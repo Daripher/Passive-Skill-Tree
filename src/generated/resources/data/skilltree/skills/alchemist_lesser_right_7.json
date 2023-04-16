@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.damage_bonus_against_poisoned",
+    "bonus": 0.05,
+    "operation": "addition",
+    "unique_id": "d2f7700d-4caa-425a-9b25-51ad44f69050"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_lesser_right_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_lesser_right_upper.png",
+  "position": {
+    "x": 175,
+    "y": -24
+  }
+}

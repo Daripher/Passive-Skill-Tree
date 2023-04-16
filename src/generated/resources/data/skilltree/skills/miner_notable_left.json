@@ -1,0 +1,9 @@
+{
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/miner_notable_left.png",
+  "position": {
+    "x": -148,
+    "y": 101
+  }
+}

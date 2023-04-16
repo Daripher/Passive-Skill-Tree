@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.tougher_armor_crafting_chance",
+    "bonus": 1.0,
+    "operation": "addition",
+    "unique_id": "0ea5e939-ce9f-4484-a3dd-06e5423e01e7"
+  },
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/blacksmith_mastery.png",
+  "position": {
+    "x": -120,
+    "y": -75
+  }
+}

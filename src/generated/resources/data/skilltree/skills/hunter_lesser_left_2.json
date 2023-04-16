@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_bows_charge_speed_bonus",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "514dc791-9e75-45af-9469-b2995129c6c4"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_lesser_left_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_lesser_left_lower.png",
+  "position": {
+    "x": 7,
+    "y": 71
+  }
+}

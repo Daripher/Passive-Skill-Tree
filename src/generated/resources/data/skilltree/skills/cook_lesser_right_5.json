@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crit_chance_bonus_when_full",
+    "bonus": 0.05,
+    "operation": "addition",
+    "unique_id": "f0d6ed51-480c-482f-9de4-521147f6613c"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_lesser_right_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_lesser_right_upper.png",
+  "position": {
+    "x": 76,
+    "y": 102
+  }
+}

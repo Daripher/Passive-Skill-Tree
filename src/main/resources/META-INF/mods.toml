@@ -1,0 +1,24 @@
+modLoader="javafml" #mandatory
+loaderVersion="[43,)"
+license="All rights reserved"
+
+[[mods]]
+	modId="skilltree"
+	version="0.1.1"
+	displayName="Passive Skill Tree"
+	authors="Daripher"
+	description='''Adds passive skill tree with player class system'''
+
+[[dependencies.skilltree]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43,)"
+    ordering="NONE"
+    side="BOTH"
+    
+[[dependencies.skilltree]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="BOTH"

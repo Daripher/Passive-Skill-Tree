@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_weapon_attack_speed_bonus",
+    "bonus": 0.25,
+    "operation": "addition",
+    "unique_id": "e8d9e80d-e71e-472a-bb7b-f313cf778ea5"
+  },
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/blacksmith_notable_left.png",
+  "position": {
+    "x": -175,
+    "y": -74
+  }
+}

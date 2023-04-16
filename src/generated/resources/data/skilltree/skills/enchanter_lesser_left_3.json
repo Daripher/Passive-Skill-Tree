@@ -1,0 +1,19 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.applied_enchantments_amplification_chance",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "9401bf0e-c133-4d2b-a429-a1b35ccdccca"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_mastery",
+    "skilltree:enchanter_lesser_left_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_lesser_left_lower.png",
+  "position": {
+    "x": -20,
+    "y": -110
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.brewed_potions_duration_bonus",
+    "bonus": 0.05,
+    "operation": "addition",
+    "unique_id": "ab1b1dfa-6eed-4792-9d34-092749d781d9"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_notable_left"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_lesser_left_upper.png",
+  "position": {
+    "x": 113,
+    "y": -138
+  }
+}

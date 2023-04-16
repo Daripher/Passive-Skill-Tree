@@ -1,0 +1,20 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.enchantment_level_requirement_decrease",
+    "bonus": 0.5,
+    "operation": "addition",
+    "unique_id": "6115072f-feca-4172-8c24-0024e65b9f9b"
+  },
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:enchanter_lesser_right_1",
+    "skilltree:enchanter_lesser_left_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_class.png",
+  "position": {
+    "x": -12,
+    "y": -44
+  },
+  "starting_point": true
+}

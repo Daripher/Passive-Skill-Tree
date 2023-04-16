@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.chance_to_ignore_armor",
+    "bonus": 0.3,
+    "operation": "addition",
+    "unique_id": "7889c819-9a03-4b6a-b1b0-391420c24b78"
+  },
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/miner_notable_right.png",
+  "position": {
+    "x": -175,
+    "y": 52
+  }
+}

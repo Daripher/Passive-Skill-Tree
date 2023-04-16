@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_weapon_damage_bonus",
+    "bonus": 0.05,
+    "operation": "addition",
+    "unique_id": "879603be-6fe7-4d65-952a-ce1a4cfbcb0a"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_lesser_left_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_lesser_left_upper.png",
+  "position": {
+    "x": -145,
+    "y": -27
+  }
+}

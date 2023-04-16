@@ -1,0 +1,16 @@
+package daripher.skilltree.init;
+
+import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class SkillTreeItems {
+	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SkillTreeMod.MOD_ID);
+
+	public static final RegistryObject<Item> SOOTHING_GEMSTONE = REGISTRY.register("soothing_gemstone", SoothingGemstoneItem::new);
+	public static final RegistryObject<Item> STURDY_GEMSTONE = REGISTRY.register("sturdy_gemstone", SturdyGemstoneItem::new);
+	public static final RegistryObject<Item> LIGHT_GEMSTONE = REGISTRY.register("light_gemstone", LightGemstoneItem::new);
+}

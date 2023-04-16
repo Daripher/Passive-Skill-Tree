@@ -1,0 +1,20 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.loot_duplication_chance",
+    "bonus": 0.5,
+    "operation": "addition",
+    "unique_id": "f3e3f506-f31a-45d1-81b9-46509a9ab90a"
+  },
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:hunter_lesser_right_1",
+    "skilltree:hunter_lesser_left_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_class.png",
+  "position": {
+    "x": -12,
+    "y": 20
+  },
+  "starting_point": true
+}

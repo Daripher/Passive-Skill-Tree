@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.double_damage_chance_with_shield",
+    "bonus": 0.03,
+    "operation": "addition",
+    "unique_id": "2bcf754e-8f85-4851-b91f-8804c36aff25"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_lesser_right_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_lesser_right_upper.png",
+  "position": {
+    "x": -92,
+    "y": -118
+  }
+}

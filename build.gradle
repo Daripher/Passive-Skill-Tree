@@ -1,0 +1,149 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }		
+        maven {
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+            content { includeGroup "org.spongepowered" }
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+version = '0.1.1'
+group = 'daripher.skilltree'
+archivesBaseName = 'PassiveSkillTree-1.19.2-BETA'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+mixin {
+    add sourceSets.main, "skilltree.refmap.json"
+    config "skilltree.mixins.json"
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.19.2'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'skilltree'
+
+            mods {
+                skilltree {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'skilltree'
+
+            mods {
+                skilltree {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        gameTestServer {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'skilltree'
+
+            mods {
+                skilltree {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'skilltree', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                skilltree {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+	maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+dependencies {
+	minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+	//implementation fg.deobf("curse.maven:prism-lib-638111:3993293")
+	//implementation fg.deobf("curse.maven:iceberg-520110:4300529")
+	//implementation fg.deobf("curse.maven:legendary-tooltips-532127:4278509")
+	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "skilltree",
+                "Specification-Vendor"    : "Daripher",
+                "Specification-Version"   : project.jar.archiveVersion,
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "Daripher",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

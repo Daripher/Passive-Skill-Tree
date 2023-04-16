@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "minecraft:coal",
+    "minecraft:raw_copper",
+    "minecraft:raw_gold",
+    "minecraft:raw_iron",
+    "minecraft:lapis_lazuli",
+    "minecraft:quartz"
+  ]
+}

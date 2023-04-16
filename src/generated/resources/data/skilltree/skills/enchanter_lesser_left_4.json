@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.free_enchantment_chance",
+    "bonus": 0.02,
+    "operation": "addition",
+    "unique_id": "fdeb1dcc-04ff-4462-81e4-ac3bce118754"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_lesser_left_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_lesser_left_upper.png",
+  "position": {
+    "x": -40,
+    "y": -122
+  }
+}

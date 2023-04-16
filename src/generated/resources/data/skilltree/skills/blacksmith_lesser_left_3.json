@@ -1,0 +1,19 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.tougher_armor_crafting_chance",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "2e48e2e2-c177-41d1-a517-354bab0a5f52"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_mastery",
+    "skilltree:blacksmith_lesser_left_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_lesser_left_lower.png",
+  "position": {
+    "x": -103,
+    "y": -47
+  }
+}

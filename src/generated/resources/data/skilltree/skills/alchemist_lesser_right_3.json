@@ -1,0 +1,19 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.damage_bonus_under_potion_effect",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "45dfe40a-ba9c-4d95-90ba-e97ad8251a7c"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_mastery",
+    "skilltree:alchemist_lesser_right_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_lesser_right_lower.png",
+  "position": {
+    "x": 87,
+    "y": -46
+  }
+}

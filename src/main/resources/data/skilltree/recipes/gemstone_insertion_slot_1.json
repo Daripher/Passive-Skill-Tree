@@ -1,0 +1,5 @@
+{
+  "type" : "skilltree:gemstone_insertion",
+  "gemstone_slot" : 1,
+  "required_skill" : "skilltree:miner_notable_left"
+}

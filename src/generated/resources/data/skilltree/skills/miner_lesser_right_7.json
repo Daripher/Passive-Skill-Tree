@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.attack_speed_bonus_with_pickaxe",
+    "bonus": 0.05,
+    "operation": "addition",
+    "unique_id": "f295033a-effe-4678-a0ff-396ce78a0aa6"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_lesser_right_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_lesser_right_upper.png",
+  "position": {
+    "x": -191,
+    "y": 8
+  }
+}

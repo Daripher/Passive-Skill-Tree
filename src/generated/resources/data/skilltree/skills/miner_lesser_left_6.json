@@ -1,0 +1,19 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.applied_gemstones_strength_bonus",
+    "bonus": 0.2,
+    "operation": "addition",
+    "unique_id": "8e2bdecf-128c-4b6e-a64f-0b191812a305"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_lesser_left_7",
+    "skilltree:hunter_lesser_right_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_lesser_left_upper.png",
+  "position": {
+    "x": -102,
+    "y": 123
+  }
+}

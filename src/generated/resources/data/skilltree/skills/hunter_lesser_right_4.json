@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.bow_charge_speed",
+    "bonus": 0.03,
+    "operation": "addition",
+    "unique_id": "07af73c2-40bd-412e-b51b-705df09db414"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_lesser_right_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_lesser_right_upper.png",
+  "position": {
+    "x": -40,
+    "y": 105
+  }
+}

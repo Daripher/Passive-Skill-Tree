@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.brewed_potions_amplification_chance",
+    "bonus": 1.0,
+    "operation": "addition",
+    "unique_id": "6617fbeb-14ff-4242-aa4b-29596d994518"
+  },
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/alchemist_mastery.png",
+  "position": {
+    "x": 97,
+    "y": -74
+  }
+}

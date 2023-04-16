@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_bows_armor_reduction",
+    "bonus": 0.25,
+    "operation": "addition",
+    "unique_id": "ce1f13ef-a0f4-43f7-9eff-1f111309289a"
+  },
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
+  "position": {
+    "x": -10,
+    "y": 114
+  }
+}

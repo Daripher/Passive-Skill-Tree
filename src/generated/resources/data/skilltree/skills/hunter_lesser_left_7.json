@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_bows_damage_bonus",
+    "bonus": 0.02,
+    "operation": "addition",
+    "unique_id": "3861b360-f9c6-4867-8a27-0daec56227cc"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_lesser_left_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_lesser_left_upper.png",
+  "position": {
+    "x": 65,
+    "y": 161
+  }
+}

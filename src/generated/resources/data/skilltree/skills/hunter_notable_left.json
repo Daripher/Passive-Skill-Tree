@@ -1,0 +1,15 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crafted_bows_double_damage_chance",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "6e3939cc-86b6-4b38-965d-e470d52b7ae5"
+  },
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/hunter_notable_left.png",
+  "position": {
+    "x": 13,
+    "y": 166
+  }
+}

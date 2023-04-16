@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.crit_chance_bonus_per_enchanted_item",
+    "bonus": 0.01,
+    "operation": "addition",
+    "unique_id": "0748c456-5a0a-4d0b-ad18-e069e3ceb638"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_notable_right"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_lesser_right_upper.png",
+  "position": {
+    "x": 42,
+    "y": -178
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.arrow_crit_damage_bonus",
+    "bonus": 0.1,
+    "operation": "addition",
+    "unique_id": "2c0bd170-c3fb-4b51-b274-7aa6334b9d5b"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_lesser_right_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_lesser_right_lower.png",
+  "position": {
+    "x": -23,
+    "y": 71
+  }
+}

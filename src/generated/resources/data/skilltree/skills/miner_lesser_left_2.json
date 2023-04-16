@@ -1,0 +1,18 @@
+{
+  "attribute_bonus": {
+    "attribute": "skilltree:player.minerals_duplication_chance",
+    "bonus": 0.09,
+    "operation": "addition",
+    "unique_id": "c61e208f-c58d-43f4-9e37-7706497f319c"
+  },
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_lesser_left_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_lesser_left_lower.png",
+  "position": {
+    "x": -68,
+    "y": 44
+  }
+}

@@ -1,0 +1,40 @@
+package daripher.skilltree.client.init;
+
+import org.lwjgl.glfw.GLFW;
+
+import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.screen.SkillTreeScreen;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
+public class SkillTreeKeybinds {
+	private static final KeyMapping SKILL_TREE_KEY = new KeyMapping("display_skill_tree", GLFW.GLFW_KEY_O, "key.categories." + SkillTreeMod.MOD_ID);
+
+	@SubscribeEvent
+	public static void registerKeybinds(RegisterKeyMappingsEvent event) {
+		event.register(SKILL_TREE_KEY);
+	}
+
+	@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
+	private static class KeyEvents {
+		@SubscribeEvent
+		public static void keyPressed(InputEvent.Key event) {
+			var minecraft = Minecraft.getInstance();
+
+			if (minecraft.player == null || minecraft.screen != null) {
+				return;
+			}
+
+			if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
+				minecraft.setScreen(new SkillTreeScreen());
+			}
+		}
+	}
+}
