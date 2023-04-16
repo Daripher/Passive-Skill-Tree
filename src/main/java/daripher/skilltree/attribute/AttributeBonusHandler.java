@@ -475,8 +475,10 @@ public class AttributeBonusHandler {
 			hiddenEffect = new MobEffectInstance(SkillTreeEffects.CRIT_CHANCE_BONUS.get(), 20 * 60, (int) (critChanceBonus * 100), false, true, true, hiddenEffect, Optional.ofNullable(null));
 		}
 
-		var foodBonusEffect = new MobEffectInstance(SkillTreeEffects.DELICACY.get(), 20 * 60, 0, false, true, true, hiddenEffect, Optional.ofNullable(null));
-		player.addEffect(foodBonusEffect);
+		if (hiddenEffect != null) {
+			var foodBonusEffect = new MobEffectInstance(SkillTreeEffects.DELICACY.get(), 20 * 60, 0, false, true, true, hiddenEffect, Optional.ofNullable(null));
+			player.addEffect(foodBonusEffect);
+		}
 
 		var critDamageBonusIfAteRecently = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_BONUS_IF_ATE_RECENTLY.get());
 
