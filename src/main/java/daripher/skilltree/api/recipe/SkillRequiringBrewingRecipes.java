@@ -41,7 +41,7 @@ public class SkillRequiringBrewingRecipes {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -74,7 +74,7 @@ public class SkillRequiringBrewingRecipes {
 	}
 
 	public static ItemStack getOutput(ItemStack input, ItemStack ingredient, Player player) {
-		if (input.isEmpty() || input.getCount() != 1 || ingredient.isEmpty()) {
+		if (input.isEmpty() || input.getCount() != 1 || ingredient.isEmpty() || player == null) {
 			return ItemStack.EMPTY;
 		}
 
