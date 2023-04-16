@@ -92,9 +92,9 @@ public class ModSkillsProvider implements DataProvider {
 		addSkill("miner_lesser_left_1", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.03D, Operation.ADDITION);
 		addSkill("miner_lesser_left_2", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.09D, Operation.ADDITION);
 		addSkill("miner_lesser_left_3", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.03D, Operation.ADDITION);
-		addSkill("miner_lesser_right_1", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.1D, Operation.ADDITION);
-		addSkill("miner_lesser_right_2", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.25D, Operation.ADDITION);
-		addSkill("miner_lesser_right_3", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.1D, Operation.ADDITION);
+		addSkill("miner_lesser_right_1", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.25D, Operation.ADDITION);
+		addSkill("miner_lesser_right_2", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.5D, Operation.ADDITION);
+		addSkill("miner_lesser_right_3", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.25D, Operation.ADDITION);
 		addSkill("miner_mastery", "miner_mastery", 24, SkillTreeAttributes.GEMSTONE_FINDING_CHANCE.get(), 0.1D, Operation.ADDITION);
 		addSkill("miner_lesser_left_4", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
 		addSkill("miner_lesser_left_5", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);

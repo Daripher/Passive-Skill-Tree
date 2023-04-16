@@ -1,7 +1,7 @@
 {
   "attribute_bonus": {
     "attribute": "skilltree:player.damage_bonus_with_pickaxe",
-    "bonus": 0.1,
+    "bonus": 0.25,
     "operation": "addition",
     "unique_id": "efeef192-c2a6-49f9-a710-f5f4c60a2ddb"
   },

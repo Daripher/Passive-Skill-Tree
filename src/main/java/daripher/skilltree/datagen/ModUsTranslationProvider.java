@@ -79,9 +79,9 @@ public class ModUsTranslationProvider extends LanguageProvider {
 		addSkill("miner_lesser_left_1", "Minerals Duplication", "+3% chance to Duplicate found Minerals");
 		addSkill("miner_lesser_left_2", "Minerals Duplication", "+9% chance to Duplicate found Minerals");
 		addSkill("miner_lesser_left_3", "Minerals Duplication", "+3% chance to Duplicate found Minerals");
-		addSkill("miner_lesser_right_1", "Pickaxe Damage", "+15% Damage with Pickaxes");
-		addSkill("miner_lesser_right_2", "Pickaxe Damage", "+25% Damage with Pickaxes");
-		addSkill("miner_lesser_right_3", "Pickaxe Damage", "+15% Damage with Pickaxes");
+		addSkill("miner_lesser_right_1", "Pickaxe Damage", "+25% Damage with Pickaxes");
+		addSkill("miner_lesser_right_2", "Pickaxe Damage", "+50% Damage with Pickaxes");
+		addSkill("miner_lesser_right_3", "Pickaxe Damage", "+25% Damage with Pickaxes");
 		addSkill("miner_mastery", "Master Miner", "You can find Gemstones in Ore");
 		addSkill("miner_lesser_right_4", "Pickaxe Attack Speed", "+5% Attack Speed with Pickaxes");
 		addSkill("miner_lesser_right_5", "Pickaxe Attack Speed", "+5% Attack Speed with Pickaxes");
