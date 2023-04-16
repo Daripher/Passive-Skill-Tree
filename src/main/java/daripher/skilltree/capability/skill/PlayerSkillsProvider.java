@@ -45,19 +45,30 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 	}
 
 	@SubscribeEvent
-	public static void grantSkillPoints(PlayerXpEvent.PickupXp event) {
+	public static void removePlayerExp(PlayerXpEvent.PickupXp event) {
 		if (event.getEntity().level.isClientSide) {
 			return;
 		}
 
-		if (event.getOrb().getTags().contains("FromPlayer")) {
+		if (!event.getOrb().getTags().contains("FromPlayer")) {
+			return;
+		}
+
+		var player = event.getEntity();
+		var playerSkillsData = get(player);
+		playerSkillsData.grantExpirience(-event.getOrb().getValue());
+	}
+
+	@SubscribeEvent
+	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
+		if (event.getAmount() <= 0) {
 			return;
 		}
 
 		var player = event.getEntity();
 		var playerSkillsData = get(player);
 		var skillPoints = playerSkillsData.getSkillPoints();
-		playerSkillsData.grantExpirience(event.getOrb().getValue());
+		playerSkillsData.grantExpirience(event.getAmount());
 
 		if (skillPoints != playerSkillsData.getSkillPoints()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
