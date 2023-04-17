@@ -6,7 +6,6 @@ import daripher.skilltree.init.SkillTreeAttributes;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.common.ForgeMod;
 
 public class LightGemstoneItem extends GemstoneItem {
 	public LightGemstoneItem() {
@@ -15,12 +14,12 @@ public class LightGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getHelmetBonus() {
-		return Triple.of(Attributes.FLYING_SPEED, 0.1D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getChestplateBonus() {
-		return Triple.of(ForgeMod.SWIM_SPEED.get(), 0.1D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.MOVEMENT_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
@@ -35,12 +34,12 @@ public class LightGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getWeaponBonus() {
-		return Triple.of(Attributes.ATTACK_SPEED, 0.1D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getShieldBonus() {
-		return Triple.of(Attributes.ATTACK_SPEED, 0.1D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override

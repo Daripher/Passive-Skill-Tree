@@ -19,17 +19,17 @@ public class SoothingGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getChestplateBonus() {
-		return Triple.of(Attributes.MAX_HEALTH, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.MAX_HEALTH, 5D, Operation.ADDITION);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getLeggingsBonus() {
-		return Triple.of(Attributes.MAX_HEALTH, 5D, Operation.ADDITION);
+		return Triple.of(Attributes.MAX_HEALTH, 2.5D, Operation.ADDITION);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getBootsBonus() {
-		return Triple.of(Attributes.MAX_HEALTH, 5D, Operation.ADDITION);
+		return Triple.of(Attributes.MAX_HEALTH, 2.5D, Operation.ADDITION);
 	}
 
 	@Override
