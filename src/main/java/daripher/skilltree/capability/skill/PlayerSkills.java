@@ -51,6 +51,11 @@ public class PlayerSkills implements IPlayerSkills {
 			this.expirience -= levelUpCost;
 			skillPoints++;
 			level = getSkillPoints() + getPlayerSkills().size();
+
+			if (level >= levelUpCosts.size()) {
+				return;
+			}
+			
 			levelUpCost = levelUpCosts.get(level);
 		}
 	}
