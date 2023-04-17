@@ -31,7 +31,6 @@ import net.minecraft.world.item.Items;
 public class SkillTreeScreen extends Screen {
 	private static final ResourceLocation CONNECTION_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_connection.png");
 	private static final ResourceLocation BACKGROUND_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_background.png");
-	private static final int MAX_SCROLL = 100;
 	private final Map<ResourceLocation, PassiveSkillButton> skillButtons = new HashMap<>();
 	private final List<Pair<PassiveSkillButton, PassiveSkillButton>> connections = new ArrayList<>();
 	private final List<PassiveSkillButton> startingPoints = new ArrayList<>();
@@ -41,6 +40,8 @@ public class SkillTreeScreen extends Screen {
 	private boolean firstInitDone;
 	private double scrollX;
 	private double scrollY;
+	private int maxScrollX;
+	private int maxScrollY;
 	public float animation;
 
 	public SkillTreeScreen(ResourceLocation skillTreeId) {
@@ -83,6 +84,14 @@ public class SkillTreeScreen extends Screen {
 
 			if (learnedSkills.contains(skill.getId())) {
 				button.isSkillLearned = true;
+			}
+
+			if (maxScrollX < Mth.abs(skill.getPositionX())) {
+				maxScrollX = Mth.abs(skill.getPositionX());
+			}
+
+			if (maxScrollY < Mth.abs(skill.getPositionY())) {
+				maxScrollY = Mth.abs(skill.getPositionY());
 			}
 		});
 	}
@@ -175,8 +184,8 @@ public class SkillTreeScreen extends Screen {
 		} else {
 			scrollX += dragAmountX;
 			scrollY += dragAmountY;
-			scrollX = Math.max(-MAX_SCROLL, Math.min(MAX_SCROLL, scrollX));
-			scrollY = Math.max(-MAX_SCROLL, Math.min(MAX_SCROLL, scrollY));
+			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
+			scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
 			rebuildWidgets();
 			return true;
 		}
