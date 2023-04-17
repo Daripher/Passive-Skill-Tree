@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.brewed_potions_duration_bonus",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "0cbe91be-afdf-476b-9175-179142f5a5ae"
+    "unique_id": "d25919a3-59b2-4b9d-8e1e-3729ad67f2f3"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 73,
     "y": -94
-  }
+  },
+  "tree": "skilltree:tree"
 }

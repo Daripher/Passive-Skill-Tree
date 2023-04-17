@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.brewed_potions_amplification_chance",
     "bonus": 0.15,
     "operation": "addition",
-    "unique_id": "0b29ee15-6a74-4567-bbd5-ee251c66fc6e"
+    "unique_id": "03f3c471-761a-4b49-ba46-08c32ac45170"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 52,
     "y": -60
-  }
+  },
+  "tree": "skilltree:tree"
 }

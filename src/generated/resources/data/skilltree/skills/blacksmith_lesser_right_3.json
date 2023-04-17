@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.damage_bonus_with_shield",
     "bonus": 0.1,
     "operation": "addition",
-    "unique_id": "3bf067df-1db7-409a-ae2e-a830e260c81a"
+    "unique_id": "c0ed764e-a4a7-439b-88c0-ba5de08f97fa"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -15,5 +15,6 @@
   "position": {
     "x": -88,
     "y": -71
-  }
+  },
+  "tree": "skilltree:tree"
 }

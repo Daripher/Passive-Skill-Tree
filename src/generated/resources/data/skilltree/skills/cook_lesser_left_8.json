@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.cooked_food_crit_chance_bonus",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "34ba6863-848d-4fbc-bdeb-291434ca3504"
+    "unique_id": "a59d496c-25a9-4881-9c84-fc9f5ace8898"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 165,
     "y": 32
-  }
+  },
+  "tree": "skilltree:tree"
 }

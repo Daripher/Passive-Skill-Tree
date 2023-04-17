@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.damage_bonus_per_enchanted_item",
     "bonus": 0.02,
     "operation": "addition",
-    "unique_id": "7c8d3497-072c-4023-ba3f-69262ea6ec82"
+    "unique_id": "f30039fc-72fa-416b-ae5b-75d976a0bf43"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 6,
     "y": -64
-  }
+  },
+  "tree": "skilltree:tree"
 }

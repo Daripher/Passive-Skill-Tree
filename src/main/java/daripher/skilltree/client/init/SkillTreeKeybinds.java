@@ -6,6 +6,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -33,7 +34,7 @@ public class SkillTreeKeybinds {
 			}
 
 			if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
-				minecraft.setScreen(new SkillTreeScreen());
+				minecraft.setScreen(new SkillTreeScreen(new ResourceLocation(SkillTreeMod.MOD_ID, "tree")));
 			}
 		}
 	}

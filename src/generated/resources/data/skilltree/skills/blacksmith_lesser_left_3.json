@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.tougher_armor_crafting_chance",
     "bonus": 0.1,
     "operation": "addition",
-    "unique_id": "2e48e2e2-c177-41d1-a517-354bab0a5f52"
+    "unique_id": "5f05f602-65a6-4936-887d-173453d6173a"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -15,5 +15,6 @@
   "position": {
     "x": -103,
     "y": -47
-  }
+  },
+  "tree": "skilltree:tree"
 }

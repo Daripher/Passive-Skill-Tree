@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crafted_bows_damage_bonus",
     "bonus": 0.02,
     "operation": "addition",
-    "unique_id": "2afa5283-c5f5-4764-9182-943a7d94e2e9"
+    "unique_id": "0fd82d7b-d3e3-41a3-a3c5-eccab9e5fe8d"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 41,
     "y": 163
-  }
+  },
+  "tree": "skilltree:tree"
 }

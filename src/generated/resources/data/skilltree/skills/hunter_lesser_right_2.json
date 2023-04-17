@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.arrow_crit_damage_bonus",
     "bonus": 0.1,
     "operation": "addition",
-    "unique_id": "2c0bd170-c3fb-4b51-b274-7aa6334b9d5b"
+    "unique_id": "9824d1a8-5554-485b-879a-acccf8394c98"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": -23,
     "y": 71
-  }
+  },
+  "tree": "skilltree:tree"
 }

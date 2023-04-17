@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crafted_armor_defence_bonus",
     "bonus": 0.5,
     "operation": "addition",
-    "unique_id": "ef12c6b0-c61f-4f95-b143-39d485e6cb19"
+    "unique_id": "4c6f65e4-48a8-4779-8153-2d2ffbf2a4da"
   },
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
@@ -16,5 +16,6 @@
     "x": -39,
     "y": -28
   },
-  "starting_point": true
+  "starting_point": true,
+  "tree": "skilltree:tree"
 }

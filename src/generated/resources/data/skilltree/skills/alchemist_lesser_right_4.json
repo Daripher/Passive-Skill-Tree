@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.damage_bonus_against_poisoned",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "79e300d0-d734-41a7-acba-588420c6d15c"
+    "unique_id": "d5539cfd-d21e-4f5a-8969-0514dfed8ba1"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 107,
     "y": -33
-  }
+  },
+  "tree": "skilltree:tree"
 }

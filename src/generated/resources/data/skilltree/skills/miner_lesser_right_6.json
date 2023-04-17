@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.attack_speed_bonus_with_pickaxe",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "c68cf7af-733b-4675-b8a9-a1dcfc5ae455"
+    "unique_id": "a9f2f0f8-649b-41c4-9a9c-ff47801350f7"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": -168,
     "y": 6
-  }
+  },
+  "tree": "skilltree:tree"
 }

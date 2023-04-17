@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.applied_enchantments_amplification_chance",
     "bonus": 0.55,
     "operation": "addition",
-    "unique_id": "349e108a-27e9-43d5-97eb-a93f40ce33fd"
+    "unique_id": "a13af5c9-855d-4c82-9fc1-1b59869a92f0"
   },
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
@@ -11,5 +11,6 @@
   "position": {
     "x": -33,
     "y": -186
-  }
+  },
+  "tree": "skilltree:tree"
 }

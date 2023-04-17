@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crit_damage_bonus_per_enchanted_item",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "b07001eb-f19e-4c1b-aa70-ca9459afe644"
+    "unique_id": "143e8214-3b6e-4f5e-88c3-8e34b59818a6"
   },
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
@@ -11,5 +11,6 @@
   "position": {
     "x": 14,
     "y": -185
-  }
+  },
+  "tree": "skilltree:tree"
 }

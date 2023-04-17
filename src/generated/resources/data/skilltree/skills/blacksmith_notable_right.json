@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crit_chance_bonus_per_armor_point",
     "bonus": 0.01,
     "operation": "addition",
-    "unique_id": "6225dd93-ad80-4947-81a4-66794fd7ffff"
+    "unique_id": "23cccfe2-d340-4d49-9a0d-a69dcd4ac90d"
   },
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
@@ -11,5 +11,6 @@
   "position": {
     "x": -147,
     "y": -122
-  }
+  },
+  "tree": "skilltree:tree"
 }

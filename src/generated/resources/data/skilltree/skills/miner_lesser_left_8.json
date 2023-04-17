@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.applied_gemstones_strength_bonus",
     "bonus": 0.2,
     "operation": "addition",
-    "unique_id": "ea97b17a-dc06-4dbc-802d-50daa6d6f8b2"
+    "unique_id": "2d6e8340-e8a9-4da2-b296-13591add3bab"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": -129,
     "y": 122
-  }
+  },
+  "tree": "skilltree:tree"
 }

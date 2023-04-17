@@ -36,14 +36,16 @@ public class SkillTreeScreen extends Screen {
 	private final List<Pair<PassiveSkillButton, PassiveSkillButton>> connections = new ArrayList<>();
 	private final List<PassiveSkillButton> startingPoints = new ArrayList<>();
 	private List<ResourceLocation> learnedSkills = new ArrayList<>();
+	private final ResourceLocation skillTreeId;
 	private int skillPoints;
 	private boolean firstInitDone;
 	private double scrollX;
 	private double scrollY;
 	public float animation;
 
-	public SkillTreeScreen() {
+	public SkillTreeScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
+		this.skillTreeId = skillTreeId;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	public void addSkillButtons() {
-		SkillTreeClientData.PASSIVE_SKILLS.forEach((skillId, skill) -> {
+		SkillTreeClientData.getSkillsForTree(skillTreeId).forEach((skillId, skill) -> {
 			var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
 			var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
 			var button = new PassiveSkillButton(this, buttonX, buttonY, skill);
@@ -86,7 +88,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	public void addSkillConnections() {
-		SkillTreeClientData.PASSIVE_SKILLS.forEach((skillId, skill) -> {
+		SkillTreeClientData.getSkillsForTree(skillTreeId).forEach((skillId, skill) -> {
 			skill.getConnectedSkills().forEach(connectedSkillId -> {
 				connections.add(Pair.of(skillButtons.get(skillId), skillButtons.get(connectedSkillId)));
 			});
@@ -131,12 +133,17 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	public void buttonPressed(Button button) {
-		if (button instanceof PassiveSkillButton skillButton && skillButton.canLearnSkill) {
+		if (button instanceof PassiveSkillButton skillButton) {
 			var passiveSkill = skillButton.passiveSkill;
-			learnedSkills.add(passiveSkill.getId());
-			NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(passiveSkill));
-			skillPoints--;
-			rebuildWidgets();
+
+			if (skillButton.canLearnSkill) {
+				learnedSkills.add(passiveSkill.getId());
+				NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(passiveSkill));
+				skillPoints--;
+				rebuildWidgets();
+			} else if (passiveSkill.getConnectedTreeId() != null) {
+				minecraft.setScreen(new SkillTreeScreen(passiveSkill.getConnectedTreeId()));
+			}
 		}
 	}
 

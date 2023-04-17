@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.gemstone_finding_chance",
     "bonus": 0.1,
     "operation": "addition",
-    "unique_id": "c57d85eb-2d4d-47ee-b444-4aff16d1006b"
+    "unique_id": "a3c558d6-bfab-48ec-bc98-c359de302e06"
   },
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
@@ -11,5 +11,6 @@
   "position": {
     "x": -121,
     "y": 50
-  }
+  },
+  "tree": "skilltree:tree"
 }

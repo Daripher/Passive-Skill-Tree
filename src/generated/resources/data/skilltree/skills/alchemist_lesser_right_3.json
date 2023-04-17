@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.damage_bonus_under_potion_effect",
     "bonus": 0.1,
     "operation": "addition",
-    "unique_id": "45dfe40a-ba9c-4d95-90ba-e97ad8251a7c"
+    "unique_id": "2d296af2-cea6-4515-97ea-756dc0188a40"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -15,5 +15,6 @@
   "position": {
     "x": 87,
     "y": -46
-  }
+  },
+  "tree": "skilltree:tree"
 }

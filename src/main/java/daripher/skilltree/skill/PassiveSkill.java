@@ -19,8 +19,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class PassiveSkill {
 	private final ResourceLocation id;
+	private final ResourceLocation treeId;
 	private final ResourceLocation backgroundTexture;
 	private final ResourceLocation iconTexture;
+	private @Nullable ResourceLocation connectedTreeId;
 	private final int buttonSize;
 	private final boolean isStartingPoint;
 	private final @Nullable Triple<Attribute, Double, Operation> attributeBonus;
@@ -28,8 +30,10 @@ public class PassiveSkill {
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
 	private int positionX, positionY;
 
-	public PassiveSkill(ResourceLocation id, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, boolean isStartingPoint, @Nullable Triple<Attribute, Double, Operation> attributeBonus) {
+	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, boolean isStartingPoint,
+			@Nullable Triple<Attribute, Double, Operation> attributeBonus) {
 		this.id = id;
+		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
 		this.iconTexture = iconTexture;
 		this.buttonSize = buttonSize;
@@ -39,6 +43,10 @@ public class PassiveSkill {
 
 	public ResourceLocation getId() {
 		return id;
+	}
+
+	public ResourceLocation getTreeId() {
+		return treeId;
 	}
 
 	public int getButtonSize() {
@@ -53,12 +61,19 @@ public class PassiveSkill {
 		return iconTexture;
 	}
 
+	public @Nullable ResourceLocation getConnectedTreeId() {
+		return connectedTreeId;
+	}
+
+	public void setConnectedTree(ResourceLocation treeId) {
+		this.connectedTreeId = treeId;
+	}
+
 	public boolean isStartingPoint() {
 		return isStartingPoint;
 	}
 
-	@Nullable
-	public Triple<Attribute, Double, Operation> getAttributeBonus() {
+	public @Nullable Triple<Attribute, Double, Operation> getAttributeBonus() {
 		return attributeBonus;
 	}
 
@@ -90,8 +105,13 @@ public class PassiveSkill {
 	public JsonObject writeToJson() {
 		var jsonObject = new JsonObject();
 		jsonObject.addProperty("button_size", getButtonSize());
+		jsonObject.addProperty("tree", getTreeId().toString());
 		jsonObject.addProperty("background_texture", getBackgroundTexture().toString());
 		jsonObject.addProperty("icon_texture", getIconTexture().toString());
+
+		if (connectedTreeId != null) {
+			jsonObject.addProperty("connected_tree", getConnectedTreeId().toString());
+		}
 
 		if (isStartingPoint()) {
 			jsonObject.addProperty("starting_point", true);
@@ -126,8 +146,10 @@ public class PassiveSkill {
 
 	public static PassiveSkill loadFromJson(ResourceLocation id, JsonObject jsonObject) {
 		var buttonSize = jsonObject.get("button_size").getAsInt();
+		var treeId = new ResourceLocation(jsonObject.get("tree").getAsString());
 		var backgroundTexture = new ResourceLocation(jsonObject.get("background_texture").getAsString());
 		var iconTexture = new ResourceLocation(jsonObject.get("icon_texture").getAsString());
+		var connectedTreeId = jsonObject.has("connected_tree") ? new ResourceLocation(jsonObject.get("connected_tree").getAsString()) : null;
 		var isStartingPoint = jsonObject.has("starting_point");
 		Triple<Attribute, Double, Operation> attributeBonus = null;
 		var hasAttributeBonus = jsonObject.has("attribute_bonus");
@@ -141,7 +163,8 @@ public class PassiveSkill {
 			attributeBonus = Triple.of(attribute, bonus, operation);
 		}
 
-		var passiveSkill = new PassiveSkill(id, buttonSize, backgroundTexture, iconTexture, isStartingPoint, attributeBonus);
+		var passiveSkill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint, attributeBonus);
+		passiveSkill.connectedTreeId = connectedTreeId;
 
 		if (hasAttributeBonus) {
 			var attributeBonusJsonObject = jsonObject.get("attribute_bonus").getAsJsonObject();
@@ -167,6 +190,7 @@ public class PassiveSkill {
 
 	public void writeToByteBuf(FriendlyByteBuf buf) {
 		buf.writeUtf(getId().toString());
+		buf.writeUtf(getTreeId().toString());
 		buf.writeInt(getButtonSize());
 		buf.writeUtf(getBackgroundTexture().toString());
 		buf.writeUtf(getIconTexture().toString());
@@ -177,23 +201,36 @@ public class PassiveSkill {
 		getConnectedSkills().forEach(skillId -> {
 			buf.writeUtf(skillId.toString());
 		});
+		buf.writeBoolean(getConnectedTreeId() != null);
+
+		if (connectedTreeId != null) {
+			buf.writeUtf(getConnectedTreeId().toString());
+		}
 	}
 
 	public static PassiveSkill loadFromByteBuf(FriendlyByteBuf buf) {
 		var skillId = new ResourceLocation(buf.readUtf());
+		var treeId = new ResourceLocation(buf.readUtf());
 		var buttonSize = buf.readInt();
 		var backgroundTexture = new ResourceLocation(buf.readUtf());
 		var iconTexture = new ResourceLocation(buf.readUtf());
 		var isStartingPoint = buf.readBoolean();
 		var positionX = buf.readInt();
 		var positionY = buf.readInt();
-		var passiveSkill = new PassiveSkill(skillId, buttonSize, backgroundTexture, iconTexture, isStartingPoint, null);
+		var passiveSkill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint, null);
 		passiveSkill.setPosition(positionX, positionY);
 		var connectionsCount = buf.readInt();
 
 		for (var i = 0; i < connectionsCount; i++) {
 			var connectedSkillId = new ResourceLocation(buf.readUtf());
 			passiveSkill.connectedSkills.add(connectedSkillId);
+		}
+
+		var hasConnectedTreeId = buf.readBoolean();
+
+		if (hasConnectedTreeId) {
+			var connectedTreeId = new ResourceLocation(buf.readUtf());
+			passiveSkill.connectedTreeId = connectedTreeId;
 		}
 
 		return passiveSkill;

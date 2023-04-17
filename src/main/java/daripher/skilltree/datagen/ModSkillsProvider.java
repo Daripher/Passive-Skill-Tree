@@ -148,6 +148,24 @@ public class ModSkillsProvider implements DataProvider {
 		addSkill("cook_lesser_right_7", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
 		addSkill("cook_lesser_right_8", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
 		addSkill("cook_notable_right", "cook_notable_right", 20, SkillTreeAttributes.CRIT_DAMAGE_BONUS_IF_ATE_RECENTLY.get(), 0.5D, Operation.ADDITION);
+//		
+//		addSkill("test", "test", 16);
+//		getSkill("test").setPosition(0, 0);
+//		getSkill("test").connect(getSkill("cook_class"));
+//		getSkill("test").setConnectedTree(new ResourceLocation("test", "test_tree"));
+//		
+//		// test code
+//		addTestSkill("test_skill_1", "test_icon_1", 16);
+//		addTestSkill("test_skill_2", "test_icon_2", 16);
+//		addTestSkill("test_skill_3", "test_icon_3", 16);
+//		addTestSkill("test_skill_4", "test_icon_4", 24);
+//		getTestSkill("test_skill_1").setPosition(0, 0);
+//		getTestSkill("test_skill_2").setPosition(0, 30);
+//		getTestSkill("test_skill_3").setPosition(0, 60);
+//		getTestSkill("test_skill_4").setPosition(0, 90);
+//		getTestSkill("test_skill_1").connect(getTestSkill("test_skill_2"));
+//		getTestSkill("test_skill_2").connect(getTestSkill("test_skill_3"));
+//		getTestSkill("test_skill_3").connect(getTestSkill("test_skill_4"));
 	}
 
 	private void generateSkillTree() {
@@ -240,10 +258,11 @@ public class ModSkillsProvider implements DataProvider {
 
 	private void addSkill(String skillName, String iconName, int buttonSize, Triple<Attribute, Double, Operation> attributeBonus) {
 		var skillId = new ResourceLocation(SkillTreeMod.MOD_ID, skillName);
+		var treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
 		var backgroundName = buttonSize == 24 ? "keystone" : buttonSize == 20 ? "notable" : "lesser";
 		var backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + backgroundName + ".png");
 		var iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + iconName + ".png");
-		data.put(skillId, new PassiveSkill(skillId, buttonSize, backgroundTexture, iconTexture, skillName.endsWith("_class"), attributeBonus));
+		data.put(skillId, new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, skillName.endsWith("_class"), attributeBonus));
 	}
 
 	@Override

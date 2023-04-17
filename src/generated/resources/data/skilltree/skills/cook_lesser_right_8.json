@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crit_chance_bonus_when_full",
     "bonus": 0.05,
     "operation": "addition",
-    "unique_id": "b9e6be79-eb30-42a2-872c-ff8f7b176f43"
+    "unique_id": "4fa4433a-6c03-43d6-9c15-294f0e8fdd8a"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 112,
     "y": 123
-  }
+  },
+  "tree": "skilltree:tree"
 }

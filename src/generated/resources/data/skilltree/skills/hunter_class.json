@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.loot_duplication_chance",
     "bonus": 0.5,
     "operation": "addition",
-    "unique_id": "f3e3f506-f31a-45d1-81b9-46509a9ab90a"
+    "unique_id": "842a7ec9-56a2-4b0a-90e3-12d4655cce67"
   },
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
@@ -16,5 +16,6 @@
     "x": -12,
     "y": 20
   },
-  "starting_point": true
+  "starting_point": true,
+  "tree": "skilltree:tree"
 }

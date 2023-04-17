@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.bow_charge_speed",
     "bonus": 0.03,
     "operation": "addition",
-    "unique_id": "4680b552-bc70-43f3-816e-cbd88b17c5f2"
+    "unique_id": "067f5ae3-4584-44e1-be2a-eef1ba939329"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": -71,
     "y": 139
-  }
+  },
+  "tree": "skilltree:tree"
 }

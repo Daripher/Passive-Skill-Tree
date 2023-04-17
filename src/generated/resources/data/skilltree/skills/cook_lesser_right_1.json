@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.damage_bonus_when_full",
     "bonus": 0.15,
     "operation": "addition",
-    "unique_id": "6f099f12-3ca4-4005-adf4-5add85284958"
+    "unique_id": "798011ea-2c81-4e6e-b13e-f7b3ac2b5417"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 32,
     "y": 32
-  }
+  },
+  "tree": "skilltree:tree"
 }

@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.cooked_food_healing_per_restoration",
     "bonus": 0.15,
     "operation": "addition",
-    "unique_id": "b9d108d2-fdff-472b-88f0-ea091f58b86d"
+    "unique_id": "f305a098-58b0-41e5-b94c-98967bff220d"
   },
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
@@ -14,5 +14,6 @@
   "position": {
     "x": 47,
     "y": 8
-  }
+  },
+  "tree": "skilltree:tree"
 }

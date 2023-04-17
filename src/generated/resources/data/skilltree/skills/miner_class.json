@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.mining_speed_bonus",
     "bonus": 0.25,
     "operation": "addition",
-    "unique_id": "cd3aebaa-13af-4779-a93d-f33995665cfa"
+    "unique_id": "82c99167-6cc9-4a90-95d2-0593c6e396b8"
   },
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
@@ -16,5 +16,6 @@
     "x": -39,
     "y": 3
   },
-  "starting_point": true
+  "starting_point": true,
+  "tree": "skilltree:tree"
 }

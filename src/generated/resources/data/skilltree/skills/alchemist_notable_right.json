@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.crit_chance_bonus_against_poisoned",
     "bonus": 0.5,
     "operation": "addition",
-    "unique_id": "e169a319-51ff-420f-81df-f82f146b218b"
+    "unique_id": "25ced70e-5f83-4688-b96e-75b2836e642e"
   },
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
@@ -11,5 +11,6 @@
   "position": {
     "x": 155,
     "y": -72
-  }
+  },
+  "tree": "skilltree:tree"
 }

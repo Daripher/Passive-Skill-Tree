@@ -3,7 +3,7 @@
     "attribute": "skilltree:player.arrow_damage_multiplier_per_distance",
     "bonus": 0.02,
     "operation": "addition",
-    "unique_id": "0ac1a3d0-6530-4ea3-93d2-99ffd2cfd6a1"
+    "unique_id": "b9ebf208-82cf-40db-8ba8-4c4faf274331"
   },
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
@@ -11,5 +11,6 @@
   "position": {
     "x": -33,
     "y": 165
-  }
+  },
+  "tree": "skilltree:tree"
 }
