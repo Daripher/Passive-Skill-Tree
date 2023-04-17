@@ -35,7 +35,7 @@ public class SkillTreeScreen extends Screen {
 	private final Map<ResourceLocation, PassiveSkillButton> skillButtons = new HashMap<>();
 	private final List<Pair<PassiveSkillButton, PassiveSkillButton>> connections = new ArrayList<>();
 	private final List<PassiveSkillButton> startingPoints = new ArrayList<>();
-	private List<ResourceLocation> learnedSkills;
+	private List<ResourceLocation> learnedSkills = new ArrayList<>();
 	private int skillPoints;
 	private boolean firstInitDone;
 	private double scrollX;
@@ -50,6 +50,7 @@ public class SkillTreeScreen extends Screen {
 	protected void init() {
 		if (!firstInitDone) {
 			firstInit();
+			firstInitDone = true;
 		}
 
 		startingPoints.clear();
@@ -61,11 +62,9 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void firstInit() {
-		learnedSkills = new ArrayList<>();
 		var skillsData = PlayerSkillsProvider.get(minecraft.player);
 		skillsData.getPlayerSkills().stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
 		skillPoints = skillsData.getSkillPoints();
-		firstInitDone = true;
 	}
 
 	public void addSkillButtons() {
