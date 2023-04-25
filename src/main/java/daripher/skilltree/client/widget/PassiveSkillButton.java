@@ -1,5 +1,7 @@
 package daripher.skilltree.client.widget;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -10,6 +12,7 @@ import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 
@@ -59,12 +62,17 @@ public class PassiveSkillButton extends Button {
 		}
 	}
 
-	public List<Component> getTooltip() {
+	public List<MutableComponent> getTooltip() {
 		var titleStyle = width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
 		var skillId = getSkillId();
 		var skillTitle = Component.translatable(skillId + ".name").withStyle(titleStyle);
-		var skillDescription = Component.translatable(skillId + ".description").withStyle(DESCRIPTION_STYLE);
-		return List.of(skillTitle, skillDescription);
+		var description = Component.translatable(skillId + ".description").getString();
+		var descriptionStrings = Arrays.asList(description.split("/n"));
+		var skillDescription = descriptionStrings.stream().map(Component::translatable).map(component -> component.withStyle(DESCRIPTION_STYLE)).toList();
+		var tooltip = new ArrayList<MutableComponent>();
+		tooltip.add(skillTitle);
+		tooltip.addAll(skillDescription);
+		return tooltip;
 	}
 
 	public void setCanLearnSkill() {
