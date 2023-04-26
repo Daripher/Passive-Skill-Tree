@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 	List<PassiveSkill> getPlayerSkills();
 
-	void learnSkill(ServerPlayer player, PassiveSkill passiveSkill);
+	boolean learnSkill(ServerPlayer player, PassiveSkill passiveSkill);
 
 	boolean hasSkill(ResourceLocation skillId);
 
@@ -22,4 +22,6 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 	int getExpirience();
 
 	void grantExpirience(int expirience);
+	
+	boolean isTreeReset();
 }

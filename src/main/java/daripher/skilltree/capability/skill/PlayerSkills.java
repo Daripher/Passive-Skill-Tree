@@ -2,6 +2,7 @@ package daripher.skilltree.capability.skill;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.google.common.base.Predicates;
 
@@ -13,12 +14,13 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class PlayerSkills implements IPlayerSkills {
+	private static final UUID TREE_VERSION = UUID.fromString("498b0001-157f-4793-a3f0-8a38f5ecd3d2");
 	private List<PassiveSkill> skills = new ArrayList<>();
 	private int skillPoints;
 	private int expirience;
+	private boolean treeReset;
 
 	@Override
 	public List<PassiveSkill> getPlayerSkills() {
@@ -39,7 +41,7 @@ public class PlayerSkills implements IPlayerSkills {
 	public void grantExpirience(int expirience) {
 		this.expirience += expirience;
 		var level = getSkillPoints() + getPlayerSkills().size();
-		var levelUpCosts = Config.COMMON_CONFIG.skillPointsCosts.get();
+		var levelUpCosts = Config.COMMON_CONFIG.getSkillPointCosts();
 
 		if (level >= levelUpCosts.size()) {
 			return;
@@ -55,26 +57,21 @@ public class PlayerSkills implements IPlayerSkills {
 			if (level >= levelUpCosts.size()) {
 				return;
 			}
-			
+
 			levelUpCost = levelUpCosts.get(level);
 		}
 	}
 
 	@Override
-	public void learnSkill(ServerPlayer player, PassiveSkill passiveSkill) {
+	public boolean learnSkill(ServerPlayer player, PassiveSkill passiveSkill) {
 		if (skillPoints == 0) {
-			return;
+			return false;
 		}
-
+		if (skills.contains(passiveSkill)) {
+			return false;
+		}
 		skillPoints--;
-		skills.add(passiveSkill);
-		var attributeBonus = passiveSkill.getAttributeBonus();
-
-		if (attributeBonus != null) {
-			var modifiedAttribute = player.getAttribute(attributeBonus.getLeft());
-			var attributeModifier = new AttributeModifier(passiveSkill.getUniqueId(), passiveSkill.getId().toString(), attributeBonus.getMiddle(), attributeBonus.getRight());
-			modifiedAttribute.addPermanentModifier(attributeModifier);
-		}
+		return skills.add(passiveSkill);
 	}
 
 	@Override
@@ -83,8 +80,16 @@ public class PlayerSkills implements IPlayerSkills {
 	}
 
 	@Override
+	public boolean isTreeReset() {
+		return treeReset;
+	}
+
+	@Override
 	public CompoundTag serializeNBT() {
 		var tag = new CompoundTag();
+		tag.putUUID("TreeVersion", TREE_VERSION);
+		tag.putInt("Points", skillPoints);
+		tag.putInt("Expirience", expirience);
 		var skillTagsList = new ListTag();
 
 		skills.forEach(skill -> {
@@ -92,23 +97,29 @@ public class PlayerSkills implements IPlayerSkills {
 		});
 
 		tag.put("Skills", skillTagsList);
-		tag.putInt("Points", skillPoints);
-		tag.putInt("Expirience", expirience);
 		return tag;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag tag) {
 		skills.clear();
-		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
-
-		skillTagsList.forEach(skillTag -> {
-			var skillId = new ResourceLocation(skillTag.getAsString());
-			var passiveSkill = SkillsDataReloader.getSkillById(skillId);
-			skills.add(passiveSkill);
-		});
-
+		var treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
 		skillPoints = tag.getInt("Points");
 		expirience = tag.getInt("Expirience");
+		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
+
+		if (treeVersion.equals(TREE_VERSION)) {
+			skillTagsList.forEach(skillTag -> {
+				var skillId = new ResourceLocation(skillTag.getAsString());
+				var passiveSkill = SkillsDataReloader.getSkillById(skillId);
+
+				if (passiveSkill != null) {
+					skills.add(passiveSkill);
+				}
+			});
+		} else {
+			skillPoints += skillTagsList.size();
+			treeReset = true;
+		}
 	}
 }

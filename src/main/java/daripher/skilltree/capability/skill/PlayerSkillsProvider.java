@@ -49,11 +49,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		if (event.getEntity().level.isClientSide) {
 			return;
 		}
-
 		if (!event.getOrb().getTags().contains("FromPlayer")) {
 			return;
 		}
-
 		var player = event.getEntity();
 		var playerSkillsData = get(player);
 		playerSkillsData.grantExpirience(-event.getOrb().getValue());
@@ -64,12 +62,10 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		if (event.getAmount() <= 0) {
 			return;
 		}
-
 		var player = event.getEntity();
 		var playerSkillsData = get(player);
 		var skillPoints = playerSkillsData.getSkillPoints();
 		playerSkillsData.grantExpirience(event.getAmount());
-
 		if (skillPoints != playerSkillsData.getSkillPoints()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
 			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
@@ -81,7 +77,6 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		if (event.getEntity().level.isClientSide) {
 			return;
 		}
-
 		if (event.isWasDeath()) {
 			event.getOriginal().reviveCaps();
 			var originalData = get(event.getOriginal());
@@ -98,16 +93,45 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 	}
 
 	@SubscribeEvent
-	public static void syncPlayerSkills(EntityJoinLevelEvent event) {
+	public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
 		if (!(event.getEntity() instanceof Player)) {
 			return;
 		}
-
 		var player = (Player) event.getEntity();
-
 		if (!event.getEntity().level.isClientSide) {
-			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
+			get(player).getPlayerSkills().forEach(passiveSkill -> {
+				passiveSkill.getAttributeModifiers().forEach(pair -> {
+					var attribute = pair.getLeft();
+					var modifier = pair.getRight();
+					var playerAttribute = player.getAttribute(attribute);
+					if (!playerAttribute.hasModifier(modifier)) {
+						playerAttribute.addTransientModifier(modifier);
+					}
+				});
+			});
 		}
+	}
+
+	@SubscribeEvent
+	public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
+		if (!(event.getEntity() instanceof Player)) {
+			return;
+		}
+		var player = (Player) event.getEntity();
+		if (!event.getEntity().level.isClientSide) {
+			if (get(player).isTreeReset()) {
+				player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void syncPlayerSkills(EntityJoinLevelEvent event) {
+		if (!(event.getEntity() instanceof ServerPlayer)) {
+			return;
+		}
+		var player = (ServerPlayer) event.getEntity();
+		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 	}
 
 	@Override
