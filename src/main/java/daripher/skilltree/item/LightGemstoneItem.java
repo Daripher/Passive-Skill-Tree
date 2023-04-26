@@ -14,22 +14,22 @@ public class LightGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getHelmetBonus() {
-		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getChestplateBonus() {
-		return Triple.of(Attributes.MOVEMENT_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.02D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getLeggingsBonus() {
-		return Triple.of(Attributes.MOVEMENT_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getBootsBonus() {
-		return Triple.of(Attributes.MOVEMENT_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.MOVEMENT_SPEED, 0.025D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
