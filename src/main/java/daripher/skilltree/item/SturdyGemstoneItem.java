@@ -44,6 +44,6 @@ public class SturdyGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getBowBonus() {
-		return Triple.of(SkillTreeAttributes.ARROW_ARMOR_REDUCTION_MULTIPLIER.get(), 0.025D, Operation.MULTIPLY_BASE);
+		return Triple.of(SkillTreeAttributes.ARROW_DAMAGE_BONUS.get(), 0.5D, Operation.ADDITION);
 	}
 }
