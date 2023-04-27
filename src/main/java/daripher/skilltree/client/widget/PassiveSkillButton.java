@@ -7,6 +7,7 @@ import java.util.List;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.gui.components.Button;
@@ -14,13 +15,16 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class PassiveSkillButton extends Button {
-	private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xCF905D).withBold(true);
-	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0xB475CF).withBold(true);
-	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withBold(true);
-	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7272D6);
+	private static final ResourceLocation TITLE_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_title");
+	private static final ResourceLocation DESCRIPTION_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_description");
+	private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169).withFont(TITLE_FONT);
+	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0xD28AF2).withFont(TITLE_FONT);
+	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withFont(TITLE_FONT);
+	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5).withFont(DESCRIPTION_FONT);
 	private final SkillTreeScreen parentScreen;
 	public final PassiveSkill passiveSkill;
 	public boolean isSkillLearned;
