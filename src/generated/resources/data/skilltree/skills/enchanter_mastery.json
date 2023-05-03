@@ -1,16 +1,18 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.applied_enchantments_amplification_chance",
-    "bonus": 1.0,
-    "operation": "addition",
-    "unique_id": "f9cea746-7509-47f3-a8bf-27fedfd03deb"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.enchantments_amplification_chance",
+      "operation": "addition",
+      "unique_id": "c5b776f0-6640-4f26-bcad-e7f6807e1cdc"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/enchanter_mastery.png",
   "position": {
-    "x": -12,
-    "y": -138
+    "x": 15,
+    "y": -28
   },
   "tree": "skilltree:tree"
 }

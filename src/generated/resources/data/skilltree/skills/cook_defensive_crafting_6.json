@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.cooked_food_life_regeneration_per_restoration",
+      "operation": "addition",
+      "unique_id": "4dbd89a4-6389-482a-bdfb-79c28557d563"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_crafting_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_defensive_crafting.png",
+  "position": {
+    "x": 19,
+    "y": -77
+  },
+  "tree": "skilltree:tree"
+}

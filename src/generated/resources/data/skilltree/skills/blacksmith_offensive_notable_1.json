@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.75,
+      "attribute": "skilltree:player.crit_damage_with_shield_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "795fca5e-becb-47ca-9cfc-c1d4a489461f"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:blacksmith_lesser_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_notable.png",
+  "position": {
+    "x": -214,
+    "y": -39
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,16 +1,18 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.cooked_food_damage_per_restoration_bonus",
-    "bonus": 0.05,
-    "operation": "addition",
-    "unique_id": "f144c280-034f-4038-b098-bae52a4dec0b"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.cooked_food_healing_per_restoration_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "16bb9066-c79f-4011-91f4-cfdf8cb231c1"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/cook_mastery.png",
   "position": {
-    "x": 96,
-    "y": 51
+    "x": -12,
+    "y": -42
   },
   "tree": "skilltree:tree"
 }

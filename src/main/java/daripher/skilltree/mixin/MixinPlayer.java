@@ -3,9 +3,6 @@ package daripher.skilltree.mixin;
 import java.lang.reflect.InvocationTargetException;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.init.SkillTreeAttributes;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +10,6 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
@@ -22,20 +18,6 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 public abstract class MixinPlayer extends LivingEntity {
 	protected MixinPlayer() {
 		super(null, null);
-	}
-
-	@Inject(method = "onEnchantmentPerformed", at = @At("TAIL"))
-	public void enchantItemForFree(ItemStack itemStack, int cost, CallbackInfo callbackInfo) {
-		var player = (Player) (Object) this;
-		var freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get());
-
-		if (freeEnchantmentChance == 0) {
-			return;
-		}
-
-		if (player.getRandom().nextFloat() < freeEnchantmentChance) {
-			player.giveExperienceLevels(cost);
-		}
 	}
 
 	@Override
@@ -66,7 +48,7 @@ public abstract class MixinPlayer extends LivingEntity {
 				var droppedExp = ExperienceOrb.getExperienceValue(expReward);
 				expReward -= droppedExp;
 				var tryMergeToExistingMethod = ObfuscationReflectionHelper.findMethod(ExperienceOrb.class, "m_147096_", ServerLevel.class, Vec3.class, int.class);
-				boolean tryMergeToExisting = false;
+				var tryMergeToExisting = false;
 
 				try {
 					tryMergeToExisting = (boolean) tryMergeToExistingMethod.invoke(null, level, position(), droppedExp);

@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.3,
+      "attribute": "skilltree:player.crit_chance_against_poisoned_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "3d2829c5-2305-4d51-bcfe-5f4c5c79e8b4"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:alchemist_lesser_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_offensive_notable.png",
+  "position": {
+    "x": 67,
+    "y": 181
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.04,
+      "attribute": "skilltree:player.crafted_bows_charge_speed_bonus",
+      "operation": "addition",
+      "unique_id": "37d28357-4984-4f60-8a51-73100b60fde9"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_offensive_crafting_3",
+    "skilltree:enchanter_defensive_crafting_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting.png",
+  "position": {
+    "x": 107,
+    "y": 4
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_life_per_gemstone_in_armor_bonus",
+      "operation": "addition",
+      "unique_id": "f3a64633-e40d-46d7-a9ec-dd48590af112"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:alchemist_lesser_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_life_notable.png",
+  "position": {
+    "x": -148,
+    "y": 229
+  },
+  "tree": "skilltree:tree"
+}

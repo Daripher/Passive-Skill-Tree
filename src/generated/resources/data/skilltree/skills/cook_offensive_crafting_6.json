@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.cooked_food_damage_per_restoration_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "c9c142e6-eae3-4317-a4d5-121f2ab7434e"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_crafting_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_offensive_crafting.png",
+  "position": {
+    "x": -35,
+    "y": -77
+  },
+  "tree": "skilltree:tree"
+}

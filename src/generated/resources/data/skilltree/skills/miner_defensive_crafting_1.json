@@ -1,0 +1,23 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.gemstones_strength_in_armor_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "287881f4-344c-4690-a8c5-b40a3e367fb8"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_defensive_crafting_2",
+    "skilltree:miner_defensive_combat_1",
+    "skilltree:miner_defensive_crafting_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_defensive_crafting.png",
+  "position": {
+    "x": -101,
+    "y": 14
+  },
+  "tree": "skilltree:tree"
+}

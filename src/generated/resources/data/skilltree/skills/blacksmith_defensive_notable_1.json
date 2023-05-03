@@ -1,0 +1,27 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "minecraft:generic.armor",
+      "operation": "addition",
+      "unique_id": "60b09898-df85-470d-919f-20193ea6c47c"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "minecraft:generic.armor",
+      "operation": "multiply_total",
+      "unique_id": "e5076de7-a4ae-465e-a0c6-72fff0ef2545"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:blacksmith_lesser_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_notable.png",
+  "position": {
+    "x": -137,
+    "y": -172
+  },
+  "tree": "skilltree:tree"
+}

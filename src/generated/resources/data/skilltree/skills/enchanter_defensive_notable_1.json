@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 10.0,
+      "attribute": "skilltree:player.armor_with_enchanted_shield",
+      "operation": "addition",
+      "unique_id": "ed5e3791-e261-486b-bd16-ed35f29ebb0b"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:enchanter_lesser_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_notable.png",
+  "position": {
+    "x": 194,
+    "y": -39
+  },
+  "tree": "skilltree:tree"
+}

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -25,20 +26,17 @@ public class PassiveSkill {
 	private @Nullable ResourceLocation connectedTreeId;
 	private final int buttonSize;
 	private final boolean isStartingPoint;
-	private final @Nullable Triple<Attribute, Double, Operation> attributeBonus;
-	private @Nullable UUID uniqueId = null;
+	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
 	private int positionX, positionY;
 
-	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, boolean isStartingPoint,
-			@Nullable Triple<Attribute, Double, Operation> attributeBonus) {
+	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, boolean isStartingPoint) {
 		this.id = id;
 		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
 		this.iconTexture = iconTexture;
 		this.buttonSize = buttonSize;
 		this.isStartingPoint = isStartingPoint;
-		this.attributeBonus = attributeBonus;
 	}
 
 	public ResourceLocation getId() {
@@ -73,12 +71,12 @@ public class PassiveSkill {
 		return isStartingPoint;
 	}
 
-	public @Nullable Triple<Attribute, Double, Operation> getAttributeBonus() {
-		return attributeBonus;
+	public List<Pair<Attribute, AttributeModifier>> getAttributeModifiers() {
+		return attributeModifiers;
 	}
 
-	public UUID getUniqueId() {
-		return uniqueId;
+	public void addAttributeBonus(Attribute attribute, AttributeModifier modifier) {
+		attributeModifiers.add(Pair.of(attribute, modifier));
 	}
 
 	public void connect(PassiveSkill otherSkill) {
@@ -117,15 +115,20 @@ public class PassiveSkill {
 			jsonObject.addProperty("starting_point", true);
 		}
 
-		if (getAttributeBonus() != null) {
-			var attributeBonusJsonObject = new JsonObject();
-			var attributeId = ForgeRegistries.ATTRIBUTES.getKey(getAttributeBonus().getLeft()).toString();
-			attributeBonusJsonObject.addProperty("attribute", attributeId);
-			attributeBonusJsonObject.addProperty("bonus", getAttributeBonus().getMiddle());
-			attributeBonusJsonObject.addProperty("operation", getAttributeBonus().getRight().name().toLowerCase());
-			var modifierId = uniqueId == null ? UUID.randomUUID() : uniqueId;
-			attributeBonusJsonObject.addProperty("unique_id", modifierId.toString());
-			jsonObject.add("attribute_bonus", attributeBonusJsonObject);
+		if (!getAttributeModifiers().isEmpty()) {
+			var modifiersJsonArray = new JsonArray();
+			getAttributeModifiers().forEach(pair -> {
+				var attribute = pair.getLeft();
+				var modifier = pair.getRight();
+				var modifierJsonObject = new JsonObject();
+				var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
+				modifierJsonObject.addProperty("attribute", attributeId);
+				modifierJsonObject.addProperty("amount", modifier.getAmount());
+				modifierJsonObject.addProperty("operation", modifier.getOperation().name().toLowerCase());
+				modifierJsonObject.addProperty("unique_id", modifier.getId().toString());
+				modifiersJsonArray.add(modifierJsonObject);
+			});
+			jsonObject.add("attribute_modifiers", modifiersJsonArray);
 		}
 
 		var positionJsonObject = new JsonObject();
@@ -151,25 +154,22 @@ public class PassiveSkill {
 		var iconTexture = new ResourceLocation(jsonObject.get("icon_texture").getAsString());
 		var connectedTreeId = jsonObject.has("connected_tree") ? new ResourceLocation(jsonObject.get("connected_tree").getAsString()) : null;
 		var isStartingPoint = jsonObject.has("starting_point");
-		Triple<Attribute, Double, Operation> attributeBonus = null;
-		var hasAttributeBonus = jsonObject.has("attribute_bonus");
-
-		if (hasAttributeBonus) {
-			var attributeBonusJsonObject = jsonObject.get("attribute_bonus").getAsJsonObject();
-			var attributeId = new ResourceLocation(attributeBonusJsonObject.get("attribute").getAsString());
-			var attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeId);
-			var bonus = attributeBonusJsonObject.get("bonus").getAsDouble();
-			var operation = Operation.valueOf(attributeBonusJsonObject.get("operation").getAsString().toUpperCase());
-			attributeBonus = Triple.of(attribute, bonus, operation);
-		}
-
-		var passiveSkill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint, attributeBonus);
+		var passiveSkill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
 		passiveSkill.connectedTreeId = connectedTreeId;
 
-		if (hasAttributeBonus) {
-			var attributeBonusJsonObject = jsonObject.get("attribute_bonus").getAsJsonObject();
-			var uniqueIdString = attributeBonusJsonObject.get("unique_id").getAsString();
-			passiveSkill.uniqueId = UUID.fromString(uniqueIdString);
+		if (jsonObject.has("attribute_modifiers")) {
+			var modifiersJsonArray = jsonObject.get("attribute_modifiers").getAsJsonArray();
+			modifiersJsonArray.forEach(modifierJsonElement -> {
+				var modifierJsonObject = (JsonObject) modifierJsonElement;
+				var attributeId = new ResourceLocation(modifierJsonObject.get("attribute").getAsString());
+				var attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeId);
+				var amount = modifierJsonObject.get("amount").getAsDouble();
+				var operation = Operation.valueOf(modifierJsonObject.get("operation").getAsString().toUpperCase());
+				var uniqueIdString = modifierJsonObject.get("unique_id").getAsString();
+				var uniqueId = UUID.fromString(uniqueIdString);
+				var modifier = new AttributeModifier(uniqueId, "Passive Skill Bonus", amount, operation);
+				passiveSkill.addAttributeBonus(attribute, modifier);
+			});
 		}
 
 		var positionJsonObject = jsonObject.get("position").getAsJsonObject();
@@ -217,7 +217,7 @@ public class PassiveSkill {
 		var isStartingPoint = buf.readBoolean();
 		var positionX = buf.readInt();
 		var positionY = buf.readInt();
-		var passiveSkill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint, null);
+		var passiveSkill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
 		passiveSkill.setPosition(positionX, positionY);
 		var connectionsCount = buf.readInt();
 

@@ -1,16 +1,18 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.brewed_potions_amplification_chance",
-    "bonus": 1.0,
-    "operation": "addition",
-    "unique_id": "e05dc05f-aa31-4f50-8679-34c453293531"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.brewed_potions_strength_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "b025abaf-59e1-4000-a07d-a34f3c38ca66"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/alchemist_mastery.png",
   "position": {
-    "x": 97,
-    "y": -74
+    "x": -12,
+    "y": 18
   },
   "tree": "skilltree:tree"
 }

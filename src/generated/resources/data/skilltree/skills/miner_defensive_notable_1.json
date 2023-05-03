@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:player.armor_per_gemstone_in_helmet_bonus",
+      "operation": "addition",
+      "unique_id": "6eeb8e2c-1f04-491a-9a64-a8d7f532deea"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:miner_lesser_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_defensive_notable.png",
+  "position": {
+    "x": -214,
+    "y": 19
+  },
+  "tree": "skilltree:tree"
+}

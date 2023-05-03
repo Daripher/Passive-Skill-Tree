@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:player.damage_with_shield_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "b5b4a939-e6c1-413d-923c-478359e8d150"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.armor_with_shield_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "b2c19875-003e-4dca-9ec5-5f5023ae347e"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/blacksmith_mixed_notable.png",
+  "position": {
+    "x": -184,
+    "y": -110
+  },
+  "tree": "skilltree:tree"
+}

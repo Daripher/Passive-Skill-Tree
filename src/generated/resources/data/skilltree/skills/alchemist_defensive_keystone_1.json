@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:player.maximum_life_per_potion_effect",
+      "operation": "addition",
+      "unique_id": "8d425b5d-652f-45da-b899-434fbc244026"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/alchemist_defensive_keystone.png",
+  "position": {
+    "x": -11,
+    "y": 256
+  },
+  "tree": "skilltree:tree"
+}

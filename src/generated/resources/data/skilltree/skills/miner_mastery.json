@@ -1,16 +1,18 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.gemstone_finding_chance",
-    "bonus": 0.1,
-    "operation": "addition",
-    "unique_id": "a3c558d6-bfab-48ec-bc98-c359de302e06"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_gemstone_slots_bonus",
+      "operation": "addition",
+      "unique_id": "46eed171-7bb3-45bc-858f-982775d5456a"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/miner_mastery.png",
   "position": {
-    "x": -121,
-    "y": 50
+    "x": -39,
+    "y": 4
   },
   "tree": "skilltree:tree"
 }

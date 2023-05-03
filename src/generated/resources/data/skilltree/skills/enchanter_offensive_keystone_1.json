@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_per_weapon_enchantment_level_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "e36401dd-b771-4a4e-b4ea-daebb0c4ae72"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_keystone.png",
+  "position": {
+    "x": 102,
+    "y": -78
+  },
+  "tree": "skilltree:tree"
+}

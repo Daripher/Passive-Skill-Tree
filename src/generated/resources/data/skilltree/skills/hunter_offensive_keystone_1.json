@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.03,
+      "attribute": "skilltree:player.arrow_damage_per_distance_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "2f3bbaa9-212b-4d43-8868-2c2787f25b0c"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/hunter_offensive_keystone.png",
+  "position": {
+    "x": 103,
+    "y": 54
+  },
+  "tree": "skilltree:tree"
+}

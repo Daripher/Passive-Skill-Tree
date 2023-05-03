@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.25,
+      "attribute": "skilltree:player.crafted_weapon_attack_speed_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "039bee16-1d12-42aa-a854-abcc2e2db8f3"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/blacksmith_crafting_notable.png",
+  "position": {
+    "x": -36,
+    "y": -56
+  },
+  "tree": "skilltree:tree"
+}

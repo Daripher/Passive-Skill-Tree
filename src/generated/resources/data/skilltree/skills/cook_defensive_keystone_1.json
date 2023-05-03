@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_life_per_satisfied_hunger",
+      "operation": "addition",
+      "unique_id": "1e0bd298-103d-4dab-bc5e-c8e13a03226d"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/cook_defensive_keystone.png",
+  "position": {
+    "x": -12,
+    "y": -280
+  },
+  "tree": "skilltree:tree"
+}

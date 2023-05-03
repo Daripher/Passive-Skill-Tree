@@ -7,6 +7,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncSkillsMessage;
+import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +26,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.network.PacketDistributor;
@@ -92,24 +94,25 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
 		if (!(event.getEntity() instanceof Player)) {
 			return;
 		}
-		var player = (Player) event.getEntity();
-		if (!event.getEntity().level.isClientSide) {
-			get(player).getPlayerSkills().forEach(passiveSkill -> {
-				passiveSkill.getAttributeModifiers().forEach(pair -> {
-					var attribute = pair.getLeft();
-					var modifier = pair.getRight();
-					var playerAttribute = player.getAttribute(attribute);
-					if (!playerAttribute.hasModifier(modifier)) {
-						playerAttribute.addTransientModifier(modifier);
-					}
-				});
-			});
+		if (event.getEntity().level.isClientSide) {
+			return;
 		}
+		var player = (Player) event.getEntity();
+		get(player).getPlayerSkills().stream().map(PassiveSkill::getAttributeModifiers).forEach(attributeAndModifierList -> {
+			attributeAndModifierList.forEach(attributeAndModifier -> {
+				var attribute = attributeAndModifier.getLeft();
+				var modifier = attributeAndModifier.getRight();
+				var playerAttribute = player.getAttribute(attribute);
+				if (!playerAttribute.hasModifier(modifier)) {
+					playerAttribute.addTransientModifier(modifier);
+				}
+			});
+		});
 	}
 
 	@SubscribeEvent

@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.block_chance_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "0d772e08-6b16-484c-bbcf-7da01a225d21"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_defensive_combat_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_defensive_combat_1.png",
+  "position": {
+    "x": 43,
+    "y": -208
+  },
+  "tree": "skilltree:tree"
+}

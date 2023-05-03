@@ -1,0 +1,23 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.crafted_armor_defence_bonus",
+      "operation": "multiply_base",
+      "unique_id": "49f636e6-3653-4933-b06e-72f3b967d77b"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_defensive_crafting_2",
+    "skilltree:blacksmith_defensive_combat_1",
+    "skilltree:blacksmith_defensive_crafting_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting.png",
+  "position": {
+    "x": -74,
+    "y": -77
+  },
+  "tree": "skilltree:tree"
+}

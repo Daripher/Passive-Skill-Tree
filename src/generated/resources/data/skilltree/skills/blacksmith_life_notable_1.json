@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_life_per_boots_armor_bonus",
+      "operation": "addition",
+      "unique_id": "0a5477cf-26c0-4f95-9759-d141388a26c1"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:miner_lesser_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_life_notable.png",
+  "position": {
+    "x": -285,
+    "y": -10
+  },
+  "tree": "skilltree:tree"
+}

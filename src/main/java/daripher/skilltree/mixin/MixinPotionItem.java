@@ -16,9 +16,7 @@ public class MixinPotionItem extends Item {
 
 	@Override
 	public Component getName(ItemStack itemStack) {
-		if (PotionHelper.isCombinedPotion(itemStack)) {
-			return Component.translatable("potion.combined");
-		} else if (PotionHelper.isSuperiorPotion(itemStack)) {
+		if (PotionHelper.isSuperiorPotion(itemStack)) {
 			var actualPotionStack = PotionHelper.getActualPotionStack(itemStack);
 			var actualPotionName = super.getName(actualPotionStack);
 			return Component.translatable("potion.superior").append(actualPotionName);

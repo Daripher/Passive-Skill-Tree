@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:player.maximum_life_per_armor_bonus",
+      "operation": "addition",
+      "unique_id": "7d018ee0-5168-4db4-8d32-97f2536eb271"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_keystone.png",
+  "position": {
+    "x": -244,
+    "y": -146
+  },
+  "tree": "skilltree:tree"
+}

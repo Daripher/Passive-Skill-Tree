@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_per_potion_effect_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "80979c00-3b12-4fc3-9774-20254fc99b4d"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/alchemist_offensive_keystone.png",
+  "position": {
+    "x": -11,
+    "y": 120
+  },
+  "tree": "skilltree:tree"
+}

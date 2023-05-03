@@ -12,10 +12,8 @@ public class ModDataGenerator {
 	public static void onGatherData(GatherDataEvent event) {
 		var dataGenerator = event.getGenerator();
 		var existingFileHelper = event.getExistingFileHelper();
-
 		dataGenerator.addProvider(event.includeClient(), new ModUsTranslationProvider(dataGenerator));
 		dataGenerator.addProvider(event.includeClient(), new ModItemModelsProvider(dataGenerator, existingFileHelper));
-
 		var blockTagsProvider = new ModBlockTagsProvider(dataGenerator, existingFileHelper);
 		dataGenerator.addProvider(event.includeServer(), blockTagsProvider);
 		dataGenerator.addProvider(event.includeServer(), new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));

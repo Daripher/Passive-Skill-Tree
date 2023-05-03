@@ -9,7 +9,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class LightGemstoneItem extends GemstoneItem {
 	public LightGemstoneItem() {
-		super(0xE2E2CE);
+		super(0xD0D0BC);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class LightGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getShieldBonus() {
-		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override

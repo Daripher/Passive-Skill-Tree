@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": -0.05,
+      "attribute": "skilltree:player.enchantment_level_requirement_decrease",
+      "operation": "multiply_base",
+      "unique_id": "3d1af338-8709-4309-a3c4-14c0ff6c497b"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_mastery"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_lesser.png",
+  "position": {
+    "x": 42,
+    "y": -37
+  },
+  "tree": "skilltree:tree"
+}

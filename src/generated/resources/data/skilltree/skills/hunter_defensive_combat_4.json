@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.evasion_chance_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "afc3ffa6-c225-40c5-ab7b-a08a1c2935b9"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_defensive_notable_1",
+    "skilltree:hunter_defensive_combat_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_1.png",
+  "position": {
+    "x": 117,
+    "y": 130
+  },
+  "tree": "skilltree:tree"
+}

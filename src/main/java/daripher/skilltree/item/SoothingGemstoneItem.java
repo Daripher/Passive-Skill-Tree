@@ -9,12 +9,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class SoothingGemstoneItem extends GemstoneItem {
 	public SoothingGemstoneItem() {
-		super(0xA9DA80);
+		super(0xB4E58B);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getHelmetBonus() {
-		return Triple.of(SkillTreeAttributes.HEALTH_REGENERATION_BONUS.get(), 0.5D, Operation.ADDITION);
+		return Triple.of(SkillTreeAttributes.LIFE_REGENERATION_BONUS.get(), 0.5D, Operation.ADDITION);
 	}
 
 	@Override
@@ -34,16 +34,16 @@ public class SoothingGemstoneItem extends GemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getWeaponBonus() {
-		return Triple.of(SkillTreeAttributes.HEALING_PER_HIT.get(), 1D, Operation.ADDITION);
+		return Triple.of(SkillTreeAttributes.LIFE_PER_HIT.get(), 1D, Operation.ADDITION);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getShieldBonus() {
-		return Triple.of(SkillTreeAttributes.HEALTH_REGENERATION_BONUS.get(), 0.5D, Operation.ADDITION);
+		return Triple.of(SkillTreeAttributes.LIFE_ON_BLOCK.get(), 1D, Operation.ADDITION);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getBowBonus() {
-		return Triple.of(SkillTreeAttributes.HEALING_PER_HIT.get(), 1D, Operation.ADDITION);
+		return Triple.of(SkillTreeAttributes.LIFE_PER_HIT.get(), 1D, Operation.ADDITION);
 	}
 }

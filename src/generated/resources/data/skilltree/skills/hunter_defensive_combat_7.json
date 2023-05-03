@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.02,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "multiply_base",
+      "unique_id": "e90531b7-5bf3-4347-a2bd-eb89b7a7ebd3"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_defensive_combat_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_2.png",
+  "position": {
+    "x": 133,
+    "y": 104
+  },
+  "tree": "skilltree:tree"
+}

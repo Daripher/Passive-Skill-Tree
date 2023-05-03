@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.02,
+      "attribute": "skilltree:player.block_chance_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "a842600e-f77d-419a-b336-edeb7a29b92e"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_defensive_combat_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_combat_1.png",
+  "position": {
+    "x": -156,
+    "y": -152
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_with_shield_multiplier",
+      "operation": "addition",
+      "unique_id": "0455f788-3648-4236-8916-2b46176d6be8"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_offensive_notable_1",
+    "skilltree:blacksmith_offensive_combat_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_combat_1.png",
+  "position": {
+    "x": -190,
+    "y": -47
+  },
+  "tree": "skilltree:tree"
+}

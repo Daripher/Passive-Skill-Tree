@@ -37,7 +37,17 @@ public class LearnSkillMessage {
 		var player = ctx.getSender();
 		var skillsData = PlayerSkillsProvider.get(player);
 		var passiveSkill = SkillsDataReloader.getSkillById(message.skillId);
-		skillsData.learnSkill(player, passiveSkill);
+		var learnedSkill = skillsData.learnSkill(player, passiveSkill);
+		if (learnedSkill) {
+			passiveSkill.getAttributeModifiers().forEach(pair -> {
+				var attribute = pair.getLeft();
+				var modifier = pair.getRight();
+				var playerAttribute = player.getAttribute(attribute);
+				if (!playerAttribute.hasModifier(modifier)) {
+					playerAttribute.addTransientModifier(modifier);
+				}
+			});
+		}
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 	}
 }

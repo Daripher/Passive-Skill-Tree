@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.damage_per_enchantment_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "a4317521-fbaf-4af1-8ea9-dae246570bbb"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_offensive_combat_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_combat_1.png",
+  "position": {
+    "x": 105,
+    "y": -125
+  },
+  "tree": "skilltree:tree"
+}

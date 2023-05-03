@@ -113,6 +113,7 @@ dependencies {
 	//implementation fg.deobf("curse.maven:iceberg-520110:4300529")
 	//implementation fg.deobf("curse.maven:legendary-tooltips-532127:4278509")
 	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
+	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
 }
 
 jar {

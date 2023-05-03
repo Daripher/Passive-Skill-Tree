@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_damage_multiplier_per_satisfied_hunger",
+      "operation": "multiply_base",
+      "unique_id": "fa035425-0f1d-4e55-b2e6-c50449b91ae4"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/cook_offensive_keystone.png",
+  "position": {
+    "x": -13,
+    "y": -144
+  },
+  "tree": "skilltree:tree"
+}

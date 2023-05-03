@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import daripher.skilltree.init.SkillTreeAttributes;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
@@ -16,16 +15,29 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionHelper {
-	private static final String COMBINED_POTION_TAG = "Combined";
 	private static final String CUSTOM_POTION_COLOR_TAG = "CustomPotionColor";
 	private static final String ACTUAL_POTION_TAG = "ActualPotion";
 
-	public static float getPlayerPotionAmplificationChance(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_AMPLIFICATION_CHANCE.get());
+	public static boolean isHarmfulPotion(ItemStack itemStack) {
+		var potion = PotionUtils.getPotion(itemStack);
+		var effects = potion.getEffects();
+		for (var effect : effects) {
+			if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public static float getPlayerPotionDurationBonus(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get());
+	public static boolean isBeneficialPotion(ItemStack itemStack) {
+		var potion = PotionUtils.getPotion(itemStack);
+		var effects = potion.getEffects();
+		for (var effect : effects) {
+			if (effect.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static void setPotionColor(ItemStack itemStack, int color) {
@@ -79,61 +91,8 @@ public class PotionHelper {
 		return itemStack.hasTag() && itemStack.getTag().contains(ACTUAL_POTION_TAG);
 	}
 
-	public static boolean isCombinedPotion(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(COMBINED_POTION_TAG);
-	}
-
 	public static boolean isPotion(ItemStack itemStack) {
 		return itemStack.getItem() instanceof PotionItem;
-	}
-
-	public static boolean canCombinePotion(ItemStack itemStack) {
-		if (!PotionHelper.isPotion(itemStack)) {
-			return false;
-		}
-
-		var effects = PotionUtils.getAllEffects(itemStack.getTag());
-
-		if (effects.isEmpty()) {
-			return false;
-		}
-
-		var combined = isCombinedPotion(itemStack);
-
-		if (combined) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public static boolean canCombinePotions(ItemStack input, ItemStack ingredient) {
-		if (!canCombinePotion(input) || !canCombinePotion(ingredient)) {
-			return false;
-		}
-
-		if (PotionHelper.getActualPotion(input) == PotionHelper.getActualPotion(ingredient)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public static ItemStack combinePotions(ItemStack potionStack1, ItemStack potionStack2) {
-		var result = new ItemStack(Items.POTION);
-		var effects = combineEffects(potionStack1, potionStack2);
-		PotionUtils.setCustomEffects(result, effects);
-		result.getTag().putBoolean(COMBINED_POTION_TAG, true);
-		var potionColor = PotionUtils.getColor(effects);
-		PotionHelper.setPotionColor(result, potionColor);
-		return result;
-	}
-
-	public static List<MobEffectInstance> combineEffects(ItemStack potionStack1, ItemStack potionStack2) {
-		var effects = new ArrayList<MobEffectInstance>();
-		effects.addAll(PotionUtils.getAllEffects(potionStack1.getTag()));
-		effects.addAll(PotionUtils.getAllEffects(potionStack2.getTag()));
-		return effects;
 	}
 
 	public static void enhancePotion(ItemStack itemStack, float amplificationChance, float durationBonus) {

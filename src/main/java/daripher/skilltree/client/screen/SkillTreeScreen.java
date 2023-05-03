@@ -60,6 +60,8 @@ public class SkillTreeScreen extends Screen {
 		connections.clear();
 		skillButtons.clear();
 		addSkillButtons();
+		maxScrollX -= width / 2 - 80;
+		maxScrollY -= height / 2 - 80;
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
 	}
@@ -99,7 +101,9 @@ public class SkillTreeScreen extends Screen {
 	public void addSkillConnections() {
 		SkillTreeClientData.getSkillsForTree(skillTreeId).forEach((skillId, skill) -> {
 			skill.getConnectedSkills().forEach(connectedSkillId -> {
-				connections.add(Pair.of(skillButtons.get(skillId), skillButtons.get(connectedSkillId)));
+				var skillButton = skillButtons.get(skillId);
+				var connectedSkillButton = skillButtons.get(connectedSkillId);
+				connections.add(Pair.of(skillButton, connectedSkillButton));
 			});
 		});
 	}
@@ -114,7 +118,7 @@ public class SkillTreeScreen extends Screen {
 			return;
 		}
 
-		if (learnedSkills.size() >= Config.COMMON_CONFIG.maximumSkillPoints.get()) {
+		if (learnedSkills.size() >= Config.COMMON_CONFIG.getMaximumSkillPoints()) {
 			return;
 		}
 

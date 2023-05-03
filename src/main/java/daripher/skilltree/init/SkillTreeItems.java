@@ -13,4 +13,6 @@ public class SkillTreeItems {
 	public static final RegistryObject<Item> SOOTHING_GEMSTONE = REGISTRY.register("soothing_gemstone", SoothingGemstoneItem::new);
 	public static final RegistryObject<Item> STURDY_GEMSTONE = REGISTRY.register("sturdy_gemstone", SturdyGemstoneItem::new);
 	public static final RegistryObject<Item> LIGHT_GEMSTONE = REGISTRY.register("light_gemstone", LightGemstoneItem::new);
+	public static final RegistryObject<Item> VOID_GEMSTONE = REGISTRY.register("void_gemstone", VoidGemstoneItem::new);
+	public static final RegistryObject<Item> RAINBOW_GEMSTONE = REGISTRY.register("rainbow_gemstone", RainbowGemstoneItem::new);
 }

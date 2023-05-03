@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.armor_enchantments_amplification_chance",
+      "operation": "addition",
+      "unique_id": "6341560e-4328-4190-8b04-bcb9a6ab5d59"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_defensive_crafting_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting.png",
+  "position": {
+    "x": 131,
+    "y": -20
+  },
+  "tree": "skilltree:tree"
+}

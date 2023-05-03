@@ -3,10 +3,9 @@ package daripher.skilltree.datagen;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Triple;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
@@ -17,10 +16,13 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 
 public class ModSkillsProvider implements DataProvider {
 	private Map<ResourceLocation, PassiveSkill> data = new HashMap<>();
+	private String[] playerClasses = new String[] { "alchemist", "hunter", "enchanter", "cook", "blacksmith", "miner" };
 	private DataGenerator dataGenerator;
 
 	public ModSkillsProvider(DataGenerator dataGenerator) {
@@ -28,187 +30,230 @@ public class ModSkillsProvider implements DataProvider {
 	}
 
 	private void addSkills() {
-		addSkill("enchanter_class", "enchanter_class", 24, SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE.get(), 0.5D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_1", "enchanter_lesser_left_lower", 16, SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_2", "enchanter_lesser_left_lower", 16, SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.3D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_3", "enchanter_lesser_left_lower", 16, SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_1", "enchanter_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_PER_ENCHANTED_ITEM.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_2", "enchanter_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_PER_ENCHANTED_ITEM.get(), 0.05D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_3", "enchanter_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_PER_ENCHANTED_ITEM.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_mastery", "enchanter_mastery", 24, SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 1D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_4", "enchanter_lesser_left_upper", 16, SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_5", "enchanter_lesser_left_upper", 16, SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_6", "enchanter_lesser_left_upper", 16, SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_7", "enchanter_lesser_left_upper", 16, SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_lesser_left_8", "enchanter_lesser_left_upper", 16, SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("enchanter_notable_left", "enchanter_notable_left", 20, SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.55D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_4", "enchanter_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ENCHANTED_ITEM.get(), 0.01D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_5", "enchanter_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ENCHANTED_ITEM.get(), 0.01D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_6", "enchanter_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ENCHANTED_ITEM.get(), 0.01D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_7", "enchanter_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ENCHANTED_ITEM.get(), 0.01D, Operation.ADDITION);
-		addSkill("enchanter_lesser_right_8", "enchanter_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ENCHANTED_ITEM.get(), 0.01D, Operation.ADDITION);
-		addSkill("enchanter_notable_right", "enchanter_notable_right", 20, SkillTreeAttributes.CRIT_DAMAGE_BONUS_PER_ENCHANTED_ITEM.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_class", "alchemist_class", 24, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.5D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_1", "alchemist_lesser_left_lower", 16, SkillTreeAttributes.BREWED_POTIONS_AMPLIFICATION_CHANCE.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_2", "alchemist_lesser_left_lower", 16, SkillTreeAttributes.BREWED_POTIONS_AMPLIFICATION_CHANCE.get(), 0.15D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_3", "alchemist_lesser_left_lower", 16, SkillTreeAttributes.BREWED_POTIONS_AMPLIFICATION_CHANCE.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_1", "alchemist_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_UNDER_POTION_EFFECT.get(), 0.1D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_2", "alchemist_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_UNDER_POTION_EFFECT.get(), 0.25D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_3", "alchemist_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_UNDER_POTION_EFFECT.get(), 0.1D, Operation.ADDITION);
-		addSkill("alchemist_mastery", "alchemist_mastery", 24, SkillTreeAttributes.BREWED_POTIONS_AMPLIFICATION_CHANCE.get(), 1D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_4", "alchemist_lesser_left_upper", 16, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_5", "alchemist_lesser_left_upper", 16, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_6", "alchemist_lesser_left_upper", 16, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_7", "alchemist_lesser_left_upper", 16, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_left_8", "alchemist_lesser_left_upper", 16, SkillTreeAttributes.BREWED_POTIONS_DURATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_notable_left", "alchemist_notable_left", 20);
-		addSkill("alchemist_lesser_right_4", "alchemist_lesser_right_upper", 16, SkillTreeAttributes.DAMAGE_BONUS_AGAINST_POISONED.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_5", "alchemist_lesser_right_upper", 16, SkillTreeAttributes.DAMAGE_BONUS_AGAINST_POISONED.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_6", "alchemist_lesser_right_upper", 16, SkillTreeAttributes.DAMAGE_BONUS_AGAINST_POISONED.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_7", "alchemist_lesser_right_upper", 16, SkillTreeAttributes.DAMAGE_BONUS_AGAINST_POISONED.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_lesser_right_8", "alchemist_lesser_right_upper", 16, SkillTreeAttributes.DAMAGE_BONUS_AGAINST_POISONED.get(), 0.05D, Operation.ADDITION);
-		addSkill("alchemist_notable_right", "alchemist_notable_right", 20, SkillTreeAttributes.CRIT_CHANCE_BONUS_AGAINST_POISONED.get(), 0.5D, Operation.ADDITION);
-		addSkill("blacksmith_class", "blacksmith_class", 24, SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_BONUS.get(), 0.5D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_1", "blacksmith_lesser_left_lower", 16, SkillTreeAttributes.TOUGHER_ARMOR_CRAFTING_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_2", "blacksmith_lesser_left_lower", 16, SkillTreeAttributes.TOUGHER_ARMOR_CRAFTING_CHANCE.get(), 0.25D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_3", "blacksmith_lesser_left_lower", 16, SkillTreeAttributes.TOUGHER_ARMOR_CRAFTING_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_1", "blacksmith_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_SHIELD.get(), 0.1D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_2", "blacksmith_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_SHIELD.get(), 0.2D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_3", "blacksmith_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_SHIELD.get(), 0.1D, Operation.ADDITION);
-		addSkill("blacksmith_mastery", "blacksmith_mastery", 24, SkillTreeAttributes.TOUGHER_ARMOR_CRAFTING_CHANCE.get(), 1D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_4", "blacksmith_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_5", "blacksmith_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_6", "blacksmith_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_7", "blacksmith_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_left_8", "blacksmith_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("blacksmith_notable_left", "blacksmith_notable_left", 20, SkillTreeAttributes.CRAFTED_WEAPON_ATTACK_SPEED_BONUS.get(), 0.25D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_4", "blacksmith_lesser_right_upper", 16, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WITH_SHIELD.get(), 0.03D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_5", "blacksmith_lesser_right_upper", 16, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WITH_SHIELD.get(), 0.03D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_6", "blacksmith_lesser_right_upper", 16, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WITH_SHIELD.get(), 0.03D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_7", "blacksmith_lesser_right_upper", 16, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WITH_SHIELD.get(), 0.03D, Operation.ADDITION);
-		addSkill("blacksmith_lesser_right_8", "blacksmith_lesser_right_upper", 16, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WITH_SHIELD.get(), 0.03D, Operation.ADDITION);
-		addSkill("blacksmith_notable_right", "blacksmith_notable_right", 20, SkillTreeAttributes.CRIT_CHANCE_BONUS_PER_ARMOR_POINT.get(), 0.01D, Operation.ADDITION);
-		addSkill("miner_class", "miner_class", 24, SkillTreeAttributes.MINING_SPEED_BONUS.get(), 0.25D, Operation.ADDITION);
-		addSkill("miner_lesser_left_1", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.03D, Operation.ADDITION);
-		addSkill("miner_lesser_left_2", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.09D, Operation.ADDITION);
-		addSkill("miner_lesser_left_3", "miner_lesser_left_lower", 16, SkillTreeAttributes.MINERALS_DUPLICATION_CHANCE.get(), 0.03D, Operation.ADDITION);
-		addSkill("miner_lesser_right_1", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.25D, Operation.ADDITION);
-		addSkill("miner_lesser_right_2", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.5D, Operation.ADDITION);
-		addSkill("miner_lesser_right_3", "miner_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WITH_PICKAXE.get(), 0.25D, Operation.ADDITION);
-		addSkill("miner_mastery", "miner_mastery", 24, SkillTreeAttributes.GEMSTONE_FINDING_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("miner_lesser_left_4", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
-		addSkill("miner_lesser_left_5", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
-		addSkill("miner_lesser_left_6", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
-		addSkill("miner_lesser_left_7", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
-		addSkill("miner_lesser_left_8", "miner_lesser_left_upper", 16, SkillTreeAttributes.APPLIED_GEMSTONES_STRENGTH_BONUS.get(), 0.2D, Operation.ADDITION);
-		addSkill("miner_notable_left", "miner_notable_left", 20);
-		addSkill("miner_lesser_right_4", "miner_lesser_right_upper", 16, SkillTreeAttributes.ATTACK_SPEED_BONUS_WITH_PICKAXE.get(), 0.05D, Operation.ADDITION);
-		addSkill("miner_lesser_right_5", "miner_lesser_right_upper", 16, SkillTreeAttributes.ATTACK_SPEED_BONUS_WITH_PICKAXE.get(), 0.05D, Operation.ADDITION);
-		addSkill("miner_lesser_right_6", "miner_lesser_right_upper", 16, SkillTreeAttributes.ATTACK_SPEED_BONUS_WITH_PICKAXE.get(), 0.05D, Operation.ADDITION);
-		addSkill("miner_lesser_right_7", "miner_lesser_right_upper", 16, SkillTreeAttributes.ATTACK_SPEED_BONUS_WITH_PICKAXE.get(), 0.05D, Operation.ADDITION);
-		addSkill("miner_lesser_right_8", "miner_lesser_right_upper", 16, SkillTreeAttributes.ATTACK_SPEED_BONUS_WITH_PICKAXE.get(), 0.05D, Operation.ADDITION);
-		addSkill("miner_notable_right", "miner_notable_right", 20, SkillTreeAttributes.CHANCE_TO_IGNORE_ARMOR.get(), 0.3D, Operation.ADDITION);
-		addSkill("hunter_class", "hunter_class", 24, SkillTreeAttributes.LOOT_DUPLICATION_CHANCE.get(), 0.5D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_1", "hunter_lesser_left_lower", 16, SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_2", "hunter_lesser_left_lower", 16, SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED_BONUS.get(), 0.1D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_3", "hunter_lesser_left_lower", 16, SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_1", "hunter_lesser_right_lower", 16, SkillTreeAttributes.ARROW_CRIT_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_2", "hunter_lesser_right_lower", 16, SkillTreeAttributes.ARROW_CRIT_DAMAGE_BONUS.get(), 0.1D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_3", "hunter_lesser_right_lower", 16, SkillTreeAttributes.ARROW_CRIT_DAMAGE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("hunter_mastery", "hunter_mastery", 24, SkillTreeAttributes.CRAFTED_BOWS_ARMOR_REDUCTION.get(), 0.25D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_4", "hunter_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_BOWS_DAMAGE_BONUS.get(), 0.02D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_5", "hunter_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_BOWS_DAMAGE_BONUS.get(), 0.02D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_6", "hunter_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_BOWS_DAMAGE_BONUS.get(), 0.02D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_7", "hunter_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_BOWS_DAMAGE_BONUS.get(), 0.02D, Operation.ADDITION);
-		addSkill("hunter_lesser_left_8", "hunter_lesser_left_upper", 16, SkillTreeAttributes.CRAFTED_BOWS_DAMAGE_BONUS.get(), 0.02D, Operation.ADDITION);
-		addSkill("hunter_notable_left", "hunter_notable_left", 20, SkillTreeAttributes.CRAFTED_BOWS_DOUBLE_DAMAGE_CHANCE.get(), 0.1D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_4", "hunter_lesser_right_upper", 16, SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.03D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_5", "hunter_lesser_right_upper", 16, SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.03D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_6", "hunter_lesser_right_upper", 16, SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.03D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_7", "hunter_lesser_right_upper", 16, SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.03D, Operation.ADDITION);
-		addSkill("hunter_lesser_right_8", "hunter_lesser_right_upper", 16, SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.03D, Operation.ADDITION);
-		addSkill("hunter_notable_right", "hunter_notable_right", 20, SkillTreeAttributes.ARROW_DAMAGE_MULTIPLIER_PER_DISTANCE.get(), 0.02D, Operation.ADDITION);
-		addSkill("cook_class", "cook_class", 24, SkillTreeAttributes.COOKED_FOOD_RESTORATION_BONUS.get(), 0.5D, Operation.ADDITION);
-		addSkill("cook_lesser_left_1", "cook_lesser_left_lower", 16, SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION.get(), 0.15D, Operation.ADDITION);
-		addSkill("cook_lesser_left_2", "cook_lesser_left_lower", 16, SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION.get(), 0.2D, Operation.ADDITION);
-		addSkill("cook_lesser_left_3", "cook_lesser_left_lower", 16, SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION.get(), 0.15D, Operation.ADDITION);
-		addSkill("cook_lesser_right_1", "cook_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WHEN_FULL.get(), 0.15D, Operation.ADDITION);
-		addSkill("cook_lesser_right_2", "cook_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WHEN_FULL.get(), 0.25D, Operation.ADDITION);
-		addSkill("cook_lesser_right_3", "cook_lesser_right_lower", 16, SkillTreeAttributes.DAMAGE_BONUS_WHEN_FULL.get(), 0.15D, Operation.ADDITION);
-		addSkill("cook_mastery", "cook_mastery", 24, SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_RESTORATION_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_left_4", "cook_lesser_left_upper", 16, SkillTreeAttributes.COOKED_FOOD_CRIT_CHANCE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_left_5", "cook_lesser_left_upper", 16, SkillTreeAttributes.COOKED_FOOD_CRIT_CHANCE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_left_6", "cook_lesser_left_upper", 16, SkillTreeAttributes.COOKED_FOOD_CRIT_CHANCE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_left_7", "cook_lesser_left_upper", 16, SkillTreeAttributes.COOKED_FOOD_CRIT_CHANCE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_left_8", "cook_lesser_left_upper", 16, SkillTreeAttributes.COOKED_FOOD_CRIT_CHANCE_BONUS.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_notable_left", "cook_notable_left", 20, SkillTreeAttributes.COOKED_FOOD_ATTACK_SPEED_BONUS.get(), 0.3D, Operation.ADDITION);
-		addSkill("cook_lesser_right_4", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_right_5", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_right_6", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_right_7", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_lesser_right_8", "cook_lesser_right_upper", 16, SkillTreeAttributes.CRIT_CHANCE_BONUS_WHEN_FULL.get(), 0.05D, Operation.ADDITION);
-		addSkill("cook_notable_right", "cook_notable_right", 20, SkillTreeAttributes.CRIT_DAMAGE_BONUS_IF_ATE_RECENTLY.get(), 0.5D, Operation.ADDITION);
-//		
-//		addSkill("test", "test", 16);
-//		getSkill("test").setPosition(0, 0);
-//		getSkill("test").connect(getSkill("cook_class"));
-//		getSkill("test").setConnectedTree(new ResourceLocation("test", "test_tree"));
-//		
-//		// test code
-//		addTestSkill("test_skill_1", "test_icon_1", 16);
-//		addTestSkill("test_skill_2", "test_icon_2", 16);
-//		addTestSkill("test_skill_3", "test_icon_3", 16);
-//		addTestSkill("test_skill_4", "test_icon_4", 24);
-//		getTestSkill("test_skill_1").setPosition(0, 0);
-//		getTestSkill("test_skill_2").setPosition(0, 30);
-//		getTestSkill("test_skill_3").setPosition(0, 60);
-//		getTestSkill("test_skill_4").setPosition(0, 90);
-//		getTestSkill("test_skill_1").connect(getTestSkill("test_skill_2"));
-//		getTestSkill("test_skill_2").connect(getTestSkill("test_skill_3"));
-//		getTestSkill("test_skill_3").connect(getTestSkill("test_skill_4"));
+		for (var playerClass : playerClasses) {
+			addSkill(playerClass + "_class", playerClass + "_class", 24);
+			addSkillBranch(playerClass, "_defensive_crafting_", playerClass + "_defensive_crafting", 16, 1, 6);
+			addSkillBranch(playerClass, "_offensive_crafting_", playerClass + "_offensive_crafting", 16, 1, 6);
+			addSkillBranch(playerClass, "_defensive_combat_", playerClass + "_defensive_combat_1", 16, 1, 5);
+			addSkillBranch(playerClass, "_defensive_combat_", playerClass + "_defensive_combat_2", 16, 6, 10);
+			addSkillBranch(playerClass, "_offensive_combat_", playerClass + "_offensive_combat_1", 16, 1, 5);
+			addSkillBranch(playerClass, "_offensive_combat_", playerClass + "_offensive_combat_2", 16, 6, 10);
+			addSkill(playerClass + "_offensive_notable_1", playerClass + "_offensive_notable", 20);
+			addSkill(playerClass + "_defensive_notable_1", playerClass + "_defensive_notable", 20);
+			addSkill(playerClass + "_offensive_keystone_1", playerClass + "_offensive_keystone", 24);
+			addSkill(playerClass + "_defensive_keystone_1", playerClass + "_defensive_keystone", 24);
+			addSkill(playerClass + "_mixed_notable_1", playerClass + "_mixed_notable", 20);
+			addSkillBranch(playerClass, "_lesser_", playerClass + "_lesser", 16, 1, 5);
+			addSkill(playerClass + "_life_notable_1", playerClass + "_life_notable", 20);
+			addSkill(playerClass + "_crafting_notable_1", playerClass + "_crafting_notable", 20);
+			addSkill(playerClass + "_mastery", playerClass + "_mastery", 24);
+		}
 	}
 
-	private void generateSkillTree() {
-		var playerClasses = new String[] { "hunter", "cook", "alchemist", "enchanter", "blacksmith", "miner" };
+	private void setClassSkillsPosition(String playerClass, int classId) {
+		setSkillPosition(null, classId, 72, 0, playerClass + "_class");
+		setSkillPosition(playerClass + "_class", classId, 8, -75, playerClass + "_defensive_crafting_1");
+		setSkillPosition(playerClass + "_class", classId, 8, 75, playerClass + "_offensive_crafting_1");
+		setSkillPosition(playerClass + "_defensive_crafting_1", classId, 8, -55, playerClass + "_defensive_crafting_2");
+		setSkillPosition(playerClass + "_offensive_crafting_1", classId, 8, 55, playerClass + "_offensive_crafting_2");
+		setSkillPosition(playerClass + "_defensive_crafting_1", classId, 8, 15, playerClass + "_defensive_combat_1");
+		setSkillPosition(playerClass + "_offensive_crafting_1", classId, 8, -15, playerClass + "_offensive_combat_1");
+		setSkillBranchPosition(playerClass, classId, playerClass + "_defensive_crafting_2", 8, "_defensive_crafting_", -30, 0, 3, 5);
+		setSkillBranchPosition(playerClass, classId, playerClass + "_offensive_crafting_2", 8, "_offensive_crafting_", 30, 0, 3, 5);
+		setSkillBranchPosition(playerClass, classId, playerClass + "_defensive_combat_1", 8, "_defensive_combat_", -30, 0, 2, 4);
+		setSkillBranchPosition(playerClass, classId, playerClass + "_offensive_combat_1", 8, "_offensive_combat_", 30, 0, 2, 4);
+		setSkillPosition(playerClass + "_defensive_crafting_5", classId, 6, 15, playerClass + "_defensive_notable_1");
+		setSkillPosition(playerClass + "_offensive_crafting_5", classId, 6, -15, playerClass + "_offensive_notable_1");
+		connectSkills(playerClass + "_defensive_combat_4", playerClass + "_defensive_notable_1");
+		connectSkills(playerClass + "_offensive_combat_4", playerClass + "_offensive_notable_1");
+		setSkillBranchPosition(playerClass, classId, playerClass + "_defensive_combat_4", 8, "_defensive_combat_", 15, 75, 5, 6);
+		setSkillBranchPosition(playerClass, classId, playerClass + "_offensive_combat_4", 8, "_offensive_combat_", -15, -75, 5, 6);
+		setSkillPosition(playerClass + "_defensive_combat_6", classId, 6, 180, playerClass + "_defensive_combat_7");
+		setSkillPosition(playerClass + "_offensive_combat_6", classId, 6, 180, playerClass + "_offensive_combat_7");
+		setSkillPosition(playerClass + "_defensive_combat_7", classId, 8, 150, playerClass + "_defensive_combat_8");
+		setSkillPosition(playerClass + "_offensive_combat_7", classId, 8, 210, playerClass + "_offensive_combat_8");
+		setSkillPosition(playerClass + "_offensive_combat_8", classId, 9, 210, playerClass + "_offensive_keystone_1");
+		connectSkills(playerClass + "_defensive_combat_8", playerClass + "_offensive_keystone_1");
+		setSkillPosition(playerClass + "_offensive_combat_8", classId, 9, 210, playerClass + "_offensive_keystone_1");
+		setSkillPosition(playerClass + "_offensive_combat_6", classId, 8, -90, playerClass + "_mixed_notable_1");
+		connectSkills(playerClass + "_defensive_combat_6", playerClass + "_mixed_notable_1");
+		setSkillPosition(playerClass + "_defensive_combat_6", classId, 6, 0, playerClass + "_defensive_combat_9");
+		setSkillPosition(playerClass + "_offensive_combat_6", classId, 6, 0, playerClass + "_offensive_combat_9");
+		setSkillPosition(playerClass + "_defensive_combat_9", classId, 8, 30, playerClass + "_defensive_combat_10");
+		setSkillPosition(playerClass + "_offensive_combat_9", classId, 8, -30, playerClass + "_offensive_combat_10");
+		setSkillPosition(playerClass + "_offensive_combat_10", classId, 9, -30, playerClass + "_defensive_keystone_1");
+		connectSkills(playerClass + "_defensive_combat_10", playerClass + "_defensive_keystone_1");
+		setSkillBranchPosition(playerClass, classId, playerClass + "_offensive_notable_1", 8, "_lesser_", 52, 0, 1, 2);
+		setSkillBranchPosition(playerClass, classId, playerClass + "_defensive_notable_1", 8, "_lesser_", -52, -0, 3, 4);
+		setSkillPosition(playerClass + "_lesser_2", classId, 9, 52, playerClass + "_life_notable_1");
+		setSkillPosition(playerClass + "_offensive_crafting_1", classId, 6, 180, playerClass + "_offensive_crafting_6");
+		setSkillPosition(playerClass + "_defensive_crafting_1", classId, 6, 180, playerClass + "_defensive_crafting_6");
+		setSkillPosition(playerClass + "_defensive_crafting_6", classId, 6, 180, playerClass + "_crafting_notable_1");
+		setSkillPosition(playerClass + "_class", classId, 7, 180, playerClass + "_lesser_5");
+		setSkillPosition(playerClass + "_lesser_5", classId, 7, 180, playerClass + "_mastery");
+	}
 
+	private void setSkillsAttributeModifiers() {
+		// hunter skills
+		addSkillAttributeModifier("hunter_class", SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get(), 0.15, Operation.ADDITION);
+		addSkillBranchAttributeModifier("hunter_offensive_crafting_", SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED_BONUS.get(), 0.04, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("hunter_defensive_crafting_", SkillTreeAttributes.CRAFTED_ARMOR_EVASION_BONUS.get(), 0.01, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("hunter_offensive_combat_", SkillTreeAttributes.ARROW_DAMAGE_BONUS.get(), 1, Operation.ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("hunter_defensive_combat_", SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("hunter_offensive_combat_", SkillTreeAttributes.ARROW_CRIT_DAMAGE_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("hunter_defensive_combat_", Attributes.MOVEMENT_SPEED, 0.02, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillAttributeModifier("hunter_offensive_notable_1", SkillTreeAttributes.ARROW_DAMAGE_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_defensive_notable_1", SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_mixed_notable_1", SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_mixed_notable_1", Attributes.MOVEMENT_SPEED, 0.05, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_keystone_1", SkillTreeAttributes.ARROW_DAMAGE_PER_DISTANCE_MULTIPLIER.get(), 0.03, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_defensive_keystone_1", SkillTreeAttributes.ARMOR_PER_EVASION.get(), 1, Operation.ADDITION);
+		addSkillAttributeModifier("hunter_crafting_notable_1", SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), 1, Operation.ADDITION);
+		addSkillBranchAttributeModifier("hunter_lesser_", SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get(), 0.05, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("hunter_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_EVASION.get(), 1 / 3D, Operation.ADDITION);
+		addSkillAttributeModifier("hunter_mastery", SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get(), 0.05, Operation.ADDITION);
+		// cook skills
+		addSkillAttributeModifier("cook_class", SkillTreeAttributes.COOKED_FOOD_RESTORATION_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("cook_offensive_crafting_", SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_RESTORATION_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("cook_defensive_crafting_", SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION_PER_RESTORATION.get(), 0.1, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("cook_offensive_combat_", SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("cook_defensive_combat_", SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("cook_offensive_combat_", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("cook_defensive_combat_", SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get(), 1, Operation.ADDITION, 6, 10);
+		addSkillAttributeModifier("cook_offensive_notable_1", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.3, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_defensive_notable_1", SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_mixed_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get(), 5, Operation.ADDITION);
+		addSkillAttributeModifier("cook_mixed_notable_1", SkillTreeAttributes.DAMAGE_MULTIPLIER_IF_ATE_RECENTLY.get(), 0.5, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_keystone_1", SkillTreeAttributes.CRIT_DAMAGE_MULTIPLIER_PER_SATISFIED_HUNGER.get(), 0.05, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_defensive_keystone_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get(), 1, Operation.ADDITION);
+		addSkillAttributeModifier("cook_crafting_notable_1", SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_RESTORATION_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("cook_lesser_", SkillTreeAttributes.COOKED_FOOD_RESTORATION_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("cook_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get(), 10, Operation.ADDITION);
+		addSkillAttributeModifier("cook_mastery", SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION_MULTIPLIER.get(), 0.5, Operation.MULTIPLY_BASE);
+		// alchemist skills
+		addSkillAttributeModifier("alchemist_class", SkillTreeAttributes.BREWED_POTIONS_DURATION_MULTIPLIER.get(), 0.4, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("alchemist_offensive_crafting_", SkillTreeAttributes.BREWED_HARMFUL_POTIONS_STRENGTH_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("alchemist_defensive_crafting_", SkillTreeAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("alchemist_offensive_combat_", SkillTreeAttributes.DAMAGE_AGAINST_POISONED_MULTIPLIER.get(), 0.2, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("alchemist_defensive_combat_", SkillTreeAttributes.EVASION_UNDER_POTION_EFFECT_MULTIPLIER.get(), 0.02, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("alchemist_offensive_combat_", SkillTreeAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT_MULTIPLIER.get(), 0.03, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("alchemist_defensive_combat_", SkillTreeAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), 2, Operation.ADDITION, 6, 10);
+		addSkillAttributeModifier("alchemist_offensive_notable_1", SkillTreeAttributes.CRIT_CHANCE_AGAINST_POISONED_MULTIPLIER.get(), 0.3, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_defensive_notable_1", SkillTreeAttributes.EVASION_UNDER_POTION_EFFECT_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_mixed_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), 10, Operation.ADDITION);
+		addSkillAttributeModifier("alchemist_mixed_notable_1", SkillTreeAttributes.DAMAGE_UNDER_POTION_EFFECT_MULTIPLIER.get(), 0.2, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_keystone_1", SkillTreeAttributes.DAMAGE_PER_POTION_EFFECT_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_defensive_keystone_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_POTION_EFFECT.get(), 2, Operation.ADDITION);
+		addSkillAttributeModifier("alchemist_crafting_notable_1", SkillTreeAttributes.BREWED_POTIONS_STRENGTH_MULTIPLIER.get(), 0.75, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("alchemist_lesser_", SkillTreeAttributes.BREWED_POTIONS_DURATION_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("alchemist_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), 10, Operation.ADDITION);
+		addSkillAttributeModifier("alchemist_mastery", SkillTreeAttributes.BREWED_POTIONS_STRENGTH_MULTIPLIER.get(), 1, Operation.MULTIPLY_BASE);
+		// enchanter class
+		addSkillAttributeModifier("enchanter_class", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER.get(), -0.3, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("enchanter_offensive_crafting_", SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("enchanter_defensive_crafting_", SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("enchanter_offensive_combat_", SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("enchanter_defensive_combat_", Attributes.ARMOR, 1, Operation.ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("enchanter_offensive_combat_", SkillTreeAttributes.CRIT_CHANCE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("enchanter_defensive_combat_", SkillTreeAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get(), 2, Operation.ADDITION, 6, 10);
+		addSkillAttributeModifier("enchanter_offensive_notable_1", SkillTreeAttributes.CRIT_DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.3, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_defensive_notable_1", SkillTreeAttributes.ARMOR_WITH_ENCHANTED_SHIELD.get(), 10, Operation.ADDITION);
+		addSkillAttributeModifier("enchanter_mixed_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_ENCHANTMENT.get(), 2, Operation.ADDITION);
+		addSkillAttributeModifier("enchanter_mixed_notable_1", SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_keystone_1", SkillTreeAttributes.DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_defensive_keystone_1", SkillTreeAttributes.ARMOR_PER_CHESTPLATE_ENCHANTMENT.get(), 2, Operation.ADDITION);
+		addSkillAttributeModifier("enchanter_crafting_notable_1", SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.5, Operation.ADDITION);
+		addSkillBranchAttributeModifier("enchanter_lesser_", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER.get(), -0.05, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("enchanter_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get(), 1, Operation.ADDITION);
+		addSkillAttributeModifier("enchanter_mastery", SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 1, Operation.ADDITION);
+		// blacksmith class
+		addSkillAttributeModifier("blacksmith_class", SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_MULTIPLIER.get(), 0.4, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_offensive_crafting_", SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get(), 1, Operation.ADDITION, 1, 6);
+		addSkillBranchAttributeModifier("blacksmith_defensive_crafting_", SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("blacksmith_offensive_combat_", SkillTreeAttributes.DAMAGE_WITH_SHIELD_MULTIPLIER.get(), 0.1, Operation.ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("blacksmith_defensive_combat_", SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.02, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("blacksmith_offensive_combat_", SkillTreeAttributes.CRIT_CHANCE_WITH_SHIELD_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("blacksmith_defensive_combat_", SkillTreeAttributes.CHESTPLATE_ARMOR_MULTIPLIER.get(), 0.04, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillAttributeModifier("blacksmith_offensive_notable_1", SkillTreeAttributes.CRIT_DAMAGE_WITH_SHIELD_MULTIPLIER.get(), 0.75, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_defensive_notable_1", Attributes.ARMOR, 2, Operation.ADDITION);
+		addSkillAttributeModifier("blacksmith_defensive_notable_1", Attributes.ARMOR, 0.1, Operation.MULTIPLY_TOTAL);
+		addSkillAttributeModifier("blacksmith_mixed_notable_1", SkillTreeAttributes.DAMAGE_WITH_SHIELD_MULTIPLIER.get(), 0.2, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_mixed_notable_1", SkillTreeAttributes.ARMOR_WITH_SHIELD_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_keystone_1", SkillTreeAttributes.ATTACK_DAMAGE_PER_ARMOR.get(), 0.1, Operation.ADDITION);
+		addSkillAttributeModifier("blacksmith_defensive_keystone_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_ARMOR.get(), 0.2, Operation.ADDITION);
+		addSkillAttributeModifier("blacksmith_crafting_notable_1", SkillTreeAttributes.CRAFTED_WEAPON_ATTACK_SPEED_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_lesser_", SkillTreeAttributes.CRAFTED_ARMOR_BONUS_TOUGHNESS_CHANCE_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("blacksmith_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_BOOTS_ARMOR.get(), 1, Operation.ADDITION);
+		addSkillAttributeModifier("blacksmith_mastery", SkillTreeAttributes.CRAFTED_ARMOR_BONUS_TOUGHNESS_CHANCE_MULTIPLIER.get(), 1, Operation.MULTIPLY_BASE);
+		// miner skills
+		addSkillAttributeModifier("miner_class", SkillTreeAttributes.MINING_SPEED_MULTIPLIER.get(), 0.15, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_offensive_crafting_", SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("miner_defensive_crafting_", SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("miner_offensive_combat_", SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), 0.01, Operation.ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("miner_defensive_combat_", Attributes.ARMOR, 1, Operation.ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("miner_offensive_combat_", SkillTreeAttributes.PICKAXE_ATTACK_SPEED_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillBranchAttributeModifier("miner_defensive_combat_", Attributes.MOVEMENT_SPEED, 0.02, Operation.MULTIPLY_BASE, 6, 10);
+		addSkillAttributeModifier("miner_offensive_notable_1", SkillTreeAttributes.DAMAGE_PER_GEMSTONE_IN_WEAPON_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_defensive_notable_1", SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET_BONUS.get(), 2, Operation.ADDITION);
+		addSkillAttributeModifier("miner_mixed_notable_1", SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), 5, Operation.ADDITION);
+		addSkillAttributeModifier("miner_mixed_notable_1", Attributes.ARMOR, 5, Operation.ADDITION);
+		addSkillAttributeModifier("miner_offensive_keystone_1", SkillTreeAttributes.PICKAXE_DAMAGE_MULTIPLIER.get(), 0.5, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_defensive_keystone_1", SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), 5, Operation.ADDITION);
+		addSkillAttributeModifier("miner_crafting_notable_1", SkillTreeAttributes.GEMSTONES_STRENGTH_MULTIPLIER.get(), 0.4, Operation.MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_lesser_", SkillTreeAttributes.MINING_SPEED_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("miner_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), 1, Operation.ADDITION);
+		addSkillAttributeModifier("miner_mastery", SkillTreeAttributes.MAXIMUM_GEMSTONE_SLOTS_BONUS.get(), 1, Operation.ADDITION);
+	}
+
+	private void addSkillBranchAttributeModifier(String branchName, Attribute attribute, double amount, Operation operation, int from, int to) {
+		for (var node = from; node <= to; node++) {
+			addSkillAttributeModifier(branchName + node, attribute, amount, operation);
+		}
+	}
+
+	private void addSkillAttributeModifier(String skillName, Attribute attribute, double amount, Operation operation) {
+		getSkill(skillName).addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
+	}
+
+	public void addSkillBranch(String playerClass, String branchName, String iconName, int nodeSize, int from, int to) {
+		for (var node = from; node <= to; node++) {
+			addSkill(playerClass + branchName + node, iconName, nodeSize);
+		}
+	}
+
+	private void setSkillsPositionsAndConnections() {
 		for (var classId = 0; classId < playerClasses.length; classId++) {
 			setClassSkillsPosition(playerClasses[classId], classId);
 		}
 
+		connectSkillsBetweenClasses("_offensive_crafting_2", "_defensive_crafting_2");
+		connectSkillsBetweenClasses("_offensive_crafting_5", "_defensive_crafting_5");
+		connectSkillsBetweenClasses("_life_notable_1", "_lesser_4");
+		connectSkillsBetweenClasses("_offensive_crafting_6", "_crafting_notable_1");
+	}
+
+	public void connectSkillsBetweenClasses(String from, String to) {
 		for (var classId = 0; classId < playerClasses.length - 1; classId++) {
-			connectSkills(playerClasses[classId] + "_lesser_left_6", playerClasses[classId + 1] + "_lesser_right_6");
+			connectSkills(playerClasses[classId] + from, playerClasses[classId + 1] + to);
 		}
 
-		connectSkills("miner_lesser_left_6", "hunter_lesser_right_6");
+		connectSkills(playerClasses[5] + from, playerClasses[0] + to);
 	}
 
-	private void setClassSkillsPosition(String playerClass, int classId) {
-		var classButton = setSkillPosition(null, classId, 20F, 0F, getSkill(playerClass + "_class"));
-		var rightBranchButton = setSkillPosition(classButton, classId, 8F, -180F / 6F, getSkill(playerClass + "_lesser_right_1"));
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, -5F, getSkill(playerClass + "_lesser_right_2"));
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, 5F, getSkill(playerClass + "_lesser_right_3"));
-		var leftBranchButton = setSkillPosition(classButton, classId, 8F, 180F / 6F, getSkill(playerClass + "_lesser_left_1"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, 5F, getSkill(playerClass + "_lesser_left_2"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, -5F, getSkill(playerClass + "_lesser_left_3"));
-		setSkillPosition(rightBranchButton, classId, 8F, 180F / 6F, getSkill(playerClass + "_mastery"));
-		connectSkills(playerClass + "_lesser_left_3", playerClass + "_mastery");
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, -360F / 6F, getSkill(playerClass + "_lesser_right_4"));
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, -290F / 6F, getSkill(playerClass + "_lesser_right_5"));
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, -220F / 6F, getSkill(playerClass + "_lesser_right_6"));
-		rightBranchButton = setSkillPosition(rightBranchButton, classId, 8F, -150F / 6F, getSkill(playerClass + "_lesser_right_7"));
-		var innerBranchButton = setSkillPosition(rightBranchButton, classId, 8F, 500F / 6F, getSkill(playerClass + "_lesser_right_8"));
-		setSkillPosition(innerBranchButton, classId, 8F, 460F / 6F, getSkill(playerClass + "_notable_right"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, 360F / 6F, getSkill(playerClass + "_lesser_left_4"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, 290F / 6F, getSkill(playerClass + "_lesser_left_5"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, 220F / 6F, getSkill(playerClass + "_lesser_left_6"));
-		leftBranchButton = setSkillPosition(leftBranchButton, classId, 8F, 150F / 6F, getSkill(playerClass + "_lesser_left_7"));
-		innerBranchButton = setSkillPosition(leftBranchButton, classId, 8F, -500F / 6F, getSkill(playerClass + "_lesser_left_8"));
-		setSkillPosition(innerBranchButton, classId, 8F, -460F / 6F, getSkill(playerClass + "_notable_left"));
+	public void setSkillBranchPosition(String playerClass, int classId, String initialNodeName, int distanceBetweenNodes, String branchName, int initialRotation, int rotationPerNode, int from, int to) {
+		var branchNode = initialNodeName;
+
+		for (var node = from; node <= to; node++) {
+			setSkillPosition(branchNode, classId, distanceBetweenNodes, initialRotation + (node - from) * rotationPerNode, playerClass + branchName + node);
+			branchNode = playerClass + branchName + node;
+		}
 	}
 
-	private PassiveSkill setSkillPosition(@Nullable PassiveSkill previousSkill, int classId, float distance, float angle, PassiveSkill skill) {
+	private void setSkillPosition(@Nullable String previousSkillName, int classId, float distance, float angle, String skillName) {
 		angle *= Mth.PI / 180F;
 		angle += getClassBranchRotation(classId);
+		var previousSkill = previousSkillName == null ? null : getSkill(previousSkillName);
+		var skill = getSkill(skillName);
 		var centerX = 0F;
 		var centerY = 0F;
 		var buttonSize = skill.getButtonSize();
@@ -223,13 +268,11 @@ public class ModSkillsProvider implements DataProvider {
 
 		var skillX = centerX + Mth.sin(angle) * distance - buttonSize / 2F;
 		var skillY = centerY + Mth.cos(angle) * distance - buttonSize / 2F;
-		skill.setPosition((int) skillX, (int) skillY);
+		skill.setPosition(Math.round(skillX), Math.round(skillY));
 
 		if (previousSkill != null) {
 			previousSkill.connect(skill);
 		}
-
-		return skill;
 	}
 
 	public float getClassBranchRotation(int classId) {
@@ -249,26 +292,19 @@ public class ModSkillsProvider implements DataProvider {
 	}
 
 	private void addSkill(String skillName, String iconName, int buttonSize) {
-		addSkill(skillName, iconName, buttonSize, null);
-	}
-
-	private void addSkill(String skillName, String iconName, int buttonSize, Attribute modifiedAttribute, double attributeBonus, Operation modifierOperation) {
-		addSkill(skillName, iconName, buttonSize, Triple.of(modifiedAttribute, attributeBonus, modifierOperation));
-	}
-
-	private void addSkill(String skillName, String iconName, int buttonSize, Triple<Attribute, Double, Operation> attributeBonus) {
 		var skillId = new ResourceLocation(SkillTreeMod.MOD_ID, skillName);
 		var treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
 		var backgroundName = buttonSize == 24 ? "keystone" : buttonSize == 20 ? "notable" : "lesser";
 		var backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + backgroundName + ".png");
 		var iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + iconName + ".png");
-		data.put(skillId, new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, skillName.endsWith("_class"), attributeBonus));
+		data.put(skillId, new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, skillName.endsWith("_class")));
 	}
 
 	@Override
 	public void run(CachedOutput cachedOutput) throws IOException {
 		addSkills();
-		generateSkillTree();
+		setSkillsPositionsAndConnections();
+		setSkillsAttributeModifiers();
 
 		for (var skill : data.values()) {
 			save(cachedOutput, skill);

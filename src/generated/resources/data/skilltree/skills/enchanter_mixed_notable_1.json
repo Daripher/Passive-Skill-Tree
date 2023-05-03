@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:player.maximum_life_per_enchantment",
+      "operation": "addition",
+      "unique_id": "4063137f-0f16-43cf-a0b6-959c9bbfcc1b"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.damage_per_enchantment_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "d44b500f-334d-44b7-8fe9-9ebf234b59e7"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/enchanter_mixed_notable.png",
+  "position": {
+    "x": 163,
+    "y": -110
+  },
+  "tree": "skilltree:tree"
+}

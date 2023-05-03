@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:player.maximum_life_with_enchanted_item",
+      "operation": "addition",
+      "unique_id": "adf360ad-368a-46d9-a24c-6ee86dd290da"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_offensive_keystone_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_combat_2.png",
+  "position": {
+    "x": 136,
+    "y": -74
+  },
+  "tree": "skilltree:tree"
+}

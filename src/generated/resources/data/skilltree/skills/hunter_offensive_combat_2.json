@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.arrow_damage_bonus",
+      "operation": "addition",
+      "unique_id": "1fb7f8fd-abee-4b2b-a0d7-ccc6353bc44b"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_offensive_combat_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_offensive_combat_1.png",
+  "position": {
+    "x": 126,
+    "y": 31
+  },
+  "tree": "skilltree:tree"
+}

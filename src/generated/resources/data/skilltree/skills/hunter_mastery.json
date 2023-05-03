@@ -1,16 +1,18 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.crafted_bows_armor_reduction",
-    "bonus": 0.25,
-    "operation": "addition",
-    "unique_id": "dd5202c4-5a9f-4428-80d7-e17b6935b6e1"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.triple_loot_chance",
+      "operation": "addition",
+      "unique_id": "0e97314f-a17f-427f-9625-257648c392ea"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
   "position": {
-    "x": -10,
-    "y": 114
+    "x": 15,
+    "y": 2
   },
   "tree": "skilltree:tree"
 }

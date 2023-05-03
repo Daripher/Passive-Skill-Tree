@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.pickaxe_damage_bonus",
+      "operation": "addition",
+      "unique_id": "b7bedca4-7b37-41eb-9ee8-f38fd8df0156"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_offensive_notable_1",
+    "skilltree:miner_offensive_combat_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_offensive_combat_1.png",
+  "position": {
+    "x": -133,
+    "y": 130
+  },
+  "tree": "skilltree:tree"
+}

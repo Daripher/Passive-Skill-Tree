@@ -1,20 +1,23 @@
 {
-  "attribute_bonus": {
-    "attribute": "skilltree:player.crafted_armor_defence_bonus",
-    "bonus": 0.5,
-    "operation": "addition",
-    "unique_id": "4c6f65e4-48a8-4779-8153-2d2ffbf2a4da"
-  },
+  "attribute_modifiers": [
+    {
+      "amount": 0.4,
+      "attribute": "skilltree:player.crafted_armor_defence_bonus",
+      "operation": "multiply_base",
+      "unique_id": "16087bcf-fa1e-43f4-a015-a37e5d30bae0"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "connections": [
-    "skilltree:blacksmith_lesser_right_1",
-    "skilltree:blacksmith_lesser_left_1"
+    "skilltree:blacksmith_defensive_crafting_1",
+    "skilltree:blacksmith_offensive_crafting_1",
+    "skilltree:blacksmith_lesser_5"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_class.png",
   "position": {
-    "x": -39,
-    "y": -28
+    "x": -85,
+    "y": -54
   },
   "starting_point": true,
   "tree": "skilltree:tree"

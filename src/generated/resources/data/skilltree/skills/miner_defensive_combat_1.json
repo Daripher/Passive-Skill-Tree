@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "minecraft:generic.armor",
+      "operation": "addition",
+      "unique_id": "2c011fdc-1b93-44b5-9cc7-23ccaafffba0"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_defensive_combat_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_defensive_combat_1.png",
+  "position": {
+    "x": -118,
+    "y": 31
+  },
+  "tree": "skilltree:tree"
+}

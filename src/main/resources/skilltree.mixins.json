@@ -8,8 +8,6 @@
   	"MixinEnchantmentMenu",
   	"MixinPlayer",
   	"MixinPotionItem",
-  	"MixinPotionSlot",
-  	"MixinIngredientSlot",
   	"MixinSmithingMenu"
   ],
   "client" : [ ],

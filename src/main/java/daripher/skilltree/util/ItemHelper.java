@@ -7,6 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -15,6 +16,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 
 public class ItemHelper {
 	private static final String DEFENCE_BONUS_TAG = "DefenceBonus";
+	private static final String EVASION_BONUS_TAG = "EvasionBonus";
 	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
 	private static final String ATTACK_SPEED_BONUS_TAG = "AttackSpeedBonus";
 	private static final String TOUGHNESS_BONUS_TAG = "ToughnessBonus";
@@ -31,6 +33,18 @@ public class ItemHelper {
 
 	public static double getDefenceBonus(ItemStack itemStack) {
 		return itemStack.getTag().getDouble(DEFENCE_BONUS_TAG);
+	}
+
+	public static void setEvasionBonus(ItemStack itemStack, double bonus) {
+		itemStack.getOrCreateTag().putDouble(EVASION_BONUS_TAG, bonus);
+	}
+
+	public static boolean hasEvasionBonus(ItemStack itemStack) {
+		return itemStack.hasTag() && itemStack.getTag().contains(EVASION_BONUS_TAG);
+	}
+
+	public static double getEvasionBonus(ItemStack itemStack) {
+		return itemStack.getTag().getDouble(EVASION_BONUS_TAG);
 	}
 
 	public static void setToughnessBonus(ItemStack itemStack, double bonus) {
@@ -145,5 +159,9 @@ public class ItemHelper {
 
 	public static boolean isFood(ItemStack itemStack) {
 		return itemStack.getFoodProperties(null) != null;
+	}
+
+	public static boolean isAxe(ItemStack itemStack) {
+		return itemStack.getItem() instanceof AxeItem;
 	}
 }

@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.bow_charge_speed_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "0f2d89e5-0745-4ece-8b46-0dd47c205616"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "multiply_base",
+      "unique_id": "21ed7632-af5c-427a-9780-ce3f2c07ccf1"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/hunter_mixed_notable.png",
+  "position": {
+    "x": 164,
+    "y": 90
+  },
+  "tree": "skilltree:tree"
+}

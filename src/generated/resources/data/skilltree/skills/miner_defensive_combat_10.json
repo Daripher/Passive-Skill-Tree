@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.02,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "multiply_base",
+      "unique_id": "7fd7eef7-2747-4b9b-8d60-43b055c057be"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_defensive_keystone_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_defensive_combat_2.png",
+  "position": {
+    "x": -226,
+    "y": 101
+  },
+  "tree": "skilltree:tree"
+}

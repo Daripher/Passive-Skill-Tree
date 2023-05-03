@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_life_if_ate_recently",
+      "operation": "addition",
+      "unique_id": "a26c05a1-7655-4b73-aa01-0c03f9defc20"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_defensive_combat_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_defensive_combat_2.png",
+  "position": {
+    "x": 19,
+    "y": -186
+  },
+  "tree": "skilltree:tree"
+}

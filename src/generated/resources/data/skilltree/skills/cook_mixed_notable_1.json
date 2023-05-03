@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 5.0,
+      "attribute": "skilltree:player.maximum_life_if_ate_recently",
+      "operation": "addition",
+      "unique_id": "804b0022-6534-4381-81ac-b11b1c4b16b1"
+    },
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.damage_multiplier_if_ate_recently",
+      "operation": "multiply_base",
+      "unique_id": "9e9be884-6590-43f5-a877-7a632da47c3c"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/cook_mixed_notable.png",
+  "position": {
+    "x": -11,
+    "y": -210
+  },
+  "tree": "skilltree:tree"
+}

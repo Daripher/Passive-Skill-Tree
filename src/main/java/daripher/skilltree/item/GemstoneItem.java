@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -32,25 +31,27 @@ public abstract class GemstoneItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-		components.add(Component.empty());
-		addModifierDescription(components, "helmet", getHelmetBonus());
-		addModifierDescription(components, "chestplate", getChestplateBonus());
-		addModifierDescription(components, "leggings", getLeggingsBonus());
-		addModifierDescription(components, "boots", getBootsBonus());
-		addModifierDescription(components, "weapon", getWeaponBonus());
-		addModifierDescription(components, "shield", getShieldBonus());
-		addModifierDescription(components, "bow", getBowBonus());
+//		components.add(Component.empty());
+//		addModifierDescription(components, "helmet", getHelmetBonus());
+//		addModifierDescription(components, "chestplate", getChestplateBonus());
+//		addModifierDescription(components, "leggings", getLeggingsBonus());
+//		addModifierDescription(components, "boots", getBootsBonus());
+//		addModifierDescription(components, "weapon", getWeaponBonus());
+//		addModifierDescription(components, "shield", getShieldBonus());
+//		addModifierDescription(components, "bow", getBowBonus());
+		var tooltip = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC);
+		components.add(tooltip);
 	}
 
-	private void addModifierDescription(List<Component> components, String itemType, Triple<Attribute, Double, Operation> attributeBonus) {
-		if (attributeBonus.getMiddle() == 0) {
-			return;
-		}
-
-		components.add(Component.translatable("gemstone.modifier." + itemType).withStyle(ChatFormatting.GRAY));
-		var attributeBonusComponent = TooltipHelper.getAttributeBonusTooltip(attributeBonus, 0);
-		components.add(attributeBonusComponent);
-	}
+//	private void addModifierDescription(List<Component> components, String itemType, Triple<Attribute, Double, Operation> attributeBonus) {
+//		if (attributeBonus.getMiddle() == 0) {
+//			return;
+//		}
+//
+//		components.add(Component.translatable("gemstone.modifier." + itemType).withStyle(ChatFormatting.GRAY));
+//		var attributeBonusComponent = TooltipHelper.getAttributeBonusTooltip(attributeBonus, 0);
+//		components.add(attributeBonusComponent);
+//	}
 
 	public abstract Triple<Attribute, Double, Operation> getHelmetBonus();
 

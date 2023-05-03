@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.crit_chance_per_enchantment_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "0b504018-5729-4750-ba39-c19b6c908082"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_offensive_combat_10"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_combat_2.png",
+  "position": {
+    "x": 171,
+    "y": -142
+  },
+  "tree": "skilltree:tree"
+}

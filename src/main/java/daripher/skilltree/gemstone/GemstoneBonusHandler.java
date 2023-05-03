@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.tuple.Triple;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.init.SkillTreeItems;
 import daripher.skilltree.util.GemstoneHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.TooltipHelper;
@@ -47,8 +48,26 @@ public class GemstoneBonusHandler {
 		if (!GemstoneHelper.hasGemstone(itemStack, gemstoneSlot)) {
 			return;
 		}
+		if (GemstoneHelper.hasRainbowGemstone(itemStack, gemstoneSlot)) {
+			applyRainbowGemstoneBonus(event, gemstoneSlot, itemStack, event.getSlotType());
+			return;
+		}
 		var gemstoneItem = GemstoneHelper.getGemstone(itemStack, gemstoneSlot);
 		var attributeBonus = GemstoneHelper.getAttributeBonus(itemStack, gemstoneItem, event.getSlotType());
+		if (attributeBonus == null) {
+			return;
+		}
+		var gemstoneStrengthBonus = GemstoneHelper.getGemstoneStrength(itemStack, gemstoneSlot);
+		var modifiedAttribute = attributeBonus.getLeft();
+		var attributeModifier = getAttributeModifier(gemstoneSlot, attributeBonus, gemstoneStrengthBonus, event.getSlotType());
+		event.addModifier(modifiedAttribute, attributeModifier);
+	}
+
+	public static void applyRainbowGemstoneBonus(ItemAttributeModifierEvent event, int gemstoneSlot, ItemStack itemStack, EquipmentSlot slotType) {
+		if (!GemstoneHelper.isRainbowGemstoneBonusSet(itemStack, gemstoneSlot)) {
+			return;
+		}
+		var attributeBonus = GemstoneHelper.getRainbowGemstoneBonus(itemStack, gemstoneSlot, slotType);
 		if (attributeBonus == null) {
 			return;
 		}
@@ -63,6 +82,17 @@ public class GemstoneBonusHandler {
 		for (var i = 0; i < 3; i++) {
 			addGemstoneTooltip(event, i);
 		}
+		addEmptyGemstoneSlotsTooltip(event);
+	}
+
+	public static void addEmptyGemstoneSlotsTooltip(ItemTooltipEvent event) {
+		if (!ItemHelper.canApplyGemstone(event.getItemStack())) {
+			return;
+		}
+		var emptyGemstoneSlotsCount = GemstoneHelper.getEmptyGemstoneSlots(event.getItemStack(), event.getEntity());
+		for (var i = 0; i < emptyGemstoneSlotsCount; i++) {
+			event.getToolTip().add(Component.translatable("gemstone.empty").withStyle(ChatFormatting.DARK_GRAY));
+		}
 	}
 
 	private static void addGemstoneTooltip(ItemTooltipEvent event, int gemstoneSlot) {
@@ -72,12 +102,12 @@ public class GemstoneBonusHandler {
 		}
 		if (gemstoneSlot == 0) {
 			event.getToolTip().add(Component.empty());
-			var emptyGemstoneSlotsCount = GemstoneHelper.getEmptyGemstoneSlots(event.getItemStack(), event.getEntity());
-			for (var i = 0; i < emptyGemstoneSlotsCount; i++) {
-				event.getToolTip().add(Component.translatable("gemstone.empty").withStyle(ChatFormatting.DARK_GRAY));
-			}
 		}
 		if (!GemstoneHelper.hasGemstone(itemStack, gemstoneSlot)) {
+			return;
+		}
+		if (GemstoneHelper.hasRainbowGemstone(itemStack, gemstoneSlot)) {
+			addRainbowGemstoneTooltip(event, gemstoneSlot);
 			return;
 		}
 		var gemstoneItem = GemstoneHelper.getGemstone(itemStack, gemstoneSlot);
@@ -92,6 +122,28 @@ public class GemstoneBonusHandler {
 				event.getToolTip().add(gemstoneItem.getName(new ItemStack(gemstoneItem)).append(":"));
 				event.getToolTip().add(attributeBonusTooltip);
 				break;
+			}
+		}
+	}
+
+	private static void addRainbowGemstoneTooltip(ItemTooltipEvent event, int gemstoneSlot) {
+		var gemstoneItem = SkillTreeItems.RAINBOW_GEMSTONE.get();
+		var itemStack = event.getItemStack();
+		event.getToolTip().add(Component.empty().append(gemstoneItem.getName(new ItemStack(gemstoneItem))).append(":"));
+		if (!GemstoneHelper.isRainbowGemstoneBonusSet(itemStack, gemstoneSlot)) {
+			event.getToolTip().add(Component.translatable("gemstone.rainbow").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+		} else {
+			var attributeBonus = GemstoneHelper.getRainbowGemstoneBonus(itemStack, gemstoneSlot);
+			var gemstoneStrengthBonus = GemstoneHelper.getGemstoneStrength(itemStack, gemstoneSlot);
+			var attributeBonusTooltip = TooltipHelper.getAttributeBonusTooltip(attributeBonus, gemstoneStrengthBonus);
+			var tooltipLinesIterator = event.getToolTip().iterator();
+			while (tooltipLinesIterator.hasNext()) {
+				var tooltipLine = tooltipLinesIterator.next();
+				if (tooltipLine.equals(attributeBonusTooltip)) {
+					tooltipLinesIterator.remove();
+					event.getToolTip().add(attributeBonusTooltip);
+					break;
+				}
 			}
 		}
 	}

@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.mining_speed_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "b69ff491-26a0-46ef-980f-9253af51a0c4"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "icon_texture": "skilltree:textures/icons/miner_lesser.png",
+  "position": {
+    "x": -258,
+    "y": 2
+  },
+  "tree": "skilltree:tree"
+}

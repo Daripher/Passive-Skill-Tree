@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_life_per_armor_enchantment",
+      "operation": "addition",
+      "unique_id": "c3570971-b082-4f25-8f28-5251be141e2e"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:cook_lesser_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_life_notable.png",
+  "position": {
+    "x": 128,
+    "y": -249
+  },
+  "tree": "skilltree:tree"
+}

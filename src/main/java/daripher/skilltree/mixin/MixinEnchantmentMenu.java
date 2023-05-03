@@ -23,19 +23,20 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 
 @Mixin(EnchantmentMenu.class)
 public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
+	private @Shadow @Final ContainerLevelAccess access;
 	private @Shadow @Final Container enchantSlots;
 	private @Shadow @Final DataSlot enchantmentSeed;
 	private @Shadow @Final RandomSource random;
-	private @Shadow @Final ContainerLevelAccess access;
 	public @Shadow @Final int[] costs;
-	public @Shadow @Final int[] levelClue;
 	public @Shadow @Final int[] enchantClue;
+	public @Shadow @Final int[] levelClue;
 	private Player player;
 	private int[] costsBeforeReduction;
 
@@ -108,37 +109,46 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 
 	private void decreaseLevelRequirement() {
 		costsBeforeReduction = costs;
-		var levelRequirementDecrease = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE.get());
-
+		var levelRequirementDecrease = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER.get());
 		if (levelRequirementDecrease == 0) {
 			return;
 		}
-
 		for (var i = 0; i < costs.length; i++) {
+			if (costs[i] == 0) {
+				continue;
+			}
 			costs[i] *= (1 - levelRequirementDecrease);
+			if (costs[i] < 1) {
+				costs[i] = 1;
+			}
 		}
 	}
 
 	private void amplifyEnchantmentsLevels(List<EnchantmentInstance> enchantments) {
-		var amplificationChance = player.getAttributeValue(SkillTreeAttributes.APPLIED_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
-
-		if (amplificationChance == 0) {
-			return;
-		}
-
 		var random = RandomSource.create(enchantmentSeed.get());
-		var levelBonus = (int) amplificationChance;
-		amplificationChance -= levelBonus;
-
 		for (var i = 0; i < enchantments.size(); i++) {
-			var oldEnchantment = enchantments.get(i);
-			var enchantmentLevel = oldEnchantment.level + levelBonus;
-
+			var enchantment = enchantments.get(i);
+			var amplificationChance = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+			var enchantmentCategory = enchantment.enchantment.category;
+			var isArmorEnchtantment = enchantmentCategory == EnchantmentCategory.ARMOR || enchantmentCategory == EnchantmentCategory.ARMOR_FEET || enchantmentCategory == EnchantmentCategory.ARMOR_LEGS
+					|| enchantmentCategory == EnchantmentCategory.ARMOR_HEAD;
+			if (isArmorEnchtantment) {
+				amplificationChance += player.getAttributeValue(SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+			}
+			var isWeaponEnchtantment = enchantmentCategory == EnchantmentCategory.WEAPON || enchantmentCategory == EnchantmentCategory.BOW || enchantmentCategory == EnchantmentCategory.CROSSBOW;
+			if (isWeaponEnchtantment) {
+				amplificationChance += player.getAttributeValue(SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+			}
+			if (amplificationChance == 0) {
+				return;
+			}
+			var levelBonus = (int) amplificationChance;
+			amplificationChance -= levelBonus;
+			var enchantmentLevel = enchantment.level + levelBonus;
 			if (random.nextFloat() < amplificationChance) {
 				enchantmentLevel++;
 			}
-
-			enchantments.set(i, new EnchantmentInstance(oldEnchantment.enchantment, enchantmentLevel));
+			enchantments.set(i, new EnchantmentInstance(enchantment.enchantment, enchantmentLevel));
 		}
 	}
 
@@ -146,11 +156,9 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 	private void extendedGetEnchantmentList(ItemStack enchantingStack, int slot, int cost, CallbackInfoReturnable<List<EnchantmentInstance>> callbackInfo) {
 		random.setSeed(enchantmentSeed.get() + slot);
 		var enchantments = EnchantmentHelper.selectEnchantment(random, enchantingStack, costsBeforeReduction[slot], false);
-
 		if (enchantingStack.is(Items.BOOK) && enchantments.size() > 1) {
 			enchantments.remove(random.nextInt(enchantments.size()));
 		}
-
 		amplifyEnchantmentsLevels(enchantments);
 		callbackInfo.setReturnValue(enchantments);
 	}
