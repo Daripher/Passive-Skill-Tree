@@ -390,11 +390,12 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyGemstoneFindingChanceBonus(BlockEvent.BreakEvent event) {
-		var level = event.getPlayer().getLevel();
+		var player = event.getPlayer();
+		var level = player.getLevel();
 		if (level.isClientSide) {
 			return;
 		}
-		var gemstoneFindingChance = event.getPlayer().getAttributeValue(SkillTreeAttributes.GEMSTONE_FINDING_CHANCE.get());
+		var gemstoneFindingChance = player.getAttributeValue(SkillTreeAttributes.GEMSTONE_FINDING_CHANCE.get());
 		if (gemstoneFindingChance == 0) {
 			return;
 		}
@@ -402,14 +403,18 @@ public class AttributeBonusHandler {
 		if (!level.getBlockState(blockPos).is(Tags.Blocks.ORES)) {
 			return;
 		}
-		if (event.getPlayer().getRandom().nextFloat() >= gemstoneFindingChance) {
+		if (player.getRandom().nextFloat() >= gemstoneFindingChance) {
 			return;
 		}
-		if (!ForgeHooks.isCorrectToolForDrops(event.getState(), event.getPlayer())) {
+		if (!ForgeHooks.isCorrectToolForDrops(event.getState(), player)) {
 			return;
 		}
-		var gemstones = new Item[] { SkillTreeItems.LIGHT_GEMSTONE.get(), SkillTreeItems.SOOTHING_GEMSTONE.get(), SkillTreeItems.STURDY_GEMSTONE.get() };
-		Block.popResource(level, blockPos, new ItemStack(gemstones[event.getPlayer().getRandom().nextInt(gemstones.length)]));
+		var gemstones = new Item[] { SkillTreeItems.LIGHT_GEMSTONE.get(), SkillTreeItems.SOOTHING_GEMSTONE.get(), SkillTreeItems.STURDY_GEMSTONE.get(), SkillTreeItems.RAINBOW_GEMSTONE.get() };
+		var foundGemstone = gemstones[player.getRandom().nextInt(gemstones.length)];
+		if (player.getRandom().nextFloat() < 0.1) {
+			foundGemstone = SkillTreeItems.VOID_GEMSTONE.get();
+		}
+		Block.popResource(level, blockPos, new ItemStack(foundGemstone));
 	}
 
 	@SubscribeEvent
