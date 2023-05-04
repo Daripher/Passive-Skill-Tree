@@ -38,7 +38,7 @@ public class RainbowGemstoneItem extends Item {
 		var hue = (player.tickCount % 360) / 360F;
 		var characters = component.getString().toCharArray();
 		for (var character : characters) {
-			var color = Color.getHSBColor(hue, 0.7F, 1F).getRGB();
+			var color = Color.getHSBColor(hue, 0.6F, 1F).getRGB();
 			var characterComponent = Component.literal("" + character);
 			var colorStyle = Style.EMPTY.withColor(color);
 			var coloredCharacter = characterComponent.withStyle(colorStyle);
