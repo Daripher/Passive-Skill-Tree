@@ -194,7 +194,7 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("miner_offensive_combat_", SkillTreeAttributes.PICKAXE_ATTACK_SPEED_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 6, 10);
 		addSkillBranchAttributeModifier("miner_defensive_combat_", Attributes.MOVEMENT_SPEED, 0.02, Operation.MULTIPLY_BASE, 6, 10);
 		addSkillAttributeModifier("miner_offensive_notable_1", SkillTreeAttributes.DAMAGE_PER_GEMSTONE_IN_WEAPON_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
-		addSkillAttributeModifier("miner_defensive_notable_1", SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET_BONUS.get(), 2, Operation.ADDITION);
+		addSkillAttributeModifier("miner_defensive_notable_1", SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get(), 2, Operation.ADDITION);
 		addSkillAttributeModifier("miner_mixed_notable_1", SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), 5, Operation.ADDITION);
 		addSkillAttributeModifier("miner_mixed_notable_1", Attributes.ARMOR, 5, Operation.ADDITION);
 		addSkillAttributeModifier("miner_offensive_keystone_1", SkillTreeAttributes.PICKAXE_DAMAGE_MULTIPLIER.get(), 0.5, Operation.MULTIPLY_BASE);

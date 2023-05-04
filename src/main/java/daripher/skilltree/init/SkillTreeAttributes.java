@@ -65,7 +65,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> PICKAXE_DAMAGE_BONUS = rangedAttribute("player", "pickaxe_damage_bonus", 0D, 0D, 50D);
 	public static final RegistryObject<Attribute> PICKAXE_DAMAGE_MULTIPLIER = rangedAttribute("player", "pickaxe_damage_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> PICKAXE_ATTACK_SPEED_MULTIPLIER = rangedAttribute("player", "pickaxe_attack_speed_multiplier", 1D, 1D, 10D);
-	public static final RegistryObject<Attribute> ARMOR_PER_GEMSTONE_IN_HELMET_BONUS = rangedAttribute("player", "armor_per_gemstone_in_helmet_bonus", 0D, 0D, 10D);
+	public static final RegistryObject<Attribute> ARMOR_PER_GEMSTONE_IN_HELMET = rangedAttribute("player", "armor_per_gemstone_in_helmet", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> DAMAGE_PER_GEMSTONE_IN_WEAPON_MULTIPLIER = rangedAttribute("player", "damage_per_gemstone_in_weapon_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> ARMOR_PER_GEMSTONE_IN_CHESTPLATE = rangedAttribute("player", "armor_per_gemstone_in_chestplate_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR = rangedAttribute("player", "maximum_life_per_gemstone_in_armor_bonus", 0D, 0D, 10D);

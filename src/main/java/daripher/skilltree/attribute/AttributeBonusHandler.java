@@ -153,9 +153,9 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getArmorPerGemstoneInHelmet(Player player) {
-		var armorPerGemstoneInChestplate = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get());
-		var getmstonesInChestplate = GemstoneHelper.getGemstonesCount(player.getItemBySlot(EquipmentSlot.HEAD));
-		return armorPerGemstoneInChestplate * getmstonesInChestplate;
+		var armorPerGemstoneInHelmet = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get());
+		var getmstonesInHelmet = GemstoneHelper.getGemstonesCount(player.getItemBySlot(EquipmentSlot.HEAD));
+		return armorPerGemstoneInHelmet * getmstonesInHelmet;
 	}
 
 	private static double getArmorPerChestplateArmor(Player player) {
