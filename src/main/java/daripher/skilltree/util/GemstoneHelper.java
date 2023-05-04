@@ -70,20 +70,20 @@ public class GemstoneHelper {
 	}
 
 	@Nullable
-	public static Triple<Attribute, Double, Operation> getRainbowGemstoneBonus(ItemStack itemStack, int gemstoneSlot, @Nullable EquipmentSlot slotType) {
-		if (ItemHelper.isWeapon(itemStack) && slotType != EquipmentSlot.MAINHAND && slotType != null) {
+	public static Triple<Attribute, Double, Operation> getRainbowGemstoneBonus(ItemStack itemStack, int gemstoneSlot, EquipmentSlot slotType) {
+		if (ItemHelper.isWeapon(itemStack) && slotType != EquipmentSlot.MAINHAND) {
 			return null;
-		} else if (ItemHelper.isShield(itemStack) && slotType != EquipmentSlot.OFFHAND && slotType != null) {
+		} else if (ItemHelper.isShield(itemStack) && slotType != EquipmentSlot.OFFHAND) {
 			return null;
-		} else if (ItemHelper.isHelmet(itemStack) && slotType != EquipmentSlot.HEAD && slotType == null) {
+		} else if (ItemHelper.isHelmet(itemStack) && slotType != EquipmentSlot.HEAD) {
 			return null;
-		} else if (ItemHelper.isChestplate(itemStack) && slotType != EquipmentSlot.CHEST && slotType != null) {
+		} else if (ItemHelper.isChestplate(itemStack) && slotType != EquipmentSlot.CHEST) {
 			return null;
-		} else if (ItemHelper.isLeggings(itemStack) && slotType != EquipmentSlot.LEGS && slotType != null) {
+		} else if (ItemHelper.isLeggings(itemStack) && slotType != EquipmentSlot.LEGS) {
 			return null;
-		} else if (ItemHelper.isBoots(itemStack) && slotType != EquipmentSlot.FEET && slotType != null) {
+		} else if (ItemHelper.isBoots(itemStack) && slotType != EquipmentSlot.FEET) {
 			return null;
-		} else if (ItemHelper.isBow(itemStack) && slotType != EquipmentSlot.MAINHAND && slotType != null) {
+		} else if (ItemHelper.isBow(itemStack) && slotType != EquipmentSlot.MAINHAND) {
 			return null;
 		}
 		var bonusTag = itemStack.getOrCreateTag().getCompound(RAINBOW_GEMSTONE_BONUS_TAG + gemstoneSlot);

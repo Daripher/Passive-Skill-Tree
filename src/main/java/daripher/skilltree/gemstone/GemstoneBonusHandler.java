@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -133,7 +134,10 @@ public class GemstoneBonusHandler {
 		if (!GemstoneHelper.isRainbowGemstoneBonusSet(itemStack, gemstoneSlot)) {
 			event.getToolTip().add(Component.translatable("gemstone.rainbow").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
 		} else {
-			var attributeBonus = GemstoneHelper.getRainbowGemstoneBonus(itemStack, gemstoneSlot);
+			var attributeBonus = GemstoneHelper.getRainbowGemstoneBonus(itemStack, gemstoneSlot, Player.getEquipmentSlotForItem(itemStack));
+			if (attributeBonus == null) {
+				return;
+			}
 			var gemstoneStrengthBonus = GemstoneHelper.getGemstoneStrength(itemStack, gemstoneSlot);
 			var attributeBonusTooltip = TooltipHelper.getAttributeBonusTooltip(attributeBonus, gemstoneStrengthBonus);
 			var tooltipLinesIterator = event.getToolTip().iterator();
