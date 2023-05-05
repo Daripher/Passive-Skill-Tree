@@ -1,10 +1,12 @@
 package daripher.skilltree.gemstone;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.jetbrains.annotations.NotNull;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.GemstoneItem;
@@ -12,6 +14,7 @@ import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -87,18 +90,65 @@ public class GemstoneBonusHandler {
 	private static void addGemstoneTooltip(ItemTooltipEvent event, int gemstoneSlot) {
 		var itemStack = event.getItemStack();
 		var gemstoneItem = GemstoneItem.getGemstone(itemStack, gemstoneSlot);
-		var attributeBonus = GemstoneItem.getAttributeBonus(itemStack, gemstoneSlot);
-		var attributeBonusTooltip = TooltipHelper.getAttributeBonusTooltip(attributeBonus);
-		var tooltipLinesIterator = event.getToolTip().iterator();
-		while (tooltipLinesIterator.hasNext()) {
-			var tooltipLine = tooltipLinesIterator.next();
-			if (tooltipLine.equals(attributeBonusTooltip)) {
-				tooltipLinesIterator.remove();
-				event.getToolTip().add(gemstoneItem.getName(new ItemStack(gemstoneItem)).append(":"));
-				event.getToolTip().add(attributeBonusTooltip);
-				break;
+		var gemstoneBonus = GemstoneItem.getAttributeBonus(itemStack, gemstoneSlot);
+		if (gemstoneSlot > 0) {
+			for (var i = gemstoneSlot - 1; i >= 0; i--) {
+				if (areGemstonesAndBonusesSame(itemStack, gemstoneItem, gemstoneBonus, i)) {
+					return;
+				}
 			}
 		}
+		removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(gemstoneBonus));
+		var sameGemstonesCount = 1;
+		for (var i = gemstoneSlot + 1; i < 3; i++) {
+			if (areGemstonesAndBonusesSame(itemStack, gemstoneItem, gemstoneBonus, i)) {
+				var secondBonus = GemstoneItem.getAttributeBonus(itemStack, i);
+				removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(secondBonus));
+				var summedAmounts = gemstoneBonus.getMiddle() + secondBonus.getMiddle();
+				gemstoneBonus = Triple.of(gemstoneBonus.getLeft(), summedAmounts, gemstoneBonus.getRight());
+				sameGemstonesCount++;
+			}
+		}
+		var gemstoneBonusTooltip = TooltipHelper.getAttributeBonusTooltip(gemstoneBonus);
+		var gemstoneName = gemstoneItem.getName(new ItemStack(gemstoneItem));
+		if (sameGemstonesCount > 1) {
+			gemstoneName.append(" x" + sameGemstonesCount);
+		}
+		gemstoneName.append(":");
+		gemstoneName = gemstoneItem.applyGemstoneColorStyle(gemstoneName);
+		event.getToolTip().add(gemstoneName);
+		event.getToolTip().add(gemstoneBonusTooltip);
+	}
+
+	private static void removeTooltip(List<Component> tooltips, MutableComponent tooltip) {
+		var tooltipsIterator = tooltips.iterator();
+		while (tooltipsIterator.hasNext()) {
+			if (!tooltipsIterator.next().equals(tooltip)) {
+				continue;
+			}
+			tooltipsIterator.remove();
+			break;
+		}
+	}
+
+	protected static boolean areGemstonesAndBonusesSame(@NotNull ItemStack itemStack, GemstoneItem gemstoneItem, Triple<Attribute, Double, Operation> gemstoneBonus, int gemstoneSlot) {
+		if (GemstoneItem.getGemstone(itemStack, gemstoneSlot) != gemstoneItem) {
+			return false;
+		}
+		if (!isSameBonus(gemstoneBonus, GemstoneItem.getAttributeBonus(itemStack, gemstoneSlot))) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean isSameBonus(Triple<Attribute, Double, Operation> first, Triple<Attribute, Double, Operation> second) {
+		if (first.equals(second)) {
+			return true;
+		}
+		if (first.getLeft() == second.getLeft() && first.getRight() == second.getRight()) {
+			return true;
+		}
+		return false;
 	}
 
 	public static AttributeModifier getAttributeModifier(int gemstoneSlot, Triple<Attribute, Double, Operation> attributeBonus, EquipmentSlot equipmentSlot) {
