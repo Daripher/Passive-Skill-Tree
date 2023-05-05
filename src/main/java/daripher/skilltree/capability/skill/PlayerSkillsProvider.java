@@ -117,14 +117,17 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
+		if (event.getEntity().level.isClientSide) {
+			return;
+		}
 		if (!(event.getEntity() instanceof Player)) {
 			return;
 		}
 		var player = (Player) event.getEntity();
-		if (!event.getEntity().level.isClientSide) {
-			if (get(player).isTreeReset()) {
-				player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
-			}
+		var skillsCapability = PlayerSkillsProvider.get(player);
+		if (skillsCapability.isTreeReset()) {
+			player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
+			skillsCapability.setTreeReset(false);
 		}
 	}
 

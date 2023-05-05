@@ -589,5 +589,6 @@
   "skill.skilltree.miner_offensive_notable_1.description": "+25% Damage per Gemstone in your Weapon",
   "skill.skilltree.miner_offensive_notable_1.name": "Cursed Stones",
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
+  "skilltree.message.reset_command": "Your skill tree will reset when you rejoin the game.",
   "skilltree.message.skillpoint": "Skill point gained. Open skill tree menu to spend it."
 }

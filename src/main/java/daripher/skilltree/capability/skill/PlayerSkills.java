@@ -90,11 +90,17 @@ public class PlayerSkills implements IPlayerSkills {
 	}
 
 	@Override
+	public void setTreeReset(boolean treeReset) {
+		this.treeReset = treeReset;
+	}
+
+	@Override
 	public CompoundTag serializeNBT() {
 		var tag = new CompoundTag();
 		tag.putUUID("TreeVersion", TREE_VERSION);
 		tag.putInt("Points", skillPoints);
 		tag.putInt("Expirience", expirience);
+		tag.putBoolean("TreeReset", treeReset);
 		var skillTagsList = new ListTag();
 
 		skills.forEach(skill -> {
@@ -111,9 +117,15 @@ public class PlayerSkills implements IPlayerSkills {
 		var treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
 		skillPoints = tag.getInt("Points");
 		expirience = tag.getInt("Expirience");
+		treeReset = tag.getBoolean("TreeReset");
 		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
-
-		if (treeVersion.equals(TREE_VERSION)) {
+		if (!treeVersion.equals(TREE_VERSION)) {
+			treeReset = true;
+		}
+		if (treeReset) {
+			skillPoints += skillTagsList.size();
+			treeReset = true;
+		} else {
 			skillTagsList.forEach(skillTag -> {
 				var skillId = new ResourceLocation(skillTag.getAsString());
 				var passiveSkill = SkillsDataReloader.getSkillById(skillId);
@@ -122,9 +134,6 @@ public class PlayerSkills implements IPlayerSkills {
 					skills.add(passiveSkill);
 				}
 			});
-		} else {
-			skillPoints += skillTagsList.size();
-			treeReset = true;
 		}
 	}
 }

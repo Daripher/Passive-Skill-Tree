@@ -26,4 +26,6 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 	boolean isTreeReset();
 
 	void setSkillPoints(int skillPoints);
+
+	void setTreeReset(boolean treeReset);
 }
