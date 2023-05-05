@@ -107,7 +107,7 @@ public class PlayerHelper {
 		}
 		var foodLevel = player.getFoodData().getFoodLevel();
 		if (foodLevel > 0) {
-			var critDamagePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_MULTIPLIER_PER_SATISFIED_HUNGER.get());
+			var critDamagePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_MULTIPLIER_PER_SATISFIED_HUNGER.get()) - 1;
 			multiplier += foodLevel * critDamagePerSatisfiedHunger;
 		}
 		return multiplier;
