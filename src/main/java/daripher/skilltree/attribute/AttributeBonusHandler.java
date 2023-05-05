@@ -10,8 +10,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
 import daripher.skilltree.init.SkillTreeItems;
+import daripher.skilltree.item.GemstoneItem;
 import daripher.skilltree.util.FoodHelper;
-import daripher.skilltree.util.GemstoneHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;
 import net.minecraft.ChatFormatting;
@@ -118,9 +118,11 @@ public class AttributeBonusHandler {
 			}
 			playerAttribute.removeModifier(modifierId);
 		}
-		playerAttribute.addTransientModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", dynamicBonus, operation));
 		if (modifiedAttribute == Attributes.MAX_HEALTH) {
+			playerAttribute.addPermanentModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", dynamicBonus, operation));
 			player.setHealth(player.getHealth());
+		} else {
+			playerAttribute.addTransientModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", dynamicBonus, operation));
 		}
 	}
 
@@ -135,7 +137,7 @@ public class AttributeBonusHandler {
 		var gemstonesInArmor = 0;
 		for (var slot = 0; slot < 4; slot++) {
 			var itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
-			gemstonesInArmor += GemstoneHelper.getGemstonesCount(itemInSlot);
+			gemstonesInArmor += GemstoneItem.getGemstonesCount(itemInSlot);
 		}
 		return lifePerGemstoneInArmor * gemstonesInArmor;
 	}
@@ -148,13 +150,13 @@ public class AttributeBonusHandler {
 
 	private static double getArmorPerGemstoneInChestplate(Player player) {
 		var armorPerGemstoneInChestplate = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get());
-		var getmstonesInChestplate = GemstoneHelper.getGemstonesCount(player.getItemBySlot(EquipmentSlot.CHEST));
+		var getmstonesInChestplate = GemstoneItem.getGemstonesCount(player.getItemBySlot(EquipmentSlot.CHEST));
 		return armorPerGemstoneInChestplate * getmstonesInChestplate;
 	}
 
 	private static double getArmorPerGemstoneInHelmet(Player player) {
 		var armorPerGemstoneInHelmet = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get());
-		var getmstonesInHelmet = GemstoneHelper.getGemstonesCount(player.getItemBySlot(EquipmentSlot.HEAD));
+		var getmstonesInHelmet = GemstoneItem.getGemstonesCount(player.getItemBySlot(EquipmentSlot.HEAD));
 		return armorPerGemstoneInHelmet * getmstonesInHelmet;
 	}
 
@@ -321,7 +323,7 @@ public class AttributeBonusHandler {
 		}
 		var helmetAdditionalGemstoneSlots = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get());
 		if (ItemHelper.isHelmet(event.getCrafting()) && helmetAdditionalGemstoneSlots > 0) {
-			GemstoneHelper.setAdditionalGemstoneSlot(event.getCrafting());
+			GemstoneItem.setAdditionalGemstoneSlot(event.getCrafting());
 		}
 	}
 

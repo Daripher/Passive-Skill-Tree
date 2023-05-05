@@ -12,8 +12,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
 public class TooltipHelper {
-	public static MutableComponent getAttributeBonusTooltip(Triple<Attribute, Double, Operation> attributeBonus, double gemstoneStrengthBonus) {
-		var modifierValue = attributeBonus.getMiddle() * (1 + gemstoneStrengthBonus);
+	public static MutableComponent getAttributeBonusTooltip(Triple<Attribute, Double, Operation> attributeBonus) {
+		var modifierValue = attributeBonus.getMiddle();
 		var modifierOperation = attributeBonus.getRight();
 		var modifiedAttribute = attributeBonus.getLeft();
 		var visibleBonusValue = modifierValue;

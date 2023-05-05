@@ -6,7 +6,6 @@ import daripher.skilltree.api.recipe.PlayerRequiringRecipe;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
 import daripher.skilltree.item.GemstoneItem;
-import daripher.skilltree.util.GemstoneHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,41 +32,40 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequ
 	@Override
 	public ItemStack assemble(Container smithingContainer) {
 		var baseItem = smithingContainer.getItem(0);
-		var gemstoneSlot = getEmptyGemstoneSlot(baseItem);
-		if (GemstoneHelper.hasGemstone(baseItem, gemstoneSlot)) {
+		var gemstoneSlot = getFirstEmptyGemstoneSlot(baseItem);
+		var gemstoneItem = (GemstoneItem) smithingContainer.getItem(1).getItem();
+		if (!gemstoneItem.canInsertInto(currentPlayer, baseItem, gemstoneSlot)) {
 			return ItemStack.EMPTY;
 		}
-		var gemstoneItem = (GemstoneItem) smithingContainer.getItem(1).getItem();
 		var resultItemStack = baseItem.copy();
 		if (baseItem.getTag() != null) {
 			resultItemStack.setTag(baseItem.getTag().copy());
 		}
-		GemstoneHelper.applyGemstone(resultItemStack, gemstoneItem, gemstoneSlot);
-		var gemstoneStrength = getGemstoneStrength(baseItem);
-		GemstoneHelper.setGemstoneStrength(resultItemStack, gemstoneStrength, gemstoneSlot);
+		var gemstoneStrength = getPlayerGemstoneStrength(currentPlayer, baseItem);
+		gemstoneItem.insertInto(currentPlayer, resultItemStack, gemstoneSlot, gemstoneStrength);
 		return resultItemStack;
 	}
 
-	public double getGemstoneStrength(ItemStack craftingItem) {
-		var gemstoneStrength = currentPlayer.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_MULTIPLIER.get()) - 1;
+	public double getPlayerGemstoneStrength(Player player, ItemStack craftingItem) {
+		var gemstoneStrength = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_MULTIPLIER.get()) - 1;
 		var craftingArmor = ItemHelper.isArmor(craftingItem) || ItemHelper.isShield(craftingItem);
 		var craftingWeapon = ItemHelper.isWeapon(craftingItem) || ItemHelper.isBow(craftingItem);
 		if (craftingArmor) {
-			var gemstoneStrengthInArmor = currentPlayer.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR_MULTIPLIER.get()) - 1;
+			var gemstoneStrengthInArmor = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR_MULTIPLIER.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInArmor;
 		} else if (craftingWeapon) {
-			var gemstoneStrengthInWeapon = currentPlayer.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON_MULTIPLIER.get()) - 1;
+			var gemstoneStrengthInWeapon = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON_MULTIPLIER.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInWeapon;
 		}
 		return gemstoneStrength;
 	}
 
-	public int getEmptyGemstoneSlot(ItemStack baseItem) {
+	public int getFirstEmptyGemstoneSlot(ItemStack baseItem) {
 		var maxGemSlots = getMaxGemSlots(baseItem);
 		var gemstoneSlot = 0;
 		for (int i = 0; i < maxGemSlots; i++) {
 			gemstoneSlot = i;
-			if (!GemstoneHelper.hasGemstone(baseItem, gemstoneSlot)) {
+			if (!GemstoneItem.hasGemstone(baseItem, gemstoneSlot)) {
 				break;
 			}
 		}
@@ -76,7 +74,7 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequ
 
 	public int getMaxGemSlots(ItemStack baseItem) {
 		var slots = 1;
-		if (GemstoneHelper.hasAdditionalGemstoneSlot(baseItem)) {
+		if (GemstoneItem.hasAdditionalGemstoneSlot(baseItem)) {
 			slots++;
 		}
 		slots += PlayerHelper.getAdditionalGemstoneSlots(currentPlayer);

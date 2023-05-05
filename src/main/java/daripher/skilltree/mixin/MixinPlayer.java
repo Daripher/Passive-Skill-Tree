@@ -3,8 +3,13 @@ package daripher.skilltree.mixin;
 import java.lang.reflect.InvocationTargetException;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import daripher.skilltree.api.player.JewelerPlayer;
 import daripher.skilltree.init.SkillTreeAttributes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +20,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 @Mixin(Player.class)
-public abstract class MixinPlayer extends LivingEntity {
+public abstract class MixinPlayer extends LivingEntity implements JewelerPlayer {
+	private int rainbowJewelInsertionSeed;
+
 	protected MixinPlayer() {
 		super(null, null);
 	}
@@ -63,5 +70,25 @@ public abstract class MixinPlayer extends LivingEntity {
 				}
 			}
 		}
+	}
+
+	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
+	private void readRainbowJewelInsertionSeed(CompoundTag tag, CallbackInfo callbackInfo) {
+		rainbowJewelInsertionSeed = tag.getInt("RainbowJewelInsertionSeed");
+	}
+
+	@Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+	private void writeRainbowJewelInsertionSeed(CompoundTag tag, CallbackInfo callbackInfo) {
+		tag.putInt("RainbowJewelInsertionSeed", rainbowJewelInsertionSeed);
+	}
+
+	@Override
+	public int getRainbowJewelInsertionSeed() {
+		return rainbowJewelInsertionSeed;
+	}
+
+	@Override
+	public void rainbowJewelInserted() {
+		rainbowJewelInsertionSeed = random.nextInt();
 	}
 }

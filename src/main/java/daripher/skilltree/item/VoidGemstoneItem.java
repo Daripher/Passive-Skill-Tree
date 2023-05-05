@@ -1,30 +1,29 @@
 package daripher.skilltree.item;
 
-import java.util.List;
+import org.apache.commons.lang3.tuple.Triple;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
-public class VoidGemstoneItem extends Item {
+public class VoidGemstoneItem extends GemstoneItem {
 	public VoidGemstoneItem() {
-		super(new Properties().tab(CreativeModeTab.TAB_MATERIALS));
+		super(0x796767);
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack itemStack) {
-		return Component.literal("").append(super.getName(itemStack)).withStyle(Style.EMPTY.withColor(0x796767));
+	public void insertInto(Player player, ItemStack itemStack, int gemstoneSlot, double gemstoneStrength) {
+		itemStack.getTag().remove(GEMSTONES_TAG);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-		var tooltip = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC);
-		components.add(tooltip);
+	public boolean canInsertInto(Player currentPlayer, ItemStack baseItem, int gemstoneSlot) {
+		return GemstoneItem.hasGemstone(baseItem, 0);
+	}
+
+	@Override
+	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
+		return null;
 	}
 }

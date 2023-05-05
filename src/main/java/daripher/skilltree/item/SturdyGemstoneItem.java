@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class SturdyGemstoneItem extends GemstoneItem {
+public class SturdyGemstoneItem extends SimpleGemstoneItem {
 	public SturdyGemstoneItem() {
 		super(0xECB573);
 	}

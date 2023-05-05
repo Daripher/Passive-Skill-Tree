@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class SoothingGemstoneItem extends GemstoneItem {
+public class SoothingGemstoneItem extends SimpleGemstoneItem {
 	public SoothingGemstoneItem() {
 		super(0xB4E58B);
 	}

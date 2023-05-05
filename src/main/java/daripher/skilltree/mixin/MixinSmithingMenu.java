@@ -8,18 +8,24 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import daripher.skilltree.api.player.JewelerPlayer;
 import daripher.skilltree.api.recipe.PlayerRequiringRecipe;
-import daripher.skilltree.util.GemstoneHelper;
+import daripher.skilltree.init.SkillTreeItems;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.SmithingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 
 @Mixin(SmithingMenu.class)
-public class MixinSmithingMenu {
+public abstract class MixinSmithingMenu extends ItemCombinerMenu {
 	private Player currentPlayer;
+
+	public MixinSmithingMenu() {
+		super(null, 0, null, null);
+	}
 
 	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
 	private void init(int windowId, Inventory inventory, ContainerLevelAccess levelAccess, CallbackInfo callbackInfo) {
@@ -33,12 +39,15 @@ public class MixinSmithingMenu {
 	}
 
 	@Inject(method = "onTake", at = @At("HEAD"))
-	private void setRainbowGemstoneBonusIfNeeded(Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
-		for (var gemstoneSlot = 0; gemstoneSlot < 3; gemstoneSlot++) {
-			if (GemstoneHelper.hasRainbowGemstone(itemStack, gemstoneSlot) && !GemstoneHelper.isRainbowGemstoneBonusSet(itemStack, gemstoneSlot)) {
-				GemstoneHelper.setRainbowGemstoneBonus(itemStack, gemstoneSlot);
-			}
+	private void changeRainbowJewelInsertionSeed(Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
+		if (inputSlots.getItem(1).getItem() != SkillTreeItems.RAINBOW_GEMSTONE.get()) {
+			return;
 		}
+		if (!(player instanceof JewelerPlayer)) {
+			return;
+		}
+		var jewelerPlayer = (JewelerPlayer) player;
+		jewelerPlayer.rainbowJewelInserted();
 	}
 
 	private void setPlayerIfNeeded(UpgradeRecipe upgradeRecipe) {
