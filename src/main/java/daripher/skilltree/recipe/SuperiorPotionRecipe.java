@@ -12,12 +12,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.RegisterEvent;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
-public enum SuperiorPotionRecipe implements IBrewingRecipe {
-	INSTANCE;
-
+public class SuperiorPotionRecipe implements IBrewingRecipe {
 	@SubscribeEvent
 	public static void registerRecipe(RegisterEvent event) {
-		BrewingRecipeRegistry.addRecipe(INSTANCE);
+		BrewingRecipeRegistry.addRecipe(new SuperiorPotionRecipe());
 	}
 
 	@Override
