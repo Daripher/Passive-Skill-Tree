@@ -37,7 +37,7 @@ public class SuperiorPotionRecipe implements IBrewingRecipe {
 		}
 
 		for (IBrewingRecipe recipe : BrewingRecipeRegistry.getRecipes()) {
-			if (recipe == this) {
+			if (recipe instanceof SuperiorPotionRecipe) {
 				continue;
 			}
 
