@@ -27,5 +27,5 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 
 	void setSkillPoints(int skillPoints);
 
-	void setTreeReset(boolean treeReset);
+	void resetTree(ServerPlayer player);
 }

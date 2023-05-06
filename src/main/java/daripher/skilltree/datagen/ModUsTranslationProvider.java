@@ -164,7 +164,7 @@ public class ModUsTranslationProvider extends LanguageProvider {
 		// system messages
 		add("skilltree.message.skillpoint", "Skill point gained. Open skill tree menu to spend it.");
 		add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
-		add("skilltree.message.reset_command", "Your skill tree will reset when you rejoin the game.");
+		add("skilltree.message.reset_command", "Your skill tree has been reset.");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

@@ -127,7 +127,6 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		var skillsCapability = PlayerSkillsProvider.get(player);
 		if (skillsCapability.isTreeReset()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
-			skillsCapability.setTreeReset(false);
 		}
 	}
 

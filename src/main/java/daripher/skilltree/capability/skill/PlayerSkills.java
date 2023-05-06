@@ -90,8 +90,19 @@ public class PlayerSkills implements IPlayerSkills {
 	}
 
 	@Override
-	public void setTreeReset(boolean treeReset) {
-		this.treeReset = treeReset;
+	public void resetTree(ServerPlayer player) {
+		skillPoints += getPlayerSkills().size();
+		getPlayerSkills().forEach(skill -> {
+			skill.getAttributeModifiers().forEach(pair -> {
+				var attribute = pair.getLeft();
+				var modifier = pair.getRight();
+				var playerAttribute = player.getAttribute(attribute);
+				if (playerAttribute.hasModifier(modifier)) {
+					playerAttribute.removeModifier(modifier);
+				}
+			});
+		});
+		getPlayerSkills().clear();
 	}
 
 	@Override
@@ -117,12 +128,8 @@ public class PlayerSkills implements IPlayerSkills {
 		var treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
 		skillPoints = tag.getInt("Points");
 		expirience = tag.getInt("Expirience");
-		treeReset = tag.getBoolean("TreeReset");
 		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
 		if (!treeVersion.equals(TREE_VERSION)) {
-			treeReset = true;
-		}
-		if (treeReset) {
 			skillPoints += skillTagsList.size();
 			treeReset = true;
 		} else {
