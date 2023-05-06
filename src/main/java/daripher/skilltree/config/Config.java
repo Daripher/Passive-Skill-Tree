@@ -16,28 +16,19 @@ public class Config {
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
 
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
-			Predicate<Object> positiveInteger = o -> o instanceof Integer && (Integer) o > 0;
 			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer && (Integer) o >= 0;
-			maximumSkillPoints = builder.define("maximum_skill_points", 55, positiveInteger);
-			skillPointsCosts = builder.defineList("skill_points_costs", generateDefaultPointsCosts(), positiveOrZeroInteger);
+			maximumSkillPoints = builder.defineInRange("maximum_skill_points", 55, 1, 300);
+			skillPointsCosts = builder.defineList("skill_points_costs", generateDefaultPointsCosts(55), positiveOrZeroInteger);
 		}
 
-		private List<Integer> generateDefaultPointsCosts() {
+		private List<Integer> generateDefaultPointsCosts(int maximumPoints) {
 			var costs = new ArrayList<Integer>();
-			costs.add(9);
-			costs.add(14);
-
-			while (costs.size() < 55) {
-				var cost = costs.get(costs.size() - 1) + costs.get(costs.size() - 2);
-				cost /= 1.8;
-
-				if (cost <= costs.get(costs.size() - 1)) {
-					cost = costs.get(costs.size() - 1) + 1;
-				}
-
+			costs.add(40);
+			for (int i = 1; i < maximumPoints; i++) {
+				var previousCost = costs.get(costs.size() - 1);
+				var cost = previousCost + 4 + i;
 				costs.add(cost);
 			}
-
 			return costs;
 		}
 
@@ -46,10 +37,10 @@ public class Config {
 		}
 
 		public List<? extends Integer> getSkillPointCosts() {
-			if (skillPointsCosts.get().size() < maximumSkillPoints.get()) {
-				skillPointsCosts.set(generateDefaultPointsCosts());
+			var maximumPoints = maximumSkillPoints.get();
+			if (skillPointsCosts.get().size() < maximumPoints) {
+				skillPointsCosts.set(generateDefaultPointsCosts(maximumPoints));
 			}
-
 			return skillPointsCosts.get();
 		}
 	}
