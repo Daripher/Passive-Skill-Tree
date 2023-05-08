@@ -27,7 +27,7 @@ public class ItemHelper {
 	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
 	private static final String ATTACK_SPEED_BONUS_TAG = "AttackSpeedBonus";
 	private static final String TOUGHNESS_BONUS_TAG = "ToughnessBonus";
-	private static final String POISONS_TAG = "ToughnessBonus";
+	private static final String POISONS_TAG = "Poisons";
 
 	public static void setDefenceBonus(ItemStack itemStack, double bonus) {
 		itemStack.getOrCreateTag().putDouble(DEFENCE_BONUS_TAG, bonus);
