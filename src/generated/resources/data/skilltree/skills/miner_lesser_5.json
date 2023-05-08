@@ -4,18 +4,18 @@
       "amount": 0.05,
       "attribute": "skilltree:player.mining_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "586b2d26-fe83-4710-b6ef-5babc5c03b6d"
+      "unique_id": "41d62817-a84e-4e28-b7fe-c2e82a297e79"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_mastery"
+    "skilltree:miner_lesser_6"
   ],
   "icon_texture": "skilltree:textures/icons/miner_lesser.png",
   "position": {
-    "x": -58,
-    "y": 21
+    "x": -56,
+    "y": 20
   },
   "tree": "skilltree:tree"
 }

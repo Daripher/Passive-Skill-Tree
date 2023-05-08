@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.damage_per_armor_bonus",
       "operation": "addition",
-      "unique_id": "f53d3d05-e6c5-463c-ad9d-fb8aa0879b1d"
+      "unique_id": "047b8dd3-d364-4aa5-bc79-f48aed7e8962"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

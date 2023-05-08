@@ -165,6 +165,14 @@ public class SkillTreeScreen extends Screen {
 		renderBackground(poseStack);
 		renderConnections(poseStack, partialTick);
 		super.render(poseStack, mouseX, mouseY, partialTick);
+		renderPointsInfo(poseStack);
+	}
+
+	private void renderPointsInfo(PoseStack poseStack) {
+		var maxPoints = Config.COMMON_CONFIG.getMaximumSkillPoints();
+		var spentPoints = learnedSkills.size();
+		var pointsInfo = spentPoints + "/" + maxPoints;
+		drawCenteredString(poseStack, font, pointsInfo, width / 2, 2, 0xFFFFFF);
 	}
 
 	@Override

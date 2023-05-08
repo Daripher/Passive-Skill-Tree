@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.damage_with_shield_multiplier",
       "operation": "addition",
-      "unique_id": "dabb18c4-59e1-4ae8-acb4-215870796645"
+      "unique_id": "369e92a3-d5ee-418a-b2e5-17ce2edea549"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

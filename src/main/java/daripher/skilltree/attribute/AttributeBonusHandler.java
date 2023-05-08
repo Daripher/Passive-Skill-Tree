@@ -14,6 +14,7 @@ import daripher.skilltree.item.GemstoneItem;
 import daripher.skilltree.util.FoodHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -71,6 +72,7 @@ public class AttributeBonusHandler {
 		}
 		if (event.getTarget() instanceof LivingEntity target) {
 			var critChance = PlayerHelper.getCritChance(event.getEntity(), target);
+			critChance = Math.min(0.65F, critChance);
 			if (event.getEntity().getRandom().nextFloat() < critChance) {
 				var critDamage = PlayerHelper.getCritDamageMultiplier(event.getEntity(), target);
 				event.setDamageModifier(critDamage);
@@ -301,12 +303,13 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void setCraftedArmorBonuses(ItemCraftedEvent event) {
-		if (!ItemHelper.isArmor(event.getCrafting())) {
+		var itemStack = event.getCrafting();
+		if (!ItemHelper.isArmor(itemStack)) {
 			return;
 		}
 		var armorDefenceBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_MULTIPLIER.get()) - 1;
 		if (armorDefenceBonus > 0) {
-			ItemHelper.setDefenceBonus(event.getCrafting(), armorDefenceBonus);
+			ItemHelper.setDefenceBonus(itemStack, armorDefenceBonus);
 		}
 		var tougherArmorCraftingChance = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_ARMOR_BONUS_TOUGHNESS_CHANCE_MULTIPLIER.get()) - 1;
 		if (tougherArmorCraftingChance > 0) {
@@ -315,15 +318,15 @@ public class AttributeBonusHandler {
 			if (event.getEntity().getRandom().nextFloat() < tougherArmorCraftingChance) {
 				bonusToughness++;
 			}
-			ItemHelper.setToughnessBonus(event.getCrafting(), bonusToughness);
+			ItemHelper.setToughnessBonus(itemStack, bonusToughness);
 		}
 		var armorEvasionBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_ARMOR_EVASION_BONUS.get());
 		if (armorEvasionBonus > 0) {
-			ItemHelper.setEvasionBonus(event.getCrafting(), armorEvasionBonus);
+			ItemHelper.setEvasionBonus(itemStack, armorEvasionBonus);
 		}
 		var helmetAdditionalGemstoneSlots = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get());
-		if (ItemHelper.isHelmet(event.getCrafting()) && helmetAdditionalGemstoneSlots > 0) {
-			GemstoneItem.setAdditionalGemstoneSlot(event.getCrafting());
+		if (ItemHelper.isHelmet(itemStack) && helmetAdditionalGemstoneSlots > 0) {
+			GemstoneItem.setAdditionalGemstoneSlot(itemStack);
 		}
 	}
 
@@ -348,17 +351,46 @@ public class AttributeBonusHandler {
 	}
 
 	@SubscribeEvent
-	public static void setCraftedWeaponAttributeBonuses(ItemCraftedEvent event) {
-		if (!ItemHelper.isWeapon(event.getCrafting())) {
+	public static void setCraftedShieldBonuses(ItemCraftedEvent event) {
+		var itemStack = event.getCrafting();
+		if (!ItemHelper.isShield(itemStack)) {
+			return;
+		}
+		var shieldArmorBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get());
+		if (shieldArmorBonus > 0) {
+			ItemHelper.setDefenceBonus(itemStack, shieldArmorBonus);
+		}
+	}
+
+	@SubscribeEvent
+	public static void applyShieldAttributeBonuses(ItemAttributeModifierEvent event) {
+		if (!ItemHelper.isShield(event.getItemStack())) {
+			return;
+		}
+		if (event.getSlotType() != EquipmentSlot.OFFHAND) {
+			return;
+		}
+		if (ItemHelper.hasDefenceBonus(event.getItemStack())) {
+			var armorBonus = ItemHelper.getDefenceBonus(event.getItemStack());
+			var modifierId = UUID.fromString("7174b3ef-e310-4b60-9535-eeddc741fcf5");
+			var modifier = new AttributeModifier(modifierId, "Skill Tree Bonus", armorBonus, Operation.ADDITION);
+			event.addModifier(Attributes.ARMOR, modifier);
+		}
+	}
+
+	@SubscribeEvent
+	public static void setCraftedWeaponBonuses(ItemCraftedEvent event) {
+		var itemStack = event.getCrafting();
+		if (!ItemHelper.isWeapon(itemStack)) {
 			return;
 		}
 		var weaponDamageBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get());
 		if (weaponDamageBonus > 0) {
-			ItemHelper.setDamageBonus(event.getCrafting(), weaponDamageBonus);
+			ItemHelper.setDamageBonus(itemStack, weaponDamageBonus);
 		}
 		var weaponAttackSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_WEAPON_ATTACK_SPEED_MULTIPLIER.get()) - 1;
 		if (weaponAttackSpeedBonus > 0) {
-			ItemHelper.setAttackSpeedBonus(event.getCrafting(), weaponAttackSpeedBonus);
+			ItemHelper.setAttackSpeedBonus(itemStack, weaponAttackSpeedBonus);
 		}
 	}
 
@@ -470,13 +502,18 @@ public class AttributeBonusHandler {
 	}
 
 	@SubscribeEvent
-	public static void setCraftedBowsAttributeBonuses(ItemCraftedEvent event) {
-		if (!ItemHelper.isBow(event.getCrafting())) {
+	public static void setCraftedBowsBonuses(ItemCraftedEvent event) {
+		var itemStack = event.getCrafting();
+		if (!ItemHelper.isBow(itemStack)) {
 			return;
 		}
 		var bowChargeSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED_BONUS.get());
 		if (bowChargeSpeedBonus > 0) {
-			ItemHelper.setAttackSpeedBonus(event.getCrafting(), bowChargeSpeedBonus);
+			ItemHelper.setAttackSpeedBonus(itemStack, bowChargeSpeedBonus);
+		}
+		var bowAdditionalGemstoneSlots = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get());
+		if (bowAdditionalGemstoneSlots > 0) {
+			GemstoneItem.setAdditionalGemstoneSlot(itemStack);
 		}
 	}
 
@@ -665,5 +702,32 @@ public class AttributeBonusHandler {
 			return;
 		}
 		player.heal((float) healingOnBlock);
+	}
+
+	@SubscribeEvent
+	public static void applyPoisonedWeaponEffects(LivingHurtEvent event) {
+		if (!(event.getSource().getDirectEntity() instanceof Player)) {
+			return;
+		}
+		var player = (Player) event.getSource().getDirectEntity();
+		var weapon = player.getMainHandItem();
+		if (!ItemHelper.hasPoisons(weapon)) {
+			return;
+		}
+		var poisons = ItemHelper.getPoisons(weapon);
+		var target = event.getEntity();
+		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public static void addPoisonedWeaponTooltips(ItemTooltipEvent event) {
+		var weapon = event.getItemStack();
+		if (!ItemHelper.hasPoisons(weapon)) {
+			return;
+		}
+		event.getToolTip().add(Component.empty());
+		event.getToolTip().add(Component.translatable("weapon.poisoned").withStyle(ChatFormatting.DARK_PURPLE));
+		var poisons = ItemHelper.getPoisons(weapon);
+		poisons.stream().map(TooltipHelper::getEffectTooltip).forEach(event.getToolTip()::add);
 	}
 }

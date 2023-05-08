@@ -4,7 +4,7 @@
       "amount": 0.15,
       "attribute": "skilltree:player.double_loot_chance",
       "operation": "addition",
-      "unique_id": "0617f87f-b2a3-4531-bdd4-e4cbc38b3cca"
+      "unique_id": "39153400-b254-4488-a71b-a971d81300de"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

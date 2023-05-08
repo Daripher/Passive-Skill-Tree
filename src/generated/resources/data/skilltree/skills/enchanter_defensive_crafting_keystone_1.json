@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.armor_enchantments_amplification_chance",
+      "operation": "addition",
+      "unique_id": "72816b41-3d3b-4826-853c-65e332d05a30"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_keystone.png",
+  "position": {
+    "x": 289,
+    "y": -27
+  },
+  "tree": "skilltree:tree"
+}

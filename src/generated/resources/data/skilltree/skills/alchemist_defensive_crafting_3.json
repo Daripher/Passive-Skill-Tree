@@ -4,7 +4,7 @@
       "amount": 0.05,
       "attribute": "skilltree:player.brewed_beneficial_potions_strength_multiplier",
       "operation": "multiply_base",
-      "unique_id": "795762f7-9c7b-423c-b7b3-1d2e1ad3d14c"
+      "unique_id": "b5c09d47-0320-49b0-975c-9acce705931b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

@@ -4,18 +4,18 @@
       "amount": 0.02,
       "attribute": "minecraft:generic.movement_speed",
       "operation": "multiply_base",
-      "unique_id": "de0222a3-5e3c-4e62-84c9-318297e4ac5b"
+      "unique_id": "cd2056a3-52c1-4a52-92a9-5aa958424419"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_offensive_keystone_1"
+    "skilltree:hunter_defensive_combat_9"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_2.png",
   "position": {
-    "x": 121,
-    "y": 83
+    "x": 133,
+    "y": 104
   },
   "tree": "skilltree:tree"
 }

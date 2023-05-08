@@ -1,21 +1,21 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.01,
+      "amount": 0.05,
       "attribute": "skilltree:player.arrow_crit_damage_multiplier",
       "operation": "multiply_base",
-      "unique_id": "c151f34b-8b8f-400d-8eed-fff0f046f7c3"
+      "unique_id": "59b61ffa-fd72-4238-807f-ed72ef0e4649"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_offensive_combat_10"
+    "skilltree:hunter_offensive_keystone_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_combat_2.png",
   "position": {
-    "x": 198,
-    "y": 80
+    "x": 136,
+    "y": 58
   },
   "tree": "skilltree:tree"
 }

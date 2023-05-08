@@ -4,13 +4,14 @@
       "amount": 1.0,
       "attribute": "skilltree:player.crafted_weapon_damage_bonus",
       "operation": "addition",
-      "unique_id": "216dd25b-d36f-42dd-a216-813bcdb66d21"
+      "unique_id": "5efcfc53-e37c-46a8-924b-4a0a8735e831"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_offensive_crafting_5"
+    "skilltree:blacksmith_offensive_crafting_5",
+    "skilltree:miner_defensive_crafting_4"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting.png",
   "position": {

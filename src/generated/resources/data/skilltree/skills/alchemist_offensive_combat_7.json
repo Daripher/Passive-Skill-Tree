@@ -4,18 +4,20 @@
       "amount": 0.03,
       "attribute": "skilltree:player.attack_speed_under_potion_effect_multiplier",
       "operation": "multiply_base",
-      "unique_id": "34b826b7-fb91-4ac6-a99b-8bc863bdc09b"
+      "unique_id": "6745466d-e3d3-45d4-bfbf-265c1fc6c79f"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_offensive_combat_8"
+    "skilltree:alchemist_offensive_combat_8",
+    "skilltree:alchemist_mixed_notable_1",
+    "skilltree:alchemist_offensive_combat_10"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_combat_2.png",
   "position": {
     "x": 19,
-    "y": 170
+    "y": 192
   },
   "tree": "skilltree:tree"
 }

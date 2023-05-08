@@ -5,6 +5,9 @@ import org.apache.commons.lang3.tuple.Triple;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -36,5 +39,19 @@ public class TooltipHelper {
 		var formattedVisibleBonus = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleBonusValue);
 		var formattedOperation = "attribute.modifier." + textOperation + "." + modifierOperation.toValue();
 		return Component.translatable(formattedOperation, formattedVisibleBonus, attributeComponent).withStyle(style);
+	}
+
+	public static MutableComponent getEffectTooltip(MobEffectInstance effect) {
+		MutableComponent potionTooltip = Component.translatable(effect.getDescriptionId());
+		MobEffect mobeffect = effect.getEffect();
+		if (effect.getAmplifier() > 0) {
+			potionTooltip = Component.translatable("potion.withAmplifier", potionTooltip, Component.translatable("potion.potency." + effect.getAmplifier()));
+		}
+		if (effect.getDuration() > 20) {
+			potionTooltip = Component.translatable("potion.withDuration", potionTooltip, MobEffectUtil.formatDuration(effect, 1F));
+		}
+		potionTooltip = potionTooltip.withStyle(mobeffect.getCategory().getTooltipFormatting());
+		potionTooltip = Component.literal(" ").append(potionTooltip);
+		return potionTooltip;
 	}
 }

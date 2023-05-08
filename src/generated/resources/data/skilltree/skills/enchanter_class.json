@@ -4,7 +4,7 @@
       "amount": -0.3,
       "attribute": "skilltree:player.enchantment_level_requirement_decrease",
       "operation": "multiply_base",
-      "unique_id": "5c761555-8cd2-46de-8312-c36d810f520c"
+      "unique_id": "a27f7d79-d495-4f3f-baf6-ad2a0434fffd"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

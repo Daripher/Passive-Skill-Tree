@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.75,
+      "attribute": "skilltree:player.brewed_harmful_potions_strength_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "c0b23bbd-d4e2-45c0-a14b-d3b3592841bb"
+    },
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_weapon_poisons_bonus",
+      "operation": "addition",
+      "unique_id": "0bf4f4ed-9268-4129-b224-3e160815e46e"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/alchemist_offensive_crafting_keystone.png",
+  "position": {
+    "x": 126,
+    "y": 257
+  },
+  "tree": "skilltree:tree"
+}

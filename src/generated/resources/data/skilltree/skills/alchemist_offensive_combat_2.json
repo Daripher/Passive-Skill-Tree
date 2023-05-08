@@ -4,7 +4,7 @@
       "amount": 0.2,
       "attribute": "skilltree:player.damage_against_poisoned_multiplier",
       "operation": "multiply_base",
-      "unique_id": "66d720fb-92fe-4ca0-9bde-ea781dc4107b"
+      "unique_id": "5b985758-c0ee-464e-b96b-2d97d963a7a5"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

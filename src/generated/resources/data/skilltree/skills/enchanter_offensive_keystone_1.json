@@ -1,10 +1,10 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
+      "amount": 0.05,
       "attribute": "skilltree:player.damage_per_weapon_enchantment_level_multiplier",
       "operation": "multiply_base",
-      "unique_id": "e36401dd-b771-4a4e-b4ea-daebb0c4ae72"
+      "unique_id": "b5daa8cf-84bb-4186-b62f-28e93126c3ce"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

@@ -4,12 +4,13 @@
       "amount": 0.01,
       "attribute": "skilltree:player.evasion_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "fb01880a-2265-4805-ba7f-f3ea6048d704"
+      "unique_id": "b98d6eaf-61fe-44e5-b831-b3154da9d02e"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
+    "skilltree:hunter_defensive_combat_7",
     "skilltree:hunter_defensive_combat_6"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_1.png",

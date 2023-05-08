@@ -4,13 +4,14 @@
       "amount": 0.05,
       "attribute": "skilltree:player.mining_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "78735f44-185f-4693-ab8c-b04c17897c12"
+      "unique_id": "ec92f2e7-6be7-4727-a60b-e6c9dd15f127"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_lesser_4"
+    "skilltree:miner_lesser_4",
+    "skilltree:miner_defensive_crafting_6"
   ],
   "icon_texture": "skilltree:textures/icons/miner_lesser.png",
   "position": {

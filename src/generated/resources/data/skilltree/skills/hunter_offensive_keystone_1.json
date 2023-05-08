@@ -1,10 +1,10 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.03,
+      "amount": 0.02,
       "attribute": "skilltree:player.arrow_damage_per_distance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "2f3bbaa9-212b-4d43-8868-2c2787f25b0c"
+      "unique_id": "68ad27f8-1902-4052-8bb9-b0fba3f93d39"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

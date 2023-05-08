@@ -4,7 +4,7 @@
       "amount": 0.01,
       "attribute": "skilltree:player.damage_per_enchantment_multiplier",
       "operation": "multiply_base",
-      "unique_id": "a4317521-fbaf-4af1-8ea9-dae246570bbb"
+      "unique_id": "c265ea51-b8c2-4bbe-99ff-06467045c9eb"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

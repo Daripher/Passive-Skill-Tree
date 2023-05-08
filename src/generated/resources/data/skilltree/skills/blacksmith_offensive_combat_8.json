@@ -4,18 +4,17 @@
       "amount": 0.1,
       "attribute": "skilltree:player.crit_chance_with_shield_multiplier",
       "operation": "multiply_base",
-      "unique_id": "1b5f96c5-665e-400a-b855-ef6767009539"
+      "unique_id": "9a2348af-8f2a-4d25-afd9-4cab20cd3af7"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_offensive_keystone_1",
-    "skilltree:blacksmith_offensive_keystone_1"
+    "skilltree:blacksmith_offensive_combat_9"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_offensive_combat_2.png",
   "position": {
-    "x": -152,
+    "x": -176,
     "y": -74
   },
   "tree": "skilltree:tree"

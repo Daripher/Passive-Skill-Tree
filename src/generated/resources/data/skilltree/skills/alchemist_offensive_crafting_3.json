@@ -4,13 +4,14 @@
       "amount": 0.05,
       "attribute": "skilltree:player.brewed_harmful_potions_strength_multiplier",
       "operation": "multiply_base",
-      "unique_id": "e76d0dd2-8360-4887-a0bf-1442765d89e6"
+      "unique_id": "d42bb8d5-6437-4b0e-b481-a78b0321731b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_offensive_crafting_4"
+    "skilltree:alchemist_offensive_crafting_4",
+    "skilltree:hunter_defensive_crafting_3"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_crafting.png",
   "position": {

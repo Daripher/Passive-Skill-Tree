@@ -4,13 +4,14 @@
       "amount": 0.1,
       "attribute": "skilltree:player.weapon_enchantments_amplification_chance",
       "operation": "addition",
-      "unique_id": "d3685708-4f60-403e-936b-ccd28612f2f4"
+      "unique_id": "ee45ffc6-31e8-4dd0-a347-0c34a2b7e474"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_offensive_crafting_4"
+    "skilltree:enchanter_offensive_crafting_4",
+    "skilltree:cook_defensive_crafting_3"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting.png",
   "position": {

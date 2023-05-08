@@ -8,7 +8,10 @@
   	"MixinEnchantmentMenu",
   	"MixinPlayer",
   	"MixinPotionItem",
-  	"MixinSmithingMenu"
+  	"MixinSmithingMenu",
+  	"MixinSimpleContainer",
+  	"MixinCraftingContainer",
+  	"MixinCraftingMenu"
   ],
   "client" : [ ],
   "injectors" : {

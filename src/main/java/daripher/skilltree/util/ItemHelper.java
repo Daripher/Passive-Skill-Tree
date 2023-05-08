@@ -1,7 +1,12 @@
 package daripher.skilltree.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -11,7 +16,9 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 
 public class ItemHelper {
@@ -20,8 +27,7 @@ public class ItemHelper {
 	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
 	private static final String ATTACK_SPEED_BONUS_TAG = "AttackSpeedBonus";
 	private static final String TOUGHNESS_BONUS_TAG = "ToughnessBonus";
-	private static final String DOUBLE_DAMAGE_CHANCE_TAG = "DoubleDamageChance";
-	private static final String ARMOR_REDUCTION_TAG = "ArmorReduction";
+	private static final String POISONS_TAG = "ToughnessBonus";
 
 	public static void setDefenceBonus(ItemStack itemStack, double bonus) {
 		itemStack.getOrCreateTag().putDouble(DEFENCE_BONUS_TAG, bonus);
@@ -83,30 +89,6 @@ public class ItemHelper {
 		return itemStack.getTag().getDouble(ATTACK_SPEED_BONUS_TAG);
 	}
 
-	public static void setDoubleDamageChanceBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(DOUBLE_DAMAGE_CHANCE_TAG, bonus);
-	}
-
-	public static boolean hasDoubleDamageChanceBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(DOUBLE_DAMAGE_CHANCE_TAG);
-	}
-
-	public static double getDoubleDamageChanceBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(DOUBLE_DAMAGE_CHANCE_TAG);
-	}
-
-	public static void setArmorReductionBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(ARMOR_REDUCTION_TAG, bonus);
-	}
-
-	public static boolean hasArmorReductionBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(ARMOR_REDUCTION_TAG);
-	}
-
-	public static double getArmorReductionBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(ARMOR_REDUCTION_TAG);
-	}
-
 	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> amountModifier) {
 		var modifiers = event.getOriginalModifiers().get(attribute);
 
@@ -163,5 +145,34 @@ public class ItemHelper {
 
 	public static boolean isAxe(ItemStack itemStack) {
 		return itemStack.getItem() instanceof AxeItem;
+	}
+
+	public static boolean isPoison(ItemStack itemStack) {
+		return itemStack.getItem() instanceof PotionItem potion && PotionHelper.isHarmfulPotion(itemStack);
+	}
+
+	public static void setPoisons(ItemStack result, ItemStack poisonStack) {
+		var potion = PotionUtils.getPotion(poisonStack);
+		var effects = potion.getEffects();
+		var poisonsTag = new ListTag();
+		for (var effect : effects) {
+			var effectTag = effect.save(new CompoundTag());
+			poisonsTag.add(effectTag);
+		}
+		result.getOrCreateTag().put(POISONS_TAG, poisonsTag);
+	}
+
+	public static boolean hasPoisons(ItemStack itemStack) {
+		return itemStack.hasTag() && itemStack.getTag().contains(POISONS_TAG);
+	}
+
+	public static List<MobEffectInstance> getPoisons(ItemStack itemStack) {
+		var poisonsTag = itemStack.getTag().getList(POISONS_TAG, 10);
+		var effects = new ArrayList<MobEffectInstance>();
+		for (var tag : poisonsTag) {
+			var effect = MobEffectInstance.load((CompoundTag) tag);
+			effects.add(effect);
+		}
+		return effects;
 	}
 }

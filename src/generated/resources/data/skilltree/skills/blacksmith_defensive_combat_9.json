@@ -4,18 +4,18 @@
       "amount": 0.04,
       "attribute": "skilltree:player.chestplate_armor_multiplier",
       "operation": "multiply_base",
-      "unique_id": "b761700c-d924-4b9f-878f-e1e3adf79b2a"
+      "unique_id": "1c5644f0-65d3-4fb4-9b8f-1376b0b2ac48"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_defensive_combat_10"
+    "skilltree:blacksmith_offensive_keystone_1"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_defensive_combat_2.png",
   "position": {
-    "x": -187,
-    "y": -142
+    "x": -137,
+    "y": -99
   },
   "tree": "skilltree:tree"
 }

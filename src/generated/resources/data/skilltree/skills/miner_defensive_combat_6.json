@@ -1,23 +1,22 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.02,
-      "attribute": "minecraft:generic.movement_speed",
-      "operation": "multiply_base",
-      "unique_id": "0369f9f9-19ef-422d-8cd6-ebb47e10c829"
+      "amount": 1.0,
+      "attribute": "minecraft:generic.armor",
+      "operation": "addition",
+      "unique_id": "7e62dc41-0d18-42f1-a772-839b7aa3762e"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_defensive_combat_7",
-    "skilltree:miner_mixed_notable_1",
-    "skilltree:miner_defensive_combat_9"
+    "skilltree:miner_defensive_combat_10",
+    "skilltree:miner_defensive_crafting_6"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_combat_2.png",
+  "icon_texture": "skilltree:textures/icons/miner_defensive_combat_1.png",
   "position": {
-    "x": -195,
-    "y": 69
+    "x": -226,
+    "y": 59
   },
   "tree": "skilltree:tree"
 }

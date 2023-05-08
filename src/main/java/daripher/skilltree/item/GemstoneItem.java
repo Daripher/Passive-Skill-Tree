@@ -7,7 +7,8 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 
-import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.util.ItemHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -150,13 +151,7 @@ public abstract class GemstoneItem extends Item {
 	}
 
 	public static int getEmptyGemstoneSlots(@NotNull ItemStack itemStack, @Nullable Player player) {
-		var maximumSlots = 1;
-		if (hasAdditionalGemstoneSlot(itemStack)) {
-			maximumSlots++;
-		}
-		if (player != null) {
-			maximumSlots += PlayerHelper.getAdditionalGemstoneSlots(player);
-		}
+		var maximumSlots = getMaximumGemstoneSlots(itemStack, player);
 		var emptySlots = maximumSlots;
 		for (var slot = 0; slot < maximumSlots; slot++) {
 			if (hasGemstone(itemStack, slot)) {
@@ -164,5 +159,23 @@ public abstract class GemstoneItem extends Item {
 			}
 		}
 		return emptySlots;
+	}
+
+	public static int getMaximumGemstoneSlots(@NotNull ItemStack itemStack, @Nullable Player player) {
+		var maximumSlots = 1;
+		if (GemstoneItem.hasAdditionalGemstoneSlot(itemStack)) {
+			maximumSlots++;
+		}
+		if (player == null) {
+			return maximumSlots;
+		}
+		maximumSlots += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_GEMSTONE_SLOTS_BONUS.get());
+		if (ItemHelper.isChestplate(itemStack)) {
+			maximumSlots += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS.get());
+		}
+		if (ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack)) {
+			maximumSlots += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS.get());
+		}
+		return maximumSlots;
 	}
 }

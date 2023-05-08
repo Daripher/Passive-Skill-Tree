@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.crafted_armor_defence_bonus",
       "operation": "multiply_base",
-      "unique_id": "6c44cf2f-26ef-426a-8a5d-ca466725b761"
+      "unique_id": "a66da3f0-8224-4705-9457-18bada6c7e22"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

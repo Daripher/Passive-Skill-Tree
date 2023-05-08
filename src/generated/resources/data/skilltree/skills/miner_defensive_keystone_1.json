@@ -4,7 +4,7 @@
       "amount": 5.0,
       "attribute": "skilltree:player.armor_per_gemstone_in_chestplate_bonus",
       "operation": "addition",
-      "unique_id": "10eb3872-1a22-4a67-b661-74912bf1b38a"
+      "unique_id": "90525ef1-bf48-48f0-82cc-db6051070337"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

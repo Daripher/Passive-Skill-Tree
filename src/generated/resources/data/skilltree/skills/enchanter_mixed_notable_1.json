@@ -4,13 +4,13 @@
       "amount": 2.0,
       "attribute": "skilltree:player.maximum_life_per_enchantment",
       "operation": "addition",
-      "unique_id": "4063137f-0f16-43cf-a0b6-959c9bbfcc1b"
+      "unique_id": "9108cff3-621f-4007-9a5f-dfcf1158c633"
     },
     {
       "amount": 0.05,
       "attribute": "skilltree:player.damage_per_enchantment_multiplier",
       "operation": "multiply_base",
-      "unique_id": "d44b500f-334d-44b7-8fe9-9ebf234b59e7"
+      "unique_id": "7d2c57c3-ade2-4bdd-944c-f9ee2bad8cf2"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

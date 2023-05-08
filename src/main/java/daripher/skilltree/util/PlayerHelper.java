@@ -208,10 +208,6 @@ public class PlayerHelper {
 		return (float) player.getAttributeValue(SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
 	}
 
-	public static int getAdditionalGemstoneSlots(Player player) {
-		return (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_GEMSTONE_SLOTS_BONUS.get());
-	}
-
 	public static boolean canEvadeDamage(DamageSource source) {
 		return source instanceof EntityDamageSource entityDamageSource && entityDamageSource.getDirectEntity() instanceof LivingEntity;
 	}

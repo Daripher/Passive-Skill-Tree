@@ -4,13 +4,13 @@
       "amount": 0.2,
       "attribute": "skilltree:player.damage_with_shield_multiplier",
       "operation": "multiply_base",
-      "unique_id": "b5b4a939-e6c1-413d-923c-478359e8d150"
+      "unique_id": "a86646c7-3888-480b-af8c-845cbd20faa8"
     },
     {
       "amount": 0.1,
       "attribute": "skilltree:player.armor_with_shield_multiplier",
       "operation": "multiply_base",
-      "unique_id": "b2c19875-003e-4dca-9ec5-5f5023ae347e"
+      "unique_id": "37fcb1c1-49dd-4b35-b74e-0faacc05c855"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

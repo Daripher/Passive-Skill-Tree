@@ -1,23 +1,22 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.02,
-      "attribute": "minecraft:generic.movement_speed",
+      "amount": 0.01,
+      "attribute": "skilltree:player.evasion_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "afbd12cc-a61f-4441-8c7d-791bbd06c024"
+      "unique_id": "bda03692-b1a2-4d91-95d7-e71a9eb63fcd"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_defensive_combat_7",
-    "skilltree:hunter_mixed_notable_1",
-    "skilltree:hunter_defensive_combat_9"
+    "skilltree:hunter_defensive_combat_10",
+    "skilltree:hunter_defensive_crafting_6"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_2.png",
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_combat_1.png",
   "position": {
-    "x": 152,
-    "y": 115
+    "x": 159,
+    "y": 147
   },
   "tree": "skilltree:tree"
 }

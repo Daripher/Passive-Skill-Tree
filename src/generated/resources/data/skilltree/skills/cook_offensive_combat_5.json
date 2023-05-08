@@ -4,12 +4,13 @@
       "amount": 0.1,
       "attribute": "skilltree:player.axe_attack_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "bbdf27cd-8230-47c6-bdee-d222c9b0cbab"
+      "unique_id": "0d26a2c3-2d78-40d3-af18-271fc663f47a"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
+    "skilltree:cook_offensive_combat_7",
     "skilltree:cook_offensive_combat_6"
   ],
   "icon_texture": "skilltree:textures/icons/cook_offensive_combat_1.png",

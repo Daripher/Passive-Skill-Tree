@@ -1,23 +1,22 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 2.0,
-      "attribute": "skilltree:player.maximum_life_with_enchanted_item",
+      "amount": 1.0,
+      "attribute": "minecraft:generic.armor",
       "operation": "addition",
-      "unique_id": "351d45c1-7d40-4337-8a2c-014647d4a5bf"
+      "unique_id": "bffec35a-d9b9-4fc4-9d23-64e41f2b8c6d"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_defensive_combat_7",
-    "skilltree:enchanter_mixed_notable_1",
-    "skilltree:enchanter_defensive_combat_9"
+    "skilltree:enchanter_defensive_combat_10",
+    "skilltree:enchanter_defensive_crafting_6"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_combat_2.png",
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_combat_1.png",
   "position": {
-    "x": 179,
-    "y": -85
+    "x": 210,
+    "y": -75
   },
   "tree": "skilltree:tree"
 }

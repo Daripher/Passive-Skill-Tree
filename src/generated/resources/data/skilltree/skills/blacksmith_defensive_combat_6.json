@@ -1,23 +1,22 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.04,
-      "attribute": "skilltree:player.chestplate_armor_multiplier",
+      "amount": 0.02,
+      "attribute": "skilltree:player.block_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "a5747464-8422-4397-8cfa-9498553d2470"
+      "unique_id": "1cb899ff-561d-4f54-b6f5-da9d2a98f15b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_defensive_combat_7",
-    "skilltree:blacksmith_mixed_notable_1",
-    "skilltree:blacksmith_defensive_combat_9"
+    "skilltree:blacksmith_defensive_combat_10",
+    "skilltree:blacksmith_defensive_crafting_6"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_combat_2.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_combat_1.png",
   "position": {
-    "x": -168,
-    "y": -131
+    "x": -175,
+    "y": -163
   },
   "tree": "skilltree:tree"
 }

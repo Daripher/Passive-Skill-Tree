@@ -4,7 +4,7 @@
       "amount": 1.0,
       "attribute": "skilltree:player.maximum_life_per_gemstone_in_armor_bonus",
       "operation": "addition",
-      "unique_id": "f3a64633-e40d-46d7-a9ec-dd48590af112"
+      "unique_id": "4a1664de-7b99-4184-b027-cc4838aa9ef8"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

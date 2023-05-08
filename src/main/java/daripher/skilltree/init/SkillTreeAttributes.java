@@ -29,6 +29,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_UNDER_POTION_EFFECT = rangedAttribute("player", "maximum_life_under_potion_effect", 0D, 0D, 50D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_POTION_EFFECT = rangedAttribute("player", "maximum_life_per_potion_effect", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> DAMAGE_PER_POTION_EFFECT_MULTIPLIER = rangedAttribute("player", "damage_per_potion_effect_multiplier", 1D, 1D, 10D);
+	public static final RegistryObject<Attribute> MAXIMUM_WEAPON_POISONS_BONUS = rangedAttribute("player", "maximum_weapon_poisons_bonus", 0D, 0D, 1D);
 	// enchanter attributes
 	public static final RegistryObject<Attribute> DAMAGE_PER_ENCHANTMENT_MULTIPLIER = rangedAttribute("player", "damage_per_enchantment_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> CRIT_CHANCE_PER_ENCHANTMENT_MULTIPLIER = rangedAttribute("player", "crit_chance_per_enchantment_multiplier", 1D, 1D, 2D);
@@ -56,9 +57,12 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> ATTACK_DAMAGE_PER_ARMOR = rangedAttribute("player", "damage_per_armor_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_ARMOR = rangedAttribute("player", "maximum_life_per_armor_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_BOOTS_ARMOR = rangedAttribute("player", "maximum_life_per_boots_armor_bonus", 0D, 0D, 10D);
+	public static final RegistryObject<Attribute> CRAFTED_SHIELDS_ARMOR_BONUS = rangedAttribute("player", "crafted_shields_armor_bonus", 0D, 0D, 10D);
 	// miner attributes
 	public static final RegistryObject<Attribute> MINING_SPEED_MULTIPLIER = rangedAttribute("player", "mining_speed_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_gemstone_slots_bonus", 0D, 0D, 5D);
+	public static final RegistryObject<Attribute> MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_weapon_gemstone_slots_bonus", 0D, 0D, 5D);
+	public static final RegistryObject<Attribute> MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_chestplate_gemstone_slots_bonus", 0D, 0D, 5D);
 	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH_MULTIPLIER = rangedAttribute("player", "gemstones_strength_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH_IN_ARMOR_MULTIPLIER = rangedAttribute("player", "gemstones_strength_in_armor_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH_IN_WEAPON_MULTIPLIER = rangedAttribute("player", "gemstones_strength_in_weapon_multiplier", 1D, 1D, 10D);
@@ -81,6 +85,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> BOW_CHARGE_SPEED_MULTIPLIER = rangedAttribute("player", "bow_charge_speed_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> ARMOR_PER_EVASION = rangedAttribute("player", "armor_per_evasion_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS = rangedAttribute("player", "crafted_helmets_additional_gemstone_slots", 0D, 0D, 1D);
+	public static final RegistryObject<Attribute> CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS = rangedAttribute("player", "crafted_bows_additional_gemstone_slots", 0D, 0D, 1D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_EVASION = rangedAttribute("player", "maximum_life_per_evasion", 0D, 0D, 1D);
 	// cook attriutes
 	public static final RegistryObject<Attribute> COOKED_FOOD_RESTORATION_MULTIPLIER = rangedAttribute("player", "cooked_food_restoration_bonus", 1D, 1D, 10D);

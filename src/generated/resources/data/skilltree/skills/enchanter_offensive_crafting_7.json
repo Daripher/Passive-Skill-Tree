@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.weapon_enchantments_amplification_chance",
+      "operation": "addition",
+      "unique_id": "1280f9be-78de-4e26-926f-90466ea76d34"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_offensive_crafting_8"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting.png",
+  "position": {
+    "x": 148,
+    "y": -211
+  },
+  "tree": "skilltree:tree"
+}

@@ -4,15 +4,14 @@
       "amount": 0.1,
       "attribute": "skilltree:player.gemstones_strength_in_weapon_multiplier",
       "operation": "multiply_base",
-      "unique_id": "e5df67df-e876-4413-996d-b1ff0ba49649"
+      "unique_id": "e954ddf9-2e46-4320-bd26-1878d6931d93"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
     "skilltree:miner_offensive_crafting_2",
-    "skilltree:miner_offensive_combat_1",
-    "skilltree:miner_offensive_crafting_6"
+    "skilltree:miner_offensive_combat_1"
   ],
   "icon_texture": "skilltree:textures/icons/miner_offensive_crafting.png",
   "position": {

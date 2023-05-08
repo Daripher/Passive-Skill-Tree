@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.cooked_food_life_regeneration_per_restoration",
       "operation": "addition",
-      "unique_id": "c64c43c4-c259-4812-a37f-bc78a767068f"
+      "unique_id": "f1a583aa-7974-41a8-8abf-ef154e080afd"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

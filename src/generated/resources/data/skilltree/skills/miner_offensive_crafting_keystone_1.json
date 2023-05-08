@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:player.gemstones_strength_in_weapon_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "35b649e9-8f7c-4cf3-a33e-c7d2e22484f5"
+    },
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.maximum_weapon_gemstone_slots_bonus",
+      "operation": "addition",
+      "unique_id": "099c7ecb-dcc6-4a2b-949e-73d04d9738fc"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/miner_offensive_crafting_keystone.png",
+  "position": {
+    "x": -175,
+    "y": 243
+  },
+  "tree": "skilltree:tree"
+}

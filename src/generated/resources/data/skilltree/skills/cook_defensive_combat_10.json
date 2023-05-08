@@ -4,18 +4,18 @@
       "amount": 1.0,
       "attribute": "skilltree:player.maximum_life_if_ate_recently",
       "operation": "addition",
-      "unique_id": "1b317658-4e7a-4057-b12b-f75d9e1b7cbf"
+      "unique_id": "073884a5-ea12-4fcb-96e4-aac3bcaf2833"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:cook_defensive_keystone_1"
+    "skilltree:cook_defensive_combat_11"
   ],
   "icon_texture": "skilltree:textures/icons/cook_defensive_combat_2.png",
   "position": {
-    "x": 7,
-    "y": -251
+    "x": 19,
+    "y": -230
   },
   "tree": "skilltree:tree"
 }

@@ -4,15 +4,15 @@
       "amount": 1.0,
       "attribute": "skilltree:player.brewed_potions_strength_multiplier",
       "operation": "multiply_base",
-      "unique_id": "b025abaf-59e1-4000-a07d-a34f3c38ca66"
+      "unique_id": "e2a92327-55db-417a-95e7-2fcb14e5350b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/alchemist_mastery.png",
   "position": {
-    "x": -12,
-    "y": 18
+    "x": 24,
+    "y": 52
   },
   "tree": "skilltree:tree"
 }

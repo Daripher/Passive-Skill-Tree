@@ -4,18 +4,20 @@
       "amount": 0.02,
       "attribute": "minecraft:generic.movement_speed",
       "operation": "multiply_base",
-      "unique_id": "69a69773-2afe-47e7-b2d8-01b5c0466f08"
+      "unique_id": "d9efa957-b305-4766-9141-83755b021f58"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_defensive_combat_8"
+    "skilltree:miner_defensive_combat_8",
+    "skilltree:miner_mixed_notable_1",
+    "skilltree:miner_defensive_combat_10"
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_combat_2.png",
   "position": {
-    "x": -176,
-    "y": 58
+    "x": -195,
+    "y": 69
   },
   "tree": "skilltree:tree"
 }

@@ -4,13 +4,14 @@
       "amount": 0.05,
       "attribute": "skilltree:player.cooked_food_restoration_bonus",
       "operation": "multiply_base",
-      "unique_id": "14af0914-859d-4d27-b191-7c9513406e27"
+      "unique_id": "1b90e27b-cf8f-4324-b799-f4f9359c7c87"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:cook_lesser_4"
+    "skilltree:cook_lesser_4",
+    "skilltree:cook_defensive_crafting_6"
   ],
   "icon_texture": "skilltree:textures/icons/cook_lesser.png",
   "position": {

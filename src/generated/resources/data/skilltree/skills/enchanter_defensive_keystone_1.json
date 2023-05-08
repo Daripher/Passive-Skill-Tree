@@ -4,7 +4,7 @@
       "amount": 2.0,
       "attribute": "skilltree:player.armor_per_chestplate_enchantment",
       "operation": "addition",
-      "unique_id": "3a6258a2-d578-49b1-9f45-4cd1f2ff4edb"
+      "unique_id": "b3b103af-ac2c-4bdd-b4d4-05349978e86c"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

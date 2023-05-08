@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.brewed_potions_duration_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "c4aebb02-87e8-47f7-9c99-711a0c2c7ea2"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_mastery",
+    "skilltree:hunter_lesser_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_lesser.png",
+  "position": {
+    "x": 15,
+    "y": 33
+  },
+  "tree": "skilltree:tree"
+}

@@ -4,15 +4,15 @@
       "amount": 0.05,
       "attribute": "skilltree:player.triple_loot_chance",
       "operation": "addition",
-      "unique_id": "0e97314f-a17f-427f-9625-257648c392ea"
+      "unique_id": "fb3aa84f-148e-4f52-8b93-caa4aaff1aef"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
   "position": {
-    "x": 15,
-    "y": 2
+    "x": 61,
+    "y": -12
   },
   "tree": "skilltree:tree"
 }

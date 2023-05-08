@@ -4,18 +4,20 @@
       "amount": 2.0,
       "attribute": "skilltree:player.maximum_life_under_potion_effect",
       "operation": "addition",
-      "unique_id": "ed325fc4-6cae-45c9-8ec1-6aa0b32f6fe2"
+      "unique_id": "60d8eaac-ed83-4562-97de-c01e55c72dc5"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_defensive_combat_8"
+    "skilltree:alchemist_defensive_combat_8",
+    "skilltree:alchemist_mixed_notable_1",
+    "skilltree:alchemist_defensive_combat_10"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_combat_2.png",
   "position": {
     "x": -35,
-    "y": 170
+    "y": 192
   },
   "tree": "skilltree:tree"
 }

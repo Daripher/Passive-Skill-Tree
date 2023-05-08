@@ -2,22 +2,21 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.crit_chance_with_shield_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "cf2507dc-7049-4c50-a5d7-484fe3de4127"
+      "attribute": "skilltree:player.damage_with_shield_multiplier",
+      "operation": "addition",
+      "unique_id": "9ddedc75-302b-4c09-9a12-2e4e5edbfbc5"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_offensive_combat_7",
-    "skilltree:blacksmith_mixed_notable_1",
-    "skilltree:blacksmith_offensive_combat_9"
+    "skilltree:blacksmith_offensive_combat_10",
+    "skilltree:blacksmith_offensive_crafting_6"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_combat_2.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_combat_1.png",
   "position": {
-    "x": -195,
-    "y": -85
+    "x": -226,
+    "y": -75
   },
   "tree": "skilltree:tree"
 }

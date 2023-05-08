@@ -4,7 +4,7 @@
       "amount": 0.05,
       "attribute": "skilltree:player.mining_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "6ee4f88d-42ef-4a40-ab59-b61e4fde1154"
+      "unique_id": "f54569bf-92bd-429a-a139-d3b9491eef15"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

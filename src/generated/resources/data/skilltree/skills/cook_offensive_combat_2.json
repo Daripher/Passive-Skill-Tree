@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.axe_attack_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "172b3ebc-f7e0-4df1-bc95-178c2c05791b"
+      "unique_id": "adefdc66-2098-491a-9531-778d373e537b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

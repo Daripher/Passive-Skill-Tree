@@ -4,7 +4,7 @@
       "amount": 0.1,
       "attribute": "skilltree:player.armor_enchantments_amplification_chance",
       "operation": "addition",
-      "unique_id": "aa6c6908-118c-452a-90fc-107b29178b59"
+      "unique_id": "86b55a41-cb42-4017-8700-f0aa71924aaf"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

@@ -4,7 +4,7 @@
       "amount": 0.05,
       "attribute": "skilltree:player.crit_damage_multiplier_per_satisfied_hunger",
       "operation": "multiply_base",
-      "unique_id": "fa035425-0f1d-4e55-b2e6-c50449b91ae4"
+      "unique_id": "46899ce7-ccc2-447a-88a2-93fe0e0e453d"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

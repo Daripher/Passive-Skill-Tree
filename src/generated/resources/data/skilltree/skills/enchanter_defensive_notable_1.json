@@ -4,7 +4,7 @@
       "amount": 10.0,
       "attribute": "skilltree:player.armor_with_enchanted_shield",
       "operation": "addition",
-      "unique_id": "ed5e3791-e261-486b-bd16-ed35f29ebb0b"
+      "unique_id": "b2383275-c71c-40ff-8684-0d607609ede4"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

@@ -4,7 +4,7 @@
       "amount": 0.25,
       "attribute": "skilltree:player.damage_per_gemstone_in_weapon_multiplier",
       "operation": "multiply_base",
-      "unique_id": "b1730eaf-d94c-48d5-a747-d61fd5608434"
+      "unique_id": "1595c071-c779-41e5-abdb-9f3e7a591b3a"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

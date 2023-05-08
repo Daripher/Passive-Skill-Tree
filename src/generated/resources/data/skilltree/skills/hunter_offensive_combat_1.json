@@ -4,7 +4,7 @@
       "amount": 1.0,
       "attribute": "skilltree:player.arrow_damage_bonus",
       "operation": "addition",
-      "unique_id": "fbf6ec54-2da5-4101-929d-694d0c530b67"
+      "unique_id": "2d33d9fc-c229-425d-878c-b2fb356bacc0"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

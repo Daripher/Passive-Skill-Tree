@@ -4,18 +4,18 @@
       "amount": 0.05,
       "attribute": "skilltree:player.double_loot_chance",
       "operation": "multiply_base",
-      "unique_id": "661df683-babb-415b-a89d-847b2102bac5"
+      "unique_id": "07db0dee-7f9c-4f35-9bea-6ee6def0dc2b"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_mastery"
+    "skilltree:hunter_lesser_6"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_lesser.png",
   "position": {
-    "x": 42,
-    "y": 20
+    "x": 40,
+    "y": 19
   },
   "tree": "skilltree:tree"
 }

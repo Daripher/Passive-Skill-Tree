@@ -2,12 +2,11 @@ package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
 
-import daripher.skilltree.api.recipe.PlayerRequiringRecipe;
+import daripher.skilltree.api.player.PlayerContainer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
 import daripher.skilltree.item.GemstoneItem;
 import daripher.skilltree.util.ItemHelper;
-import daripher.skilltree.util.PlayerHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -17,9 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.Level;
 
-public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequiringRecipe {
-	private Player currentPlayer;
-
+public class GemstoneInsertionRecipe extends UpgradeRecipe {
 	public GemstoneInsertionRecipe(ResourceLocation recipeId) {
 		super(recipeId, null, null, null);
 	}
@@ -31,18 +28,23 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequ
 
 	@Override
 	public ItemStack assemble(Container smithingContainer) {
+		var playerContainer = (PlayerContainer) smithingContainer;
+		if (!playerContainer.getPlayer().isPresent()) {
+			return ItemStack.EMPTY;
+		}
+		var player = playerContainer.getPlayer().get();
 		var baseItem = smithingContainer.getItem(0);
-		var gemstoneSlot = getFirstEmptyGemstoneSlot(baseItem);
+		var gemstoneSlot = getFirstEmptyGemstoneSlot(baseItem, player);
 		var gemstoneItem = (GemstoneItem) smithingContainer.getItem(1).getItem();
-		if (!gemstoneItem.canInsertInto(currentPlayer, baseItem, gemstoneSlot)) {
+		if (!gemstoneItem.canInsertInto(player, baseItem, gemstoneSlot)) {
 			return ItemStack.EMPTY;
 		}
 		var resultItemStack = baseItem.copy();
 		if (baseItem.getTag() != null) {
 			resultItemStack.setTag(baseItem.getTag().copy());
 		}
-		var gemstoneStrength = getPlayerGemstoneStrength(currentPlayer, baseItem);
-		gemstoneItem.insertInto(currentPlayer, resultItemStack, gemstoneSlot, gemstoneStrength);
+		var gemstoneStrength = getPlayerGemstoneStrength(player, baseItem);
+		gemstoneItem.insertInto(player, resultItemStack, gemstoneSlot, gemstoneStrength);
 		return resultItemStack;
 	}
 
@@ -60,25 +62,16 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequ
 		return gemstoneStrength;
 	}
 
-	public int getFirstEmptyGemstoneSlot(ItemStack baseItem) {
-		var maxGemSlots = getMaxGemSlots(baseItem);
+	public int getFirstEmptyGemstoneSlot(ItemStack baseItem, Player player) {
+		var maximumSlots = GemstoneItem.getMaximumGemstoneSlots(baseItem, player);
 		var gemstoneSlot = 0;
-		for (int i = 0; i < maxGemSlots; i++) {
+		for (int i = 0; i < maximumSlots; i++) {
 			gemstoneSlot = i;
 			if (!GemstoneItem.hasGemstone(baseItem, gemstoneSlot)) {
 				break;
 			}
 		}
 		return gemstoneSlot;
-	}
-
-	public int getMaxGemSlots(ItemStack baseItem) {
-		var slots = 1;
-		if (GemstoneItem.hasAdditionalGemstoneSlot(baseItem)) {
-			slots++;
-		}
-		slots += PlayerHelper.getAdditionalGemstoneSlots(currentPlayer);
-		return slots;
 	}
 
 	@Override
@@ -89,11 +82,6 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe implements PlayerRequ
 	@Override
 	public boolean isSpecial() {
 		return true;
-	}
-
-	@Override
-	public void setCurrentPlayer(Player player) {
-		this.currentPlayer = player;
 	}
 
 	public boolean isBaseIngredient(ItemStack itemStack) {

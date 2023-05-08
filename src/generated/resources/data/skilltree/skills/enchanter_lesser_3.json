@@ -4,13 +4,14 @@
       "amount": -0.05,
       "attribute": "skilltree:player.enchantment_level_requirement_decrease",
       "operation": "multiply_base",
-      "unique_id": "913d3214-9aa2-4d16-8da1-83de78b935e6"
+      "unique_id": "5eacb5e9-ced7-452f-8149-121d9b0ca7ef"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_lesser_4"
+    "skilltree:enchanter_lesser_4",
+    "skilltree:enchanter_defensive_crafting_6"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_lesser.png",
   "position": {

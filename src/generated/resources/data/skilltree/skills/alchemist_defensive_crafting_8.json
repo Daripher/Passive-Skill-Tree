@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.brewed_beneficial_potions_strength_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "30bd8b51-bfcc-4251-8671-8fca7eee74dc"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_defensive_crafting_keystone_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_defensive_crafting.png",
+  "position": {
+    "x": -124,
+    "y": 244
+  },
+  "tree": "skilltree:tree"
+}

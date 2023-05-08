@@ -4,19 +4,18 @@
       "amount": 0.1,
       "attribute": "skilltree:player.axe_crit_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "23d297f7-dfa7-4cc5-a62a-be2d23337cbf"
+      "unique_id": "24d8ede1-6707-42d5-a66c-64b3801e4d22"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:cook_offensive_keystone_1",
-    "skilltree:cook_offensive_keystone_1"
+    "skilltree:cook_offensive_combat_9"
   ],
   "icon_texture": "skilltree:textures/icons/cook_offensive_combat_2.png",
   "position": {
-    "x": -23,
-    "y": -165
+    "x": -35,
+    "y": -186
   },
   "tree": "skilltree:tree"
 }

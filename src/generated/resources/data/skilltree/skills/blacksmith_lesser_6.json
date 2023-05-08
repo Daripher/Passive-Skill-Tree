@@ -1,0 +1,22 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.crafted_armor_bonus_toughness_chance_multiplier",
+      "operation": "multiply_base",
+      "unique_id": "8a575752-01d1-4383-a2a1-1d0111e9e7a7"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_lesser_7",
+    "skilltree:center_node"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_lesser.png",
+  "position": {
+    "x": -34,
+    "y": -22
+  },
+  "tree": "skilltree:tree"
+}

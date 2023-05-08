@@ -4,19 +4,18 @@
       "amount": 0.1,
       "attribute": "skilltree:player.pickaxe_attack_speed_multiplier",
       "operation": "multiply_base",
-      "unique_id": "cd132f4c-5158-4245-a3e0-ff95d5301a89"
+      "unique_id": "0072d944-7773-4cb2-9761-4a14676f4b4c"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_offensive_keystone_1",
-    "skilltree:miner_offensive_keystone_1"
+    "skilltree:miner_offensive_combat_9"
   ],
   "icon_texture": "skilltree:textures/icons/miner_offensive_combat_2.png",
   "position": {
-    "x": -137,
-    "y": 83
+    "x": -149,
+    "y": 104
   },
   "tree": "skilltree:tree"
 }

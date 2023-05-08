@@ -4,7 +4,7 @@
       "amount": 2.0,
       "attribute": "skilltree:player.armor_per_gemstone_in_helmet",
       "operation": "addition",
-      "unique_id": "6eeb8e2c-1f04-491a-9a64-a8d7f532deea"
+      "unique_id": "64f48272-24b9-4556-a577-022c6f537544"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

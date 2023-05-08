@@ -4,7 +4,7 @@
       "amount": 0.02,
       "attribute": "skilltree:player.block_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "40de8973-8e2e-4106-8db6-7e3db4968c65"
+      "unique_id": "886ccc6b-4380-4943-8779-256a6fec5482"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

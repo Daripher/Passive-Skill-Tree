@@ -4,15 +4,15 @@
       "amount": 1.0,
       "attribute": "skilltree:player.crafted_armor_bonus_toughness_chance_multiplier",
       "operation": "multiply_base",
-      "unique_id": "eaa18f10-c277-429a-8cb1-7c3d091d4f72"
+      "unique_id": "34a96e91-a9aa-4ff4-a649-f9eeebe0cf04"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/blacksmith_mastery.png",
   "position": {
-    "x": -39,
-    "y": -26
+    "x": -85,
+    "y": -12
   },
   "tree": "skilltree:tree"
 }

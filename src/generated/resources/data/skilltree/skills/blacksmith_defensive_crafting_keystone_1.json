@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 5.0,
+      "attribute": "skilltree:player.crafted_shields_armor_bonus",
+      "operation": "addition",
+      "unique_id": "add4a0cd-47f8-41c8-8795-9e2d69d94b1c"
+    },
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:player.crafted_armor_defence_bonus",
+      "operation": "multiply_base",
+      "unique_id": "1c2b504c-98b4-464d-aaa1-ca40b58a9c44"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone.png",
+  "position": {
+    "x": -175,
+    "y": -267
+  },
+  "tree": "skilltree:tree"
+}
