@@ -41,9 +41,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkillBranch("cook_defensive_crafting_", "Cooked Food Regeneration", "+0.1 Life Regeneration per Restoration point from Food you Cook", 1, 8);
 		addSkillBranch("cook_offensive_combat_", "Axe Attack Speed", "+10% Attack Speed with Axes", 1, 6);
 		addSkillBranch("cook_defensive_combat_", "Block Chance", "+1% Block Chance", 1, 6);
-		addSkillBranch("cook_offensive_combat_", "Axe Crit Chance", "+10% Crit Chance with Axes", 7, 11);
+		addSkillBranch("cook_offensive_combat_", "Axe Crit Chance", "+5% Crit Chance with Axes", 7, 11);
 		addSkillBranch("cook_defensive_combat_", "Maximum Life if ate Recently", "+1 Maximum Life if you ate Recently", 7, 11);
-		addSkill("cook_offensive_notable_1", "Butcher", "+30% Crit Chance with Axes");
+		addSkill("cook_offensive_notable_1", "Butcher", "+20% Crit Chance with Axes");
 		addSkill("cook_defensive_notable_1", "Big Belly", "+5% Block Chance");
 		addSkill("cook_mixed_notable_1", "Voracity", "+5 Maximum Life if you ate recently/n+50% Damage if you ate recently");
 		addSkill("cook_offensive_keystone_1", "Overweight", "+5% Crit Damage per Satisfied Hunger point");

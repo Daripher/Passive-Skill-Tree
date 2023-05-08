@@ -1,7 +1,7 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.3,
+      "amount": 0.2,
       "attribute": "skilltree:player.axe_crit_chance_multiplier",
       "operation": "multiply_base"
     }

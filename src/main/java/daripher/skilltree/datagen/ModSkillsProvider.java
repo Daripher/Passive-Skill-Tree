@@ -151,9 +151,9 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("cook_defensive_crafting_", SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION_PER_RESTORATION.get(), 0.1, Operation.ADDITION, 1, 8);
 		addSkillBranchAttributeModifier("cook_offensive_combat_", SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 1, 6);
 		addSkillBranchAttributeModifier("cook_defensive_combat_", SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 6);
-		addSkillBranchAttributeModifier("cook_offensive_combat_", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.1, Operation.MULTIPLY_BASE, 7, 11);
+		addSkillBranchAttributeModifier("cook_offensive_combat_", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE, 7, 11);
 		addSkillBranchAttributeModifier("cook_defensive_combat_", SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get(), 1, Operation.ADDITION, 7, 11);
-		addSkillAttributeModifier("cook_offensive_notable_1", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.3, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_1", SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get(), 0.2, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_defensive_notable_1", SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_mixed_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get(), 5, Operation.ADDITION);
 		addSkillAttributeModifier("cook_mixed_notable_1", SkillTreeAttributes.DAMAGE_MULTIPLIER_IF_ATE_RECENTLY.get(), 0.5, Operation.MULTIPLY_BASE);
