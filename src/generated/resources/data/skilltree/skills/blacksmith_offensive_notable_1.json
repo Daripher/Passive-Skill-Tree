@@ -1,10 +1,9 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.75,
+      "amount": 0.25,
       "attribute": "skilltree:player.crit_damage_with_shield_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "833bb8dc-30a5-49a9-bf46-b9f605e89819"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

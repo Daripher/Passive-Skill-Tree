@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.damage_per_potion_effect_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "47754c90-5bf6-4dcd-9678-cd622e586044"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

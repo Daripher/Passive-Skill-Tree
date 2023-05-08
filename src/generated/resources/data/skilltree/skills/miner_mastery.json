@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.maximum_gemstone_slots_bonus",
-      "operation": "addition",
-      "unique_id": "b4badb83-2515-4297-a663-1b1e8b9bbd0d"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

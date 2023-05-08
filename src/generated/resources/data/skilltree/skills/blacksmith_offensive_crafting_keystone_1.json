@@ -3,8 +3,7 @@
     {
       "amount": 0.25,
       "attribute": "skilltree:player.crafted_weapon_attack_speed_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "5b8caaf9-1841-41c4-8fdd-6b692dff6c54"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

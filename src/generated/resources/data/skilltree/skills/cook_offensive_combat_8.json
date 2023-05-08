@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.axe_crit_chance_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "24d8ede1-6707-42d5-a66c-64b3801e4d22"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

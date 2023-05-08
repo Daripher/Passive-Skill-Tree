@@ -3,8 +3,7 @@
     {
       "amount": 0.03,
       "attribute": "skilltree:player.attack_speed_under_potion_effect_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "39abe227-fb11-4f3d-98ba-8ad9ce126cdd"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.crafted_weapon_damage_bonus",
-      "operation": "addition",
-      "unique_id": "a1fbd44d-c358-4cb7-890e-0b5f936de21d"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

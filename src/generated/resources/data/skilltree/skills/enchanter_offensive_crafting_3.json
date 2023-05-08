@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.weapon_enchantments_amplification_chance",
-      "operation": "addition",
-      "unique_id": "ee45ffc6-31e8-4dd0-a347-0c34a2b7e474"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.gemstones_strength_in_weapon_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "446de282-6832-49b2-ad57-acf4a1d62cf3"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

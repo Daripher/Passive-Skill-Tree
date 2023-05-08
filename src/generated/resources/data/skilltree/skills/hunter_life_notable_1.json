@@ -3,8 +3,7 @@
     {
       "amount": 0.3333333333333333,
       "attribute": "skilltree:player.maximum_life_per_evasion",
-      "operation": "addition",
-      "unique_id": "3ad675e4-7277-4ed9-af65-a6fb130621e2"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

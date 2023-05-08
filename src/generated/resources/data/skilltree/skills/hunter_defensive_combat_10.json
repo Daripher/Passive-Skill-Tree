@@ -3,8 +3,7 @@
     {
       "amount": 0.02,
       "attribute": "minecraft:generic.movement_speed",
-      "operation": "multiply_base",
-      "unique_id": "392df0cc-9d64-4bae-9c96-fd00ca5b5550"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

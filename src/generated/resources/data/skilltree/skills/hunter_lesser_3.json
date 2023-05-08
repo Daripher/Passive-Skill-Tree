@@ -3,8 +3,7 @@
     {
       "amount": 0.05,
       "attribute": "skilltree:player.double_loot_chance",
-      "operation": "multiply_base",
-      "unique_id": "d1cff108-94c7-4153-84cd-4129776682cf"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition",
-      "unique_id": "995b8c30-9f15-4d7f-8077-64293e5ce0d0"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

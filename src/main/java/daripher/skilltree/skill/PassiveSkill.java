@@ -125,7 +125,6 @@ public class PassiveSkill {
 				modifierJsonObject.addProperty("attribute", attributeId);
 				modifierJsonObject.addProperty("amount", modifier.getAmount());
 				modifierJsonObject.addProperty("operation", modifier.getOperation().name().toLowerCase());
-				modifierJsonObject.addProperty("unique_id", modifier.getId().toString());
 				modifiersJsonArray.add(modifierJsonObject);
 			});
 			jsonObject.add("attribute_modifiers", modifiersJsonArray);
@@ -165,8 +164,7 @@ public class PassiveSkill {
 				var attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeId);
 				var amount = modifierJsonObject.get("amount").getAsDouble();
 				var operation = Operation.valueOf(modifierJsonObject.get("operation").getAsString().toUpperCase());
-				var uniqueIdString = modifierJsonObject.get("unique_id").getAsString();
-				var uniqueId = UUID.fromString(uniqueIdString);
+				var uniqueId = UUID.randomUUID();
 				var modifier = new AttributeModifier(uniqueId, "Passive Skill Bonus", amount, operation);
 				passiveSkill.addAttributeBonus(attribute, modifier);
 			});

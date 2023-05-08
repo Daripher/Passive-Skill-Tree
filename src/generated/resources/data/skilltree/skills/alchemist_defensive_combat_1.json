@@ -3,8 +3,7 @@
     {
       "amount": 0.02,
       "attribute": "skilltree:player.evasion_under_potion_effect_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "644ed6e7-1aaa-46d6-8e62-ce5420b1b0ad"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

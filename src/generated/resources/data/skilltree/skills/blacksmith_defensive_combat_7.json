@@ -3,8 +3,7 @@
     {
       "amount": 0.04,
       "attribute": "skilltree:player.chestplate_armor_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "7fdb8523-7464-46c0-83e1-681eb0eccbc3"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

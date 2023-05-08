@@ -3,8 +3,7 @@
     {
       "amount": 0.05,
       "attribute": "skilltree:player.crit_damage_per_enchantment_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "b674cf6c-03a1-4c33-bd6a-68575db495e7"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

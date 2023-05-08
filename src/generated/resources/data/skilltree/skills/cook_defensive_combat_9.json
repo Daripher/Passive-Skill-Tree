@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.maximum_life_if_ate_recently",
-      "operation": "addition",
-      "unique_id": "824a915a-4b05-45d0-b2a1-0b7d9a3dcb43"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

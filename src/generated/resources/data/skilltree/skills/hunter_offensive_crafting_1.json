@@ -3,8 +3,7 @@
     {
       "amount": 0.04,
       "attribute": "skilltree:player.crafted_bows_charge_speed_bonus",
-      "operation": "addition",
-      "unique_id": "13960e1e-4f71-4425-b96c-911714622ac0"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

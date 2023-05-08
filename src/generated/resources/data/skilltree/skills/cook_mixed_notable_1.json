@@ -3,14 +3,12 @@
     {
       "amount": 5.0,
       "attribute": "skilltree:player.maximum_life_if_ate_recently",
-      "operation": "addition",
-      "unique_id": "cb8fae28-c9f8-48e6-b8cb-be2c05ea6cf0"
+      "operation": "addition"
     },
     {
       "amount": 0.5,
       "attribute": "skilltree:player.damage_multiplier_if_ate_recently",
-      "operation": "multiply_base",
-      "unique_id": "ad493678-a329-4b25-b98a-cbdd1f941a95"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

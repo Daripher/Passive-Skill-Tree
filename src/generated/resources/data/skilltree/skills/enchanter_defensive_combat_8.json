@@ -3,8 +3,7 @@
     {
       "amount": 2.0,
       "attribute": "skilltree:player.maximum_life_with_enchanted_item",
-      "operation": "addition",
-      "unique_id": "af127b02-adf3-4e4d-8467-fb2247e474a9"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

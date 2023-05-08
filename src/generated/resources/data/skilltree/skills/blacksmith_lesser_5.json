@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.crafted_armor_bonus_toughness_chance_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "c66224c5-5209-427e-8b08-aea1d15123de"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

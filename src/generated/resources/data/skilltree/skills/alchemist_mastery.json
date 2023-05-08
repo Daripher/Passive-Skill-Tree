@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.brewed_potions_strength_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "e2a92327-55db-417a-95e7-2fcb14e5350b"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

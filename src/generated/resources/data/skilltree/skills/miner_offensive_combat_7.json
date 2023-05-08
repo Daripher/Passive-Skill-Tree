@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.pickaxe_attack_speed_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "d173df04-7604-4321-9636-b00336d36cad"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

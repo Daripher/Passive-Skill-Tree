@@ -3,8 +3,7 @@
     {
       "amount": 0.01,
       "attribute": "skilltree:player.crit_chance_per_enchantment_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "bfc91e4a-bf6e-429a-af93-452f7a205364"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

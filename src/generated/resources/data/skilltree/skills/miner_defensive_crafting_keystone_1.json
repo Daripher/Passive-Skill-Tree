@@ -3,14 +3,12 @@
     {
       "amount": 0.2,
       "attribute": "skilltree:player.gemstones_strength_in_armor_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "af3dab1d-42a7-45f2-98c5-99b62e800f59"
+      "operation": "multiply_base"
     },
     {
       "amount": 1.0,
       "attribute": "skilltree:player.maximum_chestplate_gemstone_slots_bonus",
-      "operation": "addition",
-      "unique_id": "af1b27b3-cb92-48ac-83e4-c6836d0943e8"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

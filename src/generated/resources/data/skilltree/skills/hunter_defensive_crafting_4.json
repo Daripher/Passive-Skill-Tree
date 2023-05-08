@@ -3,8 +3,7 @@
     {
       "amount": 0.01,
       "attribute": "skilltree:player.crafted_armor_evasion_bonus",
-      "operation": "addition",
-      "unique_id": "b3147ac1-439c-4a27-af97-4084887cfd59"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

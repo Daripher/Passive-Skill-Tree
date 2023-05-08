@@ -3,8 +3,7 @@
     {
       "amount": 0.2,
       "attribute": "skilltree:player.maximum_life_per_armor_bonus",
-      "operation": "addition",
-      "unique_id": "e5e39723-fd59-4da8-9003-a6d5a45b25e3"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

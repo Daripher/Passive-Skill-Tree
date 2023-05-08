@@ -3,8 +3,7 @@
     {
       "amount": 0.01,
       "attribute": "skilltree:player.pickaxe_damage_bonus",
-      "operation": "addition",
-      "unique_id": "62143394-166e-4b89-8c5c-143da9180ade"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

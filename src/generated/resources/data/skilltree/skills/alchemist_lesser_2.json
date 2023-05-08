@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.brewed_potions_duration_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "6ea78f09-b564-4117-91aa-91621f06fdd1"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

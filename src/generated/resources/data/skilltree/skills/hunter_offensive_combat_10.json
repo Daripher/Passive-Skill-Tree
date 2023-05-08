@@ -3,8 +3,7 @@
     {
       "amount": 0.05,
       "attribute": "skilltree:player.arrow_crit_damage_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "7f3bb463-c942-4506-b79f-e04da1a1399a"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

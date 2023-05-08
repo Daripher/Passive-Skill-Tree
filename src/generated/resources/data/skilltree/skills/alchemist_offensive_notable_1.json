@@ -3,8 +3,7 @@
     {
       "amount": 0.3,
       "attribute": "skilltree:player.crit_chance_against_poisoned_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "e4213f17-5bfa-495b-b044-445d57c94da9"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

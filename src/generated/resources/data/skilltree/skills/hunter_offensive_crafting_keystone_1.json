@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.crafted_bows_additional_gemstone_slots",
-      "operation": "addition",
-      "unique_id": "92aeae5d-cd0e-4786-9340-3df73a206259"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

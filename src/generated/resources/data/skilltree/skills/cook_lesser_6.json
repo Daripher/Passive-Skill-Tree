@@ -3,8 +3,7 @@
     {
       "amount": 0.05,
       "attribute": "skilltree:player.cooked_food_restoration_bonus",
-      "operation": "multiply_base",
-      "unique_id": "7faaad55-8cfc-45ad-8ae0-6dcb7d201e2a"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

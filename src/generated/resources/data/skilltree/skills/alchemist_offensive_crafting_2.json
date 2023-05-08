@@ -3,8 +3,7 @@
     {
       "amount": 0.05,
       "attribute": "skilltree:player.brewed_harmful_potions_strength_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "c8f1bdfc-a07e-45c1-94ad-73cefce885ac"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

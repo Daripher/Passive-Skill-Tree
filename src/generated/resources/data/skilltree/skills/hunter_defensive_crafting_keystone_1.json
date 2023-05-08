@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.crafted_helmets_additional_gemstone_slots",
-      "operation": "addition",
-      "unique_id": "6c7d1444-bf34-42a6-b731-0d04edf70311"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

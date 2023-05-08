@@ -3,8 +3,7 @@
     {
       "amount": -0.05,
       "attribute": "skilltree:player.enchantment_level_requirement_decrease",
-      "operation": "multiply_base",
-      "unique_id": "df95c080-f993-4f97-833b-5d38d770572c"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

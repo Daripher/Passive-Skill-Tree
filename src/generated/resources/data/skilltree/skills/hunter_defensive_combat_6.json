@@ -3,8 +3,7 @@
     {
       "amount": 0.01,
       "attribute": "skilltree:player.evasion_chance_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "bda03692-b1a2-4d91-95d7-e71a9eb63fcd"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

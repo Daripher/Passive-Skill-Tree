@@ -3,14 +3,12 @@
     {
       "amount": 10.0,
       "attribute": "skilltree:player.maximum_life_under_potion_effect",
-      "operation": "addition",
-      "unique_id": "1d879493-6446-4586-ac52-9f0eec92c6ca"
+      "operation": "addition"
     },
     {
       "amount": 0.2,
       "attribute": "skilltree:player.damage_under_potion_effect_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "77153d9e-c6c2-4e88-ad5f-7d14d226e2e9"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",

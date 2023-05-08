@@ -3,8 +3,7 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.gemstones_strength_in_armor_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "33b0b955-68dc-4de0-a9fb-d201155c6c5e"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

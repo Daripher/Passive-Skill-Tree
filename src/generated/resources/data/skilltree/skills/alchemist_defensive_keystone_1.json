@@ -3,8 +3,7 @@
     {
       "amount": 2.0,
       "attribute": "skilltree:player.maximum_life_per_potion_effect",
-      "operation": "addition",
-      "unique_id": "e4d3fd07-f6bf-41e0-8a18-26f13b7802fc"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

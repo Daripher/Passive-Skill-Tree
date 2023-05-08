@@ -1,10 +1,9 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
+      "amount": 0.05,
       "attribute": "skilltree:player.crit_chance_with_shield_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "b4ee89e5-7135-4612-a88f-50f6196a47a0"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

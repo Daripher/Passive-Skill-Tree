@@ -3,8 +3,7 @@
     {
       "amount": 1.0,
       "attribute": "skilltree:player.armor_per_evasion_bonus",
-      "operation": "addition",
-      "unique_id": "3429fda6-72be-4abd-bb59-1c6fb90540fb"
+      "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",

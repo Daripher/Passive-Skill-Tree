@@ -3,14 +3,12 @@
     {
       "amount": 0.1,
       "attribute": "skilltree:player.bow_charge_speed_multiplier",
-      "operation": "multiply_base",
-      "unique_id": "ea9a97fd-4a38-4067-aa04-1ce9d6401ac7"
+      "operation": "multiply_base"
     },
     {
       "amount": 0.05,
       "attribute": "minecraft:generic.movement_speed",
-      "operation": "multiply_base",
-      "unique_id": "3dd3df6c-16cf-44c1-9107-79814b2125ca"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
