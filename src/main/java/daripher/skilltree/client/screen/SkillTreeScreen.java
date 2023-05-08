@@ -194,10 +194,14 @@ public class SkillTreeScreen extends Screen {
 		if (mouseButton != 0) {
 			return false;
 		} else {
-			scrollX += dragAmountX;
-			scrollY += dragAmountY;
-			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
-			scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
+			if (maxScrollX > 0) {
+				scrollX += dragAmountX;
+				scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
+			}
+			if (maxScrollY > 0) {
+				scrollY += dragAmountY;
+				scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
+			}
 			rebuildWidgets();
 			return true;
 		}
