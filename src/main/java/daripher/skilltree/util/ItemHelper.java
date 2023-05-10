@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
@@ -174,5 +175,13 @@ public class ItemHelper {
 			effects.add(effect);
 		}
 		return effects;
+	}
+
+	public static EquipmentSlot getSlotForItem(ItemStack itemStack) {
+		var slot = Player.getEquipmentSlotForItem(itemStack);
+		if (ItemHelper.isWeapon(itemStack) && slot == EquipmentSlot.OFFHAND) {
+			slot = EquipmentSlot.MAINHAND;
+		}
+		return slot;
 	}
 }

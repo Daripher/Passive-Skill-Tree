@@ -6,6 +6,9 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+
+import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.util.ItemHelper;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class GemstoneItem extends Item {
+	private static final Logger LOGGER = LogUtils.getLogger();
 	protected static final String GEMSTONES_TAG = "GEMSTONES";
 	protected static final String GEMSTONE_TAG = "GEMSTONE";
 	protected static final String ATTRIBUTE_TAG = "ATTRIBUTE";
@@ -69,6 +73,11 @@ public abstract class GemstoneItem extends Item {
 			gemstoneTag = new CompoundTag();
 		}
 		var gemstoneBonus = getGemstoneBonus(player, itemStack);
+		if (gemstoneBonus == null) {
+			LOGGER.error("Cannot insert gemstone into {}", itemStack.getItem());
+			LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(itemStack));
+			return;
+		}
 		var attribute = gemstoneBonus.getLeft();
 		var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
 		var amount = gemstoneBonus.getMiddle() * (1 + gemstoneStrength);

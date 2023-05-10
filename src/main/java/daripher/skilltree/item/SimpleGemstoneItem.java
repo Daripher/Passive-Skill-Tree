@@ -16,20 +16,20 @@ public abstract class SimpleGemstoneItem extends GemstoneItem {
 
 	@Override
 	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
-		var slotType = Player.getEquipmentSlotForItem(itemStack);
-		if (ItemHelper.isWeapon(itemStack) && slotType == EquipmentSlot.MAINHAND) {
+		var itemSlot = ItemHelper.getSlotForItem(itemStack);
+		if (ItemHelper.isWeapon(itemStack) && itemSlot == EquipmentSlot.MAINHAND) {
 			return getWeaponBonus();
-		} else if (ItemHelper.isShield(itemStack) && slotType == EquipmentSlot.OFFHAND) {
+		} else if (ItemHelper.isShield(itemStack) && itemSlot == EquipmentSlot.OFFHAND) {
 			return getShieldBonus();
-		} else if (ItemHelper.isHelmet(itemStack) && slotType == EquipmentSlot.HEAD) {
+		} else if (ItemHelper.isHelmet(itemStack) && itemSlot == EquipmentSlot.HEAD) {
 			return getHelmetBonus();
-		} else if (ItemHelper.isChestplate(itemStack) && slotType == EquipmentSlot.CHEST) {
+		} else if (ItemHelper.isChestplate(itemStack) && itemSlot == EquipmentSlot.CHEST) {
 			return getChestplateBonus();
-		} else if (ItemHelper.isLeggings(itemStack) && slotType == EquipmentSlot.LEGS) {
+		} else if (ItemHelper.isLeggings(itemStack) && itemSlot == EquipmentSlot.LEGS) {
 			return getLeggingsBonus();
-		} else if (ItemHelper.isBoots(itemStack) && slotType == EquipmentSlot.FEET) {
+		} else if (ItemHelper.isBoots(itemStack) && itemSlot == EquipmentSlot.FEET) {
 			return getBootsBonus();
-		} else if (ItemHelper.isBow(itemStack) && slotType == EquipmentSlot.MAINHAND) {
+		} else if (ItemHelper.isBow(itemStack) && itemSlot == EquipmentSlot.MAINHAND) {
 			return getBowBonus();
 		}
 		return null;

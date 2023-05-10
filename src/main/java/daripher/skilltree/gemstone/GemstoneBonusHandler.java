@@ -19,7 +19,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -67,7 +66,7 @@ public class GemstoneBonusHandler {
 
 	private static void applyGemstoneAttributeModifier(ItemAttributeModifierEvent event, int gemstoneSlot) {
 		var itemStack = event.getItemStack();
-		var itemSlot = Player.getEquipmentSlotForItem(itemStack);
+		var itemSlot = ItemHelper.getSlotForItem(itemStack);
 		if (itemSlot != event.getSlotType()) {
 			return;
 		}
