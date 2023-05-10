@@ -1,5 +1,6 @@
 package daripher.skilltree.util;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import net.minecraft.ChatFormatting;
@@ -39,6 +40,11 @@ public class TooltipHelper {
 		var formattedVisibleBonus = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleBonusValue);
 		var formattedOperation = "attribute.modifier." + textOperation + "." + modifierOperation.toValue();
 		return Component.translatable(formattedOperation, formattedVisibleBonus, attributeComponent).withStyle(style);
+	}
+
+	public static MutableComponent getAttributeBonusTooltip(Pair<Attribute, AttributeModifier> attributeBonus) {
+		var modifier = attributeBonus.getRight();
+		return getAttributeBonusTooltip(Triple.of(attributeBonus.getLeft(), modifier.getAmount(), modifier.getOperation()));
 	}
 
 	public static MutableComponent getEffectTooltip(MobEffectInstance effect) {

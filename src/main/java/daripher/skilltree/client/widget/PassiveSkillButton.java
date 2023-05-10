@@ -10,6 +10,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.util.TooltipHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -76,6 +78,13 @@ public class PassiveSkillButton extends Button {
 		var tooltip = new ArrayList<MutableComponent>();
 		tooltip.add(skillTitle);
 		tooltip.addAll(skillDescription);
+		var minecraft = parentScreen.getMinecraft();
+		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
+		if (useAdvancedTooltip) {
+			var skillIdComponent = Component.literal(passiveSkill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
+			tooltip.add(skillIdComponent);
+			passiveSkill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
+		}
 		return tooltip;
 	}
 

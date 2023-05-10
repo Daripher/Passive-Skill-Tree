@@ -200,10 +200,20 @@ public class PassiveSkill {
 			buf.writeUtf(skillId.toString());
 		});
 		buf.writeBoolean(getConnectedTreeId() != null);
-
 		if (connectedTreeId != null) {
 			buf.writeUtf(getConnectedTreeId().toString());
 		}
+		buf.writeInt(getAttributeModifiers().size());
+		getAttributeModifiers().forEach(pair -> {
+			var attribute = pair.getLeft();
+			var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
+			buf.writeUtf(attributeId);
+			var modifier = pair.getRight();
+			var amount = modifier.getAmount();
+			var operation = modifier.getOperation();
+			buf.writeDouble(amount);
+			buf.writeInt(operation.ordinal());
+		});
 	}
 
 	public static PassiveSkill loadFromByteBuf(FriendlyByteBuf buf) {
@@ -218,19 +228,23 @@ public class PassiveSkill {
 		var passiveSkill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
 		passiveSkill.setPosition(positionX, positionY);
 		var connectionsCount = buf.readInt();
-
 		for (var i = 0; i < connectionsCount; i++) {
 			var connectedSkillId = new ResourceLocation(buf.readUtf());
 			passiveSkill.connectedSkills.add(connectedSkillId);
 		}
-
 		var hasConnectedTreeId = buf.readBoolean();
-
 		if (hasConnectedTreeId) {
 			var connectedTreeId = new ResourceLocation(buf.readUtf());
 			passiveSkill.connectedTreeId = connectedTreeId;
 		}
-
+		var attributeModifiersCount = buf.readInt();
+		for (var i = 0; i < attributeModifiersCount; i++) {
+			var attributeId = buf.readUtf();
+			var attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
+			var amount = buf.readDouble();
+			var operation = Operation.values()[buf.readInt()];
+			passiveSkill.addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
+		}
 		return passiveSkill;
 	}
 }
