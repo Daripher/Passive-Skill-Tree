@@ -10,23 +10,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import daripher.skilltree.api.player.PlayerContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.item.ItemStack;
 
-@Mixin(CraftingMenu.class)
-public abstract class MixinCraftingMenu extends RecipeBookMenu<CraftingContainer> {
+@Mixin(InventoryMenu.class)
+public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContainer> {
 	private @Shadow @Final CraftingContainer craftSlots;
-	private @Shadow @Final Player player;
+	private @Shadow @Final Player owner;
 
-	public MixinCraftingMenu() {
+	public MixinInventoryMenu() {
 		super(null, 0);
 	}
 
-	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
-	private void setPlayerIntoContainer(int windowId, Inventory inventory, ContainerLevelAccess levelAccess, CallbackInfo callbackInfo) {
+	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;ZLnet/minecraft/world/entity/player/Player;)V", at = @At("TAIL"))
+	private void setPlayerIntoContainer(Inventory inventory, boolean isServerSide, Player player, CallbackInfo callbackInfo) {
 		((PlayerContainer) craftSlots).setPlayer(player);
 	}
 
@@ -37,6 +36,6 @@ public abstract class MixinCraftingMenu extends RecipeBookMenu<CraftingContainer
 	}
 
 	private void fireItemCraftedEvent(ItemStack itemStack) {
-		net.minecraftforge.event.ForgeEventFactory.firePlayerCraftingEvent(player, itemStack, craftSlots);
+		net.minecraftforge.event.ForgeEventFactory.firePlayerCraftingEvent(owner, itemStack, craftSlots);
 	}
 }
