@@ -24,7 +24,7 @@ public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContaine
 		super(null, 0);
 	}
 
-	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;ZLnet/minecraft/world/entity/player/Player;)V", at = @At("TAIL"))
+	@Inject(method = "<init>(Lnet/minecraft/world/entity/player/Inventory;ZLnet/minecraft/world/entity/player/Player;)V", at = @At("TAIL"))
 	private void setPlayerIntoContainer(Inventory inventory, boolean isServerSide, Player player, CallbackInfo callbackInfo) {
 		((PlayerContainer) craftSlots).setPlayer(player);
 	}
