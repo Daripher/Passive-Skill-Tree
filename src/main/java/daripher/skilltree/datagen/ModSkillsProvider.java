@@ -222,7 +222,7 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_BOOTS_ARMOR.get(), 1, Operation.ADDITION);
 		addSkillAttributeModifier("blacksmith_mastery", SkillTreeAttributes.CRAFTED_ARMOR_BONUS_TOUGHNESS_CHANCE_MULTIPLIER.get(), 1, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get(), 5, Operation.ADDITION);
-		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_MULTIPLIER.get(), 0.2, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE_MULTIPLIER.get(), 0.3, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", SkillTreeAttributes.CRAFTED_WEAPON_ATTACK_SPEED_MULTIPLIER.get(), 0.25, Operation.MULTIPLY_BASE);
 		// miner skills
 		addSkillAttributeModifier("miner_class", SkillTreeAttributes.MINING_SPEED_MULTIPLIER.get(), 0.15, Operation.MULTIPLY_BASE);

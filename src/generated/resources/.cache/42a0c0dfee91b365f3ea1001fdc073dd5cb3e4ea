@@ -1,4 +1,4 @@
-// 1.19.2	2023-05-09T00:40:40.2647029	Skills Provider
+// 1.19.2	2023-05-10T20:38:18.4321651	Skills Provider
 91305cf9e672e14ef2bdaa087a93a3a85b935661 data/skilltree/skills/alchemist_class.json
 e078d7cf652df18f3ce908758a22e770041de9fe data/skilltree/skills/alchemist_defensive_combat_1.json
 a6abab8c519ad2b7cc3b85d4b74ef9aebb66ce0d data/skilltree/skills/alchemist_defensive_combat_10.json
@@ -74,7 +74,7 @@ f5c5070b7f7071a9aaba4a692760f9ec7264c580 data/skilltree/skills/blacksmith_defens
 a36e295f7065aa8b13686cb0ff562a4b6777b330 data/skilltree/skills/blacksmith_defensive_crafting_6.json
 313899a90ffff7de1a1199aedaae03a9433f5540 data/skilltree/skills/blacksmith_defensive_crafting_7.json
 50580b00b5c7f76a9a4bf009c26777cea279ea78 data/skilltree/skills/blacksmith_defensive_crafting_8.json
-39d31278216b715b5c2e940c596b2b5504ee7ff0 data/skilltree/skills/blacksmith_defensive_crafting_keystone_1.json
+57b9411849f5bd2ab88dfaddf62b6ce9fbdb5f30 data/skilltree/skills/blacksmith_defensive_crafting_keystone_1.json
 62cc89ab19e58eb94b047b9fd4948b67ef4a3209 data/skilltree/skills/blacksmith_defensive_keystone_1.json
 7413c969f0b9af6267a16d032aea333b6641c9c9 data/skilltree/skills/blacksmith_defensive_notable_1.json
 e21ef3aa9d9b8b635c700da8a881c98fe98f1312 data/skilltree/skills/blacksmith_lesser_1.json

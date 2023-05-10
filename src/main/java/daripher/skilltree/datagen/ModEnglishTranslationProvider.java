@@ -105,7 +105,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkillBranch("blacksmith_lesser_", "Tougher Armor chance", "+10% chance to Craft Tougher Armor", 1, 7);
 		addSkill("blacksmith_life_notable_1", "Confident Stance", "+1 Maximum Life per Armor point on your Boots");
 		addSkill("blacksmith_mastery", "Precious Metal", "+100% chance to Craft Tougher Armor");
-		addSkill("blacksmith_defensive_crafting_keystone_1", "Shield Maker", "+5 Armor from Shields you Craft/n+20% Defence from Armor you Craft");
+		addSkill("blacksmith_defensive_crafting_keystone_1", "Shield Maker", "+5 Armor from Shields you Craft/n+30% Defence from Armor you Craft");
 		addSkill("blacksmith_offensive_crafting_keystone_1", "Mystic Alloy", "+25% Attack Speed of Weapons you Craft");
 		// miner skills
 		addSkill("miner_class", "Miner", "+15% Mining Speed");

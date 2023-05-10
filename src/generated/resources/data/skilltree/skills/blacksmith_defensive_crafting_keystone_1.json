@@ -6,7 +6,7 @@
       "operation": "addition"
     },
     {
-      "amount": 0.2,
+      "amount": 0.3,
       "attribute": "skilltree:player.crafted_armor_defence_bonus",
       "operation": "multiply_base"
     }
