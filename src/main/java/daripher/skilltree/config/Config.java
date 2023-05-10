@@ -14,11 +14,20 @@ public class Config {
 	public static class CommonConfig {
 		private final ConfigValue<Integer> maximumSkillPoints;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
+		private final ConfigValue<List<? extends String>> blacklistedGemstoneContainers;
 
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
-			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer && (Integer) o >= 0;
-			maximumSkillPoints = builder.defineInRange("maximum_skill_points", 55, 1, 300);
-			skillPointsCosts = builder.defineList("skill_points_costs", generateDefaultPointsCosts(55), positiveOrZeroInteger);
+			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer i && i >= 0;
+			Predicate<Object> potentialItemId = o -> o instanceof String s && s.contains(":");
+			builder.push("Skill points");
+			maximumSkillPoints = builder.defineInRange("Maximum skill points", 55, 1, 500);
+			builder.comment("This list's size must be equal to maximum skill points.");
+			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(55), positiveOrZeroInteger);
+			builder.pop();
+			builder.push("Gemstones");
+			builder.comment("Example: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
+			blacklistedGemstoneContainers = builder.defineList("IDs of items that shouldn't have gemstone slots", new ArrayList<String>(), potentialItemId);
+			builder.pop();
 		}
 
 		private List<Integer> generateDefaultPointsCosts(int maximumPoints) {
@@ -34,6 +43,10 @@ public class Config {
 
 		public int getMaximumSkillPoints() {
 			return maximumSkillPoints.get();
+		}
+
+		public List<? extends String> getBlacklistedGemstoneContainers() {
+			return blacklistedGemstoneContainers.get();
 		}
 
 		public List<? extends Integer> getSkillPointCosts() {

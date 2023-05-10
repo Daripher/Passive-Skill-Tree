@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import daripher.skilltree.config.Config;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
 	private static final String DEFENCE_BONUS_TAG = "DefenceBonus";
@@ -117,6 +119,11 @@ public class ItemHelper {
 	}
 
 	public static boolean canApplyGemstone(ItemStack itemStack) {
+		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
+		var itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
+		if (blacklist.contains(itemId)) {
+			return false;
+		}
 		return isArmor(itemStack) || isShield(itemStack) || isWeapon(itemStack) || isBow(itemStack);
 	}
 
