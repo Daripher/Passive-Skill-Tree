@@ -116,6 +116,9 @@ dependencies {
 	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
 	implementation fg.deobf("curse.maven:selene-499980:4491267")
+	implementation fg.deobf("curse.maven:epic-knights-armor-and-weapons-509041:4423962")
+	implementation fg.deobf("curse.maven:cloth-config-348521:3972423")
+	implementation fg.deobf("curse.maven:architectury-api-419699:4521273")
 }
 
 jar {
