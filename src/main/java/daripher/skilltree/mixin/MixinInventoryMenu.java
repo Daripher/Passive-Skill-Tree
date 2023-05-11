@@ -13,12 +13,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(InventoryMenu.class)
 public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContainer> {
 	private @Shadow @Final CraftingContainer craftSlots;
 	private @Shadow @Final Player owner;
+	private @Shadow @Final ResultContainer resultSlots;
 
 	public MixinInventoryMenu() {
 		super(null, 0);
@@ -31,7 +33,9 @@ public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContaine
 
 	@Override
 	protected boolean moveItemStackTo(ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
-		fireItemCraftedEvent(itemStack);
+		if (itemStack == resultSlots.getItem(0)) {
+			fireItemCraftedEvent(itemStack);
+		}
 		return super.moveItemStackTo(itemStack, fromSlot, toSlot, beginFromEnd);
 	}
 
