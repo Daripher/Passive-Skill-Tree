@@ -27,6 +27,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class GemstoneItem extends Item {
@@ -46,9 +49,11 @@ public abstract class GemstoneItem extends Item {
 
 	@Override
 	public MutableComponent getName(ItemStack itemStack) {
-		return applyGemstoneColorStyle(super.getName(itemStack));
+		var name = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> applyGemstoneColorStyle(super.getName(itemStack)));
+		return applyGemstoneColorStyle(name);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public MutableComponent applyGemstoneColorStyle(Component name) {
 		return Component.literal("").append(name).withStyle(Style.EMPTY.withColor(gemstoneColor));
 	}

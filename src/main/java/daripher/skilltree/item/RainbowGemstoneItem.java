@@ -20,6 +20,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class RainbowGemstoneItem extends GemstoneItem {
 	public RainbowGemstoneItem() {
@@ -63,6 +65,7 @@ public class RainbowGemstoneItem extends GemstoneItem {
 		components.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public MutableComponent applyGemstoneColorStyle(Component component) {
 		var minecraft = Minecraft.getInstance();
