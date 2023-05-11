@@ -7,6 +7,7 @@ import java.util.function.Function;
 import com.google.common.util.concurrent.AtomicDouble;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.config.Config;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
 import daripher.skilltree.init.SkillTreeItems;
@@ -429,7 +430,7 @@ public class AttributeBonusHandler {
 		if (level.isClientSide) {
 			return;
 		}
-		var gemstoneFindingChance = player.getAttributeValue(SkillTreeAttributes.GEMSTONE_FINDING_CHANCE.get());
+		var gemstoneFindingChance = Config.COMMON_CONFIG.getGemstoneDropChance();
 		if (gemstoneFindingChance == 0) {
 			return;
 		}

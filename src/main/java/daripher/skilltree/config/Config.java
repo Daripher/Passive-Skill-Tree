@@ -13,6 +13,7 @@ public class Config {
 
 	public static class CommonConfig {
 		private final ConfigValue<Integer> maximumSkillPoints;
+		private final ConfigValue<Double> gemstoneDropChance;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
 		private final ConfigValue<List<? extends String>> blacklistedGemstoneContainers;
 
@@ -25,6 +26,7 @@ public class Config {
 			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(50), positiveOrZeroInteger);
 			builder.pop();
 			builder.push("Gemstones");
+			gemstoneDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
 			builder.comment("Example: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
 			blacklistedGemstoneContainers = builder.defineList("IDs of items that shouldn't have gemstone slots", new ArrayList<String>(), potentialItemId);
 			builder.pop();
@@ -56,6 +58,10 @@ public class Config {
 			}
 			return skillPointsCosts.get();
 		}
+		
+		public double getGemstoneDropChance() {
+            return gemstoneDropChance.get();
+        }
 	}
 
 	static {

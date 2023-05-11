@@ -101,7 +101,6 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> COOKED_FOOD_HEALING_PER_RESTORATION_MULTIPLIER = rangedAttribute("player", "cooked_food_healing_per_restoration_multiplier", 1D, 1D, 10D);
 	// shared attributes
 	public static final RegistryObject<Attribute> EVASION_CHANCE_MULTIPLIER = rangedAttribute("player", "evasion_chance_multiplier", 1D, 1D, 2D);
-	public static final RegistryObject<Attribute> GEMSTONE_FINDING_CHANCE = rangedAttribute("player", "gemstone_finding_chance", 0.05D, 0D, 1D);
 	public static final RegistryObject<Attribute> LIFE_PER_HIT = rangedAttribute("player", "life_per_hit", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> LIFE_ON_BLOCK = rangedAttribute("player", "life_on_block", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> LIFE_REGENERATION_BONUS = rangedAttribute("player", "life_regeneration_bonus", 0D, 0D, 100D);
