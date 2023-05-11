@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.player.JewelerPlayer;
-import daripher.skilltree.api.player.PlayerContainer;
+import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.api.RainbowJewelRandomSeedContainer;
 import daripher.skilltree.init.SkillTreeItems;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +31,10 @@ public abstract class MixinSmithingMenu extends ItemCombinerMenu {
 		if (inputSlots.getItem(1).getItem() != SkillTreeItems.RAINBOW_GEMSTONE.get()) {
 			return;
 		}
-		if (!(player instanceof JewelerPlayer)) {
+		if (!(player instanceof RainbowJewelRandomSeedContainer)) {
 			return;
 		}
-		var jewelerPlayer = (JewelerPlayer) player;
-		jewelerPlayer.rainbowJewelInserted();
+		var jewelerPlayer = (RainbowJewelRandomSeedContainer) player;
+		jewelerPlayer.updateRainbowJewelRandomSeed();
 	}
 }

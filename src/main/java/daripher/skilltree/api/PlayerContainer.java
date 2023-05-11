@@ -1,4 +1,4 @@
-package daripher.skilltree.api.player;
+package daripher.skilltree.api;
 
 import java.util.Optional;
 

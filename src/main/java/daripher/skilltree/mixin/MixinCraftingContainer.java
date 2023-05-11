@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import daripher.skilltree.api.player.PlayerContainer;
+import daripher.skilltree.api.PlayerContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 

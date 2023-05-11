@@ -2,7 +2,7 @@ package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
 
-import daripher.skilltree.api.player.PlayerContainer;
+import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
 import daripher.skilltree.item.GemstoneItem;
