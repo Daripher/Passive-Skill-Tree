@@ -1,11 +1,13 @@
 package daripher.skilltree.mixin;
 
+import java.util.Optional;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.block.ExtendedBrewingStand;
+import daripher.skilltree.api.player.PlayerContainer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.util.PotionHelper;
 import net.minecraft.core.BlockPos;
@@ -19,8 +21,8 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 
 @Mixin(BrewingStandBlockEntity.class)
-public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEntity implements ExtendedBrewingStand {
-	private Player currentUser;
+public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEntity implements PlayerContainer {
+	private Optional<Player> player = Optional.empty();
 
 	protected MixinBrewingStandBlockEntity() {
 		super(null, null, null);
@@ -29,11 +31,11 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 	@Inject(method = "doBrew", at = @At("TAIL"))
 	private static void enhanceBrewedPotions(Level level, BlockPos blockPos, NonNullList<ItemStack> itemStacks, CallbackInfo callbackInfo) {
 		var blockEntity = level.getBlockEntity(blockPos);
-		if (!(blockEntity instanceof ExtendedBrewingStand)) {
+		if (!(blockEntity instanceof PlayerContainer)) {
 			return;
 		}
-		var brewingStand = (ExtendedBrewingStand) blockEntity;
-		var player = brewingStand.getCurrentUser();
+		var playerContainer = (PlayerContainer) blockEntity;
+		var player = playerContainer.getPlayer().get();
 		for (var slot = 0; slot < 3; slot++) {
 			var potionStack = itemStacks.get(slot);
 			enhancePotion(potionStack, player);
@@ -56,12 +58,17 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 
 	@Override
 	public AbstractContainerMenu createMenu(int window, Inventory inventory, Player player) {
-		currentUser = player;
+		setPlayer(player);
 		return super.createMenu(window, inventory, player);
 	}
 
 	@Override
-	public Player getCurrentUser() {
-		return currentUser;
+	public Optional<Player> getPlayer() {
+		return player;
+	}
+
+	@Override
+	public void setPlayer(Player player) {
+		this.player = Optional.of(player);
 	}
 }
