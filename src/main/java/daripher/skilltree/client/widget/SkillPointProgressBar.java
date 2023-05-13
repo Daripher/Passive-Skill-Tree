@@ -48,7 +48,6 @@ public class SkillPointProgressBar extends AbstractWidget {
 		if (skillPointsGained < levelupCosts.size()) {
 			levelupCost = levelupCosts.get(skillPointsGained);
 			experienceProgress = (float) skillPointsGained / levelupCost;
-			return;
 		} else {
 			skillPointsGained--;
 		}
