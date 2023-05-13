@@ -50,7 +50,7 @@ public abstract class GemstoneItem extends Item {
 	@Override
 	public MutableComponent getName(ItemStack itemStack) {
 		var name = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> applyGemstoneColorStyle(super.getName(itemStack)));
-		return applyGemstoneColorStyle(name);
+		return name;
 	}
 
 	@OnlyIn(Dist.CLIENT)
