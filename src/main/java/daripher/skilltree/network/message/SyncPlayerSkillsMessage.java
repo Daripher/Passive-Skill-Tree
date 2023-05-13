@@ -20,6 +20,7 @@ import net.minecraftforge.network.NetworkEvent;
 public class SyncPlayerSkillsMessage {
 	private List<ResourceLocation> learnedSkills = new ArrayList<>();
 	private int skillPoints;
+	private int experience;
 
 	private SyncPlayerSkillsMessage() {
 	}
@@ -28,6 +29,7 @@ public class SyncPlayerSkillsMessage {
 		var skillsCapability = PlayerSkillsProvider.get(player);
 		learnedSkills = skillsCapability.getPlayerSkills().stream().map(PassiveSkill::getId).toList();
 		skillPoints = skillsCapability.getSkillPoints();
+		experience = skillsCapability.getExperience();
 	}
 
 	public static SyncPlayerSkillsMessage decode(FriendlyByteBuf buf) {
@@ -37,6 +39,7 @@ public class SyncPlayerSkillsMessage {
 			result.learnedSkills.add(new ResourceLocation(buf.readUtf()));
 		}
 		result.skillPoints = buf.readInt();
+		result.experience = buf.readInt();
 		return result;
 	}
 
@@ -44,6 +47,7 @@ public class SyncPlayerSkillsMessage {
 		buf.writeInt(learnedSkills.size());
 		learnedSkills.stream().map(ResourceLocation::toString).forEach(buf::writeUtf);
 		buf.writeInt(skillPoints);
+		buf.writeInt(experience);
 	}
 
 	public static void receive(SyncPlayerSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
@@ -60,5 +64,6 @@ public class SyncPlayerSkillsMessage {
 		var skillTreeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
 		message.learnedSkills.stream().map(SkillTreeClientData.getSkillsForTree(skillTreeId)::get).forEach(skillsCapability.getPlayerSkills()::add);
 		skillsCapability.setSkillPoints(message.skillPoints);
+		skillsCapability.setExperience(message.experience);
 	}
 }

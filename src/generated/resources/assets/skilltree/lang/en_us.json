@@ -701,5 +701,6 @@
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
   "skilltree.message.reset_command": "Your skill tree has been reset.",
   "skilltree.message.skillpoint": "Skill point gained. Open skill tree menu to spend it.",
-  "weapon.poisoned": "Poisoned:"
+  "weapon.poisoned": "Poisoned:",
+  "widget.skill_point_progress_bar.text": "Gather Experience to gain Skill Points"
 }

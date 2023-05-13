@@ -13,14 +13,12 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 
-public class PassiveSkillButton extends Button {
+public class SkillButton extends Button {
 	private static final ResourceLocation TITLE_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_title");
 	private static final ResourceLocation DESCRIPTION_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_description");
 	private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169).withFont(TITLE_FONT);
@@ -28,41 +26,34 @@ public class PassiveSkillButton extends Button {
 	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withFont(TITLE_FONT);
 	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5).withFont(DESCRIPTION_FONT);
 	private final SkillTreeScreen parentScreen;
-	public final PassiveSkill passiveSkill;
-	public boolean isSkillLearned;
-	public boolean canLearnSkill;
+	public final PassiveSkill skill;
+	public boolean highlighted;
+	public boolean animated;
 
-	public PassiveSkillButton(SkillTreeScreen screen, int x, int y, PassiveSkill passiveSkill) {
+	public SkillButton(SkillTreeScreen screen, int x, int y, PassiveSkill passiveSkill) {
 		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), screen::buttonPressed, screen::renderButtonTooltip);
 		this.parentScreen = screen;
-		this.passiveSkill = passiveSkill;
+		this.skill = passiveSkill;
 	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, passiveSkill.getBackgroundTexture());
-		RenderSystem.setShaderColor(1F, 1F, 1F, alpha);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
+		parentScreen.prepareTextureRendering(skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, 0, 0, width, height, width * 3, height);
 		var iconSize = width / 34F;
 		poseStack.pushPose();
 		poseStack.translate(x + width / 2, y + height / 2, 0);
 		poseStack.scale(iconSize, iconSize, 1);
-		RenderSystem.setShaderTexture(0, passiveSkill.getIconTexture());
+		RenderSystem.setShaderTexture(0, skill.getIconTexture());
 		blit(poseStack, -8, -8, 16, 16, 0, 0, 16, 16, 16, 16);
 		poseStack.popPose();
-		RenderSystem.setShaderTexture(0, passiveSkill.getBackgroundTexture());
-		blit(poseStack, x, y, width, height, width + (isSkillLearned ? width : 0), 0, width, height, width * 3, height);
-
-		if (canLearnSkill) {
-			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(parentScreen.animation / 3F) + 1) / 2);
+		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
+		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
+		if (animated) {
+			RenderSystem.setShaderColor(1F, 1F, 1F, parentScreen.getAnimationProgress());
 			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
-
 		if (isHoveredOrFocused()) {
 			renderToolTip(poseStack, mouseX, mouseY);
 		}
@@ -81,18 +72,18 @@ public class PassiveSkillButton extends Button {
 		var minecraft = parentScreen.getMinecraft();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
 		if (useAdvancedTooltip) {
-			var skillIdComponent = Component.literal(passiveSkill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
+			var skillIdComponent = Component.literal(skill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
 			tooltip.add(skillIdComponent);
-			passiveSkill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
+			skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
 		}
 		return tooltip;
 	}
 
-	public void setCanLearnSkill() {
-		canLearnSkill = true;
+	public void animate() {
+		animated = true;
 	}
 
 	private String getSkillId() {
-		return "skill." + passiveSkill.getId().getNamespace() + "." + passiveSkill.getId().getPath();
+		return "skill." + skill.getId().getNamespace() + "." + skill.getId().getPath();
 	}
 }

@@ -68,9 +68,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		var playerSkillsData = get(player);
 		var skillPoints = playerSkillsData.getSkillPoints();
 		playerSkillsData.grantExpirience(event.getAmount());
+		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
 		if (skillPoints != playerSkillsData.getSkillPoints()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
-			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
 		}
 	}
 

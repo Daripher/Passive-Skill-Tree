@@ -38,8 +38,13 @@ public class PlayerSkills implements IPlayerSkills {
 	}
 
 	@Override
-	public int getExpirience() {
+	public int getExperience() {
 		return expirience;
+	}
+
+	@Override
+	public void setExperience(int experience) {
+		this.expirience = experience;
 	}
 
 	@Override
