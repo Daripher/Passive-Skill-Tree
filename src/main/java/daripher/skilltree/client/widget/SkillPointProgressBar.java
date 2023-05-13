@@ -31,31 +31,43 @@ public class SkillPointProgressBar extends AbstractWidget {
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+		renderBackground(poseStack);
+		renderExperienceBar(poseStack);
+		if (isHoveredOrFocused()) {
+			renderToolTip(poseStack, mouseX, mouseY);
+		}
+	}
+
+	protected void renderExperienceBar(PoseStack poseStack) {
 		var minecraft = Minecraft.getInstance();
 		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
-		var obtainedPoints = skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
-		var skillPointCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		if (obtainedPoints > skillPointCosts.size()) {
+		var skillPointsGained = skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
+		var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		var levelupCost = 1;
+		var experienceProgress = 1F;
+		if (skillPointsGained < levelupCosts.size()) {
+			levelupCost = levelupCosts.get(skillPointsGained);
+			experienceProgress = (float) skillPointsGained / levelupCost;
 			return;
+		} else {
+			skillPointsGained--;
 		}
-		var requiredExperience = skillPointCosts.get(obtainedPoints);
-		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
-		blit(poseStack, x, y, 0, 0, width, height);
 		RenderSystem.setShaderTexture(0, GUI_ICONS_LOCATION);
-		var experienceProgress = (float) skillsCapability.getExperience() / requiredExperience;
 		var filledBarWidth = (int) (experienceProgress * 183);
 		blit(poseStack, x + 26, y + 7, 0, 64, 182, 5);
 		if (filledBarWidth > 0) {
 			blit(poseStack, x + 26, y + 7, 0, 69, filledBarWidth, 5);
 		}
-		var levelText = "" + obtainedPoints;
+		var levelText = "" + skillPointsGained;
 		var font = minecraft.font;
 		drawCenteredOutlinedText(poseStack, levelText, font, x + 17, y + 5);
-		var nextLevelText = "" + (obtainedPoints + 1);
+		var nextLevelText = "" + (skillPointsGained + 1);
 		drawCenteredOutlinedText(poseStack, nextLevelText, font, x + width - 17, y + 5);
-		if (isHoveredOrFocused()) {
-			renderToolTip(poseStack, mouseX, mouseY);
-		}
+	}
+
+	protected void renderBackground(PoseStack poseStack) {
+		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
+		blit(poseStack, x, y, 0, 0, width, height);
 	}
 
 	@Override
