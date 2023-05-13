@@ -176,6 +176,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("skilltree.message.reset_command", "Your skill tree has been reset.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
+		add("widget.skill_point_progress_bar.points", "Points left: %s");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

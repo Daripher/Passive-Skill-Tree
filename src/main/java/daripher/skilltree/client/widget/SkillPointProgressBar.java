@@ -25,7 +25,7 @@ public class SkillPointProgressBar extends AbstractWidget {
 	private final SkillTreeScreen parentScreen;
 
 	public SkillPointProgressBar(SkillTreeScreen parentScreen, int x, int y) {
-		super(x, y, 235, 19, Component.translatable("widget.skill_point_progress_bar.text").withStyle(ChatFormatting.GRAY));
+		super(x, y, 235, 19, Component.empty());
 		this.parentScreen = parentScreen;
 	}
 
@@ -74,7 +74,12 @@ public class SkillPointProgressBar extends AbstractWidget {
 	public void renderToolTip(PoseStack poseStack, int mouseX, int mouseY) {
 		var borderStyleStack = new ItemStack(Items.STONE);
 		var tooltip = new ArrayList<MutableComponent>();
-		tooltip.add(Component.empty().append(getMessage()));
+		var minecraft = Minecraft.getInstance();
+		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
+		var skillPointsAvailable = skillsCapability.getSkillPoints();
+		tooltip.add(Component.translatable("widget.skill_point_progress_bar.text").withStyle(ChatFormatting.GRAY));
+		var skillPointsComponent = Component.literal("" + skillPointsAvailable).withStyle(ChatFormatting.GREEN);
+		tooltip.add(Component.translatable("widget.skill_point_progress_bar.points", skillPointsComponent).withStyle(ChatFormatting.GRAY));
 		parentScreen.renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
 	}
 
