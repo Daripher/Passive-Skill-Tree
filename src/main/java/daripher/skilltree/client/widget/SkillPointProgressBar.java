@@ -2,7 +2,6 @@ package daripher.skilltree.client.widget;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
@@ -16,6 +15,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,7 +31,6 @@ public class SkillPointProgressBar extends AbstractWidget {
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		renderBackground(poseStack);
 		renderExperienceBar(poseStack);
 		if (isHoveredOrFocused()) {
 			renderToolTip(poseStack, mouseX, mouseY);
@@ -47,26 +46,24 @@ public class SkillPointProgressBar extends AbstractWidget {
 		var experienceProgress = 1F;
 		if (skillPointsGained < levelupCosts.size()) {
 			levelupCost = levelupCosts.get(skillPointsGained);
-			experienceProgress = (float) skillPointsGained / levelupCost;
+			experienceProgress = (float) skillsCapability.getExperience() / levelupCost;
 		} else {
 			skillPointsGained--;
 		}
-		RenderSystem.setShaderTexture(0, GUI_ICONS_LOCATION);
 		var filledBarWidth = (int) (experienceProgress * 183);
-		blit(poseStack, x + 26, y + 7, 0, 64, 182, 5);
+		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
+		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
 		if (filledBarWidth > 0) {
-			blit(poseStack, x + 26, y + 7, 0, 69, filledBarWidth, 5);
+			blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
 		}
 		var levelText = "" + skillPointsGained;
 		var font = minecraft.font;
-		drawCenteredOutlinedText(poseStack, levelText, font, x + 17, y + 5);
+		var textY = y + 6;
+		drawCenteredOutlinedText(poseStack, levelText, font, x + 17, textY);
 		var nextLevelText = "" + (skillPointsGained + 1);
-		drawCenteredOutlinedText(poseStack, nextLevelText, font, x + width - 17, y + 5);
-	}
-
-	protected void renderBackground(PoseStack poseStack) {
-		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
-		blit(poseStack, x, y, 0, 0, width, height);
+		drawCenteredOutlinedText(poseStack, nextLevelText, font, x + width - 17, textY);
+		var percentageText = "" + (int) (experienceProgress * 100) + "%";
+		drawCenteredOutlinedText(poseStack, percentageText, font, x + width / 2, textY);
 	}
 
 	@Override
@@ -77,7 +74,7 @@ public class SkillPointProgressBar extends AbstractWidget {
 		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
 		var skillPointsAvailable = skillsCapability.getSkillPoints();
 		tooltip.add(Component.translatable("widget.skill_point_progress_bar.text").withStyle(ChatFormatting.GRAY));
-		var skillPointsComponent = Component.literal("" + skillPointsAvailable).withStyle(ChatFormatting.GREEN);
+		var skillPointsComponent = Component.literal("" + skillPointsAvailable).withStyle(Style.EMPTY.withColor(0xFCE266));
 		tooltip.add(Component.translatable("widget.skill_point_progress_bar.points", skillPointsComponent).withStyle(ChatFormatting.GRAY));
 		parentScreen.renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
 	}
@@ -88,7 +85,7 @@ public class SkillPointProgressBar extends AbstractWidget {
 		font.draw(poseStack, text, x - 1, y, 0);
 		font.draw(poseStack, text, x, y + 1, 0);
 		font.draw(poseStack, text, x, y - 1, 0);
-		font.draw(poseStack, text, x, y, 8453920);
+		font.draw(poseStack, text, x, y, 0xFCE266);
 	}
 
 	@Override

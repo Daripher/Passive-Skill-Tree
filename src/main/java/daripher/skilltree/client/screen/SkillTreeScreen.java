@@ -61,7 +61,7 @@ public class SkillTreeScreen extends Screen {
 		maxScrollY -= height / 2 - 80;
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
-		skillPointProgressBar = new SkillPointProgressBar(this, width / 2 - 235 / 2, height - 21);
+		skillPointProgressBar = new SkillPointProgressBar(this, width / 2 - 235 / 2, height - 18);
 	}
 
 	protected void initSkillsIfNeeded() {
