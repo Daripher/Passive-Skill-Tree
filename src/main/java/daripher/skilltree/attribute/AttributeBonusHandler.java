@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 import java.util.function.Function;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.google.common.util.concurrent.AtomicDouble;
 
 import daripher.skilltree.SkillTreeMod;
@@ -47,6 +49,7 @@ import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -543,28 +546,44 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void setCraftedFoodBonuses(ItemCraftedEvent event) {
-		if (!ItemHelper.isFood(event.getCrafting())) {
+		var craftedItem = event.getCrafting();
+		if (!ItemHelper.isFood(craftedItem)) {
 			return;
 		}
-		var restorationBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.COOKED_FOOD_RESTORATION_MULTIPLIER.get()) - 1;
+		var player = event.getEntity();
+		setCraftedFoodBonuses(craftedItem, player);
+	}
+
+	@SubscribeEvent
+	public static void setCraftedFoodBonuses(ItemSmeltedEvent event) {
+		var craftedItem = event.getSmelting();
+		if (!ItemHelper.isFood(craftedItem)) {
+			return;
+		}
+		var player = event.getEntity();
+		setCraftedFoodBonuses(craftedItem, player);
+	}
+
+	protected static void setCraftedFoodBonuses(@NotNull ItemStack craftedItem, Player player) {
+		var restorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_RESTORATION_MULTIPLIER.get()) - 1;
 		if (restorationBonus > 0) {
-			FoodHelper.setRestorationBonus(event.getCrafting(), (float) restorationBonus);
+			FoodHelper.setRestorationBonus(craftedItem, (float) restorationBonus);
 		}
-		var lifeRegenerationBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION_PER_RESTORATION.get());
+		var lifeRegenerationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION_PER_RESTORATION.get());
 		if (lifeRegenerationBonus > 0) {
-			FoodHelper.setLifeRegenerationBonus(event.getCrafting(), (float) lifeRegenerationBonus);
+			FoodHelper.setLifeRegenerationBonus(craftedItem, (float) lifeRegenerationBonus);
 		}
-		var damagePerRestorationBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_RESTORATION_MULTIPLIER.get()) - 1;
+		var damagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_RESTORATION_MULTIPLIER.get()) - 1;
 		if (damagePerRestorationBonus > 0) {
-			FoodHelper.setDamageBonus(event.getCrafting(), (float) damagePerRestorationBonus);
+			FoodHelper.setDamageBonus(craftedItem, (float) damagePerRestorationBonus);
 		}
-		var critDamagePerRestorationBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_RESTORATION_MULTIPLIER.get()) - 1;
+		var critDamagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_RESTORATION_MULTIPLIER.get()) - 1;
 		if (critDamagePerRestorationBonus > 0) {
-			FoodHelper.setCritDamageBonus(event.getCrafting(), (float) critDamagePerRestorationBonus);
+			FoodHelper.setCritDamageBonus(craftedItem, (float) critDamagePerRestorationBonus);
 		}
-		var healingPerRestorationBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION_MULTIPLIER.get()) - 1;
+		var healingPerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION_MULTIPLIER.get()) - 1;
 		if (healingPerRestorationBonus > 0) {
-			FoodHelper.setHealingBonus(event.getCrafting(), (float) healingPerRestorationBonus);
+			FoodHelper.setHealingBonus(craftedItem, (float) healingPerRestorationBonus);
 		}
 	}
 

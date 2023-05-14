@@ -12,7 +12,8 @@
   	"MixinSimpleContainer",
   	"MixinCraftingContainer",
   	"MixinCraftingMenu",
-  	"MixinInventoryMenu"
+  	"MixinInventoryMenu",
+  	"MixinAbstractFurnaceMenu"
   ],
   "client" : [ ],
   "injectors" : {
