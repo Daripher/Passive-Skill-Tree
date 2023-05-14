@@ -113,17 +113,6 @@ public class PlayerHelper {
 		return multiplier;
 	}
 
-	public static float getAttackSpeedBonus(Player player) {
-		var bonus = 0F;
-		if (ItemHelper.isPickaxe(player.getMainHandItem())) {
-			bonus += getAttackSpeedBonusWithPickaxe(player);
-		}
-		if (ItemHelper.isAxe(player.getMainHandItem())) {
-			bonus += getAttackSpeedBonusWithAxe(player);
-		}
-		return bonus;
-	}
-
 	public static float getFlatDamageBonus(Player player) {
 		var bonus = 0F;
 		if (ItemHelper.isPickaxe(player.getMainHandItem())) {

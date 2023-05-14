@@ -41,7 +41,6 @@ import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -100,7 +99,7 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "579a74e0-a2fd-4074-bb7b-cbaa646cf847", AttributeBonusHandler::getMaximumLifeIfAteRecently);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "98a17cd0-68c8-4808-8981-1796c33295e7", AttributeBonusHandler::getMaximumLifePerSatisfiedHunger);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), Operation.ADDITION, "4aa87d74-b729-4e1d-9c76-893495050416", AttributeBonusHandler::getEvasionUnderPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.ADDITION, "a4daf7f8-29e3-404d-8277-9215a16ef4c8", AttributeBonusHandler::getAttackSpeedUnderPotionEffect);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "a4daf7f8-29e3-404d-8277-9215a16ef4c8", AttributeBonusHandler::getAttackSpeedUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "de712f9d-9f47-475c-8b86-188bca70d1df", AttributeBonusHandler::getMaximumLifeUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "282c4f81-7b6d-48e0-82c9-c4ebd58265cb", AttributeBonusHandler::getMaximumLifePerPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "16c35c5c-56da-4d21-ad56-bd6618fee711", AttributeBonusHandler::getMaximumLifeWithEnchantedItem);
@@ -108,6 +107,8 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "27b4644b-96a0-4443-89e5-1700af61d602", AttributeBonusHandler::getMaximumLifePerEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "55c3cb58-c09e-465a-a812-6a18ae587ec0", AttributeBonusHandler::getArmorPerChestplateEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9b1e9aac-fa58-4343-ba88-7541eca2836f", AttributeBonusHandler::getMaximumLifePerArmorEnchantment);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "7e8487e4-390c-4ee3-9b84-c1204ef3c321", AttributeBonusHandler::getAttackSpeedWithAxe);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "5e2d6a95-bc70-4f3d-a348-307b49f5bc84", AttributeBonusHandler::getAttackSpeedWithPickaxe);
 	}
 
 	private static void applyDynamicAttributeBonus(Player player, Attribute modifiedAttribute, Operation operation, String id, Function<Player, Double> dynamicBonusFunction) {
@@ -281,25 +282,20 @@ public class AttributeBonusHandler {
 		return maximumLifePerArmorEnchantment * enchantmentCount;
 	}
 
-	@SubscribeEvent
-	public static void applyAttackSpeedBonus(LivingEquipmentChangeEvent event) {
-		if (!(event.getEntity() instanceof Player)) {
-			return;
+	private static double getAttackSpeedWithAxe(Player player) {
+		if (!ItemHelper.isAxe(player.getMainHandItem())) {
+			return 0;
 		}
-		var player = (Player) event.getEntity();
-		var attackSpeedBonus = PlayerHelper.getAttackSpeedBonus(player);
-		var modifierId = UUID.fromString("030cf99a-09f8-4e40-a858-56b9d588b445");
-		if (attackSpeedBonus > 0) {
-			var attackSpeedAttribute = player.getAttribute(Attributes.ATTACK_SPEED);
-			var oldModifier = attackSpeedAttribute.getModifier(modifierId);
-			if (oldModifier != null) {
-				if (oldModifier.getAmount() == attackSpeedBonus) {
-					return;
-				}
-				attackSpeedAttribute.removeModifier(modifierId);
-			}
-			attackSpeedAttribute.addTransientModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", attackSpeedBonus, Operation.MULTIPLY_TOTAL));
+		var attackSpeedWithAxe = player.getAttributeValue(SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
+		return attackSpeedWithAxe;
+	}
+
+	private static double getAttackSpeedWithPickaxe(Player player) {
+		if (!ItemHelper.isPickaxe(player.getMainHandItem())) {
+			return 0;
 		}
+		var attackSpeedWithPickaxe = player.getAttributeValue(SkillTreeAttributes.PICKAXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
+		return attackSpeedWithPickaxe;
 	}
 
 	@SubscribeEvent
