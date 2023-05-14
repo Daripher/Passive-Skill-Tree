@@ -5,6 +5,8 @@ import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
 import daripher.skilltree.init.SkillTreeItems;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.integration.AppleSkinIntegration;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -21,5 +23,9 @@ public class SkillTreeMod {
 		SkillTreeAttributes.REGISTRY.register(modEventBus);
 		SkillTreeRecipeSerializers.REGISTRY.register(modEventBus);
 		SkillTreeEffects.REGISTRY.register(modEventBus);
+
+		if (ModList.get().isLoaded("appleskin")) {
+			AppleSkinIntegration.ISNTANCE.addCompatibility();
+		}
 	}
 }
