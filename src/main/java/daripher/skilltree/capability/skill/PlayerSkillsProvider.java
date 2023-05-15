@@ -34,9 +34,8 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> PLAYER_SKILLS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-	});
-	private LazyOptional<IPlayerSkills> playerSkillsLazyOptional = LazyOptional.of(() -> new PlayerSkills());
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent
 	public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
@@ -79,12 +78,11 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		if (event.getEntity().level.isClientSide) {
 			return;
 		}
-		if (event.isWasDeath()) {
-			event.getOriginal().reviveCaps();
-			var originalData = get(event.getOriginal());
-			var cloneData = get(event.getEntity());
-			cloneData.deserializeNBT(originalData.serializeNBT());
-		}
+		event.getOriginal().reviveCaps();
+		var originalData = get(event.getOriginal());
+		var cloneData = get(event.getEntity());
+		cloneData.deserializeNBT(originalData.serializeNBT());
+		event.getOriginal().invalidateCaps();
 	}
 
 	@SubscribeEvent
@@ -141,20 +139,20 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@Override
 	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		return cap == PLAYER_SKILLS_CAPABILITY ? playerSkillsLazyOptional.cast() : LazyOptional.empty();
+		return cap == CAPABILITY ? optionalCapability.cast() : LazyOptional.empty();
 	}
 
 	@Override
 	public CompoundTag serializeNBT() {
-		return playerSkillsLazyOptional.orElseThrow(NullPointerException::new).serializeNBT();
+		return optionalCapability.orElseThrow(NullPointerException::new).serializeNBT();
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag compoundTag) {
-		playerSkillsLazyOptional.orElseThrow(NullPointerException::new).deserializeNBT(compoundTag);
+		optionalCapability.orElseThrow(NullPointerException::new).deserializeNBT(compoundTag);
 	}
 
 	public static @NotNull IPlayerSkills get(Player player) {
-		return player.getCapability(PLAYER_SKILLS_CAPABILITY).orElseThrow(NullPointerException::new);
+		return player.getCapability(CAPABILITY).orElseThrow(NullPointerException::new);
 	}
 }
