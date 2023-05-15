@@ -28,8 +28,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class SkillTreeScreen extends Screen {
 	private static final ResourceLocation CONNECTION_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_connection.png");
@@ -150,7 +148,7 @@ public class SkillTreeScreen extends Screen {
 		if (!(button instanceof SkillButton)) {
 			return;
 		}
-		var borderStyleStack = new ItemStack(Items.MUSIC_DISC_13);
+		var borderStyleStack = ((SkillButton) button).getTooltipBorderStyleStack();
 		var tooltip = ((SkillButton) button).getTooltip();
 		renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
 	}

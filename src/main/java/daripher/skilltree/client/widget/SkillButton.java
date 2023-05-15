@@ -17,6 +17,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class SkillButton extends Button {
 	private static final ResourceLocation TITLE_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_title");
@@ -85,5 +87,10 @@ public class SkillButton extends Button {
 
 	private String getSkillId() {
 		return "skill." + skill.getId().getNamespace() + "." + skill.getId().getPath();
+	}
+
+	public ItemStack getTooltipBorderStyleStack() {
+		var styleItem = width == 24 ? Items.GOLDEN_APPLE : width == 20 ? Items.NETHERITE_SWORD : Items.BUCKET;
+		return new ItemStack(styleItem);
 	}
 }
