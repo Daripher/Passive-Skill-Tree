@@ -21,7 +21,7 @@ plugins {
 
 apply plugin: 'org.spongepowered.mixin'
 
-version = '0.3.6a'
+version = '0.3.7'
 group = 'daripher.skilltree'
 archivesBaseName = 'PassiveSkillTree-1.19.2-BETA'
 
