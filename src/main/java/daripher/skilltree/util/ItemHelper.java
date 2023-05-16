@@ -120,8 +120,15 @@ public class ItemHelper {
 
 	public static boolean canApplyGemstone(ItemStack itemStack) {
 		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
-		var itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString();
-		if (blacklist.contains(itemId)) {
+		if (blacklist.contains("*:*")) {
+			return false;
+		}
+		var itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+		if (blacklist.contains(itemId.toString())) {
+			return false;
+		}
+		var itemNamespace = itemId.getNamespace();
+		if (blacklist.contains(itemNamespace + ":*")) {
 			return false;
 		}
 		return isArmor(itemStack) || isShield(itemStack) || isWeapon(itemStack) || isBow(itemStack);

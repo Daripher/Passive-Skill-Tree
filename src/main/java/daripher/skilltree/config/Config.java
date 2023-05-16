@@ -14,6 +14,7 @@ public class Config {
 	public static class CommonConfig {
 		private final ConfigValue<Integer> maximumSkillPoints;
 		private final ConfigValue<Double> gemstoneDropChance;
+		private final ConfigValue<Boolean> showChatMessages;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
 		private final ConfigValue<List<? extends String>> blacklistedGemstoneContainers;
 
@@ -24,10 +25,14 @@ public class Config {
 			maximumSkillPoints = builder.defineInRange("Maximum skill points", 50, 1, 500);
 			builder.comment("This list's size must be equal to maximum skill points.");
 			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(50), positiveOrZeroInteger);
+			builder.comment("Disabling this will remove chat messages when you gain a skill point.");
+			showChatMessages = builder.define("Show chat messages", true);
 			builder.pop();
 			builder.push("Gemstones");
 			gemstoneDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
-			builder.comment("Example: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
+			builder.comment("This is how to blacklist specific items: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
+			builder.comment("You can also blacklist whole namespace like this: [\"<mod_id>:*\"]");
+			builder.comment("You can also blacklist all items like this: [\"*:*\"]");
 			blacklistedGemstoneContainers = builder.defineList("IDs of items that shouldn't have gemstone slots", new ArrayList<String>(), potentialItemId);
 			builder.pop();
 		}
@@ -58,10 +63,14 @@ public class Config {
 			}
 			return skillPointsCosts.get();
 		}
-		
+
 		public double getGemstoneDropChance() {
-            return gemstoneDropChance.get();
-        }
+			return gemstoneDropChance.get();
+		}
+
+		public boolean shouldShowChatMessages() {
+			return showChatMessages.get();
+		}
 	}
 
 	static {

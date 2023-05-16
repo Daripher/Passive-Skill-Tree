@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncSkillsMessage;
@@ -68,7 +69,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		var skillPoints = playerSkillsData.getSkillPoints();
 		playerSkillsData.grantExpirience(event.getAmount());
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
-		if (skillPoints != playerSkillsData.getSkillPoints()) {
+		var gainedSkillPoint = skillPoints != playerSkillsData.getSkillPoints();
+		var shouldShowChatMessages = Config.COMMON_CONFIG.shouldShowChatMessages();
+		if (gainedSkillPoint && shouldShowChatMessages) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
 		}
 	}
