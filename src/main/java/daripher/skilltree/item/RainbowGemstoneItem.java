@@ -67,7 +67,7 @@ public class RainbowGemstoneItem extends GemstoneItem {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public MutableComponent applyGemstoneColorStyle(Component component) {
+	public MutableComponent applyGemstoneColorStyle(MutableComponent component) {
 		var minecraft = Minecraft.getInstance();
 		var player = minecraft.player;
 		if (player == null) {
