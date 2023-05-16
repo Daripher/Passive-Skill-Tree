@@ -18,5 +18,6 @@ public class ModItemModelsProvider extends ItemModelProvider {
 		basicItem(SkillTreeItems.LIGHT_GEMSTONE.get());
 		basicItem(SkillTreeItems.VOID_GEMSTONE.get());
 		basicItem(SkillTreeItems.RAINBOW_GEMSTONE.get());
+		basicItem(SkillTreeItems.WISDOM_SCROLL.get());
 	}
 }

@@ -155,6 +155,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addTooltip(SkillTreeItems.VOID_GEMSTONE.get(), "Seems empty inside");
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gemstone");
 		addTooltip(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Its magic is inconsistent");
+		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION_BONUS.get(), "Life Regeneration");
 		add(SkillTreeAttributes.LIFE_PER_HIT.get(), "Life per Hit");
