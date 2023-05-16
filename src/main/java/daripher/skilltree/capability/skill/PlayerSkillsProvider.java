@@ -35,7 +35,8 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent
@@ -48,6 +49,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void removePlayerExp(PlayerXpEvent.PickupXp event) {
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+			return;
+		}
 		if (event.getEntity().level.isClientSide) {
 			return;
 		}
@@ -61,6 +65,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+			return;
+		}
 		if (event.getAmount() <= 0) {
 			return;
 		}

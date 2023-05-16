@@ -15,6 +15,7 @@ public class Config {
 		private final ConfigValue<Integer> maximumSkillPoints;
 		private final ConfigValue<Double> gemstoneDropChance;
 		private final ConfigValue<Boolean> showChatMessages;
+		private final ConfigValue<Boolean> enableExperienceGain;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
 		private final ConfigValue<List<? extends String>> blacklistedGemstoneContainers;
 
@@ -27,6 +28,8 @@ public class Config {
 			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(50), positiveOrZeroInteger);
 			builder.comment("Disabling this will remove chat messages when you gain a skill point.");
 			showChatMessages = builder.define("Show chat messages", true);
+			builder.comment("Warning: If you disable this make sure you make alternative way of getting skill points.");
+			enableExperienceGain = builder.define("Enable experience gain", true);
 			builder.pop();
 			builder.push("Gemstones");
 			gemstoneDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
@@ -70,6 +73,10 @@ public class Config {
 
 		public boolean shouldShowChatMessages() {
 			return showChatMessages.get();
+		}
+
+		public boolean experienceGainEnabled() {
+			return enableExperienceGain.get();
 		}
 	}
 
