@@ -33,15 +33,15 @@ public class SkillTreeScreen extends Screen {
 	private static final ResourceLocation CONNECTION_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_connection.png");
 	private static final ResourceLocation BACKGROUND_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_background.png");
 	private static final ResourceLocation OVERLAY_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_overlay.png");
-	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
+	protected final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<Pair<SkillButton, SkillButton>> connections = new ArrayList<>();
 	private final List<SkillButton> startingPoints = new ArrayList<>();
 	private final ResourceLocation skillTreeId;
 	private List<ResourceLocation> learnedSkills;
 	private AbstractWidget skillPointProgressBar;
 	private int skillPoints;
-	private double scrollX;
-	private double scrollY;
+	protected double scrollX;
+	protected double scrollY;
 	private int maxScrollX;
 	private int maxScrollY;
 	public float renderAnimation;
@@ -78,7 +78,7 @@ public class SkillTreeScreen extends Screen {
 		SkillTreeClientData.getSkillsForTree(skillTreeId).forEach(this::addSkillButton);
 	}
 
-	private void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
+	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
 		var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
 		var button = new SkillButton(this, buttonX, buttonY, skill);
@@ -209,7 +209,7 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragAmountX, double dragAmountY) {
-		if (mouseButton != 0) {
+		if (mouseButton != 0 && mouseButton != 2) {
 			return false;
 		}
 		if (maxScrollX > 0) {
@@ -224,7 +224,7 @@ public class SkillTreeScreen extends Screen {
 		return true;
 	}
 
-	private void renderConnections(PoseStack poseStack, float partialTick) {
+	protected void renderConnections(PoseStack poseStack, float partialTick) {
 		prepareTextureRendering(CONNECTION_TEXTURE_LOCATION);
 		connections.forEach(connection -> renderConnection(poseStack, connection));
 	}
