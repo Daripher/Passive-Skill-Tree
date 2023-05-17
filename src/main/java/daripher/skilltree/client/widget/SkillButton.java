@@ -90,8 +90,7 @@ public class SkillButton extends Button {
 	}
 
 	public ItemStack getTooltipBorderStyleStack() {
-//		var styleItem = width == 24 ? Items.GOLDEN_APPLE : width == 20 ? Items.NETHERITE_SWORD : Items.BUCKET;
-//		return new ItemStack(styleItem);
-		return ItemStack.EMPTY;
+		var styleItem = width == 24 ? Items.EXPERIENCE_BOTTLE : width == 20 ? Items.SHULKER_SHELL : Items.BUCKET;
+		return new ItemStack(styleItem);
 	}
 }
