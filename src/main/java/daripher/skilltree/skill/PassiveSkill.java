@@ -7,9 +7,11 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class PassiveSkill {
+	private static final Logger LOGGER = LogUtils.getLogger();
 	private final ResourceLocation id;
 	private final ResourceLocation treeId;
 	private final ResourceLocation backgroundTexture;
@@ -162,6 +165,9 @@ public class PassiveSkill {
 				var modifierJsonObject = (JsonObject) modifierJsonElement;
 				var attributeId = new ResourceLocation(modifierJsonObject.get("attribute").getAsString());
 				var attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeId);
+				if (attribute == null) {
+					LOGGER.error("Attribute {} does not exist", attributeId);
+				}
 				var amount = modifierJsonObject.get("amount").getAsDouble();
 				var operation = Operation.valueOf(modifierJsonObject.get("operation").getAsString().toUpperCase());
 				var uniqueId = UUID.randomUUID();
