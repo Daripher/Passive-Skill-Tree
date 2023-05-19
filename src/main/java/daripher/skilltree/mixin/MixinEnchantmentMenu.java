@@ -84,20 +84,13 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 		var random = RandomSource.create(enchantmentSeed.get());
 		for (var i = 0; i < enchantments.size(); i++) {
 			var enchantment = enchantments.get(i);
-			var amplifiedEnchantment = amplifyEnchantmentLevel(enchantment, random);
+			var amplifiedEnchantment = amplifyEnchantment(enchantment, random);
 			enchantments.set(i, amplifiedEnchantment);
 		}
 	}
 
-	protected EnchantmentInstance amplifyEnchantmentLevel(EnchantmentInstance enchantment, RandomSource random) {
-		var amplificationChance = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
-		var category = enchantment.enchantment.category;
-		if (isArmorEnchantment(category)) {
-			amplificationChance += player.getAttributeValue(SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
-		}
-		if (isWeaponEnchantment(category)) {
-			amplificationChance += player.getAttributeValue(SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
-		}
+	protected EnchantmentInstance amplifyEnchantment(EnchantmentInstance enchantment, RandomSource random) {
+		var amplificationChance = getAmplificationChance(enchantment);
 		if (amplificationChance == 0) {
 			return enchantment;
 		}
@@ -108,6 +101,18 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 			enchantmentLevel++;
 		}
 		return new EnchantmentInstance(enchantment.enchantment, enchantmentLevel);
+	}
+
+	protected double getAmplificationChance(EnchantmentInstance enchantment) {
+		var amplificationChance = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		var category = enchantment.enchantment.category;
+		if (isArmorEnchantment(category)) {
+			amplificationChance += player.getAttributeValue(SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		}
+		if (isWeaponEnchantment(category)) {
+			amplificationChance += player.getAttributeValue(SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		}
+		return amplificationChance;
 	}
 
 	protected boolean isWeaponEnchantment(EnchantmentCategory enchantmentCategory) {
