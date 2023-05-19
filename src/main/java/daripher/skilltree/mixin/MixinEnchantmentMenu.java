@@ -41,7 +41,8 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 		player = inventory.player;
 	}
 
-	@Redirect(method = "lambda$slotsChanged$0(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/lang/Object;", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
+	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
+			at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
 	private int decreaseLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
 		var cost = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		costsBeforeReduction[slot] = cost;
@@ -63,7 +64,8 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 		return cost;
 	}
 
-	@Redirect(method = "lambda$slotsChanged$0(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/lang/Object;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantments(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		amplifyEnchantmentsLevels(enchantments);
