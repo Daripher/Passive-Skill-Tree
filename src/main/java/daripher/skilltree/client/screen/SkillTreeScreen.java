@@ -42,8 +42,8 @@ public class SkillTreeScreen extends Screen {
 	private int skillPoints;
 	protected double scrollX;
 	protected double scrollY;
-	private int maxScrollX;
-	private int maxScrollY;
+	protected int maxScrollX;
+	protected int maxScrollY;
 	public float renderAnimation;
 
 	public SkillTreeScreen(ResourceLocation skillTreeId) {
@@ -159,7 +159,7 @@ public class SkillTreeScreen extends Screen {
 		}
 	}
 
-	private void skillButtonPressed(SkillButton button) {
+	protected void skillButtonPressed(SkillButton button) {
 		if (button.animated) {
 			learnSkill(button.skill);
 			return;
