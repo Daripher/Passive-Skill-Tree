@@ -1,4 +1,4 @@
-package daripher.skilltree.mixin;
+package daripher.skilltree.mixin.minecraft;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;

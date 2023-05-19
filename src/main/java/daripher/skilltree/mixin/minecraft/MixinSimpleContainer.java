@@ -1,15 +1,15 @@
-package daripher.skilltree.mixin;
+package daripher.skilltree.mixin.minecraft;
 
 import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 
 import daripher.skilltree.api.PlayerContainer;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 
-@Mixin(CraftingContainer.class)
-public class MixinCraftingContainer implements PlayerContainer {
+@Mixin(SimpleContainer.class)
+public class MixinSimpleContainer implements PlayerContainer {
 	private Optional<Player> player = Optional.empty();
 
 	@Override

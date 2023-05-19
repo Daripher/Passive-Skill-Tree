@@ -1,4 +1,4 @@
-package daripher.skilltree.mixin;
+package daripher.skilltree.mixin.minecraft;
 
 import java.util.Optional;
 
