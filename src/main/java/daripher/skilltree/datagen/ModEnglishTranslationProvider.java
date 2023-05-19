@@ -55,8 +55,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkill("cook_offensive_crafting_keystone_1", "Spicy Meal", "+5% Crit Damage per Restoration point from Food you Cook");
 		// alchemist skills
 		addSkill("alchemist_class", "Alchemist", "+40% Brewed Potions Duration");
-		addSkillBranch("alchemist_offensive_crafting_", "Harmful Potions Strength", "+5% Brewed Harmful Potions Strength", 1, 8);
-		addSkillBranch("alchemist_defensive_crafting_", "Beneficial Potions Strength", "+5% Brewed Beneficial Potions Strength", 1, 8);
+		addSkillBranch("alchemist_offensive_crafting_", "Harmful Potions Strength", "+5% chance to Brew better Harmful Potion", 1, 8);
+		addSkillBranch("alchemist_defensive_crafting_", "Beneficial Potions Strength", "+5% chance to Brew better Beneficial Potion", 1, 8);
 		addSkillBranch("alchemist_offensive_combat_", "Damage against Poisoned", "+20% Damage against Poisoned Enemies", 1, 6);
 		addSkillBranch("alchemist_defensive_combat_", "Evasion under Potion Effect", "+2% Evasion under Potion Effect", 1, 6);
 		addSkillBranch("alchemist_offensive_combat_", "Attack Speed under Potion Effect", "+3% Attack Speed under Potion Effect", 7, 11);
@@ -68,9 +68,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkill("alchemist_defensive_keystone_1", "Mutation", "+2 Maximum Life per Potion Effect on you");
 		addSkillBranch("alchemist_lesser_", "Brewed Potions Duration", "+10% Brewed Potions Duration", 1, 7);
 		addSkill("alchemist_life_notable_1", "Elixir of Life", "+10 Maximum Life under Potion Effect");
-		addSkill("alchemist_mastery", "Secret Ingredient", "+100% Brewed Potions Strength");
-		addSkill("alchemist_defensive_crafting_keystone_1", "Purity", "+175% Brewed Beneficial Potions Strength");
-		addSkill("alchemist_offensive_crafting_keystone_1", "Poisoned Blade", "+75% Brewed Harmful Potions Strength/nYou can apply poisons to weapons");
+		addSkill("alchemist_mastery", "Secret Ingredient", "+100% chance to Brew better Potion");
+		addSkill("alchemist_defensive_crafting_keystone_1", "Purity", "+175% chance to Brew better Beneficial Potion");
+		addSkill("alchemist_offensive_crafting_keystone_1", "Poisoned Blade", "+75% chance to Brew better Harmful Potion/nYou can apply poisons to weapons");
 		// enchanter skills
 		addSkill("enchanter_class", "Enchanter", "-30% Level Requirement for Enchantments");
 		addSkillBranch("enchanter_offensive_crafting_", "Weapon Enchantment Strenth", "+10% chance to apply better Weapon Enchantment", 1, 8);
