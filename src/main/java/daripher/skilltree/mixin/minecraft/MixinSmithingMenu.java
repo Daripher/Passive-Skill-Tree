@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.api.RainbowJewelRandomSeedContainer;
+import daripher.skilltree.api.SkillTreePlayer;
 import daripher.skilltree.init.SkillTreeItems;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 @Mixin(SmithingMenu.class)
 public abstract class MixinSmithingMenu extends ItemCombinerMenu {
-	public MixinSmithingMenu() {
+	private MixinSmithingMenu() {
 		super(null, 0, null, null);
 	}
 
@@ -28,13 +28,8 @@ public abstract class MixinSmithingMenu extends ItemCombinerMenu {
 
 	@Inject(method = "onTake", at = @At("HEAD"))
 	private void changeRainbowJewelInsertionSeed(Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
-		if (inputSlots.getItem(1).getItem() != SkillTreeItems.RAINBOW_GEMSTONE.get()) {
-			return;
+		if (inputSlots.getItem(1).getItem() == SkillTreeItems.RAINBOW_GEMSTONE.get()) {
+			((SkillTreePlayer) player).updateRainbowGemstoneRandomSeed();
 		}
-		if (!(player instanceof RainbowJewelRandomSeedContainer)) {
-			return;
-		}
-		var jewelerPlayer = (RainbowJewelRandomSeedContainer) player;
-		jewelerPlayer.updateRainbowJewelRandomSeed();
 	}
 }

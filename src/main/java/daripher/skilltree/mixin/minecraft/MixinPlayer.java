@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.RainbowJewelRandomSeedContainer;
+import daripher.skilltree.api.SkillTreePlayer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 @Mixin(Player.class)
-public abstract class MixinPlayer extends LivingEntity implements RainbowJewelRandomSeedContainer {
+public abstract class MixinPlayer extends LivingEntity implements SkillTreePlayer {
 	private int rainbowJewelInsertionSeed;
 
 	protected MixinPlayer() {
@@ -83,12 +83,12 @@ public abstract class MixinPlayer extends LivingEntity implements RainbowJewelRa
 	}
 
 	@Override
-	public int getRainbowJewelRandomSeed() {
+	public int getRainbowGemstoneRandomSeed() {
 		return rainbowJewelInsertionSeed;
 	}
 
 	@Override
-	public void updateRainbowJewelRandomSeed() {
+	public void updateRainbowGemstoneRandomSeed() {
 		rainbowJewelInsertionSeed = random.nextInt();
 	}
 }

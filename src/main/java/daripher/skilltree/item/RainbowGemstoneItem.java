@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import daripher.skilltree.api.RainbowJewelRandomSeedContainer;
+import daripher.skilltree.api.SkillTreePlayer;
 import daripher.skilltree.init.SkillTreeItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -26,12 +26,9 @@ public class RainbowGemstoneItem extends GemstoneItem {
 
 	@Override
 	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
-		if (!(player instanceof RainbowJewelRandomSeedContainer)) {
-			return null;
-		}
 		var simpleGemstones = new Item[] { SkillTreeItems.LIGHT_GEMSTONE.get(), SkillTreeItems.STURDY_GEMSTONE.get(), SkillTreeItems.SOOTHING_GEMSTONE.get() };
 		var random = RandomSource.create();
-		var randomSeed = ((RainbowJewelRandomSeedContainer) player).getRainbowJewelRandomSeed();
+		var randomSeed = ((SkillTreePlayer) player).getRainbowGemstoneRandomSeed();
 		var itemSlot = Player.getEquipmentSlotForItem(itemStack).ordinal();
 		random.setSeed(randomSeed + itemSlot);
 		var randomGemstone = (SimpleGemstoneItem) simpleGemstones[random.nextInt(simpleGemstones.length)];
