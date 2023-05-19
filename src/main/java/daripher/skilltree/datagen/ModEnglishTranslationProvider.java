@@ -73,8 +73,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkill("alchemist_offensive_crafting_keystone_1", "Poisoned Blade", "+75% Brewed Harmful Potions Strength/nYou can apply poisons to weapons");
 		// enchanter skills
 		addSkill("enchanter_class", "Enchanter", "-30% Level Requirement for Enchantments");
-		addSkillBranch("enchanter_offensive_crafting_", "Weapon Enchantment Strenth", "+10% Weapon Enchantment Strenth", 1, 8);
-		addSkillBranch("enchanter_defensive_crafting_", "Armor Enchantment Strenth", "+10% Armor Enchantment Strenth", 1, 8);
+		addSkillBranch("enchanter_offensive_crafting_", "Weapon Enchantment Strenth", "+10% chance to apply better Weapon Enchantment", 1, 8);
+		addSkillBranch("enchanter_defensive_crafting_", "Armor Enchantment Strenth", "+10% chance to apply better Armor Enchantment", 1, 8);
 		addSkillBranch("enchanter_offensive_combat_", "Damage per Enchantment", "+1% Damage per Enchantment", 1, 6);
 		addSkillBranch("enchanter_defensive_combat_", "Armor", "+1 Armor", 1, 6);
 		addSkillBranch("enchanter_offensive_combat_", "Crit Chance per Enchantment", "+1% Crit Chance per Enchantment", 7, 11);
@@ -86,9 +86,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addSkill("enchanter_defensive_keystone_1", "Celestial Protection", "+2 Armor per Enchantment on your Chestplate");
 		addSkillBranch("enchanter_lesser_", "Level Requirement for Enchantments", "-5% Level Requirement for Enchantments", 1, 7);
 		addSkill("enchanter_life_notable_1", "Life from Magic", "+1 Maximum Life per Enchantment on your Armor");
-		addSkill("enchanter_mastery", "Hidden Knowledge", "+100% Enchantment Strength");
-		addSkill("enchanter_defensive_crafting_keystone_1", "Runic Barrier", "+50% Armor Enchantment Strenth");
-		addSkill("enchanter_offensive_crafting_keystone_1", "Runic Power", "+50% Weapon Enchantment Strenth");
+		addSkill("enchanter_mastery", "Hidden Knowledge", "+100% chance to apply better Enchantment");
+		addSkill("enchanter_defensive_crafting_keystone_1", "Runic Barrier", "+50% chance to apply better Armor Enchantment");
+		addSkill("enchanter_offensive_crafting_keystone_1", "Runic Power", "+50% chance to apply better Weapon Enchantment");
 		// blacksmith skills
 		addSkill("blacksmith_class", "Blacksmith", "+40% Defence from Armor you Craft");
 		addSkillBranch("blacksmith_offensive_crafting_", "Crafted Weapon Damage", "+1 Damage of Weapons you Craft", 1, 8);
