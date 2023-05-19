@@ -66,7 +66,15 @@ public abstract class MixinEnchantmentMenu extends AbstractContainerMenu {
 
 	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
-	private List<EnchantmentInstance> amplifyEnchantments(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
+	private List<EnchantmentInstance> amplifyEnchantmentsVisually(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
+		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
+		amplifyEnchantmentsLevels(enchantments);
+		return enchantments;
+	}
+
+	@Redirect(method = { "lambda$clickMenuButton$1", "m_39475_" },
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		amplifyEnchantmentsLevels(enchantments);
 		return enchantments;
