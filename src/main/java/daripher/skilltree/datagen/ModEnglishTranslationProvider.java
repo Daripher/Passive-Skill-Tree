@@ -136,7 +136,6 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("gemstone.modifier.shield", "When in Shield:");
 		add("gemstone.modifier.bow", "When in Bow:");
 		add("gemstone.empty", "<Empty Gemstone Slot>");
-		add("gemstone.rainbow", " Fate is an illusion");
 		// food info
 		add("food.bonus", "When Eaten:");
 		add("food.bonus.damage", "+%d%% Damage");
