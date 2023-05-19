@@ -1,11 +1,11 @@
-package daripher.skilltree.integration;
+package daripher.skilltree.compat;
 
 import daripher.skilltree.util.FoodHelper;
 import net.minecraftforge.common.MinecraftForge;
 import squeek.appleskin.api.event.FoodValuesEvent;
 import squeek.appleskin.api.food.FoodValues;
 
-public enum AppleSkinIntegration {
+public enum AppleSkinCompatibility {
 	ISNTANCE;
 
 	public void addCompatibility() {
