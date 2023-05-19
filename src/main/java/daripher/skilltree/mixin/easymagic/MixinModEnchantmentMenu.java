@@ -34,7 +34,7 @@ public class MixinModEnchantmentMenu {
 		return decreasedRequirement;
 	}
 
-	@Inject(method = "createEnchantmentInstance", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "createEnchantmentInstance", at = @At("RETURN"), cancellable = true, remap = false)
 	private void amplifyEnchantments(ItemStack itemStack, int slot, CallbackInfoReturnable<List<EnchantmentInstance>> callbackInfo) {
 		var costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
 		var enchantments = ((EnchantmentMenuAccessor) this).callGetEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
