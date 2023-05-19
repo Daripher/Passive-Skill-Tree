@@ -185,7 +185,7 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", SkillTreeAttributes.BREWED_HARMFUL_POTIONS_STRENGTH_MULTIPLIER.get(), 0.75, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", SkillTreeAttributes.MAXIMUM_WEAPON_POISONS_BONUS.get(), 1, Operation.ADDITION);
 		// enchanter class
-		addSkillAttributeModifier("enchanter_class", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER.get(), -0.3, Operation.MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_class", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE.get(), 0.3, Operation.MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_offensive_crafting_", SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1, Operation.ADDITION, 1, 8);
 		addSkillBranchAttributeModifier("enchanter_defensive_crafting_", SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.1, Operation.ADDITION, 1, 8);
 		addSkillBranchAttributeModifier("enchanter_offensive_combat_", SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.01, Operation.MULTIPLY_BASE, 1, 6);
@@ -198,7 +198,7 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("enchanter_mixed_notable_1", SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_offensive_keystone_1", SkillTreeAttributes.DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL_MULTIPLIER.get(), 0.05, Operation.MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_defensive_keystone_1", SkillTreeAttributes.ARMOR_PER_CHESTPLATE_ENCHANTMENT.get(), 2, Operation.ADDITION);
-		addSkillBranchAttributeModifier("enchanter_lesser_", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER.get(), -0.05, Operation.MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("enchanter_lesser_", SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE.get(), 0.05, Operation.MULTIPLY_BASE, 1, 7);
 		addSkillAttributeModifier("enchanter_life_notable_1", SkillTreeAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get(), 1, Operation.ADDITION);
 		addSkillAttributeModifier("enchanter_mastery", SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 1, Operation.ADDITION);
 		addSkillAttributeModifier("enchanter_defensive_crafting_keystone_1", SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get(), 0.5, Operation.ADDITION);

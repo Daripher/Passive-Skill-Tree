@@ -34,7 +34,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> DAMAGE_PER_ENCHANTMENT_MULTIPLIER = rangedAttribute("player", "damage_per_enchantment_multiplier", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> CRIT_CHANCE_PER_ENCHANTMENT_MULTIPLIER = rangedAttribute("player", "crit_chance_per_enchantment_multiplier", 1D, 1D, 2D);
 	public static final RegistryObject<Attribute> CRIT_DAMAGE_PER_ENCHANTMENT_MULTIPLIER = rangedAttribute("player", "crit_damage_per_enchantment_multiplier", 1D, 1D, 10D);
-	public static final RegistryObject<Attribute> ENCHANTMENT_LEVEL_REQUIREMENT_MULTIPLIER = rangedAttribute("player", "enchantment_level_requirement_decrease", 0D, 0D, 1D);
+	public static final RegistryObject<Attribute> ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE = rangedAttribute("player", "enchantment_level_requirement_decrease", 1D, 1D, 2D);
 	public static final RegistryObject<Attribute> ENCHANTMENTS_AMPLIFICATION_CHANCE = rangedAttribute("player", "enchantments_amplification_chance", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE = rangedAttribute("player", "armor_enchantments_amplification_chance", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE = rangedAttribute("player", "weapon_enchantments_amplification_chance", 0D, 0D, 10D);
