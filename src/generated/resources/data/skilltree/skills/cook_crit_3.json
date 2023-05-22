@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_defensive_life_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_crit.png",
+  "position": {
+    "x": 42,
+    "y": -349
+  },
+  "tree": "skilltree:tree"
+}

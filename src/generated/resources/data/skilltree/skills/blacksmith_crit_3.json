@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_defensive_life_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_crit.png",
+  "position": {
+    "x": -278,
+    "y": -222
+  },
+  "tree": "skilltree:tree"
+}

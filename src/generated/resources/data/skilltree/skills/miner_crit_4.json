@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_crit_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_crit.png",
+  "position": {
+    "x": -348,
+    "y": 32
+  },
+  "tree": "skilltree:tree"
+}

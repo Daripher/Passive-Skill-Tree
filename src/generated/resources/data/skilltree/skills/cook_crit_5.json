@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_crit_notable_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_crit.png",
+  "position": {
+    "x": 127,
+    "y": -348
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_defensive_life_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_crit.png",
+  "position": {
+    "x": -58,
+    "y": 333
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_defensive_life_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_crit.png",
+  "position": {
+    "x": 262,
+    "y": 206
+  },
+  "tree": "skilltree:tree"
+}

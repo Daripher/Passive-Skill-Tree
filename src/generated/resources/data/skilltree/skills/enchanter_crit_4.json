@@ -1,0 +1,13 @@
+{
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_crit_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_crit.png",
+  "position": {
+    "x": 332,
+    "y": -48
+  },
+  "tree": "skilltree:tree"
+}

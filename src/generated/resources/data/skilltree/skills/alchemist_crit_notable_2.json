@@ -1,0 +1,10 @@
+{
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/alchemist_crit_notable_2.png",
+  "position": {
+    "x": -167,
+    "y": 317
+  },
+  "tree": "skilltree:tree"
+}

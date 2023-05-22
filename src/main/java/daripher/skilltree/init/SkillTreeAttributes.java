@@ -106,6 +106,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> LIFE_REGENERATION_BONUS = rangedAttribute("player", "life_regeneration_bonus", 0D, 0D, 100D);
 	public static final RegistryObject<Attribute> BLOCK_CHANCE_MULTIPLIER = rangedAttribute("player", "block_chance_multiplier", 1D, 1D, 2D);
 	public static final RegistryObject<Attribute> CRIT_DAMAGE_MULTIPLIER = rangedAttribute("player", "crit_damage_multiplier", 1D, 1D, 5D);
+	public static final RegistryObject<Attribute> CRIT_CHANCE_MULTIPLIER = rangedAttribute("player", "crit_chance", 1D, 1D, 2D);
 
 	private static RegistryObject<Attribute> rangedAttribute(String category, String name, double defaultValue, double minValue, double maxValue) {
 		return REGISTRY.register(category + "." + name, () -> new RangedAttribute(category + "." + name, defaultValue, minValue, maxValue).setSyncable(true));

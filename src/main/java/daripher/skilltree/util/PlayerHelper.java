@@ -68,7 +68,7 @@ public class PlayerHelper {
 	}
 
 	public static float getCritChance(Player player, LivingEntity target) {
-		var chance = 0F;
+		var chance = (float) (player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_MULTIPLIER.get()) - 1);
 		if (target.hasEffect(MobEffects.POISON)) {
 			chance += PlayerHelper.getCritChanceAgainstPoisoned(player);
 		}
