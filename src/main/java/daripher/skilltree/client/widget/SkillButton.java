@@ -62,23 +62,49 @@ public class SkillButton extends Button {
 	}
 
 	public List<MutableComponent> getTooltip() {
-		var titleStyle = width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
-		var skillId = getSkillId();
-		var skillTitle = Component.translatable(skillId + ".name").withStyle(titleStyle);
-		var description = Component.translatable(skillId + ".description").getString();
-		var descriptionStrings = Arrays.asList(description.split("/n"));
-		var skillDescription = descriptionStrings.stream().map(Component::translatable).map(component -> component.withStyle(DESCRIPTION_STYLE)).toList();
 		var tooltip = new ArrayList<MutableComponent>();
-		tooltip.add(skillTitle);
-		tooltip.addAll(skillDescription);
+		addTitleTooltip(tooltip);
+		addDescriptionTooltip(tooltip);
 		var minecraft = parentScreen.getMinecraft();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
 		if (useAdvancedTooltip) {
-			var skillIdComponent = Component.literal(skill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
-			tooltip.add(skillIdComponent);
-			skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
+			addIdTooltip(tooltip);
+			addAttributeModifiersTooltip(tooltip);
 		}
 		return tooltip;
+	}
+
+	protected void addDescriptionTooltip(ArrayList<MutableComponent> tooltip) {
+		var descriptionId = getSkillId() + ".description";
+		var description = Component.translatable(descriptionId).getString();
+		if (description.equals(descriptionId)) {
+			addAttributeModifiersTooltip(tooltip);
+		} else {
+			var descriptionStrings = Arrays.asList(description.split("/n"));
+			descriptionStrings.stream().map(Component::translatable).map(this::applyDescriptionStyle).forEach(tooltip::add);
+		}
+	}
+
+	protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
+		var skillTitle = Component.translatable(getSkillId() + ".name").withStyle(getTitleStyle());
+		tooltip.add(skillTitle);
+	}
+
+	private Style getTitleStyle() {
+		return width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+	}
+
+	protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {
+		var skillIdComponent = Component.literal(skill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
+		tooltip.add(skillIdComponent);
+	}
+
+	protected MutableComponent applyDescriptionStyle(MutableComponent component) {
+		return component.withStyle(DESCRIPTION_STYLE);
+	}
+
+	protected void addAttributeModifiersTooltip(ArrayList<MutableComponent> tooltip) {
+		skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
 	}
 
 	public void animate() {
