@@ -203,7 +203,8 @@ public class SkillTreeScreen extends Screen {
 		prepareTextureRendering(BACKGROUND_TEXTURE_LOCATION);
 		poseStack.pushPose();
 		poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
-		blit(poseStack, width / 2 - 512, height / 2 - 512, 0, 0F, 0F, 1024, 1024, 1024, 1024);
+		var size = getBackgroundSize();
+		blit(poseStack, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
 		poseStack.popPose();
 	}
 
@@ -287,6 +288,10 @@ public class SkillTreeScreen extends Screen {
 
 	protected float getAngleBetweenPoints(int x1, int y1, int x2, int y2) {
 		return (float) Mth.atan2(y2 - y1, x2 - x1);
+	}
+
+	protected int getBackgroundSize() {
+		return 2048;
 	}
 
 	protected int getMaximumSkillPoints() {
