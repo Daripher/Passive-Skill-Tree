@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -17,6 +19,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -86,8 +90,25 @@ public class SkillButton extends Button {
 	}
 
 	protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
-		var skillTitle = Component.translatable(getSkillId() + ".name").withStyle(getTitleStyle());
-		tooltip.add(skillTitle);
+		var titleId = getSkillId() + ".name";
+		var title = Component.translatable(titleId);
+		var attributeModifiers = skill.getAttributeModifiers();
+		var hasAttributeModifiers = !attributeModifiers.isEmpty();
+		if (titleId.equals(title.getString()) && hasAttributeModifiers) {
+			title = generateTitle(attributeModifiers);
+		}
+		tooltip.add(title.withStyle(getTitleStyle()));
+	}
+
+	protected MutableComponent generateTitle(List<Pair<Attribute, AttributeModifier>> attributeModifiers) {
+		var title = Component.empty();
+		var affectedAttributesNames = attributeModifiers.stream().map(Pair::getLeft).map(Attribute::getDescriptionId).map(Component::translatable).toList();
+		title.append(affectedAttributesNames.get(0));
+		if (attributeModifiers.size() > 1) {
+			title.append(" and ");
+			title.append(affectedAttributesNames.get(1));
+		}
+		return title;
 	}
 
 	private Style getTitleStyle() {
