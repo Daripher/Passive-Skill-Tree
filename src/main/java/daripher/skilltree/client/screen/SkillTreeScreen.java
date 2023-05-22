@@ -195,7 +195,7 @@ public class SkillTreeScreen extends Screen {
 
 	private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		prepareTextureRendering(OVERLAY_TEXTURE_LOCATION);
-		blit(poseStack, 0, 0, 0, 0F, 0F, 512, 512, width, height);
+		blit(poseStack, 0, 0, 0, 0F, 0F, width, height, width, height);
 	}
 
 	@Override
