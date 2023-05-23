@@ -72,10 +72,18 @@ public class SkillButton extends Button {
 		var minecraft = parentScreen.getMinecraft();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
 		if (useAdvancedTooltip) {
-			addIdTooltip(tooltip);
-			addAttributeModifiersTooltip(tooltip);
+			addAdvancedTooltip(tooltip);
 		}
 		return tooltip;
+	}
+
+	protected void addAdvancedTooltip(ArrayList<MutableComponent> tooltip) {
+		addIdTooltip(tooltip);
+		var descriptionId = getSkillId() + ".description";
+		var description = Component.translatable(descriptionId).getString();
+		if (!description.equals(descriptionId)) {
+			addAttributeModifiersTooltip(tooltip);
+		}
 	}
 
 	protected void addDescriptionTooltip(ArrayList<MutableComponent> tooltip) {
