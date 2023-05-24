@@ -64,7 +64,12 @@ public class AttributeBonusHandler {
 		if (event.getSource().getDirectEntity() instanceof Player player) {
 			var damageBonus = PlayerHelper.getFlatDamageBonus(player);
 			var damageMultiplier = PlayerHelper.getDamageMultiplier(player, event.getEntity());
-			event.setAmount((event.getAmount() + damageBonus) * damageMultiplier);
+			var damage = (event.getAmount() + damageBonus) * damageMultiplier;
+			var doubleDamageChance = player.getAttributeValue(SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE.get()) - 1;
+			if (player.getRandom().nextFloat() < doubleDamageChance) {
+				damage *= 2;
+			}
+			event.setAmount(damage);
 		}
 	}
 
@@ -99,7 +104,6 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.ADDITION, "d1079882-dd8c-42b7-9a43-3928553193c8", AttributeBonusHandler::getDamagePerArmor);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9199d7cf-c7e4-4123-b636-6f6591e1137d", AttributeBonusHandler::getMaximumLifePerArmor);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "8810227f-9798-4890-8400-91c0941a3fc0", AttributeBonusHandler::getMaximumLifePerBootsArmor);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "579a74e0-a2fd-4074-bb7b-cbaa646cf847", AttributeBonusHandler::getMaximumLifeIfAteRecently);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "98a17cd0-68c8-4808-8981-1796c33295e7", AttributeBonusHandler::getMaximumLifePerSatisfiedHunger);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), Operation.MULTIPLY_BASE, "4aa87d74-b729-4e1d-9c76-893495050416", AttributeBonusHandler::getEvasionUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "a4daf7f8-29e3-404d-8277-9215a16ef4c8", AttributeBonusHandler::getAttackSpeedUnderPotionEffect);
@@ -110,10 +114,11 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "27b4644b-96a0-4443-89e5-1700af61d602", AttributeBonusHandler::getMaximumLifePerEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "55c3cb58-c09e-465a-a812-6a18ae587ec0", AttributeBonusHandler::getArmorPerChestplateEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9b1e9aac-fa58-4343-ba88-7541eca2836f", AttributeBonusHandler::getMaximumLifePerArmorEnchantment);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "7e8487e4-390c-4ee3-9b84-c1204ef3c321", AttributeBonusHandler::getAttackSpeedWithAxe);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "5e2d6a95-bc70-4f3d-a348-307b49f5bc84", AttributeBonusHandler::getAttackSpeedWithPickaxe);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), Operation.MULTIPLY_BASE, "bfbc3d6b-7c37-498b-888c-3b05c921f24a", AttributeBonusHandler::getBlockChanceWithEnchantedShield);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), Operation.MULTIPLY_BASE, "d2865c2c-d5cc-4de9-a793-752349d27da0", AttributeBonusHandler::getEvasionChanceWhenWounded);
+		applyDynamicAttributeBonus(player, SkillTreeAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, "226aadf2-0669-4074-801c-1b6ffe43379f", AttributeBonusHandler::getLifePerHitWhenWounded);
+		applyDynamicAttributeBonus(player, SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE.get(), Operation.MULTIPLY_BASE, "2cca17d1-daad-412a-bc9b-0fd77ac0d97b", AttributeBonusHandler::getDoubleDamageChanceWhenWounded);
 	}
 
 	private static void applyDynamicAttributeBonus(Player player, Attribute modifiedAttribute, Operation operation, String id, Function<Player, Double> dynamicBonusFunction) {
@@ -199,11 +204,6 @@ public class AttributeBonusHandler {
 		return bootsArmor.doubleValue() * maximumLifePerBootsArmor;
 	}
 
-	private static double getMaximumLifeIfAteRecently(Player player) {
-		var maximumLifeIfAteRecently = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_IF_ATE_RECENTLY.get());
-		return player.hasEffect(SkillTreeEffects.DELICACY.get()) ? maximumLifeIfAteRecently : 0;
-	}
-
 	private static double getMaximumLifePerSatisfiedHunger(Player player) {
 		var maximumLifePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get());
 		var satisfiedHunger = player.getFoodData().getFoodLevel();
@@ -287,14 +287,6 @@ public class AttributeBonusHandler {
 		return maximumLifePerArmorEnchantment * enchantmentCount;
 	}
 
-	private static double getAttackSpeedWithAxe(Player player) {
-		if (!ItemHelper.isAxe(player.getMainHandItem())) {
-			return 0;
-		}
-		var attackSpeedWithAxe = player.getAttributeValue(SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
-		return attackSpeedWithAxe;
-	}
-
 	private static double getAttackSpeedWithPickaxe(Player player) {
 		if (!ItemHelper.isPickaxe(player.getMainHandItem())) {
 			return 0;
@@ -319,6 +311,24 @@ public class AttributeBonusHandler {
 		}
 		var evasionChanceWhenWounded = player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE_WHEN_WOUNDED.get());
 		return evasionChanceWhenWounded;
+	}
+
+	private static double getLifePerHitWhenWounded(Player player) {
+		var isWounded = player.getHealth() < player.getMaxHealth() / 2;
+		if (!isWounded) {
+			return 0D;
+		}
+		var lifePerHitWhenWounded = player.getAttributeValue(SkillTreeAttributes.LIFE_PER_HIT_WHEN_WOUNDED.get());
+		return lifePerHitWhenWounded;
+	}
+
+	private static double getDoubleDamageChanceWhenWounded(Player player) {
+		var isWounded = player.getHealth() < player.getMaxHealth() / 2;
+		if (!isWounded) {
+			return 0D;
+		}
+		var doubleDamageChanceWhenWounded = player.getAttributeValue(SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE_WHEN_WOUNDED.get()) - 1;
+		return doubleDamageChanceWhenWounded;
 	}
 
 	@SubscribeEvent
@@ -546,7 +556,7 @@ public class AttributeBonusHandler {
 			var attackSpeedBonus = ItemHelper.getAttackSpeedBonus(event.getItemStack());
 			var modifierId = UUID.fromString("0cf2b159-b953-4c96-a84e-d380f6a74031");
 			var attackSpeedModifier = new AttributeModifier(modifierId, "Crafted Bow Bonus", attackSpeedBonus, Operation.MULTIPLY_BASE);
-			event.addModifier(SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), attackSpeedModifier);
+			event.addModifier(Attributes.ATTACK_SPEED, attackSpeedModifier);
 		}
 	}
 
@@ -558,10 +568,15 @@ public class AttributeBonusHandler {
 			return;
 		var player = (Player) event.getSource().getEntity();
 		var arrow = (AbstractArrow) event.getSource().getDirectEntity();
+		arrow.setCritArrow(false);
 		var damageBonus = PlayerHelper.getFlatArrowDamageBonus(player);
 		var damageMultiplier = PlayerHelper.getArrowDamageMultiplier(player, event.getEntity(), arrow);
-		event.setAmount(event.getAmount() + damageBonus);
-		event.setAmount(event.getAmount() * damageMultiplier);
+		var damage = (event.getAmount() + damageBonus) * damageMultiplier;
+		var doubleDamageChance = player.getAttributeValue(SkillTreeAttributes.DOUBLE_DAMAGE_CHANCE.get()) - 1;
+		if (player.getRandom().nextFloat() < doubleDamageChance) {
+			damage *= 2;
+		}
+		event.setAmount(damage);
 	}
 
 	@SubscribeEvent
@@ -589,7 +604,7 @@ public class AttributeBonusHandler {
 		if (restorationBonus > 0) {
 			FoodHelper.setRestorationBonus(craftedItem, (float) restorationBonus);
 		}
-		var lifeRegenerationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION_PER_RESTORATION.get());
+		var lifeRegenerationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION.get());
 		if (lifeRegenerationBonus > 0) {
 			FoodHelper.setLifeRegenerationBonus(craftedItem, (float) lifeRegenerationBonus);
 		}
@@ -601,7 +616,7 @@ public class AttributeBonusHandler {
 		if (critDamagePerRestorationBonus > 0) {
 			FoodHelper.setCritDamageBonus(craftedItem, (float) critDamagePerRestorationBonus);
 		}
-		var healingPerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION_MULTIPLIER.get()) - 1;
+		var healingPerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_RESTORATION.get());
 		if (healingPerRestorationBonus > 0) {
 			FoodHelper.setHealingBonus(craftedItem, (float) healingPerRestorationBonus);
 		}
@@ -635,7 +650,7 @@ public class AttributeBonusHandler {
 		}
 		if (FoodHelper.hasLifeRegenerationBonus(event.getItem())) {
 			var lifeRegenerationBonus = FoodHelper.getLifeRegenerationBonus(event.getItem());
-			var effectAmplifier = (int) (lifeRegenerationBonus * finalRestoration * 100);
+			var effectAmplifier = (int) (lifeRegenerationBonus * 100);
 			var lifeRegenerationEffect = new MobEffectInstance(SkillTreeEffects.LIFE_REGENERATION_BONUS.get(), 20 * 60, effectAmplifier);
 			player.addEffect(lifeRegenerationEffect);
 		}
@@ -782,5 +797,15 @@ public class AttributeBonusHandler {
 		}
 		var lifePerHit = (float) player.getAttributeValue(SkillTreeAttributes.LIFE_PER_HIT.get());
 		player.heal(lifePerHit);
+	}
+
+	@SubscribeEvent
+	public static void applyBaseBowAttackSpeed(ItemAttributeModifierEvent event) {
+		if (!ItemHelper.isBow(event.getItemStack())) {
+			return;
+		}
+		var modifierId = UUID.fromString("fa233e1c-4180-4865-b01b-bcce9785aca3");
+		var modifier = new AttributeModifier(modifierId, "Base Attack Speed", -3, Operation.ADDITION);
+		event.addModifier(Attributes.ATTACK_SPEED, modifier);
 	}
 }
