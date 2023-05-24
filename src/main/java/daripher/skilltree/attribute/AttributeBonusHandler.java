@@ -537,7 +537,7 @@ public class AttributeBonusHandler {
 		if (!ItemHelper.isBow(itemStack)) {
 			return;
 		}
-		var bowChargeSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_CHARGE_SPEED.get()) - 1;
+		var bowChargeSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_ATTACK_SPEED.get()) - 1;
 		if (bowChargeSpeedBonus > 0) {
 			ItemHelper.setAttackSpeedBonus(itemStack, bowChargeSpeedBonus);
 		}
@@ -552,12 +552,15 @@ public class AttributeBonusHandler {
 		if (!ItemHelper.isBow(event.getItemStack()) || event.getSlotType() != EquipmentSlot.MAINHAND) {
 			return;
 		}
+		// Item.BASE_ATTACK_SPEED_UUID
+		var modifierId = (UUID) ObfuscationReflectionHelper.getPrivateValue(Item.class, null, "f_41375_");
+		var modifierAmount = -3F;
 		if (ItemHelper.hasAttackSpeedBonus(event.getItemStack())) {
 			var attackSpeedBonus = ItemHelper.getAttackSpeedBonus(event.getItemStack());
-			var modifierId = UUID.fromString("0cf2b159-b953-4c96-a84e-d380f6a74031");
-			var attackSpeedModifier = new AttributeModifier(modifierId, "Crafted Bow Bonus", attackSpeedBonus, Operation.MULTIPLY_BASE);
-			event.addModifier(Attributes.ATTACK_SPEED, attackSpeedModifier);
+			modifierAmount += attackSpeedBonus;
 		}
+		var modifier = new AttributeModifier(modifierId, "Base Attack Speed", modifierAmount, Operation.ADDITION);
+		event.addModifier(Attributes.ATTACK_SPEED, modifier);
 	}
 
 	@SubscribeEvent
@@ -797,15 +800,5 @@ public class AttributeBonusHandler {
 		}
 		var lifePerHit = (float) player.getAttributeValue(SkillTreeAttributes.LIFE_PER_HIT.get());
 		player.heal(lifePerHit);
-	}
-
-	@SubscribeEvent
-	public static void applyBaseBowAttackSpeed(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.isBow(event.getItemStack())) {
-			return;
-		}
-		var modifierId = UUID.fromString("fa233e1c-4180-4865-b01b-bcce9785aca3");
-		var modifier = new AttributeModifier(modifierId, "Base Attack Speed", -3, Operation.ADDITION);
-		event.addModifier(Attributes.ATTACK_SPEED, modifier);
 	}
 }
