@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.SkillTreePlayer;
-import daripher.skilltree.init.SkillTreeAttributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.level.GameRules;
@@ -30,7 +30,7 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 	@Override
 	public int getUseItemRemainingTicks() {
 		if (getUseItem().getItem() instanceof BowItem) {
-			var bowChargeSpeed = this.getAttributeValue(SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get());
+			var bowChargeSpeed = this.getAttributeValue(Attributes.ATTACK_SPEED) - 1;
 
 			if (bowChargeSpeed > 1) {
 				var bowChargeSpeedBonus = bowChargeSpeed - 1;

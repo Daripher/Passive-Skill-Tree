@@ -34,7 +34,7 @@ public class LightGemstoneItem extends SimpleGemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getWeaponBonus() {
-		return Triple.of(Attributes.ATTACK_SPEED, 0.05D, Operation.MULTIPLY_TOTAL);
+		return Triple.of(Attributes.ATTACK_SPEED, 0.025D, Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override
@@ -44,6 +44,6 @@ public class LightGemstoneItem extends SimpleGemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getBowBonus() {
-		return Triple.of(SkillTreeAttributes.BOW_CHARGE_SPEED_MULTIPLIER.get(), 0.025D, Operation.MULTIPLY_BASE);
+		return Triple.of(Attributes.ATTACK_SPEED, 0.025D, Operation.MULTIPLY_BASE);
 	}
 }
