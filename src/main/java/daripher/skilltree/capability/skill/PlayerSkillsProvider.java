@@ -41,7 +41,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof Player) {
+		if (event.getObject() instanceof Player && !event.getObject().level.isClientSide) {
 			var capabilityProvider = new PlayerSkillsProvider();
 			event.addCapability(CAPABILITY_ID, capabilityProvider);
 		}
@@ -49,30 +49,25 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void removePlayerExp(PlayerXpEvent.PickupXp event) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
-			return;
+		if (!event.getEntity().level.isClientSide && Config.COMMON_CONFIG.experienceGainEnabled() && event.getOrb().getTags().contains("FromPlayer")) {
+			var player = event.getEntity();
+			var playerSkillsData = get(player);
+			playerSkillsData.grantExpirience(-event.getOrb().getValue());
 		}
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
-		if (!event.getOrb().getTags().contains("FromPlayer")) {
-			return;
-		}
-		var player = event.getEntity();
-		var playerSkillsData = get(player);
-		playerSkillsData.grantExpirience(-event.getOrb().getValue());
 	}
-
 	@SubscribeEvent
 	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+		if (event.getAmount() <= 0 || !event.getEntity().level.isClientSide || !Config.COMMON_CONFIG.experienceGainEnabled()) {
 			return;
 		}
-		if (event.getAmount() <= 0) {
-			return;
-		}
+
 		var player = event.getEntity();
-		var playerSkillsData = get(player);
+		var playerSkillsDataOptional = player.getCapability(CAPABILITY);
+		if (!playerSkillsDataOptional.isPresent()) {
+			return;
+		}
+
+		var playerSkillsData = playerSkillsDataOptional.orElseThrow(NullPointerException::new);
 		var skillPoints = playerSkillsData.getSkillPoints();
 		playerSkillsData.grantExpirience(event.getAmount());
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
@@ -82,6 +77,8 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
 		}
 	}
+
+
 
 	@SubscribeEvent
 	public static void persistThroughDeath(PlayerEvent.Clone event) {
@@ -104,12 +101,10 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
-		if (!(event.getEntity() instanceof Player)) {
+		if (!(event.getEntity() instanceof Player) || event.getEntity().level.isClientSide) {
 			return;
 		}
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
+
 		var player = (Player) event.getEntity();
 		get(player).getPlayerSkills().stream().map(PassiveSkill::getAttributeModifiers).forEach(attributeAndModifierList -> {
 			attributeAndModifierList.forEach(attributeAndModifier -> {
@@ -125,12 +120,10 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
-		if (event.getEntity().level.isClientSide) {
+		if (event.getEntity().level.isClientSide || !(event.getEntity() instanceof Player)) {
 			return;
 		}
-		if (!(event.getEntity() instanceof Player)) {
-			return;
-		}
+
 		var player = (Player) event.getEntity();
 		var skillsCapability = PlayerSkillsProvider.get(player);
 		if (skillsCapability.isTreeReset()) {
@@ -143,6 +136,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		if (!(event.getEntity() instanceof ServerPlayer)) {
 			return;
 		}
+
 		var player = (ServerPlayer) event.getEntity();
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 	}
