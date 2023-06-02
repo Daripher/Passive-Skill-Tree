@@ -20,6 +20,7 @@ import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
@@ -40,6 +41,7 @@ public class SkillTreeScreen extends Screen {
 	private List<ResourceLocation> learnedSkills;
 	private AbstractWidget skillPointProgressBar;
 	private int skillPoints;
+	private int guiScale;
 	protected double scrollX;
 	protected double scrollY;
 	protected int maxScrollX;
@@ -49,6 +51,8 @@ public class SkillTreeScreen extends Screen {
 	public SkillTreeScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
 		this.skillTreeId = skillTreeId;
+		this.minecraft = Minecraft.getInstance();
+		this.guiScale = minecraft.options.guiScale().get();
 	}
 
 	@Override
@@ -223,6 +227,26 @@ public class SkillTreeScreen extends Screen {
 		}
 		rebuildWidgets();
 		return true;
+	}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+		var guiScale = minecraft.options.guiScale().get();
+		if (amount > 0 && guiScale < 4) {
+			minecraft.options.guiScale().set(guiScale + 1);
+		}
+		if (amount < 0 && guiScale > 1) {
+			minecraft.options.guiScale().set(guiScale - 1);
+		}
+		minecraft.resizeDisplay();
+		return super.mouseScrolled(mouseX, mouseY, amount);
+	}
+
+	@Override
+	public void onClose() {
+		minecraft.options.guiScale().set(guiScale);
+		minecraft.resizeDisplay();
+		super.onClose();
 	}
 
 	protected void renderConnections(PoseStack poseStack, float partialTick) {
