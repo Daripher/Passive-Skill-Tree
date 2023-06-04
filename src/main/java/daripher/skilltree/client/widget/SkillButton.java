@@ -133,7 +133,7 @@ public class SkillButton extends Button {
 	}
 
 	protected void addAttributeModifiersTooltip(ArrayList<MutableComponent> tooltip) {
-		skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).forEach(tooltip::add);
+		skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).map(this::applyDescriptionStyle).forEach(tooltip::add);
 	}
 
 	public void animate() {
