@@ -11,8 +11,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.Tags;
 
 @Mixin(Player.class)
 public abstract class MixinPlayer extends LivingEntity implements SkillTreePlayer {
@@ -24,17 +24,17 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 
 	@Override
 	public int getUseItemRemainingTicks() {
-		if (getUseItem().getItem() instanceof BowItem) {
-			var bowChargeSpeed = this.getAttributeValue(Attributes.ATTACK_SPEED) - 1;
-
-			if (bowChargeSpeed > 1) {
-				var bowChargeSpeedBonus = bowChargeSpeed - 1;
-				var maxUseDuration = getUseItem().getUseDuration();
-				var useDuration = maxUseDuration - useItemRemaining;
-				return (int) (useItemRemaining - useDuration * bowChargeSpeedBonus);
-			}
+		var usingBow = getUseItem().is(Tags.Items.TOOLS_BOWS);
+		if (!usingBow) {
+			return super.getUseItemRemainingTicks();
 		}
-
+		var attackSpeedBonus = getAttributeValue(Attributes.ATTACK_SPEED) - 1;
+		if (attackSpeedBonus > 0) {
+			var bowChargeSpeedBonus = attackSpeedBonus;
+			var maxUseDuration = getUseItem().getUseDuration();
+			var useDuration = maxUseDuration - useItemRemaining;
+			return (int) (useItemRemaining - useDuration * bowChargeSpeedBonus);
+		}
 		return super.getUseItemRemainingTicks();
 	}
 
