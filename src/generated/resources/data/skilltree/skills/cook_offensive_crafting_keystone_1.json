@@ -1,7 +1,7 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.025,
+      "amount": 0.03,
       "attribute": "skilltree:player.cooked_food_critical_damage_per_saturation",
       "operation": "multiply_base"
     }

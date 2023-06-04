@@ -257,7 +257,7 @@ public class ModSkillsProvider implements DataProvider {
 		// cook skills
 		addSkillAttributeModifier("cook_class", COOKED_FOOD_SATURATION.get(), 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_defensive_crafting", COOKED_FOOD_HEALING_PER_SATURATION.get(), 0.05, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("cook_offensive_crafting", COOKED_FOOD_DAMAGE_PER_SATURATION.get(), 0.05, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("cook_offensive_crafting", COOKED_FOOD_DAMAGE_PER_SATURATION.get(), 0.01, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("cook_defensive", BLOCK_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("cook_offensive", DAMAGE_IF_NOT_HUNGRY.get(), 0.1, MULTIPLY_BASE, 1, 7);
 		addSkillAttributeModifier("cook_defensive_notable_1", BLOCK_CHANCE_IF_NOT_HUNGRY.get(), 0.1, MULTIPLY_BASE);
@@ -269,15 +269,15 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("cook_lesser", COOKED_FOOD_SATURATION.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("cook_mastery", COOKED_FOOD_SATURATION.get(), 0.5, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_crit", CRIT_CHANCE_IF_NOT_HUNGRY.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("cook_crit_keystone_1", CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), 0.025, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_crit_keystone_1", CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), 0.03, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_crafting", COOKED_FOOD_LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 3);
 		addSkillAttributeModifier("cook_defensive_crafting_keystone_1", COOKED_FOOD_HEALING_PER_SATURATION.get(), 0.25, MULTIPLY_BASE);
-		addSkillAttributeModifier("cook_offensive_crafting_keystone_1", COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get(), 0.025, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_crafting_keystone_1", COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get(), 0.03, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_healing", LIFE_ON_BLOCK.get(), 0.5, ADDITION, 1, 2);
 		addSkillAttributeModifier("cook_healing_notable_1", LIFE_ON_BLOCK_IF_NOT_HUNGRY.get(), 1, ADDITION);
 		addSkillAttributeModifier("cook_crafting_notable_1", COOKED_FOOD_LIFE_REGENERATION.get(), 1.5, ADDITION);
 		addSkillAttributeModifier("cook_defensive_keystone_1", BLOCK_CHANCE_PER_SATISFIED_HUNGER.get(), 0.01, MULTIPLY_BASE);
-		addSkillAttributeModifier("cook_offensive_keystone_1", DAMAGE_PER_SATISFIED_HUNGER.get(), 0.025, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_keystone_1", DAMAGE_PER_SATISFIED_HUNGER.get(), 0.03, MULTIPLY_BASE);
 	}
 
 	private void addSkillBranchAttributeModifier(String branchName, Attribute attribute, double amount, Operation operation, int from, int to) {
