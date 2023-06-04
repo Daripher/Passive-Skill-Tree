@@ -35,7 +35,8 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent
@@ -46,41 +47,25 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 		}
 	}
 
-	@SubscribeEvent
-	public static void removePlayerExp(PlayerXpEvent.PickupXp event) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
-			return;
-		}
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
-		if (!event.getOrb().getTags().contains("FromPlayer")) {
-			return;
-		}
-		var player = event.getEntity();
-		var playerSkillsData = get(player);
-		playerSkillsData.grantExpirience(-event.getOrb().getValue());
-	}
-
-	@SubscribeEvent
-	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
-			return;
-		}
-		if (event.getAmount() <= 0) {
-			return;
-		}
-		var player = event.getEntity();
-		var playerSkillsData = get(player);
-		var skillPoints = playerSkillsData.getSkillPoints();
-		playerSkillsData.grantExpirience(event.getAmount());
-		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
-		var gainedSkillPoint = skillPoints != playerSkillsData.getSkillPoints();
-		var shouldShowChatMessages = Config.COMMON_CONFIG.shouldShowChatMessages();
-		if (gainedSkillPoint && shouldShowChatMessages) {
-			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
-		}
-	}
+//	@SubscribeEvent
+//	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
+//		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+//			return;
+//		}
+//		if (event.getAmount() <= 0) {
+//			return;
+//		}
+//		var player = event.getEntity();
+//		var playerSkillsData = get(player);
+//		var skillPoints = playerSkillsData.getSkillPoints();
+//		playerSkillsData.grantExpirience(event.getAmount());
+//		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
+//		var gainedSkillPoint = skillPoints != playerSkillsData.getSkillPoints();
+//		var shouldShowChatMessages = Config.COMMON_CONFIG.shouldShowChatMessages();
+//		if (gainedSkillPoint && shouldShowChatMessages) {
+//			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
+//		}
+//	}
 
 	@SubscribeEvent
 	public static void persistThroughDeath(PlayerEvent.Clone event) {
