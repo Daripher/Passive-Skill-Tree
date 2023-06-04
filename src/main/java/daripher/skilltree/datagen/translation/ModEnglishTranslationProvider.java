@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen;
+package daripher.skilltree.datagen.translation;
 
 import java.util.Arrays;
 
@@ -130,16 +130,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Soldier", MobEffects.HEAL, MobEffects.DAMAGE_BOOST);
 		addMixture("Ninja", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
 		// gems info
-		add("gemstone.modifier.helmet", "When in Helmet:");
-		add("gemstone.modifier.chestplate", "When in Chestplate:");
-		add("gemstone.modifier.leggings", "When in Leggings:");
-		add("gemstone.modifier.boots", "When in Boots:");
-		add("gemstone.modifier.weapon", "When in Weapon:");
-		add("gemstone.modifier.shield", "When in Shield:");
-		add("gemstone.modifier.bow", "When in Bow:");
 		add("gemstone.empty", "<Empty Gemstone Slot>");
 		// food info
-		add("food.bonus", "When Eaten:");
 		add("food.bonus.damage", "+%d%% Damage");
 		add("food.bonus.crit_damage", "+%d%% Crit Damage");
 		add("food.bonus.life_regeneration", "+%s Life Regeneration");
@@ -178,7 +170,6 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.ARROW_DAMAGE_PER_DISTANCE.get(), "Arrow Damage per Distance to Enemy");
 		add(SkillTreeAttributes.LIFE_PER_ARROW_HIT.get(), "Life per Arrow Hit");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_EVASION.get(), "Maximum Life per Evasion Chance");
-		add(SkillTreeAttributes.DAMAGE_PER_ARROW_IN_ENEMY.get(), "Damage per Arrow in Enemy");
 		add(SkillTreeAttributes.ATTACK_SPEED_WITH_BOW.get(), "Attack Speed with Bow");
 		add(SkillTreeAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Chance to retrieve Arrows");
 		add(SkillTreeAttributes.CRIT_CHANCE_WITH_BOW.get(), "Critical Hit Chance with Bow");

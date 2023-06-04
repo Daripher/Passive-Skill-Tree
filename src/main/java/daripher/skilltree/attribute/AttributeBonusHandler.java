@@ -846,8 +846,6 @@ public class AttributeBonusHandler {
 			finalRestoration += restoration * restorationBonus;
 		}
 		if (FoodHelper.hasDamageBonus(event.getItemStack())) {
-			event.getToolTip().add(Component.empty());
-			event.getToolTip().add(Component.translatable("food.bonus").withStyle(ChatFormatting.GRAY));
 			var damagePerRestorationBonus = FoodHelper.getDamageBonus(event.getItemStack());
 			event.getToolTip().add(Component.translatable("food.bonus.damage", (int) (damagePerRestorationBonus * finalRestoration * 100)).withStyle(ChatFormatting.BLUE));
 		}
@@ -857,7 +855,8 @@ public class AttributeBonusHandler {
 		}
 		if (FoodHelper.hasLifeRegenerationBonus(event.getItemStack())) {
 			var lifeRegenerationBonus = FoodHelper.getLifeRegenerationBonus(event.getItemStack());
-			var formattedBonus = String.format("%.2f", lifeRegenerationBonus);
+			var formattedBonus = String.format("%.1f", lifeRegenerationBonus);
+			formattedBonus = formattedBonus.replace(".0", "");
 			event.getToolTip().add(Component.translatable("food.bonus.life_regeneration", formattedBonus).withStyle(ChatFormatting.BLUE));
 		}
 	}
