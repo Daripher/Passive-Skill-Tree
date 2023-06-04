@@ -19,17 +19,12 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 
 	int getSkillPoints();
 
-	int getExperience();
-
-	void grantExpirience(int expirience);
-	
-	boolean isTreeReset();
-
 	void setSkillPoints(int skillPoints);
+
+	void grantSkillPoints(int skillPoints);
+
+	boolean isTreeReset();
 
 	void resetTree(ServerPlayer player);
 
-	void setExperience(int experience);
-
-	void grantSkillPoints(int skillPoints);
 }

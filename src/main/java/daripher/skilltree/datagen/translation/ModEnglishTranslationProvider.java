@@ -253,12 +253,12 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeEffects.DAMAGE_BONUS.get(), "Damage");
 		add(SkillTreeEffects.LIFE_REGENERATION_BONUS.get(), "Life Regeneration");
 		// system messages
-		add("skilltree.message.skillpoint", "Skill point gained. Open skill tree menu to spend it.");
 		add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
 		add("skilltree.message.reset_command", "Your skill tree has been reset.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
+		add("widget.skill_point_progress_bar.buy", "Click here to gain a Skill Point for %s Experience");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

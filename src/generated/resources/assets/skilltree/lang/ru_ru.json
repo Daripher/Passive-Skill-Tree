@@ -250,10 +250,10 @@
   "skill.skilltree.miner_speed_notable_1.name": "Выносливость",
   "skill.skilltree.void.description": "Ничего не даёт",
   "skill.skilltree.void.name": "Пустота",
-  "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
-  "skilltree.message.reset_command": "Your skill tree has been reset.",
-  "skilltree.message.skillpoint": "Skill point gained. Open skill tree menu to spend it.",
+  "skilltree.message.reset": "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.",
+  "skilltree.message.reset_command": "Ваше древо пассивных умений было сброшено.",
   "weapon.poisoned": "Отравлено:",
+  "widget.skill_point_progress_bar.buy": "Нажмите здесь что бы получить очко умений за %s опыта",
   "widget.skill_point_progress_bar.points": "Очков умений осталось: %s",
   "widget.skill_point_progress_bar.text": "Получайте опыт что бы открывать умения"
 }

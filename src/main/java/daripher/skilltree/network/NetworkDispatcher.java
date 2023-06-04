@@ -3,6 +3,7 @@ package daripher.skilltree.network;
 import java.util.Optional;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncSkillsMessage;
@@ -25,5 +26,6 @@ public class NetworkDispatcher {
 		network_channel.registerMessage(1, SyncSkillsMessage.class, SyncSkillsMessage::encode, SyncSkillsMessage::decode, SyncSkillsMessage::receive, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		network_channel.registerMessage(2, SyncPlayerSkillsMessage.class, SyncPlayerSkillsMessage::encode, SyncPlayerSkillsMessage::decode, SyncPlayerSkillsMessage::receive, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
 		network_channel.registerMessage(3, LearnSkillMessage.class, LearnSkillMessage::encode, LearnSkillMessage::decode, LearnSkillMessage::receive, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+		network_channel.registerMessage(4, GainSkillPointMessage.class, GainSkillPointMessage::encode, GainSkillPointMessage::decode, GainSkillPointMessage::receive, Optional.of(NetworkDirection.PLAY_TO_SERVER));
 	}
 }

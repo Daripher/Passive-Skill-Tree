@@ -26,7 +26,7 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 	}
 
 	@Override
-	protected void init() {
+	public void init() {
 		maxScrollX = 512;
 		maxScrollY = 512;
 		addSkillButtons();

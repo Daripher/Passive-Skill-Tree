@@ -56,7 +56,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	@Override
-	protected void init() {
+	public void init() {
 		initSkillsIfNeeded();
 		addSkillButtons();
 		maxScrollX -= width / 2 - 80;
@@ -64,6 +64,7 @@ public class SkillTreeScreen extends Screen {
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
 		skillPointProgressBar = new SkillPointProgressBar(this, width / 2 - 235 / 2, height - 18);
+		addRenderableWidget(skillPointProgressBar);
 	}
 
 	protected void initSkillsIfNeeded() {

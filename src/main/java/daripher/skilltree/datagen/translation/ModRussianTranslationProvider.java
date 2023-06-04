@@ -253,12 +253,12 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeEffects.DAMAGE_BONUS.get(), "Урон");
 		add(SkillTreeEffects.LIFE_REGENERATION_BONUS.get(), "Регенерация здоровья");
 		// system messages
-		add("skilltree.message.skillpoint", "Skill point gained. Open skill tree menu to spend it.");
-		add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
-		add("skilltree.message.reset_command", "Your skill tree has been reset.");
+		add("skilltree.message.reset", "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.");
+		add("skilltree.message.reset_command", "Ваше древо пассивных умений было сброшено.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Получайте опыт что бы открывать умения");
 		add("widget.skill_point_progress_bar.points", "Очков умений осталось: %s");
+		add("widget.skill_point_progress_bar.buy", "Нажмите здесь что бы получить очко умений за %s опыта");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

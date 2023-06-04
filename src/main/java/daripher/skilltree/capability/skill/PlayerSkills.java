@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.google.common.base.Predicates;
 
-import daripher.skilltree.config.Config;
 import daripher.skilltree.data.SkillsDataReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +18,6 @@ public class PlayerSkills implements IPlayerSkills {
 	private static final UUID TREE_VERSION = UUID.fromString("00fe35b4-d733-4054-b84c-121eb51f22f8");
 	private List<PassiveSkill> skills = new ArrayList<>();
 	private int skillPoints;
-	private int expirience;
 	private boolean treeReset;
 
 	@Override
@@ -40,41 +38,6 @@ public class PlayerSkills implements IPlayerSkills {
 	@Override
 	public void grantSkillPoints(int skillPoints) {
 		this.skillPoints += skillPoints;
-	}
-
-	@Override
-	public int getExperience() {
-		return expirience;
-	}
-
-	@Override
-	public void setExperience(int experience) {
-		this.expirience = experience;
-	}
-
-	@Override
-	public void grantExpirience(int expirience) {
-		this.expirience += expirience;
-		var level = getSkillPoints() + getPlayerSkills().size();
-		var levelUpCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-
-		if (level >= levelUpCosts.size()) {
-			return;
-		}
-
-		var levelUpCost = levelUpCosts.get(level);
-
-		while (this.expirience >= levelUpCost) {
-			this.expirience -= levelUpCost;
-			skillPoints++;
-			level = getSkillPoints() + getPlayerSkills().size();
-
-			if (level >= levelUpCosts.size()) {
-				return;
-			}
-
-			levelUpCost = levelUpCosts.get(level);
-		}
 	}
 
 	@Override
@@ -120,7 +83,6 @@ public class PlayerSkills implements IPlayerSkills {
 		var tag = new CompoundTag();
 		tag.putUUID("TreeVersion", TREE_VERSION);
 		tag.putInt("Points", skillPoints);
-		tag.putInt("Expirience", expirience);
 		tag.putBoolean("TreeReset", treeReset);
 		var skillTagsList = new ListTag();
 
@@ -137,7 +99,6 @@ public class PlayerSkills implements IPlayerSkills {
 		skills.clear();
 		var treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
 		skillPoints = tag.getInt("Points");
-		expirience = tag.getInt("Expirience");
 		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
 		if (!treeVersion.equals(TREE_VERSION)) {
 			skillPoints += skillTagsList.size();
