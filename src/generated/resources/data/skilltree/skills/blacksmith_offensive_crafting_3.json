@@ -9,13 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_offensive_crafting_4",
-    "skilltree:miner_defensive_crafting_3"
+    "skilltree:blacksmith_offensive_crafting_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
   "position": {
-    "x": -147,
-    "y": -20
+    "x": -105,
+    "y": -125
   },
   "tree": "skilltree:tree"
 }

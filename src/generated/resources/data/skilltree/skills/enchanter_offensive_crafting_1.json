@@ -2,20 +2,19 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.weapon_enchantments_amplification_chance",
-      "operation": "addition"
+      "attribute": "skilltree:player.chance_to_apply_better_weapon_enchantment",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_offensive_crafting_2",
-    "skilltree:enchanter_offensive_combat_1"
+    "skilltree:enchanter_offensive_crafting_2"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting.png",
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting_1.png",
   "position": {
-    "x": 58,
-    "y": -77
+    "x": 89,
+    "y": -34
   },
   "tree": "skilltree:tree"
 }

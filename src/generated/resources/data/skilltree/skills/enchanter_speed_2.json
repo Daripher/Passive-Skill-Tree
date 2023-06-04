@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.attack_speed_with_enchanted_weapon",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_speed_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_speed_1.png",
+  "position": {
+    "x": 207,
+    "y": -100
+  },
+  "tree": "skilltree:tree"
+}

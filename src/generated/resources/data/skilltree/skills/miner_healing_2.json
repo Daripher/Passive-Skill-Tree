@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.life_regeneration_bonus",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_offensive_crafting_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_healing_1.png",
+  "position": {
+    "x": -69,
+    "y": 99
+  },
+  "tree": "skilltree:tree"
+}

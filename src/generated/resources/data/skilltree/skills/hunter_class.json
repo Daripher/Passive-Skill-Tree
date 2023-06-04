@@ -3,20 +3,22 @@
     {
       "amount": 0.15,
       "attribute": "skilltree:player.double_loot_chance",
-      "operation": "addition"
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "connections": [
+    "skilltree:hunter_defensive_1",
+    "skilltree:hunter_offensive_1",
     "skilltree:hunter_defensive_crafting_1",
     "skilltree:hunter_offensive_crafting_1",
-    "skilltree:hunter_lesser_5"
+    "skilltree:hunter_crafting_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_class.png",
   "position": {
-    "x": 61,
-    "y": 30
+    "x": 85,
+    "y": 44
   },
   "starting_point": true,
   "tree": "skilltree:tree"

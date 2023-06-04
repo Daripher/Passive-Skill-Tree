@@ -50,14 +50,14 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe {
 	}
 
 	public double getPlayerGemstoneStrength(Player player, ItemStack craftingItem) {
-		var gemstoneStrength = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_MULTIPLIER.get()) - 1;
+		var gemstoneStrength = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH.get()) - 1;
 		var craftingArmor = ItemHelper.isArmor(craftingItem) || ItemHelper.isShield(craftingItem);
 		var craftingWeapon = ItemHelper.isWeapon(craftingItem) || ItemHelper.isBow(craftingItem);
 		if (craftingArmor) {
-			var gemstoneStrengthInArmor = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR_MULTIPLIER.get()) - 1;
+			var gemstoneStrengthInArmor = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInArmor;
 		} else if (craftingWeapon) {
-			var gemstoneStrengthInWeapon = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON_MULTIPLIER.get()) - 1;
+			var gemstoneStrengthInWeapon = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInWeapon;
 		}
 		return gemstoneStrength;

@@ -8,13 +8,10 @@
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
-  "connections": [
-    "skilltree:cook_lesser_4"
-  ],
-  "icon_texture": "skilltree:textures/icons/enchanter_life_notable.png",
+  "icon_texture": "skilltree:textures/icons/enchanter_life_notable_1.png",
   "position": {
-    "x": 128,
-    "y": -249
+    "x": 168,
+    "y": -113
   },
   "tree": "skilltree:tree"
 }

@@ -1,25 +1,21 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 2.0,
+      "amount": 10.0,
       "attribute": "minecraft:generic.armor",
       "operation": "addition"
-    },
-    {
-      "amount": 0.1,
-      "attribute": "minecraft:generic.armor",
-      "operation": "multiply_total"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
   "connections": [
-    "skilltree:blacksmith_lesser_3"
+    "skilltree:blacksmith_defensive_4",
+    "skilltree:blacksmith_defensive_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_notable.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
   "position": {
-    "x": -137,
-    "y": -172
+    "x": -215,
+    "y": -36
   },
   "tree": "skilltree:tree"
 }

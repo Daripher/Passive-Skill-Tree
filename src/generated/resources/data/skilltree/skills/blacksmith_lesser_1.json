@@ -2,20 +2,19 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.crafted_armor_bonus_toughness_chance_multiplier",
+      "attribute": "skilltree:player.chance_to_craft_tougher_armor",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_lesser_2",
-    "skilltree:blacksmith_offensive_crafting_6"
+    "skilltree:blacksmith_lesser_3"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_lesser.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_lesser_1.png",
   "position": {
-    "x": -236,
-    "y": -27
+    "x": -246,
+    "y": -113
   },
   "tree": "skilltree:tree"
 }

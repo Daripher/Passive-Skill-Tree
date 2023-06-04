@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:player.crafted_shields_armor_bonus",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/blacksmith_crafting_notable_1.png",
+  "position": {
+    "x": -70,
+    "y": -10
+  },
+  "tree": "skilltree:tree"
+}

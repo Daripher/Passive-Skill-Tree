@@ -8,10 +8,10 @@
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting_keystone.png",
+  "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting_keystone_1.png",
   "position": {
-    "x": 289,
-    "y": 3
+    "x": 188,
+    "y": 230
   },
   "tree": "skilltree:tree"
 }

@@ -1,13 +1,20 @@
 {
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_chance_against_poisoned",
+      "operation": "multiply_base"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_crit_5"
+    "skilltree:alchemist_crit_keystone_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_crit.png",
+  "icon_texture": "skilltree:textures/icons/alchemist_crit_1.png",
   "position": {
-    "x": -142,
-    "y": 307
+    "x": -147,
+    "y": 235
   },
   "tree": "skilltree:tree"
 }

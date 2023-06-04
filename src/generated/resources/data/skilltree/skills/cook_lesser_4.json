@@ -2,16 +2,19 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.cooked_food_restoration_bonus",
+      "attribute": "skilltree:player.cooked_food_saturation",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
-  "icon_texture": "skilltree:textures/icons/cook_lesser.png",
+  "connections": [
+    "skilltree:cook_lesser_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_lesser_1.png",
   "position": {
-    "x": 108,
-    "y": -230
+    "x": 20,
+    "y": -293
   },
   "tree": "skilltree:tree"
 }

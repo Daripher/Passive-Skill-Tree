@@ -37,6 +37,9 @@ public class TooltipHelper {
 		var textOperation = modifierValue > 0 ? "plus" : "take";
 		var style = modifierValue > 0 ? ChatFormatting.BLUE : ChatFormatting.RED;
 		var attributeComponent = Component.translatable(modifiedAttribute.getDescriptionId());
+		if (modifiedAttribute.getDescriptionId().contains(".can_")) {
+			return attributeComponent.withStyle(style);
+		}
 		var formattedVisibleBonus = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleBonusValue);
 		var formattedOperation = "attribute.modifier." + textOperation + "." + modifierOperation.toValue();
 		return Component.translatable(formattedOperation, formattedVisibleBonus, attributeComponent).withStyle(style);

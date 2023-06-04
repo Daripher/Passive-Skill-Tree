@@ -43,16 +43,16 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 	}
 
 	private static void enhancePotion(ItemStack potionStack, Player player) {
-		var amplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_STRENGTH_MULTIPLIER.get()) - 1;
+		var amplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get()) - 1;
 		if (PotionHelper.isHarmfulPotion(potionStack)) {
-			var harmfulPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_HARMFUL_POTIONS_STRENGTH_MULTIPLIER.get()) - 1;
+			var harmfulPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get()) - 1;
 			amplificationChance += harmfulPotionAmplificationChance;
 		}
 		if (PotionHelper.isBeneficialPotion(potionStack)) {
-			var beneficialPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH_MULTIPLIER.get()) - 1;
+			var beneficialPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get()) - 1;
 			amplificationChance += beneficialPotionAmplificationChance;
 		}
-		var durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION_MULTIPLIER.get()) - 1;
+		var durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION.get()) - 1;
 		PotionHelper.enhancePotion(potionStack, amplificationChance, durationBonus);
 	}
 

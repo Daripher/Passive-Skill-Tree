@@ -1,13 +1,21 @@
 {
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_chance_with_shield",
+      "operation": "multiply_base"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_defensive_life_notable_1"
+    "skilltree:blacksmith_crit_1",
+    "skilltree:blacksmith_crit_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_crit.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_crit_1.png",
   "position": {
-    "x": -278,
-    "y": -222
+    "x": -134,
+    "y": -227
   },
   "tree": "skilltree:tree"
 }

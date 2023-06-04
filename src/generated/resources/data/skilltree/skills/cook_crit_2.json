@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_chance_if_not_hungry",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_crit_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_crit_1.png",
+  "position": {
+    "x": 118,
+    "y": -202
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.5,
+      "attribute": "skilltree:player.cooked_food_life_regeneration",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/cook_crafting_notable_1.png",
+  "position": {
+    "x": -40,
+    "y": -62
+  },
+  "tree": "skilltree:tree"
+}

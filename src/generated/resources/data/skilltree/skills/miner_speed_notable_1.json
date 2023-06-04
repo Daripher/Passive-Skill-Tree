@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.15,
+      "attribute": "skilltree:player.attack_speed_with_pickaxe",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/miner_speed_notable_1.png",
+  "position": {
+    "x": -211,
+    "y": 106
+  },
+  "tree": "skilltree:tree"
+}

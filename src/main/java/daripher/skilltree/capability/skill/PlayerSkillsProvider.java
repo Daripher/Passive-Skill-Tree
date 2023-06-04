@@ -35,8 +35,7 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-	});
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent

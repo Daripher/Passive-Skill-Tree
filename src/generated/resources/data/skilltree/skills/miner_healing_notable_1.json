@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.life_regeneration_per_gemstone_in_helmet",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:miner_healing_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_healing_notable_1.png",
+  "position": {
+    "x": -84,
+    "y": 120
+  },
+  "tree": "skilltree:tree"
+}

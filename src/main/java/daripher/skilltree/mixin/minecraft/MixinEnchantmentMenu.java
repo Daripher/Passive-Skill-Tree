@@ -40,11 +40,11 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 
 	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
 			at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
-	private int decreaseLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
+	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
 		var levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		costsBeforeReduction[slot] = levelRequirement;
-		var decreasedRequirement = EnchantmentHelper.decreaseLevelRequirement(levelRequirement, player);
-		return decreasedRequirement;
+		var reducedRequirement = EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
+		return reducedRequirement;
 	}
 
 	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },

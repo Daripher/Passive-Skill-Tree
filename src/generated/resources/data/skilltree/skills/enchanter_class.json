@@ -2,21 +2,23 @@
   "attribute_modifiers": [
     {
       "amount": 0.3,
-      "attribute": "skilltree:player.enchantment_level_requirement_decrease",
+      "attribute": "skilltree:player.enchantment_level_requirement_reduction",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "connections": [
+    "skilltree:enchanter_defensive_1",
+    "skilltree:enchanter_offensive_1",
     "skilltree:enchanter_defensive_crafting_1",
     "skilltree:enchanter_offensive_crafting_1",
-    "skilltree:enchanter_lesser_5"
+    "skilltree:enchanter_crafting_1"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_class.png",
   "position": {
-    "x": 61,
-    "y": -54
+    "x": 85,
+    "y": -68
   },
   "starting_point": true,
   "tree": "skilltree:tree"

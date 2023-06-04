@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.5,
-      "attribute": "skilltree:player.cooked_food_healing_per_restoration_multiplier",
+      "attribute": "skilltree:player.cooked_food_saturation",
       "operation": "multiply_base"
     }
   ],
@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/cook_mastery.png",
   "position": {
-    "x": -48,
-    "y": -76
+    "x": -12,
+    "y": -353
   },
   "tree": "skilltree:tree"
 }

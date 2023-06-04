@@ -1,17 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 2.0,
-      "attribute": "skilltree:player.maximum_life_per_potion_effect",
-      "operation": "addition"
+      "amount": 0.02,
+      "attribute": "skilltree:player.evasion_per_potion_effect",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/alchemist_defensive_keystone.png",
+  "icon_texture": "skilltree:textures/icons/alchemist_defensive_keystone_1.png",
   "position": {
-    "x": -11,
-    "y": 256
+    "x": 42,
+    "y": 303
   },
   "tree": "skilltree:tree"
 }

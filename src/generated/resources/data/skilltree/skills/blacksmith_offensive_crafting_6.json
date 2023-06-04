@@ -11,10 +11,10 @@
   "connections": [
     "skilltree:blacksmith_offensive_crafting_7"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
   "position": {
-    "x": -239,
-    "y": -51
+    "x": -180,
+    "y": -201
   },
   "tree": "skilltree:tree"
 }

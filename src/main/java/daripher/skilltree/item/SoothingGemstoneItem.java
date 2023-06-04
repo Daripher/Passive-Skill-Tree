@@ -14,7 +14,7 @@ public class SoothingGemstoneItem extends SimpleGemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getHelmetBonus() {
-		return Triple.of(SkillTreeAttributes.LIFE_REGENERATION_BONUS.get(), 0.5D, Operation.ADDITION);
+		return Triple.of(SkillTreeAttributes.LIFE_REGENERATION.get(), 0.5D, Operation.ADDITION);
 	}
 
 	@Override

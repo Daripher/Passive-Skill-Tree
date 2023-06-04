@@ -1,0 +1,10 @@
+{
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "icon_texture": "skilltree:textures/icons/void.png",
+  "position": {
+    "x": -12,
+    "y": -12
+  },
+  "tree": "skilltree:tree"
+}

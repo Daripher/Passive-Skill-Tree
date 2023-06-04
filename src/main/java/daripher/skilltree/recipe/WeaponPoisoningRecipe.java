@@ -26,7 +26,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
 			return false;
 		}
 		var player = playerContainer.getPlayer().get();
-		var canPoison = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_WEAPON_POISONS_BONUS.get()) >= 1;
+		var canPoison = player.getAttributeValue(SkillTreeAttributes.CAN_POISON_WEAPONS.get()) >= 1;
 		if (!canPoison) {
 			return false;
 		}

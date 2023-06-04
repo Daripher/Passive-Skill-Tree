@@ -1,13 +1,21 @@
 {
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_chance_with_bow",
+      "operation": "multiply_base"
+    }
+  ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_defensive_life_notable_1"
+    "skilltree:hunter_crit_1",
+    "skilltree:hunter_crit_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_crit.png",
+  "icon_texture": "skilltree:textures/icons/hunter_crit_1.png",
   "position": {
-    "x": 262,
-    "y": 206
+    "x": 118,
+    "y": 211
   },
   "tree": "skilltree:tree"
 }

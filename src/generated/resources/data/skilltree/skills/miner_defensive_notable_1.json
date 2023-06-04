@@ -9,12 +9,13 @@
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
   "connections": [
-    "skilltree:miner_lesser_3"
+    "skilltree:miner_defensive_4",
+    "skilltree:miner_defensive_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_notable.png",
+  "icon_texture": "skilltree:textures/icons/miner_defensive_notable_1.png",
   "position": {
-    "x": -214,
-    "y": 19
+    "x": -135,
+    "y": 156
   },
   "tree": "skilltree:tree"
 }

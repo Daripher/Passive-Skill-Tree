@@ -1,17 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.6,
-      "attribute": "skilltree:player.cooked_food_restoration_bonus",
+      "amount": 0.25,
+      "attribute": "skilltree:player.cooked_food_healing_per_saturation",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/cook_defensive_crafting_keystone.png",
+  "icon_texture": "skilltree:textures/icons/cook_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 126,
-    "y": -281
+    "x": -120,
+    "y": -307
   },
   "tree": "skilltree:tree"
 }

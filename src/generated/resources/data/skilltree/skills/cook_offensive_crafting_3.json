@@ -1,21 +1,20 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:player.cooked_food_damage_per_restoration_multiplier",
+      "amount": 0.05,
+      "attribute": "skilltree:player.cooked_food_damage_per_saturation",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:cook_offensive_crafting_4",
-    "skilltree:blacksmith_defensive_crafting_3"
+    "skilltree:cook_offensive_crafting_4"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_offensive_crafting.png",
+  "icon_texture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
   "position": {
-    "x": -67,
-    "y": -134
+    "x": 44,
+    "y": -151
   },
   "tree": "skilltree:tree"
 }

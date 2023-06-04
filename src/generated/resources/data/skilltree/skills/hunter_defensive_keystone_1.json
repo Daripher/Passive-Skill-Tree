@@ -1,17 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 1.0,
+      "amount": 0.25,
       "attribute": "skilltree:player.armor_per_evasion_bonus",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/hunter_defensive_keystone.png",
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_keystone_1.png",
   "position": {
-    "x": 220,
-    "y": 122
+    "x": 288,
+    "y": 98
   },
   "tree": "skilltree:tree"
 }

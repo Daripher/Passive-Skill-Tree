@@ -1,17 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.pickaxe_damage_multiplier",
+      "amount": 0.75,
+      "attribute": "skilltree:player.pickaxe_damage",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/miner_offensive_keystone.png",
+  "icon_texture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
   "position": {
-    "x": -126,
-    "y": 54
+    "x": -312,
+    "y": 98
   },
   "tree": "skilltree:tree"
 }

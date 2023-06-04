@@ -14,17 +14,17 @@ public class LightGemstoneItem extends SimpleGemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getHelmetBonus() {
-		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_BASE);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE.get(), 0.01D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getChestplateBonus() {
-		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.02D, Operation.MULTIPLY_BASE);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE.get(), 0.02D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override
 	public Triple<Attribute, Double, Operation> getLeggingsBonus() {
-		return Triple.of(SkillTreeAttributes.EVASION_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_BASE);
+		return Triple.of(SkillTreeAttributes.EVASION_CHANCE.get(), 0.01D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class LightGemstoneItem extends SimpleGemstoneItem {
 
 	@Override
 	public Triple<Attribute, Double, Operation> getShieldBonus() {
-		return Triple.of(SkillTreeAttributes.BLOCK_CHANCE_MULTIPLIER.get(), 0.01D, Operation.MULTIPLY_BASE);
+		return Triple.of(SkillTreeAttributes.BLOCK_CHANCE.get(), 0.01D, Operation.MULTIPLY_BASE);
 	}
 
 	@Override

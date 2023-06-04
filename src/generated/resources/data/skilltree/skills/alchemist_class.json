@@ -2,21 +2,23 @@
   "attribute_modifiers": [
     {
       "amount": 0.4,
-      "attribute": "skilltree:player.brewed_potions_duration_multiplier",
+      "attribute": "skilltree:player.brewed_potions_duration",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
   "connections": [
+    "skilltree:alchemist_defensive_1",
+    "skilltree:alchemist_offensive_1",
     "skilltree:alchemist_defensive_crafting_1",
     "skilltree:alchemist_offensive_crafting_1",
-    "skilltree:alchemist_lesser_5"
+    "skilltree:alchemist_crafting_1"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_class.png",
   "position": {
     "x": -12,
-    "y": 72
+    "y": 100
   },
   "starting_point": true,
   "tree": "skilltree:tree"

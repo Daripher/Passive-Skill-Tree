@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.can_mix_potions",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/alchemist_crafting_notable_1.png",
+  "position": {
+    "x": 20,
+    "y": 42
+  },
+  "tree": "skilltree:tree"
+}

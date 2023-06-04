@@ -1,20 +1,21 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.3,
-      "attribute": "skilltree:player.crit_chance_against_poisoned_multiplier",
+      "amount": 0.4,
+      "attribute": "skilltree:player.damage_against_poisoned",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
   "connections": [
-    "skilltree:alchemist_lesser_1"
+    "skilltree:alchemist_offensive_4",
+    "skilltree:alchemist_offensive_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_offensive_notable.png",
+  "icon_texture": "skilltree:textures/icons/alchemist_offensive_notable_1.png",
   "position": {
-    "x": 67,
-    "y": 181
+    "x": -90,
+    "y": 182
   },
   "tree": "skilltree:tree"
 }

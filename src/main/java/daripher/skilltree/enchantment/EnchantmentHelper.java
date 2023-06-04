@@ -43,15 +43,15 @@ public class EnchantmentHelper {
 		return amplificationChance;
 	}
 
-	public static int decreaseLevelRequirement(int levelRequirement, Player player) {
-		var decrease = getLevelRequirementDecrease(player);
-		if (decrease == 0) {
+	public static int reduceLevelRequirement(int levelRequirement, Player player) {
+		var reduction = getLevelRequirementReduction(player);
+		if (reduction == 0) {
 			return levelRequirement;
 		}
-		return decreaseRequirement(levelRequirement, decrease);
+		return reduceRequirement(levelRequirement, reduction);
 	}
 
-	private static int decreaseRequirement(int cost, double reduction) {
+	private static int reduceRequirement(int cost, double reduction) {
 		if (cost == 0) {
 			return cost;
 		}
@@ -62,20 +62,20 @@ public class EnchantmentHelper {
 		return cost;
 	}
 
-	private static double getLevelRequirementDecrease(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_DECREASE.get()) - 1;
+	private static double getLevelRequirementReduction(Player player) {
+		return player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get()) - 1;
 	}
 	
 	private static double getWeaponEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.WEAPON_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get()) - 1;
 	}
 
 	private static double getArmorEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.ARMOR_ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get()) - 1;
 	}
 
 	private static double getBaseEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.ENCHANTMENTS_AMPLIFICATION_CHANCE.get());
+		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ENCHANTMENT.get()) - 1;
 	}
 	
 	private static boolean isWeaponEnchantment(EnchantmentCategory enchantmentCategory) {

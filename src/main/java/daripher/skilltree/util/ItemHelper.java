@@ -118,6 +118,10 @@ public class ItemHelper {
 		return itemStack.getItem() instanceof BowItem;
 	}
 
+	public static boolean isWeaponOrBow(ItemStack itemStack) {
+		return isWeapon(itemStack) || isBow(itemStack);
+	}
+
 	public static boolean canApplyGemstone(ItemStack itemStack) {
 		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) {
@@ -166,9 +170,12 @@ public class ItemHelper {
 		return itemStack.getItem() instanceof PotionItem potion && PotionHelper.isHarmfulPotion(itemStack);
 	}
 
+	public static boolean isPotion(ItemStack itemStack) {
+		return itemStack.getItem() instanceof PotionItem;
+	}
+
 	public static void setPoisons(ItemStack result, ItemStack poisonStack) {
-		var potion = PotionUtils.getPotion(poisonStack);
-		var effects = potion.getEffects();
+		var effects = PotionUtils.getMobEffects(poisonStack);
 		var poisonsTag = new ListTag();
 		for (var effect : effects) {
 			var effectTag = effect.save(new CompoundTag());

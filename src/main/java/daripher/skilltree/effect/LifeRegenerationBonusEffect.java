@@ -8,6 +8,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 public class LifeRegenerationBonusEffect extends MobEffect {
 	public LifeRegenerationBonusEffect() {
 		super(MobEffectCategory.BENEFICIAL, 0);
-		addAttributeModifier(SkillTreeAttributes.LIFE_REGENERATION_BONUS.get(), "bd211b5c-f6f1-48a4-8578-0af495d0649a", 0.01, Operation.ADDITION);
+		addAttributeModifier(SkillTreeAttributes.LIFE_REGENERATION.get(), "bd211b5c-f6f1-48a4-8578-0af495d0649a", 0.01, Operation.ADDITION);
 	}
 }

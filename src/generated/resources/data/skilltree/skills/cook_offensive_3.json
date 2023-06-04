@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_if_not_hungry",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_offensive_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_offensive_1.png",
+  "position": {
+    "x": 33,
+    "y": -192
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:player.life_regeneration_bonus",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_healing_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_healing_1.png",
+  "position": {
+    "x": -183,
+    "y": -8
+  },
+  "tree": "skilltree:tree"
+}

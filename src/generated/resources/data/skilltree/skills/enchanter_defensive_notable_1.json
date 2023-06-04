@@ -1,20 +1,21 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 10.0,
-      "attribute": "skilltree:player.armor_with_enchanted_shield",
-      "operation": "addition"
+      "amount": 0.1,
+      "attribute": "skilltree:player.block_chance_with_enchanted_shield",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
   "connections": [
-    "skilltree:enchanter_lesser_3"
+    "skilltree:enchanter_defensive_4",
+    "skilltree:enchanter_defensive_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_notable.png",
+  "icon_texture": "skilltree:textures/icons/enchanter_defensive_notable_1.png",
   "position": {
-    "x": 194,
-    "y": -39
+    "x": 115,
+    "y": -176
   },
   "tree": "skilltree:tree"
 }

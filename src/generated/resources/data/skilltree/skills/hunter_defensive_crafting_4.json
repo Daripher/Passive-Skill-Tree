@@ -2,19 +2,20 @@
   "attribute_modifiers": [
     {
       "amount": 0.01,
-      "attribute": "skilltree:player.crafted_armor_evasion_bonus",
-      "operation": "addition"
+      "attribute": "skilltree:player.crafted_armor_evasion",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_defensive_crafting_5"
+    "skilltree:hunter_defensive_notable_1",
+    "skilltree:hunter_healing_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting.png",
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting_1.png",
   "position": {
-    "x": 84,
-    "y": 127
+    "x": 167,
+    "y": 18
   },
   "tree": "skilltree:tree"
 }

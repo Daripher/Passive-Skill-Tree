@@ -1,17 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.weapon_enchantments_amplification_chance",
-      "operation": "addition"
+      "amount": 0.4,
+      "attribute": "skilltree:player.chance_to_apply_better_weapon_enchantment",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting_keystone.png",
+  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting_keystone_1.png",
   "position": {
-    "x": 151,
-    "y": -267
+    "x": 296,
+    "y": -65
   },
   "tree": "skilltree:tree"
 }

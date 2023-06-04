@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.brewed_potions_strength_multiplier",
+      "attribute": "skilltree:player.chance_to_brew_stronger_potion",
       "operation": "multiply_base"
     }
   ],
@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/alchemist_mastery.png",
   "position": {
-    "x": 24,
-    "y": 52
+    "x": -12,
+    "y": 329
   },
   "tree": "skilltree:tree"
 }

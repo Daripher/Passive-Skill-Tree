@@ -30,7 +30,7 @@ public class MixinModEnchantmentMenu {
 		var costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
 		costsBeforeReduction[slot] = levelRequirement;
 		var player = ((PlayerContainer) (Object) this).getPlayer().get();
-		var decreasedRequirement = daripher.skilltree.enchantment.EnchantmentHelper.decreaseLevelRequirement(levelRequirement, player);
+		var decreasedRequirement = daripher.skilltree.enchantment.EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
 		return decreasedRequirement;
 	}
 

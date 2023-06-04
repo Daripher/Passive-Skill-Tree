@@ -2,19 +2,20 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.evasion_under_potion_effect_multiplier",
+      "attribute": "skilltree:player.evasion_under_potion_effect",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
   "connections": [
-    "skilltree:alchemist_lesser_3"
+    "skilltree:alchemist_defensive_4",
+    "skilltree:alchemist_defensive_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_defensive_notable.png",
+  "icon_texture": "skilltree:textures/icons/alchemist_defensive_notable_1.png",
   "position": {
-    "x": -87,
-    "y": 181
+    "x": 70,
+    "y": 182
   },
   "tree": "skilltree:tree"
 }

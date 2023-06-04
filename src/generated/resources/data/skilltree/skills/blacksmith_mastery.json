@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.crafted_armor_bonus_toughness_chance_multiplier",
+      "attribute": "skilltree:player.chance_to_craft_tougher_armor",
       "operation": "multiply_base"
     }
   ],
@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/blacksmith_mastery.png",
   "position": {
-    "x": -85,
-    "y": -12
+    "x": -308,
+    "y": -183
   },
   "tree": "skilltree:tree"
 }

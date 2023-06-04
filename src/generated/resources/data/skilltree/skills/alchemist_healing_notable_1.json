@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:player.life_per_hit_under_potion_effect",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [
+    "skilltree:alchemist_healing_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
+  "position": {
+    "x": 65,
+    "y": 120
+  },
+  "tree": "skilltree:tree"
+}

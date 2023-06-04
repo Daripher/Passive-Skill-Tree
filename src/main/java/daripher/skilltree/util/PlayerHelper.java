@@ -1,7 +1,6 @@
 package daripher.skilltree.util;
 
 import daripher.skilltree.init.SkillTreeAttributes;
-import daripher.skilltree.init.SkillTreeEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -12,25 +11,28 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 
 public class PlayerHelper {
 	public static float getDamageMultiplier(Player player, LivingEntity target) {
-		var damageMultiplier = 1F;
+		var multiplier = 1F;
 		if (target.hasEffect(MobEffects.POISON)) {
-			damageMultiplier += PlayerHelper.getDamageBonusAgainsPoisoned(player);
+			multiplier += PlayerHelper.getDamageBonusAgainsPoisoned(player);
 		}
 		if (!player.getActiveEffects().isEmpty()) {
-			damageMultiplier += PlayerHelper.getDamageBonusUnderPotionEffect(player);
+			multiplier += PlayerHelper.getDamageBonusUnderPotionEffect(player);
 		}
 		if (ItemHelper.isShield(player.getOffhandItem())) {
-			damageMultiplier += PlayerHelper.getDamageBonusWithShield(player);
+			multiplier += PlayerHelper.getDamageBonusWithShield(player);
+		}
+		if (ItemHelper.isWeaponOrBow(player.getMainHandItem()) && player.getMainHandItem().isEnchanted()) {
+			multiplier += PlayerHelper.getDamageBonusWithEnchantedWeapon(player);
 		}
 		if (ItemHelper.isPickaxe(player.getMainHandItem())) {
-			damageMultiplier += PlayerHelper.getDamageBonusWithPickaxe(player);
+			multiplier += PlayerHelper.getDamageBonusWithPickaxe(player);
 		}
-		if (player.hasEffect(SkillTreeEffects.DELICACY.get())) {
-			damageMultiplier += PlayerHelper.getDamageBonusIfAteRecently(player);
+		if (player.getFoodData().getFoodLevel() >= 10) {
+			multiplier += PlayerHelper.getDamageMultiplierIfNotHungry(player);
 		}
 		if (!player.getActiveEffects().isEmpty()) {
-			var damagePerEffect = player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_POTION_EFFECT_MULTIPLIER.get()) - 1;
-			damageMultiplier += player.getActiveEffects().size() * damagePerEffect;
+			var damagePerEffect = player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_POTION_EFFECT.get()) - 1;
+			multiplier += player.getActiveEffects().size() * damagePerEffect;
 		}
 		for (var slot : EquipmentSlot.values()) {
 			var itemInSlot = player.getItemBySlot(slot);
@@ -39,13 +41,20 @@ public class PlayerHelper {
 			}
 			var damagePerEnchantment = PlayerHelper.getDamageBonusPerEnchantment(player);
 			var enchantmentCount = itemInSlot.getAllEnchantments().size();
-			damageMultiplier += damagePerEnchantment * enchantmentCount;
+			multiplier += damagePerEnchantment * enchantmentCount;
 		}
 		for (var enchantmentLevel : player.getMainHandItem().getAllEnchantments().values()) {
 			var damagePerEnchantmentLevel = PlayerHelper.getDamageBonusPerWeaponEnchantmentLevel(player);
-			damageMultiplier += damagePerEnchantmentLevel * enchantmentLevel;
+			multiplier += damagePerEnchantmentLevel * enchantmentLevel;
 		}
-		return damageMultiplier;
+		var foodLevel = player.getFoodData().getFoodLevel();
+		if (foodLevel > 0) {
+			var damagePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_SATISFIED_HUNGER.get()) - 1;
+			multiplier += foodLevel * damagePerSatisfiedHunger;
+		}
+		var damagePerArrowInEnemy = player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_ARROW_IN_ENEMY.get()) - 1;
+		multiplier += damagePerArrowInEnemy * target.getArrowCount();
+		return multiplier;
 	}
 
 	public static float getArrowDamageMultiplier(Player player, LivingEntity target, AbstractArrow arrow) {
@@ -61,22 +70,19 @@ public class PlayerHelper {
 			damageMultiplier += arrowCritDamageBonus;
 			damageMultiplier += getCritDamageMultiplier(player, target) - 1.5F;
 		}
-		var damageBonusPerDistance = player.getAttributeValue(SkillTreeAttributes.ARROW_DAMAGE_PER_DISTANCE_MULTIPLIER.get()) - 1;
+		var damageBonusPerDistance = player.getAttributeValue(SkillTreeAttributes.ARROW_DAMAGE_PER_DISTANCE.get()) - 1;
 		damageMultiplier += damageBonusPerDistance * player.distanceTo(target);
 		damageMultiplier += getDamageMultiplier(player, target) - 1;
 		return damageMultiplier;
 	}
 
 	public static float getCritChance(Player player, LivingEntity target) {
-		var chance = (float) (player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_MULTIPLIER.get()) - 1);
+		var chance = (float) (player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE.get()) - 1);
 		if (target.hasEffect(MobEffects.POISON)) {
 			chance += PlayerHelper.getCritChanceAgainstPoisoned(player);
 		}
 		if (ItemHelper.isShield(player.getOffhandItem())) {
 			chance += PlayerHelper.getCritChanceWithShield(player);
-		}
-		if (ItemHelper.isAxe(player.getMainHandItem())) {
-			chance += PlayerHelper.getCritChanceWithAxe(player);
 		}
 		for (var slot : EquipmentSlot.values()) {
 			var itemInSlot = player.getItemBySlot(slot);
@@ -92,23 +98,23 @@ public class PlayerHelper {
 
 	public static float getCritDamageMultiplier(Player player, LivingEntity target) {
 		var multiplier = 1.5F;
-		multiplier += player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_MULTIPLIER.get()) - 1;
-		for (var slot : EquipmentSlot.values()) {
-			var itemInSlot = player.getItemBySlot(slot);
-			if (!itemInSlot.isEnchanted()) {
-				continue;
-			}
-			var critDamagePerEnchantment = PlayerHelper.getCritDamagePerEnchantment(player);
-			var enchantmentCount = itemInSlot.getAllEnchantments().size();
-			multiplier += critDamagePerEnchantment * enchantmentCount;
+		multiplier += player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE.get()) - 1;
+		var mainhandItem = player.getMainHandItem();
+		if (ItemHelper.isWeaponOrBow(mainhandItem)) {
+			var critDamagePerWeaponEnchantment = PlayerHelper.getCritDamagePerWeaponEnchantment(player);
+			var enchantmentCount = mainhandItem.getAllEnchantments().size();
+			multiplier += critDamagePerWeaponEnchantment * enchantmentCount;
 		}
 		if (ItemHelper.isShield(player.getOffhandItem())) {
 			multiplier += getCritDamageWithShield(player);
 		}
 		var foodLevel = player.getFoodData().getFoodLevel();
 		if (foodLevel > 0) {
-			var critDamagePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_MULTIPLIER_PER_SATISFIED_HUNGER.get()) - 1;
+			var critDamagePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_PER_SATISFIED_HUNGER.get()) - 1;
 			multiplier += foodLevel * critDamagePerSatisfiedHunger;
+		}
+		if (target.hasEffect(MobEffects.POISON)) {
+			multiplier += getCritDamageAgainstPoisoned(player);
 		}
 		return multiplier;
 	}
@@ -121,6 +127,10 @@ public class PlayerHelper {
 		return bonus;
 	}
 
+	public static float getDamageMultiplierIfNotHungry(Player player) {
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_IF_NOT_HUNGRY.get());
+	}
+
 	public static float getFlatArrowDamageBonus(Player player) {
 		return (float) player.getAttributeValue(SkillTreeAttributes.ARROW_DAMAGE_BONUS.get());
 	}
@@ -130,71 +140,63 @@ public class PlayerHelper {
 	}
 
 	public static float getArrowDamageBonus(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.ARROW_DAMAGE_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.ARROW_DAMAGE.get()) - 1;
 	}
 
 	public static double getArrowCritDamageBonus(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.ARROW_CRIT_DAMAGE_MULTIPLIER.get()) - 1;
+		return player.getAttributeValue(SkillTreeAttributes.ARROW_CRIT_DAMAGE.get()) - 1;
 	}
 
 	public static float getDamageBonusPerEnchantment(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_ENCHANTMENT.get()) - 1;
 	}
 
 	public static float getDamageBonusPerWeaponEnchantmentLevel(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL.get()) - 1;
 	}
 
 	public static float getDamageBonusUnderPotionEffect(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_UNDER_POTION_EFFECT_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_UNDER_POTION_EFFECT.get()) - 1;
 	}
 
 	public static float getDamageBonusAgainsPoisoned(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_AGAINST_POISONED_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_AGAINST_POISONED.get()) - 1;
 	}
 
 	public static float getDamageBonusWithShield(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_WITH_SHIELD_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_WITH_SHIELD.get()) - 1;
+	}
+
+	public static float getDamageBonusWithEnchantedWeapon(Player player) {
+		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_WITH_ENCHANTED_WEAPON.get()) - 1;
 	}
 
 	public static float getDamageBonusWithPickaxe(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.PICKAXE_DAMAGE_MULTIPLIER.get()) - 1;
-	}
-
-	public static float getDamageBonusIfAteRecently(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_MULTIPLIER_IF_ATE_RECENTLY.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.PICKAXE_DAMAGE.get()) - 1;
 	}
 
 	public static float getCritChanceAgainstPoisoned(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_AGAINST_POISONED_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_AGAINST_POISONED.get()) - 1;
 	}
 
 	public static float getCritChancePerEnchantment(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_PER_ENCHANTMENT_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_PER_ENCHANTMENT.get()) - 1;
 	}
 
 	public static float getCritChanceWithShield(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_WITH_SHIELD_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_WITH_SHIELD.get()) - 1;
 	}
 
-	public static float getCritChanceWithAxe(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.AXE_CRIT_CHANCE_MULTIPLIER.get()) - 1;
-	}
-
-	public static float getCritDamagePerEnchantment(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_PER_ENCHANTMENT_MULTIPLIER.get()) - 1;
+	public static float getCritDamagePerWeaponEnchantment(Player player) {
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT.get()) - 1;
 	}
 
 	public static float getCritDamageWithShield(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_WITH_SHIELD_MULTIPLIER.get()) - 1;
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_WITH_SHIELD.get()) - 1;
 	}
 
-	public static float getAttackSpeedBonusWithPickaxe(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.PICKAXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
-	}
-
-	public static float getAttackSpeedBonusWithAxe(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.AXE_ATTACK_SPEED_MULTIPLIER.get()) - 1;
+	public static float getCritDamageAgainstPoisoned(Player player) {
+		return (float) player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_AGAINST_POISONED.get()) - 1;
 	}
 
 	public static boolean canEvadeDamage(DamageSource source) {

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.SkillTreePlayer;
+import daripher.skilltree.init.SkillTreeAttributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
@@ -80,6 +82,15 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 	@Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
 	private void writeRainbowJewelInsertionSeed(CompoundTag tag, CallbackInfo callbackInfo) {
 		tag.putInt("RainbowJewelInsertionSeed", rainbowJewelInsertionSeed);
+	}
+
+	@Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
+	private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
+		var player = (Player) (Object) this;
+		var freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
+		if (player.getRandom().nextFloat() < freeEnchantmentChance) {
+			player.giveExperienceLevels(enchantmentCost);
+		}
 	}
 
 	@Override

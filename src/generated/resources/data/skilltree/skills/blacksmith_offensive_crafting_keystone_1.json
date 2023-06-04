@@ -2,16 +2,16 @@
   "attribute_modifiers": [
     {
       "amount": 0.25,
-      "attribute": "skilltree:player.crafted_weapon_attack_speed_multiplier",
+      "attribute": "skilltree:player.crafted_weapon_attack_speed",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_keystone.png",
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_keystone_1.png",
   "position": {
-    "x": -313,
-    "y": -27
+    "x": -212,
+    "y": -254
   },
   "tree": "skilltree:tree"
 }

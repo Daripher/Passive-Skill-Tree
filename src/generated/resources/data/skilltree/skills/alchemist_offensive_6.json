@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_against_poisoned",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:alchemist_offensive_7",
+    "skilltree:alchemist_lesser_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_offensive_1.png",
+  "position": {
+    "x": -62,
+    "y": 251
+  },
+  "tree": "skilltree:tree"
+}

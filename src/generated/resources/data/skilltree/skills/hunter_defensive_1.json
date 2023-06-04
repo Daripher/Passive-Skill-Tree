@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:player.evasion_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_defensive_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_defensive_1.png",
+  "position": {
+    "x": 119,
+    "y": 48
+  },
+  "tree": "skilltree:tree"
+}

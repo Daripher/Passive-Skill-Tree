@@ -9,12 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_life_notable_1"
+    "skilltree:hunter_lesser_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_lesser.png",
+  "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
   "position": {
-    "x": 242,
-    "y": 2
+    "x": 202,
+    "y": 146
   },
   "tree": "skilltree:tree"
 }

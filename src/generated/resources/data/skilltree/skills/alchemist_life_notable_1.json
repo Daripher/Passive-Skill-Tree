@@ -1,20 +1,17 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 10.0,
+      "amount": 6.0,
       "attribute": "skilltree:player.maximum_life_under_potion_effect",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
-  "connections": [
-    "skilltree:hunter_lesser_4"
-  ],
-  "icon_texture": "skilltree:textures/icons/alchemist_life_notable.png",
+  "icon_texture": "skilltree:textures/icons/alchemist_life_notable_1.png",
   "position": {
-    "x": 127,
-    "y": 229
+    "x": -10,
+    "y": 197
   },
   "tree": "skilltree:tree"
 }
