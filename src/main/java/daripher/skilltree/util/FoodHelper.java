@@ -1,5 +1,9 @@
 package daripher.skilltree.util;
 
+import org.jetbrains.annotations.NotNull;
+
+import daripher.skilltree.init.SkillTreeAttributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class FoodHelper {
@@ -8,6 +12,29 @@ public class FoodHelper {
 	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
 	private static final String CRIT_DAMAGE_BONUS_TAG = "CritDamageBonus";
 	private static final String HEALING_BONUS_TAG = "HealingBonus";
+
+	public static void setCraftedFoodBonuses(@NotNull ItemStack craftedItem, Player player) {
+		var restorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_SATURATION.get()) - 1;
+		if (restorationBonus > 0) {
+			FoodHelper.setRestorationBonus(craftedItem, (float) restorationBonus);
+		}
+		var lifeRegenerationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION.get());
+		if (lifeRegenerationBonus > 0) {
+			FoodHelper.setLifeRegenerationBonus(craftedItem, (float) lifeRegenerationBonus);
+		}
+		var damagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_SATURATION.get()) - 1;
+		if (damagePerRestorationBonus > 0) {
+			FoodHelper.setDamageBonus(craftedItem, (float) damagePerRestorationBonus);
+		}
+		var critDamagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get()) - 1;
+		if (critDamagePerRestorationBonus > 0) {
+			FoodHelper.setCritDamageBonus(craftedItem, (float) critDamagePerRestorationBonus);
+		}
+		var healingPerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_SATURATION.get());
+		if (healingPerRestorationBonus > 0) {
+			FoodHelper.setHealingBonus(craftedItem, (float) healingPerRestorationBonus);
+		}
+	}
 
 	public static void setRestorationBonus(ItemStack itemStack, float bonus) {
 		itemStack.getOrCreateTag().putFloat(RESTORATION_BONUS_TAG, bonus);

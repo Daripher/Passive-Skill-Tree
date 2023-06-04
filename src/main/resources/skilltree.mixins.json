@@ -14,6 +14,7 @@
   	"minecraft/MixinCraftingMenu",
   	"minecraft/MixinInventoryMenu",
   	"minecraft/MixinAbstractFurnaceMenu",
+  	"minecraft/MixinCampfireBlockEntity",
   	"easymagic/MixinModEnchantmentMenu"
   ],
   "client" : [ ],
