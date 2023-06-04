@@ -1,9 +1,12 @@
 {
-  "providers" : [ {
-    "type" : "ttf",
-    "file" : "skilltree:dragon_serial_bold.ttf",
-    "shift" : [ 0, 1 ],
-    "size" : 10,
-    "oversample" : 6
-  } ]
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "skilltree:font.ttf",
+			"shift": [0, 0.5],
+			"size": 12.0,
+			"oversample": 4.0,
+			"skip": ""
+        }
+	]
 }
