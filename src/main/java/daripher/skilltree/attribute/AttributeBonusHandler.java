@@ -91,8 +91,8 @@ public class AttributeBonusHandler {
 			return;
 		}
 		var player = event.player;
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "d1f7e78b-3368-409c-aa89-90f0f89a5524", AttributeBonusHandler::getMaxLifePerEvasion);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "b68181bd-fbc4-4a63-95d4-df386fe3f71f", AttributeBonusHandler::getMaxLifePerGemstoneInArmor);
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "d1f7e78b-3368-409c-aa89-90f0f89a5524", AttributeBonusHandler::getMaximumLifePerEvasion);
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "b68181bd-fbc4-4a63-95d4-df386fe3f71f", AttributeBonusHandler::getMaximumLifePerGemstoneInArmor);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "7cb71ee5-8715-40ae-a877-72ec3b49b33e", AttributeBonusHandler::getArmorPerEvasion);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "66eae15c-53eb-4a4a-b511-2ab94f81324b", AttributeBonusHandler::getArmorPerGemstoneInChestplate);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "1080308c-bdd4-4693-876c-a36390b66b73", AttributeBonusHandler::getArmorPerGemstoneInHelmet);
@@ -119,7 +119,7 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "44984187-74c8-4927-be18-1e187ca9babe", AttributeBonusHandler::getCritChanceIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "7bd1d9fb-4a20-41f3-89df-7cb42e849c5f", AttributeBonusHandler::getAttackWithEnchantedWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, "9c36d4dc-06e3-4f42-b8e6-abb0fb6b344c", AttributeBonusHandler::getLifePerHitUnderPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "77353761-61e2-4f3c-b0e4-2abef4b75d76", AttributeBonusHandler::getMaxLifePerGemstoneInHelmet);
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "77353761-61e2-4f3c-b0e4-2abef4b75d76", AttributeBonusHandler::getMaximumLifePerGemstoneInHelmet);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "636b118d-478b-4c4e-9785-b6e7da876828", AttributeBonusHandler::getCritChancePerGemstoneInWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_DAMAGE.get(), Operation.MULTIPLY_BASE, "3051c828-7281-458c-b6fc-df9d93b31d30", AttributeBonusHandler::getCritDamagePerGemstoneInWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.LIFE_REGENERATION.get(), Operation.ADDITION, "6732aed2-1948-4e86-a83c-aad617cd4387", AttributeBonusHandler::getLifeRegenerationPerGemstoneInHelmet);
@@ -153,13 +153,13 @@ public class AttributeBonusHandler {
 		}
 	}
 
-	private static double getMaxLifePerEvasion(Player player) {
+	private static double getMaximumLifePerEvasion(Player player) {
 		var lifePerEvasion = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_EVASION.get());
 		var evasion = player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE.get()) - 1;
 		return evasion * lifePerEvasion * 100;
 	}
 
-	private static double getMaxLifePerGemstoneInArmor(Player player) {
+	private static double getMaximumLifePerGemstoneInArmor(Player player) {
 		var lifePerGemstoneInArmor = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get());
 		var gemstonesInArmor = 0;
 		for (var slot = 0; slot < 4; slot++) {
@@ -169,7 +169,7 @@ public class AttributeBonusHandler {
 		return lifePerGemstoneInArmor * gemstonesInArmor;
 	}
 
-	private static double getMaxLifePerGemstoneInHelmet(Player player) {
+	private static double getMaximumLifePerGemstoneInHelmet(Player player) {
 		var lifePerGemstoneInHelmet = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get());
 		var helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 		var gemstonesInHelmet = GemstoneItem.getGemstonesCount(helmet);
@@ -502,7 +502,7 @@ public class AttributeBonusHandler {
 		if (isHungry) {
 			return 0D;
 		}
-		var lifeOnBlockIfNotHungry = player.getAttributeValue(SkillTreeAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get()) - 1;
+		var lifeOnBlockIfNotHungry = player.getAttributeValue(SkillTreeAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get());
 		return lifeOnBlockIfNotHungry;
 	}
 
@@ -511,7 +511,7 @@ public class AttributeBonusHandler {
 		if (isHungry) {
 			return 0D;
 		}
-		var maximumLifeIfNotHungry = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get()) - 1;
+		var maximumLifeIfNotHungry = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get());
 		return maximumLifeIfNotHungry;
 	}
 
