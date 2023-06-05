@@ -246,7 +246,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getEvasionPerPotionEffect(Player player) {
-		var evasionPerPotionEffect = player.getAttributeValue(SkillTreeAttributes.EVASION_PER_POTION_EFFECT.get());
+		var evasionPerPotionEffect = player.getAttributeValue(SkillTreeAttributes.EVASION_PER_POTION_EFFECT.get()) - 1;
 		var potionEffectCount = player.getActiveEffects().size();
 		return potionEffectCount * evasionPerPotionEffect;
 	}
@@ -326,7 +326,7 @@ public class AttributeBonusHandler {
 		if (!isWounded) {
 			return 0D;
 		}
-		var evasionChanceWhenWounded = player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE_WHEN_WOUNDED.get());
+		var evasionChanceWhenWounded = player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE_WHEN_WOUNDED.get()) - 1;
 		return evasionChanceWhenWounded;
 	}
 
