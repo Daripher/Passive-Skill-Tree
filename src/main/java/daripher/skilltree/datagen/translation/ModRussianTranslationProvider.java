@@ -255,6 +255,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		// system messages
 		add("skilltree.message.reset", "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.");
 		add("skilltree.message.reset_command", "Ваше древо пассивных умений было сброшено.");
+		add("skilltree.message.point_command", "Вы получили очки пассивных умений.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Получайте опыт что бы открывать умения");
 		add("widget.skill_point_progress_bar.points", "Очков умений осталось: %s");

@@ -60,7 +60,7 @@ public class SkillTreeCommands {
 		var amount = IntegerArgumentType.getInteger(ctx, "amount");
 		var skillsCapability = PlayerSkillsProvider.get(player);
 		skillsCapability.setSkillPoints(amount + skillsCapability.getSkillPoints());
-		player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
+		player.sendSystemMessage(Component.translatable("skilltree.message.point_command").withStyle(ChatFormatting.YELLOW));
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 		return 1;
 	}

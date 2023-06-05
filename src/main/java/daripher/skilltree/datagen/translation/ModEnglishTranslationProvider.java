@@ -255,6 +255,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		// system messages
 		add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
 		add("skilltree.message.reset_command", "Your skill tree has been reset.");
+		add("skilltree.message.point_command", "Skill points gained.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
