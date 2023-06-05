@@ -484,7 +484,7 @@ public class AttributeBonusHandler {
 		if (enchantmentsCount == 0) {
 			return 0D;
 		}
-		var blockChancePerShieldEnchantment = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get());
+		var blockChancePerShieldEnchantment = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get()) - 1;
 		return blockChancePerShieldEnchantment * enchantmentsCount;
 	}
 
@@ -520,7 +520,7 @@ public class AttributeBonusHandler {
 		if (satisfiedHunger == 0) {
 			return 0D;
 		}
-		var blockChancePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get());
+		var blockChancePerSatisfiedHunger = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get()) - 1;
 		return satisfiedHunger * blockChancePerSatisfiedHunger;
 	}
 
