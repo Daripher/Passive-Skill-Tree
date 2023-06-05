@@ -28,7 +28,7 @@ public class PlayerHelper {
 			multiplier += PlayerHelper.getDamageBonusWithPickaxe(player);
 		}
 		if (player.getFoodData().getFoodLevel() >= 10) {
-			multiplier += PlayerHelper.getDamageMultiplierIfNotHungry(player);
+			multiplier += player.getAttributeValue(SkillTreeAttributes.DAMAGE_IF_NOT_HUNGRY.get()) - 1;
 		}
 		if (!player.getActiveEffects().isEmpty()) {
 			var damagePerEffect = player.getAttributeValue(SkillTreeAttributes.DAMAGE_PER_POTION_EFFECT.get()) - 1;
@@ -125,10 +125,6 @@ public class PlayerHelper {
 			bonus += getFlatPickaxeDamageBonus(player);
 		}
 		return bonus;
-	}
-
-	public static float getDamageMultiplierIfNotHungry(Player player) {
-		return (float) player.getAttributeValue(SkillTreeAttributes.DAMAGE_IF_NOT_HUNGRY.get());
 	}
 
 	public static float getFlatArrowDamageBonus(Player player) {
