@@ -110,6 +110,9 @@ public class SkillPointProgressBar extends Button {
 	}
 
 	private static boolean canBuySkillPoint(int currentLevel) {
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+			return false;
+		}
 		if (isMaxLevel(currentLevel)) {
 			return false;
 		}

@@ -29,7 +29,7 @@ public class Config {
 			builder.comment("Disabling this will remove chat messages when you gain a skill point.");
 			showChatMessages = builder.define("Show chat messages", true);
 			builder.comment("Warning: If you disable this make sure you make alternative way of getting skill points.");
-			enableExperienceGain = builder.define("Enable experience gain", true);
+			enableExperienceGain = builder.define("Enable exprerience exchange for skill points", true);
 			builder.pop();
 			builder.push("Gemstones");
 			gemstoneDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
