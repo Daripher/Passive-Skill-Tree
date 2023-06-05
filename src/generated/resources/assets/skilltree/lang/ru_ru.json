@@ -136,7 +136,7 @@
   "player.damage_with_enchanted_weapon": "Урон с зачарованным оружием",
   "player.damage_with_shield": "Урон со щитом",
   "player.double_loot_chance": "Шанс удвоенной добычи",
-  "player.enchantment_level_requirement_reduction": "Требование к уровню для зачарования",
+  "player.enchantment_level_requirement_reduction": "Снижение требования к уровню для зачарования",
   "player.evasion_chance": "Шанс уклонения",
   "player.evasion_chance_when_wounded": "Уклонение когда ранен",
   "player.evasion_per_potion_effect": "Шанс уклонения за каждый эффект зелья",

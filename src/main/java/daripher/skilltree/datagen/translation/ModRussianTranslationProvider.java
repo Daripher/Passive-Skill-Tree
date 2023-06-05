@@ -218,7 +218,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.CHANCE_TO_CRAFT_TOUGHER_ARMOR.get(), "Шанс создать более твёрдую броню");
 		add(SkillTreeAttributes.ATTACK_DAMAGE_PER_ARMOR.get(), "Урон в ближнем бою за единицу брони");
 		add(SkillTreeAttributes.CHESTPLATE_ARMOR.get(), "Броня нагрудника");
-		add(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), "Требование к уровню для зачарования");
+		add(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), "Снижение требования к уровню для зачарования");
 		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), "Шанс наложить усиленное зачарование брони");
 		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), "Шанс наложить усиленное зачарование оружие");
 		add(SkillTreeAttributes.DAMAGE_WITH_ENCHANTED_WEAPON.get(), "Урон с зачарованным оружием");
