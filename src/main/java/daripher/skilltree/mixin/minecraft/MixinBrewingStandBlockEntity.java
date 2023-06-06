@@ -53,6 +53,9 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 			amplificationChance += beneficialPotionAmplificationChance;
 		}
 		var durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION.get()) - 1;
+		if (durationBonus == 0 && amplificationChance == 0) {
+			return;
+		}
 		PotionHelper.enhancePotion(potionStack, amplificationChance, durationBonus);
 	}
 

@@ -122,7 +122,6 @@ public class PotionHelper {
 			}
 			enhancedEffects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
 		});
-
 		return enhancedEffects;
 	}
 
