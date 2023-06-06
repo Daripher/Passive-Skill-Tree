@@ -119,9 +119,10 @@ dependencies {
 	//implementation fg.deobf("curse.maven:epic-knights-armor-and-weapons-509041:4423962")
 	//implementation fg.deobf("curse.maven:cloth-config-348521:3972423")
 	//implementation fg.deobf("curse.maven:architectury-api-419699:4521273")
-	implementation fg.deobf("curse.maven:corail-deconstruction-table-444880:4524451")
+	//implementation fg.deobf("curse.maven:corail-deconstruction-table-444880:4524451")
 	implementation fg.deobf("curse.maven:easy-magic-456239:4411042")
 	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
+	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
 }
 
 jar {
