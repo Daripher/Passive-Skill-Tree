@@ -123,6 +123,7 @@ dependencies {
 	implementation fg.deobf("curse.maven:easy-magic-456239:4411042")
 	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
 	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
+	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
 }
 
 jar {
