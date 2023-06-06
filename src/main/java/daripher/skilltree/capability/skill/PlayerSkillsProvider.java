@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncSkillsMessage;
@@ -26,7 +25,6 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -35,8 +33,7 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-	});
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent
@@ -46,26 +43,6 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 			event.addCapability(CAPABILITY_ID, capabilityProvider);
 		}
 	}
-
-//	@SubscribeEvent
-//	public static void grantSkillPoints(PlayerXpEvent.XpChange event) {
-//		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
-//			return;
-//		}
-//		if (event.getAmount() <= 0) {
-//			return;
-//		}
-//		var player = event.getEntity();
-//		var playerSkillsData = get(player);
-//		var skillPoints = playerSkillsData.getSkillPoints();
-//		playerSkillsData.grantExpirience(event.getAmount());
-//		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
-//		var gainedSkillPoint = skillPoints != playerSkillsData.getSkillPoints();
-//		var shouldShowChatMessages = Config.COMMON_CONFIG.shouldShowChatMessages();
-//		if (gainedSkillPoint && shouldShowChatMessages) {
-//			player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
-//		}
-//	}
 
 	@SubscribeEvent
 	public static void persistThroughDeath(PlayerEvent.Clone event) {
