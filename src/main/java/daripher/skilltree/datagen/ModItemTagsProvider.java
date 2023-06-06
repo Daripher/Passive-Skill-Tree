@@ -3,10 +3,13 @@ package daripher.skilltree.datagen;
 import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.init.SkillTreeTags;
+import daripher.skilltree.item.GemstoneItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
 	public ModItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -15,5 +18,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
 	@Override
 	protected void addTags() {
+		var gemstonesTag = tag(SkillTreeTags.GEMSTONES);
+		ForgeRegistries.ITEMS.getValues().stream().filter(GemstoneItem.class::isInstance).forEach(gemstonesTag::add);
 	}
 }
