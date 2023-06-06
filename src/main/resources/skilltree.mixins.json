@@ -16,7 +16,8 @@
   	"minecraft/MixinAbstractFurnaceMenu",
   	"minecraft/MixinCampfireBlockEntity",
   	"minecraft/MixinVanillaBrewingRecipe",
-  	"easymagic/MixinModEnchantmentMenu"
+  	"easymagic/MixinModEnchantmentMenu",
+  	"easyvillagers/MixinConverterTileentity"
   ],
   "client" : [ ],
   "injectors" : {
