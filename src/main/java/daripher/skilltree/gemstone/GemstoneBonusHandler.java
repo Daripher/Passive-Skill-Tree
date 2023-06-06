@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.item.GemstoneItem;
+import daripher.skilltree.item.gem.GemstoneItem;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;

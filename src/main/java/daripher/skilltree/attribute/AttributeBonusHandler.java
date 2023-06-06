@@ -11,7 +11,7 @@ import daripher.skilltree.config.Config;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
 import daripher.skilltree.init.SkillTreeItems;
-import daripher.skilltree.item.GemstoneItem;
+import daripher.skilltree.item.gem.GemstoneItem;
 import daripher.skilltree.util.FoodHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;

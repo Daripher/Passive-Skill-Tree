@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
-import daripher.skilltree.item.GemstoneItem;
+import daripher.skilltree.item.gem.GemstoneItem;
 import daripher.skilltree.util.ItemHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

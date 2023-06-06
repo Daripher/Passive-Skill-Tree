@@ -1,4 +1,4 @@
-package daripher.skilltree.item;
+package daripher.skilltree.item.gem;
 
 import org.apache.commons.lang3.tuple.Triple;
 

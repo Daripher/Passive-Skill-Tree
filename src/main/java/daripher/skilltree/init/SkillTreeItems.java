@@ -2,6 +2,11 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.*;
+import daripher.skilltree.item.gem.LightGemstoneItem;
+import daripher.skilltree.item.gem.RainbowGemstoneItem;
+import daripher.skilltree.item.gem.SoothingGemstoneItem;
+import daripher.skilltree.item.gem.SturdyGemstoneItem;
+import daripher.skilltree.item.gem.VoidGemstoneItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

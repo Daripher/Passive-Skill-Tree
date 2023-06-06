@@ -1,4 +1,4 @@
-package daripher.skilltree.item;
+package daripher.skilltree.item.gem;
 
 import java.awt.Color;
 

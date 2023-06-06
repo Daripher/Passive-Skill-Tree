@@ -1,4 +1,4 @@
-package daripher.skilltree.item;
+package daripher.skilltree.item.gem;
 
 import java.util.List;
 
@@ -97,7 +97,7 @@ public abstract class GemstoneItem extends Item {
 		itemStack.getTag().put(GEMSTONES_TAG, gemstonesTagList);
 	}
 
-	protected abstract Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack);
+	protected abstract @Nullable Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack);
 
 	protected static ListTag getGemstonesTagList(ItemStack itemStack) {
 		return itemStack.getOrCreateTag().getList(GEMSTONES_TAG, new CompoundTag().getId());

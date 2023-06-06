@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeTags;
-import daripher.skilltree.item.GemstoneItem;
+import daripher.skilltree.item.gem.GemstoneItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
