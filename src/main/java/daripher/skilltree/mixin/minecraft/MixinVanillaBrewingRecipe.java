@@ -9,7 +9,7 @@ import daripher.skilltree.util.PotionHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.brewing.VanillaBrewingRecipe;
 
-@Mixin(VanillaBrewingRecipe.class)
+@Mixin(value = VanillaBrewingRecipe.class, remap = false)
 public class MixinVanillaBrewingRecipe {
 	@Inject(method = "isInput", at = @At("HEAD"), cancellable = true)
 	private void isInput(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
