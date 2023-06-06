@@ -250,6 +250,7 @@
   "skill.skilltree.miner_speed_notable_1.name": "Endurance",
   "skill.skilltree.void.description": "Grants Nothing",
   "skill.skilltree.void.name": "Void",
+  "skilltree.message.point_command": "Skill points gained.",
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
   "skilltree.message.reset_command": "Your skill tree has been reset.",
   "weapon.poisoned": "Poisoned:",
