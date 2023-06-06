@@ -20,7 +20,11 @@ public class SuperiorPotionRecipe implements IBrewingRecipe {
 
 	@Override
 	public boolean isInput(ItemStack input) {
-		return PotionHelper.isSuperiorPotion(input) && BrewingRecipeRegistry.isValidInput(PotionHelper.getActualPotionStack(input));
+		if (!PotionHelper.isSuperiorPotion(input)) {
+			return false;
+		}
+		var actualPotionStack = PotionHelper.getActualPotionStack(input);
+		return BrewingRecipeRegistry.isValidInput(actualPotionStack);
 	}
 
 	@Override
@@ -31,23 +35,15 @@ public class SuperiorPotionRecipe implements IBrewingRecipe {
 	@Override
 	public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 		var actualPotionStack = PotionHelper.getActualPotionStack(input);
-
-		if (!BrewingRecipeRegistry.isValidInput(actualPotionStack)) {
-			return ItemStack.EMPTY;
-		}
-
 		for (IBrewingRecipe recipe : BrewingRecipeRegistry.getRecipes()) {
 			if (recipe instanceof SuperiorPotionRecipe) {
 				continue;
 			}
-
 			ItemStack output = recipe.getOutput(actualPotionStack, ingredient);
-
 			if (!output.isEmpty()) {
 				return output;
 			}
 		}
-
 		return ItemStack.EMPTY;
 	}
 }

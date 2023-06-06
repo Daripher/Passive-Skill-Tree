@@ -18,6 +18,7 @@ import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mixin(PotionItem.class)
 public class MixinPotionItem extends Item {
@@ -28,36 +29,59 @@ public class MixinPotionItem extends Item {
 	@Override
 	public Component getName(ItemStack itemStack) {
 		if (PotionHelper.isPotionMix(itemStack)) {
-			var mixtureId = getMixtureId(itemStack);
-			var translatedName = Component.translatable(mixtureId);
-			if (translatedName.getString().equals(mixtureId)) {
-				return Component.translatable(getDescriptionId() + ".mixture");
-			}
-			return translatedName;
+			return getMixtureName(itemStack);
 		}
 		if (PotionHelper.isSuperiorPotion(itemStack)) {
-			var actualPotionStack = PotionHelper.getActualPotionStack(itemStack);
-			var actualPotionName = super.getName(actualPotionStack);
-			return Component.translatable("potion.superior").append(actualPotionName);
+			return getSuperiorPotionName(itemStack);
 		}
 		return super.getName(itemStack);
 	}
 
+	protected Component getMixtureName(ItemStack itemStack) {
+		var mixtureId = getMixtureId(itemStack);
+		var translatedName = Component.translatable(mixtureId);
+		if (translatedName.getString().equals(mixtureId)) {
+			var baseMixtureName = Component.translatable(getDescriptionId() + ".mixture");
+			return baseMixtureName;
+		}
+		return translatedName;
+	}
+
+	protected Component getSuperiorPotionName(ItemStack itemStack) {
+		var actualPotionStack = PotionHelper.getActualPotionStack(itemStack);
+		var actualPotionName = super.getName(actualPotionStack);
+		return Component.translatable("potion.superior").append(actualPotionName);
+	}
+
 	@Inject(method = "appendHoverText", at = @At("TAIL"))
-	public void appendMixtureId(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag, CallbackInfo callbackInfo) {
-		if (!PotionHelper.isPotionMix(itemStack)) {
-			return;
+	public void appendAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag, CallbackInfo callbackInfo) {
+		if (tooltipFlag == TooltipFlag.Default.ADVANCED) {
+			appendAdvancedTooltip(itemStack, level, components);
 		}
-		if (tooltipFlag != TooltipFlag.Default.ADVANCED) {
-			return;
+	}
+
+	private void appendAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components) {
+		if (PotionHelper.isSuperiorPotion(itemStack)) {
+			var actualPotion = PotionHelper.getActualPotion(itemStack);
+			var actualPotionId = ForgeRegistries.POTIONS.getKey(actualPotion).toString();
+			var actualPotionTooltip = Component.literal(actualPotionId).withStyle(ChatFormatting.DARK_GRAY);
+			components.add(actualPotionTooltip);
 		}
-		components.add(Component.literal(getMixtureId(itemStack)).withStyle(ChatFormatting.DARK_GRAY));
+		if (PotionHelper.isPotionMix(itemStack)) {
+			var mixtureId = getMixtureId(itemStack);
+			var mixtureIdTooltip = Component.literal(mixtureId).withStyle(ChatFormatting.DARK_GRAY);
+			components.add(mixtureIdTooltip);
+		}
 	}
 
 	protected String getMixtureId(ItemStack itemStack) {
 		var effects = PotionUtils.getMobEffects(itemStack);
 		var name = new StringBuilder(getDescriptionId() + ".mixture");
-		effects.stream().map(MobEffectInstance::getEffect).map(MobEffect::getDescriptionId).map(id -> id.replaceAll("effect.", "")).forEach(id -> name.append("." + id));
+		effects.stream()
+			.map(MobEffectInstance::getEffect)
+			.map(MobEffect::getDescriptionId)
+			.map(id -> id.replaceAll("effect.", ""))
+			.forEach(id -> name.append("." + id));
 		var mixtureId = name.toString();
 		return mixtureId;
 	}

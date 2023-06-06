@@ -8,7 +8,6 @@ import java.util.Random;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -64,7 +63,7 @@ public class PotionHelper {
 			return itemStack;
 		}
 		var actualPotion = getActualPotion(itemStack);
-		var actualPotionStack = new ItemStack(Items.POTION);
+		var actualPotionStack = new ItemStack(itemStack.getItem());
 		PotionUtils.setPotion(actualPotionStack, actualPotion);
 		return actualPotionStack;
 	}
