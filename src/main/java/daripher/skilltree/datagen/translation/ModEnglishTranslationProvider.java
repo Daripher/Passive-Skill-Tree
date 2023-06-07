@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
+
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
@@ -131,6 +133,19 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Ninja", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
 		// gems info
 		add("gemstone.empty", "<Empty Gemstone Slot>");
+		add("gemstone.slot.helmet", "Helmets: ");
+		add("gemstone.slot.chestplate", "Chestplates: ");
+		add("gemstone.slot.boots", "Boots: ");
+		add("gemstone.slot.other_armor", "Other Armor: ");
+		add("gemstone.slot.weapon", "Weapons: ");
+		add("gemstone.slot.shield", "Shields: ");
+		add("gemstone.slot.bow", "Bows: ");
+		add("gemstone.slot.melee_weapon", "Melee Weapons: ");
+		addGemSlots(SkillTreeItems.SOOTHING_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.STURDY_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.LIGHT_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.VOID_GEMSTONE.get(), "Consumes gems from item");
+		addGemSlots(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Outcome unpredictable");
 		// food info
 		add("food.bonus.damage", "+%d%% Damage");
 		add("food.bonus.crit_damage", "+%d%% Crit Damage");
@@ -139,15 +154,10 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("weapon.poisoned", "Poisoned:");
 		// items
 		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Soothing Gemstone");
-		addTooltip(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Warm to the touch");
 		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Sturdy Gemstone");
-		addTooltip(SkillTreeItems.STURDY_GEMSTONE.get(), "Unbreakable");
 		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Light Gemstone");
-		addTooltip(SkillTreeItems.LIGHT_GEMSTONE.get(), "Almost weightless");
 		add(SkillTreeItems.VOID_GEMSTONE.get(), "Void Gemstone");
-		addTooltip(SkillTreeItems.VOID_GEMSTONE.get(), "Seems empty inside");
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gemstone");
-		addTooltip(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Its magic is inconsistent");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
@@ -260,6 +270,15 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
 		add("widget.skill_point_progress_bar.buy", "Click here to gain a Skill Point for %s Experience");
+	}
+
+	private void addGemSlots(@NotNull Item item) {
+		add(item.getDescriptionId() + ".slots", "Fits in:/n• Armor, Weapons, Shields");
+	}
+
+	private void addGemSlots(@NotNull Item item, String bonuses) {
+		addGemSlots(item);
+		add(item.getDescriptionId() + ".bonus", bonuses);
 	}
 
 	private void addTooltip(Item item, String tooltip) {

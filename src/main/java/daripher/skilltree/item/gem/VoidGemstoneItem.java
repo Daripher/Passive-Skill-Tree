@@ -1,7 +1,11 @@
 package daripher.skilltree.item.gem;
 
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Triple;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
@@ -25,5 +29,10 @@ public class VoidGemstoneItem extends GemstoneItem {
 	@Override
 	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
 		return null;
+	}
+
+	@Override
+	protected void appenBonusesTooltip(List<Component> components) {
+		components.add(Component.translatable(getDescriptionId() + ".bonus").withStyle(ChatFormatting.GOLD));
 	}
 }

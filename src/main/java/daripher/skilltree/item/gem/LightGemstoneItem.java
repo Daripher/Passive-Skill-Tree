@@ -1,8 +1,13 @@
 package daripher.skilltree.item.gem;
 
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Triple;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.util.TooltipHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -45,5 +50,14 @@ public class LightGemstoneItem extends SimpleGemstoneItem {
 	@Override
 	public Triple<Attribute, Double, Operation> getBowBonus() {
 		return Triple.of(Attributes.ATTACK_SPEED, 0.025D, Operation.MULTIPLY_BASE);
+	}
+
+	@Override
+	protected void appenBonusesTooltip(List<Component> components) {
+		components.add(Component.translatable("gemstone.slot.chestplate").withStyle(ChatFormatting.GOLD).append(TooltipHelper.getAttributeBonusTooltip(getChestplateBonus())));
+		components.add(Component.translatable("gemstone.slot.boots").withStyle(ChatFormatting.GOLD).append(TooltipHelper.getAttributeBonusTooltip(getBootsBonus())));
+		components.add(Component.translatable("gemstone.slot.other_armor").withStyle(ChatFormatting.GOLD).append(TooltipHelper.getAttributeBonusTooltip(getHelmetBonus())));
+		components.add(Component.translatable("gemstone.slot.weapon").withStyle(ChatFormatting.GOLD).append(TooltipHelper.getAttributeBonusTooltip(getWeaponBonus())));
+		components.add(Component.translatable("gemstone.slot.shield").withStyle(ChatFormatting.GOLD).append(TooltipHelper.getAttributeBonusTooltip(getShieldBonus())));
 	}
 }

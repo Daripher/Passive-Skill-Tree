@@ -1,5 +1,6 @@
 package daripher.skilltree.item.gem;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -12,7 +13,6 @@ import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.util.ItemHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -61,8 +61,16 @@ public abstract class GemstoneItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-		var tooltip = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC);
-		components.add(tooltip);
+		var slotDescriptionLines = Component.translatable(getDescriptionId() + ".slots").getString().split("/n");
+		Arrays.asList(slotDescriptionLines).stream()
+			.map(Component::literal)
+			.map(this::applySlotDescriptionStyle)
+			.forEach(components::add);
+		appenBonusesTooltip(components);
+	}
+	
+	private MutableComponent applySlotDescriptionStyle(MutableComponent component) {
+		return component.withStyle(Style.EMPTY.withColor(0x0AFF0A));
 	}
 
 	public boolean canInsertInto(Player currentPlayer, ItemStack baseItem, int gemstoneSlot) {
@@ -98,6 +106,8 @@ public abstract class GemstoneItem extends Item {
 	}
 
 	protected abstract @Nullable Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack);
+
+	protected abstract void appenBonusesTooltip(List<Component> components);
 
 	protected static ListTag getGemstonesTagList(ItemStack itemStack) {
 		return itemStack.getOrCreateTag().getList(GEMSTONES_TAG, new CompoundTag().getId());

@@ -1,11 +1,12 @@
 package daripher.skilltree.item.gem;
 
 import java.awt.Color;
+import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 
 import daripher.skilltree.api.SkillTreePlayer;
-import daripher.skilltree.init.SkillTreeItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -14,10 +15,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class RainbowGemstoneItem extends GemstoneItem {
 	public RainbowGemstoneItem() {
@@ -26,31 +27,31 @@ public class RainbowGemstoneItem extends GemstoneItem {
 
 	@Override
 	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
-		var simpleGemstones = new Item[] { SkillTreeItems.LIGHT_GEMSTONE.get(), SkillTreeItems.STURDY_GEMSTONE.get(), SkillTreeItems.SOOTHING_GEMSTONE.get() };
+		var random = createInsertionRandomSource(player, itemStack);
+		var randomGemstone = getRandomSimpleGemstone(random);
+		var randomBonus = random.nextInt(7);
+		return getRandomGemstoneBonus(randomGemstone, randomBonus);
+	}
+
+	protected Triple<Attribute, Double, Operation> getRandomGemstoneBonus(SimpleGemstoneItem gemstone, int randomBonus) {
+		return switch (randomBonus) {
+			case 0: yield gemstone.getHelmetBonus();
+			case 1: yield gemstone.getChestplateBonus();
+			case 2: yield gemstone.getLeggingsBonus();
+			case 3: yield gemstone.getBootsBonus();
+			case 4: yield gemstone.getWeaponBonus();
+			case 5: yield gemstone.getShieldBonus();
+			case 6: yield gemstone.getBowBonus();
+			default: yield null;
+		};
+	}
+
+	protected RandomSource createInsertionRandomSource(Player player, ItemStack itemStack) {
 		var random = RandomSource.create();
 		var randomSeed = ((SkillTreePlayer) player).getRainbowGemstoneRandomSeed();
 		var itemSlot = Player.getEquipmentSlotForItem(itemStack).ordinal();
 		random.setSeed(randomSeed + itemSlot);
-		var randomGemstone = (SimpleGemstoneItem) simpleGemstones[random.nextInt(simpleGemstones.length)];
-		var randomBonus = random.nextInt(7);
-		switch (randomBonus) {
-			case 0:
-				return randomGemstone.getHelmetBonus();
-			case 1:
-				return randomGemstone.getChestplateBonus();
-			case 2:
-				return randomGemstone.getLeggingsBonus();
-			case 3:
-				return randomGemstone.getBootsBonus();
-			case 4:
-				return randomGemstone.getWeaponBonus();
-			case 5:
-				return randomGemstone.getShieldBonus();
-			case 6:
-				return randomGemstone.getBowBonus();
-			default:
-				return null;
-		}
+		return random;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -73,5 +74,16 @@ public class RainbowGemstoneItem extends GemstoneItem {
 			hue += 0.05F;
 		}
 		return styledComponent;
+	}
+
+	protected SimpleGemstoneItem getRandomSimpleGemstone(RandomSource random) {
+		var simpleGemstones = ForgeRegistries.ITEMS.getValues().stream().filter(SimpleGemstoneItem.class::isInstance).map(SimpleGemstoneItem.class::cast);
+		var randomGemstone = simpleGemstones.skip(simpleGemstones.count()).findFirst().orElseThrow(NullPointerException::new);
+		return randomGemstone;
+	}
+
+	@Override
+	protected void appenBonusesTooltip(List<Component> components) {
+		components.add(Component.translatable(getDescriptionId() + ".bonus").withStyle(ChatFormatting.GOLD));
 	}
 }

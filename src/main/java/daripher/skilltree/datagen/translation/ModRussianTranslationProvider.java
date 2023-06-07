@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
+
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
@@ -131,6 +133,19 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		addMixture("ниндзя", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
 		// gems info
 		add("gemstone.empty", "<Слот для самоцвета>");
+		add("gemstone.slot.helmet", "Шлемы: ");
+		add("gemstone.slot.chestplate", "Нагрудники: ");
+		add("gemstone.slot.boots", "Ботинки: ");
+		add("gemstone.slot.other_armor", "Другая броня: ");
+		add("gemstone.slot.weapon", "Оружие: ");
+		add("gemstone.slot.shield", "Щиты: ");
+		add("gemstone.slot.bow", "Луки: ");
+		add("gemstone.slot.melee_weapon", "Оружие ближнего боя: ");
+		addGemSlots(SkillTreeItems.SOOTHING_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.STURDY_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.LIGHT_GEMSTONE.get());
+		addGemSlots(SkillTreeItems.VOID_GEMSTONE.get(), "Поглощает самоцветы в предмете");
+		addGemSlots(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Результат непредсказуем");
 		// food info
 		add("food.bonus.damage", "+%d%% Урон");
 		add("food.bonus.crit_damage", "+%d%% Критический урон");
@@ -139,15 +154,10 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("weapon.poisoned", "Отравлено:");
 		// items
 		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Успокаивающий самоцвет");
-		addTooltip(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Тёплый на ощупь");
 		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Крепкий самоцвет");
-		addTooltip(SkillTreeItems.STURDY_GEMSTONE.get(), "Неразрушимый");
 		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Лёгкий самоцвет");
-		addTooltip(SkillTreeItems.LIGHT_GEMSTONE.get(), "Почти невесомый");
 		add(SkillTreeItems.VOID_GEMSTONE.get(), "Пустотный самоцвет");
-		addTooltip(SkillTreeItems.VOID_GEMSTONE.get(), "Кажется пустым");
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Радужный самоцвет");
-		addTooltip(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Его магия непостоянна");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Свиток мудрости");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION.get(), "Регенерация здоровья");
@@ -260,6 +270,15 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("widget.skill_point_progress_bar.text", "Получайте опыт что бы открывать умения");
 		add("widget.skill_point_progress_bar.points", "Очков умений осталось: %s");
 		add("widget.skill_point_progress_bar.buy", "Нажмите здесь что бы получить очко умений за %s опыта");
+	}
+
+	private void addGemSlots(@NotNull Item item) {
+		add(item.getDescriptionId() + ".slots", "Вставляется в:/n• Броню, Оружие, Щиты");
+	}
+
+	private void addGemSlots(@NotNull Item item, String bonuses) {
+		addGemSlots(item);
+		add(item.getDescriptionId() + ".bonus", bonuses);
 	}
 
 	private void addTooltip(Item item, String tooltip) {
