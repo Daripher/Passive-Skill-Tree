@@ -81,6 +81,7 @@
   "item.skilltree.void_gemstone.bonus": "Поглощает самоцветы в предмете",
   "item.skilltree.void_gemstone.slots": "Вставляется в:/n• Броню, Оружие, Щиты",
   "item.skilltree.wisdom_scroll": "Свиток мудрости",
+  "item.skilltree.wisdom_scroll.tooltip": "Дарует одно очко пассивных умений",
   "player.armor_per_evasion_bonus": "Броня за шанс уклонения",
   "player.armor_per_gemstone_in_chestplate_bonus": "Броня за каждый самоцвет в нагруднике",
   "player.armor_per_gemstone_in_helmet": "Броня за каждый самоцвет в шлеме",

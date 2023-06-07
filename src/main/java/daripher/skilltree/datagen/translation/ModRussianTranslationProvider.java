@@ -159,6 +159,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeItems.VOID_GEMSTONE.get(), "Пустотный самоцвет");
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Радужный самоцвет");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Свиток мудрости");
+		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION.get(), "Регенерация здоровья");
 		add(SkillTreeAttributes.LIFE_PER_HIT.get(), "Здоровье за удар");

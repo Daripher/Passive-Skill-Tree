@@ -81,6 +81,7 @@
   "item.skilltree.void_gemstone.bonus": "Consumes gems from item",
   "item.skilltree.void_gemstone.slots": "Fits in:/n• Armor, Weapons, Shields",
   "item.skilltree.wisdom_scroll": "Wisdom Scroll",
+  "item.skilltree.wisdom_scroll.tooltip": "Grants one Skill Point",
   "player.armor_per_evasion_bonus": "Armor per Evasion Chance",
   "player.armor_per_gemstone_in_chestplate_bonus": "Armor per Gemstone in Chestplate",
   "player.armor_per_gemstone_in_helmet": "Armor per Gemstone in Helmet",

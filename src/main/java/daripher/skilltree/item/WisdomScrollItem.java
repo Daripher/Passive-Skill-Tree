@@ -1,5 +1,7 @@
 package daripher.skilltree.item;
 
+import java.util.List;
+
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
@@ -14,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 
@@ -44,5 +47,10 @@ public class WisdomScrollItem extends Item {
 			}
 		}
 		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+		components.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
 	}
 }
