@@ -161,9 +161,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeItems.VOID_GEMSTONE.get(), "Void Gemstone");
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gemstone");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
-		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Grants one Skill Point");
+		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
 		add(SkillTreeItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
-		addTooltip(SkillTreeItems.AMNESIA_SCROLL.get(), "Resets your Passive Skill Tree");
+		addTooltip(SkillTreeItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
 		add(SkillTreeAttributes.LIFE_PER_HIT.get(), "Life per Hit");
@@ -270,7 +270,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		// system messages
 		add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
 		add("skilltree.message.reset_command", "Your skill tree has been reset.");
-		add("skilltree.message.point_command", "Skill points gained.");
+		add("skilltree.message.point_command", "Skill point gained.");
 		// screen info
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
