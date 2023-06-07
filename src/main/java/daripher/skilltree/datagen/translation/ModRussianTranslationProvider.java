@@ -131,6 +131,8 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		addMixture("замедленного времени", MobEffects.SLOW_FALLING, MobEffects.MOVEMENT_SLOWDOWN);
 		addMixture("солдата", MobEffects.HEAL, MobEffects.DAMAGE_BOOST);
 		addMixture("ниндзя", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
+		addMixture("благословения", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
+		addMixture("чумы", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
 		add("gemstone.empty", "<Слот для самоцвета>");
 		add("gemstone.slot.helmet", "Шлемы: ");

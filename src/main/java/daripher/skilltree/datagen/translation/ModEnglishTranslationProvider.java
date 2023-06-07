@@ -131,6 +131,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Slow Motion", MobEffects.SLOW_FALLING, MobEffects.MOVEMENT_SLOWDOWN);
 		addMixture("Soldier", MobEffects.HEAL, MobEffects.DAMAGE_BOOST);
 		addMixture("Ninja", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
+		addMixture("Blessing", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
+		addMixture("Plague", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
 		add("gemstone.empty", "<Empty Gemstone Slot>");
 		add("gemstone.slot.helmet", "Helmets: ");
