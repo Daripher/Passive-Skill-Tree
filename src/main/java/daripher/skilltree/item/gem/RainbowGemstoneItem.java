@@ -77,9 +77,15 @@ public class RainbowGemstoneItem extends GemstoneItem {
 	}
 
 	protected SimpleGemstoneItem getRandomSimpleGemstone(RandomSource random) {
-		var simpleGemstones = ForgeRegistries.ITEMS.getValues().stream().filter(SimpleGemstoneItem.class::isInstance).map(SimpleGemstoneItem.class::cast);
-		var randomGemstone = simpleGemstones.skip(simpleGemstones.count()).findFirst().orElseThrow(NullPointerException::new);
+		var simpleGemstones = getAllSimpleGemstones();
+		var randomIndex = random.nextInt(simpleGemstones.size());
+		var randomGemstone = simpleGemstones.get(randomIndex);
 		return randomGemstone;
+	}
+
+	protected List<SimpleGemstoneItem> getAllSimpleGemstones() {
+		var items = ForgeRegistries.ITEMS.getValues();
+		return items.stream().filter(SimpleGemstoneItem.class::isInstance).map(SimpleGemstoneItem.class::cast).toList();
 	}
 
 	@Override
