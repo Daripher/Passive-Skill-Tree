@@ -43,7 +43,7 @@ public class WisdomScrollItem extends Item {
 			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
 			var shouldShowChatMessages = Config.COMMON_CONFIG.shouldShowChatMessages();
 			if (shouldShowChatMessages) {
-				player.sendSystemMessage(Component.translatable("skilltree.message.skillpoint").withStyle(ChatFormatting.YELLOW));
+				player.sendSystemMessage(Component.translatable("skilltree.message.point_command").withStyle(ChatFormatting.YELLOW));
 			}
 		}
 		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide);
