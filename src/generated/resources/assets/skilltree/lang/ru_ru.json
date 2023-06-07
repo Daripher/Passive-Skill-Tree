@@ -68,6 +68,8 @@
   "item.minecraft.splash_potion.mixture.minecraft.slow_falling.minecraft.slowness": "Взрывная микстура замедленного времени",
   "item.minecraft.splash_potion.mixture.minecraft.slowness.minecraft.weakness": "Взрывная микстура старения",
   "item.minecraft.splash_potion.mixture.minecraft.strength.minecraft.speed": "Взрывная микстура ниндзя",
+  "item.skilltree.amnesia_scroll": "Свиток амнезии",
+  "item.skilltree.amnesia_scroll.tooltip": "Сбрасывает ваше древо пассивных умений",
   "item.skilltree.light_gemstone": "Лёгкий самоцвет",
   "item.skilltree.light_gemstone.slots": "Вставляется в:/n• Броню, Оружие, Щиты",
   "item.skilltree.rainbow_gemstone": "Радужный самоцвет",

@@ -160,6 +160,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gemstone");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
 		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Grants one Skill Point");
+		add(SkillTreeItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
+		addTooltip(SkillTreeItems.AMNESIA_SCROLL.get(), "Resets your Passive Skill Tree");
 		// attributes
 		add(SkillTreeAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
 		add(SkillTreeAttributes.LIFE_PER_HIT.get(), "Life per Hit");

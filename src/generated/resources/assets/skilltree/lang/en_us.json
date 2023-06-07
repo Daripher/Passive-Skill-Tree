@@ -68,6 +68,8 @@
   "item.minecraft.splash_potion.mixture.minecraft.slow_falling.minecraft.slowness": "Splash Mixture of Slow Motion",
   "item.minecraft.splash_potion.mixture.minecraft.slowness.minecraft.weakness": "Splash Mixture of Aging",
   "item.minecraft.splash_potion.mixture.minecraft.strength.minecraft.speed": "Splash Mixture of Ninja",
+  "item.skilltree.amnesia_scroll": "Amnesia Scroll",
+  "item.skilltree.amnesia_scroll.tooltip": "Resets your Passive Skill Tree",
   "item.skilltree.light_gemstone": "Light Gemstone",
   "item.skilltree.light_gemstone.slots": "Fits in:/n• Armor, Weapons, Shields",
   "item.skilltree.rainbow_gemstone": "Rainbow Gemstone",
