@@ -129,6 +129,7 @@ dependencies {
 	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
 	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
 	implementation fg.deobf("curse.maven:bookshelf-228525:4556697")
+	implementation fg.deobf("curse.maven:jei-238222:4494410")
 }
 
 jar {
