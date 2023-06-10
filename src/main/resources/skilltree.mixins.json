@@ -20,7 +20,8 @@
   	"easyvillagers/MixinConverterTileentity",
   	"farmersdelight/MixinCookingPotBlockEntity",
   	"farmersdelight/MixinStoveBlock",
-  	"farmersdelight/MixinStoveBlockEntity"
+  	"farmersdelight/MixinStoveBlockEntity",
+  	"apotheosis/MixinApothEnchantContainer"
   ],
   "client" : [ ],
   "injectors" : {

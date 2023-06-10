@@ -38,8 +38,8 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 		player = inventory.player;
 	}
 
-	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
-			at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
+	@Redirect(method = { "lambda$slotsChanged$0",
+			"m_39483_" }, at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
 		var levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		costsBeforeReduction[slot] = levelRequirement;
@@ -47,8 +47,7 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 		return reducedRequirement;
 	}
 
-	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" },
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsVisually(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		var random = RandomSource.create(enchantmentSeed.get());
@@ -56,8 +55,7 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 		return enchantments;
 	}
 
-	@Redirect(method = { "lambda$clickMenuButton$1", "m_39475_" },
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = { "lambda$clickMenuButton$1", "m_39475_" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		var random = RandomSource.create(enchantmentSeed.get());
@@ -69,19 +67,24 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int slot, int cost) {
 		return null;
 	}
-	
+
 	@Override
 	public Optional<Player> getPlayer() {
 		return Optional.ofNullable(player);
 	}
-	
+
 	@Override
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-	
+
 	@Override
 	public int[] getCostsBeforeReduction() {
 		return costsBeforeReduction;
+	}
+
+	@Override
+	public int getEnchantmentSeed() {
+		return enchantmentSeed.get();
 	}
 }
