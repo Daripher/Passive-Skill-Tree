@@ -63,7 +63,9 @@ public class EnchantmentHelper {
 	}
 
 	private static double getLevelRequirementReduction(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get()) - 1;
+		var reduction = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get()) - 1;
+		var roundReduction = Math.round(reduction * 100D) / 100D;
+		return roundReduction;
 	}
 	
 	private static double getWeaponEnchantmentAmplificationChance(Player player) {
