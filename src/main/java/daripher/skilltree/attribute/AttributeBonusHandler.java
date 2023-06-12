@@ -893,7 +893,8 @@ public class AttributeBonusHandler {
 			return;
 		}
 		var player = (Player) event.getEntity();
-		if (!ItemHelper.isShield(player.getOffhandItem())) {
+		var offhandItem = player.getOffhandItem();
+		if (!ItemHelper.isShield(offhandItem)) {
 			return;
 		}
 		var blockChance = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE.get()) - 1;
@@ -907,12 +908,7 @@ public class AttributeBonusHandler {
 		event.setCanceled(true);
 		player.level.broadcastEntityEvent(player, (byte) 29);
 		if (shieldBlockEvent.shieldTakesDamage()) {
-			var hurtCurrentlyUsedShieldMethod = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_7909_", float.class);
-			try {
-				hurtCurrentlyUsedShieldMethod.invoke(player, event.getAmount());
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
+			PlayerHelper.hurtShield(player, offhandItem, event.getAmount());
 		}
 		if (event.getSource().isProjectile()) {
 			return;

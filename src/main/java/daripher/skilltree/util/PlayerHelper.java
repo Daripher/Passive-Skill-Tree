@@ -1,6 +1,10 @@
 package daripher.skilltree.util;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -9,6 +13,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class PlayerHelper {
 	public static float getDamageMultiplier(Player player, LivingEntity target) {
@@ -212,5 +218,24 @@ public class PlayerHelper {
 			gemPower += gemPowerInWeapon;
 		}
 		return (float) gemPower;
+	}
+
+	public static void hurtShield(Player player, final ItemStack shield, float amount) {
+		if (shield.canPerformAction(ToolActions.SHIELD_BLOCK)) {
+			if (!player.level.isClientSide) {
+				player.awardStat(Stats.ITEM_USED.get(shield.getItem()));
+			}
+			if (amount >= 3.0F) {
+				int i = 1 + Mth.floor(amount);
+				shield.hurtAndBreak(i, player, (player_) -> {
+					player_.broadcastBreakEvent(InteractionHand.OFF_HAND);
+					ForgeEventFactory.onPlayerDestroyItem(player, shield, InteractionHand.OFF_HAND);
+				});
+				if (shield.isEmpty()) {
+					player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+					player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level.random.nextFloat() * 0.4F);
+				}
+			}
+		}
 	}
 }
