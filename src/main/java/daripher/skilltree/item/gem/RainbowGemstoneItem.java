@@ -20,13 +20,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class RainbowGemstoneItem extends GemstoneItem {
+public class RainbowGemstoneItem extends GemItem {
 	public RainbowGemstoneItem() {
 		super(0);
 	}
 
 	@Override
-	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
+	public Triple<Attribute, Double, Operation> getGemBonus(Player player, ItemStack itemStack) {
 		var random = createInsertionRandomSource(player, itemStack);
 		var randomGemstone = getRandomSimpleGemstone(random);
 		var randomBonus = random.nextInt(7);

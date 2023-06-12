@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.maximum_gemstone_slots_bonus",
+      "attribute": "skilltree:player.maximum_sockets",
       "operation": "addition"
     }
   ],

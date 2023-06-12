@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
 
 public class PlayerHelper {
 	public static float getDamageMultiplier(Player player, LivingEntity target) {
@@ -197,5 +198,19 @@ public class PlayerHelper {
 
 	public static boolean canEvadeDamage(DamageSource source) {
 		return source instanceof EntityDamageSource entityDamageSource && entityDamageSource.getDirectEntity() instanceof LivingEntity;
+	}
+
+	public static float getGemPower(Player player, ItemStack itemStack) {
+		var gemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER.get());
+		var craftingArmor = ItemHelper.isArmor(itemStack) || ItemHelper.isShield(itemStack);
+		var craftingWeapon = ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack);
+		if (craftingArmor) {
+			var gemPowerInArmor = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
+			gemPower += gemPowerInArmor;
+		} else if (craftingWeapon) {
+			var gemPowerInWeapon = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get()) - 1;
+			gemPower += gemPowerInWeapon;
+		}
+		return (float) gemPower;
 	}
 }

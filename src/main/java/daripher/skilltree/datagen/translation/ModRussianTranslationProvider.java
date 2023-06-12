@@ -134,7 +134,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		addMixture("благословения", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
 		addMixture("чумы", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
-		add("gemstone.empty", "<Слот для самоцвета>");
+		add("gemstone.empty", "<Пустое гнездо>");
 		add("gemstone.slot.helmet", "Шлемы: ");
 		add("gemstone.slot.chestplate", "Нагрудники: ");
 		add("gemstone.slot.boots", "Ботинки: ");
@@ -177,8 +177,8 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get(), "Шанс удвоенной добычи");
 		add(SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get(), "Шанс утроенной добычи");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_EVASION.get(), "Уклонение создаваемой брони");
-		add(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Максимум слотов для самоцветов создаваемых луков");
-		add(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Максимум слотов для самоцветов создаваемых шлемов");
+		add(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Гнёзд создаваемых луков");
+		add(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Гнёзд создаваемых шлемов");
 		add(SkillTreeAttributes.CRAFTED_BOWS_ATTACK_SPEED.get(), "Скорость атаки создаваемых луков");
 		add(SkillTreeAttributes.EVASION_CHANCE_WHEN_WOUNDED.get(), "Уклонение когда ранен");
 		add(SkillTreeAttributes.ARMOR_PER_EVASION.get(), "Броня за шанс уклонения");
@@ -206,11 +206,11 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.PICKAXE_DAMAGE.get(), "Урон с киркой");
 		add(SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), "Урон с киркой");
 		add(SkillTreeAttributes.ATTACK_SPEED_WITH_PICKAXE.get(), "Скорость атаки с киркой");
-		add(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR.get(), "Сила самоцветов в броне");
-		add(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON.get(), "Сила самоцветов в оружии");
-		add(SkillTreeAttributes.MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS.get(), "Максимум слотов для самоцветов в оружии");
-		add(SkillTreeAttributes.MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS.get(), "Максимум слотов для самоцветов в нагрудниках");
-		add(SkillTreeAttributes.MAXIMUM_GEMSTONE_SLOTS_BONUS.get(), "Максимум слотов для самоцветов");
+		add(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get(), "Сила самоцветов в броне");
+		add(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get(), "Сила самоцветов в оружии");
+		add(SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get(), "Гнёзд в оружии");
+		add(SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get(), "Гнёзд в нагрудниках");
+		add(SkillTreeAttributes.MAXIMUM_SOCKETS.get(), "Гнёзд во всех предметах");
 		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get(), "Броня за каждый самоцвет в шлеме");
 		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), "Броня за каждый самоцвет в нагруднике");
 		add(SkillTreeAttributes.CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), "Шанс критического удара за каждый самоцвет в оружии");
@@ -218,7 +218,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), "Максимум здоровья за каждый самоцвет в шлеме");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), "Максимум здоровья за каждый самоцвет в броне");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), "Критический урон за каждый самоцвет в оружии");
-		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Шанс нахождения самоцветов");
+		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Шанс найти самоцвет в руде");
 		add(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), "Регенерация здоровья за каждый самоцвет в шлеме");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE.get(), "Защита создаваемой брони");
 		add(SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get(), "Броня создаваемых щитов");
@@ -275,6 +275,20 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("widget.skill_point_progress_bar.text", "Получайте опыт что бы открывать умения");
 		add("widget.skill_point_progress_bar.points", "Очков умений осталось: %s");
 		add("widget.skill_point_progress_bar.buy", "Нажмите здесь что бы получить очко умений за %s опыта");
+		// apotheosis compatibility
+		add("item.apotheosis.gem.skilltree:ruby", "Рубин");
+		add("item.apotheosis.gem.skilltree:onyx", "Оникс");
+		add("item.apotheosis.gem.skilltree:moonstone", "Лунный камень");
+		add("item.apotheosis.gem.skilltree:opal", "Опал");
+		add("item.apotheosis.gem.skilltree:adamite", "Адамит");
+		add("item.apotheosis.gem.skilltree:third_eye", "Третий Глаз");
+		add("item.apotheosis.gem.skilltree:citrine", "Цитрин");
+		add("gem_class.any_armor", "Любая броня");
+		add("gem_class.armor_or_shield", "Броня и щиты");
+		add("gem_class.any_weapon", "Любое оружие");
+		add("gem_class.other_armor", "Другая броня");
+		add("gem_class.other_weapon", "Другое оружие");
+		add("gem_class.pickaxe", "Кирки");
 	}
 
 	private void addGemSlots(@NotNull Item item) {

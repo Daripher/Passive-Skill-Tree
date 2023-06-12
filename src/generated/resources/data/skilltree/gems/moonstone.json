@@ -1,0 +1,126 @@
+{
+  "bonuses": [
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "skilltree:player.mining_speed",
+      "gem_class": {
+        "key": "pickaxe",
+        "types": [
+          "pickaxe"
+        ]
+      },
+      "operation": "multiply_base",
+      "values": {
+        "common": {
+          "min": 0.01,
+          "step": 0.02,
+          "steps": 5
+        },
+        "epic": {
+          "min": 0.07,
+          "step": 0.02,
+          "steps": 5
+        },
+        "mythic": {
+          "min": 0.089999996,
+          "step": 0.02,
+          "steps": 5
+        },
+        "rare": {
+          "min": 0.049999997,
+          "step": 0.02,
+          "steps": 5
+        },
+        "uncommon": {
+          "min": 0.03,
+          "step": 0.02,
+          "steps": 5
+        }
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "minecraft:generic.attack_speed",
+      "gem_class": {
+        "key": "other_weapon",
+        "types": [
+          "trident",
+          "heavy_weapon",
+          "shovel",
+          "sword",
+          "bow"
+        ]
+      },
+      "operation": "multiply_base",
+      "values": {
+        "common": {
+          "min": 0.005,
+          "step": 0.01,
+          "steps": 5
+        },
+        "epic": {
+          "min": 0.035,
+          "step": 0.01,
+          "steps": 5
+        },
+        "mythic": {
+          "min": 0.044999998,
+          "step": 0.01,
+          "steps": 5
+        },
+        "rare": {
+          "min": 0.024999999,
+          "step": 0.01,
+          "steps": 5
+        },
+        "uncommon": {
+          "min": 0.015,
+          "step": 0.01,
+          "steps": 5
+        }
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "gem_class": {
+        "key": "boots",
+        "types": [
+          "boots"
+        ]
+      },
+      "operation": "multiply_base",
+      "values": {
+        "common": {
+          "min": 0.01,
+          "step": 0.01,
+          "steps": 5
+        },
+        "epic": {
+          "min": 0.04,
+          "step": 0.01,
+          "steps": 5
+        },
+        "mythic": {
+          "min": 0.049999997,
+          "step": 0.01,
+          "steps": 5
+        },
+        "rare": {
+          "min": 0.03,
+          "step": 0.01,
+          "steps": 5
+        },
+        "uncommon": {
+          "min": 0.02,
+          "step": 0.01,
+          "steps": 5
+        }
+      }
+    }
+  ],
+  "dimensions": [
+    "skilltree:fake_dimension"
+  ],
+  "weight": 1
+}

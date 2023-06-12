@@ -9,13 +9,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public abstract class SimpleGemstoneItem extends GemstoneItem {
+public abstract class SimpleGemstoneItem extends GemItem {
 	public SimpleGemstoneItem(int gemstoneColor) {
 		super(gemstoneColor);
 	}
 
 	@Override
-	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
+	public Triple<Attribute, Double, Operation> getGemBonus(Player player, ItemStack itemStack) {
 		var itemSlot = ItemHelper.getSlotForItem(itemStack);
 		if (ItemHelper.isWeapon(itemStack) && itemSlot == EquipmentSlot.MAINHAND) {
 			return getWeaponBonus();

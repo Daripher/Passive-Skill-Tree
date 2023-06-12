@@ -72,12 +72,12 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> CHESTPLATE_ARMOR = rangedAttribute("player", "chestplate_armor", 1D, 1D, 10D);
 	// miner attributes
 	public static final RegistryObject<Attribute> MINING_SPEED = rangedAttribute("player", "mining_speed", 1D, 1D, 10D);
-	public static final RegistryObject<Attribute> MAXIMUM_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_gemstone_slots_bonus", 0D, 0D, 5D);
-	public static final RegistryObject<Attribute> MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_weapon_gemstone_slots_bonus", 0D, 0D, 5D);
-	public static final RegistryObject<Attribute> MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS = rangedAttribute("player", "maximum_chestplate_gemstone_slots_bonus", 0D, 0D, 5D);
-	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH = rangedAttribute("player", "gemstones_strength", 1D, 1D, 10D);
-	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH_IN_ARMOR = rangedAttribute("player", "gemstones_strength_in_armor", 1D, 1D, 10D);
-	public static final RegistryObject<Attribute> GEMSTONES_STRENGTH_IN_WEAPON = rangedAttribute("player", "gemstones_strength_in_weapon", 1D, 1D, 10D);
+	public static final RegistryObject<Attribute> MAXIMUM_SOCKETS = rangedAttribute("player", "maximum_sockets", 0D, 0D, 5D);
+	public static final RegistryObject<Attribute> MAXIMUM_WEAPON_SOCKETS = rangedAttribute("player", "maximum_weapon_sockets", 0D, 0D, 5D);
+	public static final RegistryObject<Attribute> MAXIMUM_CHESTPLATE_SOCKETS = rangedAttribute("player", "maximum_chestplate_sockets", 0D, 0D, 5D);
+	public static final RegistryObject<Attribute> GEM_POWER = rangedAttribute("player", "gemstones_strength", 1D, 1D, 10D);
+	public static final RegistryObject<Attribute> GEM_POWER_IN_ARMOR = rangedAttribute("player", "gemstones_strength_in_armor", 1D, 1D, 10D);
+	public static final RegistryObject<Attribute> GEM_POWER_IN_WEAPON = rangedAttribute("player", "gemstones_strength_in_weapon", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> PICKAXE_DAMAGE_BONUS = rangedAttribute("player", "pickaxe_damage_bonus", 0D, 0D, 50D);
 	public static final RegistryObject<Attribute> PICKAXE_DAMAGE = rangedAttribute("player", "pickaxe_damage", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> ATTACK_SPEED_WITH_PICKAXE = rangedAttribute("player", "attack_speed_with_pickaxe", 1D, 1D, 10D);

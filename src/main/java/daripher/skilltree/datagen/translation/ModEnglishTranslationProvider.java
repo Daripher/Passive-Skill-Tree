@@ -134,7 +134,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Blessing", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
 		addMixture("Plague", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
-		add("gemstone.empty", "<Empty Gemstone Slot>");
+		add("gemstone.empty", "<Empty Socket>");
+		add("gemstone.additional_socket", "• Has an additional socket.");
+		add("gemstone.disabled", "Disabled with Apotheosis installed");
 		add("gemstone.slot.helmet", "Helmets: ");
 		add("gemstone.slot.chestplate", "Chestplates: ");
 		add("gemstone.slot.boots", "Boots: ");
@@ -155,11 +157,11 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		// weapon info
 		add("weapon.poisoned", "Poisoned:");
 		// items
-		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Soothing Gemstone");
-		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Sturdy Gemstone");
-		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Light Gemstone");
-		add(SkillTreeItems.VOID_GEMSTONE.get(), "Void Gemstone");
-		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gemstone");
+		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Soothing Gem");
+		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Sturdy Gem");
+		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Light Gem");
+		add(SkillTreeItems.VOID_GEMSTONE.get(), "Void Gem");
+		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gem");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
 		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
 		add(SkillTreeItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
@@ -177,8 +179,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get(), "Double Loot Chance");
 		add(SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get(), "Triple Loot Chance");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_EVASION.get(), "Crafted Armor Evasion Chance");
-		add(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Crafted Bows maximum Gemstone Slots");
-		add(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Crafted Helmets maximum Gemstone Slots");
+		add(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Crafted Bows Sockets");
+		add(SkillTreeAttributes.CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), "Crafted Helmets Sockets");
 		add(SkillTreeAttributes.CRAFTED_BOWS_ATTACK_SPEED.get(), "Crafted Bows Attack Speed");
 		add(SkillTreeAttributes.EVASION_CHANCE_WHEN_WOUNDED.get(), "Evasion Chance when Wounded");
 		add(SkillTreeAttributes.ARMOR_PER_EVASION.get(), "Armor per Evasion Chance");
@@ -206,20 +208,20 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.PICKAXE_DAMAGE.get(), "Pickaxe Damage");
 		add(SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), "Pickaxe Damage");
 		add(SkillTreeAttributes.ATTACK_SPEED_WITH_PICKAXE.get(), "Attack Speed with Pickaxe");
-		add(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR.get(), "Gemstones Strength in Armor");
-		add(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON.get(), "Gemstones Strength in Weapon");
-		add(SkillTreeAttributes.MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS.get(), "Maximum Weapon Gemstone Slots");
-		add(SkillTreeAttributes.MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS.get(), "Maximum Chestplate Gemstone Slots");
-		add(SkillTreeAttributes.MAXIMUM_GEMSTONE_SLOTS_BONUS.get(), "Maximum Gemstone Slots");
-		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get(), "Armor per Gemstone in Helmet");
-		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), "Armor per Gemstone in Chestplate");
-		add(SkillTreeAttributes.CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), "Critical Hit Chance per Gemstone in Weapon");
+		add(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get(), "Gem Strength in Armor");
+		add(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get(), "Gem Strength in Weapon");
+		add(SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get(), "Weapon Gem Sockets");
+		add(SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get(), "Chestplate Gem Sockets");
+		add(SkillTreeAttributes.MAXIMUM_SOCKETS.get(), "Equipment Gem Sockets");
+		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get(), "Armor per Gem in Helmet");
+		add(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), "Armor per Gem in Chestplate");
+		add(SkillTreeAttributes.CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), "Critical Hit Chance per Gem in Weapon");
 		add(SkillTreeAttributes.MINING_SPEED.get(), "Mining Speed");
-		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), "Maximum Life per Gemstone in Helmet");
-		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), "Maximum Life per Gemstone in Armor");
-		add(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), "Critical Hit Damage per Gemstone in Weapon");
-		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Chance to find Gemstone");
-		add(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), "Life Regeneration per Gemstone in Helmet");
+		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), "Maximum Life per Gem in Helmet");
+		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), "Maximum Life per Gem in Armor");
+		add(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), "Critical Hit Damage per Gem in Weapon");
+		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Chance to find Gem in Ore");
+		add(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), "Life Regeneration per Gem in Helmet");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE.get(), "Crafted Armor Defence");
 		add(SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get(), "Crafted Shields Armor");
 		add(SkillTreeAttributes.LIFE_REGENERATION_WITH_SHIELD.get(), "Life Regeneration with Shield");
@@ -275,6 +277,20 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
 		add("widget.skill_point_progress_bar.buy", "Click here to gain a Skill Point for %s Experience");
+		// apotheosis compatibility
+		add("item.apotheosis.gem.skilltree:ruby", "Ruby");
+		add("item.apotheosis.gem.skilltree:onyx", "Onyx");
+		add("item.apotheosis.gem.skilltree:moonstone", "Moonstone");
+		add("item.apotheosis.gem.skilltree:opal", "Opal");
+		add("item.apotheosis.gem.skilltree:adamite", "Adamite");
+		add("item.apotheosis.gem.skilltree:third_eye", "Third Eye");
+		add("item.apotheosis.gem.skilltree:citrine", "Citrine");
+		add("gem_class.any_armor", "Any Armor");
+		add("gem_class.armor_or_shield", "Armor or Shields");
+		add("gem_class.any_weapon", "Any Weapon");
+		add("gem_class.other_armor", "Other Armor");
+		add("gem_class.other_weapon", "Other Weapon");
+		add("gem_class.pickaxe", "Pickaxes");
 	}
 
 	private void addGemSlots(@NotNull Item item) {

@@ -1,0 +1,89 @@
+{
+  "bonuses": [
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "skilltree:player.life_per_hit",
+      "gem_class": {
+        "key": "any_weapon",
+        "types": [
+          "heavy_weapon",
+          "trident",
+          "sword",
+          "shovel",
+          "bow",
+          "pickaxe"
+        ]
+      },
+      "operation": "addition",
+      "values": {
+        "common": {
+          "min": 0.1,
+          "step": 0.1,
+          "steps": 5
+        },
+        "epic": {
+          "min": 0.4,
+          "step": 0.1,
+          "steps": 5
+        },
+        "mythic": {
+          "min": 0.5,
+          "step": 0.1,
+          "steps": 5
+        },
+        "rare": {
+          "min": 0.3,
+          "step": 0.1,
+          "steps": 5
+        },
+        "uncommon": {
+          "min": 0.2,
+          "step": 0.1,
+          "steps": 5
+        }
+      }
+    },
+    {
+      "type": "apotheosis:attribute",
+      "attribute": "skilltree:player.life_on_block",
+      "gem_class": {
+        "key": "shield",
+        "types": [
+          "shield"
+        ]
+      },
+      "operation": "addition",
+      "values": {
+        "common": {
+          "min": 0.1,
+          "step": 0.1,
+          "steps": 5
+        },
+        "epic": {
+          "min": 0.4,
+          "step": 0.1,
+          "steps": 5
+        },
+        "mythic": {
+          "min": 0.5,
+          "step": 0.1,
+          "steps": 5
+        },
+        "rare": {
+          "min": 0.3,
+          "step": 0.1,
+          "steps": 5
+        },
+        "uncommon": {
+          "min": 0.2,
+          "step": 0.1,
+          "steps": 5
+        }
+      }
+    }
+  ],
+  "dimensions": [
+    "skilltree:fake_dimension"
+  ],
+  "weight": 1
+}

@@ -3,9 +3,10 @@ package daripher.skilltree.recipe;
 import com.google.gson.JsonObject;
 
 import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
-import daripher.skilltree.item.gem.GemstoneItem;
+import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.util.ItemHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.ModList;
 
 public class GemstoneInsertionRecipe extends UpgradeRecipe {
 	public GemstoneInsertionRecipe(ResourceLocation recipeId) {
@@ -24,11 +26,17 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe {
 
 	@Override
 	public boolean matches(Container smithingContainer, Level level) {
+		if (ModList.get().isLoaded("apotheosis")) {
+			return false;
+		}
 		return isBaseIngredient(smithingContainer.getItem(0)) && isAdditionIngredient(smithingContainer.getItem(1));
 	}
 
 	@Override
 	public ItemStack assemble(Container smithingContainer) {
+		if (ModList.get().isLoaded("apotheosis")) {
+			return ItemStack.EMPTY;
+		}
 		var playerContainer = (PlayerContainer) smithingContainer;
 		if (!playerContainer.getPlayer().isPresent()) {
 			return ItemStack.EMPTY;
@@ -36,7 +44,7 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe {
 		var player = playerContainer.getPlayer().get();
 		var baseItem = smithingContainer.getItem(0);
 		var gemstoneSlot = getFirstEmptyGemstoneSlot(baseItem, player);
-		var gemstoneItem = (GemstoneItem) smithingContainer.getItem(1).getItem();
+		var gemstoneItem = (GemItem) smithingContainer.getItem(1).getItem();
 		if (!gemstoneItem.canInsertInto(player, baseItem, gemstoneSlot)) {
 			return ItemStack.EMPTY;
 		}
@@ -50,25 +58,25 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe {
 	}
 
 	public double getPlayerGemstoneStrength(Player player, ItemStack craftingItem) {
-		var gemstoneStrength = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH.get()) - 1;
+		var gemstoneStrength = player.getAttributeValue(SkillTreeAttributes.GEM_POWER.get()) - 1;
 		var craftingArmor = ItemHelper.isArmor(craftingItem) || ItemHelper.isShield(craftingItem);
 		var craftingWeapon = ItemHelper.isWeapon(craftingItem) || ItemHelper.isBow(craftingItem);
 		if (craftingArmor) {
-			var gemstoneStrengthInArmor = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_ARMOR.get()) - 1;
+			var gemstoneStrengthInArmor = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInArmor;
 		} else if (craftingWeapon) {
-			var gemstoneStrengthInWeapon = player.getAttributeValue(SkillTreeAttributes.GEMSTONES_STRENGTH_IN_WEAPON.get()) - 1;
+			var gemstoneStrengthInWeapon = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get()) - 1;
 			gemstoneStrength += gemstoneStrengthInWeapon;
 		}
 		return gemstoneStrength;
 	}
 
 	public int getFirstEmptyGemstoneSlot(ItemStack baseItem, Player player) {
-		var maximumSlots = GemstoneItem.getMaximumGemstoneSlots(baseItem, player);
+		var maximumSlots = GemHelper.getMaximumGemstoneSlots(baseItem, player);
 		var gemstoneSlot = 0;
 		for (int i = 0; i < maximumSlots; i++) {
 			gemstoneSlot = i;
-			if (!GemstoneItem.hasGemstone(baseItem, gemstoneSlot)) {
+			if (!GemHelper.hasGem(baseItem, gemstoneSlot)) {
 				break;
 			}
 		}
@@ -90,7 +98,7 @@ public class GemstoneInsertionRecipe extends UpgradeRecipe {
 	}
 
 	public boolean isAdditionIngredient(ItemStack itemStack) {
-		return itemStack.getItem() instanceof GemstoneItem;
+		return itemStack.getItem() instanceof GemItem;
 	}
 
 	@Override

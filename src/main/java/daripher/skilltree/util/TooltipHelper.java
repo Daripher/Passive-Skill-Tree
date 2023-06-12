@@ -20,6 +20,9 @@ public class TooltipHelper {
 		var modifierValue = attributeBonus.getMiddle();
 		var modifierOperation = attributeBonus.getRight();
 		var modifiedAttribute = attributeBonus.getLeft();
+		if (modifierOperation == null || modifiedAttribute == null) {
+			return Component.literal("ERROR").withStyle(ChatFormatting.RED);
+		}
 		var visibleBonusValue = modifierValue;
 
 		if (modifierOperation == AttributeModifier.Operation.ADDITION) {

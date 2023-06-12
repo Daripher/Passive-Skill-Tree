@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import daripher.skilltree.gem.GemHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -11,23 +12,23 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class VoidGemstoneItem extends GemstoneItem {
+public class VoidGemstoneItem extends GemItem {
 	public VoidGemstoneItem() {
 		super(0x796767);
 	}
 
 	@Override
 	public void insertInto(Player player, ItemStack itemStack, int gemstoneSlot, double gemstoneStrength) {
-		itemStack.getTag().remove(GEMSTONES_TAG);
+		GemHelper.removeGems(itemStack);
 	}
 
 	@Override
 	public boolean canInsertInto(Player currentPlayer, ItemStack baseItem, int gemstoneSlot) {
-		return GemstoneItem.hasGemstone(baseItem, 0);
+		return GemHelper.hasGem(baseItem, 0);
 	}
 
 	@Override
-	protected Triple<Attribute, Double, Operation> getGemstoneBonus(Player player, ItemStack itemStack) {
+	public Triple<Attribute, Double, Operation> getGemBonus(Player player, ItemStack itemStack) {
 		return null;
 	}
 

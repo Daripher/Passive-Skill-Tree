@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig.Type;
 
 public class Config {
 	public static final CommonConfig COMMON_CONFIG;
@@ -67,7 +69,7 @@ public class Config {
 			return skillPointsCosts.get();
 		}
 
-		public double getGemstoneDropChance() {
+		public double getGemDropChance() {
 			return gemstoneDropChance.get();
 		}
 
@@ -78,6 +80,10 @@ public class Config {
 		public boolean experienceGainEnabled() {
 			return enableExperienceGain.get();
 		}
+	}
+
+	public static void register() {
+		ModLoadingContext.get().registerConfig(Type.COMMON, COMMON_CONFIG_SPEC);
 	}
 
 	static {

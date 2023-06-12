@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeTags;
-import daripher.skilltree.item.gem.GemstoneItem;
+import daripher.skilltree.item.gem.GemItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -19,6 +19,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 	@Override
 	protected void addTags() {
 		var gemstonesTag = tag(SkillTreeTags.GEMSTONES);
-		ForgeRegistries.ITEMS.getValues().stream().filter(GemstoneItem.class::isInstance).forEach(gemstonesTag::add);
+		ForgeRegistries.ITEMS.getValues().stream().filter(GemItem.class::isInstance).forEach(gemstonesTag::add);
 	}
 }

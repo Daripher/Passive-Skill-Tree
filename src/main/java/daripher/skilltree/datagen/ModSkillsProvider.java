@@ -182,8 +182,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("hunter_offensive_keystone_1", ARROW_DAMAGE_PER_DISTANCE.get(), 0.05, MULTIPLY_BASE);
 		// miner skills
 		addSkillAttributeModifier("miner_class", MINING_SPEED.get(), 0.15, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("miner_defensive_crafting", GEMSTONES_STRENGTH_IN_ARMOR.get(), 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("miner_offensive_crafting", GEMSTONES_STRENGTH_IN_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("miner_defensive_crafting", GEM_POWER_IN_ARMOR.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("miner_offensive_crafting", GEM_POWER_IN_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("miner_defensive", ARMOR, 1, ADDITION, 1, 7);
 		addSkillBranchAttributeModifier("miner_offensive", PICKAXE_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
 		addSkillAttributeModifier("miner_defensive_notable_1", ARMOR_PER_GEMSTONE_IN_HELMET.get(), 2, ADDITION);
@@ -193,14 +193,14 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("miner_speed", ATTACK_SPEED_WITH_PICKAXE.get(), 0.05, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("miner_speed_notable_1", ATTACK_SPEED_WITH_PICKAXE.get(), 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_lesser", MINING_SPEED.get(), 0.05, MULTIPLY_BASE, 1, 6);
-		addSkillAttributeModifier("miner_mastery", MAXIMUM_GEMSTONE_SLOTS_BONUS.get(), 1, ADDITION);
+		addSkillAttributeModifier("miner_mastery", MAXIMUM_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("miner_crit", CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), 0.02, MULTIPLY_BASE, 1, 4);
 		addSkillAttributeModifier("miner_crit_keystone_1", CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), 0.1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_crafting", CHANCE_TO_FIND_GEMSTONE.get(), 0.01, MULTIPLY_BASE, 1, 3);
-		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", GEMSTONES_STRENGTH_IN_ARMOR.get(), 0.3, MULTIPLY_BASE);
-		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", MAXIMUM_CHESTPLATE_GEMSTONE_SLOTS_BONUS.get(), 1, ADDITION);
-		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", GEMSTONES_STRENGTH_IN_WEAPON.get(), 0.3, MULTIPLY_BASE);
-		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", MAXIMUM_WEAPON_GEMSTONE_SLOTS_BONUS.get(), 1, ADDITION);
+		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", GEM_POWER_IN_ARMOR.get(), 0.3, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", MAXIMUM_CHESTPLATE_SOCKETS.get(), 1, ADDITION);
+		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", GEM_POWER_IN_WEAPON.get(), 0.3, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", MAXIMUM_WEAPON_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("miner_healing", LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 2);
 		addSkillAttributeModifier("miner_healing_notable_1", LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), 0.5, ADDITION);
 		addSkillAttributeModifier("miner_crafting_notable_1", CHANCE_TO_FIND_GEMSTONE.get(), 0.02, MULTIPLY_BASE);

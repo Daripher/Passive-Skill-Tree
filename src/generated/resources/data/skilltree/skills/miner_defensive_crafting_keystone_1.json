@@ -7,7 +7,7 @@
     },
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.maximum_chestplate_gemstone_slots_bonus",
+      "attribute": "skilltree:player.maximum_chestplate_sockets",
       "operation": "addition"
     }
   ],

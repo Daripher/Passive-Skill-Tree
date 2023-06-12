@@ -22,6 +22,7 @@ import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
@@ -123,6 +124,9 @@ public class ItemHelper {
 	}
 
 	public static boolean canApplyGemstone(ItemStack itemStack) {
+		if (ModList.get().isLoaded("apotheosis")) {
+			return false;
+		}
 		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) {
 			return false;
@@ -164,6 +168,10 @@ public class ItemHelper {
 
 	public static boolean isAxe(ItemStack itemStack) {
 		return itemStack.getItem() instanceof AxeItem;
+	}
+
+	public static boolean isEquipment(ItemStack stack) {
+		return isWeaponOrBow(stack) || isArmor(stack) || isShield(stack);
 	}
 
 	public static boolean isPoison(ItemStack itemStack) {

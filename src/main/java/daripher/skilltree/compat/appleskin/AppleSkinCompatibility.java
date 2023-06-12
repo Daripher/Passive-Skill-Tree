@@ -1,4 +1,4 @@
-package daripher.skilltree.compat;
+package daripher.skilltree.compat.appleskin;
 
 import daripher.skilltree.util.FoodHelper;
 import net.minecraftforge.common.MinecraftForge;

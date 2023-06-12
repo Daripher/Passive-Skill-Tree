@@ -21,9 +21,16 @@
   	"farmersdelight/MixinCookingPotBlockEntity",
   	"farmersdelight/MixinStoveBlock",
   	"farmersdelight/MixinStoveBlockEntity",
-  	"apotheosis/MixinApothEnchantContainer"
+  	"apotheosis/MixinApothEnchantContainer",
+  	"apotheosis/MixinSocketHelper",
+  	"apotheosis/MixinAddSocketsRecipe",
+  	"apotheosis/MixinSocketingRecipe",
+  	"apotheosis/MixinAttributeBonus",
+  	"apotheosis/MixinEnchantmentBonus"
   ],
-  "client" : [ ],
+  "client" : [
+  	"apotheosis/MixinAdventureModuleClient"
+  ],
   "injectors" : {
     "defaultRequire" : 1
   },
