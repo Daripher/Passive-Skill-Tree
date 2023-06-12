@@ -721,6 +721,9 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void applyLootDuplicationChanceBonus(LivingDropsEvent event) {
+		if (event.getEntity() instanceof Player) {
+			return;
+		}
 		if (!(event.getSource().getEntity() instanceof Player)) {
 			return;
 		}
