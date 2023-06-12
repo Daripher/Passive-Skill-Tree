@@ -1,42 +1,21 @@
 package daripher.skilltree.mixin.minecraft;
 
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import daripher.skilltree.util.FoodHelper;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.food.FoodProperties;
+import daripher.skilltree.util.ItemHelper;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(ItemStack.class)
 public class MixinItemStack {
-	public @Nullable FoodProperties getFoodProperties(@Nullable LivingEntity entity) {
-		var itemStack = (ItemStack) (Object) this;
-		var foodProperties = itemStack.getItem().getFoodProperties(itemStack, entity);
-
-		if (FoodHelper.hasRestorationBonus(itemStack)) {
-			var restorationBonus = FoodHelper.getRestorationBonus(itemStack);
-			var newPropertiesBuilder = new FoodProperties.Builder().nutrition((int) (foodProperties.getNutrition() * (1 + restorationBonus))).saturationMod(foodProperties.getSaturationModifier());
-
-			if (foodProperties.canAlwaysEat()) {
-				newPropertiesBuilder = newPropertiesBuilder.alwaysEat();
-			}
-
-			if (foodProperties.isFastFood()) {
-				newPropertiesBuilder = newPropertiesBuilder.fast();
-			}
-
-			if (foodProperties.isMeat()) {
-				newPropertiesBuilder = newPropertiesBuilder.meat();
-			}
-
-			for (var effectWithChance : foodProperties.getEffects()) {
-				newPropertiesBuilder = newPropertiesBuilder.effect(effectWithChance::getFirst, effectWithChance.getSecond());
-			}
-
-			return newPropertiesBuilder.build();
+	@Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
+	private void getMaxDamage(CallbackInfoReturnable<Integer> callbackInfo) {
+		if (!ItemHelper.hasDurabilityBonus((ItemStack) (Object) this)) {
+			return;
 		}
-
-		return foodProperties;
+		var durabilityBonus = ItemHelper.getDurabilityBonus((ItemStack) (Object) this);
+		callbackInfo.setReturnValue((int) (callbackInfo.getReturnValue() * (1 + durabilityBonus)));
 	}
 }

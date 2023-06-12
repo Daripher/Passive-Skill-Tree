@@ -70,6 +70,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> ATTACK_SPEED_WITH_SHIELD = rangedAttribute("player", "attack_speed_with_shield", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> LIFE_REGENERATION_WITH_SHIELD = rangedAttribute("player", "life_regeneration_with_shield", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> CHESTPLATE_ARMOR = rangedAttribute("player", "chestplate_armor", 1D, 1D, 10D);
+	public static final RegistryObject<Attribute> CRAFTED_EQUIPMENT_DURABILITY = rangedAttribute("player", "crafted_equipment_durability", 1D, 1D, 10D);
 	// miner attributes
 	public static final RegistryObject<Attribute> MINING_SPEED = rangedAttribute("player", "mining_speed", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_SOCKETS = rangedAttribute("player", "maximum_sockets", 0D, 0D, 5D);

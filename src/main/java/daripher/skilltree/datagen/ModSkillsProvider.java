@@ -207,8 +207,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("miner_defensive_keystone_1", ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), 5, ADDITION);
 		addSkillAttributeModifier("miner_offensive_keystone_1", PICKAXE_DAMAGE.get(), 0.75, MULTIPLY_BASE);
 		// blacksmith skills
-		addSkillAttributeModifier("blacksmith_class", CRAFTED_ARMOR_DEFENCE.get(), 0.4, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("blacksmith_defensive_crafting", CRAFTED_ARMOR_DEFENCE.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillAttributeModifier("blacksmith_class", CRAFTED_EQUIPMENT_DURABILITY.get(), 0.25, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_defensive_crafting", CRAFTED_ARMOR_DEFENCE.get(), 0.15, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("blacksmith_offensive_crafting", CRAFTED_WEAPON_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
 		addSkillBranchAttributeModifier("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 7);
 		addSkillBranchAttributeModifier("blacksmith_offensive", DAMAGE_WITH_SHIELD.get(), 0.1, MULTIPLY_BASE, 1, 7);
@@ -218,12 +218,12 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_life_notable_1", MAXIMUM_LIFE_PER_BOOTS_ARMOR.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("blacksmith_speed", ATTACK_SPEED_WITH_SHIELD.get(), 0.05, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("blacksmith_speed_notable_1", ATTACK_SPEED_WITH_SHIELD.get(), 0.10, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("blacksmith_lesser", CHANCE_TO_CRAFT_TOUGHER_ARMOR.get(), 0.1, MULTIPLY_BASE, 1, 6);
+		addSkillBranchAttributeModifier("blacksmith_lesser", CRAFTED_EQUIPMENT_DURABILITY.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("blacksmith_mastery", CHANCE_TO_CRAFT_TOUGHER_ARMOR.get(), 1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_crit", CRIT_CHANCE_WITH_SHIELD.get(), 0.05, MULTIPLY_BASE, 1, 4);
 		addSkillAttributeModifier("blacksmith_crit_keystone_1", CRIT_DAMAGE_WITH_SHIELD.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_crafting", CRAFTED_SHIELDS_ARMOR_BONUS.get(), 1, ADDITION, 1, 3);
-		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", CRAFTED_ARMOR_DEFENCE.get(), 0.4, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", CRAFTED_ARMOR_DEFENCE.get(), 0.45, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", CRAFTED_WEAPON_ATTACK_SPEED.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_healing", LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 2);
 		addSkillAttributeModifier("blacksmith_healing_notable_1", LIFE_REGENERATION_WITH_SHIELD.get(), 1, ADDITION);

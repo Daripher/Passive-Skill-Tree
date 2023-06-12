@@ -234,13 +234,13 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.ATTACK_DAMAGE_PER_ARMOR.get(), "Урон в ближнем бою за единицу брони");
 		add(SkillTreeAttributes.CHESTPLATE_ARMOR.get(), "Броня нагрудника");
 		add(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), "Снижение требования к уровню для зачарования");
-		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), "Шанс наложить усиленное зачарование брони");
-		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), "Шанс наложить усиленное зачарование оружие");
+		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), "Сила накладываемых зачарований брони");
+		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), "Сила накладываемых зачарований оружия");
 		add(SkillTreeAttributes.DAMAGE_WITH_ENCHANTED_WEAPON.get(), "Урон с зачарованным оружием");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get(), "Максимум здоровья с зачарованным предметом");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get(), "Максимум здоровья за каждое зачарование брони");
 		add(SkillTreeAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get(), "Скорость атаки с зачарованным оружием");
-		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ENCHANTMENT.get(), "Шанс наложить усиленное зачарование");
+		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ENCHANTMENT.get(), "Сила накладываемых зачарований");
 		add(SkillTreeAttributes.CRIT_CHANCE_WITH_ENCHANTED_WEAPON.get(), "Шанс критического удара с зачарованным оружием");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT.get(), "Критический урон за каждое зачарование на оружии");
 		add(SkillTreeAttributes.LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT.get(), "Здоровье при блоке за каждое зачарование на щите");
@@ -263,6 +263,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.DAMAGE_PER_SATISFIED_HUNGER.get(), "Урон за единицу утолённого голода");
 		add(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get(), "Критический урон создаваемой еды за единицу насыщения");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), "Критический урон за единицу утолённого голода");
+		add(SkillTreeAttributes.CRAFTED_EQUIPMENT_DURABILITY.get(), "Прочность создаваемых предметов");
 		// effects
 		add(SkillTreeEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
 		add(SkillTreeEffects.DAMAGE_BONUS.get(), "Урон");

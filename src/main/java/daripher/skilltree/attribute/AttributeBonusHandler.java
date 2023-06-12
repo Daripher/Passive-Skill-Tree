@@ -1030,4 +1030,17 @@ public class AttributeBonusHandler {
 		}
 		stuckArrowsData.stream().map(CompoundTag.class::cast).map(ItemStack::of).forEach(entity::spawnAtLocation);
 	}
+
+	@SubscribeEvent
+	public static void setCraftedEquipmentBonuses(ItemCraftedEvent event) {
+		var craftedStack = event.getCrafting();
+		if (!ItemHelper.isEquipment(craftedStack)) {
+			return;
+		}
+		var durabilityBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_EQUIPMENT_DURABILITY.get()) - 1;
+		if (durabilityBonus == 0) {
+			return;
+		}
+		ItemHelper.setDurabilityBonus(craftedStack, durabilityBonus);
+	}
 }

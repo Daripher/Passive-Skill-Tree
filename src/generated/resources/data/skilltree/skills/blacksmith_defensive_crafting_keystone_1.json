@@ -1,7 +1,7 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.4,
+      "amount": 0.45,
       "attribute": "skilltree:player.crafted_armor_defence",
       "operation": "multiply_base"
     }

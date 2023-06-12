@@ -31,6 +31,7 @@ public class ItemHelper {
 	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
 	private static final String ATTACK_SPEED_BONUS_TAG = "AttackSpeedBonus";
 	private static final String TOUGHNESS_BONUS_TAG = "ToughnessBonus";
+	private static final String DURABILITY_BONUS_TAG = "DurabilityBonus";
 	private static final String POISONS_TAG = "Poisons";
 
 	public static void setDefenceBonus(ItemStack itemStack, double bonus) {
@@ -91,6 +92,18 @@ public class ItemHelper {
 
 	public static double getAttackSpeedBonus(ItemStack itemStack) {
 		return itemStack.getTag().getDouble(ATTACK_SPEED_BONUS_TAG);
+	}
+
+	public static void setDurabilityBonus(ItemStack itemStack, double bonus) {
+		itemStack.getOrCreateTag().putDouble(DURABILITY_BONUS_TAG, bonus);
+	}
+
+	public static boolean hasDurabilityBonus(ItemStack itemStack) {
+		return itemStack.hasTag() && itemStack.getTag().contains(DURABILITY_BONUS_TAG);
+	}
+
+	public static double getDurabilityBonus(ItemStack itemStack) {
+		return itemStack.getTag().getDouble(DURABILITY_BONUS_TAG);
 	}
 
 	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> amountModifier) {

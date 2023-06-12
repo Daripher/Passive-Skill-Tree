@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:player.chance_to_craft_tougher_armor",
+      "amount": 0.05,
+      "attribute": "skilltree:player.crafted_equipment_durability",
       "operation": "multiply_base"
     }
   ],

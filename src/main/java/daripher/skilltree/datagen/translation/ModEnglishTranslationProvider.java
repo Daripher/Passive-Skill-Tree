@@ -193,9 +193,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), "Maximum Life under Potion Effect");
 		add(SkillTreeAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get(), "Attack Speed under Potion Effect");
 		add(SkillTreeAttributes.BREWED_POTIONS_DURATION.get(), "Brewed Potions Duration");
-		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get(), "Chance to Brew Stronger Potion");
-		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get(), "Chance to Brew Stronger Beneficial Potion");
-		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), "Chance to Brew Stronger Harmful Potion");
+		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get(), "Brewed Potions Strength");
+		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get(), "Brewed Beneficial Potions Strength");
+		add(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), "Brewed Harmful Potions Strength");
 		add(SkillTreeAttributes.DAMAGE_AGAINST_POISONED.get(), "Damage against Poisoned");
 		add(SkillTreeAttributes.CRIT_CHANCE_AGAINST_POISONED.get(), "Critical Hit Chance against Poisoned");
 		add(SkillTreeAttributes.EVASION_UNDER_POTION_EFFECT.get(), "Evasion Chance under Potion Effect");
@@ -208,8 +208,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.PICKAXE_DAMAGE.get(), "Pickaxe Damage");
 		add(SkillTreeAttributes.PICKAXE_DAMAGE_BONUS.get(), "Pickaxe Damage");
 		add(SkillTreeAttributes.ATTACK_SPEED_WITH_PICKAXE.get(), "Attack Speed with Pickaxe");
-		add(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get(), "Gem Strength in Armor");
-		add(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get(), "Gem Strength in Weapon");
+		add(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get(), "Gem Power in Armor");
+		add(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get(), "Gem Power in Weapon");
 		add(SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get(), "Weapon Gem Sockets");
 		add(SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get(), "Chestplate Gem Sockets");
 		add(SkillTreeAttributes.MAXIMUM_SOCKETS.get(), "Equipment Gem Sockets");
@@ -236,8 +236,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.ATTACK_DAMAGE_PER_ARMOR.get(), "Attack Damage per Armor");
 		add(SkillTreeAttributes.CHESTPLATE_ARMOR.get(), "Chestplate Armor");
 		add(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), "Enchantment Level Requirement reduction");
-		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), "Chance to apply better Armor Enchantment");
-		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), "Chance to apply better Weapon Enchantment");
+		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), "Applied Armor Enchantments Strength");
+		add(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), "Applied Weapon Enchantments Strength");
 		add(SkillTreeAttributes.DAMAGE_WITH_ENCHANTED_WEAPON.get(), "Damage with Enchanted Weapon");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get(), "Maximum Life with Enchanted Item");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get(), "Maximum Life per Armor Enchantment");
@@ -265,6 +265,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.DAMAGE_PER_SATISFIED_HUNGER.get(), "Damage per Satisfied Hunger Point");
 		add(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get(), "Cooked Food Critical Hit Damage per Saturation Point");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), "Critical Hit Damage per Satisfied Hunger Point");
+		add(SkillTreeAttributes.CRAFTED_EQUIPMENT_DURABILITY.get(), "Crafted Equipment Durability");
 		// effects
 		add(SkillTreeEffects.CRIT_DAMAGE_BONUS.get(), "Crit Damage");
 		add(SkillTreeEffects.DAMAGE_BONUS.get(), "Damage");
