@@ -25,6 +25,7 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 
 	boolean isTreeReset();
 
-	void resetTree(ServerPlayer player);
+	void setTreeReset(boolean reset);
 
+	void resetTree(ServerPlayer player);
 }

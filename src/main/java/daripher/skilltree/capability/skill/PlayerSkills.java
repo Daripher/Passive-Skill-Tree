@@ -63,6 +63,11 @@ public class PlayerSkills implements IPlayerSkills {
 	}
 
 	@Override
+	public void setTreeReset(boolean reset) {
+		treeReset = reset;
+	}
+
+	@Override
 	public void resetTree(ServerPlayer player) {
 		skillPoints += getPlayerSkills().size();
 		getPlayerSkills().forEach(skill -> {
