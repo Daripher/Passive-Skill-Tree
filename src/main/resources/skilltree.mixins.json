@@ -17,6 +17,7 @@
   	"minecraft/MixinCampfireBlockEntity",
   	"minecraft/MixinVanillaBrewingRecipe",
   	"minecraft/MixinItemStack",
+  	"minecraft/MixinItem",
   	"easymagic/MixinModEnchantmentMenu",
   	"easyvillagers/MixinConverterTileentity",
   	"farmersdelight/MixinCookingPotBlockEntity",
