@@ -21,6 +21,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -121,7 +122,7 @@ public class ItemHelper {
 	}
 
 	public static boolean isShield(ItemStack itemStack) {
-		return itemStack.getItem() instanceof ShieldItem;
+		return itemStack.is(Tags.Items.TOOLS_SHIELDS) || itemStack.getItem() instanceof ShieldItem;
 	}
 
 	public static boolean isWeapon(ItemStack itemStack) {
