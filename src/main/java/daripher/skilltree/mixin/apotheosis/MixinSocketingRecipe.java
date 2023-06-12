@@ -20,11 +20,11 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
-@Mixin(SocketingRecipe.class)
+@Mixin(value = SocketingRecipe.class, remap = false)
 public class MixinSocketingRecipe {
 	private static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMS";
 
-	@Redirect(method = "matches", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
+	@Redirect(method = { "matches", "m_5818_" }, at = @At(value = "INVOKE", target = "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
 	private boolean bypassMaximumSockets(ItemStack itemStack, Container container, Level level) {
 		if (!(container instanceof PlayerContainer)) {
 			return SocketHelper.hasEmptySockets(itemStack);
@@ -33,7 +33,7 @@ public class MixinSocketingRecipe {
 		return hasEmptySockets(player, itemStack);
 	}
 
-	@Inject(method = "assemble", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = { "assemble", "m_5874_" }, at = @At(value = "HEAD"), cancellable = true)
 	private void bypassMaximumSocketsAndApplyGemStrength(Container container, CallbackInfoReturnable<ItemStack> callbackInfo) {
 		var result = container.getItem(0).copy();
 		if (result.isEmpty()) {

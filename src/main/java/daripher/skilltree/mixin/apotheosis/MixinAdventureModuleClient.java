@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 
-@Mixin(AdventureModuleClient.class)
+@Mixin(value = AdventureModuleClient.class, remap = false)
 public class MixinAdventureModuleClient {
 	private static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMS";
 

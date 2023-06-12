@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 
-@Mixin(ApothEnchantContainer.class)
+@Mixin(value = ApothEnchantContainer.class, remap = false)
 public class MixinApothEnchantContainer {
 	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {

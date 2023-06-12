@@ -18,7 +18,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.EnchantmentBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
-@Mixin(EnchantmentBonus.class)
+@Mixin(value = EnchantmentBonus.class, remap = false)
 public abstract class MixinEnchantmentBonus extends GemBonus {
 	protected @Shadow @Final Enchantment ench;
 	protected @Shadow @Final boolean mustExist;

@@ -17,7 +17,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
 
-@Mixin(AttributeBonus.class)
+@Mixin(value = AttributeBonus.class, remap = false)
 public class MixinAttributeBonus {
 	protected @Shadow @Final Operation operation;
 	protected @Shadow @Final Map<LootRarity, StepFunction> values;

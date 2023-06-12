@@ -17,7 +17,7 @@ import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 
-@Mixin(SocketHelper.class)
+@Mixin(value = SocketHelper.class, remap = false)
 public class MixinSocketHelper {
 	private static final String ADDITIONAL_SOCKET_TAG = "ADDITIONAL_SOCKET";
 	private static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMS";
