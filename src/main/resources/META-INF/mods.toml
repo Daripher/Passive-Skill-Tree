@@ -1,4 +1,4 @@
-modLoader="javafml" #mandatory
+modLoader="javafml"
 loaderVersion="[43,)"
 license="All rights reserved"
 
@@ -8,7 +8,8 @@ license="All rights reserved"
 	displayName="Passive Skill Tree"
 	authors="Daripher"
 	description='''Adds passive skill tree with player class system'''
-
+	credits='''Thanks to: LittleOdie for some gem ideas. Prince_Vladislav for some of the icons. All the modpack makers who use my mod. All the people on my discord server.'''
+	
 [[dependencies.skilltree]]
     modId="forge"
     mandatory=true
