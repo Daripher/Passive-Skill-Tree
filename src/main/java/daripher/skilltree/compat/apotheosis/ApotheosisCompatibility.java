@@ -1,7 +1,6 @@
 package daripher.skilltree.compat.apotheosis;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.compat.apotheosis.datagen.ModGemProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

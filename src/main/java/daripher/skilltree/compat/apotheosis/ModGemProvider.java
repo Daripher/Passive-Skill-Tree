@@ -1,4 +1,4 @@
-package daripher.skilltree.compat.apotheosis.datagen;
+package daripher.skilltree.compat.apotheosis;
 
 import static shadows.apotheosis.adventure.loot.LootCategory.BOOTS;
 import static shadows.apotheosis.adventure.loot.LootCategory.BOW;

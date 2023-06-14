@@ -7,9 +7,9 @@
         "key": "any_armor",
         "types": [
           "leggings",
-          "chestplate",
+          "boots",
           "helmet",
-          "boots"
+          "chestplate"
         ]
       },
       "operation": "addition",

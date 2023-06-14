@@ -20,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class IrisciteItem extends GemItem {
@@ -74,20 +73,10 @@ public class IrisciteItem extends GemItem {
 		return styledComponent;
 	}
 
-	protected SimpleGemItem getRandomSimpleGemstone(RandomSource random) {
-		var simpleGemstones = getAllSimpleGemstones();
-		var randomIndex = random.nextInt(simpleGemstones.size());
-		var randomGemstone = simpleGemstones.get(randomIndex);
-		return randomGemstone;
-	}
-
-	protected List<SimpleGemItem> getAllSimpleGemstones() {
-		var items = ForgeRegistries.ITEMS.getValues();
-		return items.stream().filter(SimpleGemItem.class::isInstance).map(SimpleGemItem.class::cast).toList();
-	}
-
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
+		var slotTooltip = Component.translatable("gem.slot.anything").withStyle(ChatFormatting.GOLD);
+		var bonusTooltip = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
+		components.add(slotTooltip.append(bonusTooltip));
 	}
 }

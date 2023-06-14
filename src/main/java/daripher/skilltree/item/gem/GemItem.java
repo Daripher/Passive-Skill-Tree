@@ -47,6 +47,7 @@ public abstract class GemItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+		components.add(Component.empty());
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
 				components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
