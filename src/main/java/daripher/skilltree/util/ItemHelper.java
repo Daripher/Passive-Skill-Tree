@@ -183,7 +183,7 @@ public class ItemHelper {
 	}
 
 	public static boolean isWeapon(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_AXES) || itemStack.is(Tags.Items.TOOLS_SWORDS);
+		return itemStack.is(Tags.Items.TOOLS_AXES) || itemStack.is(Tags.Items.TOOLS_SWORDS) || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
 	}
 
 	public static boolean isBow(ItemStack itemStack) {
