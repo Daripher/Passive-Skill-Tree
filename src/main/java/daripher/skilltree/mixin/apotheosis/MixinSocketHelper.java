@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import daripher.skilltree.gem.GemHelper;
+import daripher.skilltree.util.ItemHelper;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
-import shadows.apotheosis.adventure.loot.LootCategory;
 
 @Mixin(value = SocketHelper.class, remap = false)
 public class MixinSocketHelper {
@@ -54,7 +54,7 @@ public class MixinSocketHelper {
 
 	@Inject(method = "getSockets", at = @At("HEAD"))
 	private static void addAdditionalSockets(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (LootCategory.forItem(stack) == LootCategory.NONE) {
+		if (!ItemHelper.isEquipment(stack)) {
 			return;
 		}
 		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
