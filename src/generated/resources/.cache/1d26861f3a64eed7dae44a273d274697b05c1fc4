@@ -1,8 +1,11 @@
-// 1.19.2	2023-06-07T07:22:06.7671589	Item Models: skilltree
+// 1.19.2	2023-06-14T09:01:58.8594821	Item Models: skilltree
+2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/skilltree/models/item/adamite.json
 7f105626d8a7ca598d2b0804d3cf871e12ebf6c0 assets/skilltree/models/item/amnesia_scroll.json
-a645ed4040dfc46195b380cdced1d3511e7ce559 assets/skilltree/models/item/light_gemstone.json
-1073b20e49caf100946d668099b409dab690982f assets/skilltree/models/item/rainbow_gemstone.json
-b6e4ac9b2b4b6087722324b3844e98d2935fd36a assets/skilltree/models/item/soothing_gemstone.json
-1b83616dc50c5ab2caffbac4e4c38e5a4cc6a73b assets/skilltree/models/item/sturdy_gemstone.json
-e8f229d8bf665d71e23b122fd524c050af58e786 assets/skilltree/models/item/void_gemstone.json
+bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/skilltree/models/item/citrine.json
+86ee96a5bb26d9ce68126aa175e2bffbb83af78c assets/skilltree/models/item/iriscite.json
+2d816afa64598d863ab6b342002325909f839e44 assets/skilltree/models/item/moonstone.json
+c7974f3615f8e293e5f0c38211cba136ce359e0f assets/skilltree/models/item/onyx.json
+a7e6b611fae75f1acc47517176951caee14f42b0 assets/skilltree/models/item/opal.json
+6b8f2b2fc2aed2aac3fbb0dad4e8d74c12c6e440 assets/skilltree/models/item/ruby.json
+7deb5cee57bfd4c7ea45eb2bf03046c5abef91b1 assets/skilltree/models/item/vacucite.json
 b2dda19d8e8f5cd65954cc60490f1dab8dade95a assets/skilltree/models/item/wisdom_scroll.json

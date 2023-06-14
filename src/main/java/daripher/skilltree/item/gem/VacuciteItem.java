@@ -12,9 +12,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class VoidGemstoneItem extends GemItem {
-	public VoidGemstoneItem() {
-		super(0x796767);
+public class VacuciteItem extends GemItem {
+	public VacuciteItem() {
+		super(0x35866E);
 	}
 
 	@Override
@@ -34,6 +34,6 @@ public class VoidGemstoneItem extends GemItem {
 
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(Component.translatable(getDescriptionId() + ".bonus").withStyle(ChatFormatting.GOLD));
+		components.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
 	}
 }

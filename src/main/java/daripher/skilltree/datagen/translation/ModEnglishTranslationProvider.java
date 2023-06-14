@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.NotNull;
-
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
@@ -134,22 +132,24 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Blessing", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
 		addMixture("Plague", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
-		add("gemstone.empty", "<Empty Socket>");
-		add("gemstone.additional_socket", "• Has an additional socket.");
-		add("gemstone.disabled", "Disabled with Apotheosis installed");
-		add("gemstone.slot.helmet", "Helmets: ");
-		add("gemstone.slot.chestplate", "Chestplates: ");
-		add("gemstone.slot.boots", "Boots: ");
-		add("gemstone.slot.other_armor", "Other Armor: ");
-		add("gemstone.slot.weapon", "Weapons: ");
-		add("gemstone.slot.shield", "Shields: ");
-		add("gemstone.slot.bow", "Bows: ");
-		add("gemstone.slot.melee_weapon", "Melee Weapons: ");
-		addGemSlots(SkillTreeItems.SOOTHING_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.STURDY_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.LIGHT_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.VOID_GEMSTONE.get(), "Consumes gems from item");
-		addGemSlots(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Outcome unpredictable");
+		add("gem.socket", "[Empty Socket]");
+		add("gem.additional_socket", "• Has an additional socket.");
+		add("gem.disabled", "Disabled with Apotheosis adventure module enabled.");
+		add("gem.slot.helmet", "Helmets: ");
+		add("gem.slot.chestplate", "Chestplates: ");
+		add("gem.slot.boots", "Boots: ");
+		add("gem.slot.other_armor", "Other Armor: ");
+		add("gem.slot.weapon", "Weapons: ");
+		add("gem.slot.shield", "Shields: ");
+		add("gem.slot.bow", "Bows: ");
+		add("gem.slot.melee_weapon", "Melee Weapons: ");
+		add("gem.slot.armor_and_shield", "Armor and Shields: ");
+		add("gem.slot.anything", "Anything: ");
+		add("gem.slot.armor", "Armor: ");
+		add("gem.slot.pickaxe", "Pickaxes: ");
+		add("gem.slots", "Fits in:");
+		addTooltip(SkillTreeItems.VACUCITE.get(), "Anything: Consumes gems from item");
+		addTooltip(SkillTreeItems.IRISCITE.get(), "Anything: Outcome unpredictable");
 		// food info
 		add("food.bonus.damage", "+%d%% Damage");
 		add("food.bonus.crit_damage", "+%d%% Crit Damage");
@@ -157,11 +157,14 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		// weapon info
 		add("weapon.poisoned", "Poisoned:");
 		// items
-		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Soothing Gem");
-		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Sturdy Gem");
-		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Light Gem");
-		add(SkillTreeItems.VOID_GEMSTONE.get(), "Void Gem");
-		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Rainbow Gem");
+		add(SkillTreeItems.ADAMITE.get(), "Adamite");
+		add(SkillTreeItems.CITRINE.get(), "Citrine");
+		add(SkillTreeItems.IRISCITE.get(), "Iriscite");
+		add(SkillTreeItems.MOONSTONE.get(), "Moonstone");
+		add(SkillTreeItems.ONYX.get(), "Onyx");
+		add(SkillTreeItems.OPAL.get(), "Opal");
+		add(SkillTreeItems.RUBY.get(), "Ruby");
+		add(SkillTreeItems.VACUCITE.get(), "Vacucite");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
 		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
 		add(SkillTreeItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
@@ -292,15 +295,6 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("gem_class.other_armor", "Other Armor");
 		add("gem_class.other_weapon", "Other Weapon");
 		add("gem_class.pickaxe", "Pickaxes");
-	}
-
-	private void addGemSlots(@NotNull Item item) {
-		add(item.getDescriptionId() + ".slots", "Fits in:/n• Armor, Weapons, Shields");
-	}
-
-	private void addGemSlots(@NotNull Item item, String bonuses) {
-		addGemSlots(item);
-		add(item.getDescriptionId() + ".bonus", bonuses);
 	}
 
 	private void addTooltip(Item item, String tooltip) {

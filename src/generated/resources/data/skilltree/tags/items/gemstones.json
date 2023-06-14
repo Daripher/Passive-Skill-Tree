@@ -1,9 +1,12 @@
 {
   "values": [
-    "skilltree:soothing_gemstone",
-    "skilltree:sturdy_gemstone",
-    "skilltree:light_gemstone",
-    "skilltree:void_gemstone",
-    "skilltree:rainbow_gemstone"
+    "skilltree:ruby",
+    "skilltree:onyx",
+    "skilltree:moonstone",
+    "skilltree:vacucite",
+    "skilltree:iriscite",
+    "skilltree:opal",
+    "skilltree:citrine",
+    "skilltree:adamite"
   ]
 }

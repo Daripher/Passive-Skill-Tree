@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "skilltree:item/void_gemstone"
+    "layer0": "skilltree:item/adamite"
   }
 }

@@ -7,12 +7,9 @@ import java.util.function.Function;
 import com.google.common.util.concurrent.AtomicDouble;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.config.Config;
 import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
-import daripher.skilltree.init.SkillTreeItems;
 import daripher.skilltree.util.FoodHelper;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;
@@ -20,7 +17,6 @@ import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlot.Type;
@@ -35,9 +31,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -52,11 +46,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
@@ -117,7 +109,7 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.EVASION_CHANCE.get(), Operation.MULTIPLY_BASE, "d2865c2c-d5cc-4de9-a793-752349d27da0", AttributeBonusHandler::getEvasionChanceWhenWounded);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "f6dbc327-88c0-4704-b230-91fe1642dc7a", AttributeBonusHandler::getAttackSpeedIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "5d449ea8-12dd-4596-a6e1-e4837946acb6", AttributeBonusHandler::getAttackSpeedWithBow);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "e37a2257-8511-4ffb-a5dd-913b591dd520", AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
+//		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "e37a2257-8511-4ffb-a5dd-913b591dd520", AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "fbc2d0b3-1453-4c49-8220-662e89ae1f45", AttributeBonusHandler::getCritChanceWithBow);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "44984187-74c8-4927-be18-1e187ca9babe", AttributeBonusHandler::getCritChanceIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "7bd1d9fb-4a20-41f3-89df-7cb42e849c5f", AttributeBonusHandler::getAttackWithEnchantedWeapon);
@@ -351,18 +343,18 @@ public class AttributeBonusHandler {
 		return attackSpeedWithBow;
 	}
 
-	private static double getAttackSpeedPerGemInWeapon(Player player) {
-		var mainHandItem = player.getMainHandItem();
-		if (!ItemHelper.isWeaponOrBow(mainHandItem)) {
-			return 0D;
-		}
-		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
-		if (gemstonesInWeapon == 0) {
-			return 0D;
-		}
-		var attackSpeedPerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_PER_GEMSTONE_IN_WEAPON.get()) - 1;
-		return attackSpeedPerGemInWeapon * gemstonesInWeapon;
-	}
+//	private static double getAttackSpeedPerGemInWeapon(Player player) {
+//		var mainHandItem = player.getMainHandItem();
+//		if (!ItemHelper.isWeaponOrBow(mainHandItem)) {
+//			return 0D;
+//		}
+//		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
+//		if (gemstonesInWeapon == 0) {
+//			return 0D;
+//		}
+//		var attackSpeedPerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_PER_GEMSTONE_IN_WEAPON.get()) - 1;
+//		return attackSpeedPerGemInWeapon * gemstonesInWeapon;
+//	}
 
 	private static double getCritChancePerGemInWeapon(Player player) {
 		var mainHandItem = player.getMainHandItem();
@@ -651,45 +643,6 @@ public class AttributeBonusHandler {
 			var miningSpeedMultiplier = (float) event.getEntity().getAttributeValue(SkillTreeAttributes.MINING_SPEED.get());
 			event.setNewSpeed(event.getOriginalSpeed() * miningSpeedMultiplier);
 		}
-	}
-
-	@SubscribeEvent
-	public static void applyGemFindingChanceBonus(BlockEvent.BreakEvent event) {
-		var player = event.getPlayer();
-		var level = player.getLevel();
-		if (level.isClientSide) {
-			return;
-		}
-		var gemstoneFindingChance = Config.COMMON_CONFIG.getGemDropChance();
-		gemstoneFindingChance += player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get()) - 1;
-		if (gemstoneFindingChance == 0) {
-			return;
-		}
-		var blockPos = event.getPos();
-		if (!level.getBlockState(blockPos).is(Tags.Blocks.ORES)) {
-			return;
-		}
-		if (player.getRandom().nextFloat() >= gemstoneFindingChance) {
-			return;
-		}
-		if (!ForgeHooks.isCorrectToolForDrops(event.getState(), player)) {
-			return;
-		}
-		if (ModList.get().isLoaded("apotheosis")) {
-			ApotheosisCompatibility.ISNTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
-			return;
-		}
-		var gemstones = new Item[] {
-			SkillTreeItems.LIGHT_GEMSTONE.get(),
-			SkillTreeItems.SOOTHING_GEMSTONE.get(),
-			SkillTreeItems.STURDY_GEMSTONE.get(),
-			SkillTreeItems.RAINBOW_GEMSTONE.get()
-		};
-		var foundGem = gemstones[player.getRandom().nextInt(gemstones.length)];
-		if (player.getRandom().nextFloat() < 0.1) {
-			foundGem = SkillTreeItems.VOID_GEMSTONE.get();
-		}
-		Block.popResource(level, blockPos, new ItemStack(foundGem));
 	}
 
 	@SubscribeEvent
@@ -1041,5 +994,13 @@ public class AttributeBonusHandler {
 			return;
 		}
 		ItemHelper.setDurabilityBonus(craftedStack, durabilityBonus);
+	}
+
+	@SubscribeEvent
+	public static void addAdditionalSocketTooltip(ItemTooltipEvent event) {
+		if (GemHelper.hasAdditionalSocket(event.getItemStack())) {
+			var additionalSocketTooltip = Component.translatable("gem.additional_socket").withStyle(ChatFormatting.YELLOW);
+			event.getToolTip().add(1, additionalSocketTooltip);
+		}
 	}
 }

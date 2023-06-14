@@ -72,9 +72,6 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "adamite"), createGem(
 				new AttributeBonus(WEAPON_CLASS, SkillTreeAttributes.DAMAGE_AGAINST_POISONED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.015F)),
 				new AttributeBonus(HELMET_CLASS, SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.01F))));
-		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "adamite"), createGem(
-				new AttributeBonus(WEAPON_CLASS, SkillTreeAttributes.DAMAGE_AGAINST_POISONED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.015F)),
-				new AttributeBonus(HELMET_CLASS, SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.01F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "third_eye"), createGem(0, 0.4F, true,
 				new AttributeBonus(HELMET_CLASS, SkillTreeAttributes.MAXIMUM_SOCKETS.get(), Operation.ADDITION, generateBonus(LootRarity.MYTHIC, 1F, 1, 0F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "citrine"), createGem(

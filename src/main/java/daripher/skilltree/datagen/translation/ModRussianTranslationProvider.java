@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.NotNull;
-
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
@@ -134,7 +132,9 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		addMixture("благословения", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
 		addMixture("чумы", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
-		add("gemstone.empty", "<Пустое гнездо>");
+		add("gem.socket", "[Пустое гнездо]");
+		add("gem.additional_socket", "• Имеет дополнительное гнездо.");
+		add("gem.disabled", "Отключено с модулем приключений Apotheosis.");
 		add("gemstone.slot.helmet", "Шлемы: ");
 		add("gemstone.slot.chestplate", "Нагрудники: ");
 		add("gemstone.slot.boots", "Ботинки: ");
@@ -143,11 +143,13 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("gemstone.slot.shield", "Щиты: ");
 		add("gemstone.slot.bow", "Луки: ");
 		add("gemstone.slot.melee_weapon", "Оружие ближнего боя: ");
-		addGemSlots(SkillTreeItems.SOOTHING_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.STURDY_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.LIGHT_GEMSTONE.get());
-		addGemSlots(SkillTreeItems.VOID_GEMSTONE.get(), "Поглощает самоцветы в предмете");
-		addGemSlots(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Результат непредсказуем");
+		add("gem.slot.armor_and_shield", "Броню и щиты: ");
+		add("gem.slot.anything", "Что угодно: ");
+		add("gem.slot.armor", "Броню: ");
+		add("gem.slot.pickaxe", "Кирки: ");
+		add("gem.slots", "Вставляется в:");
+		addTooltip(SkillTreeItems.VACUCITE.get(), "Что угодно: Поглощает самоцветы из предмета");
+		addTooltip(SkillTreeItems.IRISCITE.get(), "Что угодно: Результат непредсказуем");
 		// food info
 		add("food.bonus.damage", "+%d%% Урон");
 		add("food.bonus.crit_damage", "+%d%% Критический урон");
@@ -155,11 +157,14 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		// weapon info
 		add("weapon.poisoned", "Отравлено:");
 		// items
-		add(SkillTreeItems.SOOTHING_GEMSTONE.get(), "Успокаивающий самоцвет");
-		add(SkillTreeItems.STURDY_GEMSTONE.get(), "Крепкий самоцвет");
-		add(SkillTreeItems.LIGHT_GEMSTONE.get(), "Лёгкий самоцвет");
-		add(SkillTreeItems.VOID_GEMSTONE.get(), "Пустотный самоцвет");
-		add(SkillTreeItems.RAINBOW_GEMSTONE.get(), "Радужный самоцвет");
+		add(SkillTreeItems.ADAMITE.get(), "Адамит");
+		add(SkillTreeItems.CITRINE.get(), "Цитрин");
+		add(SkillTreeItems.IRISCITE.get(), "Ирисцит");
+		add(SkillTreeItems.MOONSTONE.get(), "Лунный камень");
+		add(SkillTreeItems.ONYX.get(), "Оникс");
+		add(SkillTreeItems.OPAL.get(), "Опал");
+		add(SkillTreeItems.RUBY.get(), "Рубин");
+		add(SkillTreeItems.VACUCITE.get(), "Вакуцит");
 		add(SkillTreeItems.WISDOM_SCROLL.get(), "Свиток мудрости");
 		addTooltip(SkillTreeItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
 		add(SkillTreeItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
@@ -290,15 +295,6 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("gem_class.other_armor", "Другая броня");
 		add("gem_class.other_weapon", "Другое оружие");
 		add("gem_class.pickaxe", "Кирки");
-	}
-
-	private void addGemSlots(@NotNull Item item) {
-		add(item.getDescriptionId() + ".slots", "Вставляется в:/n• Броню, Оружие, Щиты");
-	}
-
-	private void addGemSlots(@NotNull Item item, String bonuses) {
-		addGemSlots(item);
-		add(item.getDescriptionId() + ".bonus", bonuses);
 	}
 
 	private void addTooltip(Item item, String tooltip) {

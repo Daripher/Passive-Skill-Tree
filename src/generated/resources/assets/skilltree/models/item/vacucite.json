@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "skilltree:item/sturdy_gemstone"
+    "layer0": "skilltree:item/vacucite"
   }
 }

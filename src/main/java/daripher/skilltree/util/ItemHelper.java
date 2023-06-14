@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -11,15 +12,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -117,29 +113,11 @@ public class ItemHelper {
 		});
 	}
 
-	public static boolean isArmor(ItemStack itemStack) {
-		return itemStack.getItem() instanceof ArmorItem;
-	}
-
-	public static boolean isShield(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_SHIELDS) || itemStack.getItem() instanceof ShieldItem;
-	}
-
-	public static boolean isWeapon(ItemStack itemStack) {
-		return itemStack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, itemStack).containsKey(Attributes.ATTACK_DAMAGE);
-	}
-
-	public static boolean isBow(ItemStack itemStack) {
-		return itemStack.getItem() instanceof BowItem;
-	}
-
-	public static boolean isWeaponOrBow(ItemStack itemStack) {
-		return isWeapon(itemStack) || isBow(itemStack);
-	}
-
-	public static boolean canApplyGemstone(ItemStack itemStack) {
+	public static boolean canInsertGem(ItemStack itemStack) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return false;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return false;
+			}
 		}
 		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) {
@@ -154,38 +132,6 @@ public class ItemHelper {
 			return false;
 		}
 		return isArmor(itemStack) || isShield(itemStack) || isWeapon(itemStack) || isBow(itemStack);
-	}
-
-	public static boolean isHelmet(ItemStack itemStack) {
-		return isArmor(itemStack) && ((ArmorItem) itemStack.getItem()).getSlot() == EquipmentSlot.HEAD;
-	}
-
-	public static boolean isChestplate(ItemStack itemStack) {
-		return isArmor(itemStack) && ((ArmorItem) itemStack.getItem()).getSlot() == EquipmentSlot.CHEST;
-	}
-
-	public static boolean isLeggings(ItemStack itemStack) {
-		return isArmor(itemStack) && ((ArmorItem) itemStack.getItem()).getSlot() == EquipmentSlot.LEGS;
-	}
-
-	public static boolean isBoots(ItemStack itemStack) {
-		return isArmor(itemStack) && ((ArmorItem) itemStack.getItem()).getSlot() == EquipmentSlot.FEET;
-	}
-
-	public static boolean isPickaxe(ItemStack itemStack) {
-		return itemStack.getItem() instanceof PickaxeItem;
-	}
-
-	public static boolean isFood(ItemStack itemStack) {
-		return itemStack.getFoodProperties(null) != null;
-	}
-
-	public static boolean isAxe(ItemStack itemStack) {
-		return itemStack.getItem() instanceof AxeItem;
-	}
-
-	public static boolean isEquipment(ItemStack stack) {
-		return isWeaponOrBow(stack) || isArmor(stack) || isShield(stack);
 	}
 
 	public static boolean isPoison(ItemStack itemStack) {
@@ -226,5 +172,57 @@ public class ItemHelper {
 			slot = EquipmentSlot.MAINHAND;
 		}
 		return slot;
+	}
+
+	public static boolean isArmor(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.ARMORS);
+	}
+
+	public static boolean isShield(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.TOOLS_SHIELDS);
+	}
+
+	public static boolean isWeapon(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.TOOLS_AXES) || itemStack.is(Tags.Items.TOOLS_SWORDS);
+	}
+
+	public static boolean isBow(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.TOOLS_BOWS);
+	}
+
+	public static boolean isWeaponOrBow(ItemStack itemStack) {
+		return isWeapon(itemStack) || isBow(itemStack);
+	}
+
+	public static boolean isHelmet(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.ARMORS_HELMETS);
+	}
+
+	public static boolean isChestplate(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.ARMORS_CHESTPLATES);
+	}
+
+	public static boolean isLeggings(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.ARMORS_LEGGINGS);
+	}
+
+	public static boolean isBoots(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.ARMORS_BOOTS);
+	}
+
+	public static boolean isPickaxe(ItemStack itemStack) {
+		return itemStack.is(Tags.Items.TOOLS_PICKAXES);
+	}
+
+	public static boolean isFood(ItemStack itemStack) {
+		return itemStack.getFoodProperties(null) != null;
+	}
+
+	public static boolean isAxe(ItemStack itemStack) {
+		return itemStack.getItem() instanceof AxeItem;
+	}
+
+	public static boolean isEquipment(ItemStack stack) {
+		return isWeaponOrBow(stack) || isArmor(stack) || isShield(stack);
 	}
 }

@@ -20,5 +20,6 @@ public class ModDataGenerator {
 		dataGenerator.addProvider(event.includeServer(), blockTagsProvider);
 		dataGenerator.addProvider(event.includeServer(), new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
 		dataGenerator.addProvider(event.includeServer(), new ModSkillsProvider(dataGenerator));
+		dataGenerator.addProvider(event.includeServer(), new ModLootTablesProvider(dataGenerator));
 	}
 }

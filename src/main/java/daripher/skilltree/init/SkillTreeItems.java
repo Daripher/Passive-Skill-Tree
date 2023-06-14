@@ -11,11 +11,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class SkillTreeItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SkillTreeMod.MOD_ID);
 
-	public static final RegistryObject<Item> SOOTHING_GEMSTONE = REGISTRY.register("soothing_gemstone", SoothingGemstoneItem::new);
-	public static final RegistryObject<Item> STURDY_GEMSTONE = REGISTRY.register("sturdy_gemstone", SturdyGemstoneItem::new);
-	public static final RegistryObject<Item> LIGHT_GEMSTONE = REGISTRY.register("light_gemstone", LightGemstoneItem::new);
-	public static final RegistryObject<Item> VOID_GEMSTONE = REGISTRY.register("void_gemstone", VoidGemstoneItem::new);
-	public static final RegistryObject<Item> RAINBOW_GEMSTONE = REGISTRY.register("rainbow_gemstone", RainbowGemstoneItem::new);
+	public static final RegistryObject<Item> RUBY = REGISTRY.register("ruby", RubyItem::new);
+	public static final RegistryObject<Item> ONYX = REGISTRY.register("onyx", OnyxItem::new);
+	public static final RegistryObject<Item> MOONSTONE = REGISTRY.register("moonstone", MoonstoneItem::new);
+	public static final RegistryObject<Item> VACUCITE = REGISTRY.register("vacucite", VacuciteItem::new);
+	public static final RegistryObject<Item> IRISCITE = REGISTRY.register("iriscite", IrisciteItem::new);
+	public static final RegistryObject<Item> OPAL = REGISTRY.register("opal", OpalItem::new);
+	public static final RegistryObject<Item> CITRINE = REGISTRY.register("citrine", CitrineItem::new);
+	public static final RegistryObject<Item> ADAMITE = REGISTRY.register("adamite", AdamiteItem::new);
 	public static final RegistryObject<Item> WISDOM_SCROLL = REGISTRY.register("wisdom_scroll", WisdomScrollItem::new);
 	public static final RegistryObject<Item> AMNESIA_SCROLL = REGISTRY.register("amnesia_scroll", AmnesiaScrollItem::new);
 }

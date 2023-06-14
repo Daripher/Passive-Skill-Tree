@@ -33,7 +33,9 @@ public class GemHelper {
 
 	public static boolean hasGem(ItemStack itemStack, int gemSlot) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return false;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return false;
+			}
 		}
 		if (!itemStack.hasTag()) {
 			return false;
@@ -95,7 +97,9 @@ public class GemHelper {
 
 	public static GemItem getGem(ItemStack itemStack, int gemstoneSlot) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return null;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return null;
+			}
 		}
 		if (!hasGem(itemStack, gemstoneSlot)) {
 			return null;
@@ -116,7 +120,9 @@ public class GemHelper {
 
 	public static int getGemsCount(ItemStack itemStack) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return ApotheosisCompatibility.ISNTANCE.getGemsCount(itemStack);
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return ApotheosisCompatibility.ISNTANCE.getGemsCount(itemStack);
+			}
 		}
 		if (itemStack.isEmpty()) {
 			return 0;
@@ -131,11 +137,13 @@ public class GemHelper {
 		return gemstones;
 	}
 
-	public static int getEmptyGemSlots(@NotNull ItemStack itemStack, @Nullable Player player) {
+	public static int getEmptySockets(@NotNull ItemStack itemStack, @Nullable Player player) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return 0;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return 0;
+			}
 		}
-		var maximumSlots = getMaximumGemstoneSlots(itemStack, player);
+		var maximumSlots = getMaximumSockets(itemStack, player);
 		var emptySlots = maximumSlots;
 		for (var slot = 0; slot < maximumSlots; slot++) {
 			if (hasGem(itemStack, slot)) {
@@ -145,9 +153,11 @@ public class GemHelper {
 		return emptySlots;
 	}
 
-	public static int getMaximumGemstoneSlots(@NotNull ItemStack itemStack, @Nullable Player player) {
+	public static int getMaximumSockets(@NotNull ItemStack itemStack, @Nullable Player player) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			return 0;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				return 0;
+			}
 		}
 		var maximumSlots = 1;
 		if (hasAdditionalSocket(itemStack)) {

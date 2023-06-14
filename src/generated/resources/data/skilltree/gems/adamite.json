@@ -6,12 +6,12 @@
       "gem_class": {
         "key": "any_weapon",
         "types": [
-          "heavy_weapon",
           "trident",
-          "sword",
-          "shovel",
+          "heavy_weapon",
+          "pickaxe",
           "bow",
-          "pickaxe"
+          "shovel",
+          "sword"
         ]
       },
       "operation": "multiply_base",

@@ -28,7 +28,7 @@ public abstract class MixinSmithingMenu extends ItemCombinerMenu {
 
 	@Inject(method = "onTake", at = @At("HEAD"))
 	private void changeRainbowJewelInsertionSeed(Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
-		if (inputSlots.getItem(1).getItem() == SkillTreeItems.RAINBOW_GEMSTONE.get()) {
+		if (inputSlots.getItem(1).getItem() == SkillTreeItems.IRISCITE.get()) {
 			((SkillTreePlayer) player).updateRainbowGemstoneRandomSeed();
 		}
 	}

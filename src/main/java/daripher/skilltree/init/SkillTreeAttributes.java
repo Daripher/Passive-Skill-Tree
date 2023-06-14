@@ -87,7 +87,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> ARMOR_PER_GEMSTONE_IN_CHESTPLATE = rangedAttribute("player", "armor_per_gemstone_in_chestplate_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR = rangedAttribute("player", "maximum_life_per_gemstone_in_armor_bonus", 0D, 0D, 10D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET = rangedAttribute("player", "maximum_life_per_gemstone_in_helmet", 0D, 0D, 10D);
-	public static final RegistryObject<Attribute> ATTACK_SPEED_PER_GEMSTONE_IN_WEAPON = rangedAttribute("player", "attack_speed_per_gemstone_in_weapon", 1D, 1D, 10D);
+//	public static final RegistryObject<Attribute> ATTACK_SPEED_PER_GEMSTONE_IN_WEAPON = rangedAttribute("player", "attack_speed_per_gemstone_in_weapon", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON = rangedAttribute("player", "crit_chance_per_gemstone_in_weapon", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON = rangedAttribute("player", "crit_damage_per_gemstone_in_weapon", 1D, 1D, 10D);
 	public static final RegistryObject<Attribute> LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET = rangedAttribute("player", "life_regeneration_per_gemstone_in_helmet", 0D, 0D, 10D);

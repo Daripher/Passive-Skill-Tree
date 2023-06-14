@@ -9,20 +9,34 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.jetbrains.annotations.NotNull;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.config.Config;
+import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
@@ -31,7 +45,7 @@ public class GemBonusHandler {
 
 	@SubscribeEvent
 	public static void applyGemstoneBonuses(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.canApplyGemstone(event.getItemStack())) {
+		if (!ItemHelper.canInsertGem(event.getItemStack())) {
 			return;
 		}
 		var gemstoneSlot = 0;
@@ -43,7 +57,7 @@ public class GemBonusHandler {
 
 	@SubscribeEvent
 	public static void addGemstoneTooltips(ItemTooltipEvent event) {
-		if (!ItemHelper.canApplyGemstone(event.getItemStack())) {
+		if (!ItemHelper.canInsertGem(event.getItemStack())) {
 			return;
 		}
 		event.getToolTip().add(Component.empty());
@@ -52,28 +66,69 @@ public class GemBonusHandler {
 			addGemstoneTooltip(event, gemstoneSlot);
 			gemstoneSlot++;
 		}
-		addEmptyGemstoneSlotsTooltip(event);
+		addEmptySocketsTooltip(event);
+	}
+
+	@SubscribeEvent
+	public static void dropGemFromOre(BlockEvent.BreakEvent event) {
+		var player = event.getPlayer();
+		if (player.isCreative()) {
+			return;
+		}
+		var level = player.getLevel();
+		if (level.isClientSide) {
+			return;
+		}
+		var gemDropChance = Config.COMMON_CONFIG.getGemDropChance();
+		gemDropChance += player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get()) - 1;
+		if (gemDropChance == 0) {
+			return;
+		}
+		var blockPos = event.getPos();
+		if (!level.getBlockState(blockPos).is(Tags.Blocks.ORES)) {
+			return;
+		}
+		if (player.getRandom().nextFloat() >= gemDropChance) {
+			return;
+		}
+		if (!ForgeHooks.isCorrectToolForDrops(event.getState(), player)) {
+			return;
+		}
+		if (ModList.get().isLoaded("apotheosis")) {
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				ApotheosisCompatibility.ISNTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
+				return;
+			}
+		}
+		var serverLevel = (ServerLevel) level;
+		var lootTable = serverLevel.getServer().getLootTables().get(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
+		var lootContext = new LootContext.Builder(serverLevel)
+				.withParameter(LootContextParams.BLOCK_STATE, event.getState())
+				.withParameter(LootContextParams.ORIGIN, new Vec3(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
+				.withParameter(LootContextParams.TOOL, player.getMainHandItem())
+				.withLuck(player.getLuck())
+				.create(LootContextParamSets.BLOCK);
+		lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
 	}
 
 	private static void applyGemstoneAttributeModifier(ItemAttributeModifierEvent event, int gemstoneSlot) {
 		var itemStack = event.getItemStack();
 		var itemSlot = ItemHelper.getSlotForItem(itemStack);
-		if (itemSlot != event.getSlotType()) {
+		if (itemSlot != event.getSlotType())
 			return;
-		}
 		var attributeBonus = GemItem.getAttributeBonus(itemStack, gemstoneSlot);
 		var attribute = attributeBonus.getLeft();
 		var attributeModifier = getAttributeModifier(gemstoneSlot, attributeBonus, event.getSlotType());
 		event.addModifier(attribute, attributeModifier);
 	}
 
-	public static void addEmptyGemstoneSlotsTooltip(ItemTooltipEvent event) {
-		if (!ItemHelper.canApplyGemstone(event.getItemStack())) {
+	public static void addEmptySocketsTooltip(ItemTooltipEvent event) {
+		if (!ItemHelper.canInsertGem(event.getItemStack())) {
 			return;
 		}
-		var emptyGemstoneSlotsCount = GemHelper.getEmptyGemSlots(event.getItemStack(), event.getEntity());
-		for (var i = 0; i < emptyGemstoneSlotsCount; i++) {
-			event.getToolTip().add(Component.translatable("gemstone.empty").withStyle(ChatFormatting.DARK_GRAY));
+		var emptySockets = GemHelper.getEmptySockets(event.getItemStack(), event.getEntity());
+		for (var i = 0; i < emptySockets; i++) {
+			event.getToolTip().add(Component.translatable("gem.socket").withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}
 

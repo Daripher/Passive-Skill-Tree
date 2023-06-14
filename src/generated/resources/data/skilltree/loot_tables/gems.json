@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:ruby"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:onyx"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:moonstone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:iriscite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:opal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:citrine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:adamite"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:vacucite"
+        }
+      ],
+      "rolls": 0.2
+    }
+  ]
+}

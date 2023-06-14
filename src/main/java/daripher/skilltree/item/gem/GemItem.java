@@ -1,12 +1,12 @@
 package daripher.skilltree.item.gem;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.gem.GemHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -26,11 +26,11 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 
 public abstract class GemItem extends Item {
-	private final int gemstoneColor;
+	private final int color;
 
-	public GemItem(int gemstoneColor) {
+	public GemItem(int color) {
 		super(new Properties().tab(CreativeModeTab.TAB_MATERIALS));
-		this.gemstoneColor = gemstoneColor;
+		this.color = color;
 	}
 
 	@Override
@@ -42,22 +42,20 @@ public abstract class GemItem extends Item {
 
 	@OnlyIn(Dist.CLIENT)
 	public MutableComponent applyGemstoneColorStyle(MutableComponent name) {
-		return name.withStyle(Style.EMPTY.withColor(gemstoneColor));
+		return name.withStyle(Style.EMPTY.withColor(color));
 	}
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			components.add(Component.translatable("gemstone.disabled").withStyle(ChatFormatting.RED));
-			return;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+				components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
+				return;
+			}
 		}
-		var slotDescriptionLines = Component.translatable(getDescriptionId() + ".slots").getString().split("/n");
-		Arrays.asList(slotDescriptionLines).stream().map(Component::literal).map(this::applySlotDescriptionStyle).forEach(components::add);
+		var slotsTooltip = Component.translatable("gem.slots").withStyle(Style.EMPTY.withColor(0x0AFF0A));
+		components.add(slotsTooltip);
 		appenBonusesTooltip(components);
-	}
-
-	private MutableComponent applySlotDescriptionStyle(MutableComponent component) {
-		return component.withStyle(Style.EMPTY.withColor(0x0AFF0A));
 	}
 
 	public boolean canInsertInto(Player currentPlayer, ItemStack baseItem, int gemstoneSlot) {
