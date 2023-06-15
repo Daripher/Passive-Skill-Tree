@@ -26,10 +26,9 @@ public class MixinSocketingRecipe {
 
 	@Redirect(method = { "matches", "m_5818_" }, at = @At(value = "INVOKE", target = "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
 	private boolean bypassMaximumSockets(ItemStack itemStack, Container container, Level level) {
-		if (!(container instanceof PlayerContainer)) {
-			return SocketHelper.hasEmptySockets(itemStack);
-		}
-		var player = ((PlayerContainer) container).getPlayer().orElseThrow(NullPointerException::new);
+		if (!(container instanceof PlayerContainer)) return SocketHelper.hasEmptySockets(itemStack);
+		var playerContainer = (PlayerContainer) container;
+		var player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
 		return hasEmptySockets(player, itemStack);
 	}
 
@@ -69,15 +68,11 @@ public class MixinSocketingRecipe {
 	}
 
 	private ItemStack increaseGemPower(ItemStack gemStack, Container container) {
-		if (!(container instanceof PlayerContainer)) {
-			return gemStack;
-		}
+		if (!(container instanceof PlayerContainer)) return gemStack;
 		var player = ((PlayerContainer) container).getPlayer().orElseThrow(NullPointerException::new);
 		var itemStack = container.getItem(0);
 		var gemPower = PlayerHelper.getGemPower(player, itemStack);
-		if (gemPower == 1) {
-			return gemStack;
-		}
+		if (gemPower == 1) return gemStack;
 		gemStack.getOrCreateTag().putFloat("gem_power", (float) gemPower);
 		return gemStack;
 	}
@@ -86,12 +81,13 @@ public class MixinSocketingRecipe {
 		var maxSockets = 0;
 		maxSockets += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_SOCKETS.get());
 		if (ItemHelper.isChestplate(itemStack)) {
-			maxSockets += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get());
+			var chestplateSockets = SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get();
+			maxSockets += (int) player.getAttributeValue(chestplateSockets);
 		}
 		if (ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack)) {
-			maxSockets += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get());
+			var weaponSockets = SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get();
+			maxSockets += (int) player.getAttributeValue(weaponSockets);
 		}
-
 		return maxSockets;
 	}
 
@@ -103,12 +99,8 @@ public class MixinSocketingRecipe {
 	}
 
 	private static int getAdditionalGems(ItemStack itemStack) {
-		if (!itemStack.hasTag()) {
-			return 0;
-		}
-		if (!itemStack.getTag().contains(ADDITIONAL_GEMS_TAG)) {
-			return 0;
-		}
+		if (!itemStack.hasTag()) return 0;
+		if (!itemStack.getTag().contains(ADDITIONAL_GEMS_TAG)) return 0;
 		var additionalGems = itemStack.getTag().getInt(ADDITIONAL_GEMS_TAG);
 		return additionalGems;
 	}

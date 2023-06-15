@@ -34,22 +34,24 @@ public class MixinApothEnchantContainer {
 
 	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsVisually(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
-		var costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
-		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
-		var enchantmentSeed = ((SkillTreeEnchantmentMenu) (Object) this).getEnchantmentSeed();
-		var random = RandomSource.create(enchantmentSeed);
-		var player = ((PlayerContainer) (Object) this).getPlayer().orElseThrow(NullPointerException::new);
-		EnchantmentHelper.amplifyEnchantments(enchantments, random, player);
+		var enchantments = amplifyEnchantments(itemStack, slot);
 		return enchantments;
 	}
 
 	@Redirect(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
-		var costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
+		var enchantments = amplifyEnchantments(itemStack, slot);
+		return enchantments;
+	}
+
+	protected List<EnchantmentInstance> amplifyEnchantments(ItemStack itemStack, int slot) {
+		var enchantmentMenu = (SkillTreeEnchantmentMenu) (Object) this;
+		var costsBeforeReduction = enchantmentMenu.getCostsBeforeReduction();
 		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
-		var enchantmentSeed = ((SkillTreeEnchantmentMenu) (Object) this).getEnchantmentSeed();
+		var enchantmentSeed = enchantmentMenu.getEnchantmentSeed();
 		var random = RandomSource.create(enchantmentSeed);
-		var player = ((PlayerContainer) (Object) this).getPlayer().orElseThrow(NullPointerException::new);
+		var playerContainer = (PlayerContainer) (Object) this;
+		var player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
 		EnchantmentHelper.amplifyEnchantments(enchantments, random, player);
 		return enchantments;
 	}

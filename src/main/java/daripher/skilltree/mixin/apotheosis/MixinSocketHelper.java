@@ -23,28 +23,19 @@ public class MixinSocketHelper {
 	private static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMS";
 
 	@ModifyVariable(method = "getGems(Lnet/minecraft/world/item/ItemStack;I)Ljava/util/List;", at = @At("HEAD"), ordinal = 0)
-	private static int applyAdditionalGems(int value, ItemStack stack, int sockets) {
-		if (!stack.hasTag()) {
-			return value;
-		}
-		if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) {
-			return value;
-		}
+	private static int applyAdditionalGems(int sockets, ItemStack stack, int sockets_) {
+		if (!stack.hasTag()) return sockets;
+		if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) return sockets;
 		var additionalGems = stack.getTag().getInt(ADDITIONAL_GEMS_TAG);
-		value += additionalGems;
-		return value;
+		return sockets + additionalGems;
 	}
 
 	@Inject(method = "setGems", at = @At("HEAD"), cancellable = true)
 	private static void setAdditionalGems(ItemStack stack, List<ItemStack> gems, CallbackInfo callbackInfo) {
 		var sockets = getSockets(stack);
 		if (gems.size() <= sockets) {
-			if (!stack.hasTag()) {
-				return;
-			}
-			if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) {
-				return;
-			}
+			if (!stack.hasTag()) return;
+			if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) return;
 			stack.getOrCreateTag().remove(ADDITIONAL_GEMS_TAG);
 			return;
 		}
@@ -54,13 +45,9 @@ public class MixinSocketHelper {
 
 	@Inject(method = "getSockets", at = @At("HEAD"))
 	private static void addAdditionalSockets(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!ItemHelper.isEquipment(stack)) {
-			return;
-		}
+		if (!ItemHelper.isEquipment(stack)) return;
 		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-		if (socketAffix == null) {
-			SocketHelper.setSockets(stack, 1);
-		}
+		if (socketAffix == null) SocketHelper.setSockets(stack, 1);
 		if (GemHelper.hasAdditionalSocket(stack) && !hasAdditionalSocket(stack)) {
 			setHasAdditionalSocket(stack);
 			var sockets = (int) AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get()).level();
