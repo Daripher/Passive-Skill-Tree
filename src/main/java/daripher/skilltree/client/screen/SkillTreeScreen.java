@@ -61,6 +61,7 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public void init() {
+		clearWidgets();
 		initSkillsIfNeeded();
 		addSkillButtons();
 		maxScrollX -= width / 2 - 80;
