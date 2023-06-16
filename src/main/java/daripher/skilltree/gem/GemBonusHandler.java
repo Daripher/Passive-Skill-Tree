@@ -25,6 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -72,28 +73,20 @@ public class GemBonusHandler {
 	@SubscribeEvent
 	public static void dropGemFromOre(BlockEvent.BreakEvent event) {
 		var player = event.getPlayer();
-		if (player.isCreative()) {
-			return;
-		}
+		if (player.isCreative()) return;
 		var level = player.getLevel();
-		if (level.isClientSide) {
-			return;
-		}
-		var gemDropChance = Config.COMMON_CONFIG.getGemDropChance();
-		gemDropChance += player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get()) - 1;
-		if (gemDropChance == 0) {
-			return;
-		}
+		if (level.isClientSide) return;
+		var dropChance = Config.COMMON_CONFIG.getGemDropChance();
+		dropChance += player.getAttributeValue(SkillTreeAttributes.GEM_DROP_CHANCE.get()) - 1;
+		if (dropChance == 0) return;
 		var blockPos = event.getPos();
-		if (!level.getBlockState(blockPos).is(Tags.Blocks.ORES)) {
-			return;
-		}
-		if (player.getRandom().nextFloat() >= gemDropChance) {
-			return;
-		}
-		if (!ForgeHooks.isCorrectToolForDrops(event.getState(), player)) {
-			return;
-		}
+		var isOre = level.getBlockState(blockPos).is(Tags.Blocks.ORES);
+		if (!isOre) return;
+		if (player.getRandom().nextFloat() >= dropChance) return;
+		var usingCorrectTool = ForgeHooks.isCorrectToolForDrops(event.getState(), player);
+		if (!usingCorrectTool) return;
+		var hasSilkTouch = player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0;
+		if (hasSilkTouch) return;
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
 				ApotheosisCompatibility.ISNTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);

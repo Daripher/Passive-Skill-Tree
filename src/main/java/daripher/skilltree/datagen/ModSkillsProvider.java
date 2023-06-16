@@ -196,14 +196,14 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("miner_mastery", MAXIMUM_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("miner_crit", CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), 0.02, MULTIPLY_BASE, 1, 4);
 		addSkillAttributeModifier("miner_crit_keystone_1", CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), 0.1, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("miner_crafting", CHANCE_TO_FIND_GEMSTONE.get(), 0.01, MULTIPLY_BASE, 1, 3);
+		addSkillBranchAttributeModifier("miner_crafting", GEM_DROP_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 3);
 		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", GEM_POWER_IN_ARMOR.get(), 0.3, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", MAXIMUM_CHESTPLATE_SOCKETS.get(), 1, ADDITION);
 		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", GEM_POWER_IN_WEAPON.get(), 0.3, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", MAXIMUM_WEAPON_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("miner_healing", LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 2);
 		addSkillAttributeModifier("miner_healing_notable_1", LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), 0.5, ADDITION);
-		addSkillAttributeModifier("miner_crafting_notable_1", CHANCE_TO_FIND_GEMSTONE.get(), 0.02, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_crafting_notable_1", GEM_DROP_CHANCE.get(), 0.02, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_defensive_keystone_1", ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), 5, ADDITION);
 		addSkillAttributeModifier("miner_offensive_keystone_1", PICKAXE_DAMAGE.get(), 0.75, MULTIPLY_BASE);
 		// blacksmith skills

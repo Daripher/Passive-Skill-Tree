@@ -223,7 +223,7 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), "Максимум здоровья за самоцвет в шлеме");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), "Максимум здоровья за самоцвет в броне");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), "Критический урон за самоцвет в оружии");
-		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Шанс найти самоцвет в руде");
+		add(SkillTreeAttributes.GEM_DROP_CHANCE.get(), "Шанс найти самоцвет в руде");
 		add(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), "Регенерация здоровья за самоцвет в шлеме");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE.get(), "Защита создаваемой брони");
 		add(SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get(), "Броня создаваемых щитов");

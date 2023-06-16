@@ -134,7 +134,7 @@ public class SkillTreeAttributes {
 	public static final RegistryObject<Attribute> BLOCK_CHANCE = rangedAttribute("player", "block_chance", 1D, 1D, 2D);
 	public static final RegistryObject<Attribute> CRIT_DAMAGE = rangedAttribute("player", "crit_damage", 1D, 1D, 5D);
 	public static final RegistryObject<Attribute> CRIT_CHANCE = rangedAttribute("player", "crit_chance", 1D, 1D, 2D);
-	public static final RegistryObject<Attribute> CHANCE_TO_FIND_GEMSTONE = rangedAttribute("player", "chance_to_find_gemstone", 1D, 1D, 2D);
+	public static final RegistryObject<Attribute> GEM_DROP_CHANCE = rangedAttribute("player", "chance_to_find_gemstone", 1D, 1D, 2D);
 
 	private static RegistryObject<Attribute> rangedAttribute(String category, String name, double defaultValue, double minValue, double maxValue) {
 		return REGISTRY.register(category + "." + name, () -> new RangedAttribute(category + "." + name, defaultValue, minValue, maxValue).setSyncable(true));

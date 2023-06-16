@@ -223,7 +223,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), "Maximum Life per Gem in Helmet");
 		add(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), "Maximum Life per Gem in Armor");
 		add(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), "Critical Hit Damage per Gem in Weapon");
-		add(SkillTreeAttributes.CHANCE_TO_FIND_GEMSTONE.get(), "Chance to find Gem in Ore");
+		add(SkillTreeAttributes.GEM_DROP_CHANCE.get(), "Chance to find Gem in Ore");
 		add(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), "Life Regeneration per Gem in Helmet");
 		add(SkillTreeAttributes.CRAFTED_ARMOR_DEFENCE.get(), "Crafted Armor Defence");
 		add(SkillTreeAttributes.CRAFTED_SHIELDS_ARMOR_BONUS.get(), "Crafted Shields Armor");
