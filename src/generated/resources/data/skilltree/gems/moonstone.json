@@ -44,11 +44,11 @@
       "gem_class": {
         "key": "other_weapon",
         "types": [
-          "trident",
-          "heavy_weapon",
-          "shovel",
+          "bow",
           "sword",
-          "bow"
+          "shovel",
+          "heavy_weapon",
+          "trident"
         ]
       },
       "operation": "multiply_base",

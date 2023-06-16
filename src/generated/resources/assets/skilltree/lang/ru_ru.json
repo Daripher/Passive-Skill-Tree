@@ -288,6 +288,7 @@
   "skill.skilltree.miner_speed_notable_1.name": "Выносливость",
   "skill.skilltree.void.description": "Ничего не даёт",
   "skill.skilltree.void.name": "Пустота",
+  "skilltree.jei.gem_info": "Самоцветы можно вставлять в предметы с гнёздами на кузнечном столе. Выпадают из любой руды с небольшим шансом (требуется инструмент без шёлкового касания).",
   "skilltree.message.point_command": "Получено очко пассивных умений.",
   "skilltree.message.reset": "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.",
   "skilltree.message.reset_command": "Ваше древо пассивных умений было сброшено.",

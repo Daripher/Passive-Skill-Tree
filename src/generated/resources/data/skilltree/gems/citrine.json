@@ -7,17 +7,17 @@
         "key": "anything",
         "types": [
           "bow",
-          "helmet",
-          "heavy_weapon",
-          "trident",
-          "crossbow",
-          "chestplate",
-          "pickaxe",
-          "shield",
-          "leggings",
-          "boots",
+          "shovel",
           "sword",
-          "shovel"
+          "boots",
+          "leggings",
+          "shield",
+          "pickaxe",
+          "chestplate",
+          "crossbow",
+          "trident",
+          "heavy_weapon",
+          "helmet"
         ]
       },
       "operation": "addition",

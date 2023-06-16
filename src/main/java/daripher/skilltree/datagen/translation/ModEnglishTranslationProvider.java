@@ -295,6 +295,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("gem_class.other_armor", "Other Armor");
 		add("gem_class.other_weapon", "Other Weapon");
 		add("gem_class.pickaxe", "Pickaxes");
+		// jei compatibility
+		add("skilltree.jei.gem_info", "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

@@ -295,6 +295,8 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("gem_class.other_armor", "Другая броня");
 		add("gem_class.other_weapon", "Другое оружие");
 		add("gem_class.pickaxe", "Кирки");
+		// jei compatibility
+		add("skilltree.jei.gem_info", "Самоцветы можно вставлять в предметы с гнёздами на кузнечном столе. Выпадают из любой руды с небольшим шансом (требуется инструмент без шёлкового касания).");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

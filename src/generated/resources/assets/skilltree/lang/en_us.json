@@ -288,6 +288,7 @@
   "skill.skilltree.miner_speed_notable_1.name": "Endurance",
   "skill.skilltree.void.description": "Grants Nothing",
   "skill.skilltree.void.name": "Void",
+  "skilltree.jei.gem_info": "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).",
   "skilltree.message.point_command": "Skill point gained.",
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
   "skilltree.message.reset_command": "Your skill tree has been reset.",
