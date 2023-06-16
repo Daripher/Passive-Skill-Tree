@@ -21,13 +21,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class SkillPointProgressBar extends Button {
+public class ProgressBar extends Button {
 	private static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_widgets.png");
 	private static final Style EXPERIENCE_COLOR = Style.EMPTY.withColor(0xFCE266);
 	private final SkillTreeScreen parentScreen;
 
-	public SkillPointProgressBar(SkillTreeScreen parentScreen, int x, int y) {
-		super(x, y, 235, 19, Component.empty(), SkillPointProgressBar::buttonPressed);
+	public ProgressBar(SkillTreeScreen parentScreen, int x, int y) {
+		super(x, y, 235, 19, Component.empty(), ProgressBar::buttonPressed);
 		this.parentScreen = parentScreen;
 	}
 

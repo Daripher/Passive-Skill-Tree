@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -15,7 +16,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.SkillTreeClientData;
 import daripher.skilltree.client.widget.SkillButton;
-import daripher.skilltree.client.widget.SkillPointProgressBar;
+import daripher.skilltree.client.widget.ProgressBar;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.LearnSkillMessage;
@@ -24,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -39,9 +41,11 @@ public class SkillTreeScreen extends Screen {
 	private final List<SkillButton> startingPoints = new ArrayList<>();
 	private final ResourceLocation skillTreeId;
 	private List<ResourceLocation> learnedSkills;
-	private AbstractWidget skillPointProgressBar;
+	private AbstractWidget progressBar;
 	private int skillPoints;
 	private int guiScale;
+	protected double scrollSpeedX;
+	protected double scrollSpeedY;
 	protected double scrollX;
 	protected double scrollY;
 	protected int maxScrollX;
@@ -61,16 +65,49 @@ public class SkillTreeScreen extends Screen {
 		addSkillButtons();
 		maxScrollX -= width / 2 - 80;
 		maxScrollY -= height / 2 - 80;
+		if (maxScrollX < 0) maxScrollX = 0;
+		if (maxScrollY < 0) maxScrollY = 0;
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
-		skillPointProgressBar = new SkillPointProgressBar(this, width / 2 - 235 / 2, height - 18);
-		addRenderableWidget(skillPointProgressBar);
+		progressBar = new ProgressBar(this, width / 2 - 235 / 2, height - 18);
+		addRenderableWidget(progressBar);
+	}
+
+	@Override
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+		updateScroll(partialTick);
+		renderAnimation += partialTick;
+		renderBackground(poseStack);
+		renderConnections(poseStack, partialTick);
+		poseStack.pushPose();
+		poseStack.translate(scrollX, scrollY, 0);
+		for (Widget widget : renderables) {
+			if (widget == progressBar) continue;
+			widget.render(poseStack, mouseX, mouseY, partialTick);
+		}
+		poseStack.popPose();
+		renderOverlay(poseStack, mouseX, mouseY, partialTick);
+		progressBar.render(poseStack, mouseX, mouseY, partialTick);
+		getChildAt(mouseX, mouseY)
+			.filter(SkillButton.class::isInstance)
+			.map(SkillButton.class::cast)
+			.ifPresent(button -> renderButtonTooltip(button, poseStack, mouseX, mouseY));
+	}
+	
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int button) {
+		return super.mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
+	}
+	
+	@Override
+	public Optional<GuiEventListener> getChildAt(double mouseX, double mouseY) {
+		var child = super.getChildAt(mouseX, mouseY);
+		if (child.filter(ProgressBar.class::isInstance).isPresent()) return child;
+		return super.getChildAt(mouseX - scrollX, mouseY - scrollY);
 	}
 
 	protected void initSkillsIfNeeded() {
-		if (learnedSkills != null) {
-			return;
-		}
+		if (learnedSkills != null) return;
 		learnedSkills = new ArrayList<>();
 		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
 		skillsCapability.getPlayerSkills().stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
@@ -84,23 +121,15 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
-		var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
-		var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
+		var buttonX = (int) (skill.getPositionX() + width / 2);
+		var buttonY = (int) (skill.getPositionY() + height / 2);
 		var button = new SkillButton(this, buttonX, buttonY, skill);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
-		if (skill.isStartingPoint()) {
-			startingPoints.add(button);
-		}
-		if (learnedSkills.contains(skill.getId())) {
-			button.highlighted = true;
-		}
-		if (maxScrollX < Mth.abs(skill.getPositionX())) {
-			maxScrollX = Mth.abs(skill.getPositionX());
-		}
-		if (maxScrollY < Mth.abs(skill.getPositionY())) {
-			maxScrollY = Mth.abs(skill.getPositionY());
-		}
+		if (skill.isStartingPoint()) startingPoints.add(button);
+		if (learnedSkills.contains(skill.getId())) button.highlighted = true;
+		if (maxScrollX < Mth.abs(skill.getPositionX())) maxScrollX = Mth.abs(skill.getPositionX());
+		if (maxScrollY < Mth.abs(skill.getPositionY())) maxScrollY = Mth.abs(skill.getPositionY());
 	}
 
 	public void addSkillConnections() {
@@ -119,49 +148,32 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void highlightSkillsThatCanBeLearned() {
-		if (skillPoints == 0) {
-			return;
-		}
+		if (skillPoints == 0) return;
 		if (learnedSkills.isEmpty()) {
 			startingPoints.forEach(SkillButton::animate);
 			return;
 		}
-		if (learnedSkills.size() >= getMaximumSkillPoints()) {
-			return;
-		}
+		if (learnedSkills.size() >= getMaximumSkillPoints()) return;
 		connections.forEach(this::highlightSkillIfCanLearn);
 	}
 
 	protected void highlightSkillIfCanLearn(Pair<SkillButton, SkillButton> connection) {
 		var button1 = connection.getLeft();
 		var button2 = connection.getRight();
-		if (button1.highlighted == button2.highlighted) {
-			return;
-		}
-		if (!button1.highlighted) {
-			button1.animate();
-		}
-		if (!button2.highlighted) {
-			button2.animate();
-		}
+		if (button1.highlighted == button2.highlighted) return;
+		if (!button1.highlighted) button1.animate();
+		if (!button2.highlighted) button2.animate();
 	}
 
 	public void renderButtonTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
-		if (skillPointProgressBar.isMouseOver(mouseX, mouseY)) {
-			return;
-		}
-		if (!(button instanceof SkillButton)) {
-			return;
-		}
+		if (!(button instanceof SkillButton)) return;
 		var borderStyleStack = ((SkillButton) button).getTooltipBorderStyleStack();
 		var tooltip = ((SkillButton) button).getTooltip();
 		renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
 	}
 
 	public void buttonPressed(Button button) {
-		if (button instanceof SkillButton) {
-			skillButtonPressed((SkillButton) button);
-		}
+		if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
 	}
 
 	protected void skillButtonPressed(SkillButton button) {
@@ -183,19 +195,17 @@ public class SkillTreeScreen extends Screen {
 		rebuildWidgets();
 	}
 
-	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		renderAnimation += partialTick;
-		renderBackground(poseStack);
-		renderConnections(poseStack, partialTick);
-		for (Widget widget : renderables) {
-			if (widget == skillPointProgressBar) {
-				continue;
-			}
-			widget.render(poseStack, mouseX, mouseY, partialTick);
+	private void updateScroll(float partialTick) {
+		if (scrollSpeedX != 0) {
+			scrollX += scrollSpeedX * partialTick;
+			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
+			scrollSpeedX *= 0.8;
 		}
-		renderOverlay(poseStack, mouseX, mouseY, partialTick);
-		skillPointProgressBar.render(poseStack, mouseX, mouseY, partialTick);
+		if (scrollSpeedY != 0) {
+			scrollY += scrollSpeedY * partialTick;
+			scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
+			scrollSpeedY *= 0.8;
+		}
 	}
 
 	private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -215,18 +225,9 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragAmountX, double dragAmountY) {
-		if (mouseButton != 0 && mouseButton != 2) {
-			return false;
-		}
-		if (maxScrollX > 0) {
-			scrollX += dragAmountX;
-			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
-		}
-		if (maxScrollY > 0) {
-			scrollY += dragAmountY;
-			scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
-		}
-		rebuildWidgets();
+		if (mouseButton != 0 && mouseButton != 2) return false;
+		if (maxScrollX > 0) scrollSpeedX += dragAmountX * 0.25;
+		if (maxScrollY > 0) scrollSpeedY += dragAmountY * 0.25;
 		return true;
 	}
 
@@ -261,7 +262,7 @@ public class SkillTreeScreen extends Screen {
 		var button2 = connection.getRight();
 		var connectionX = button1.x + button1.getWidth() / 2;
 		var connectionY = button1.y + button1.getHeight() / 2;
-		poseStack.translate(connectionX, connectionY, 0);
+		poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
 		var rotation = getAngleBetweenButtons(button1, button2);
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
 		var length = getDistanceBetweenButtons(button1, button2);

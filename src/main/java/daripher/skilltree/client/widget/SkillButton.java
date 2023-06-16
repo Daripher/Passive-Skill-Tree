@@ -60,9 +60,6 @@ public class SkillButton extends Button {
 			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
-		if (isHoveredOrFocused()) {
-			renderToolTip(poseStack, mouseX, mouseY);
-		}
 	}
 
 	public List<MutableComponent> getTooltip() {
