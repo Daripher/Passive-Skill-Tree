@@ -10,8 +10,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.util.FoodHelper;
-import daripher.skilltree.util.ItemHelper;
 import daripher.skilltree.util.PlayerHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
@@ -335,7 +335,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getAttackSpeedWithBow(Player player) {
-		var hasBow = ItemHelper.isBow(player.getMainHandItem());
+		var hasBow = ItemHelper.isRangedWeapon(player.getMainHandItem());
 		if (hasBow) {
 			return 0D;
 		}
@@ -358,7 +358,7 @@ public class AttributeBonusHandler {
 
 	private static double getCritChancePerGemInWeapon(Player player) {
 		var mainHandItem = player.getMainHandItem();
-		if (!ItemHelper.isWeaponOrBow(mainHandItem)) {
+		if (!ItemHelper.isWeapon(mainHandItem)) {
 			return 0D;
 		}
 		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
@@ -370,7 +370,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getCritChanceWithBow(Player player) {
-		var hasBow = ItemHelper.isBow(player.getMainHandItem());
+		var hasBow = ItemHelper.isRangedWeapon(player.getMainHandItem());
 		if (hasBow) {
 			return 0D;
 		}
@@ -389,7 +389,7 @@ public class AttributeBonusHandler {
 
 	private static double getAttackWithEnchantedWeapon(Player player) {
 		var mainHandItem = player.getMainHandItem();
-		if (!ItemHelper.isWeaponOrBow(mainHandItem) || !mainHandItem.isEnchanted()) {
+		if (!ItemHelper.isWeapon(mainHandItem) || !mainHandItem.isEnchanted()) {
 			return 0D;
 		}
 		var attackWithEnchantedWeapon = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get()) - 1;
@@ -404,7 +404,7 @@ public class AttributeBonusHandler {
 
 	private static double getCritDamagePerGemInWeapon(Player player) {
 		var mainHandItem = player.getMainHandItem();
-		if (!ItemHelper.isWeaponOrBow(mainHandItem)) {
+		if (!ItemHelper.isWeapon(mainHandItem)) {
 			return 0D;
 		}
 		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
@@ -604,7 +604,7 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedWeaponBonuses(ItemCraftedEvent event) {
 		var itemStack = event.getCrafting();
-		if (!ItemHelper.isWeapon(itemStack)) {
+		if (!ItemHelper.isMeleeWeapon(itemStack)) {
 			return;
 		}
 		var weaponDamageBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get());
@@ -619,7 +619,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyWeaponAttributeBonuses(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.isWeapon(event.getItemStack())) {
+		if (!ItemHelper.isMeleeWeapon(event.getItemStack())) {
 			return;
 		}
 		if (ItemHelper.hasDamageBonus(event.getItemStack())) {
@@ -703,7 +703,7 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedBowsBonuses(ItemCraftedEvent event) {
 		var itemStack = event.getCrafting();
-		if (!ItemHelper.isBow(itemStack)) {
+		if (!ItemHelper.isRangedWeapon(itemStack)) {
 			return;
 		}
 		var bowChargeSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_ATTACK_SPEED.get()) - 1;
@@ -718,7 +718,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyBowAttributeBonuses(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.isBow(event.getItemStack()) || event.getSlotType() != EquipmentSlot.MAINHAND) {
+		if (!ItemHelper.isRangedWeapon(event.getItemStack()) || event.getSlotType() != EquipmentSlot.MAINHAND) {
 			return;
 		}
 		// Item.BASE_ATTACK_SPEED_UUID

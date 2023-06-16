@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
-import daripher.skilltree.util.ItemHelper;
+import daripher.skilltree.item.ItemHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -37,7 +37,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
 			if (stackInSlot.isEmpty()) {
 				continue;
 			}
-			if (ItemHelper.isWeapon(stackInSlot)) {
+			if (ItemHelper.isMeleeWeapon(stackInSlot)) {
 				weaponsCount++;
 				continue;
 			}
@@ -57,7 +57,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
 			if (stackInSlot.isEmpty()) {
 				continue;
 			}
-			if (ItemHelper.isWeapon(stackInSlot)) {
+			if (ItemHelper.isMeleeWeapon(stackInSlot)) {
 				weaponStack = stackInSlot;
 			}
 			if (ItemHelper.isPoison(stackInSlot)) {

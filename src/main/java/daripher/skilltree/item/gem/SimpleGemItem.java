@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import daripher.skilltree.util.ItemHelper;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -34,13 +34,13 @@ public abstract class SimpleGemItem extends GemItem {
 	public Triple<Attribute, Double, Operation> getGemBonus(Player player, ItemStack itemStack) {
 		var itemSlot = ItemHelper.getSlotForItem(itemStack);
 		if (ItemHelper.isPickaxe(itemStack) && itemSlot == EquipmentSlot.MAINHAND) return getPickaxeBonus();
-		else if (ItemHelper.isWeapon(itemStack) && itemSlot == EquipmentSlot.MAINHAND) return getWeaponBonus();
+		else if (ItemHelper.isMeleeWeapon(itemStack) && itemSlot == EquipmentSlot.MAINHAND) return getWeaponBonus();
 		else if (ItemHelper.isShield(itemStack) && itemSlot == EquipmentSlot.OFFHAND) return getShieldBonus();
 		else if (ItemHelper.isHelmet(itemStack) && itemSlot == EquipmentSlot.HEAD) return getHelmetBonus();
 		else if (ItemHelper.isChestplate(itemStack) && itemSlot == EquipmentSlot.CHEST) return getChestplateBonus();
 		else if (ItemHelper.isLeggings(itemStack) && itemSlot == EquipmentSlot.LEGS) return getLeggingsBonus();
 		else if (ItemHelper.isBoots(itemStack) && itemSlot == EquipmentSlot.FEET) return getBootsBonus();
-		else if (ItemHelper.isBow(itemStack) && itemSlot == EquipmentSlot.MAINHAND) return getBowBonus();
+		else if (ItemHelper.isRangedWeapon(itemStack) && itemSlot == EquipmentSlot.MAINHAND) return getBowBonus();
 		return null;
 	}
 

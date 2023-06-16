@@ -1,4 +1,4 @@
-package daripher.skilltree.util;
+package daripher.skilltree.item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
+import daripher.skilltree.util.PotionHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -13,9 +14,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -120,18 +128,12 @@ public class ItemHelper {
 			}
 		}
 		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
-		if (blacklist.contains("*:*")) {
-			return false;
-		}
+		if (blacklist.contains("*:*")) return false;
 		var itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
-		if (blacklist.contains(itemId.toString())) {
-			return false;
-		}
+		if (blacklist.contains(itemId.toString())) return false;
 		var itemNamespace = itemId.getNamespace();
-		if (blacklist.contains(itemNamespace + ":*")) {
-			return false;
-		}
-		return isArmor(itemStack) || isShield(itemStack) || isWeapon(itemStack) || isBow(itemStack);
+		if (blacklist.contains(itemNamespace + ":*")) return false;
+		return isEquipment(itemStack);
 	}
 
 	public static boolean isPoison(ItemStack itemStack) {
@@ -168,61 +170,64 @@ public class ItemHelper {
 
 	public static EquipmentSlot getSlotForItem(ItemStack itemStack) {
 		var slot = Player.getEquipmentSlotForItem(itemStack);
-		if (ItemHelper.isWeapon(itemStack) && slot == EquipmentSlot.OFFHAND) {
+		if (ItemHelper.isMeleeWeapon(itemStack) && slot == EquipmentSlot.OFFHAND) {
 			slot = EquipmentSlot.MAINHAND;
 		}
 		return slot;
 	}
 
 	public static boolean isArmor(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.ARMORS);
+		return itemStack.getItem() instanceof ArmorItem || itemStack.is(Tags.Items.ARMORS);
 	}
 
 	public static boolean isShield(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_SHIELDS);
+		return itemStack.getItem() instanceof ShieldItem || itemStack.is(Tags.Items.TOOLS_SHIELDS);
+	}
+
+	public static boolean isMeleeWeapon(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES)) return true;
+		if (itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS)) return true;
+		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
+	}
+
+	public static boolean isRangedWeapon(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS)) return true;
+		return itemStack.getItem() instanceof BowItem || itemStack.is(Tags.Items.TOOLS_BOWS);
 	}
 
 	public static boolean isWeapon(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_AXES) || itemStack.is(Tags.Items.TOOLS_SWORDS) || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
-	}
-
-	public static boolean isBow(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_BOWS);
-	}
-
-	public static boolean isWeaponOrBow(ItemStack itemStack) {
-		return isWeapon(itemStack) || isBow(itemStack);
+		return isMeleeWeapon(itemStack) || isRangedWeapon(itemStack);
 	}
 
 	public static boolean isHelmet(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.HEAD) return true;
 		return itemStack.is(Tags.Items.ARMORS_HELMETS);
 	}
 
 	public static boolean isChestplate(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.CHEST) return true;
 		return itemStack.is(Tags.Items.ARMORS_CHESTPLATES);
 	}
 
 	public static boolean isLeggings(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.LEGS) return true;
 		return itemStack.is(Tags.Items.ARMORS_LEGGINGS);
 	}
 
 	public static boolean isBoots(ItemStack itemStack) {
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.FEET) return true;
 		return itemStack.is(Tags.Items.ARMORS_BOOTS);
 	}
 
 	public static boolean isPickaxe(ItemStack itemStack) {
-		return itemStack.is(Tags.Items.TOOLS_PICKAXES);
+		return itemStack.getItem() instanceof PickaxeItem || itemStack.is(Tags.Items.TOOLS_PICKAXES);
 	}
 
 	public static boolean isFood(ItemStack itemStack) {
 		return itemStack.getFoodProperties(null) != null;
 	}
 
-	public static boolean isAxe(ItemStack itemStack) {
-		return itemStack.getItem() instanceof AxeItem;
-	}
-
 	public static boolean isEquipment(ItemStack stack) {
-		return isWeaponOrBow(stack) || isArmor(stack) || isShield(stack);
+		return isWeapon(stack) || isArmor(stack) || isShield(stack);
 	}
 }

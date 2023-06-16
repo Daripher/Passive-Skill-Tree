@@ -10,8 +10,8 @@ import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemItem;
-import daripher.skilltree.util.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -170,7 +170,7 @@ public class GemHelper {
 		if (ItemHelper.isChestplate(itemStack)) {
 			maximumSlots += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get());
 		}
-		if (ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack)) {
+		if (ItemHelper.isWeapon(itemStack)) {
 			maximumSlots += (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get());
 		}
 		return maximumSlots;

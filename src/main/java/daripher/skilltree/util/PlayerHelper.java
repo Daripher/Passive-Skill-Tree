@@ -1,6 +1,7 @@
 package daripher.skilltree.util;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.item.ItemHelper;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -28,7 +29,7 @@ public class PlayerHelper {
 		if (ItemHelper.isShield(player.getOffhandItem())) {
 			multiplier += PlayerHelper.getDamageBonusWithShield(player);
 		}
-		if (ItemHelper.isWeaponOrBow(player.getMainHandItem()) && player.getMainHandItem().isEnchanted()) {
+		if (ItemHelper.isWeapon(player.getMainHandItem()) && player.getMainHandItem().isEnchanted()) {
 			multiplier += PlayerHelper.getDamageBonusWithEnchantedWeapon(player);
 		}
 		if (ItemHelper.isPickaxe(player.getMainHandItem())) {
@@ -107,7 +108,7 @@ public class PlayerHelper {
 		var multiplier = 1.5F;
 		multiplier += player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE.get()) - 1;
 		var mainhandItem = player.getMainHandItem();
-		if (ItemHelper.isWeaponOrBow(mainhandItem)) {
+		if (ItemHelper.isWeapon(mainhandItem)) {
 			var critDamagePerWeaponEnchantment = PlayerHelper.getCritDamagePerWeaponEnchantment(player);
 			var enchantmentCount = mainhandItem.getAllEnchantments().size();
 			multiplier += critDamagePerWeaponEnchantment * enchantmentCount;
@@ -209,7 +210,7 @@ public class PlayerHelper {
 	public static float getGemPower(Player player, ItemStack itemStack) {
 		var gemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER.get());
 		var craftingArmor = ItemHelper.isArmor(itemStack) || ItemHelper.isShield(itemStack);
-		var craftingWeapon = ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack);
+		var craftingWeapon = ItemHelper.isWeapon(itemStack);
 		if (craftingArmor) {
 			var gemPowerInArmor = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
 			gemPower += gemPowerInArmor;

@@ -8,8 +8,8 @@ import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemItem;
-import daripher.skilltree.util.ItemHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -62,7 +62,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 	public double getPlayerGemPower(Player player, ItemStack itemStack) {
 		var gemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER.get()) - 1;
 		var isArmor = ItemHelper.isArmor(itemStack) || ItemHelper.isShield(itemStack);
-		var isWeapon = ItemHelper.isWeapon(itemStack) || ItemHelper.isBow(itemStack);
+		var isWeapon = ItemHelper.isWeapon(itemStack);
 		if (isArmor) {
 			var armorGemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
 			gemPower += armorGemPower;
