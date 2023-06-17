@@ -228,6 +228,6 @@ public class ItemHelper {
 	}
 
 	public static boolean isEquipment(ItemStack stack) {
-		return isWeapon(stack) || isArmor(stack) || isShield(stack);
+		return isWeapon(stack) || isArmor(stack) || isShield(stack) || isPickaxe(stack);
 	}
 }
