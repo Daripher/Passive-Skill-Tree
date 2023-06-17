@@ -7,12 +7,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.SkillTreePlayer;
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.item.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.Tags;
 
 @Mixin(Player.class)
 public abstract class MixinPlayer extends LivingEntity implements SkillTreePlayer {
@@ -24,18 +24,12 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 
 	@Override
 	public int getUseItemRemainingTicks() {
-		var usingBow = getUseItem().is(Tags.Items.TOOLS_BOWS);
-		if (!usingBow) {
-			return super.getUseItemRemainingTicks();
-		}
+		var usingRangedWeapon = ItemHelper.isRangedWeapon(getUseItem());
+		if (!usingRangedWeapon) return super.getUseItemRemainingTicks();
 		var attackSpeedBonus = getAttributeValue(Attributes.ATTACK_SPEED) - 1;
-		if (attackSpeedBonus > 0) {
-			var bowChargeSpeedBonus = attackSpeedBonus;
-			var maxUseDuration = getUseItem().getUseDuration();
-			var useDuration = maxUseDuration - useItemRemaining;
-			return (int) (useItemRemaining - useDuration * bowChargeSpeedBonus);
-		}
-		return super.getUseItemRemainingTicks();
+		if (attackSpeedBonus <= 0) return super.getUseItemRemainingTicks();
+		var useDuration = getUseItem().getUseDuration() - useItemRemaining;
+		return (int) (useItemRemaining - useDuration * attackSpeedBonus);		
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
@@ -52,9 +46,7 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 	private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
 		var player = (Player) (Object) this;
 		var freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
-		if (player.getRandom().nextFloat() < freeEnchantmentChance) {
-			player.giveExperienceLevels(enchantmentCost);
-		}
+		if (player.getRandom().nextFloat() < freeEnchantmentChance) player.giveExperienceLevels(enchantmentCost);
 	}
 
 	@Override
