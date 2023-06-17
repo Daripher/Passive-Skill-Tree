@@ -42,7 +42,6 @@ public class SkillTreeScreen extends Screen {
 	private final ResourceLocation skillTreeId;
 	private List<ResourceLocation> learnedSkills;
 	private AbstractWidget progressBar;
-	private int skillPoints;
 	private int guiScale;
 	protected double scrollSpeedX;
 	protected double scrollSpeedY;
@@ -51,6 +50,7 @@ public class SkillTreeScreen extends Screen {
 	protected int maxScrollX;
 	protected int maxScrollY;
 	public float renderAnimation;
+	public int skillPoints;
 
 	public SkillTreeScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
@@ -97,6 +97,9 @@ public class SkillTreeScreen extends Screen {
 	
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
+		var child = super.getChildAt(mouseX, mouseY);
+		var clickedProgressBar = child.filter(ProgressBar.class::isInstance).isPresent();
+		if (clickedProgressBar) return super.mouseClicked(mouseX, mouseY, button);
 		return super.mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
 	}
 	

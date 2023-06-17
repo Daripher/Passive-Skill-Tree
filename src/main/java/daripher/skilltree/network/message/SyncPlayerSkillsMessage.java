@@ -62,6 +62,7 @@ public class SyncPlayerSkillsMessage {
 		message.learnedSkills.stream().map(SkillTreeClientData.getSkillsForTree(skillTreeId)::get).forEach(skillsCapability.getPlayerSkills()::add);
 		skillsCapability.setSkillPoints(message.skillPoints);
 		if (minecraft.screen instanceof SkillTreeScreen skillTreeScreen) {
+			skillTreeScreen.skillPoints = skillsCapability.getSkillPoints();
 			skillTreeScreen.init();
 		}
 	}

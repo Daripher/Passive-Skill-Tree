@@ -34,9 +34,7 @@ public class ProgressBar extends Button {
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		renderExperienceBar(poseStack);
-		if (isHoveredOrFocused()) {
-			renderToolTip(poseStack, mouseX, mouseY);
-		}
+		if (isHoveredOrFocused()) renderToolTip(poseStack, mouseX, mouseY);
 	}
 
 	protected void renderExperienceBar(PoseStack poseStack) {
@@ -51,9 +49,7 @@ public class ProgressBar extends Button {
 		var filledBarWidth = (int) (experienceProgress * 183);
 		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
 		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
-		if (filledBarWidth == 0) {
-			return;
-		}
+		if (filledBarWidth == 0) return;
 		blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
 	}
 
@@ -65,18 +61,14 @@ public class ProgressBar extends Button {
 
 	protected void renderNextLevel(PoseStack poseStack) {
 		var currentLevel = getCurrentLevel();
-		if (isMaxLevel(currentLevel)) {
-			currentLevel--;
-		}
+		if (isMaxLevel(currentLevel)) currentLevel--;
 		var nextLevel = currentLevel + 1;
 		drawCenteredOutlinedText(poseStack, "" + nextLevel, getMinecraftFont(), x + width - 17, getTextY());
 	}
 
 	protected void renderCurrentLevel(PoseStack poseStack) {
 		var currentLevel = getCurrentLevel();
-		if (isMaxLevel(currentLevel)) {
-			currentLevel--;
-		}
+		if (isMaxLevel(currentLevel)) currentLevel--;
 		drawCenteredOutlinedText(poseStack, "" + currentLevel, getMinecraftFont(), x + 17, getTextY());
 	}
 
@@ -101,24 +93,19 @@ public class ProgressBar extends Button {
 
 	private static void buttonPressed(Button button) {
 		var currentLevel = getCurrentLevel();
-		if (canBuySkillPoint(currentLevel)) {
-			var minecraft = Minecraft.getInstance();
-			var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-			NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
-			minecraft.player.giveExperiencePoints(-levelupCosts.get(currentLevel));
-		}
+		if (!canBuySkillPoint(currentLevel)) return;
+		var minecraft = Minecraft.getInstance();
+		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
+		minecraft.player.giveExperiencePoints(-skillCosts.get(currentLevel));
 	}
 
 	private static boolean canBuySkillPoint(int currentLevel) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
-			return false;
-		}
-		if (isMaxLevel(currentLevel)) {
-			return false;
-		}
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) return false;
+		if (isMaxLevel(currentLevel)) return false;
 		var minecraft = Minecraft.getInstance();
-		var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		return minecraft.player.totalExperience >= levelupCosts.get(currentLevel);
+		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		return minecraft.player.totalExperience >= skillCosts.get(currentLevel);
 	}
 
 	protected int getTextY() {
