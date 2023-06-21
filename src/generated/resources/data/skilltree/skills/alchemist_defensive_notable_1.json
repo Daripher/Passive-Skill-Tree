@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:alchemist_defensive_4",
-    "skilltree:alchemist_defensive_crafting_5"
+    "skilltree:alchemist_defensive_crafting_5",
+    "skilltree:hunter_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_notable_1.png",
   "position": {

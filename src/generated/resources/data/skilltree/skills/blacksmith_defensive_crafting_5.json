@@ -9,13 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_defensive_crafting_6",
-    "skilltree:miner_crit_2"
+    "skilltree:blacksmith_defensive_crafting_6"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
   "position": {
-    "x": -237,
-    "y": -48
+    "x": -239,
+    "y": -34
   },
   "tree": "skilltree:tree"
 }

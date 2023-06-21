@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 5.0,
-      "attribute": "skilltree:player.armor_per_gemstone_in_chestplate_bonus",
+      "attribute": "skilltree:player.armor_per_gem_in_chestplate",
       "operation": "addition"
     }
   ],
@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/miner_defensive_keystone_1.png",
   "position": {
-    "x": -258,
-    "y": 193
+    "x": -281,
+    "y": 206
   },
   "tree": "skilltree:tree"
 }

@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:hunter_defensive_4",
-    "skilltree:hunter_defensive_crafting_5"
+    "skilltree:hunter_defensive_crafting_5",
+    "skilltree:enchanter_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_notable_1.png",
   "position": {

@@ -10,7 +10,7 @@
   "button_size": 16,
   "connections": [
     "skilltree:enchanter_defensive_7",
-    "skilltree:enchanter_lesser_1"
+    "skilltree:enchanter_crit_1"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_1.png",
   "position": {

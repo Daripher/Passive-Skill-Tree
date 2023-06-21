@@ -11,7 +11,7 @@
   "icon_texture": "skilltree:textures/icons/alchemist_mastery.png",
   "position": {
     "x": -12,
-    "y": 329
+    "y": 355
   },
   "tree": "skilltree:tree"
 }

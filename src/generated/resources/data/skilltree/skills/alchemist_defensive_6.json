@@ -10,7 +10,7 @@
   "button_size": 16,
   "connections": [
     "skilltree:alchemist_defensive_7",
-    "skilltree:alchemist_lesser_1"
+    "skilltree:alchemist_crit_1"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_1.png",
   "position": {

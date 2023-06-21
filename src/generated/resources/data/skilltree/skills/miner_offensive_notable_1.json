@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.25,
-      "attribute": "skilltree:player.pickaxe_damage",
+      "attribute": "skilltree:player.damage_with_gem_in_weapon",
       "operation": "multiply_base"
     }
   ],
@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:miner_offensive_4",
-    "skilltree:miner_offensive_crafting_5"
+    "skilltree:miner_offensive_crafting_5",
+    "skilltree:miner_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/miner_offensive_notable_1.png",
   "position": {

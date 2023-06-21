@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:player.crit_damage_per_weapon_enchantment",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/enchanter_crit_notable_1.png",
+  "position": {
+    "x": 214,
+    "y": -139
+  },
+  "tree": "skilltree:tree"
+}

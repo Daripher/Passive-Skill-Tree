@@ -10,7 +10,7 @@
   "button_size": 16,
   "connections": [
     "skilltree:miner_defensive_7",
-    "skilltree:miner_lesser_1"
+    "skilltree:miner_crit_1"
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_1.png",
   "position": {

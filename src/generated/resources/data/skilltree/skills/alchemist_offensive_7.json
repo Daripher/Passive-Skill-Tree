@@ -9,7 +9,8 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_offensive_keystone_1"
+    "skilltree:alchemist_offensive_8",
+    "skilltree:alchemist_lesser_2"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_1.png",
   "position": {

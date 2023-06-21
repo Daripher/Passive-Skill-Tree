@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_with_gem_in_weapon",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_offensive_notable_2",
+    "skilltree:miner_offensive_notable_3",
+    "skilltree:miner_offensive_notable_4",
+    "skilltree:miner_offensive_notable_5",
+    "skilltree:miner_offensive_notable_6"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_offensive_1.png",
+  "position": {
+    "x": -317,
+    "y": -8
+  },
+  "tree": "skilltree:tree"
+}

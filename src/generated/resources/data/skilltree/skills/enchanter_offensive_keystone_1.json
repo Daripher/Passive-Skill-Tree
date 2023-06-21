@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_keystone_1.png",
   "position": {
-    "x": 288,
-    "y": -122
+    "x": 311,
+    "y": -135
   },
   "tree": "skilltree:tree"
 }

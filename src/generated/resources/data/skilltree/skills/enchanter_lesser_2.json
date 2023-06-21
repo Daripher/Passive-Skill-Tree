@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_lesser_1.png",
   "position": {
-    "x": 230,
-    "y": -113
+    "x": 253,
+    "y": -126
   },
   "tree": "skilltree:tree"
 }

@@ -9,7 +9,8 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:cook_offensive_keystone_1"
+    "skilltree:cook_offensive_8",
+    "skilltree:cook_lesser_2"
   ],
   "icon_texture": "skilltree:textures/icons/cook_offensive_1.png",
   "position": {

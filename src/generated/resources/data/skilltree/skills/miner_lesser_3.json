@@ -10,8 +10,8 @@
   "button_size": 16,
   "icon_texture": "skilltree:textures/icons/miner_lesser_1.png",
   "position": {
-    "x": -241,
-    "y": 159
+    "x": -264,
+    "y": 172
   },
   "tree": "skilltree:tree"
 }

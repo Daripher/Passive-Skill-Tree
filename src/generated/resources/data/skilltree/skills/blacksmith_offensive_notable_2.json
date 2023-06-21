@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.25,
+      "attribute": "skilltree:player.sword_damage",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_notable_2.png",
+  "position": {
+    "x": -134,
+    "y": -281
+  },
+  "tree": "skilltree:tree"
+}

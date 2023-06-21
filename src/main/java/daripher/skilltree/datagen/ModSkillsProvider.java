@@ -41,8 +41,8 @@ public class ModSkillsProvider implements DataProvider {
 		// class skills
 		addSkill(playerClass, "class", "class", 24);
 		// lesser skills
-		addSkillBranch(playerClass, "defensive", "defensive_1", 16, 1, 7);
-		addSkillBranch(playerClass, "offensive", "offensive_1", 16, 1, 7);
+		addSkillBranch(playerClass, "defensive", "defensive_1", 16, 1, 8);
+		addSkillBranch(playerClass, "offensive", "offensive_1", 16, 1, 13);
 		addSkillBranch(playerClass, "defensive_crafting", "defensive_crafting_1", 16, 1, 7);
 		addSkillBranch(playerClass, "offensive_crafting", "offensive_crafting_1", 16, 1, 7);
 		addSkillBranch(playerClass, "crafting", "crafting_1", 16, 1, 3);
@@ -50,21 +50,23 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillBranch(playerClass, "speed", "speed_1", 16, 1, 2);
 		addSkillBranch(playerClass, "healing", "healing_1", 16, 1, 2);
 		addSkillBranch(playerClass, "lesser", "lesser_1", 16, 1, 6);
-		addSkillBranch(playerClass, "crit", "crit_1", 16, 1, 4);
+		addSkillBranch(playerClass, "crit", "crit_1", 16, 1, 2);
 		// notable skills
 		addSkill(playerClass, "defensive_notable_1", "defensive_notable_1", 20);
-		addSkill(playerClass, "offensive_notable_1", "offensive_notable_1", 20);
+		for (int i = 1; i <= 6; i++) {
+			addSkill(playerClass, "offensive_notable_" + i, "offensive_notable_" + i, 20);
+		}
 		addSkill(playerClass, "crafting_notable_1", "crafting_notable_1", 20);
 		addSkill(playerClass, "life_notable_1", "life_notable_1", 20);
 		addSkill(playerClass, "speed_notable_1", "speed_notable_1", 20);
 		addSkill(playerClass, "healing_notable_1", "healing_notable_1", 20);
+		addSkill(playerClass, "crit_notable_1", "crit_notable_1", 20);
 		// keystone skills
 		addSkill(playerClass, "defensive_keystone_1", "defensive_keystone_1", 24);
 		addSkill(playerClass, "offensive_keystone_1", "offensive_keystone_1", 24);
 		addSkill(playerClass, "defensive_crafting_keystone_1", "defensive_crafting_keystone_1", 24);
 		addSkill(playerClass, "offensive_crafting_keystone_1", "offensive_crafting_keystone_1", 24);
 		addSkill(playerClass, "mastery", "mastery", 24);
-		addSkill(playerClass, "crit_keystone_1", "crit_keystone_1", 24);
 	}
 
 	private void shapeSkillTree() {
@@ -92,42 +94,44 @@ public class ModSkillsProvider implements DataProvider {
 		setSkillPosition(playerClass, "offensive_4", 10, 90, "life_2");
 		setSkillPosition(playerClass, "life_2", 10, 90, "life_notable_1");
 		connectSkills(playerClass, "life_1", "life_notable_1");
-		setSkillBranchPosition(playerClass, "defensive_4", 10, "defensive", 0, 0, 5, 7);
-		setSkillBranchPosition(playerClass, "offensive_4", 10, "offensive", 0, 0, 5, 7);
+		setSkillBranchPosition(playerClass, "defensive_4", 10, "defensive", 0, 0, 5, 8);
+		setSkillBranchPosition(playerClass, "offensive_4", 10, "offensive", 0, 0, 5, 8);
 		setSkillPosition(playerClass, "defensive_5", 10, -90, "speed_1");
 		setSkillPosition(playerClass, "offensive_5", 10, 90, "speed_2");
 		setSkillPosition(playerClass, "speed_2", 10, 90, "speed_notable_1");
 		connectSkills(playerClass, "speed_1", "speed_notable_1");
-		setSkillPosition(playerClass, "defensive_7", 10, 0, "defensive_keystone_1");
-		setSkillPosition(playerClass, "offensive_7", 10, 0, "offensive_keystone_1");
-		setSkillBranchPosition(playerClass, "defensive_notable_1", 10, "defensive_crafting", 0, 0, 5, 6);
-		setSkillBranchPosition(playerClass, "offensive_notable_1", 10, "offensive_crafting", 0, 0, 5, 6);
-		setSkillPosition(playerClass, "defensive_crafting_6", 10, 30, "defensive_crafting_7");
-		setSkillPosition(playerClass, "offensive_crafting_6", 10, -30, "offensive_crafting_7");
-		setSkillPosition(playerClass, "defensive_crafting_7", 10, 30, "defensive_crafting_keystone_1");
-		setSkillPosition(playerClass, "offensive_crafting_7", 10, -30, "offensive_crafting_keystone_1");
+		setSkillPosition(playerClass, "defensive_8", 10, 0, "defensive_keystone_1");
+		setSkillPosition(playerClass, "offensive_8", 10, 0, "offensive_keystone_1");
+		setSkillPosition(playerClass, "defensive_notable_1", 8, 30, "defensive_crafting_5");
+		setSkillPosition(playerClass, "offensive_notable_1", 8, -30, "offensive_crafting_5");
+		setSkillBranchPosition(playerClass, "defensive_crafting_5", 10, "defensive_crafting", 0, 0, 6, 7);
+		setSkillBranchPosition(playerClass, "offensive_crafting_5", 10, "offensive_crafting", 0, 0, 6, 7);
+		setSkillPosition(playerClass, "defensive_crafting_7", 10, 0, "defensive_crafting_keystone_1");
+		setSkillPosition(playerClass, "offensive_crafting_7", 10, 0, "offensive_crafting_keystone_1");
 		setSkillPosition(playerClass, "defensive_crafting_4", 10, 120, "healing_1");
 		setSkillPosition(playerClass, "healing_1", 8, -150, "healing_notable_1");
 		setSkillPosition(playerClass, "healing_notable_1", 8, -150, "healing_2");
-		setSkillPosition(playerClass, "defensive_6", 10, -90, "lesser_1");
-		setSkillPosition(playerClass, "offensive_6", 10, 90, "lesser_2");
+		setSkillPosition(playerClass, "defensive_7", 10, -90, "lesser_1");
+		setSkillPosition(playerClass, "offensive_7", 10, 90, "lesser_2");
 		setSkillPosition(playerClass, "lesser_1", 10, 0, "lesser_3");
 		setSkillPosition(playerClass, "lesser_2", 10, 0, "lesser_4");
 		setSkillPosition(playerClass, "lesser_4", 12, 90, "lesser_5");
 		connectSkills(playerClass, "lesser_5", "lesser_3");
 		setSkillPosition(playerClass, "lesser_5", 10, 0, "lesser_6");
 		setSkillPosition(playerClass, "lesser_6", 10, 0, "mastery");
-		setSkillBranchPosition(playerClass, "offensive_crafting_5", 10, "crit", -120, 0, 1, 2);
-		setSkillPosition(playerClass, "crit_2", 10, 0, "crit_3");
-		connectSkills(playerClass, "crit_3", "crit_1");
-		setSkillPosition(playerClass, "crit_3", 10, -30, "crit_4");
-		setSkillPosition(playerClass, "crit_4", 10, -30, "crit_keystone_1");
+		setSkillPosition(playerClass, "defensive_6", 10, -90, "crit_1");
+		setSkillPosition(playerClass, "offensive_6", 10, 90, "crit_2");
+		setSkillPosition(playerClass, "crit_2", 10, 90, "crit_notable_1");
+		connectSkills(playerClass, "crit_1", "crit_notable_1");
+		setSkillPosition(playerClass, "offensive_notable_1", 8, -120, "offensive_9");
+		setSkillBranchPosition(playerClass, "offensive_9", 10, "offensive", -30, 0, 10, 13);
+		for (var i = 2; i <= 6; i++) setSkillPosition(playerClass, "offensive_13", 12, 90 + i * 60, "offensive_notable_" + i);
 	}
 
 	protected void connectClassTrees() {
 		connectSkillsBetweenClasses("healing_2", "offensive_crafting_2");
 		connectSkillsBetweenClasses("crafting_3", "crafting_2");
-		connectSkillsBetweenClasses("defensive_crafting_5", "crit_2");
+		connectSkillsBetweenClasses("defensive_notable_1", "offensive_9");
 	}
 
 	private void setSkillsAttributeModifiers() {
@@ -135,8 +139,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_class", BREWED_POTIONS_DURATION.get(), 0.4, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_defensive_crafting", CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get(), 0.1, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("alchemist_offensive_crafting", CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("alchemist_defensive", EVASION_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("alchemist_offensive", DAMAGE_AGAINST_POISONED.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("alchemist_defensive", EVASION_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 8);
+		addSkillBranchAttributeModifier("alchemist_offensive", DAMAGE_AGAINST_POISONED.get(), 0.1, MULTIPLY_BASE, 1, 13);
 		addSkillAttributeModifier("alchemist_defensive_notable_1", EVASION_UNDER_POTION_EFFECT.get(), 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_offensive_notable_1", DAMAGE_AGAINST_POISONED.get(), 0.4, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_life", MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), 2, ADDITION, 1, 2);
@@ -145,8 +149,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_speed_notable_1", ATTACK_SPEED_UNDER_POTION_EFFECT.get(), 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_lesser", BREWED_POTIONS_DURATION.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("alchemist_mastery", CHANCE_TO_BREW_STRONGER_POTION.get(), 1, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("alchemist_crit", CRIT_CHANCE_AGAINST_POISONED.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("alchemist_crit_keystone_1", CRIT_DAMAGE_AGAINST_POISONED.get(), 0.2, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("alchemist_crit", CRIT_CHANCE_AGAINST_POISONED.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("alchemist_crit_notable_1", CRIT_DAMAGE_AGAINST_POISONED.get(), 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_crafting", CHANCE_TO_BREW_STRONGER_POTION.get(), 0.05, MULTIPLY_BASE, 1, 3);
 		addSkillAttributeModifier("alchemist_defensive_crafting_keystone_1", CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get(), 1.3, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), 0.3, MULTIPLY_BASE);
@@ -156,62 +160,77 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_crafting_notable_1", CAN_MIX_POTIONS.get(), 1, ADDITION);
 		addSkillAttributeModifier("alchemist_defensive_keystone_1", EVASION_PER_POTION_EFFECT.get(), 0.02, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_offensive_keystone_1", DAMAGE_PER_POTION_EFFECT.get(), 0.1, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_notable_2", DAMAGE_WITH_POISONED_WEAPON.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_notable_3", PROJECTILE_DAMAGE_AGAINST_POISONED.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_notable_4", SPLASH_POTION_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_notable_5", DAMAGE_UNDER_POTION_EFFECT.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_notable_6", DAMAGE_PER_ADAMITE_IN_WEAPON.get(), 0.05, MULTIPLY_BASE);
 		// hunter skills
 		addSkillAttributeModifier("hunter_class", DOUBLE_LOOT_CHANCE.get(), 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_defensive_crafting", CRAFTED_ARMOR_EVASION.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("hunter_offensive_crafting", CRAFTED_BOWS_ATTACK_SPEED.get(), 0.04, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("hunter_defensive", EVASION_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("hunter_offensive", ARROW_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
+		addSkillBranchAttributeModifier("hunter_offensive_crafting", CRAFTED_RANGED_WEAPON_ATTACK_SPEED.get(), 0.04, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("hunter_defensive", EVASION_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 8);
+		addSkillBranchAttributeModifier("hunter_offensive", PROJECTILE_DAMAGE.get(), 0.1, MULTIPLY_BASE, 1, 13);
 		addSkillAttributeModifier("hunter_defensive_notable_1", EVASION_CHANCE_WHEN_WOUNDED.get(), 0.1, MULTIPLY_BASE);
-		addSkillAttributeModifier("hunter_offensive_notable_1", ARROW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_1", PROJECTILE_DAMAGE.get(), 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_life", MAXIMUM_LIFE_PER_EVASION.get(), 0.05, ADDITION, 1, 2);
 		addSkillAttributeModifier("hunter_life_notable_1", MAXIMUM_LIFE_PER_EVASION.get(), 0.1, ADDITION);
-		addSkillBranchAttributeModifier("hunter_speed", ATTACK_SPEED_WITH_BOW.get(), 0.05, MULTIPLY_BASE, 1, 2);
-		addSkillAttributeModifier("hunter_speed_notable_1", ATTACK_SPEED_WITH_BOW.get(), 0.10, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("hunter_speed", ATTACK_SPEED_WITH_RANGED_WEAPON.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("hunter_speed_notable_1", ATTACK_SPEED_WITH_RANGED_WEAPON.get(), 0.10, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_lesser", DOUBLE_LOOT_CHANCE.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("hunter_mastery", TRIPLE_LOOT_CHANCE.get(), 0.05, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("hunter_crit", CRIT_CHANCE_WITH_BOW.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("hunter_crit_keystone_1", ARROW_CRIT_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("hunter_crit", PROJECTILE_CRIT_CHANCE.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("hunter_crit_notable_1", PROJECTILE_CRIT_DAMAGE.get(), 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_crafting", CHANCE_TO_RETRIEVE_ARROWS.get(), 0.05, MULTIPLY_BASE, 1, 3);
 		addSkillAttributeModifier("hunter_defensive_crafting_keystone_1", CRAFTED_HELMETS_ADDITIONAL_GEMSTONE_SLOTS.get(), 1, ADDITION);
-		addSkillAttributeModifier("hunter_offensive_crafting_keystone_1", CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get(), 1, ADDITION);
+		addSkillAttributeModifier("hunter_offensive_crafting_keystone_1", CRAFTED_RANGED_WEAPON_ADDITIONAL_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("hunter_healing", LIFE_PER_HIT.get(), 0.5, ADDITION, 1, 2);
-		addSkillAttributeModifier("hunter_healing_notable_1", LIFE_PER_ARROW_HIT.get(), 1, ADDITION);
+		addSkillAttributeModifier("hunter_healing_notable_1", LIFE_PER_PROJECTILE_HIT.get(), 1, ADDITION);
 		addSkillAttributeModifier("hunter_crafting_notable_1", CHANCE_TO_RETRIEVE_ARROWS.get(), 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("hunter_defensive_keystone_1", ARMOR_PER_EVASION.get(), 0.25, ADDITION);
-		addSkillAttributeModifier("hunter_offensive_keystone_1", ARROW_DAMAGE_PER_DISTANCE.get(), 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_keystone_1", DAMAGE_PER_DISTANCE.get(), 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_2", BOW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_3", TIPPED_ARROW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_4", TRIDENT_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_5", ARROW_DAMAGE.get(), 0.1, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_offensive_notable_6", CROSSBOW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
 		// miner skills
 		addSkillAttributeModifier("miner_class", MINING_SPEED.get(), 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_defensive_crafting", GEM_POWER_IN_ARMOR.get(), 0.1, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("miner_offensive_crafting", GEM_POWER_IN_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("miner_defensive", ARMOR, 1, ADDITION, 1, 7);
-		addSkillBranchAttributeModifier("miner_offensive", PICKAXE_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
-		addSkillAttributeModifier("miner_defensive_notable_1", ARMOR_PER_GEMSTONE_IN_HELMET.get(), 2, ADDITION);
-		addSkillAttributeModifier("miner_offensive_notable_1", PICKAXE_DAMAGE.get(), 0.25, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("miner_life", MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get(), 1, ADDITION, 1, 2);
-		addSkillAttributeModifier("miner_life_notable_1", MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get(), 1, ADDITION);
-		addSkillBranchAttributeModifier("miner_speed", ATTACK_SPEED_WITH_PICKAXE.get(), 0.05, MULTIPLY_BASE, 1, 2);
-		addSkillAttributeModifier("miner_speed_notable_1", ATTACK_SPEED_WITH_PICKAXE.get(), 0.15, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_defensive", ARMOR, 1, ADDITION, 1, 8);
+		addSkillBranchAttributeModifier("miner_offensive", DAMAGE_WITH_GEM_IN_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 13);
+		addSkillAttributeModifier("miner_defensive_notable_1", ARMOR_PER_GEM_IN_HELMET.get(), 2, ADDITION);
+		addSkillAttributeModifier("miner_offensive_notable_1", DAMAGE_WITH_GEM_IN_WEAPON.get(), 0.25, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_life", MAXIMUM_LIFE_PER_GEM_IN_HELMET.get(), 1, ADDITION, 1, 2);
+		addSkillAttributeModifier("miner_life_notable_1", MAXIMUM_LIFE_PER_GEM_IN_ARMOR.get(), 1, ADDITION);
+		addSkillBranchAttributeModifier("miner_speed", ATTACK_SPEED_WITH_GEM_IN_WEAPON.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("miner_speed_notable_1", ATTACK_SPEED_PER_GEM_IN_WEAPON.get(), 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_lesser", MINING_SPEED.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("miner_mastery", MAXIMUM_SOCKETS.get(), 1, ADDITION);
-		addSkillBranchAttributeModifier("miner_crit", CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get(), 0.02, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("miner_crit_keystone_1", CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get(), 0.1, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_crit", CRIT_CHANCE_PER_GEM_IN_WEAPON.get(), 0.02, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("miner_crit_notable_1", CRIT_DAMAGE_PER_GEM_IN_WEAPON.get(), 0.1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_crafting", GEM_DROP_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 3);
 		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", GEM_POWER_IN_ARMOR.get(), 0.3, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_defensive_crafting_keystone_1", MAXIMUM_CHESTPLATE_SOCKETS.get(), 1, ADDITION);
 		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", GEM_POWER_IN_WEAPON.get(), 0.3, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_offensive_crafting_keystone_1", MAXIMUM_WEAPON_SOCKETS.get(), 1, ADDITION);
 		addSkillBranchAttributeModifier("miner_healing", LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 2);
-		addSkillAttributeModifier("miner_healing_notable_1", LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get(), 0.5, ADDITION);
+		addSkillAttributeModifier("miner_healing_notable_1", LIFE_REGENERATION_PER_GEM_IN_HELMET.get(), 0.5, ADDITION);
 		addSkillAttributeModifier("miner_crafting_notable_1", GEM_DROP_CHANCE.get(), 0.02, MULTIPLY_BASE);
-		addSkillAttributeModifier("miner_defensive_keystone_1", ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get(), 5, ADDITION);
-		addSkillAttributeModifier("miner_offensive_keystone_1", PICKAXE_DAMAGE.get(), 0.75, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_defensive_keystone_1", ARMOR_PER_GEM_IN_CHESTPLATE.get(), 5, ADDITION);
+		addSkillAttributeModifier("miner_offensive_keystone_1", DAMAGE_PER_GEM_IN_WEAPON.get(), 0.15, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_notable_2", DAMAGE_WITH_DIFFERENT_WEAPON_GEMS.get(), 0.4, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_notable_3", MELEE_DAMAGE_PER_GEM_IN_WEAPON.get(), 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_notable_4", DAMAGE_PER_IRISCITE_IN_WEAPON.get(), 0.15, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_notable_5", PROJECTILE_DAMAGE_PER_GEM_IN_WEAPON.get(), 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("miner_offensive_notable_6", DAMAGE_WITH_SAME_WEAPON_GEMS.get(), 0.2, MULTIPLY_BASE);
 		// blacksmith skills
 		addSkillAttributeModifier("blacksmith_class", CRAFTED_EQUIPMENT_DURABILITY.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_defensive_crafting", CRAFTED_ARMOR_DEFENCE.get(), 0.15, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("blacksmith_offensive_crafting", CRAFTED_WEAPON_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
-		addSkillBranchAttributeModifier("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 7);
-		addSkillBranchAttributeModifier("blacksmith_offensive", DAMAGE_WITH_SHIELD.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("blacksmith_offensive_crafting", CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get(), 1, ADDITION, 1, 7);
+		addSkillBranchAttributeModifier("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 8);
+		addSkillBranchAttributeModifier("blacksmith_offensive", DAMAGE_WITH_SHIELD.get(), 0.1, MULTIPLY_BASE, 1, 13);
 		addSkillAttributeModifier("blacksmith_defensive_notable_1", ARMOR, 10, ADDITION);
 		addSkillAttributeModifier("blacksmith_offensive_notable_1", DAMAGE_WITH_SHIELD.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_life", MAXIMUM_LIFE_PER_BOOTS_ARMOR.get(), 0.5, ADDITION, 1, 2);
@@ -220,22 +239,27 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_speed_notable_1", ATTACK_SPEED_WITH_SHIELD.get(), 0.10, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_lesser", CRAFTED_EQUIPMENT_DURABILITY.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("blacksmith_mastery", CHANCE_TO_CRAFT_TOUGHER_ARMOR.get(), 1, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("blacksmith_crit", CRIT_CHANCE_WITH_SHIELD.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("blacksmith_crit_keystone_1", CRIT_DAMAGE_WITH_SHIELD.get(), 0.25, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_crit", CRIT_CHANCE_WITH_SHIELD.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("blacksmith_crit_notable_1", CRIT_DAMAGE_WITH_SHIELD.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_crafting", CRAFTED_SHIELDS_ARMOR_BONUS.get(), 1, ADDITION, 1, 3);
 		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", CRAFTED_ARMOR_DEFENCE.get(), 0.45, MULTIPLY_BASE);
-		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", CRAFTED_WEAPON_ATTACK_SPEED.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", CRAFTED_MELEE_WEAPON_ATTACK_SPEED.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_healing", LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 2);
 		addSkillAttributeModifier("blacksmith_healing_notable_1", LIFE_REGENERATION_WITH_SHIELD.get(), 1, ADDITION);
 		addSkillAttributeModifier("blacksmith_crafting_notable_1", CRAFTED_SHIELDS_ARMOR_BONUS.get(), 2, ADDITION);
 		addSkillAttributeModifier("blacksmith_defensive_keystone_1", CHESTPLATE_ARMOR.get(), 1, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_offensive_keystone_1", ATTACK_DAMAGE_PER_ARMOR.get(), 0.15, ADDITION);
+		addSkillAttributeModifier("blacksmith_offensive_notable_2", SWORD_DAMAGE.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_notable_3", MELEE_DAMAGE_WITH_SHIELD.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_notable_4", TRIDENT_DAMAGE.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_notable_5", PROJECTILE_DAMAGE_WITH_SHIELD.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_notable_6", AXE_DAMAGE.get(), 0.2, MULTIPLY_BASE);
 		// enchanter skills
 		addSkillAttributeModifier("enchanter_class", ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), 0.3, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_defensive_crafting", CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), 0.1, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("enchanter_offensive_crafting", CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("enchanter_defensive", BLOCK_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("enchanter_offensive", DAMAGE_WITH_ENCHANTED_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("enchanter_defensive", BLOCK_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 8);
+		addSkillBranchAttributeModifier("enchanter_offensive", DAMAGE_WITH_ENCHANTED_WEAPON.get(), 0.1, MULTIPLY_BASE, 1, 13);
 		addSkillAttributeModifier("enchanter_defensive_notable_1", BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get(), 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_offensive_notable_1", DAMAGE_WITH_ENCHANTED_WEAPON.get(), 0.20, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_life", MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get(), 2, ADDITION, 1, 2);
@@ -244,8 +268,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("enchanter_speed_notable_1", ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get(), 0.10, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_lesser", ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("enchanter_mastery", CHANCE_TO_APPLY_BETTER_ENCHANTMENT.get(), 1, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("enchanter_crit", CRIT_CHANCE_WITH_ENCHANTED_WEAPON.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("enchanter_crit_keystone_1", CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT.get(), 0.05, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("enchanter_crit", CRIT_CHANCE_WITH_ENCHANTED_WEAPON.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("enchanter_crit_notable_1", CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT.get(), 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_crafting", FREE_ENCHANTMENT_CHANCE.get(), 0.05, MULTIPLY_BASE, 1, 3);
 		addSkillAttributeModifier("enchanter_defensive_crafting_keystone_1", CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get(), 0.4, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_offensive_crafting_keystone_1", CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get(), 0.4, MULTIPLY_BASE);
@@ -254,12 +278,17 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("enchanter_crafting_notable_1", FREE_ENCHANTMENT_CHANCE.get(), 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_defensive_keystone_1", BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get(), 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_offensive_keystone_1", DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL.get(), 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_notable_2", ENCHANTED_SWORD_DAMAGE.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_notable_3", ENCHANTED_BOW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_notable_4", ENCHANTED_TRIDENT_DAMAGE.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_notable_5", ENCHANTED_CROSSBOW_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_notable_6", ENCHANTED_AXE_DAMAGE.get(), 0.2, MULTIPLY_BASE);
 		// cook skills
 		addSkillAttributeModifier("cook_class", COOKED_FOOD_SATURATION.get(), 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_defensive_crafting", COOKED_FOOD_HEALING_PER_SATURATION.get(), 0.05, MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("cook_offensive_crafting", COOKED_FOOD_DAMAGE_PER_SATURATION.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("cook_defensive", BLOCK_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("cook_offensive", DAMAGE_IF_NOT_HUNGRY.get(), 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("cook_defensive", BLOCK_CHANCE.get(), 0.01, MULTIPLY_BASE, 1, 8);
+		addSkillBranchAttributeModifier("cook_offensive", DAMAGE_IF_NOT_HUNGRY.get(), 0.1, MULTIPLY_BASE, 1, 13);
 		addSkillAttributeModifier("cook_defensive_notable_1", BLOCK_CHANCE_IF_NOT_HUNGRY.get(), 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_offensive_notable_1", DAMAGE_IF_NOT_HUNGRY.get(), 0.25, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_life", MAXIMUM_LIFE_IF_NOT_HUNGRY.get(), 2, ADDITION, 1, 2);
@@ -268,8 +297,8 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("cook_speed_notable_1", ATTACK_SPEED_IF_NOT_HUNGRY.get(), 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_lesser", COOKED_FOOD_SATURATION.get(), 0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("cook_mastery", COOKED_FOOD_SATURATION.get(), 0.5, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("cook_crit", CRIT_CHANCE_IF_NOT_HUNGRY.get(), 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("cook_crit_keystone_1", CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), 0.03, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("cook_crit", CRIT_CHANCE_IF_NOT_HUNGRY.get(), 0.05, MULTIPLY_BASE, 1, 2);
+		addSkillAttributeModifier("cook_crit_notable_1", CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(), 0.03, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_crafting", COOKED_FOOD_LIFE_REGENERATION.get(), 0.5, ADDITION, 1, 3);
 		addSkillAttributeModifier("cook_defensive_crafting_keystone_1", COOKED_FOOD_HEALING_PER_SATURATION.get(), 0.25, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_offensive_crafting_keystone_1", COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get(), 0.03, MULTIPLY_BASE);
@@ -278,6 +307,11 @@ public class ModSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("cook_crafting_notable_1", COOKED_FOOD_LIFE_REGENERATION.get(), 1.5, ADDITION);
 		addSkillAttributeModifier("cook_defensive_keystone_1", BLOCK_CHANCE_PER_SATISFIED_HUNGER.get(), 0.01, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_offensive_keystone_1", DAMAGE_PER_SATISFIED_HUNGER.get(), 0.03, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_2", MELEE_DAMAGE_IF_NOT_HUNGRY.get(), 0.15, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_3", AXE_DAMAGE.get(), 0.15, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_4", TRIDENT_DAMAGE.get(), 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_5", SWORD_DAMAGE.get(), 0.2, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_notable_6", PROJECTILE_DAMAGE_IF_NOT_HUNGRY.get(), 0.2, MULTIPLY_BASE);
 	}
 
 	private void addSkillBranchAttributeModifier(String branchName, Attribute attribute, double amount, Operation operation, int from, int to) {

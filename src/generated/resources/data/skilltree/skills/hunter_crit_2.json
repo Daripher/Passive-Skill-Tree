@@ -2,19 +2,19 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.crit_chance_with_bow",
+      "attribute": "skilltree:player.projectile_crit_chance",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_crit_3"
+    "skilltree:hunter_crit_notable_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_crit_1.png",
   "position": {
-    "x": 95,
-    "y": 198
+    "x": 202,
+    "y": 146
   },
   "tree": "skilltree:tree"
 }

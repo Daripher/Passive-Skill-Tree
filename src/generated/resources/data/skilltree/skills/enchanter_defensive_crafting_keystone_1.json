@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 188,
-    "y": -254
+    "x": 198,
+    "y": -242
   },
   "tree": "skilltree:tree"
 }

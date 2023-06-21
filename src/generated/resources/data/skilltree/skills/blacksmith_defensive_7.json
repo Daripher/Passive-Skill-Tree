@@ -9,7 +9,8 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_defensive_keystone_1"
+    "skilltree:blacksmith_defensive_8",
+    "skilltree:blacksmith_lesser_1"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_defensive_1.png",
   "position": {

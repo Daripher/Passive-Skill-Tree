@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.attack_speed_with_bow",
+      "attribute": "skilltree:player.attack_speed_with_ranged_weapon",
       "operation": "multiply_base"
     }
   ],

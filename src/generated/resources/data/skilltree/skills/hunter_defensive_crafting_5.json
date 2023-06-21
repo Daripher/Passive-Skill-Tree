@@ -9,13 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:hunter_defensive_crafting_6",
-    "skilltree:enchanter_crit_2"
+    "skilltree:hunter_defensive_crafting_6"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting_1.png",
   "position": {
-    "x": 221,
-    "y": 32
+    "x": 223,
+    "y": 18
   },
   "tree": "skilltree:tree"
 }

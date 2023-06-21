@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.maximum_life_per_gemstone_in_helmet",
+      "attribute": "skilltree:player.maximum_life_per_gem_in_helmet",
       "operation": "addition"
     }
   ],

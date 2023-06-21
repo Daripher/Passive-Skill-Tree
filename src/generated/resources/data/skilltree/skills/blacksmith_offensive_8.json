@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:player.damage_with_shield",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_offensive_keystone_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_1.png",
+  "position": {
+    "x": -251,
+    "y": -211
+  },
+  "tree": "skilltree:tree"
+}

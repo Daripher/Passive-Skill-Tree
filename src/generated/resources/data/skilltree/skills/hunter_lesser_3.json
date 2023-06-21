@@ -10,8 +10,8 @@
   "button_size": 16,
   "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
   "position": {
-    "x": 253,
-    "y": 110
+    "x": 276,
+    "y": 123
   },
   "tree": "skilltree:tree"
 }

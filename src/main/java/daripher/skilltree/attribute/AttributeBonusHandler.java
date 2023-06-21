@@ -28,6 +28,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,18 +59,15 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void applyDamageBonus(LivingHurtEvent event) {
 		if (event.getSource().getDirectEntity() instanceof Player player) {
-			var damageBonus = PlayerHelper.getFlatDamageBonus(player);
-			var damageMultiplier = PlayerHelper.getDamageMultiplier(player, event.getEntity());
-			var damage = (event.getAmount() + damageBonus) * damageMultiplier;
+			var damage = event.getAmount();
+			damage *= PlayerHelper.getDamageMultiplier(player, event.getEntity(), true);
 			event.setAmount(damage);
 		}
 	}
 
 	@SubscribeEvent
 	public static void applyCritBonus(CriticalHitEvent event) {
-		if (event.isVanillaCritical()) {
-			return;
-		}
+		if (event.isVanillaCritical()) return;
 		if (event.getTarget() instanceof LivingEntity target) {
 			var critChance = PlayerHelper.getCritChance(event.getEntity(), target);
 			critChance = Math.min(0.75F, critChance);
@@ -82,9 +81,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyDynamicAttributeBonuses(PlayerTickEvent event) {
-		if (event.player.level.isClientSide) {
-			return;
-		}
+		if (event.player.level.isClientSide) return;
 		var player = event.player;
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "d1f7e78b-3368-409c-aa89-90f0f89a5524", AttributeBonusHandler::getMaximumLifePerEvasion);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "b68181bd-fbc4-4a63-95d4-df386fe3f71f", AttributeBonusHandler::getMaximumLifePerGemInArmor);
@@ -104,13 +101,12 @@ public class AttributeBonusHandler {
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "27b4644b-96a0-4443-89e5-1700af61d602", AttributeBonusHandler::getMaximumLifePerEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "55c3cb58-c09e-465a-a812-6a18ae587ec0", AttributeBonusHandler::getArmorPerChestplateEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9b1e9aac-fa58-4343-ba88-7541eca2836f", AttributeBonusHandler::getMaximumLifePerArmorEnchantment);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "5e2d6a95-bc70-4f3d-a348-307b49f5bc84", AttributeBonusHandler::getAttackSpeedWithPickaxe);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "5e2d6a95-bc70-4f3d-a348-307b49f5bc84", AttributeBonusHandler::getAttackSpeedWithGemInWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE, "bfbc3d6b-7c37-498b-888c-3b05c921f24a", AttributeBonusHandler::getBlockChanceWithEnchantedShield);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.EVASION_CHANCE.get(), Operation.MULTIPLY_BASE, "d2865c2c-d5cc-4de9-a793-752349d27da0", AttributeBonusHandler::getEvasionChanceWhenWounded);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "f6dbc327-88c0-4704-b230-91fe1642dc7a", AttributeBonusHandler::getAttackSpeedIfNotHungry);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "5d449ea8-12dd-4596-a6e1-e4837946acb6", AttributeBonusHandler::getAttackSpeedWithBow);
-//		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "e37a2257-8511-4ffb-a5dd-913b591dd520", AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
-		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "fbc2d0b3-1453-4c49-8220-662e89ae1f45", AttributeBonusHandler::getCritChanceWithBow);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "5d449ea8-12dd-4596-a6e1-e4837946acb6", AttributeBonusHandler::getAttackSpeedWithRangedWeapon);
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "e37a2257-8511-4ffb-a5dd-913b591dd520", AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "44984187-74c8-4927-be18-1e187ca9babe", AttributeBonusHandler::getCritChanceIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "7bd1d9fb-4a20-41f3-89df-7cb42e849c5f", AttributeBonusHandler::getAttackWithEnchantedWeapon);
 		applyDynamicAttributeBonus(player, SkillTreeAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, "9c36d4dc-06e3-4f42-b8e6-abb0fb6b344c", AttributeBonusHandler::getLifePerHitUnderPotionEffect);
@@ -155,7 +151,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getMaximumLifePerGemInArmor(Player player) {
-		var lifePerGemInArmor = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_ARMOR.get());
+		var lifePerGemInArmor = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEM_IN_ARMOR.get());
 		var gemstonesInArmor = 0;
 		for (var slot = 0; slot < 4; slot++) {
 			var itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
@@ -165,7 +161,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getMaximumLifePerGemInHelmet(Player player) {
-		var lifePerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEMSTONE_IN_HELMET.get());
+		var lifePerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.MAXIMUM_LIFE_PER_GEM_IN_HELMET.get());
 		var helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 		var gemstonesInHelmet = GemHelper.getGemsCount(helmet);
 		return lifePerGemInHelmet * gemstonesInHelmet;
@@ -178,13 +174,13 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getArmorPerGemInChestplate(Player player) {
-		var armorPerGemInChestplate = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_CHESTPLATE.get());
+		var armorPerGemInChestplate = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEM_IN_CHESTPLATE.get());
 		var getmstonesInChestplate = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.CHEST));
 		return armorPerGemInChestplate * getmstonesInChestplate;
 	}
 
 	private static double getArmorPerGemInHelmet(Player player) {
-		var armorPerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEMSTONE_IN_HELMET.get());
+		var armorPerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.ARMOR_PER_GEM_IN_HELMET.get());
 		var getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
 		return armorPerGemInHelmet * getmstonesInHelmet;
 	}
@@ -299,21 +295,15 @@ public class AttributeBonusHandler {
 		return maximumLifePerArmorEnchantment * enchantmentCount;
 	}
 
-	private static double getAttackSpeedWithPickaxe(Player player) {
-		if (!ItemHelper.isPickaxe(player.getMainHandItem())) {
-			return 0;
-		}
-		var attackSpeedWithPickaxe = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_WITH_PICKAXE.get()) - 1;
-		return attackSpeedWithPickaxe;
+	private static double getAttackSpeedWithGemInWeapon(Player player) {
+		if (!GemHelper.hasGem(player.getMainHandItem(), 0)) return 0;
+		return player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_WITH_GEM_IN_WEAPON.get()) - 1;
 	}
 
 	private static double getBlockChanceWithEnchantedShield(Player player) {
 		var offhandItem = player.getOffhandItem();
-		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) {
-			return 0D;
-		}
-		var blockChanceWithEnchantedShield = player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get()) - 1;
-		return blockChanceWithEnchantedShield;
+		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) return 0D;
+		return player.getAttributeValue(SkillTreeAttributes.BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get()) - 1;
 	}
 
 	private static double getEvasionChanceWhenWounded(Player player) {
@@ -334,27 +324,21 @@ public class AttributeBonusHandler {
 		return attackSpeedIfNotHungry;
 	}
 
-	private static double getAttackSpeedWithBow(Player player) {
-		var hasBow = ItemHelper.isRangedWeapon(player.getMainHandItem());
-		if (hasBow) {
-			return 0D;
-		}
-		var attackSpeedWithBow = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_WITH_BOW.get()) - 1;
+	private static double getAttackSpeedWithRangedWeapon(Player player) {
+		var hasRangedWeapon = ItemHelper.isRangedWeapon(player.getMainHandItem());
+		if (!hasRangedWeapon) return 0D;
+		var attackSpeedWithBow = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get()) - 1;
 		return attackSpeedWithBow;
 	}
 
-//	private static double getAttackSpeedPerGemInWeapon(Player player) {
-//		var mainHandItem = player.getMainHandItem();
-//		if (!ItemHelper.isWeaponOrBow(mainHandItem)) {
-//			return 0D;
-//		}
-//		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
-//		if (gemstonesInWeapon == 0) {
-//			return 0D;
-//		}
-//		var attackSpeedPerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_PER_GEMSTONE_IN_WEAPON.get()) - 1;
-//		return attackSpeedPerGemInWeapon * gemstonesInWeapon;
-//	}
+	private static double getAttackSpeedPerGemInWeapon(Player player) {
+		var mainHandItem = player.getMainHandItem();
+		if (!ItemHelper.isWeapon(mainHandItem)) return 0D;
+		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
+		if (gemstonesInWeapon == 0) return 0D;
+		var attackSpeedPerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.ATTACK_SPEED_PER_GEM_IN_WEAPON.get()) - 1;
+		return attackSpeedPerGemInWeapon * gemstonesInWeapon;
+	}
 
 	private static double getCritChancePerGemInWeapon(Player player) {
 		var mainHandItem = player.getMainHandItem();
@@ -365,17 +349,8 @@ public class AttributeBonusHandler {
 		if (gemstonesInWeapon == 0) {
 			return 0D;
 		}
-		var critChancePerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_PER_GEMSTONE_IN_WEAPON.get()) - 1;
+		var critChancePerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_PER_GEM_IN_WEAPON.get()) - 1;
 		return critChancePerGemInWeapon * gemstonesInWeapon;
-	}
-
-	private static double getCritChanceWithBow(Player player) {
-		var hasBow = ItemHelper.isRangedWeapon(player.getMainHandItem());
-		if (hasBow) {
-			return 0D;
-		}
-		var critChanceWithBow = player.getAttributeValue(SkillTreeAttributes.CRIT_CHANCE_WITH_BOW.get()) - 1;
-		return critChanceWithBow;
 	}
 
 	private static double getCritChanceIfNotHungry(Player player) {
@@ -411,12 +386,12 @@ public class AttributeBonusHandler {
 		if (gemstonesInWeapon == 0) {
 			return 0D;
 		}
-		var critDamagePerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_PER_GEMSTONE_IN_WEAPON.get()) - 1;
+		var critDamagePerGemInWeapon = player.getAttributeValue(SkillTreeAttributes.CRIT_DAMAGE_PER_GEM_IN_WEAPON.get()) - 1;
 		return critDamagePerGemInWeapon * gemstonesInWeapon;
 	}
 
 	private static double getLifeRegenerationPerGemInHelmet(Player player) {
-		var lifeRegenerationPerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.LIFE_REGENERATION_PER_GEMSTONE_IN_HELMET.get());
+		var lifeRegenerationPerGemInHelmet = player.getAttributeValue(SkillTreeAttributes.LIFE_REGENERATION_PER_GEM_IN_HELMET.get());
 		var getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
 		return lifeRegenerationPerGemInHelmet * getmstonesInHelmet;
 	}
@@ -607,11 +582,11 @@ public class AttributeBonusHandler {
 		if (!ItemHelper.isMeleeWeapon(itemStack)) {
 			return;
 		}
-		var weaponDamageBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_WEAPON_DAMAGE_BONUS.get());
+		var weaponDamageBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get());
 		if (weaponDamageBonus > 0) {
 			ItemHelper.setDamageBonus(itemStack, weaponDamageBonus);
 		}
-		var weaponAttackSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get()) - 1;
+		var weaponAttackSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_MELEE_WEAPON_ATTACK_SPEED.get()) - 1;
 		if (weaponAttackSpeedBonus > 0) {
 			ItemHelper.setAttackSpeedBonus(itemStack, weaponAttackSpeedBonus);
 		}
@@ -703,17 +678,11 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedBowsBonuses(ItemCraftedEvent event) {
 		var itemStack = event.getCrafting();
-		if (!ItemHelper.isRangedWeapon(itemStack)) {
-			return;
-		}
-		var bowChargeSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_ATTACK_SPEED.get()) - 1;
-		if (bowChargeSpeedBonus > 0) {
-			ItemHelper.setAttackSpeedBonus(itemStack, bowChargeSpeedBonus);
-		}
-		var bowAdditionalGemSlots = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_BOWS_ADDITIONAL_GEMSTONE_SLOTS.get());
-		if (bowAdditionalGemSlots > 0) {
-			GemHelper.setAdditionalSocket(itemStack);
-		}
+		if (!ItemHelper.isRangedWeapon(itemStack)) return;
+		var attackSpeedBonus = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_RANGED_WEAPON_ATTACK_SPEED.get()) - 1;
+		if (attackSpeedBonus > 0) ItemHelper.setAttackSpeedBonus(itemStack, attackSpeedBonus);
+		var additionalSockets = event.getEntity().getAttributeValue(SkillTreeAttributes.CRAFTED_RANGED_WEAPON_ADDITIONAL_SOCKETS.get());
+		if (additionalSockets > 0) GemHelper.setAdditionalSocket(itemStack);
 	}
 
 	@SubscribeEvent
@@ -733,28 +702,20 @@ public class AttributeBonusHandler {
 	}
 
 	@SubscribeEvent
-	public static void applyArrowDamageBonus(LivingHurtEvent event) {
-		if (!(event.getSource().getDirectEntity() instanceof AbstractArrow))
-			return;
-		if (!(event.getSource().getEntity() instanceof Player))
-			return;
+	public static void applyProjectileDamageBonus(LivingHurtEvent event) {
+		if (!(event.getSource().getDirectEntity() instanceof Projectile)) return;
+		if (!(event.getSource().getEntity() instanceof Player)) return;
 		var player = (Player) event.getSource().getEntity();
-		var arrow = (AbstractArrow) event.getSource().getDirectEntity();
-		arrow.setCritArrow(false);
-		var damageBonus = PlayerHelper.getFlatArrowDamageBonus(player);
-		var damageMultiplier = PlayerHelper.getArrowDamageMultiplier(player, event.getEntity(), arrow);
-		var damage = (event.getAmount() + damageBonus) * damageMultiplier;
+		var projectile = (Projectile) event.getSource().getDirectEntity();
+		var damage = event.getAmount();
+		damage *= PlayerHelper.getProjectileDamageMultiplier(player, event.getEntity(), projectile);
 		event.setAmount(damage);
 	}
 
 	@SubscribeEvent
 	public static void setCraftedFoodBonuses(ItemCraftedEvent event) {
-		var craftedItem = event.getCrafting();
-		if (!ItemHelper.isFood(craftedItem)) {
-			return;
-		}
-		var player = event.getEntity();
-		FoodHelper.setCraftedFoodBonuses(craftedItem, player);
+		if (!ItemHelper.isFood(event.getCrafting())) return;
+		FoodHelper.setCraftedFoodBonuses(event.getCrafting(), event.getEntity());
 	}
 
 	@SubscribeEvent
@@ -895,25 +856,38 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyPoisonedWeaponEffects(LivingHurtEvent event) {
-		if (!(event.getSource().getDirectEntity() instanceof Player)) {
-			return;
-		}
-		var player = (Player) event.getSource().getDirectEntity();
+		var damageSource = event.getSource();
+		if (!(damageSource.getDirectEntity() instanceof Player)) return;
+		var player = (Player) damageSource.getDirectEntity();
 		var weapon = player.getMainHandItem();
-		if (!ItemHelper.hasPoisons(weapon)) {
-			return;
-		}
+		if (!ItemHelper.hasPoisons(weapon)) return;
 		var poisons = ItemHelper.getPoisons(weapon);
 		var target = event.getEntity();
 		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
 	}
 
+	@SubscribeEvent
+	public static void applyPoisonedThrownTridentEffects(LivingHurtEvent event) {
+		var damageSource = event.getSource();
+		if (!(damageSource.getDirectEntity() instanceof ThrownTrident)) return;
+		var trident = (ThrownTrident) damageSource.getDirectEntity();
+		var getPickupItemMethod = ObfuscationReflectionHelper.findMethod(AbstractArrow.class, "m_7941_");
+		var weapon = (ItemStack) null;
+		try {
+			weapon = (ItemStack) getPickupItemMethod.invoke(trident);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		if (!ItemHelper.hasPoisons(weapon)) return;
+		var poisons = ItemHelper.getPoisons(weapon);
+		var target = event.getEntity();
+		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
+	}
+	
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void addPoisonedWeaponTooltips(ItemTooltipEvent event) {
 		var weapon = event.getItemStack();
-		if (!ItemHelper.hasPoisons(weapon)) {
-			return;
-		}
+		if (!ItemHelper.hasPoisons(weapon)) return;
 		event.getToolTip().add(Component.empty());
 		event.getToolTip().add(Component.translatable("weapon.poisoned").withStyle(ChatFormatting.DARK_PURPLE));
 		var poisons = ItemHelper.getPoisons(weapon);
@@ -935,7 +909,7 @@ public class AttributeBonusHandler {
 		}
 		var lifePerHit = (float) player.getAttributeValue(SkillTreeAttributes.LIFE_PER_HIT.get());
 		if (directAttacker instanceof AbstractArrow) {
-			lifePerHit += player.getAttributeValue(SkillTreeAttributes.LIFE_PER_ARROW_HIT.get());
+			lifePerHit += player.getAttributeValue(SkillTreeAttributes.LIFE_PER_PROJECTILE_HIT.get());
 		}
 		player.heal(lifePerHit);
 	}

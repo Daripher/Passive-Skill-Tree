@@ -1,9 +1,9 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:player.arrow_damage_bonus",
-      "operation": "addition"
+      "amount": 0.1,
+      "attribute": "skilltree:player.projectile_damage",
+      "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",

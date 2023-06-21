@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_lesser_1.png",
   "position": {
-    "x": -255,
-    "y": 134
+    "x": -278,
+    "y": 147
   },
   "tree": "skilltree:tree"
 }

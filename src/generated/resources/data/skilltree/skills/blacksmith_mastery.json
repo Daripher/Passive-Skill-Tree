@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/blacksmith_mastery.png",
   "position": {
-    "x": -308,
-    "y": -183
+    "x": -331,
+    "y": -196
   },
   "tree": "skilltree:tree"
 }

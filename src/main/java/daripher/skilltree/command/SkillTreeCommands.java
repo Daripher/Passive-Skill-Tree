@@ -24,24 +24,24 @@ public class SkillTreeCommands {
 	public static void registerCommands(RegisterCommandsEvent event) {
 		var resetCommand = Commands.literal("skilltree")
 				.then(Commands.literal("reset")
-						.then(Commands.argument("player", EntityArgument.player())
-								.executes(SkillTreeCommands::executeResetCommand)))
+					.then(Commands.argument("player", EntityArgument.player())
+						.executes(SkillTreeCommands::executeResetCommand)))
 				.requires(SkillTreeCommands::hasPermission);
 		event.getDispatcher().register(resetCommand);
 		var addPointsCommand = Commands.literal("skilltree")
 				.then(Commands.literal("points")
-						.then(Commands.literal("add")
-								.then(Commands.argument("player", EntityArgument.player())
-										.then(Commands.argument("amount", IntegerArgumentType.integer())
-												.executes(SkillTreeCommands::executeAddPointsCommand)))))
+					.then(Commands.literal("add")
+						.then(Commands.argument("player", EntityArgument.player())
+							.then(Commands.argument("amount", IntegerArgumentType.integer())
+								.executes(SkillTreeCommands::executeAddPointsCommand)))))
 				.requires(SkillTreeCommands::hasPermission);
 		event.getDispatcher().register(addPointsCommand);
 		var setPointsCommand = Commands.literal("skilltree")
 				.then(Commands.literal("points")
-						.then(Commands.literal("set")
-								.then(Commands.argument("player", EntityArgument.player())
-										.then(Commands.argument("amount", IntegerArgumentType.integer())
-												.executes(SkillTreeCommands::executeSetPointsCommand)))))
+					.then(Commands.literal("set")
+						.then(Commands.argument("player", EntityArgument.player())
+							.then(Commands.argument("amount", IntegerArgumentType.integer())
+								.executes(SkillTreeCommands::executeSetPointsCommand)))))
 				.requires(SkillTreeCommands::hasPermission);
 		event.getDispatcher().register(setPointsCommand);
 	}

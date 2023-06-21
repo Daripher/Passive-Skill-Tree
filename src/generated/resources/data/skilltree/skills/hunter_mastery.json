@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
   "position": {
-    "x": 284,
-    "y": 159
+    "x": 307,
+    "y": 172
   },
   "tree": "skilltree:tree"
 }

@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.gemstones_strength_in_armor",
+      "attribute": "skilltree:player.gem_power_in_armor",
       "operation": "multiply_base"
     }
   ],

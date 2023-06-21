@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/miner_mastery.png",
   "position": {
-    "x": -308,
-    "y": 158
+    "x": -331,
+    "y": 171
   },
   "tree": "skilltree:tree"
 }

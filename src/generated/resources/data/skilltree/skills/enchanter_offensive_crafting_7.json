@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting_1.png",
   "position": {
-    "x": 270,
-    "y": -61
+    "x": 269,
+    "y": -60
   },
   "tree": "skilltree:tree"
 }

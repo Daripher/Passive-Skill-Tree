@@ -101,9 +101,7 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
 
 	private static Gem createGem(int weight, float quality, boolean unique, GemBonus... gemBonuses) {
 		var dimensions = Set.of(new ResourceLocation(SkillTreeMod.MOD_ID, "fake_dimension"));
-		if (unique) {
-			dimensions = Set.of();
-		}
+		if (unique) dimensions = Set.of();
 		return new Gem(weight, quality, dimensions, null, null, Arrays.asList(gemBonuses), unique, Optional.empty());
 	}
 }

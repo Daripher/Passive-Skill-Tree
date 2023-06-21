@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:blacksmith_offensive_4",
-    "skilltree:blacksmith_offensive_crafting_5"
+    "skilltree:blacksmith_offensive_crafting_5",
+    "skilltree:blacksmith_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_offensive_notable_1.png",
   "position": {

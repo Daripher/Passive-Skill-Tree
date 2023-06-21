@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:cook_defensive_4",
-    "skilltree:cook_defensive_crafting_5"
+    "skilltree:cook_defensive_crafting_5",
+    "skilltree:blacksmith_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/cook_defensive_notable_1.png",
   "position": {

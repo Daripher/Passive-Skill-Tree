@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PlayerSkills implements IPlayerSkills {
-	private static final UUID TREE_VERSION = UUID.fromString("6b5361e7-307e-458e-89af-5b6d73825703");
+	private static final UUID TREE_VERSION = UUID.fromString("77fee779-4042-4312-8aca-5776af55238e");
 	private List<PassiveSkill> skills = new ArrayList<>();
 	private int skillPoints;
 	private boolean treeReset;

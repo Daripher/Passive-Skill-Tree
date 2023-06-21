@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.crafted_weapon_damage_bonus",
+      "attribute": "skilltree:player.crafted_melee_weapon_damage_bonus",
       "operation": "addition"
     }
   ],

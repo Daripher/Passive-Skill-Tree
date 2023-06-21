@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 2.0,
-      "attribute": "skilltree:player.armor_per_gemstone_in_helmet",
+      "attribute": "skilltree:player.armor_per_gem_in_helmet",
       "operation": "addition"
     }
   ],
@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:miner_defensive_4",
-    "skilltree:miner_defensive_crafting_5"
+    "skilltree:miner_defensive_crafting_5",
+    "skilltree:alchemist_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_notable_1.png",
   "position": {

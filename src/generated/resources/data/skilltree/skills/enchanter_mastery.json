@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/enchanter_mastery.png",
   "position": {
-    "x": 284,
-    "y": -182
+    "x": 307,
+    "y": -195
   },
   "tree": "skilltree:tree"
 }

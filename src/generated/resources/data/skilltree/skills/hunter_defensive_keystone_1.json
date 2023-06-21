@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/hunter_defensive_keystone_1.png",
   "position": {
-    "x": 288,
-    "y": 98
+    "x": 311,
+    "y": 111
   },
   "tree": "skilltree:tree"
 }

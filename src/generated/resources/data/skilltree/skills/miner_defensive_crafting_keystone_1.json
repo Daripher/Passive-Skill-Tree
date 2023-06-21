@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.3,
-      "attribute": "skilltree:player.gemstones_strength_in_armor",
+      "attribute": "skilltree:player.gem_power_in_armor",
       "operation": "multiply_base"
     },
     {
@@ -15,8 +15,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/miner_defensive_crafting_keystone_1.png",
   "position": {
-    "x": -212,
-    "y": 230
+    "x": -222,
+    "y": 218
   },
   "tree": "skilltree:tree"
 }

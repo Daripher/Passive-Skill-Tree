@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.crafted_bows_additional_gemstone_slots",
+      "attribute": "skilltree:player.crafted_ranged_weapon_additional_sockets",
       "operation": "addition"
     }
   ],
@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting_keystone_1.png",
   "position": {
-    "x": 188,
-    "y": 230
+    "x": 198,
+    "y": 218
   },
   "tree": "skilltree:tree"
 }

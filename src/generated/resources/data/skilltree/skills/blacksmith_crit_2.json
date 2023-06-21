@@ -9,12 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_crit_3"
+    "skilltree:blacksmith_crit_notable_1"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_crit_1.png",
   "position": {
-    "x": -111,
-    "y": -214
+    "x": -218,
+    "y": -162
   },
   "tree": "skilltree:tree"
 }

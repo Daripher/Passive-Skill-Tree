@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:enchanter_defensive_4",
-    "skilltree:enchanter_defensive_crafting_5"
+    "skilltree:enchanter_defensive_crafting_5",
+    "skilltree:cook_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_notable_1.png",
   "position": {

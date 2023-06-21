@@ -33,6 +33,7 @@ public enum ApotheosisCompatibility {
 	}
 
 	public int getGemsCount(ItemStack itemStack) {
+		if (!ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
 		return SocketHelper.getActiveGems(itemStack).size();
 	}
 

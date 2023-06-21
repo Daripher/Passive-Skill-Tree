@@ -9,7 +9,8 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_offensive_keystone_1"
+    "skilltree:enchanter_offensive_8",
+    "skilltree:enchanter_lesser_2"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_1.png",
   "position": {

@@ -202,13 +202,9 @@ public class PassiveSkill {
 		buf.writeInt(getPositionX());
 		buf.writeInt(getPositionY());
 		buf.writeInt(getConnectedSkills().size());
-		getConnectedSkills().forEach(skillId -> {
-			buf.writeUtf(skillId.toString());
-		});
+		getConnectedSkills().forEach(skillId -> buf.writeUtf(skillId.toString()));
 		buf.writeBoolean(getConnectedTreeId() != null);
-		if (connectedTreeId != null) {
-			buf.writeUtf(getConnectedTreeId().toString());
-		}
+		if (connectedTreeId != null) buf.writeUtf(getConnectedTreeId().toString());
 		buf.writeInt(getAttributeModifiers().size());
 		getAttributeModifiers().forEach(pair -> {
 			var attribute = pair.getLeft();

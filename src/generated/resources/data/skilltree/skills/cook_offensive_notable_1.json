@@ -10,7 +10,8 @@
   "button_size": 20,
   "connections": [
     "skilltree:cook_offensive_4",
-    "skilltree:cook_offensive_crafting_5"
+    "skilltree:cook_offensive_crafting_5",
+    "skilltree:cook_offensive_9"
   ],
   "icon_texture": "skilltree:textures/icons/cook_offensive_notable_1.png",
   "position": {

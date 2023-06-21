@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.5,
-      "attribute": "skilltree:player.life_regeneration_per_gemstone_in_helmet",
+      "attribute": "skilltree:player.life_regeneration_per_gem_in_helmet",
       "operation": "addition"
     }
   ],

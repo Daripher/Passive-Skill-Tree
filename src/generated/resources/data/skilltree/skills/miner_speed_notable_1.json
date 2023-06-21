@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:player.attack_speed_with_pickaxe",
+      "amount": 0.05,
+      "attribute": "skilltree:player.attack_speed_per_gem_in_weapon",
       "operation": "multiply_base"
     }
   ],

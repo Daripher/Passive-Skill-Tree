@@ -11,7 +11,7 @@
   "icon_texture": "skilltree:textures/icons/cook_mastery.png",
   "position": {
     "x": -12,
-    "y": -353
+    "y": -379
   },
   "tree": "skilltree:tree"
 }

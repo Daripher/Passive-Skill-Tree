@@ -10,7 +10,7 @@
   "button_size": 16,
   "connections": [
     "skilltree:hunter_defensive_7",
-    "skilltree:hunter_lesser_1"
+    "skilltree:hunter_crit_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_1.png",
   "position": {

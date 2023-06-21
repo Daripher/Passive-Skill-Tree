@@ -10,8 +10,8 @@
   "button_size": 24,
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 96,
-    "y": 283
+    "x": 81,
+    "y": 285
   },
   "tree": "skilltree:tree"
 }

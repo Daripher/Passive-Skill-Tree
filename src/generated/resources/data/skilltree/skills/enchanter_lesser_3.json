@@ -10,8 +10,8 @@
   "button_size": 16,
   "icon_texture": "skilltree:textures/icons/enchanter_lesser_1.png",
   "position": {
-    "x": 225,
-    "y": -175
+    "x": 248,
+    "y": -188
   },
   "tree": "skilltree:tree"
 }

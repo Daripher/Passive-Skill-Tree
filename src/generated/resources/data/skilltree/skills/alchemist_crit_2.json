@@ -9,12 +9,12 @@
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_crit_3"
+    "skilltree:alchemist_crit_notable_1"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_crit_1.png",
   "position": {
-    "x": -134,
-    "y": 186
+    "x": -36,
+    "y": 251
   },
   "tree": "skilltree:tree"
 }

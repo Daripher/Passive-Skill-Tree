@@ -185,14 +185,31 @@ public class ItemHelper {
 	}
 
 	public static boolean isMeleeWeapon(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES)) return true;
-		if (itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS)) return true;
-		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
+		return isSword(itemStack) || isAxe(itemStack) || isTrident(itemStack);
 	}
 
 	public static boolean isRangedWeapon(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS)) return true;
+		return isCrossbow(itemStack) || isBow(itemStack) || isTrident(itemStack);
+	}
+	
+	public static boolean isCrossbow(ItemStack itemStack) {
+		return itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS);
+	}
+	
+	public static boolean isBow(ItemStack itemStack) {
 		return itemStack.getItem() instanceof BowItem || itemStack.is(Tags.Items.TOOLS_BOWS);
+	}
+
+	public static boolean isTrident(ItemStack itemStack) {
+		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
+	}
+	
+	public static boolean isAxe(ItemStack itemStack) {
+		return itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES);
+	}
+	
+	public static boolean isSword(ItemStack itemStack) {
+		return itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS);
 	}
 
 	public static boolean isWeapon(ItemStack itemStack) {
