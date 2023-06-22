@@ -39,7 +39,7 @@ public class PotionMixingRecipe extends CustomRecipe {
 			if (stackInSlot.isEmpty()) {
 				continue;
 			}
-			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isPotionMix(stackInSlot)) {
+			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isMixture(stackInSlot)) {
 				potionsCount++;
 				if (potionStack1.isEmpty()) {
 					potionStack1 = stackInSlot;
@@ -63,7 +63,7 @@ public class PotionMixingRecipe extends CustomRecipe {
 			if (stackInSlot.isEmpty()) {
 				continue;
 			}
-			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isPotionMix(stackInSlot)) {
+			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isMixture(stackInSlot)) {
 				if (potionStack1.isEmpty()) {
 					potionStack1 = stackInSlot;
 				} else {

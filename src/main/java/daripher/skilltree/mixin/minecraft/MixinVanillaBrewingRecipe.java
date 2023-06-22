@@ -13,15 +13,13 @@ import net.minecraftforge.common.brewing.VanillaBrewingRecipe;
 public class MixinVanillaBrewingRecipe {
 	@Inject(method = "isInput", at = @At("HEAD"), cancellable = true)
 	private void isInput(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
-		if (PotionHelper.isSuperiorPotion(stack)) {
-			callbackInfo.setReturnValue(false);
-		}
+		if (!PotionHelper.isSuperiorPotion(stack)) return;
+		callbackInfo.setReturnValue(false);
 	}
 
 	@Inject(method = "getOutput", at = @At("HEAD"), cancellable = true)
 	private void getOutput(ItemStack input, ItemStack ingredient, CallbackInfoReturnable<ItemStack> callbackInfo) {
-		if (PotionHelper.isSuperiorPotion(input)) {
-			callbackInfo.setReturnValue(ItemStack.EMPTY);
-		}
+		if (!PotionHelper.isSuperiorPotion(input)) return;
+		callbackInfo.setReturnValue(ItemStack.EMPTY);
 	}
 }

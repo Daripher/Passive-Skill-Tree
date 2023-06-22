@@ -21,10 +21,8 @@ public class MixinStoveBlockEntity implements PlayerContainer {
 
 	@Redirect(method = "cookAndOutputItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/CampfireCookingRecipe;getResultItem()Lnet/minecraft/world/item/ItemStack;", remap = true), remap = false)
 	private ItemStack setCookedFoodBonuses(CampfireCookingRecipe recipe) {
-		var result = recipe.getResultItem();
-		if (player == null) {
-			return result;
-		}
+		ItemStack result = recipe.getResultItem();
+		if (player == null) return result;
 		FoodHelper.setCraftedFoodBonuses(result, player);
 		return result;
 	}

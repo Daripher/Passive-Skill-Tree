@@ -24,11 +24,14 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 
 	@Override
 	public int getUseItemRemainingTicks() {
-		var usingRangedWeapon = ItemHelper.isRangedWeapon(getUseItem());
-		if (!usingRangedWeapon) return super.getUseItemRemainingTicks();
-		var attackSpeedBonus = getAttributeValue(Attributes.ATTACK_SPEED) - 1;
-		if (attackSpeedBonus <= 0) return super.getUseItemRemainingTicks();
-		var useDuration = getUseItem().getUseDuration() - useItemRemaining;
+		if (!ItemHelper.isRangedWeapon(getUseItem())) {
+			return super.getUseItemRemainingTicks();
+		}
+		double attackSpeedBonus = getAttributeValue(Attributes.ATTACK_SPEED) - 1;
+		if (attackSpeedBonus <= 0) {
+			return super.getUseItemRemainingTicks();
+		}
+		int useDuration = getUseItem().getUseDuration() - useItemRemaining;
 		return (int) (useItemRemaining - useDuration * attackSpeedBonus);		
 	}
 
@@ -45,8 +48,10 @@ public abstract class MixinPlayer extends LivingEntity implements SkillTreePlaye
 	@Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
 	private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
 		var player = (Player) (Object) this;
-		var freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
-		if (player.getRandom().nextFloat() < freeEnchantmentChance) player.giveExperienceLevels(enchantmentCost);
+		double freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
+		if (player.getRandom().nextFloat() < freeEnchantmentChance) {
+			player.giveExperienceLevels(enchantmentCost);
+		}
 	}
 
 	@Override

@@ -84,7 +84,7 @@ public class PotionHelper {
 		return itemStack.hasTag() && itemStack.getTag().contains(ACTUAL_POTION_TAG);
 	}
 
-	public static boolean isPotionMix(ItemStack itemStack) {
+	public static boolean isMixture(ItemStack itemStack) {
 		return itemStack.hasTag() && itemStack.getTag().contains(MIXED_POTION_TAG);
 	}
 

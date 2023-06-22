@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
@@ -19,14 +20,14 @@ public class MixinAdventureModuleClient {
 	private static int showAdditionalSockets(ItemStack itemStack, int sockets) {
 		var minecraft = Minecraft.getInstance();
 		if (minecraft == null || minecraft.player == null) return sockets;
-		var additionalSockets = getAdditionalSockets(itemStack, minecraft.player);
+		int additionalSockets = getAdditionalSockets(itemStack, minecraft.player);
 		return sockets + additionalSockets;
 	}
 
 	private static int getAdditionalSockets(ItemStack itemStack, Player player) {
-		var playerMaxSockets = getMaxSockets(player, itemStack);
-		var additionalGems = getAdditionalGems(itemStack);
-		var additionalSockets = Math.max(0, playerMaxSockets - additionalGems);
+		int playerMaxSockets = getMaxSockets(player, itemStack);
+		int additionalGems = getAdditionalGems(itemStack);
+		int additionalSockets = Math.max(0, playerMaxSockets - additionalGems);
 		return additionalSockets;
 	}
 
@@ -36,13 +37,13 @@ public class MixinAdventureModuleClient {
 	}
 
 	private static int getMaxSockets(Player player, ItemStack itemStack) {
-		var maxSockets = (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_SOCKETS.get());
+		int maxSockets = (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_SOCKETS.get());
 		if (ItemHelper.isChestplate(itemStack)) {
-			var chestplateSockets = SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get();
+			Attribute chestplateSockets = SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get();
 			maxSockets += (int) player.getAttributeValue(chestplateSockets);
 		}
 		if (ItemHelper.isWeapon(itemStack)) {
-			var weaponSockets = SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get();
+			Attribute weaponSockets = SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get();
 			maxSockets += (int) player.getAttributeValue(weaponSockets);
 		}
 		return maxSockets;

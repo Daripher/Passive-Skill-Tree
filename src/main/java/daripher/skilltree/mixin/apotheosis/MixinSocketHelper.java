@@ -15,6 +15,7 @@ import daripher.skilltree.item.ItemHelper;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 
 @Mixin(value = SocketHelper.class, remap = false)
@@ -26,31 +27,31 @@ public class MixinSocketHelper {
 	private static int applyAdditionalGems(int sockets, ItemStack stack, int sockets_) {
 		if (!stack.hasTag()) return sockets;
 		if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) return sockets;
-		var additionalGems = stack.getTag().getInt(ADDITIONAL_GEMS_TAG);
+		int additionalGems = stack.getTag().getInt(ADDITIONAL_GEMS_TAG);
 		return sockets + additionalGems;
 	}
 
 	@Inject(method = "setGems", at = @At("HEAD"), cancellable = true)
 	private static void setAdditionalGems(ItemStack stack, List<ItemStack> gems, CallbackInfo callbackInfo) {
-		var sockets = getSockets(stack);
+		int sockets = getSockets(stack);
 		if (gems.size() <= sockets) {
 			if (!stack.hasTag()) return;
 			if (!stack.getTag().contains(ADDITIONAL_GEMS_TAG)) return;
 			stack.getOrCreateTag().remove(ADDITIONAL_GEMS_TAG);
 			return;
 		}
-		var additionalGems = gems.size() - sockets;
+		int additionalGems = gems.size() - sockets;
 		stack.getOrCreateTag().putInt(ADDITIONAL_GEMS_TAG, additionalGems);
 	}
 
 	@Inject(method = "getSockets", at = @At("HEAD"))
 	private static void addAdditionalSockets(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
 		if (!ItemHelper.isEquipment(stack)) return;
-		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
+		AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
 		if (socketAffix == null) SocketHelper.setSockets(stack, 1);
 		if (GemHelper.hasAdditionalSocket(stack) && !hasAdditionalSocket(stack)) {
 			setHasAdditionalSocket(stack);
-			var sockets = (int) AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get()).level();
+			int sockets = (int) AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get()).level();
 			SocketHelper.setSockets(stack, sockets + 1);
 		}
 	}

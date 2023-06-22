@@ -27,10 +27,8 @@ public class MixinCookingPotBlockEntity {
 
 	@Redirect(method = "processCooking", at = @At(value = "INVOKE", target = "Lvectorwing/farmersdelight/common/crafting/CookingPotRecipe;getResultItem()Lnet/minecraft/world/item/ItemStack;", remap = true))
 	private ItemStack setCookedFoodBonuses(CookingPotRecipe recipe) {
-		var result = recipe.getResultItem();
-		if (player == null) {
-			return result;
-		}
+		ItemStack result = recipe.getResultItem();
+		if (player == null) return result;
 		FoodHelper.setCraftedFoodBonuses(result, player);
 		return result;
 	}

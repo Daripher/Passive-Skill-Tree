@@ -15,19 +15,19 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 public class MixinEnchantmentBonus {
 	@Redirect(method = "getSocketBonusTooltip", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"))
 	private Object amplifyGemPowerVisually(Map<?, ?> values, Object rarity, ItemStack gemStack, LootRarity rarity_, int facets) {
-		var level = (int) values.get(rarity);
+		int level = (int) values.get(rarity);
 		if (!gemStack.hasTag()) return level;
 		if (!gemStack.getTag().contains("gem_power")) return level;
-		var gemPower = gemStack.getTag().getFloat("gem_power");
+		float gemPower = gemStack.getTag().getFloat("gem_power");
 		return (int) (level * gemPower);
 	}
 	
 	@Redirect(method = "getEnchantmentLevels", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"))
 	private Object amplifyGemPower(Map<?, ?> values, Object rarity, ItemStack gemStack, LootRarity rarity_, int facets, Map<Enchantment, Integer> enchantments) {
-		var level = (int) values.get(rarity);
+		int level = (int) values.get(rarity);
 		if (!gemStack.hasTag()) return level;
 		if (!gemStack.getTag().contains("gem_power")) return level;
-		var gemPower = gemStack.getTag().getFloat("gem_power");
+		float gemPower = gemStack.getTag().getFloat("gem_power");
 		return (int) (level * gemPower);
 	}
 }

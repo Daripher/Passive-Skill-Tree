@@ -13,7 +13,7 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 public class MixinAddSocketsRecipe {
 	@Redirect(method = { "matches", "m_5818_" }, at = @At(value = "INVOKE", target = "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;getSockets(Lnet/minecraft/world/item/ItemStack;)I"))
 	private int getSocketsWithoutAdditional(ItemStack itemStack) {
-		var sockets = SocketHelper.getSockets(itemStack);
+		int sockets = SocketHelper.getSockets(itemStack);
 		if (GemHelper.hasAdditionalSocket(itemStack)) sockets--;
 		return sockets;
 	}

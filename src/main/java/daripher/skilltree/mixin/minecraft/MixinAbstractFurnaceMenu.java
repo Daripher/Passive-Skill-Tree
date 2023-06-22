@@ -17,9 +17,11 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.event.ForgeEventFactory;
 
 @Mixin(AbstractFurnaceMenu.class)
 public abstract class MixinAbstractFurnaceMenu extends RecipeBookMenu<Container> implements PlayerContainer {
@@ -42,14 +44,10 @@ public abstract class MixinAbstractFurnaceMenu extends RecipeBookMenu<Container>
 
 	@Override
 	protected boolean moveItemStackTo(ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
-		var resultSlot = slots.get(AbstractFurnaceMenu.RESULT_SLOT);
+		Slot resultSlot = slots.get(AbstractFurnaceMenu.RESULT_SLOT);
 		if (itemStack == resultSlot.getItem()) {
-			fireItemSmeltedEvent(itemStack);
+			ForgeEventFactory.firePlayerSmeltedEvent(player.get(), itemStack);
 		}
 		return super.moveItemStackTo(itemStack, fromSlot, toSlot, beginFromEnd);
-	}
-
-	private void fireItemSmeltedEvent(ItemStack itemStack) {
-		net.minecraftforge.event.ForgeEventFactory.firePlayerSmeltedEvent(player.get(), itemStack);
 	}
 }

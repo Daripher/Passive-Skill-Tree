@@ -12,12 +12,14 @@ import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.util.PotionHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 
 @Mixin(BrewingStandBlockEntity.class)
@@ -30,32 +32,28 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 
 	@Inject(method = "doBrew", at = @At("TAIL"))
 	private static void enhanceBrewedPotions(Level level, BlockPos blockPos, NonNullList<ItemStack> itemStacks, CallbackInfo callbackInfo) {
-		var blockEntity = level.getBlockEntity(blockPos);
-		if (!(blockEntity instanceof PlayerContainer)) {
-			return;
-		}
+		BlockEntity blockEntity = level.getBlockEntity(blockPos);
+		if (!(blockEntity instanceof PlayerContainer)) return;
 		var playerContainer = (PlayerContainer) blockEntity;
-		var player = playerContainer.getPlayer().get();
-		for (var slot = 0; slot < 3; slot++) {
-			var potionStack = itemStacks.get(slot);
+		Player player = playerContainer.getPlayer().get();
+		for (int slot = 0; slot < 3; slot++) {
+			ItemStack potionStack = itemStacks.get(slot);
 			enhancePotion(potionStack, player);
 		}
 	}
 
 	private static void enhancePotion(ItemStack potionStack, Player player) {
-		var amplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get()) - 1;
+		float amplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get()) - 1;
 		if (PotionHelper.isHarmfulPotion(potionStack)) {
-			var harmfulPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get()) - 1;
-			amplificationChance += harmfulPotionAmplificationChance;
+			Attribute harmfulPotionAmplificationChance = SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get();
+			amplificationChance += player.getAttributeValue(harmfulPotionAmplificationChance) - 1;
 		}
 		if (PotionHelper.isBeneficialPotion(potionStack)) {
-			var beneficialPotionAmplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get()) - 1;
-			amplificationChance += beneficialPotionAmplificationChance;
+			Attribute beneficialPotionAmplificationChance = SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get();
+			amplificationChance += player.getAttributeValue(beneficialPotionAmplificationChance) - 1;
 		}
-		var durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION.get()) - 1;
-		if (durationBonus == 0 && amplificationChance == 0) {
-			return;
-		}
+		float durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION.get()) - 1;
+		if (durationBonus == 0 && amplificationChance == 0) return;
 		PotionHelper.enhancePotion(potionStack, amplificationChance, durationBonus);
 	}
 

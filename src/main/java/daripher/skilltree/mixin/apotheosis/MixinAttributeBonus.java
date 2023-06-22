@@ -13,10 +13,10 @@ import shadows.placebo.util.StepFunction;
 public class MixinAttributeBonus {
 	@Redirect(method = "read", at = @At(value = "INVOKE", target = "Lshadows/placebo/util/StepFunction;getForStep(I)F"))
 	private float amplifyGemPower(StepFunction function, int step, ItemStack gemStack, LootRarity rarity, int facets) {
-		var bonus = function.getForStep(step);
+		float bonus = function.getForStep(step);
 		if (!gemStack.hasTag()) return bonus;
 		if (!gemStack.getTag().contains("gem_power")) return bonus;
-		var gemPower = gemStack.getTag().getFloat("gem_power");
+		float gemPower = gemStack.getTag().getFloat("gem_power");
 		return bonus * gemPower;
 	}
 }

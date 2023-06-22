@@ -12,10 +12,9 @@ import net.minecraft.world.item.ItemStack;
 public class MixinItemStack {
 	@Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
 	private void getMaxDamage(CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!ItemHelper.hasDurabilityBonus((ItemStack) (Object) this)) {
-			return;
-		}
-		var durabilityBonus = ItemHelper.getDurabilityBonus((ItemStack) (Object) this);
+		var itemStack = (ItemStack) (Object) this;
+		if (!ItemHelper.hasDurabilityBonus(itemStack)) return;
+		double durabilityBonus = ItemHelper.getDurabilityBonus(itemStack);
 		callbackInfo.setReturnValue((int) (callbackInfo.getReturnValue() * (1 + durabilityBonus)));
 	}
 }

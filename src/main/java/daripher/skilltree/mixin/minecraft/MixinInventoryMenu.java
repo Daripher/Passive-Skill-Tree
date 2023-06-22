@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.ForgeEventFactory;
 
 @Mixin(InventoryMenu.class)
 public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContainer> {
@@ -34,12 +35,8 @@ public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContaine
 	@Override
 	protected boolean moveItemStackTo(ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
 		if (itemStack == resultSlots.getItem(0)) {
-			fireItemCraftedEvent(itemStack);
+			ForgeEventFactory.firePlayerCraftingEvent(owner, itemStack, craftSlots);
 		}
 		return super.moveItemStackTo(itemStack, fromSlot, toSlot, beginFromEnd);
-	}
-
-	private void fireItemCraftedEvent(ItemStack itemStack) {
-		net.minecraftforge.event.ForgeEventFactory.firePlayerCraftingEvent(owner, itemStack, craftSlots);
 	}
 }

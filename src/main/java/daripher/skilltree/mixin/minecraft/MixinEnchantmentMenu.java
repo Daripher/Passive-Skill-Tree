@@ -41,15 +41,15 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 	@Redirect(method = { "lambda$slotsChanged$0",
 			"m_39483_" }, at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
-		var levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
+		int levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		costsBeforeReduction[slot] = levelRequirement;
-		var reducedRequirement = EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
+		int reducedRequirement = EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
 		return reducedRequirement;
 	}
 
 	@Redirect(method = { "lambda$slotsChanged$0", "m_39483_" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsVisually(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
-		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
+		List<EnchantmentInstance> enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		var random = RandomSource.create(enchantmentSeed.get());
 		EnchantmentHelper.amplifyEnchantments(enchantments, random, player);
 		return enchantments;
@@ -57,7 +57,7 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, SkillTree
 
 	@Redirect(method = { "lambda$clickMenuButton$1", "m_39475_" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
 	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(EnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
-		var enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
+		List<EnchantmentInstance> enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		var random = RandomSource.create(enchantmentSeed.get());
 		EnchantmentHelper.amplifyEnchantments(enchantments, random, player);
 		return enchantments;
