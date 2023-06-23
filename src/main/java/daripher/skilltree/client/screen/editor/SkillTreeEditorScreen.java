@@ -43,7 +43,7 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
 		var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
-		var button = new SkillButton(this, buttonX, buttonY, skill);
+		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
 		if (selectedSkills.contains(skill.getId())) {

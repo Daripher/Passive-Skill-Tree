@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.api.SkillTreeEnchantmentMenu;
+import daripher.skilltree.api.PSTEnchantmentMenu;
 import fuzs.easymagic.mixin.accessor.EnchantmentMenuAccessor;
 import fuzs.easymagic.world.inventory.ModEnchantmentMenu;
 import net.minecraft.util.RandomSource;
@@ -28,7 +28,7 @@ public class MixinModEnchantmentMenu {
 	@Redirect(method = "updateLevels", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getEnchantmentCost(Lnet/minecraft/util/RandomSource;IILnet/minecraft/world/item/ItemStack;)I"))
 	private int decreaseLevelRequirements(RandomSource random, int slot, int power, ItemStack itemStack) {
 		int levelRequirement = EnchantmentHelper.getEnchantmentCost(random, slot, power, itemStack);
-		int[] costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
+		int[] costsBeforeReduction = ((PSTEnchantmentMenu) (Object) this).getCostsBeforeReduction();
 		costsBeforeReduction[slot] = levelRequirement;
 		Player player = ((PlayerContainer) (Object) this).getPlayer().get();
 		int decreasedRequirement = daripher.skilltree.enchantment.EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
@@ -37,7 +37,7 @@ public class MixinModEnchantmentMenu {
 
 	@Inject(method = "createEnchantmentInstance", at = @At("RETURN"), cancellable = true, remap = false)
 	private void amplifyEnchantments(ItemStack itemStack, int slot, CallbackInfoReturnable<List<EnchantmentInstance>> callbackInfo) {
-		int[] costsBeforeReduction = ((SkillTreeEnchantmentMenu) (Object) this).getCostsBeforeReduction();
+		int[] costsBeforeReduction = ((PSTEnchantmentMenu) (Object) this).getCostsBeforeReduction();
 		List<EnchantmentInstance> enchantments = ((EnchantmentMenuAccessor) this).callGetEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		var random = RandomSource.create(enchantmentSeed.get());
 		Player player = ((PlayerContainer) (Object) this).getPlayer().get();

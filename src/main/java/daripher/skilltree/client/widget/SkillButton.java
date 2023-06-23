@@ -3,6 +3,7 @@ package daripher.skilltree.client.widget;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,11 +11,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -31,20 +33,20 @@ public class SkillButton extends Button {
 	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0xD28AF2).withFont(TITLE_FONT);
 	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withFont(TITLE_FONT);
 	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5).withFont(DESCRIPTION_FONT);
-	private final SkillTreeScreen parentScreen;
+	private final Supplier<Float> animationFunction;
 	public final PassiveSkill skill;
 	public boolean highlighted;
 	public boolean animated;
 
-	public SkillButton(SkillTreeScreen screen, int x, int y, PassiveSkill passiveSkill) {
-		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), screen::buttonPressed, screen::renderButtonTooltip);
-		this.parentScreen = screen;
+	public SkillButton(Supplier<Float> animationFunction, int x, int y, PassiveSkill passiveSkill, OnPress pressFunction, OnTooltip tooltipFunction) {
+		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), pressFunction, tooltipFunction);
 		this.skill = passiveSkill;
+		this.animationFunction = animationFunction;
 	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		parentScreen.prepareTextureRendering(skill.getBackgroundTexture());
+		prepareTextureRendering(skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, 0, 0, width, height, width * 3, height);
 		var iconSize = width / 34F;
 		poseStack.pushPose();
@@ -56,17 +58,26 @@ public class SkillButton extends Button {
 		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
 		if (animated) {
-			RenderSystem.setShaderColor(1F, 1F, 1F, parentScreen.getAnimationProgress());
+			RenderSystem.setShaderColor(1F, 1F, 1F, animationFunction.get());
 			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
 	}
 
+	private void prepareTextureRendering(ResourceLocation textureLocation) {
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, textureLocation);
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		RenderSystem.enableBlend();
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.enableDepthTest();
+	}
+	
 	public List<MutableComponent> getTooltip() {
 		var tooltip = new ArrayList<MutableComponent>();
 		addTitleTooltip(tooltip);
 		addDescriptionTooltip(tooltip);
-		var minecraft = parentScreen.getMinecraft();
+		var minecraft = Minecraft.getInstance();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
 		if (useAdvancedTooltip) {
 			addAdvancedTooltip(tooltip);

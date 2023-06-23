@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import daripher.skilltree.api.SkillTreePlayer;
+import daripher.skilltree.api.PSTPlayer;
 import daripher.skilltree.init.SkillTreeItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -45,7 +45,7 @@ public class IrisciteItem extends GemItem {
 
 	protected RandomSource createInsertionRandomSource(Player player, ItemStack itemStack) {
 		var random = RandomSource.create();
-		var randomSeed = ((SkillTreePlayer) player).getRainbowGemstoneRandomSeed();
+		var randomSeed = ((PSTPlayer) player).getRainbowGemstoneRandomSeed();
 		var itemSlot = Player.getEquipmentSlotForItem(itemStack).ordinal();
 		random.setSeed(randomSeed + itemSlot);
 		return random;

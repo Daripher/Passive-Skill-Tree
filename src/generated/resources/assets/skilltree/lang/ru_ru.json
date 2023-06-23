@@ -349,6 +349,7 @@
   "skilltree.message.reset": "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.",
   "skilltree.message.reset_command": "Ваше древо пассивных умений было сброшено.",
   "weapon.poisoned": "Отравлено:",
+  "widget.skill_button.not_learned": "Умение не изучено",
   "widget.skill_point_progress_bar.buy": "Нажмите здесь чтобы получить очко умений за %s опыта",
   "widget.skill_point_progress_bar.points": "Очков умений осталось: %s",
   "widget.skill_point_progress_bar.text": "Получайте опыт чтобы открывать умения"

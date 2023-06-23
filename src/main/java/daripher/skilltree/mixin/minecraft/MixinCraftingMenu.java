@@ -1,5 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
+import java.util.Optional;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
 
 @Mixin(CraftingMenu.class)
-public abstract class MixinCraftingMenu extends RecipeBookMenu<CraftingContainer> {
+public abstract class MixinCraftingMenu extends RecipeBookMenu<CraftingContainer> implements PlayerContainer {
 	private @Shadow @Final CraftingContainer craftSlots;
 	private @Shadow @Final Player player;
 	private @Shadow @Final ResultContainer resultSlots;
@@ -39,5 +41,15 @@ public abstract class MixinCraftingMenu extends RecipeBookMenu<CraftingContainer
 			ForgeEventFactory.firePlayerCraftingEvent(player, itemStack, craftSlots);
 		}
 		return super.moveItemStackTo(itemStack, fromSlot, toSlot, beginFromEnd);
+	}
+
+	@Override
+	public Optional<Player> getPlayer() {
+		return Optional.ofNullable(player);
+	}
+
+	@Override
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }

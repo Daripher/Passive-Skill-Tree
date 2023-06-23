@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.SkillTreePlayer;
+import daripher.skilltree.api.PSTPlayer;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(Player.class)
-public abstract class MixinPlayer extends LivingEntity implements SkillTreePlayer {
+public abstract class MixinPlayer extends LivingEntity implements PSTPlayer {
 	private int rainbowJewelInsertionSeed;
 
 	protected MixinPlayer() {

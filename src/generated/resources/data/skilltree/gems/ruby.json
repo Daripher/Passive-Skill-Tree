@@ -6,10 +6,10 @@
       "gem_class": {
         "key": "any_armor",
         "types": [
-          "leggings",
-          "boots",
           "helmet",
-          "chestplate"
+          "chestplate",
+          "leggings",
+          "boots"
         ]
       },
       "operation": "addition",

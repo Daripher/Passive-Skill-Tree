@@ -31,6 +31,8 @@
   	"apotheosis/MixinEnchantmentBonus"
   ],
   "client" : [
+  	"minecraft/MixinRecipeBookComponent",
+  	"minecraft/MixinCraftingScreen",
   	"apotheosis/MixinAdventureModuleClient"
   ],
   "injectors" : {

@@ -1,6 +1,6 @@
 package daripher.skilltree.api;
 
-public interface SkillTreePlayer {
+public interface PSTPlayer {
 	int getRainbowGemstoneRandomSeed();
 
 	void updateRainbowGemstoneRandomSeed();

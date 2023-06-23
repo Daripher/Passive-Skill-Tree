@@ -337,6 +337,7 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
 		add("widget.skill_point_progress_bar.points", "Points left: %s");
 		add("widget.skill_point_progress_bar.buy", "Click here to gain a Skill Point for %s Experience");
+		add("widget.skill_button.not_learned", "Skill not learned");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Ruby");
 		add("item.apotheosis.gem.skilltree:onyx", "Onyx");
