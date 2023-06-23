@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.google.common.base.Predicates;
-
 import daripher.skilltree.data.SkillsDataReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.nbt.CompoundTag;
@@ -54,7 +52,7 @@ public class PlayerSkills implements IPlayerSkills {
 
 	@Override
 	public boolean hasSkill(ResourceLocation skillId) {
-		return skills.stream().map(PassiveSkill::getId).anyMatch(Predicates.equalTo(skillId));
+		return skills.stream().map(PassiveSkill::getId).anyMatch(skillId::equals);
 	}
 
 	@Override

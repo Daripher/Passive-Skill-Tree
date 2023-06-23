@@ -649,29 +649,25 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void applyLootDuplicationChanceBonus(LivingDropsEvent event) {
-		if (event.getEntity() instanceof Player) {
-			return;
-		}
-		if (!(event.getSource().getEntity() instanceof Player)) {
-			return;
-		}
+		if (event.getEntity() instanceof Player) return;
+		if (!(event.getSource().getEntity() instanceof Player)) return;
 		var player = (Player) event.getSource().getEntity();
+		var target = event.getEntity();
 		var doubleLootChance = player.getAttributeValue(SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get()) - 1;
 		var tripleLootChance = player.getAttributeValue(SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get()) - 1;
-		if (doubleLootChance == 0 && tripleLootChance == 0) {
-			return;
-		}
+		if (doubleLootChance == 0 && tripleLootChance == 0) return;
 		var lootTripled = player.getRandom().nextFloat() < tripleLootChance;
 		var lootDoubled = player.getRandom().nextFloat() < doubleLootChance;
-		if (!lootTripled && !lootDoubled) {
-			return;
+		if (!lootTripled && !lootDoubled) return;
+		var additionalDrops = event.getDrops().stream().map(ItemEntity::copy).toList();
+		for (var slot : EquipmentSlot.values()) {
+			var itemInSlot = target.getItemBySlot(slot);
+			if (itemInSlot.isEmpty()) continue;
+			additionalDrops.removeIf(itemEntity -> ItemStack.matches(itemInSlot, itemEntity.getItem()));
 		}
-		var additionalDrops = event.getDrops().stream().map(itemEntity -> new ItemEntity(itemEntity.level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), itemEntity.getItem().copy())).toList();
 		event.getDrops().addAll(additionalDrops);
-		if (!lootTripled) {
-			return;
-		}
-		additionalDrops = event.getDrops().stream().map(itemEntity -> new ItemEntity(itemEntity.level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), itemEntity.getItem().copy())).toList();
+		if (!lootTripled) return;
+		additionalDrops = additionalDrops.stream().map(ItemEntity::copy).toList();
 		event.getDrops().addAll(additionalDrops);
 	}
 

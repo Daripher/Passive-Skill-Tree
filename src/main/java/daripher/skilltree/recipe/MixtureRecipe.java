@@ -15,8 +15,8 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-public class PotionMixingRecipe extends CustomRecipe {
-	public PotionMixingRecipe(ResourceLocation id) {
+public class MixtureRecipe extends CustomRecipe {
+	public MixtureRecipe(ResourceLocation id) {
 		super(id);
 	}
 
@@ -85,19 +85,19 @@ public class PotionMixingRecipe extends CustomRecipe {
 		return SkillTreeRecipeSerializers.POTION_MIXING.get();
 	}
 
-	public static class Serializer implements RecipeSerializer<PotionMixingRecipe> {
+	public static class Serializer implements RecipeSerializer<MixtureRecipe> {
 		@Override
-		public PotionMixingRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
-			return new PotionMixingRecipe(id);
+		public MixtureRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+			return new MixtureRecipe(id);
 		}
 
 		@Override
-		public PotionMixingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-			return new PotionMixingRecipe(id);
+		public MixtureRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+			return new MixtureRecipe(id);
 		}
 
 		@Override
-		public void toNetwork(FriendlyByteBuf buf, PotionMixingRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buf, MixtureRecipe recipe) {
 		}
 	}
 }
