@@ -130,6 +130,8 @@ dependencies {
 	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
 	implementation fg.deobf("curse.maven:bookshelf-228525:4556697")
 	implementation fg.deobf("curse.maven:jei-238222:4494410")
+	implementation fg.deobf("curse.maven:simply-swords-659887:4553225")
+	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
 }
 
 jar {
