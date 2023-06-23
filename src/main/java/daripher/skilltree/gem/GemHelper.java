@@ -84,14 +84,14 @@ public class GemHelper {
 
 	public static GemItem getGem(ItemStack itemStack, int socket) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
-				return null;
-			}
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return null;
 		}
 		if (!hasGem(itemStack, socket)) return null;
 		var gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
-		var gemId = gemTag.getString(GEM_TAG);
-		return (GemItem) ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
+		String gemId = gemTag.getString(GEM_TAG);
+		Item gem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
+		if (!(gem instanceof GemItem)) return null;
+		return (GemItem) gem;
 	}
 
 	public static void setAdditionalSocket(ItemStack itemStack) {
