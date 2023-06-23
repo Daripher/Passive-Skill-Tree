@@ -4,11 +4,11 @@ license="All rights reserved"
 
 [[mods]]
 	modId="skilltree"
-	version="0.4.7"
+	version="0.4.7a"
 	displayName="Passive Skill Tree"
 	authors="Daripher"
 	description='''Adds passive skill tree with player class system'''
-	credits='''Thanks to: LittleOdie for some gem ideas. Prince_Vladislav for some of the icons. All the modpack makers who use my mod. All the people on my discord server.'''
+	credits='''Thanks to: LittleOdie for some ideas. Prince_Vladislav for some of the icons. All the modpack makers who use my mod. All the people on my discord server.'''
 	
 [[dependencies.skilltree]]
     modId="forge"
