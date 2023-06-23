@@ -132,6 +132,8 @@ dependencies {
 	implementation fg.deobf("curse.maven:jei-238222:4494410")
 	implementation fg.deobf("curse.maven:simply-swords-659887:4553225")
 	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
+	implementation fg.deobf("curse.maven:tetra-289712:4487237")
+	implementation fg.deobf("curse.maven:mutil-351914:3941314")
 }
 
 jar {
