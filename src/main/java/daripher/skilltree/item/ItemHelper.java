@@ -26,6 +26,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -181,6 +182,7 @@ public class ItemHelper {
 	}
 
 	public static boolean isShield(ItemStack itemStack) {
+		if (itemStack.canPerformAction(ToolActions.SHIELD_BLOCK)) return true;
 		return itemStack.getItem() instanceof ShieldItem || itemStack.is(Tags.Items.TOOLS_SHIELDS);
 	}
 
@@ -193,22 +195,29 @@ public class ItemHelper {
 	}
 	
 	public static boolean isCrossbow(ItemStack itemStack) {
+		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_crossbow")) return true;
 		return itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS);
 	}
 	
 	public static boolean isBow(ItemStack itemStack) {
+		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_bow")) return true;
 		return itemStack.getItem() instanceof BowItem || itemStack.is(Tags.Items.TOOLS_BOWS);
 	}
 
 	public static boolean isTrident(ItemStack itemStack) {
+		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_single")) return true;
 		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
 	}
 	
 	public static boolean isAxe(ItemStack itemStack) {
+		if (itemStack.canPerformAction(ToolActions.AXE_DIG)) return true;
 		return itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES);
 	}
 	
 	public static boolean isSword(ItemStack itemStack) {
+		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_sword")) return true;
+		if (itemStack.canPerformAction(ToolActions.SWORD_DIG)) return true;
+		if (itemStack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
 		return itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS);
 	}
 
@@ -237,6 +246,7 @@ public class ItemHelper {
 	}
 
 	public static boolean isPickaxe(ItemStack itemStack) {
+		if (itemStack.canPerformAction(ToolActions.PICKAXE_DIG)) return true;
 		return itemStack.getItem() instanceof PickaxeItem || itemStack.is(Tags.Items.TOOLS_PICKAXES);
 	}
 
