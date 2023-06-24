@@ -45,7 +45,7 @@ public class IrisciteItem extends GemItem {
 
 	protected RandomSource createInsertionRandomSource(Player player, ItemStack itemStack) {
 		var random = RandomSource.create();
-		var randomSeed = ((PSTPlayer) player).getRainbowGemstoneRandomSeed();
+		var randomSeed = ((PSTPlayer) player).getIrisciteSeed();
 		var itemSlot = Player.getEquipmentSlotForItem(itemStack).ordinal();
 		random.setSeed(randomSeed + itemSlot);
 		return random;

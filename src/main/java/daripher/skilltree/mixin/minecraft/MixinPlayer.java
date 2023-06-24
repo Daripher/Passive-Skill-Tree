@@ -55,12 +55,12 @@ public abstract class MixinPlayer extends LivingEntity implements PSTPlayer {
 	}
 
 	@Override
-	public int getRainbowGemstoneRandomSeed() {
+	public int getIrisciteSeed() {
 		return rainbowJewelInsertionSeed;
 	}
 
 	@Override
-	public void updateRainbowGemstoneRandomSeed() {
+	public void updateIrisciteSeed() {
 		rainbowJewelInsertionSeed = random.nextInt();
 	}
 }

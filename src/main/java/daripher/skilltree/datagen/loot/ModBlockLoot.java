@@ -11,6 +11,7 @@ import daripher.skilltree.init.SkillTreeItems;
 import daripher.skilltree.item.gem.GemItem;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -22,22 +23,26 @@ public class ModBlockLoot extends BlockLoot {
 
 	@Override
 	protected void addTables() {
-		var gemsLootPool = LootPool.lootPool();
-		var vacucite = SkillTreeItems.VACUCITE.get();
+		lootTables.put(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"), gemsLootTable());
+	}
+
+	protected LootTable.Builder gemsLootTable() {
+		LootPool.Builder gems = LootPool.lootPool();
+		Item vacucite = SkillTreeItems.VACUCITE.get();
 		SkillTreeItems.REGISTRY.getEntries().stream()
 				.map(RegistryObject::get)
 				.filter(GemItem.class::isInstance)
 				.filter(Predicates.not(vacucite::equals))
 				.map(LootItem::lootTableItem)
-				.forEach(gemsLootPool::add);
-		var rareGemsLootPool = LootPool.lootPool()
+				.forEach(gems::add);
+		LootPool.Builder rareGems = LootPool.lootPool()
 				.add(LootItem.lootTableItem(vacucite))
 				.setRolls(ConstantValue.exactly(0.2F))
 				.setBonusRolls(ConstantValue.exactly(0.1F));
-		var lootTable = LootTable.lootTable()
-				.withPool(gemsLootPool)
-				.withPool(rareGemsLootPool);
-		lootTables.put(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"), lootTable);
+		LootTable.Builder lootTable = LootTable.lootTable()
+				.withPool(gems)
+				.withPool(rareGems);
+		return lootTable;
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 package daripher.skilltree.attribute;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
 import com.google.common.util.concurrent.AtomicDouble;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.api.PSTLivingEntity;
 import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.init.SkillTreeAttributes;
 import daripher.skilltree.init.SkillTreeEffects;
@@ -652,23 +655,19 @@ public class AttributeBonusHandler {
 		if (event.getEntity() instanceof Player) return;
 		if (!(event.getSource().getEntity() instanceof Player)) return;
 		var player = (Player) event.getSource().getEntity();
-		var target = event.getEntity();
-		var doubleLootChance = player.getAttributeValue(SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get()) - 1;
-		var tripleLootChance = player.getAttributeValue(SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get()) - 1;
+		LivingEntity target = event.getEntity();
+		double doubleLootChance = player.getAttributeValue(SkillTreeAttributes.DOUBLE_LOOT_CHANCE.get()) - 1;
+		double tripleLootChance = player.getAttributeValue(SkillTreeAttributes.TRIPLE_LOOT_CHANCE.get()) - 1;
 		if (doubleLootChance == 0 && tripleLootChance == 0) return;
-		var lootTripled = player.getRandom().nextFloat() < tripleLootChance;
-		var lootDoubled = player.getRandom().nextFloat() < doubleLootChance;
+		boolean lootTripled = player.getRandom().nextFloat() < tripleLootChance;
+		boolean lootDoubled = player.getRandom().nextFloat() < doubleLootChance;
 		if (!lootTripled && !lootDoubled) return;
-		var additionalDrops = event.getDrops().stream().map(ItemEntity::copy).toList();
-		for (var slot : EquipmentSlot.values()) {
-			var itemInSlot = target.getItemBySlot(slot);
-			if (itemInSlot.isEmpty()) continue;
-			additionalDrops.removeIf(itemEntity -> ItemStack.matches(itemInSlot, itemEntity.getItem()));
-		}
-		event.getDrops().addAll(additionalDrops);
+		List<ItemEntity> extraLoot = new ArrayList<ItemEntity>();
+		event.getDrops().stream().map(ItemEntity::copy).forEach(extraLoot::add);
+		if (target instanceof PSTLivingEntity pstEntity) extraLoot.removeIf(pstEntity::hadEquipped);
+		event.getDrops().addAll(extraLoot);
 		if (!lootTripled) return;
-		additionalDrops = additionalDrops.stream().map(ItemEntity::copy).toList();
-		event.getDrops().addAll(additionalDrops);
+		event.getDrops().addAll(extraLoot.stream().map(ItemEntity::copy).toList());
 	}
 
 	@SubscribeEvent
@@ -703,7 +702,7 @@ public class AttributeBonusHandler {
 		if (!(event.getSource().getEntity() instanceof Player)) return;
 		var player = (Player) event.getSource().getEntity();
 		var projectile = (Projectile) event.getSource().getDirectEntity();
-		var damage = event.getAmount();
+		float damage = event.getAmount();
 		damage *= PlayerHelper.getProjectileDamageMultiplier(player, event.getEntity(), projectile);
 		event.setAmount(damage);
 	}

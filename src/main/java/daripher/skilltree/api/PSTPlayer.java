@@ -1,7 +1,7 @@
 package daripher.skilltree.api;
 
 public interface PSTPlayer {
-	int getRainbowGemstoneRandomSeed();
+	int getIrisciteSeed();
 
-	void updateRainbowGemstoneRandomSeed();
+	void updateIrisciteSeed();
 }

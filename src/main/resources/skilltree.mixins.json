@@ -18,6 +18,7 @@
   	"minecraft/MixinVanillaBrewingRecipe",
   	"minecraft/MixinItemStack",
   	"minecraft/MixinItem",
+  	"minecraft/MixinLivingEntity",
   	"easymagic/MixinModEnchantmentMenu",
   	"easyvillagers/MixinConverterTileentity",
   	"farmersdelight/MixinCookingPotBlockEntity",
