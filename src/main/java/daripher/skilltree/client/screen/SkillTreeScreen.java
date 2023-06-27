@@ -127,7 +127,7 @@ public class SkillTreeScreen extends Screen {
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + width / 2);
 		var buttonY = (int) (skill.getPositionY() + height / 2);
-		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
+		var button = new SkillButton(this::getAnimationProgress, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
 		if (skill.isStartingPoint()) startingPoints.add(button);
