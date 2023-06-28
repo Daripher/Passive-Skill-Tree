@@ -25,9 +25,9 @@ public class Config {
 			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer i && i >= 0;
 			Predicate<Object> potentialItemId = o -> o instanceof String s && s.contains(":");
 			builder.push("Skill points");
-			maximumSkillPoints = builder.defineInRange("Maximum skill points", 100, 1, 500);
+			maximumSkillPoints = builder.defineInRange("Maximum skill points", 50, 1, 500);
 			builder.comment("This list's size must be equal to maximum skill points.");
-			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(100), positiveOrZeroInteger);
+			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(50), positiveOrZeroInteger);
 			builder.comment("Disabling this will remove chat messages when you gain a skill point.");
 			showChatMessages = builder.define("Show chat messages", true);
 			builder.comment("Warning: If you disable this make sure you make alternative way of getting skill points.");
