@@ -3,7 +3,6 @@ package daripher.skilltree.datagen.loot;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
 
 import daripher.skilltree.SkillTreeMod;
@@ -15,7 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockLoot extends BlockLoot {
@@ -28,21 +27,22 @@ public class ModBlockLoot extends BlockLoot {
 
 	protected LootTable.Builder gemsLootTable() {
 		LootPool.Builder gems = LootPool.lootPool();
-		Item vacucite = SkillTreeItems.VACUCITE.get();
 		SkillTreeItems.REGISTRY.getEntries().stream()
 				.map(RegistryObject::get)
 				.filter(GemItem.class::isInstance)
-				.filter(Predicates.not(vacucite::equals))
-				.map(LootItem::lootTableItem)
+				.map(this::gemLootItem)
 				.forEach(gems::add);
-		LootPool.Builder rareGems = LootPool.lootPool()
-				.add(LootItem.lootTableItem(vacucite))
-				.setRolls(ConstantValue.exactly(0.2F))
-				.setBonusRolls(ConstantValue.exactly(0.1F));
-		LootTable.Builder lootTable = LootTable.lootTable()
-				.withPool(gems)
-				.withPool(rareGems);
-		return lootTable;
+		return LootTable.lootTable().withPool(gems);
+	}
+
+	protected LootPoolSingletonContainer.Builder<?> gemLootItem(Item item) {
+		LootPoolSingletonContainer.Builder<?> lootItem = LootItem.lootTableItem(item);
+		if (item == SkillTreeItems.VACUCITE.get()) {
+			lootItem.setQuality(1);
+		} else {
+			lootItem.setWeight(3);
+		}
+		return lootItem;
 	}
 
 	@Override
