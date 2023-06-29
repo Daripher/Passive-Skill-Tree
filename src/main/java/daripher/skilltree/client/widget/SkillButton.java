@@ -30,7 +30,7 @@ public class SkillButton extends Button {
 	private static final ResourceLocation TITLE_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_title");
 	private static final ResourceLocation DESCRIPTION_FONT = new ResourceLocation(SkillTreeMod.MOD_ID, "skill_description");
 	private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169).withFont(TITLE_FONT);
-	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0xD28AF2).withFont(TITLE_FONT);
+	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8).withFont(TITLE_FONT);
 	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withFont(TITLE_FONT);
 	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5).withFont(DESCRIPTION_FONT);
 	private final Supplier<Float> animationFunction;
@@ -48,12 +48,11 @@ public class SkillButton extends Button {
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		prepareTextureRendering(skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, 0, 0, width, height, width * 3, height);
-		var iconSize = width / 34F;
 		poseStack.pushPose();
 		poseStack.translate(x + width / 2, y + height / 2, 0);
-		poseStack.scale(iconSize, iconSize, 1);
+		poseStack.scale(0.5F, 0.5F, 1);
 		RenderSystem.setShaderTexture(0, skill.getIconTexture());
-		blit(poseStack, -8, -8, 16, 16, 0, 0, 16, 16, 16, 16);
+		blit(poseStack, -width / 2, -height / 2, width, height, 0, 0, width, height, width, height);
 		poseStack.popPose();
 		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
