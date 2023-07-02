@@ -349,6 +349,7 @@
   "skilltree.message.reset": "你的技能树已被重置，技能点已返还",
   "skilltree.message.reset_command": "你的技能树已被重置",
   "weapon.poisoned": "附加的药水效果：",
+  "widget.skill_button.not_learned": "技能没有学习",
   "widget.skill_point_progress_bar.buy": "点击这里消耗%s点经验值获得技能点",
   "widget.skill_point_progress_bar.points": "技能点剩余：%s",
   "widget.skill_point_progress_bar.text": "积累经验值获得技能点"
