@@ -349,8 +349,7 @@
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
   "skilltree.message.reset_command": "Your skill tree has been reset.",
   "weapon.poisoned": "Poisoned:",
+  "widget.buy_skill_button": "Buy Skill Point",
   "widget.skill_button.not_learned": "Skill not learned",
-  "widget.skill_point_progress_bar.buy": "Click here to gain a Skill Point for %s Experience",
-  "widget.skill_point_progress_bar.points": "Points left: %s",
-  "widget.skill_point_progress_bar.text": "Gather Experience to gain Skill Points"
+  "widget.skill_points_left": "Points left: %s"
 }

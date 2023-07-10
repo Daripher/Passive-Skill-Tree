@@ -334,10 +334,9 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("skilltree.message.reset_command", "Ваше древо пассивных умений было сброшено.");
 		add("skilltree.message.point_command", "Получено очко пассивных умений.");
 		// screen info
-		add("widget.skill_point_progress_bar.text", "Получайте опыт чтобы открывать умения");
-		add("widget.skill_point_progress_bar.points", "Очков умений осталось: %s");
-		add("widget.skill_point_progress_bar.buy", "Нажмите здесь чтобы получить очко умений за %s опыта");
+		add("widget.skill_points_left", "Очков осталось: %s");
 		add("widget.skill_button.not_learned", "Умение не изучено");
+		add("widget.buy_skill_button", "Купить очко умений");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Рубин");
 		add("item.apotheosis.gem.skilltree:onyx", "Оникс");

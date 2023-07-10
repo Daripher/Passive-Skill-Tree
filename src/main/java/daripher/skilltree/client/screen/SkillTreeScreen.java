@@ -15,10 +15,12 @@ import com.mojang.math.Vector3f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.SkillTreeClientData;
-import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.ProgressBar;
+import daripher.skilltree.client.widget.SkillButton;
+import daripher.skilltree.client.widget.SkillTreeButton;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
+import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.Minecraft;
@@ -29,6 +31,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -36,12 +40,15 @@ public class SkillTreeScreen extends Screen {
 	private static final ResourceLocation CONNECTION_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_connection.png");
 	private static final ResourceLocation BACKGROUND_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_background.png");
 	private static final ResourceLocation OVERLAY_TEXTURE_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_overlay.png");
+	public static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_widgets.png");
+	private static final Style EXPERIENCE_COLOR = Style.EMPTY.withColor(0xFCE266);
 	protected final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<Pair<SkillButton, SkillButton>> connections = new ArrayList<>();
 	private final List<SkillButton> startingPoints = new ArrayList<>();
 	private final ResourceLocation skillTreeId;
 	private List<ResourceLocation> learnedSkills;
 	private AbstractWidget progressBar;
+	private AbstractWidget buySkillButton;
 	private int guiScale;
 	protected double scrollSpeedX;
 	protected double scrollSpeedY;
@@ -70,39 +77,43 @@ public class SkillTreeScreen extends Screen {
 		if (maxScrollY < 0) maxScrollY = 0;
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
-		progressBar = new ProgressBar(this, width / 2 - 235 / 2, height - 18);
+		progressBar = new ProgressBar(width / 2 - 235 / 2, 2);
 		addRenderableWidget(progressBar);
+		buySkillButton = new SkillTreeButton(width / 2 - 145, height - 18, 140, 14, Component.translatable("widget.buy_skill_button"), b -> buySkill());
+		addRenderableWidget(buySkillButton);
 	}
 
 	@Override
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		updateScroll(partialTick);
+		updateScreen(partialTick);
 		renderAnimation += partialTick;
 		renderBackground(poseStack);
 		renderConnections(poseStack, partialTick);
 		poseStack.pushPose();
 		poseStack.translate(scrollX, scrollY, 0);
 		for (Widget widget : renderables) {
-			if (widget == progressBar) continue;
+			if (widget == progressBar || widget == buySkillButton) continue;
 			widget.render(poseStack, mouseX, mouseY, partialTick);
 		}
 		poseStack.popPose();
 		renderOverlay(poseStack, mouseX, mouseY, partialTick);
 		progressBar.render(poseStack, mouseX, mouseY, partialTick);
-		getChildAt(mouseX, mouseY)
-			.filter(SkillButton.class::isInstance)
-			.map(SkillButton.class::cast)
-			.ifPresent(button -> renderButtonTooltip(button, poseStack, mouseX, mouseY));
+		prepareTextureRendering(WIDGETS_LOCATION);
+		blit(poseStack, width / 2 + 5, height - 18, 0, 10, 140, 14);
+		MutableComponent pointsLeft = Component.literal("" + skillPoints).withStyle(EXPERIENCE_COLOR);
+		drawCenteredString(poseStack, font, Component.translatable("widget.skill_points_left", pointsLeft), width / 2 + 75, height - 15, 0xFFFFFF);
+		buySkillButton.render(poseStack, mouseX, mouseY, partialTick);
+		getChildAt(mouseX, mouseY).filter(SkillButton.class::isInstance).map(SkillButton.class::cast).ifPresent(button -> renderButtonTooltip(button, poseStack, mouseX, mouseY));
 	}
-	
+
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		var child = super.getChildAt(mouseX, mouseY);
-		var clickedProgressBar = child.filter(ProgressBar.class::isInstance).isPresent();
-		if (clickedProgressBar) return super.mouseClicked(mouseX, mouseY, button);
+		Optional<GuiEventListener> child = super.getChildAt(mouseX, mouseY);
+		boolean clickedWidget = child.filter(SkillTreeButton.class::isInstance).isPresent();
+		if (clickedWidget) return super.mouseClicked(mouseX, mouseY, button);
 		return super.mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
 	}
-	
+
 	@Override
 	public Optional<GuiEventListener> getChildAt(double mouseX, double mouseY) {
 		var child = super.getChildAt(mouseX, mouseY);
@@ -180,6 +191,37 @@ public class SkillTreeScreen extends Screen {
 		if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
 	}
 
+	private void buySkill() {
+		var currentLevel = getCurrentLevel();
+		if (!canBuySkillPoint(currentLevel)) return;
+		var minecraft = Minecraft.getInstance();
+		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
+		minecraft.player.giveExperiencePoints(-skillCosts.get(currentLevel));
+	}
+
+	private static boolean canBuySkillPoint(int currentLevel) {
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) return false;
+		if (isMaxLevel(currentLevel)) return false;
+		var minecraft = Minecraft.getInstance();
+		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		return minecraft.player.totalExperience >= skillCosts.get(currentLevel);
+	}
+
+	private static boolean isMaxLevel(int currentLevel) {
+		var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		return currentLevel >= levelupCosts.size();
+	}
+
+	private static int getCurrentLevel() {
+		var minecraft = Minecraft.getInstance();
+		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
+		var learnedSkills = skillsCapability.getPlayerSkills().size();
+		var skillPoints = skillsCapability.getSkillPoints();
+		var currentLevel = learnedSkills + skillPoints;
+		return currentLevel;
+	}
+
 	protected void skillButtonPressed(SkillButton button) {
 		if (button.animated) {
 			learnSkill(button.skill);
@@ -199,7 +241,11 @@ public class SkillTreeScreen extends Screen {
 		rebuildWidgets();
 	}
 
-	private void updateScroll(float partialTick) {
+	private void updateScreen(float partialTick) {
+		int currentLevel = getCurrentLevel();
+		List<? extends Integer> pointCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		int pointCost = pointCosts.get(currentLevel);
+		buySkillButton.active = !isMaxLevel(currentLevel) && minecraft.player.totalExperience >= pointCost;
 		if (scrollSpeedX != 0) {
 			scrollX += scrollSpeedX * partialTick;
 			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
@@ -282,7 +328,7 @@ public class SkillTreeScreen extends Screen {
 		poseStack.popPose();
 	}
 
-	public void prepareTextureRendering(ResourceLocation textureLocation) {
+	public static void prepareTextureRendering(ResourceLocation textureLocation) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, textureLocation);
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);

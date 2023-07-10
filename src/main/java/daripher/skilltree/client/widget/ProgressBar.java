@@ -1,59 +1,38 @@
 package daripher.skilltree.client.widget;
 
-import java.util.ArrayList;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.config.Config;
-import daripher.skilltree.network.NetworkDispatcher;
-import daripher.skilltree.network.message.GainSkillPointMessage;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class ProgressBar extends Button {
-	private static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_widgets.png");
-	private static final Style EXPERIENCE_COLOR = Style.EMPTY.withColor(0xFCE266);
-	private final SkillTreeScreen parentScreen;
-
-	public ProgressBar(SkillTreeScreen parentScreen, int x, int y) {
-		super(x, y, 235, 19, Component.empty(), ProgressBar::buttonPressed);
-		this.parentScreen = parentScreen;
+	public ProgressBar(int x, int y) {
+		super(x, y, 235, 19, Component.empty(), b -> {});
 	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		renderExperienceBar(poseStack);
-		if (isHoveredOrFocused()) renderToolTip(poseStack, mouseX, mouseY);
-	}
-
-	protected void renderExperienceBar(PoseStack poseStack) {
-		renderExperienceBarBackground(poseStack);
+		renderBackground(poseStack);
 		renderCurrentLevel(poseStack);
 		renderNextLevel(poseStack);
-		renderExperienceProgress(poseStack);
+		renderProgress(poseStack);
 	}
 
-	protected void renderExperienceBarBackground(PoseStack poseStack) {
+	protected void renderBackground(PoseStack poseStack) {
 		var experienceProgress = getExperienceProgress();
 		var filledBarWidth = (int) (experienceProgress * 183);
-		parentScreen.prepareTextureRendering(WIDGETS_LOCATION);
+		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_LOCATION);
 		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
 		if (filledBarWidth == 0) return;
 		blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
 	}
 
-	protected void renderExperienceProgress(PoseStack poseStack) {
+	protected void renderProgress(PoseStack poseStack) {
 		var experienceProgress = getExperienceProgress();
 		var percentageText = "" + (int) (experienceProgress * 100) + "%";
 		drawCenteredOutlinedText(poseStack, percentageText, getMinecraftFont(), x + width / 2, getTextY());
@@ -70,42 +49,6 @@ public class ProgressBar extends Button {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
 		drawCenteredOutlinedText(poseStack, "" + currentLevel, getMinecraftFont(), x + 17, getTextY());
-	}
-
-	@Override
-	public void renderToolTip(PoseStack poseStack, int mouseX, int mouseY) {
-		var borderStyleStack = new ItemStack(Items.STONE);
-		var tooltip = new ArrayList<MutableComponent>();
-		var minecraft = Minecraft.getInstance();
-		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
-		var skillPointsAvailable = skillsCapability.getSkillPoints();
-		tooltip.add(Component.translatable("widget.skill_point_progress_bar.text").withStyle(ChatFormatting.GRAY));
-		var skillPointsComponent = Component.literal("" + skillPointsAvailable).withStyle(EXPERIENCE_COLOR);
-		tooltip.add(Component.translatable("widget.skill_point_progress_bar.points", skillPointsComponent).withStyle(ChatFormatting.GRAY));
-		var currentLevel = getCurrentLevel();
-		if (canBuySkillPoint(currentLevel)) {
-			var levelupCost = getLevelupCost(currentLevel);
-			var costComponent = Component.literal("" + levelupCost).withStyle(EXPERIENCE_COLOR);
-			tooltip.add(Component.translatable("widget.skill_point_progress_bar.buy", costComponent).withStyle(ChatFormatting.GRAY));
-		}
-		parentScreen.renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
-	}
-
-	private static void buttonPressed(Button button) {
-		var currentLevel = getCurrentLevel();
-		if (!canBuySkillPoint(currentLevel)) return;
-		var minecraft = Minecraft.getInstance();
-		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
-		minecraft.player.giveExperiencePoints(-skillCosts.get(currentLevel));
-	}
-
-	private static boolean canBuySkillPoint(int currentLevel) {
-		if (!Config.COMMON_CONFIG.experienceGainEnabled()) return false;
-		if (isMaxLevel(currentLevel)) return false;
-		var minecraft = Minecraft.getInstance();
-		var skillCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		return minecraft.player.totalExperience >= skillCosts.get(currentLevel);
 	}
 
 	protected int getTextY() {
@@ -143,11 +86,6 @@ public class ProgressBar extends Button {
 	protected Font getMinecraftFont() {
 		var minecraft = Minecraft.getInstance();
 		return minecraft.font;
-	}
-
-	private int getLevelupCost(int currentLevel) {
-		var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		return levelupCosts.get(currentLevel);
 	}
 
 	protected void drawCenteredOutlinedText(PoseStack poseStack, String text, Font font, int x, int y) {

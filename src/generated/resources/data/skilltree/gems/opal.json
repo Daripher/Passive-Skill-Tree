@@ -6,12 +6,12 @@
       "gem_class": {
         "key": "any_weapon",
         "types": [
+          "sword",
           "shovel",
           "bow",
           "pickaxe",
           "heavy_weapon",
-          "trident",
-          "sword"
+          "trident"
         ]
       },
       "operation": "addition",

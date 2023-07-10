@@ -334,10 +334,9 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("skilltree.message.reset_command", "Your skill tree has been reset.");
 		add("skilltree.message.point_command", "Skill point gained.");
 		// screen info
-		add("widget.skill_point_progress_bar.text", "Gather Experience to gain Skill Points");
-		add("widget.skill_point_progress_bar.points", "Points left: %s");
-		add("widget.skill_point_progress_bar.buy", "Click here to gain a Skill Point for %s Experience");
+		add("widget.skill_points_left", "Points left: %s");
 		add("widget.skill_button.not_learned", "Skill not learned");
+		add("widget.buy_skill_button", "Buy Skill Point");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Ruby");
 		add("item.apotheosis.gem.skilltree:onyx", "Onyx");
