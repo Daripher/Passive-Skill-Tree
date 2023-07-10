@@ -46,6 +46,7 @@ public class MixinSocketHelper {
 
 	@Inject(method = "getSockets", at = @At("HEAD"))
 	private static void addAdditionalSockets(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
+		if (Affixes.SOCKET.get() == null) return;
 		if (!ItemHelper.isEquipment(stack)) return;
 		AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
 		if (socketAffix == null) SocketHelper.setSockets(stack, 1);

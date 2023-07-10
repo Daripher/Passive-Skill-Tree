@@ -30,7 +30,8 @@ public class MixinSocketingRecipe {
 	@Redirect(method = { "matches", "m_5818_" }, at = @At(value = "INVOKE", target = "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
 	private boolean bypassMaximumSockets(ItemStack itemStack, Container container, Level level) {
 		if (!(container instanceof PlayerContainer)) return SocketHelper.hasEmptySockets(itemStack);
-		var playerContainer = (PlayerContainer) container;
+		PlayerContainer playerContainer = (PlayerContainer) container;
+		if (playerContainer.getPlayer().isEmpty()) return SocketHelper.hasEmptySockets(itemStack);
 		Player player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
 		return hasEmptySockets(player, itemStack);
 	}
@@ -42,7 +43,7 @@ public class MixinSocketingRecipe {
 		result.setCount(1);
 		int baseSockets = SocketHelper.getSockets(result);
 		int additionalSockets = 0;
-		if (container instanceof PlayerContainer playerContainer) {
+		if (container instanceof PlayerContainer playerContainer && playerContainer.getPlayer().isPresent()) {
 			Player player = ((PlayerContainer) container).getPlayer().orElseThrow(NullPointerException::new);
 			additionalSockets = getAdditionalSockets(result, player);
 		}
@@ -70,7 +71,9 @@ public class MixinSocketingRecipe {
 
 	private ItemStack increaseGemPower(ItemStack gemStack, Container container) {
 		if (!(container instanceof PlayerContainer)) return gemStack;
-		Player player = ((PlayerContainer) container).getPlayer().orElseThrow(NullPointerException::new);
+		PlayerContainer playerContainer = (PlayerContainer) container;
+		if (playerContainer.getPlayer().isEmpty()) return gemStack;
+		Player player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
 		ItemStack itemStack = container.getItem(0);
 		float gemPower = PlayerHelper.getGemPower(player, itemStack);
 		if (gemPower == 1) return gemStack;
