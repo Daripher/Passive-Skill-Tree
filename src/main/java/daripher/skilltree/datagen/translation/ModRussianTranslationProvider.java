@@ -337,6 +337,8 @@ public class ModRussianTranslationProvider extends LanguageProvider {
 		add("widget.skill_points_left", "Очков осталось: %s");
 		add("widget.skill_button.not_learned", "Умение не изучено");
 		add("widget.buy_skill_button", "Купить очко умений");
+		add("key.categories.skilltree", "Древо пассивных умений");
+		add("key.display_skill_tree", "Открыть древо пассивных умений");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Рубин");
 		add("item.apotheosis.gem.skilltree:onyx", "Оникс");

@@ -108,6 +108,8 @@
   "item.skilltree.vacucite.tooltip": "Поглощает самоцветы из предмета",
   "item.skilltree.wisdom_scroll": "Свиток мудрости",
   "item.skilltree.wisdom_scroll.tooltip": "Дарует одно очко пассивных умений",
+  "key.categories.skilltree": "Древо пассивных умений",
+  "key.display_skill_tree": "Открыть древо пассивных умений",
   "player.armor_per_evasion_bonus": "Броня за шанс уклонения",
   "player.armor_per_gem_in_chestplate": "Броня за самоцвет в нагруднике",
   "player.armor_per_gem_in_helmet": "Броня за самоцвет в шлеме",

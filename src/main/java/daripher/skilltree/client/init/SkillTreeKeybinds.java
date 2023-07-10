@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class SkillTreeKeybinds {
-	private static final KeyMapping SKILL_TREE_KEY = new KeyMapping("display_skill_tree", GLFW.GLFW_KEY_O, "key.categories." + SkillTreeMod.MOD_ID);
+	private static final KeyMapping SKILL_TREE_KEY = new KeyMapping("key.display_skill_tree", GLFW.GLFW_KEY_O, "key.categories." + SkillTreeMod.MOD_ID);
 //	private static final KeyMapping EDITOR_KEY = new KeyMapping("display_editor", GLFW.GLFW_KEY_J, "key.categories." + SkillTreeMod.MOD_ID);
 
 	@SubscribeEvent

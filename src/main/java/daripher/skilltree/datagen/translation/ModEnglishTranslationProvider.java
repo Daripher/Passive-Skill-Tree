@@ -337,6 +337,8 @@ public class ModEnglishTranslationProvider extends LanguageProvider {
 		add("widget.skill_points_left", "Points left: %s");
 		add("widget.skill_button.not_learned", "Skill not learned");
 		add("widget.buy_skill_button", "Buy Skill Point");
+		add("key.categories.skilltree", "Passive Skill Tree");
+		add("key.display_skill_tree", "Open Skill Tree");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Ruby");
 		add("item.apotheosis.gem.skilltree:onyx", "Onyx");

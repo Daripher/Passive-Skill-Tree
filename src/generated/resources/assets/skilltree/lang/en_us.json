@@ -108,6 +108,8 @@
   "item.skilltree.vacucite.tooltip": "Consumes gems from item",
   "item.skilltree.wisdom_scroll": "Wisdom Scroll",
   "item.skilltree.wisdom_scroll.tooltip": "Grants one passive skill point",
+  "key.categories.skilltree": "Passive Skill Tree",
+  "key.display_skill_tree": "Open Skill Tree",
   "player.armor_per_evasion_bonus": "Armor per Evasion Chance",
   "player.armor_per_gem_in_chestplate": "Armor per Gem in Chestplate",
   "player.armor_per_gem_in_helmet": "Armor per Gem in Helmet",
