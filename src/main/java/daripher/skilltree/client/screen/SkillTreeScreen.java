@@ -242,10 +242,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void updateScreen(float partialTick) {
-		int currentLevel = getCurrentLevel();
-		List<? extends Integer> pointCosts = Config.COMMON_CONFIG.getSkillPointCosts();
-		int pointCost = pointCosts.get(currentLevel);
-		buySkillButton.active = !isMaxLevel(currentLevel) && minecraft.player.totalExperience >= pointCost;
+		updateBuyPointButton();
 		if (scrollSpeedX != 0) {
 			scrollX += scrollSpeedX * partialTick;
 			scrollX = Math.max(-maxScrollX, Math.min(maxScrollX, scrollX));
@@ -256,6 +253,15 @@ public class SkillTreeScreen extends Screen {
 			scrollY = Math.max(-maxScrollY, Math.min(maxScrollY, scrollY));
 			scrollSpeedY *= 0.8;
 		}
+	}
+
+	protected void updateBuyPointButton() {
+		int currentLevel = getCurrentLevel();
+		buySkillButton.active = false;
+		if (isMaxLevel(currentLevel)) return;
+		List<? extends Integer> pointCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		int pointCost = pointCosts.get(currentLevel);
+		buySkillButton.active = minecraft.player.totalExperience >= pointCost;
 	}
 
 	private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
