@@ -3,7 +3,7 @@ package daripher.skilltree.network.message;
 import java.util.function.Supplier;
 
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.data.SkillsDataReloader;
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,7 +36,7 @@ public class LearnSkillMessage {
 		ctx.setPacketHandled(true);
 		var player = ctx.getSender();
 		var skillsData = PlayerSkillsProvider.get(player);
-		var passiveSkill = SkillsDataReloader.getSkillById(message.skillId);
+		var passiveSkill = SkillsReloader.getSkillById(message.skillId);
 		var learnedSkill = skillsData.learnSkill(player, passiveSkill);
 		if (learnedSkill) {
 			passiveSkill.getAttributeModifiers().forEach(pair -> {

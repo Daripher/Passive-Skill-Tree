@@ -11,8 +11,8 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModItemTagsProvider extends ItemTagsProvider {
-	public ModItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
+public class PSTItemTagsProvider extends ItemTagsProvider {
+	public PSTItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
 		super(dataGenerator, blockTagsProvider, SkillTreeMod.MOD_ID, existingFileHelper);
 	}
 

@@ -6,8 +6,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 
-public class ModRecipeProvider extends RecipeProvider {
-	public ModRecipeProvider(DataGenerator dataGenerator) {
+public class PSTRecipeProvider extends RecipeProvider {
+	public PSTRecipeProvider(DataGenerator dataGenerator) {
 		super(dataGenerator);
 	}
 

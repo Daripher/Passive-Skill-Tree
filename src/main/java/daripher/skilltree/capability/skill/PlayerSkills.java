@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import daripher.skilltree.data.SkillsDataReloader;
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -105,7 +105,7 @@ public class PlayerSkills implements IPlayerSkills {
 		} else {
 			skillTagsList.forEach(skillTag -> {
 				var skillId = new ResourceLocation(skillTag.getAsString());
-				var passiveSkill = SkillsDataReloader.getSkillById(skillId);
+				var passiveSkill = SkillsReloader.getSkillById(skillId);
 
 				if (passiveSkill != null) {
 					skills.add(passiveSkill);

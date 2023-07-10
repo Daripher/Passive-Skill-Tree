@@ -15,8 +15,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
 
-public class ModEnglishTranslationProvider extends LanguageProvider {
-	public ModEnglishTranslationProvider(DataGenerator gen) {
+public class PSTEnglishTranslationProvider extends LanguageProvider {
+	public PSTEnglishTranslationProvider(DataGenerator gen) {
 		super(gen, SkillTreeMod.MOD_ID, "en_us");
 	}
 

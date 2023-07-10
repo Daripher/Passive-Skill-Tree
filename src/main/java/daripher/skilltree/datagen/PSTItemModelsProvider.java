@@ -7,8 +7,8 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ModItemModelsProvider extends ItemModelProvider {
-	public ModItemModelsProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
+public class PSTItemModelsProvider extends ItemModelProvider {
+	public PSTItemModelsProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
 		super(dataGenerator, SkillTreeMod.MOD_ID, existingFileHelper);
 	}
 

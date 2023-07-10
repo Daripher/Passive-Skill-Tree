@@ -22,12 +22,12 @@ import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operati
 import static net.minecraft.world.entity.ai.attributes.Attributes.*;
 import static daripher.skilltree.init.SkillTreeAttributes.*;
 
-public class ModSkillsProvider implements DataProvider {
+public class PSTSkillsProvider implements DataProvider {
 	private Map<ResourceLocation, PassiveSkill> data = new HashMap<>();
 	private String[] playerClasses = new String[] { "alchemist", "hunter", "enchanter", "cook", "blacksmith", "miner" };
 	private DataGenerator dataGenerator;
 
-	public ModSkillsProvider(DataGenerator dataGenerator) {
+	public PSTSkillsProvider(DataGenerator dataGenerator) {
 		this.dataGenerator = dataGenerator;
 	}
 

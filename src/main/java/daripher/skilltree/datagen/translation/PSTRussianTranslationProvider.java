@@ -15,8 +15,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
 
-public class ModRussianTranslationProvider extends LanguageProvider {
-	public ModRussianTranslationProvider(DataGenerator gen) {
+public class PSTRussianTranslationProvider extends LanguageProvider {
+	public PSTRussianTranslationProvider(DataGenerator gen) {
 		super(gen, SkillTreeMod.MOD_ID, "ru_ru");
 	}
 
