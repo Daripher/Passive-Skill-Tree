@@ -13,7 +13,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.util.TooltipHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
@@ -21,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +32,10 @@ public class SkillButton extends Button {
 	private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169).withFont(TITLE_FONT);
 	private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8).withFont(TITLE_FONT);
 	private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F).withFont(TITLE_FONT);
+	private static final Style GATEWAY_TITLE_STYLE = Style.EMPTY.withColor(0xA9A6B1).withFont(TITLE_FONT);
 	private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5).withFont(DESCRIPTION_FONT);
+	private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454).withFont(DESCRIPTION_FONT);
+	private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withFont(DESCRIPTION_FONT).withItalic(true);
 	private final Supplier<Float> animationFunction;
 	public final PassiveSkill skill;
 	public boolean highlighted;
@@ -57,7 +60,7 @@ public class SkillButton extends Button {
 		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
 		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
 		if (animated) {
-			RenderSystem.setShaderColor(1F, 1F, 1F, animationFunction.get());
+			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animationFunction.get() / 3F) + 1) / 2);
 			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
@@ -71,16 +74,15 @@ public class SkillButton extends Button {
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
 	}
-	
+
 	public List<MutableComponent> getTooltip() {
 		var tooltip = new ArrayList<MutableComponent>();
 		addTitleTooltip(tooltip);
 		addDescriptionTooltip(tooltip);
+		addLoreTooltip(tooltip);
 		var minecraft = Minecraft.getInstance();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
-		if (useAdvancedTooltip) {
-			addAdvancedTooltip(tooltip);
-		}
+		if (useAdvancedTooltip) addAdvancedTooltip(tooltip);
 		return tooltip;
 	}
 
@@ -102,6 +104,13 @@ public class SkillButton extends Button {
 			var descriptionStrings = Arrays.asList(description.split("/n"));
 			descriptionStrings.stream().map(Component::translatable).map(this::applyDescriptionStyle).forEach(tooltip::add);
 		}
+	}
+
+	private void addLoreTooltip(ArrayList<MutableComponent> tooltip) {
+		String loreId = getSkillId() + ".lore";
+		MutableComponent loreComponent = Component.translatable(loreId);
+		if (loreId.equals(loreComponent.getString())) return;
+		tooltip.add(loreComponent.withStyle(LORE_STYLE));
 	}
 
 	protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
@@ -127,12 +136,12 @@ public class SkillButton extends Button {
 	}
 
 	private Style getTitleStyle() {
-		return width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+		return width == 33 ? GATEWAY_TITLE_STYLE : width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
 	}
 
 	protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {
-		var skillIdComponent = Component.literal(skill.getId().toString()).withStyle(ChatFormatting.DARK_GRAY);
-		tooltip.add(skillIdComponent);
+		MutableComponent idComponent = Component.literal(skill.getId().toString()).withStyle(ID_STYLE);
+		tooltip.add(idComponent);
 	}
 
 	protected MutableComponent applyDescriptionStyle(MutableComponent component) {

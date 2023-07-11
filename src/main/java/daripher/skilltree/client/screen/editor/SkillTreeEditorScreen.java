@@ -69,7 +69,7 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		renderAnimation += partialTick;
 		renderBackground(poseStack);
-		renderConnections(poseStack, partialTick);
+		renderConnections(poseStack, mouseX, mouseY, partialTick);
 		for (Widget widget : renderables) {
 			widget.render(poseStack, mouseX, mouseY, partialTick);
 		}

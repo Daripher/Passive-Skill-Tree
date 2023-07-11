@@ -16,7 +16,7 @@ public class SkillTreeButton extends Button {
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_LOCATION);
+		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_TEXTURE);
 		int v = !isActive() ? 24 : isHoveredOrFocused() ? 38 : 10;
 		blit(poseStack, x, y, 0, v, width, height);
 		Minecraft minecraft = Minecraft.getInstance();

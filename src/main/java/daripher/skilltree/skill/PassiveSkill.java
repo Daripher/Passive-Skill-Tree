@@ -27,6 +27,7 @@ public class PassiveSkill {
 	private final ResourceLocation backgroundTexture;
 	private final ResourceLocation iconTexture;
 	private @Nullable ResourceLocation connectedTreeId;
+	private @Nullable ResourceLocation gatewayId;
 	private final int buttonSize;
 	private final boolean isStartingPoint;
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
@@ -103,6 +104,18 @@ public class PassiveSkill {
 		return connectedSkills;
 	}
 
+	public void setGatewayId(ResourceLocation gatewayId) {
+		this.gatewayId = gatewayId;
+	}
+
+	public ResourceLocation getGatewayId() {
+		return gatewayId;
+	}
+
+	public boolean isGateway() {
+		return gatewayId != null;
+	}
+
 	public JsonObject writeToJson() {
 		var jsonObject = new JsonObject();
 		jsonObject.addProperty("button_size", getButtonSize());
@@ -146,6 +159,7 @@ public class PassiveSkill {
 			jsonObject.add("connections", connectionsJsonArray);
 		}
 
+		if (isGateway()) jsonObject.addProperty("gatewayId", getGatewayId().toString());
 		return jsonObject;
 	}
 
@@ -156,8 +170,8 @@ public class PassiveSkill {
 		var iconTexture = new ResourceLocation(jsonObject.get("icon_texture").getAsString());
 		var connectedTreeId = jsonObject.has("connected_tree") ? new ResourceLocation(jsonObject.get("connected_tree").getAsString()) : null;
 		var isStartingPoint = jsonObject.has("starting_point");
-		var passiveSkill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
-		passiveSkill.connectedTreeId = connectedTreeId;
+		var skill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
+		skill.connectedTreeId = connectedTreeId;
 
 		if (jsonObject.has("attribute_modifiers")) {
 			var modifiersJsonArray = jsonObject.get("attribute_modifiers").getAsJsonArray();
@@ -172,24 +186,25 @@ public class PassiveSkill {
 				var operation = Operation.valueOf(modifierJsonObject.get("operation").getAsString().toUpperCase());
 				var uniqueId = UUID.randomUUID();
 				var modifier = new AttributeModifier(uniqueId, "Passive Skill Bonus", amount, operation);
-				passiveSkill.addAttributeBonus(attribute, modifier);
+				skill.addAttributeBonus(attribute, modifier);
 			});
 		}
 
 		var positionJsonObject = jsonObject.get("position").getAsJsonObject();
 		var positionX = positionJsonObject.get("x").getAsInt();
 		var positionY = positionJsonObject.get("y").getAsInt();
-		passiveSkill.setPosition(positionX, positionY);
+		skill.setPosition(positionX, positionY);
 
 		if (jsonObject.has("connections")) {
 			var connectionsJsonArray = jsonObject.get("connections").getAsJsonArray();
 			connectionsJsonArray.forEach(connectionJsonElement -> {
 				var connectedSkillId = new ResourceLocation(connectionJsonElement.getAsString());
-				passiveSkill.connectedSkills.add(connectedSkillId);
+				skill.connectedSkills.add(connectedSkillId);
 			});
 		}
 
-		return passiveSkill;
+		if (jsonObject.has("gatewayId")) skill.setGatewayId(new ResourceLocation(jsonObject.get("gatewayId").getAsString()));
+		return skill;
 	}
 
 	public void writeToByteBuf(FriendlyByteBuf buf) {
@@ -216,6 +231,8 @@ public class PassiveSkill {
 			buf.writeDouble(amount);
 			buf.writeInt(operation.ordinal());
 		});
+		buf.writeBoolean(isGateway());
+		if (isGateway()) buf.writeUtf(getGatewayId().toString());
 	}
 
 	public static PassiveSkill loadFromByteBuf(FriendlyByteBuf buf) {
@@ -227,17 +244,17 @@ public class PassiveSkill {
 		var isStartingPoint = buf.readBoolean();
 		var positionX = buf.readInt();
 		var positionY = buf.readInt();
-		var passiveSkill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
-		passiveSkill.setPosition(positionX, positionY);
+		var skill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
+		skill.setPosition(positionX, positionY);
 		var connectionsCount = buf.readInt();
 		for (var i = 0; i < connectionsCount; i++) {
 			var connectedSkillId = new ResourceLocation(buf.readUtf());
-			passiveSkill.connectedSkills.add(connectedSkillId);
+			skill.connectedSkills.add(connectedSkillId);
 		}
 		var hasConnectedTreeId = buf.readBoolean();
 		if (hasConnectedTreeId) {
 			var connectedTreeId = new ResourceLocation(buf.readUtf());
-			passiveSkill.connectedTreeId = connectedTreeId;
+			skill.connectedTreeId = connectedTreeId;
 		}
 		var attributeModifiersCount = buf.readInt();
 		for (var i = 0; i < attributeModifiersCount; i++) {
@@ -245,8 +262,10 @@ public class PassiveSkill {
 			var attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
 			var amount = buf.readDouble();
 			var operation = Operation.values()[buf.readInt()];
-			passiveSkill.addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
+			skill.addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
 		}
-		return passiveSkill;
+		boolean isGateway = buf.readBoolean();
+		if (isGateway) skill.setGatewayId(new ResourceLocation(buf.readUtf()));
+		return skill;
 	}
 }

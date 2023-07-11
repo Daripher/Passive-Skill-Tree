@@ -26,7 +26,7 @@ public class ProgressBar extends Button {
 	protected void renderBackground(PoseStack poseStack) {
 		var experienceProgress = getExperienceProgress();
 		var filledBarWidth = (int) (experienceProgress * 183);
-		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_LOCATION);
+		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_TEXTURE);
 		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
 		if (filledBarWidth == 0) return;
 		blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
