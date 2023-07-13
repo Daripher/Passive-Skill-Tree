@@ -231,7 +231,8 @@ public class PlayerHelper {
 	}
 
 	public static boolean canEvadeDamage(DamageSource source) {
-		return source instanceof EntityDamageSource damageSource && damageSource.getDirectEntity() instanceof LivingEntity;
+		if (!(source instanceof EntityDamageSource damageSource)) return false;
+		return damageSource.getDirectEntity() instanceof LivingEntity || damageSource.getEntity() instanceof LivingEntity;
 	}
 
 	public static float getGemPower(Player player, ItemStack itemStack) {
