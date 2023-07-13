@@ -20,6 +20,8 @@ import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlot.Type;
@@ -640,13 +642,13 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyEvasionBonus(LivingAttackEvent event) {
-		if (event.getEntity() instanceof Player player) {
-			var evasionChance = (float) player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE.get()) - 1;
-			if (evasionChance == 0)
-				return;
-			var canEvade = PlayerHelper.canEvadeDamage(event.getSource());
-			if (canEvade && player.getRandom().nextFloat() < evasionChance)
-				event.setCanceled(true);
+		if (!(event.getEntity() instanceof Player player)) return;
+		float evasion = (float) player.getAttributeValue(SkillTreeAttributes.EVASION_CHANCE.get()) - 1;
+		if (evasion == 0) return;
+		boolean canEvade = PlayerHelper.canEvadeDamage(event.getSource());
+		if (canEvade && player.getRandom().nextFloat() < evasion) {
+			player.level.playSound(null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
+			event.setCanceled(true);
 		}
 	}
 
@@ -878,7 +880,7 @@ public class AttributeBonusHandler {
 		var target = event.getEntity();
 		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
 	}
-	
+
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void addPoisonedWeaponTooltips(ItemTooltipEvent event) {
 		var weapon = event.getItemStack();
