@@ -2,6 +2,7 @@ package daripher.skilltree.item.gem;
 
 import java.util.List;
 
+import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -14,6 +15,6 @@ public class CitrineItem extends SimpleGemItem {
 
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(getBonusTooltip("anything", getWeaponBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("anything", getWeaponBonus()));
 	}
 }

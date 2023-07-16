@@ -1,7 +1,8 @@
 package daripher.skilltree.util;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -16,54 +17,57 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 
 public class TooltipHelper {
-	public static MutableComponent getAttributeBonusTooltip(Triple<Attribute, Double, Operation> attributeBonus) {
-		var modifierValue = attributeBonus.getMiddle();
-		var modifierOperation = attributeBonus.getRight();
-		var modifiedAttribute = attributeBonus.getLeft();
-		if (modifierOperation == null || modifiedAttribute == null) {
-			return Component.literal("ERROR").withStyle(ChatFormatting.RED);
-		}
-		var visibleBonusValue = modifierValue;
+	private static final MutableComponent ERROR = Component.literal("ERROR").withStyle(ChatFormatting.RED);
 
-		if (modifierOperation == AttributeModifier.Operation.ADDITION) {
-			if (modifiedAttribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
-				visibleBonusValue *= 10D;
-			}
+	public static MutableComponent getAttributeBonusTooltip(Optional<Pair<Attribute, AttributeModifier>> bonus) {
+		return bonus.isPresent() ? getAttributeBonusTooltip(bonus.get()) : ERROR;
+	}
+
+	public static MutableComponent getAttributeBonusTooltip(Pair<Attribute, AttributeModifier> bonus) {
+		AttributeModifier modifier = bonus.getRight();
+		if (modifier == null) return ERROR;
+		Attribute attribute = bonus.getLeft();
+		Operation operation = modifier.getOperation();
+		if (operation == null || attribute == null) return ERROR;
+		double amount = modifier.getAmount();
+		double visibleAmount = amount;
+		if (operation == AttributeModifier.Operation.ADDITION) {
+			if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) visibleAmount *= 10D;
 		} else {
-			visibleBonusValue *= 100D;
+			visibleAmount *= 100D;
 		}
-
-		if (modifierValue < 0D) {
-			visibleBonusValue *= -1D;
-		}
-
-		var textOperation = modifierValue > 0 ? "plus" : "take";
-		var style = modifierValue > 0 ? ChatFormatting.BLUE : ChatFormatting.RED;
-		var attributeComponent = Component.translatable(modifiedAttribute.getDescriptionId());
-		if (modifiedAttribute.getDescriptionId().contains(".can_")) {
-			return attributeComponent.withStyle(style);
-		}
-		var formattedVisibleBonus = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleBonusValue);
-		var formattedOperation = "attribute.modifier." + textOperation + "." + modifierOperation.toValue();
-		return Component.translatable(formattedOperation, formattedVisibleBonus, attributeComponent).withStyle(style);
+		if (amount < 0D) visibleAmount *= -1D;
+		String textOperation = amount > 0 ? "plus" : "take";
+		ChatFormatting style = amount > 0 ? ChatFormatting.BLUE : ChatFormatting.RED;
+		MutableComponent attributeDescription = Component.translatable(attribute.getDescriptionId());
+		if (attribute.getDescriptionId().startsWith("can_")) return attributeDescription.withStyle(style);
+		String textAmount = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
+		textOperation = "attribute.modifier." + textOperation + "." + operation.toValue();
+		return Component.translatable(textOperation, textAmount, attributeDescription).withStyle(style);
 	}
 
-	public static MutableComponent getAttributeBonusTooltip(Pair<Attribute, AttributeModifier> attributeBonus) {
-		var modifier = attributeBonus.getRight();
-		return getAttributeBonusTooltip(Triple.of(attributeBonus.getLeft(), modifier.getAmount(), modifier.getOperation()));
+	public static MutableComponent getAttributeBonusTooltip(String slot, Optional<Pair<Attribute, AttributeModifier>> bonus) {
+		return bonus.isPresent() ? getAttributeBonusTooltip(slot, bonus.get()) : ERROR;
 	}
 
-	public static MutableComponent getEffectTooltip(MobEffectInstance effect) {
-		MutableComponent potionTooltip = Component.translatable(effect.getDescriptionId());
-		MobEffect mobeffect = effect.getEffect();
-		if (effect.getAmplifier() > 0) {
-			potionTooltip = Component.translatable("potion.withAmplifier", potionTooltip, Component.translatable("potion.potency." + effect.getAmplifier()));
+	public static MutableComponent getAttributeBonusTooltip(String slot, Pair<Attribute, AttributeModifier> bonus) {
+		Component slotTooltip = Component.translatable("gem.slot." + slot).withStyle(ChatFormatting.GOLD);
+		Component bonusTooltip = getAttributeBonusTooltip(bonus);
+		return Component.empty().append(slotTooltip).append(bonusTooltip);
+	}
+
+	public static MutableComponent getEffectTooltip(MobEffectInstance effectInstance) {
+		MutableComponent tooltip = Component.translatable(effectInstance.getDescriptionId());
+		MobEffect effect = effectInstance.getEffect();
+		if (effectInstance.getAmplifier() > 0) {
+			MutableComponent amplifier = Component.translatable("potion.potency." + effectInstance.getAmplifier());
+			tooltip = Component.translatable("potion.withAmplifier", tooltip, amplifier);
 		}
-		if (effect.getDuration() > 20) {
-			potionTooltip = Component.translatable("potion.withDuration", potionTooltip, MobEffectUtil.formatDuration(effect, 1F));
+		if (effectInstance.getDuration() > 20) {
+			String duration = MobEffectUtil.formatDuration(effectInstance, 1F);
+			tooltip = Component.translatable("potion.withDuration", tooltip, duration);
 		}
-		potionTooltip = potionTooltip.withStyle(mobeffect.getCategory().getTooltipFormatting());
-		potionTooltip = Component.literal(" ").append(potionTooltip);
-		return potionTooltip;
+		tooltip = tooltip.withStyle(effect.getCategory().getTooltipFormatting());
+		return Component.literal(" ").append(tooltip);
 	}
 }

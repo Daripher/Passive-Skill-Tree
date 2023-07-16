@@ -3,9 +3,10 @@ package daripher.skilltree.gem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import daripher.skilltree.SkillTreeMod;
@@ -23,7 +24,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -46,13 +46,11 @@ public class GemBonusHandler {
 
 	@SubscribeEvent
 	public static void applyGemstoneBonuses(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.canInsertGem(event.getItemStack())) {
-			return;
-		}
-		var gemstoneSlot = 0;
-		while (GemHelper.hasGem(event.getItemStack(), gemstoneSlot)) {
-			applyGemstoneAttributeModifier(event, gemstoneSlot);
-			gemstoneSlot++;
+		if (!ItemHelper.canInsertGem(event.getItemStack())) return;
+		int socket = 0;
+		while (GemHelper.hasGem(event.getItemStack(), socket)) {
+			applyGemstoneAttributeModifier(event, socket);
+			socket++;
 		}
 	}
 
@@ -62,10 +60,10 @@ public class GemBonusHandler {
 			return;
 		}
 		event.getToolTip().add(Component.empty());
-		var gemstoneSlot = 0;
-		while (GemHelper.hasGem(event.getItemStack(), gemstoneSlot)) {
-			addGemstoneTooltip(event, gemstoneSlot);
-			gemstoneSlot++;
+		int socket = 0;
+		while (GemHelper.hasGem(event.getItemStack(), socket)) {
+			addGemTooltip(event, socket);
+			socket++;
 		}
 		addEmptySocketsTooltip(event);
 	}
@@ -95,67 +93,71 @@ public class GemBonusHandler {
 		}
 		var serverLevel = (ServerLevel) level;
 		var lootTable = serverLevel.getServer().getLootTables().get(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
+		// formatter:off
 		var lootContext = new LootContext.Builder(serverLevel)
 				.withParameter(LootContextParams.BLOCK_STATE, event.getState())
 				.withParameter(LootContextParams.ORIGIN, new Vec3(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
 				.withParameter(LootContextParams.TOOL, player.getMainHandItem())
 				.withLuck(player.getLuck())
 				.create(LootContextParamSets.BLOCK);
+		// formatter:on
 		lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
 	}
 
-	private static void applyGemstoneAttributeModifier(ItemAttributeModifierEvent event, int gemstoneSlot) {
-		var itemStack = event.getItemStack();
-		var itemSlot = ItemHelper.getSlotForItem(itemStack);
-		if (itemSlot != event.getSlotType())
-			return;
-		var attributeBonus = GemItem.getAttributeBonus(itemStack, gemstoneSlot);
-		var attribute = attributeBonus.getLeft();
-		var attributeModifier = getAttributeModifier(gemstoneSlot, attributeBonus, event.getSlotType());
-		event.addModifier(attribute, attributeModifier);
+	private static void applyGemstoneAttributeModifier(ItemAttributeModifierEvent event, int socket) {
+		ItemStack itemStack = event.getItemStack();
+		EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
+		if (slot != event.getSlotType()) return;
+		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = GemHelper.getAttributeBonus(itemStack, socket);
+		if (!optionalBonus.isPresent()) return;
+		Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
+		AttributeModifier modifier = getAttributeModifier(socket, bonus, event.getSlotType());
+		event.addModifier(bonus.getLeft(), modifier);
 	}
 
 	public static void addEmptySocketsTooltip(ItemTooltipEvent event) {
-		if (!ItemHelper.canInsertGem(event.getItemStack())) {
-			return;
-		}
+		if (!ItemHelper.canInsertGem(event.getItemStack())) return;
 		var emptySockets = GemHelper.getEmptySockets(event.getItemStack(), event.getEntity());
-		for (var i = 0; i < emptySockets; i++) {
+		for (int i = 0; i < emptySockets; i++) {
 			event.getToolTip().add(Component.translatable("gem.socket").withStyle(ChatFormatting.DARK_GRAY));
 		}
 	}
 
-	private static void addGemstoneTooltip(ItemTooltipEvent event, int gemstoneSlot) {
-		var itemStack = event.getItemStack();
-		var gemstoneItem = GemHelper.getGem(itemStack, gemstoneSlot);
-		var gemstoneBonus = GemItem.getAttributeBonus(itemStack, gemstoneSlot);
-		if (gemstoneSlot > 0) {
-			for (var i = gemstoneSlot - 1; i >= 0; i--) {
-				if (areGemstonesAndBonusesSame(itemStack, gemstoneItem, gemstoneBonus, i)) {
-					return;
-				}
+	private static void addGemTooltip(ItemTooltipEvent event, int socket) {
+		ItemStack itemStack = event.getItemStack();
+		GemItem gem = GemHelper.getGem(itemStack, socket);
+		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = GemHelper.getAttributeBonus(itemStack, socket);
+		if (!optionalBonus.isPresent()) return;
+		Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
+		if (socket > 0) {
+			for (int i = socket - 1; i >= 0; i--) {
+				if (sameBonuses(itemStack, gem, bonus, i)) return;
 			}
 		}
-		removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(gemstoneBonus));
-		var sameGemstonesCount = 1;
-		for (var i = gemstoneSlot + 1; i < 4; i++) {
-			if (areGemstonesAndBonusesSame(itemStack, gemstoneItem, gemstoneBonus, i)) {
-				var secondBonus = GemItem.getAttributeBonus(itemStack, i);
+		removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(bonus));
+		int sameGemsCount = 1;
+		for (int i = socket + 1; i < 4; i++) {
+			if (sameBonuses(itemStack, gem, bonus, i)) {
+				Pair<Attribute, AttributeModifier> secondBonus = GemHelper.getAttributeBonus(itemStack, i).get();
 				removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(secondBonus));
-				var summedAmounts = gemstoneBonus.getMiddle() + secondBonus.getMiddle();
-				gemstoneBonus = Triple.of(gemstoneBonus.getLeft(), summedAmounts, gemstoneBonus.getRight());
-				sameGemstonesCount++;
+				bonus = sumBonuses(bonus, secondBonus);
+				sameGemsCount++;
 			}
 		}
-		var gemstoneBonusTooltip = TooltipHelper.getAttributeBonusTooltip(gemstoneBonus);
-		var gemstoneName = gemstoneItem.getName(new ItemStack(gemstoneItem));
-		if (sameGemstonesCount > 1) {
-			gemstoneName.append(" x" + sameGemstonesCount);
+		var gemstoneBonusTooltip = TooltipHelper.getAttributeBonusTooltip(bonus);
+		var gemstoneName = gem.getName(new ItemStack(gem));
+		if (sameGemsCount > 1) {
+			gemstoneName.append(" x" + sameGemsCount);
 		}
 		gemstoneName.append(":");
-		gemstoneName = gemstoneItem.applyGemstoneColorStyle(gemstoneName);
+		gemstoneName = gem.applyGemstoneColorStyle(gemstoneName);
 		event.getToolTip().add(gemstoneName);
 		event.getToolTip().add(gemstoneBonusTooltip);
+	}
+
+	protected static Pair<Attribute, AttributeModifier> sumBonuses(Pair<Attribute, AttributeModifier> bonus, Pair<Attribute, AttributeModifier> secondBonus) {
+		double summedAmounts = bonus.getRight().getAmount() + secondBonus.getRight().getAmount();
+		return Pair.of(bonus.getLeft(), new AttributeModifier("Gem Bonus", summedAmounts, bonus.getRight().getOperation()));
 	}
 
 	private static void removeTooltip(List<Component> tooltips, MutableComponent tooltip) {
@@ -169,31 +171,21 @@ public class GemBonusHandler {
 		}
 	}
 
-	protected static boolean areGemstonesAndBonusesSame(@NotNull ItemStack itemStack, GemItem gemstoneItem, Triple<Attribute, Double, Operation> gemstoneBonus, int gemstoneSlot) {
-		if (GemHelper.getGem(itemStack, gemstoneSlot) != gemstoneItem) {
-			return false;
-		}
-		if (!isSameBonus(gemstoneBonus, GemItem.getAttributeBonus(itemStack, gemstoneSlot))) {
-			return false;
-		}
+	protected static boolean sameBonuses(@NotNull ItemStack stack, GemItem gem, Pair<Attribute, AttributeModifier> bonus, int socket) {
+		if (GemHelper.getGem(stack, socket) != gem) return false;
+		Optional<Pair<Attribute, AttributeModifier>> secondBonus = GemHelper.getAttributeBonus(stack, socket);
+		if (!secondBonus.isPresent()) return false;
+		if (!sameBonus(bonus, secondBonus.get())) return false;
 		return true;
 	}
 
-	private static boolean isSameBonus(Triple<Attribute, Double, Operation> first, Triple<Attribute, Double, Operation> second) {
-		if (first.equals(second)) {
-			return true;
-		}
-		if (first.getLeft() == second.getLeft() && first.getRight() == second.getRight()) {
-			return true;
-		}
-		return false;
+	private static boolean sameBonus(Pair<Attribute, AttributeModifier> first, Pair<Attribute, AttributeModifier> second) {
+		return first.getLeft() == second.getLeft() && first.getRight().getOperation() == second.getRight().getOperation();
 	}
 
-	public static AttributeModifier getAttributeModifier(int gemstoneSlot, Triple<Attribute, Double, Operation> attributeBonus, EquipmentSlot equipmentSlot) {
-		var amount = attributeBonus.getMiddle();
-		var operation = attributeBonus.getRight();
-		var modifierId = UUID.fromString(MODIFIER_IDS.get(equipmentSlot)[gemstoneSlot]);
-		return new AttributeModifier(modifierId, "Gemstone Bonus", amount, operation);
+	public static AttributeModifier getAttributeModifier(int socket, Pair<Attribute, AttributeModifier> bonus, EquipmentSlot slot) {
+		UUID modifierId = UUID.fromString(MODIFIER_IDS.get(slot)[socket]);
+		return new AttributeModifier(modifierId, "Gem Bonus", bonus.getRight().getAmount(), bonus.getRight().getOperation());
 	}
 
 	static {

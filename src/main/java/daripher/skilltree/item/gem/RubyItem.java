@@ -3,6 +3,7 @@ package daripher.skilltree.item.gem;
 import java.util.List;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,7 +17,7 @@ public class RubyItem extends SimpleGemItem {
 
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(getBonusTooltip("armor", getHelmetBonus()));
-		components.add(getBonusTooltip("shield", getShieldBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("armor", getHelmetBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("shield", getShieldBonus()));
 	}
 }

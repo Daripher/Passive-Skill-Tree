@@ -1,10 +1,11 @@
 package daripher.skilltree.gem;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -46,25 +48,20 @@ public class GemHelper {
 	}
 
 	public static void insertGem(Player player, ItemStack itemStack, GemItem gem, int gemSlot, double gemPower) {
-		var gemTag = (CompoundTag) null;
-		var gemsTagList = getGemsListTag(itemStack);
+		CompoundTag gemTag = new CompoundTag();
+		ListTag gemsTagList = getGemsListTag(itemStack);
 		if (gemsTagList.size() > gemSlot) gemTag = gemsTagList.getCompound(gemSlot);
-		if (gemTag == null) gemTag = new CompoundTag();
-		var gemBonus = gem.getGemBonus(player, itemStack);
-		if (gemBonus == null) {
+		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = gem.getGemBonus(player, itemStack);
+		if (!optionalBonus.isPresent()) {
 			LOGGER.error("Cannot insert gem into {}", itemStack.getItem());
 			LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(itemStack));
 			return;
 		}
-		var attribute = gemBonus.getLeft();
-		var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-		var amount = gemBonus.getMiddle() * (1 + gemPower);
-		var operation = gemBonus.getRight().toString();
-		var gemId = ForgeRegistries.ITEMS.getKey(gem).toString();
-		gemTag.putString(GEM_TAG, gemId);
-		gemTag.putString(ATTRIBUTE_TAG, attributeId);
-		gemTag.putDouble(AMOUNT_TAG, amount);
-		gemTag.putString(OPERATION_TAG, operation);
+		Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
+		gemTag.putString(GEM_TAG, ForgeRegistries.ITEMS.getKey(gem).toString());
+		gemTag.putString(ATTRIBUTE_TAG, ForgeRegistries.ATTRIBUTES.getKey(bonus.getLeft()).toString());
+		gemTag.putDouble(AMOUNT_TAG, bonus.getRight().getAmount() * (1 + gemPower));
+		gemTag.putString(OPERATION_TAG, bonus.getRight().getOperation().toString());
 		gemsTagList.add(gemSlot, gemTag);
 		itemStack.getTag().put(GEMS_TAG, gemsTagList);
 	}
@@ -73,13 +70,19 @@ public class GemHelper {
 		itemStack.getTag().remove(GEMS_TAG);
 	}
 
-	public static Triple<Attribute, Double, Operation> getAttributeBonus(ItemStack itemStack, int socket) {
-		var gemstoneTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
-		var attributeId = gemstoneTag.getString(ATTRIBUTE_TAG);
-		var attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-		var amount = gemstoneTag.getDouble(AMOUNT_TAG);
-		var operation = Operation.valueOf(gemstoneTag.getString(OPERATION_TAG));
-		return Triple.of(attribute, amount, operation);
+	public static Optional<Pair<Attribute, AttributeModifier>> getAttributeBonus(ItemStack itemStack, int socket) {
+		if (!GemHelper.hasGem(itemStack, socket)) return Optional.empty();
+		CompoundTag gemsTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
+		if (gemsTag == null) return Optional.empty();
+		String attributeId = gemsTag.getString(ATTRIBUTE_TAG);
+		if (attributeId.isEmpty()) return Optional.empty();
+		Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
+		if (attribute == null) return Optional.empty();
+		Operation operation = Operation.valueOf(gemsTag.getString(OPERATION_TAG));
+		if (operation == null) return Optional.empty();
+		double amount = gemsTag.getDouble(AMOUNT_TAG);
+		if (amount == 0) return Optional.empty();
+		return Optional.of(Pair.of(attribute, new AttributeModifier("Gem Bonus", amount, operation)));
 	}
 
 	public static GemItem getGem(ItemStack itemStack, int socket) {
@@ -89,9 +92,8 @@ public class GemHelper {
 		if (!hasGem(itemStack, socket)) return null;
 		var gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
 		String gemId = gemTag.getString(GEM_TAG);
-		Item gem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
-		if (!(gem instanceof GemItem)) return null;
-		return (GemItem) gem;
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
+		return item instanceof GemItem gem ? gem : null;
 	}
 
 	public static void setAdditionalSocket(ItemStack itemStack) {
@@ -124,7 +126,7 @@ public class GemHelper {
 		var gemsCount = 0;
 		var socket = 0;
 		while (hasGem(itemStack, socket)) {
-			if(getGem(itemStack, socket) == gem) gemsCount++;
+			if (getGem(itemStack, socket) == gem) gemsCount++;
 			socket++;
 		}
 		return gemsCount;

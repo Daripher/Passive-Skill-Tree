@@ -3,6 +3,7 @@ package daripher.skilltree.item.gem;
 import java.util.List;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -17,8 +18,8 @@ public class MoonstoneItem extends SimpleGemItem {
 
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(getBonusTooltip("pickaxe", getPickaxeBonus()));
-		components.add(getBonusTooltip("weapon", getWeaponBonus()));
-		components.add(getBonusTooltip("boots", getBootsBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("pickaxe", getPickaxeBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("weapon", getWeaponBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("boots", getBootsBonus()));
 	}
 }

@@ -1,10 +1,9 @@
 package daripher.skilltree.item.gem;
 
 import java.util.List;
+import java.util.Optional;
 
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.lang3.tuple.Pair;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.gem.GemHelper;
@@ -13,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -67,15 +66,7 @@ public abstract class GemItem extends Item {
 		GemHelper.insertGem(player, itemStack, this, gemSlot, gemPower);
 	}
 
-	public static Triple<Attribute, Double, Operation> getAttributeBonus(ItemStack itemStack, int gemstoneSlot) {
-		if (!GemHelper.hasGem(itemStack, gemstoneSlot)) {
-			return null;
-		}
-		var attributeBonus = GemHelper.getAttributeBonus(itemStack, gemstoneSlot);
-		return attributeBonus;
-	}
-
-	public abstract @Nullable Triple<Attribute, Double, Operation> getGemBonus(Player player, ItemStack itemStack);
+	public abstract Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack);
 
 	protected abstract void appenBonusesTooltip(List<Component> components);
 }

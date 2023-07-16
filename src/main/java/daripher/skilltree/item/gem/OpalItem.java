@@ -3,6 +3,7 @@ package daripher.skilltree.item.gem;
 import java.util.List;
 
 import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 
@@ -15,7 +16,7 @@ public class OpalItem extends SimpleGemItem {
 
 	@Override
 	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(getBonusTooltip("weapon", getWeaponBonus()));
-		components.add(getBonusTooltip("shield", getShieldBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("weapon", getWeaponBonus()));
+		components.add(TooltipHelper.getAttributeBonusTooltip("shield", getShieldBonus()));
 	}
 }
