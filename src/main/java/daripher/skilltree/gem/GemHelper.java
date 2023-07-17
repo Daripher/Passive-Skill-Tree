@@ -89,7 +89,7 @@ public class GemHelper {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return Optional.empty();
 		}
-		if (!hasGem(itemStack, socket)) return null;
+		if (!hasGem(itemStack, socket)) return Optional.empty();
 		CompoundTag gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
 		String gemId = gemTag.getString(GEM_TAG);
 		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
