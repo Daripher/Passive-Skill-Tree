@@ -45,20 +45,18 @@ public class GemBonusHandler {
 	private static final Map<EquipmentSlot, String[]> MODIFIER_IDS = new HashMap<>();
 
 	@SubscribeEvent
-	public static void applyGemstoneBonuses(ItemAttributeModifierEvent event) {
+	public static void applyGemBonuses(ItemAttributeModifierEvent event) {
 		if (!ItemHelper.canInsertGem(event.getItemStack())) return;
 		int socket = 0;
 		while (GemHelper.hasGem(event.getItemStack(), socket)) {
-			applyGemstoneAttributeModifier(event, socket);
+			applyGemBonus(event, socket);
 			socket++;
 		}
 	}
 
 	@SubscribeEvent
-	public static void addGemstoneTooltips(ItemTooltipEvent event) {
-		if (!ItemHelper.canInsertGem(event.getItemStack())) {
-			return;
-		}
+	public static void addGemTooltips(ItemTooltipEvent event) {
+		if (!ItemHelper.canInsertGem(event.getItemStack())) return;
 		event.getToolTip().add(Component.empty());
 		int socket = 0;
 		while (GemHelper.hasGem(event.getItemStack(), socket)) {
@@ -104,7 +102,7 @@ public class GemBonusHandler {
 		lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
 	}
 
-	private static void applyGemstoneAttributeModifier(ItemAttributeModifierEvent event, int socket) {
+	private static void applyGemBonus(ItemAttributeModifierEvent event, int socket) {
 		ItemStack itemStack = event.getItemStack();
 		EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
 		if (slot != event.getSlotType()) return;
@@ -125,7 +123,9 @@ public class GemBonusHandler {
 
 	private static void addGemTooltip(ItemTooltipEvent event, int socket) {
 		ItemStack itemStack = event.getItemStack();
-		GemItem gem = GemHelper.getGem(itemStack, socket);
+		Optional<GemItem> optionalGem = GemHelper.getGem(itemStack, socket);
+		if (optionalGem.isEmpty()) return;
+		GemItem gem = optionalGem.get();
 		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = GemHelper.getAttributeBonus(itemStack, socket);
 		if (!optionalBonus.isPresent()) return;
 		Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
@@ -144,15 +144,15 @@ public class GemBonusHandler {
 				sameGemsCount++;
 			}
 		}
-		var gemstoneBonusTooltip = TooltipHelper.getAttributeBonusTooltip(bonus);
-		var gemstoneName = gem.getName(new ItemStack(gem));
+		MutableComponent gemBonusTooltip = TooltipHelper.getAttributeBonusTooltip(bonus);
+		MutableComponent gemName = gem.getName(new ItemStack(gem));
 		if (sameGemsCount > 1) {
-			gemstoneName.append(" x" + sameGemsCount);
+			gemName.append(" x" + sameGemsCount);
 		}
-		gemstoneName.append(":");
-		gemstoneName = gem.applyGemstoneColorStyle(gemstoneName);
-		event.getToolTip().add(gemstoneName);
-		event.getToolTip().add(gemstoneBonusTooltip);
+		gemName.append(":");
+		gemName = gem.applyGemstoneColorStyle(gemName);
+		event.getToolTip().add(gemName);
+		event.getToolTip().add(gemBonusTooltip);
 	}
 
 	protected static Pair<Attribute, AttributeModifier> sumBonuses(Pair<Attribute, AttributeModifier> bonus, Pair<Attribute, AttributeModifier> secondBonus) {
@@ -172,7 +172,7 @@ public class GemBonusHandler {
 	}
 
 	protected static boolean sameBonuses(@NotNull ItemStack stack, GemItem gem, Pair<Attribute, AttributeModifier> bonus, int socket) {
-		if (GemHelper.getGem(stack, socket) != gem) return false;
+		if (!GemHelper.getGem(stack, socket).filter(gem::equals).isPresent()) return false;
 		Optional<Pair<Attribute, AttributeModifier>> secondBonus = GemHelper.getAttributeBonus(stack, socket);
 		if (!secondBonus.isPresent()) return false;
 		if (!sameBonus(bonus, secondBonus.get())) return false;

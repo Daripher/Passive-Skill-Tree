@@ -85,15 +85,16 @@ public class GemHelper {
 		return Optional.of(Pair.of(attribute, new AttributeModifier("Gem Bonus", amount, operation)));
 	}
 
-	public static GemItem getGem(ItemStack itemStack, int socket) {
+	public static Optional<GemItem> getGem(ItemStack itemStack, int socket) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return null;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return Optional.empty();
 		}
 		if (!hasGem(itemStack, socket)) return null;
-		var gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
+		CompoundTag gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
 		String gemId = gemTag.getString(GEM_TAG);
 		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(gemId));
-		return item instanceof GemItem gem ? gem : null;
+		if (!(item instanceof GemItem gem)) return Optional.empty();
+		return Optional.of(gem);
 	}
 
 	public static void setAdditionalSocket(ItemStack itemStack) {
@@ -126,7 +127,7 @@ public class GemHelper {
 		var gemsCount = 0;
 		var socket = 0;
 		while (hasGem(itemStack, socket)) {
-			if (getGem(itemStack, socket) == gem) gemsCount++;
+			if (getGem(itemStack, socket).filter(gem::equals).isPresent()) gemsCount++;
 			socket++;
 		}
 		return gemsCount;
