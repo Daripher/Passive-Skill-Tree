@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "copper_ring",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/copper"
+    }
+  },
+  "pattern": [
+    " # ",
+    "# #",
+    " # "
+  ],
+  "result": {
+    "item": "skilltree:copper_ring"
+  }
+}
