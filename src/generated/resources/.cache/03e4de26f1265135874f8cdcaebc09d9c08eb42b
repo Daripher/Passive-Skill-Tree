@@ -1,6 +1,6 @@
-// 1.19.2	2023-07-27T16:32:28.9282631	Tags for minecraft:item
-8fca97e20c4f0f6112299e52e6e67eb15013a8d9 data/curios/tags/items/necklace.json
-0f040ff36122813c37f735048a7944bb96ebdf00 data/curios/tags/items/quiver.json
+// 1.19.2	2023-07-31T15:05:09.240149	Tags for minecraft:item
+cb8e012b305dba9574089d7f46bdd42757a3ad01 data/curios/tags/items/necklace.json
+7a88c7e72ea97036ffaedcfc691d05b93ce3cf54 data/curios/tags/items/quiver.json
 66bb644ad4f941567a9624ab40ffcf18a197606b data/curios/tags/items/ring.json
 e3a08329a8faa4e76467f3cc10cb6daa98b57c64 data/forge/tags/items/nuggets/copper.json
 47f49818f029f63e5ec67015fdb3a47197335121 data/skilltree/tags/items/gems.json

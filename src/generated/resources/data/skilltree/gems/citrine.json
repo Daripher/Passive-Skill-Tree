@@ -6,6 +6,9 @@
       "gem_class": {
         "key": "anything",
         "types": [
+          "boots",
+          "leggings",
+          "shield",
           "pickaxe",
           "chestplate",
           "crossbow",
@@ -14,10 +17,7 @@
           "helmet",
           "bow",
           "shovel",
-          "sword",
-          "boots",
-          "leggings",
-          "shield"
+          "sword"
         ]
       },
       "operation": "addition",

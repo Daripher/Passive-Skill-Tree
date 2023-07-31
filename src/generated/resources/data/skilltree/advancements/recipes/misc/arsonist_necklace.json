@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ender_pearl": {
+    "has_fire_charge": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:ender_pearl"
+              "minecraft:fire_charge"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:end_quiver"
+        "recipe": "skilltree:arsonist_necklace"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_ender_pearl",
+      "has_fire_charge",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:end_quiver"
+      "skilltree:arsonist_necklace"
     ]
   }
 }

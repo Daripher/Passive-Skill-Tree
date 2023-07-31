@@ -53,6 +53,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -1219,5 +1220,14 @@ public class AttributeBonusHandler {
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_IGNITE.get()) - 1;
 		if (player.getRandom().nextFloat() >= chance) return;
 		event.getEntity().setSecondsOnFire(5);
+	}
+
+	@SubscribeEvent
+	public static void applyChanceToExplodeEnemy(LivingHurtEvent event) {
+		if (!(event.getSource().getEntity() instanceof Player player)) return;
+		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get()) - 1;
+		if (player.getRandom().nextFloat() >= chance) return;
+		LivingEntity target = event.getEntity();
+		target.level.explode(player, target.getX(), target.getEyeY(), target.getZ(), 2F, BlockInteraction.NONE);
 	}
 }

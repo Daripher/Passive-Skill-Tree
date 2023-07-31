@@ -38,6 +38,8 @@ public class PSTRecipesProvider extends RecipeProvider {
 		necklace(PSTItems.HEALER_NECKLACE, Items.GHAST_TEAR, consumer);
 		necklace(PSTItems.SIMPLE_NECKLACE, consumer);
 		necklace(PSTItems.SCHOLAR_NECKLACE, Items.ENDER_PEARL, consumer);
+		necklace(PSTItems.ARSONIST_NECKLACE, Items.FIRE_CHARGE, consumer);
+		necklace(PSTItems.FISHERMAN_NECKLACE, Items.TROPICAL_FISH, consumer);
 		// quviers
 		quiver(PSTItems.QUIVER, consumer);
 		quiver(PSTItems.ARMORED_QUIVER, Tags.Items.INGOTS_IRON, consumer);

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "fisherman_necklace",
+  "key": {
+    "#": {
+      "item": "minecraft:tropical_fish"
+    },
+    "n": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "pattern": [
+    "nnn",
+    "n n",
+    "n#n"
+  ],
+  "result": {
+    "item": "skilltree:fisherman_necklace"
+  }
+}

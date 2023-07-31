@@ -194,6 +194,7 @@ public class PSTAttributes {
 	public static final RegistryObject<Attribute> CRIT_DAMAGE = create("crit_damage", 1D, 1D);
 	public static final RegistryObject<Attribute> CRIT_CHANCE = create("crit_chance", 1D, 1D);
 	public static final RegistryObject<Attribute> GEM_DROP_CHANCE = create("chance_to_find_gemstone", 1D, 1D);
+	public static final RegistryObject<Attribute> CHANCE_TO_EXPLODE_ENEMY = create("chance_to_explode_enemy", 1D, 1D);
 
 	private static RegistryObject<Attribute> create(String name, double defaultValue, double minValue) {
 		String descriptionId = "attribute.name." + SkillTreeMod.MOD_ID + "." + name;

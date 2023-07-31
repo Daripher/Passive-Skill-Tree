@@ -1,16 +1,17 @@
-// 1.19.2	2023-07-27T16:32:28.9382711	Item Models: skilltree
+// 1.19.2	2023-07-31T15:05:09.2241367	Item Models: skilltree
 2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/skilltree/models/item/adamite.json
 7f105626d8a7ca598d2b0804d3cf871e12ebf6c0 assets/skilltree/models/item/amnesia_scroll.json
 694e18d4621f069f97383796e09d359d6c90882f assets/skilltree/models/item/armored_quiver.json
+fe9c855469e5ebbd37bd8a8df22f01aeaf2acae9 assets/skilltree/models/item/arsonist_necklace.json
 2f8b19d5040230bb290e93743907c9ffbc6cc590 assets/skilltree/models/item/assassin_necklace.json
 eafb7376380bf954455e3f48dc144283927edffa assets/skilltree/models/item/bone_quiver.json
 bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/skilltree/models/item/citrine.json
 4edc69c003ad38c47b6b629c466a870d7b578304 assets/skilltree/models/item/copper_nugget.json
 50c767e9f51012abb9e221a888e725a1a47b6f10 assets/skilltree/models/item/copper_ring.json
 286f13e230d4f566b65edb905b44b7e9ed9b70d7 assets/skilltree/models/item/diamond_quiver.json
-81e0d0b8a7fc28b1026ac71825dd62782734b6e7 assets/skilltree/models/item/end_quiver.json
 9279cbbb760a89d5b78ba4c769951a78591a9247 assets/skilltree/models/item/explosive_quiver.json
 73f76d224b3b05d6ce116d82c7f5ac62b46eeaf8 assets/skilltree/models/item/fiery_quiver.json
+895c081bcacbdb18e8d02cf90e72e6f71f9e0b58 assets/skilltree/models/item/fisherman_necklace.json
 4cfda358b0302a839ef1d7595da9fc853abafb54 assets/skilltree/models/item/gilded_quiver.json
 fe57c993da264dad1d8a535a0349c67a270c3d9a assets/skilltree/models/item/golden_ring.json
 221c8b63eafc7b3a08a0b17d4a23d0cd50787742 assets/skilltree/models/item/healer_necklace.json

@@ -259,6 +259,8 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTItems.TRAVELER_NECKLACE.get(), "Ожерелье путешественника");
 		add(PSTItems.SIMPLE_NECKLACE.get(), "Ожерелье простоты");
 		add(PSTItems.SCHOLAR_NECKLACE.get(), "Ожерелье учёного");
+		add(PSTItems.ARSONIST_NECKLACE.get(), "Ожерелье поджигателя");
+		add(PSTItems.FISHERMAN_NECKLACE.get(), "Ожерелье рыбака");
 		add(PSTItems.QUIVER.get(), "Колчан");
 		add(PSTItems.ARMORED_QUIVER.get(), "Бронированный колчан");
 		add(PSTItems.DIAMOND_QUIVER.get(), "Алмазный колчан");
@@ -424,6 +426,7 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.LUCK_WHILE_FISHING.get(), "Удача во время рыбалки");
 		add(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get(), "Здоровье за удар создаваемого оружия");
 		add(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get(), "Урон по горящим врагам создаваемого оружия");
+		add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Шанс взорвать врага");
 		// effects
 		add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
 		add(PSTEffects.DAMAGE_BONUS.get(), "Урон");

@@ -254,11 +254,13 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTItems.IRON_RING.get(), "Iron Ring");
 		add(PSTItems.GOLDEN_RING.get(), "Golden Ring");
 		add(PSTItems.COPPER_NUGGET.get(), "Copper Nugget");
-		add(PSTItems.ASSASSIN_NECKLACE.get(), "Necklace of Assassin");
-		add(PSTItems.HEALER_NECKLACE.get(), "Necklace of Healer");
-		add(PSTItems.TRAVELER_NECKLACE.get(), "Necklace of Traveler");
-		add(PSTItems.SIMPLE_NECKLACE.get(), "Necklace of Simplicity");
-		add(PSTItems.SCHOLAR_NECKLACE.get(), "Necklace of Scholar");
+		add(PSTItems.ASSASSIN_NECKLACE.get(), "Assassin's Necklace");
+		add(PSTItems.HEALER_NECKLACE.get(), "Healer's Necklace");
+		add(PSTItems.TRAVELER_NECKLACE.get(), "Traveler's Traveler");
+		add(PSTItems.SIMPLE_NECKLACE.get(), "Simple Necklace");
+		add(PSTItems.SCHOLAR_NECKLACE.get(), "Scholar's Necklace");
+		add(PSTItems.ARSONIST_NECKLACE.get(), "Arsonist's Necklace");
+		add(PSTItems.FISHERMAN_NECKLACE.get(), "Fisherman's Necklace");
 		add(PSTItems.QUIVER.get(), "Quiver");
 		add(PSTItems.ARMORED_QUIVER.get(), "Armored Quiver");
 		add(PSTItems.DIAMOND_QUIVER.get(), "Diamond Quiver");
@@ -424,6 +426,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.LUCK_WHILE_FISHING.get(), "Luck while Fishing");
 		add(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get(), "Crafted Weapon Life per Hit");
 		add(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get(), "Crafted Weapon Damage against Burning enemies");
+		add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Chance to Explode enemy");
 		// effects
 		add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Critical Damage");
 		add(PSTEffects.DAMAGE_BONUS.get(), "Damage");

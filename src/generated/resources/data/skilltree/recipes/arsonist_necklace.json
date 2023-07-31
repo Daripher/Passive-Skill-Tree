@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "arsonist_necklace",
+  "key": {
+    "#": {
+      "item": "minecraft:fire_charge"
+    },
+    "n": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "pattern": [
+    "nnn",
+    "n n",
+    "n#n"
+  ],
+  "result": {
+    "item": "skilltree:arsonist_necklace"
+  }
+}

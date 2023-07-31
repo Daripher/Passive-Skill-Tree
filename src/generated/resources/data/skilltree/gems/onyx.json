@@ -6,11 +6,11 @@
       "gem_class": {
         "key": "melee_weapon",
         "types": [
+          "pickaxe",
           "sword",
           "shovel",
           "heavy_weapon",
-          "trident",
-          "pickaxe"
+          "trident"
         ]
       },
       "operation": "addition",
@@ -48,11 +48,11 @@
       "gem_class": {
         "key": "armor_or_shield",
         "types": [
+          "shield",
           "leggings",
           "boots",
           "chestplate",
-          "helmet",
-          "shield"
+          "helmet"
         ]
       },
       "operation": "addition",

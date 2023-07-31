@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "skilltree:item/end_quiver"
+    "layer0": "skilltree:item/fisherman_necklace"
   }
 }
