@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "diamond_quiver",
+  "key": {
+    "#": {
+      "tag": "forge:gems/diamond"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#ls",
+    "#ls",
+    "#ls"
+  ],
+  "result": {
+    "item": "skilltree:diamond_quiver"
+  }
+}

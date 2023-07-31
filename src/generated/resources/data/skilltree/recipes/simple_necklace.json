@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "simple_necklace",
+  "key": {
+    "n": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "pattern": [
+    "nnn",
+    "n n",
+    "nnn"
+  ],
+  "result": {
+    "item": "skilltree:simple_necklace"
+  }
+}

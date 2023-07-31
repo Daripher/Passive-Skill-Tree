@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.chance_to_brew_stronger_potion",
+      "attribute": "skilltree:brewed_potions_strength",
       "operation": "multiply_base"
     }
   ],
@@ -14,7 +14,7 @@
   "icon_texture": "skilltree:textures/icons/alchemist_crafting_1.png",
   "position": {
     "x": -8,
-    "y": 44
+    "y": 86
   },
   "tree": "skilltree:tree"
 }

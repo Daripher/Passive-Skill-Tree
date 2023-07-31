@@ -19,6 +19,8 @@
   	"minecraft/MixinItemStack",
   	"minecraft/MixinItem",
   	"minecraft/MixinLivingEntity",
+  	"minecraft/MixinAbstractArrow",
+  	"minecraft/MixinFishingHook",
   	"easymagic/MixinModEnchantmentMenu",
   	"easyvillagers/MixinConverterTileentity",
   	"farmersdelight/MixinCookingPotBlockEntity",

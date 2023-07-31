@@ -1,0 +1,30 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:chance_to_ignite",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:damage_against_burning",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:crit_chance_against_burning",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:enchanter_subclass_1_offensive_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
+  "position": {
+    "x": 451,
+    "y": -111
+  },
+  "tree": "skilltree:tree"
+}

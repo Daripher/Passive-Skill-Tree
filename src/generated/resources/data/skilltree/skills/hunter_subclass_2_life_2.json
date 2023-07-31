@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:maximum_life_per_arrow_in_quiver",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_subclass_2_life_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_life_1.png",
+  "position": {
+    "x": 377,
+    "y": 65
+  },
+  "tree": "skilltree:tree"
+}

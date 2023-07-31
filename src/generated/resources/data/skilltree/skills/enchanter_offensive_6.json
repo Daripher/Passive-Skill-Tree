@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:player.damage_with_enchanted_weapon",
+      "amount": 0.05,
+      "attribute": "skilltree:damage_with_enchanted_weapon",
       "operation": "multiply_base"
     }
   ],
@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_1.png",
   "position": {
-    "x": 243,
-    "y": -90
+    "x": 278,
+    "y": -110
   },
   "tree": "skilltree:tree"
 }

@@ -2,19 +2,20 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.gem_power_in_armor",
+      "attribute": "skilltree:gem_power_in_armor",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_defensive_crafting_4"
+    "skilltree:miner_defensive_crafting_4",
+    "skilltree:miner_healing_1"
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
   "position": {
-    "x": -105,
-    "y": 109
+    "x": -140,
+    "y": 129
   },
   "tree": "skilltree:tree"
 }

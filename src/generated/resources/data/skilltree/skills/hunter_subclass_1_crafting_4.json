@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:crafted_armor_stealth",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:hunter_subclass_1_mastery",
+    "skilltree:hunter_subclass_1_crafting_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_subclass_1_crafting_1.png",
+  "position": {
+    "x": 278,
+    "y": 345
+  },
+  "tree": "skilltree:tree"
+}

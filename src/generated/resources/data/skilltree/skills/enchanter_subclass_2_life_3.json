@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": "addition"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:experience_per_hour",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_subclass_2_life_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_life_1.png",
+  "position": {
+    "x": 271,
+    "y": -320
+  },
+  "tree": "skilltree:tree"
+}

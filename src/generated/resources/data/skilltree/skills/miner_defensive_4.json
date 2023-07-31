@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_1.png",
   "position": {
-    "x": -159,
-    "y": 143
+    "x": -194,
+    "y": 163
   },
   "tree": "skilltree:tree"
 }

@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import daripher.skilltree.gem.GemHelper;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.item.gem.GemHelper;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.AffixHelper;

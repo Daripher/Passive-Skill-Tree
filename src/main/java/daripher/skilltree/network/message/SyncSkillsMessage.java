@@ -3,7 +3,8 @@ package daripher.skilltree.network.message;
 import java.util.function.Supplier;
 
 import daripher.skilltree.client.SkillTreeClientData;
-import daripher.skilltree.data.SkillsReloader;
+import daripher.skilltree.skill.SkillsReloader;
+import daripher.skilltree.util.ByteBufHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -14,13 +15,10 @@ public class SyncSkillsMessage {
 	}
 
 	public void encode(FriendlyByteBuf buf) {
-		var skills = SkillsReloader.getSkills().values();
-		buf.writeInt(skills.size());
-		skills.forEach(skill -> skill.writeToByteBuf(buf));
+		ByteBufHelper.writePassiveSkills(buf, SkillsReloader.getSkills().values());
 	}
 
 	public static void receive(SyncSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
-		var ctx = ctxSupplier.get();
-		ctx.setPacketHandled(true);
+		ctxSupplier.get().setPacketHandled(true);
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:crafted_rings_critical_damage",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [],
+  "icon_texture": "skilltree:textures/icons/alchemist_subclass_special_1.png",
+  "position": {
+    "x": -222,
+    "y": 359
+  },
+  "tree": "skilltree:tree"
+}

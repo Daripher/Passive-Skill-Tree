@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import daripher.skilltree.gem.GemHelper;
+import daripher.skilltree.item.gem.GemHelper;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;

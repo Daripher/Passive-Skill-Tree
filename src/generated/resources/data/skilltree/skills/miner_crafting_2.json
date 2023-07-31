@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:player.chance_to_find_gemstone",
+      "amount": 0.02,
+      "attribute": "skilltree:chance_to_find_gemstone",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_crafting_1.png",
   "position": {
-    "x": -53,
-    "y": 18
+    "x": -90,
+    "y": 40
   },
   "tree": "skilltree:tree"
 }

@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.PSTPlayer;
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.api.IrisciteSeedContainer;
+import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(Player.class)
-public abstract class MixinPlayer extends LivingEntity implements PSTPlayer {
+public abstract class MixinPlayer extends LivingEntity implements IrisciteSeedContainer {
 	private int rainbowJewelInsertionSeed;
 
 	protected MixinPlayer() {
@@ -48,7 +48,7 @@ public abstract class MixinPlayer extends LivingEntity implements PSTPlayer {
 	@Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
 	private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
 		var player = (Player) (Object) this;
-		double freeEnchantmentChance = player.getAttributeValue(SkillTreeAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
+		double freeEnchantmentChance = player.getAttributeValue(PSTAttributes.FREE_ENCHANTMENT_CHANCE.get()) - 1;
 		if (player.getRandom().nextFloat() < freeEnchantmentChance) {
 			player.giveExperienceLevels(enchantmentCost);
 		}

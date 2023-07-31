@@ -1,20 +1,18 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.life_regeneration_per_gem_in_helmet",
+      "amount": 0.25,
+      "attribute": "skilltree:life_regeneration_per_gem_in_helmet",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
-  "connections": [
-    "skilltree:miner_healing_2"
-  ],
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_healing_notable_1.png",
   "position": {
-    "x": -84,
-    "y": 120
+    "x": -65,
+    "y": 85
   },
   "tree": "skilltree:tree"
 }

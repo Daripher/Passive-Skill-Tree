@@ -1,0 +1,40 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:chance_to_save_crafitng_materials",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:crafted_equipment_durability",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:crafted_weapon_attack_speed",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:chance_to_craft_tougher_armor",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 5.0,
+      "attribute": "skilltree:crafted_shields_armor_bonus",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:blacksmith_subclass_2_life_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
+  "position": {
+    "x": -475,
+    "y": -111
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "minecraft:generic.armor",
+      "operation": "addition"
+    },
+    {
+      "amount": 0.005,
+      "attribute": "skilltree:block_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_subclass_1_defensive_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_defensive_1.png",
+  "position": {
+    "x": -155,
+    "y": -232
+  },
+  "tree": "skilltree:tree"
+}

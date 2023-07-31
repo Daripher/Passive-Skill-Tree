@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "minecraft:generic.attack_speed",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:cook_subclass_1_offensive_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_subclass_1_offensive_1.png",
+  "position": {
+    "x": 121,
+    "y": -432
+  },
+  "tree": "skilltree:tree"
+}

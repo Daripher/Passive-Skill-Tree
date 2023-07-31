@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 
-import daripher.skilltree.api.PSTRecipe;
+import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.api.PlayerContainer;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -42,8 +42,8 @@ public class MixinRecipeBookComponent {
 	}
 	
 	private boolean canCraft(Recipe<?> recipe) {
-		if (!(recipe instanceof PSTRecipe)) return true;
+		if (!(recipe instanceof SkillRequiringRecipe)) return true;
 		if (!(menu instanceof PlayerContainer)) return false;
-		return ((PSTRecipe) recipe).canCraftIn((PlayerContainer) menu);
+		return ((SkillRequiringRecipe) recipe).canCraftIn((PlayerContainer) menu);
 	}
 }

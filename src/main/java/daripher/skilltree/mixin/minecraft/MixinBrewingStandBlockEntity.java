@@ -8,11 +8,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.util.PotionHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -43,18 +42,24 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 	}
 
 	private static void enhancePotion(ItemStack potionStack, Player player) {
-		float amplificationChance = (float) player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_POTION.get()) - 1;
+		float strengthBonus = (float) player.getAttributeValue(PSTAttributes.BREWED_POTIONS_STRENGTH.get()) - 1;
+		float durationBonus = (float) player.getAttributeValue(PSTAttributes.BREWED_POTIONS_DURATION.get()) - 1;
 		if (PotionHelper.isHarmfulPotion(potionStack)) {
-			Attribute harmfulPotionAmplificationChance = SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get();
-			amplificationChance += player.getAttributeValue(harmfulPotionAmplificationChance) - 1;
+			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_STRENGTH.get()) - 1;
+			durationBonus += player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_DURATION.get()) - 1;			
 		}
 		if (PotionHelper.isBeneficialPotion(potionStack)) {
-			Attribute beneficialPotionAmplificationChance = SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_BENEFICIAL_POTION.get();
-			amplificationChance += player.getAttributeValue(beneficialPotionAmplificationChance) - 1;
+			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH.get()) - 1;
+			durationBonus += player.getAttributeValue(PSTAttributes.BREWED_BENEFICIAL_POTIONS_DURATION.get()) - 1;
 		}
-		float durationBonus = (float) player.getAttributeValue(SkillTreeAttributes.BREWED_POTIONS_DURATION.get()) - 1;
-		if (durationBonus == 0 && amplificationChance == 0) return;
-		PotionHelper.enhancePotion(potionStack, amplificationChance, durationBonus);
+		if (PotionHelper.isPoison(potionStack)) {
+			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_POISONS_STRENGTH.get()) - 1;
+		}
+		if (PotionHelper.isHealingPotion(potionStack)) {
+			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_HEALING_POTIONS_STRENGTH.get()) - 1;
+		}
+		if (durationBonus == 0 && strengthBonus == 0) return;
+		PotionHelper.enhancePotion(potionStack, strengthBonus, durationBonus);
 	}
 
 	@Override

@@ -2,16 +2,16 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.damage_against_poisoned",
+      "attribute": "skilltree:damage_against_poisoned",
       "gem_class": {
         "key": "any_weapon",
         "types": [
-          "sword",
           "shovel",
-          "bow",
-          "pickaxe",
+          "sword",
+          "trident",
           "heavy_weapon",
-          "trident"
+          "pickaxe",
+          "bow"
         ]
       },
       "operation": "multiply_base",
@@ -45,7 +45,7 @@
     },
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.chance_to_brew_stronger_harmful_potion",
+      "attribute": "skilltree:brewed_harmful_potions_strength",
       "gem_class": {
         "key": "helmet",
         "types": [

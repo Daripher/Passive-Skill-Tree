@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:player.projectile_crit_chance",
+      "amount": 0.02,
+      "attribute": "skilltree:projectile_crit_chance",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_crit_1.png",
   "position": {
-    "x": 230,
-    "y": 97
+    "x": 265,
+    "y": 117
   },
   "tree": "skilltree:tree"
 }

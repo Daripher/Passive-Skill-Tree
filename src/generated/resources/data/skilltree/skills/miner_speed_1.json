@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:player.attack_speed_with_gem_in_weapon",
+      "amount": 0.02,
+      "attribute": "skilltree:attack_speed_with_gem_in_weapon",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_speed_1.png",
   "position": {
-    "x": -195,
-    "y": 133
+    "x": -230,
+    "y": 153
   },
   "tree": "skilltree:tree"
 }

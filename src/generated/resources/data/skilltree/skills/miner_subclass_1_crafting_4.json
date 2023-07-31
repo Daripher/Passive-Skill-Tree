@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.02,
+      "attribute": "skilltree:crafted_boots_movement_speed",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_subclass_1_mastery",
+    "skilltree:miner_subclass_1_crafting_notable_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
+  "position": {
+    "x": -455,
+    "y": 63
+  },
+  "tree": "skilltree:tree"
+}

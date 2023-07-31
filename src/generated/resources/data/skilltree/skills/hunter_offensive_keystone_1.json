@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.damage_per_distance",
+      "attribute": "skilltree:damage_per_distance_to_enemy",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",
   "position": {
-    "x": 257,
-    "y": 206
+    "x": 292,
+    "y": 226
   },
   "tree": "skilltree:tree"
 }

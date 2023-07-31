@@ -1,0 +1,15 @@
+{
+  "attribute_modifiers": [],
+  "background_texture": "skilltree:textures/icons/background/gateway.png",
+  "button_size": 33,
+  "connections": [
+    "skilltree:enchanter_subclass_1_defensive_1"
+  ],
+  "gateway": "skilltree:dimensional_gateway",
+  "icon_texture": "skilltree:textures/icons/void.png",
+  "position": {
+    "x": 195,
+    "y": -17
+  },
+  "tree": "skilltree:tree"
+}

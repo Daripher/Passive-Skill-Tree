@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -37,13 +37,13 @@ public class MixinAdventureModuleClient {
 	}
 
 	private static int getMaxSockets(Player player, ItemStack itemStack) {
-		int maxSockets = (int) player.getAttributeValue(SkillTreeAttributes.MAXIMUM_SOCKETS.get());
+		int maxSockets = (int) player.getAttributeValue(PSTAttributes.MAXIMUM_EQUIPMENT_SOCKETS.get());
 		if (ItemHelper.isChestplate(itemStack)) {
-			Attribute chestplateSockets = SkillTreeAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get();
+			Attribute chestplateSockets = PSTAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get();
 			maxSockets += (int) player.getAttributeValue(chestplateSockets);
 		}
 		if (ItemHelper.isWeapon(itemStack)) {
-			Attribute weaponSockets = SkillTreeAttributes.MAXIMUM_WEAPON_SOCKETS.get();
+			Attribute weaponSockets = PSTAttributes.MAXIMUM_WEAPON_SOCKETS.get();
 			maxSockets += (int) player.getAttributeValue(weaponSockets);
 		}
 		return maxSockets;

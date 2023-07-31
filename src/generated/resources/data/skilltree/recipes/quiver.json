@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "quiver",
+  "key": {
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "ls",
+    "ls",
+    "ls"
+  ],
+  "result": {
+    "item": "skilltree:quiver"
+  }
+}

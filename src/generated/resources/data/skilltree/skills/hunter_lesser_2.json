@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.double_loot_chance",
+      "attribute": "skilltree:double_loot_chance",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
   "position": {
-    "x": 225,
-    "y": 159
+    "x": 260,
+    "y": 179
   },
   "tree": "skilltree:tree"
 }

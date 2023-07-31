@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.block_chance_per_shield_enchantment",
+      "attribute": "skilltree:block_chance_per_shield_enchantment",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_keystone_1.png",
   "position": {
-    "x": 257,
-    "y": -230
+    "x": 292,
+    "y": -250
   },
   "tree": "skilltree:tree"
 }

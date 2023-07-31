@@ -1,7 +1,7 @@
 package daripher.skilltree.datagen;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.SkillTreeItems;
+import daripher.skilltree.init.PSTItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -14,6 +14,6 @@ public class PSTItemModelsProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		SkillTreeItems.REGISTRY.getEntries().stream().map(RegistryObject::get).forEach(this::basicItem);
+		PSTItems.REGISTRY.getEntries().stream().map(RegistryObject::get).forEach(this::basicItem);
 	}
 }

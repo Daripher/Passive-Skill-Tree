@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:player.cooked_food_damage_per_saturation",
+      "amount": 0.0025,
+      "attribute": "skilltree:cooked_food_damage_per_saturation",
       "operation": "multiply_base"
     }
   ],
@@ -14,7 +14,7 @@
   "icon_texture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
   "position": {
     "x": 18,
-    "y": -105
+    "y": -145
   },
   "tree": "skilltree:tree"
 }

@@ -1,17 +1,18 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.03,
-      "attribute": "skilltree:player.cooked_food_critical_damage_per_saturation",
+      "amount": 0.01,
+      "attribute": "skilltree:cooked_food_crit_damage_per_saturation",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/cook_offensive_crafting_keystone_1.png",
   "position": {
     "x": 81,
-    "y": -309
+    "y": -349
   },
   "tree": "skilltree:tree"
 }

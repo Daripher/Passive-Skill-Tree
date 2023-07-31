@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:experience_from_ore",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [],
+  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_crafting_notable_1.png",
+  "position": {
+    "x": 276,
+    "y": -393
+  },
+  "tree": "skilltree:tree"
+}

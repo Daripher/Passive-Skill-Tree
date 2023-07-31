@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.005,
+      "attribute": "skilltree:evasion_chance",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.5,
+      "attribute": "minecraft:generic.armor",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_subclass_2_defensive_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
+  "position": {
+    "x": -155,
+    "y": 216
+  },
+  "tree": "skilltree:tree"
+}

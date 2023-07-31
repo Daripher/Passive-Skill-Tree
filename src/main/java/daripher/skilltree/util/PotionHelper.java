@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potion;
@@ -22,9 +23,7 @@ public class PotionHelper {
 	public static boolean isHarmfulPotion(ItemStack itemStack) {
 		var effects = PotionUtils.getMobEffects(itemStack);
 		for (var effect : effects) {
-			if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
-				return true;
-			}
+			if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) return true;
 		}
 		return false;
 	}
@@ -32,9 +31,24 @@ public class PotionHelper {
 	public static boolean isBeneficialPotion(ItemStack itemStack) {
 		var effects = PotionUtils.getMobEffects(itemStack);
 		for (var effect : effects) {
-			if (effect.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
-				return true;
-			}
+			if (effect.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) return true;
+		}
+		return false;
+	}
+
+	public static boolean isPoison(ItemStack itemStack) {
+		var effects = PotionUtils.getMobEffects(itemStack);
+		for (var effect : effects) {
+			if (effect.getEffect() == MobEffects.POISON || effect.getEffect() == MobEffects.HARM) return true;
+		}
+		return false;
+	}
+
+	public static boolean isHealingPotion(ItemStack itemStack) {
+		var effects = PotionUtils.getMobEffects(itemStack);
+		for (var effect : effects) {
+			if (effect.getEffect() == MobEffects.REGENERATION || effect.getEffect() == MobEffects.HEAL
+					|| effect.getEffect() == MobEffects.HEALTH_BOOST) return true;
 		}
 		return false;
 	}

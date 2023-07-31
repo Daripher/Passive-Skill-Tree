@@ -1,14 +1,17 @@
 package daripher.skilltree.item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.util.PotionHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -32,109 +35,58 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
-	private static final String DEFENCE_BONUS_TAG = "DefenceBonus";
-	private static final String EVASION_BONUS_TAG = "EvasionBonus";
-	private static final String DAMAGE_BONUS_TAG = "DamageBonus";
-	private static final String ATTACK_SPEED_BONUS_TAG = "AttackSpeedBonus";
-	private static final String TOUGHNESS_BONUS_TAG = "ToughnessBonus";
-	private static final String DURABILITY_BONUS_TAG = "DurabilityBonus";
-	private static final String POISONS_TAG = "Poisons";
+	private static final String POISONS = "Poisons";
+	public static final String IGNITE_CHANCE = "IgniteChanceBonus";
+	public static final String DAMAGE_AGAINST_BURNING = "DamageVsBurningBonus";
+	public static final String LIFE_PER_HIT = "LifePerHitBonus";
+	public static final String ATTACK_SPEED = "AttackSpeedBonus";
+	public static final String DAMAGE = "DamageBonus";
+	public static final String CRIT_CHANCE = "CritChanceBonus";
+	public static final String DURABILITY = "DurabilityBonus";
+	public static final String MAXIMUM_LIFE = "MaximumLifeBonus";
+	public static final String CAPACITY = "CapacityBonus";
+	public static final String TOUGHNESS = "ToghnessBonus";
+	public static final String DEFENCE = "DefenceBonus";
+	public static final String MOVEMENT_SPEED = "MovementSpeedBonus";
+	public static final String STEALTH = "StealthBonus";
+	public static final String EVASION = "EvasionBonus";
+	public static final String CRIT_DAMAGE = "CritDamageBonus";
+	public static final String BLOCK_CHANCE = "BlockChanceBonus";
+	public static final String DOUBLE_LOOT = "DoubleLootBonus";
 
-	public static void setDefenceBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(DEFENCE_BONUS_TAG, bonus);
+	public static void setBonus(ItemStack itemStack, String type, double bonus) {
+		itemStack.getOrCreateTag().putDouble(type, bonus);
 	}
 
-	public static boolean hasDefenceBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(DEFENCE_BONUS_TAG);
+	public static boolean hasBonus(ItemStack itemStack, String type) {
+		return itemStack.hasTag() && itemStack.getTag().contains(type);
 	}
 
-	public static double getDefenceBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(DEFENCE_BONUS_TAG);
+	public static double getBonus(ItemStack itemStack, String type) {
+		return itemStack.getTag().getDouble(type);
 	}
 
-	public static void setEvasionBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(EVASION_BONUS_TAG, bonus);
-	}
-
-	public static boolean hasEvasionBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(EVASION_BONUS_TAG);
-	}
-
-	public static double getEvasionBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(EVASION_BONUS_TAG);
-	}
-
-	public static void setToughnessBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(TOUGHNESS_BONUS_TAG, bonus);
-	}
-
-	public static boolean hasToughnessBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(TOUGHNESS_BONUS_TAG);
-	}
-
-	public static double getToughnessBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(TOUGHNESS_BONUS_TAG);
-	}
-
-	public static void setDamageBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(DAMAGE_BONUS_TAG, bonus);
-	}
-
-	public static boolean hasDamageBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(DAMAGE_BONUS_TAG);
-	}
-
-	public static double getDamageBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(DAMAGE_BONUS_TAG);
-	}
-
-	public static void setAttackSpeedBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(ATTACK_SPEED_BONUS_TAG, bonus);
-	}
-
-	public static boolean hasAttackSpeedBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(ATTACK_SPEED_BONUS_TAG);
-	}
-
-	public static double getAttackSpeedBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(ATTACK_SPEED_BONUS_TAG);
-	}
-
-	public static void setDurabilityBonus(ItemStack itemStack, double bonus) {
-		itemStack.getOrCreateTag().putDouble(DURABILITY_BONUS_TAG, bonus);
-	}
-
-	public static boolean hasDurabilityBonus(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(DURABILITY_BONUS_TAG);
-	}
-
-	public static double getDurabilityBonus(ItemStack itemStack) {
-		return itemStack.getTag().getDouble(DURABILITY_BONUS_TAG);
-	}
-
-	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> amountModifier) {
-		var modifiers = event.getOriginalModifiers().get(attribute);
-
+	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> func) {
+		Collection<AttributeModifier> modifiers = event.getOriginalModifiers().get(attribute);
 		modifiers.forEach(modifier -> {
 			event.removeModifier(attribute, modifier);
-			modifier = new AttributeModifier(modifier.getId(), modifier.getName(), amountModifier.apply(modifier.getAmount()), modifier.getOperation());
+			modifier = new AttributeModifier(modifier.getId(), modifier.getName(), func.apply(modifier.getAmount()), modifier.getOperation());
 			event.addModifier(attribute, modifier);
 		});
 	}
 
 	public static boolean canInsertGem(ItemStack itemStack) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
-				return false;
-			}
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
 		}
-		var blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
+		List<? extends String> blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) return false;
-		var itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+		ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+		if (itemId == null) return false;
 		if (blacklist.contains(itemId.toString())) return false;
-		var itemNamespace = itemId.getNamespace();
+		String itemNamespace = itemId.getNamespace();
 		if (blacklist.contains(itemNamespace + ":*")) return false;
-		return isEquipment(itemStack);
+		return isEquipment(itemStack) && !isLeggings(itemStack) || isJewelry(itemStack);
 	}
 
 	public static boolean isPoison(ItemStack itemStack) {
@@ -152,15 +104,15 @@ public class ItemHelper {
 			var effectTag = effect.save(new CompoundTag());
 			poisonsTag.add(effectTag);
 		}
-		result.getOrCreateTag().put(POISONS_TAG, poisonsTag);
+		result.getOrCreateTag().put(POISONS, poisonsTag);
 	}
 
 	public static boolean hasPoisons(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(POISONS_TAG);
+		return itemStack.hasTag() && itemStack.getTag().contains(POISONS);
 	}
 
 	public static List<MobEffectInstance> getPoisons(ItemStack itemStack) {
-		var poisonsTag = itemStack.getTag().getList(POISONS_TAG, 10);
+		var poisonsTag = itemStack.getTag().getList(POISONS, 10);
 		var effects = new ArrayList<MobEffectInstance>();
 		for (var tag : poisonsTag) {
 			var effect = MobEffectInstance.load((CompoundTag) tag);
@@ -193,12 +145,12 @@ public class ItemHelper {
 	public static boolean isRangedWeapon(ItemStack itemStack) {
 		return isCrossbow(itemStack) || isBow(itemStack) || isTrident(itemStack);
 	}
-	
+
 	public static boolean isCrossbow(ItemStack itemStack) {
 		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_crossbow")) return true;
 		return itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS);
 	}
-	
+
 	public static boolean isBow(ItemStack itemStack) {
 		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_bow")) return true;
 		return itemStack.getItem() instanceof BowItem || itemStack.is(Tags.Items.TOOLS_BOWS);
@@ -208,12 +160,12 @@ public class ItemHelper {
 		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_single")) return true;
 		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
 	}
-	
+
 	public static boolean isAxe(ItemStack itemStack) {
 		if (itemStack.canPerformAction(ToolActions.AXE_DIG)) return true;
 		return itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES);
 	}
-	
+
 	public static boolean isSword(ItemStack itemStack) {
 		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_sword")) return true;
 		if (itemStack.canPerformAction(ToolActions.SWORD_DIG)) return true;
@@ -256,5 +208,21 @@ public class ItemHelper {
 
 	public static boolean isEquipment(ItemStack stack) {
 		return isWeapon(stack) || isArmor(stack) || isShield(stack) || isPickaxe(stack);
+	}
+
+	public static boolean isJewelry(ItemStack stack) {
+		return isRing(stack) || isNecklace(stack);
+	}
+
+	public static boolean isRing(ItemStack stack) {
+		return stack.is(PSTTags.RINGS);
+	}
+
+	public static boolean isNecklace(ItemStack stack) {
+		return stack.is(PSTTags.NECKLACES);
+	}
+
+	public static boolean isQuiver(ItemStack stack) {
+		return stack.is(PSTTags.QUIVERS);
 	}
 }

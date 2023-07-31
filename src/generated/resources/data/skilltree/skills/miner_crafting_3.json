@@ -1,22 +1,20 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:player.chance_to_find_gemstone",
+      "amount": 0.02,
+      "attribute": "skilltree:chance_to_find_gemstone",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_crafting_notable_1",
-    "skilltree:void",
-    "skilltree:alchemist_crafting_2"
+    "skilltree:miner_crafting_notable_1"
   ],
   "icon_texture": "skilltree:textures/icons/miner_crafting_1.png",
   "position": {
-    "x": -23,
-    "y": 18
+    "x": -67,
+    "y": 27
   },
   "tree": "skilltree:tree"
 }

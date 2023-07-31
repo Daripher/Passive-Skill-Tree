@@ -1,33 +1,30 @@
 package daripher.skilltree.skill;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mojang.logging.LogUtils;
-
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.entity.player.Player;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class PassiveSkill {
-	private static final Logger LOGGER = LogUtils.getLogger();
 	private final ResourceLocation id;
 	private final ResourceLocation treeId;
 	private final ResourceLocation backgroundTexture;
 	private final ResourceLocation iconTexture;
-	private @Nullable ResourceLocation connectedTreeId;
-	private @Nullable ResourceLocation gatewayId;
+	private Optional<ResourceLocation> connectedTreeId = Optional.empty();
+	private Optional<ResourceLocation> gatewayId = Optional.empty();
 	private final int buttonSize;
 	private final boolean isStartingPoint;
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
@@ -63,11 +60,15 @@ public class PassiveSkill {
 		return iconTexture;
 	}
 
-	public @Nullable ResourceLocation getConnectedTreeId() {
+	public Optional<ResourceLocation> getConnectedTreeId() {
 		return connectedTreeId;
 	}
 
-	public void setConnectedTree(ResourceLocation treeId) {
+	public void setConnectedTree(@Nullable ResourceLocation treeId) {
+		this.connectedTreeId = Optional.ofNullable(treeId);
+	}
+
+	public void setConnectedTree(Optional<ResourceLocation> treeId) {
 		this.connectedTreeId = treeId;
 	}
 
@@ -83,6 +84,10 @@ public class PassiveSkill {
 		attributeModifiers.add(Pair.of(attribute, modifier));
 	}
 
+	public void addAttributeBonus(Pair<Attribute, AttributeModifier> bonus) {
+		attributeModifiers.add(bonus);
+	}
+
 	public void connect(PassiveSkill otherSkill) {
 		connectedSkills.add(otherSkill.getId());
 	}
@@ -90,6 +95,10 @@ public class PassiveSkill {
 	public void setPosition(int x, int y) {
 		positionX = x;
 		positionY = y;
+	}
+
+	public void setPosition(Point position) {
+		setPosition(position.x, position.y);
 	}
 
 	public int getPositionX() {
@@ -104,168 +113,47 @@ public class PassiveSkill {
 		return connectedSkills;
 	}
 
-	public void setGatewayId(ResourceLocation gatewayId) {
+	public void setGatewayId(@Nullable ResourceLocation gatewayId) {
+		this.gatewayId = Optional.ofNullable(gatewayId);
+	}
+
+	public void setGatewayId(Optional<ResourceLocation> gatewayId) {
 		this.gatewayId = gatewayId;
 	}
 
-	public ResourceLocation getGatewayId() {
+	public Optional<ResourceLocation> getGatewayId() {
 		return gatewayId;
 	}
 
 	public boolean isGateway() {
-		return gatewayId != null;
+		return gatewayId.isPresent();
 	}
 
-	public JsonObject writeToJson() {
-		var jsonObject = new JsonObject();
-		jsonObject.addProperty("button_size", getButtonSize());
-		jsonObject.addProperty("tree", getTreeId().toString());
-		jsonObject.addProperty("background_texture", getBackgroundTexture().toString());
-		jsonObject.addProperty("icon_texture", getIconTexture().toString());
-
-		if (connectedTreeId != null) {
-			jsonObject.addProperty("connected_tree", getConnectedTreeId().toString());
-		}
-
-		if (isStartingPoint()) {
-			jsonObject.addProperty("starting_point", true);
-		}
-
-		if (!getAttributeModifiers().isEmpty()) {
-			var modifiersJsonArray = new JsonArray();
-			getAttributeModifiers().forEach(pair -> {
-				var attribute = pair.getLeft();
-				var modifier = pair.getRight();
-				var modifierJsonObject = new JsonObject();
-				var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-				modifierJsonObject.addProperty("attribute", attributeId);
-				modifierJsonObject.addProperty("amount", modifier.getAmount());
-				modifierJsonObject.addProperty("operation", modifier.getOperation().name().toLowerCase());
-				modifiersJsonArray.add(modifierJsonObject);
-			});
-			jsonObject.add("attribute_modifiers", modifiersJsonArray);
-		}
-
-		var positionJsonObject = new JsonObject();
-		positionJsonObject.addProperty("x", positionX);
-		positionJsonObject.addProperty("y", positionY);
-		jsonObject.add("position", positionJsonObject);
-
-		if (!getConnectedSkills().isEmpty()) {
-			var connectionsJsonArray = new JsonArray();
-			getConnectedSkills().forEach(skillId -> {
-				connectionsJsonArray.add(skillId.toString());
-			});
-			jsonObject.add("connections", connectionsJsonArray);
-		}
-
-		if (isGateway()) jsonObject.addProperty("gatewayId", getGatewayId().toString());
-		return jsonObject;
+	public void learn(ServerPlayer player, boolean restoring) {
+		getAttributeModifiers().forEach(pair -> addAttributeModifier(player, pair.getLeft(), pair.getRight(), restoring));
 	}
 
-	public static PassiveSkill loadFromJson(ResourceLocation id, JsonObject jsonObject) {
-		var buttonSize = jsonObject.get("button_size").getAsInt();
-		var treeId = new ResourceLocation(jsonObject.get("tree").getAsString());
-		var backgroundTexture = new ResourceLocation(jsonObject.get("background_texture").getAsString());
-		var iconTexture = new ResourceLocation(jsonObject.get("icon_texture").getAsString());
-		var connectedTreeId = jsonObject.has("connected_tree") ? new ResourceLocation(jsonObject.get("connected_tree").getAsString()) : null;
-		var isStartingPoint = jsonObject.has("starting_point");
-		var skill = new PassiveSkill(id, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
-		skill.connectedTreeId = connectedTreeId;
-
-		if (jsonObject.has("attribute_modifiers")) {
-			var modifiersJsonArray = jsonObject.get("attribute_modifiers").getAsJsonArray();
-			modifiersJsonArray.forEach(modifierJsonElement -> {
-				var modifierJsonObject = (JsonObject) modifierJsonElement;
-				var attributeId = new ResourceLocation(modifierJsonObject.get("attribute").getAsString());
-				var attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeId);
-				if (attribute == null) {
-					LOGGER.error("Attribute {} does not exist", attributeId);
-				}
-				var amount = modifierJsonObject.get("amount").getAsDouble();
-				var operation = Operation.valueOf(modifierJsonObject.get("operation").getAsString().toUpperCase());
-				var uniqueId = UUID.randomUUID();
-				var modifier = new AttributeModifier(uniqueId, "Passive Skill Bonus", amount, operation);
-				skill.addAttributeBonus(attribute, modifier);
-			});
+	@SuppressWarnings("deprecation")
+	public void addAttributeModifier(ServerPlayer player, Attribute attribute, AttributeModifier modifier, boolean restoring) {
+		if (attribute instanceof SlotAttributeWrapper wrapper) {
+			if (!restoring) CuriosApi.getSlotHelper().growSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
+			return;
 		}
-
-		var positionJsonObject = jsonObject.get("position").getAsJsonObject();
-		var positionX = positionJsonObject.get("x").getAsInt();
-		var positionY = positionJsonObject.get("y").getAsInt();
-		skill.setPosition(positionX, positionY);
-
-		if (jsonObject.has("connections")) {
-			var connectionsJsonArray = jsonObject.get("connections").getAsJsonArray();
-			connectionsJsonArray.forEach(connectionJsonElement -> {
-				var connectedSkillId = new ResourceLocation(connectionJsonElement.getAsString());
-				skill.connectedSkills.add(connectedSkillId);
-			});
-		}
-
-		if (jsonObject.has("gatewayId")) skill.setGatewayId(new ResourceLocation(jsonObject.get("gatewayId").getAsString()));
-		return skill;
+		AttributeInstance instance = player.getAttribute(attribute);
+		if (!instance.hasModifier(modifier)) instance.addTransientModifier(modifier);
 	}
 
-	public void writeToByteBuf(FriendlyByteBuf buf) {
-		buf.writeUtf(getId().toString());
-		buf.writeUtf(getTreeId().toString());
-		buf.writeInt(getButtonSize());
-		buf.writeUtf(getBackgroundTexture().toString());
-		buf.writeUtf(getIconTexture().toString());
-		buf.writeBoolean(isStartingPoint());
-		buf.writeInt(getPositionX());
-		buf.writeInt(getPositionY());
-		buf.writeInt(getConnectedSkills().size());
-		getConnectedSkills().forEach(skillId -> buf.writeUtf(skillId.toString()));
-		buf.writeBoolean(getConnectedTreeId() != null);
-		if (connectedTreeId != null) buf.writeUtf(getConnectedTreeId().toString());
-		buf.writeInt(getAttributeModifiers().size());
-		getAttributeModifiers().forEach(pair -> {
-			var attribute = pair.getLeft();
-			var attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-			buf.writeUtf(attributeId);
-			var modifier = pair.getRight();
-			var amount = modifier.getAmount();
-			var operation = modifier.getOperation();
-			buf.writeDouble(amount);
-			buf.writeInt(operation.ordinal());
-		});
-		buf.writeBoolean(isGateway());
-		if (isGateway()) buf.writeUtf(getGatewayId().toString());
+	public void remove(ServerPlayer player) {
+		getAttributeModifiers().forEach(pair -> removeAttributeModifier(player, pair.getLeft(), pair.getRight()));
 	}
 
-	public static PassiveSkill loadFromByteBuf(FriendlyByteBuf buf) {
-		var skillId = new ResourceLocation(buf.readUtf());
-		var treeId = new ResourceLocation(buf.readUtf());
-		var buttonSize = buf.readInt();
-		var backgroundTexture = new ResourceLocation(buf.readUtf());
-		var iconTexture = new ResourceLocation(buf.readUtf());
-		var isStartingPoint = buf.readBoolean();
-		var positionX = buf.readInt();
-		var positionY = buf.readInt();
-		var skill = new PassiveSkill(skillId, treeId, buttonSize, backgroundTexture, iconTexture, isStartingPoint);
-		skill.setPosition(positionX, positionY);
-		var connectionsCount = buf.readInt();
-		for (var i = 0; i < connectionsCount; i++) {
-			var connectedSkillId = new ResourceLocation(buf.readUtf());
-			skill.connectedSkills.add(connectedSkillId);
+	@SuppressWarnings("deprecation")
+	public void removeAttributeModifier(Player player, Attribute attribute, AttributeModifier modifier) {
+		if (attribute instanceof SlotAttributeWrapper wrapper) {
+			CuriosApi.getSlotHelper().shrinkSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
+			return;
 		}
-		var hasConnectedTreeId = buf.readBoolean();
-		if (hasConnectedTreeId) {
-			var connectedTreeId = new ResourceLocation(buf.readUtf());
-			skill.connectedTreeId = connectedTreeId;
-		}
-		var attributeModifiersCount = buf.readInt();
-		for (var i = 0; i < attributeModifiersCount; i++) {
-			var attributeId = buf.readUtf();
-			var attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-			var amount = buf.readDouble();
-			var operation = Operation.values()[buf.readInt()];
-			skill.addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
-		}
-		boolean isGateway = buf.readBoolean();
-		if (isGateway) skill.setGatewayId(new ResourceLocation(buf.readUtf()));
-		return skill;
+		AttributeInstance instance = player.getAttribute(attribute);
+		if (instance.hasModifier(modifier)) instance.removeModifier(modifier);
 	}
 }

@@ -14,9 +14,9 @@ public enum AppleSkinCompatibility {
 
 	private void adjustFoodValues(FoodValuesEvent event) {
 		if (!FoodHelper.hasRestorationBonus(event.itemStack)) return;
-		var restorationBonus = FoodHelper.getRestorationBonus(event.itemStack);
-		var modifiedHunger = (int) (event.modifiedFoodValues.hunger * (1 + restorationBonus));
-		var modifiedSaturation = event.modifiedFoodValues.saturationModifier / (1 + restorationBonus);
-		event.modifiedFoodValues = new FoodValues(modifiedHunger, modifiedSaturation);
+		float restorationBonus = FoodHelper.getRestorationBonus(event.itemStack);
+		int hunger = (int) (event.modifiedFoodValues.hunger * (1 + restorationBonus));
+		float saturation = event.modifiedFoodValues.saturationModifier / (1 + restorationBonus);
+		event.modifiedFoodValues = new FoodValues(hunger, saturation);
 	}
 }

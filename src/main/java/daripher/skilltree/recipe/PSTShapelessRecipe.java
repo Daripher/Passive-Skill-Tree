@@ -2,8 +2,8 @@ package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
 
-import daripher.skilltree.api.PSTRecipe;
-import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.api.SkillRequiringRecipe;
+import daripher.skilltree.init.PSTRecipeSerializers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 
-public class PSTShapelessRecipe extends ShapelessRecipe implements PSTRecipe {
+public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequiringRecipe {
 	private final ResourceLocation requiredSkillId;
 
 	public PSTShapelessRecipe(ShapelessRecipe recipe, ResourceLocation requiredSkillId) {
@@ -35,7 +35,7 @@ public class PSTShapelessRecipe extends ShapelessRecipe implements PSTRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SkillTreeRecipeSerializers.SHAPELESS_CRAFTING.get();
+		return PSTRecipeSerializers.SHAPELESS_CRAFTING.get();
 	}
 
 	@Override

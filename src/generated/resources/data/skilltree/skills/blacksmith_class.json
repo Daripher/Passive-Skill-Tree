@@ -2,11 +2,11 @@
   "attribute_modifiers": [
     {
       "amount": 0.25,
-      "attribute": "skilltree:player.crafted_equipment_durability",
+      "attribute": "skilltree:crafted_equipment_durability",
       "operation": "multiply_base"
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "background_texture": "skilltree:textures/icons/background/class.png",
   "button_size": 24,
   "connections": [
     "skilltree:blacksmith_defensive_1",
@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_class.png",
   "position": {
-    "x": -109,
-    "y": -68
+    "x": -144,
+    "y": -88
   },
   "starting_point": true,
   "tree": "skilltree:tree"

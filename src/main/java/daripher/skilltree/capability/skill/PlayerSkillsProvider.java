@@ -7,7 +7,6 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncSkillsMessage;
-import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,25 +32,23 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
 	private static final ResourceLocation CAPABILITY_ID = new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
-	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+	private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 	private LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(() -> new PlayerSkills());
 
 	@SubscribeEvent
 	public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof Player) {
-			var capabilityProvider = new PlayerSkillsProvider();
-			event.addCapability(CAPABILITY_ID, capabilityProvider);
-		}
+		if (!(event.getObject() instanceof Player)) return;
+		PlayerSkillsProvider provider = new PlayerSkillsProvider();
+		event.addCapability(CAPABILITY_ID, provider);
 	}
 
 	@SubscribeEvent
 	public static void persistThroughDeath(PlayerEvent.Clone event) {
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
+		if (event.getEntity().level.isClientSide) return;
 		event.getOriginal().reviveCaps();
-		var originalData = get(event.getOriginal());
-		var cloneData = get(event.getEntity());
+		IPlayerSkills originalData = get(event.getOriginal());
+		IPlayerSkills cloneData = get(event.getEntity());
 		cloneData.deserializeNBT(originalData.serializeNBT());
 		event.getOriginal().invalidateCaps();
 	}
@@ -65,47 +62,24 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
-		if (!(event.getEntity() instanceof Player)) {
-			return;
-		}
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
-		var player = (Player) event.getEntity();
-		get(player).getPlayerSkills().stream().map(PassiveSkill::getAttributeModifiers).forEach(attributeAndModifierList -> {
-			attributeAndModifierList.forEach(attributeAndModifier -> {
-				var attribute = attributeAndModifier.getLeft();
-				var modifier = attributeAndModifier.getRight();
-				var playerAttribute = player.getAttribute(attribute);
-				if (!playerAttribute.hasModifier(modifier)) {
-					playerAttribute.addTransientModifier(modifier);
-				}
-			});
-		});
+		if (!(event.getEntity() instanceof ServerPlayer player)) return;
+		get(player).getPlayerSkills().forEach(skill -> skill.learn(player, true));
 	}
 
 	@SubscribeEvent
 	public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
-		if (event.getEntity().level.isClientSide) {
-			return;
-		}
-		if (!(event.getEntity() instanceof Player)) {
-			return;
-		}
-		var player = (Player) event.getEntity();
-		var skillsCapability = PlayerSkillsProvider.get(player);
-		if (skillsCapability.isTreeReset()) {
+		if (!(event.getEntity() instanceof Player player)) return;
+		if (event.getEntity().level.isClientSide) return;
+		IPlayerSkills capability = get(player);
+		if (capability.isTreeReset()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
-			skillsCapability.setTreeReset(false);
+			capability.setTreeReset(false);
 		}
 	}
 
 	@SubscribeEvent
 	public static void syncPlayerSkills(EntityJoinLevelEvent event) {
-		if (!(event.getEntity() instanceof ServerPlayer)) {
-			return;
-		}
-		var player = (ServerPlayer) event.getEntity();
+		if (!(event.getEntity() instanceof ServerPlayer player)) return;
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 	}
 

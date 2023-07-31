@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "toxic_quiver",
+  "key": {
+    "#": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#ls",
+    "#ls",
+    "#ls"
+  ],
+  "result": {
+    "item": "skilltree:toxic_quiver"
+  }
+}

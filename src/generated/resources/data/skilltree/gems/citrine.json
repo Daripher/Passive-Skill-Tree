@@ -6,18 +6,18 @@
       "gem_class": {
         "key": "anything",
         "types": [
-          "heavy_weapon",
-          "trident",
-          "crossbow",
-          "chestplate",
           "pickaxe",
-          "shield",
-          "leggings",
-          "boots",
-          "sword",
-          "shovel",
+          "chestplate",
+          "crossbow",
+          "trident",
+          "heavy_weapon",
+          "helmet",
           "bow",
-          "helmet"
+          "shovel",
+          "sword",
+          "boots",
+          "leggings",
+          "shield"
         ]
       },
       "operation": "addition",

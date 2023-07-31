@@ -12,6 +12,5 @@ public class PSTBlockTagsProvider extends BlockTagsProvider {
 
 	@Override
 	protected void addTags() {
-
 	}
 }

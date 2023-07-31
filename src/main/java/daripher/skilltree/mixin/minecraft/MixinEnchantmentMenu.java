@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.api.PSTEnchantmentMenu;
+import daripher.skilltree.api.EnchantmentMenuExtention;
 import daripher.skilltree.enchantment.EnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 
 @Mixin(EnchantmentMenu.class)
-public abstract class MixinEnchantmentMenu implements PlayerContainer, PSTEnchantmentMenu {
+public abstract class MixinEnchantmentMenu implements PlayerContainer, EnchantmentMenuExtention {
 	private @Shadow @Final DataSlot enchantmentSeed;
 	public @Shadow @Final int[] costs;
 	private Player player;
@@ -42,7 +42,7 @@ public abstract class MixinEnchantmentMenu implements PlayerContainer, PSTEnchan
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
 		int levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		costsBeforeReduction[slot] = levelRequirement;
-		int reducedRequirement = EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
+		int reducedRequirement = EnchantmentHelper.adjustLevelRequirement(levelRequirement, player);
 		return reducedRequirement;
 	}
 

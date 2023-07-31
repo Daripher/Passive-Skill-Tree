@@ -2,16 +2,16 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.life_per_hit",
+      "attribute": "skilltree:life_per_hit",
       "gem_class": {
         "key": "any_weapon",
         "types": [
-          "sword",
           "shovel",
-          "bow",
-          "pickaxe",
+          "sword",
+          "trident",
           "heavy_weapon",
-          "trident"
+          "pickaxe",
+          "bow"
         ]
       },
       "operation": "addition",
@@ -45,7 +45,7 @@
     },
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.life_on_block",
+      "attribute": "skilltree:life_on_block",
       "gem_class": {
         "key": "shield",
         "types": [

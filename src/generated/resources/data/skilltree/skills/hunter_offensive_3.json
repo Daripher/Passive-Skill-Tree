@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.projectile_damage",
+      "attribute": "skilltree:projectile_damage",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_1.png",
   "position": {
-    "x": 130,
-    "y": 120
+    "x": 165,
+    "y": 140
   },
   "tree": "skilltree:tree"
 }

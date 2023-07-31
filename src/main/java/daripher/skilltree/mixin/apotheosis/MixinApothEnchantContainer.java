@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.api.PSTEnchantmentMenu;
+import daripher.skilltree.api.EnchantmentMenuExtention;
 import daripher.skilltree.enchantment.EnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -26,10 +26,10 @@ public class MixinApothEnchantContainer {
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
 		int[] costs = ((EnchantmentMenu) (Object) this).costs;
 		int levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
-		int[] costsBeforeReduction = ((PSTEnchantmentMenu) (Object) this).getCostsBeforeReduction();
+		int[] costsBeforeReduction = ((EnchantmentMenuExtention) (Object) this).getCostsBeforeReduction();
 		costsBeforeReduction[slot] = levelRequirement;
 		Player player = ((PlayerContainer) (Object) this).getPlayer().orElseThrow(NullPointerException::new);
-		int reducedRequirement = EnchantmentHelper.reduceLevelRequirement(levelRequirement, player);
+		int reducedRequirement = EnchantmentHelper.adjustLevelRequirement(levelRequirement, player);
 		return reducedRequirement;
 	}
 
@@ -46,7 +46,7 @@ public class MixinApothEnchantContainer {
 	}
 
 	protected List<EnchantmentInstance> amplifyEnchantments(ItemStack itemStack, int slot) {
-		var enchantmentMenu = (PSTEnchantmentMenu) (Object) this;
+		var enchantmentMenu = (EnchantmentMenuExtention) (Object) this;
 		int[] costsBeforeReduction = enchantmentMenu.getCostsBeforeReduction();
 		List<EnchantmentInstance> enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		int enchantmentSeed = enchantmentMenu.getEnchantmentSeed();

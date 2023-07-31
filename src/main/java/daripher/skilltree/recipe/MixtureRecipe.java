@@ -3,8 +3,8 @@ package daripher.skilltree.recipe;
 import com.google.gson.JsonObject;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.init.SkillTreeAttributes;
-import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.init.PSTAttributes;
+import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.util.PotionHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +27,7 @@ public class MixtureRecipe extends CustomRecipe {
 			return false;
 		}
 		var player = playerContainer.getPlayer().get();
-		var canMixPotions = player.getAttributeValue(SkillTreeAttributes.CAN_MIX_POTIONS.get()) >= 1;
+		var canMixPotions = player.getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
 		if (!canMixPotions) {
 			return false;
 		}
@@ -82,7 +82,7 @@ public class MixtureRecipe extends CustomRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SkillTreeRecipeSerializers.POTION_MIXING.get();
+		return PSTRecipeSerializers.POTION_MIXING.get();
 	}
 
 	public static class Serializer implements RecipeSerializer<MixtureRecipe> {

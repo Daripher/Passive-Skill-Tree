@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 10.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": "addition"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:incoming_healing",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:alchemist_subclass_2_life_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_mastery.png",
+  "position": {
+    "x": 133,
+    "y": 440
+  },
+  "tree": "skilltree:tree"
+}

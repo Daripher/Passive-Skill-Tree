@@ -2,8 +2,8 @@ package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
 
-import daripher.skilltree.api.PSTRecipe;
-import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.api.SkillRequiringRecipe;
+import daripher.skilltree.init.PSTRecipeSerializers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 
-public class PSTShapedRecipe extends ShapedRecipe implements PSTRecipe {
+public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecipe {
 	private final ResourceLocation requiredSkillId;
 
 	public PSTShapedRecipe(ShapedRecipe recipe, ResourceLocation requiredSkillId) {
@@ -35,7 +35,7 @@ public class PSTShapedRecipe extends ShapedRecipe implements PSTRecipe {
 	
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SkillTreeRecipeSerializers.SHAPED_CRAFTING.get();
+		return PSTRecipeSerializers.SHAPED_CRAFTING.get();
 	}
 
 	@Override
@@ -47,7 +47,6 @@ public class PSTShapedRecipe extends ShapedRecipe implements PSTRecipe {
 		public PSTShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromJson(id, json);
 			var requiredSkillId = new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
-			System.out.println("!!!!!!!!!!!!!!!!!!!!");
 			return new PSTShapedRecipe(recipe, requiredSkillId);
 		}
 

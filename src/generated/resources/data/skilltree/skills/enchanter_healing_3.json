@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.25,
+      "attribute": "skilltree:life_on_block",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_healing_2",
+    "skilltree:enchanter_healing_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_healing_1.png",
+  "position": {
+    "x": 75,
+    "y": -152
+  },
+  "tree": "skilltree:tree"
+}

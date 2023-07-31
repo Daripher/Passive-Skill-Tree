@@ -1,0 +1,26 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "minecraft:generic.attack_speed",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.1,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/class.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:miner_subclass_1_offensive_1",
+    "skilltree:miner_subclass_1_crafting_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_subclass_1.png",
+  "position": {
+    "x": -358,
+    "y": 20
+  },
+  "tree": "skilltree:tree"
+}

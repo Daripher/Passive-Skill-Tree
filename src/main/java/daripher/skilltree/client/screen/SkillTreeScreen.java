@@ -85,6 +85,10 @@ public class SkillTreeScreen extends Screen {
 		addRenderableWidget(progressBar);
 		buySkillButton = new SkillTreeButton(width / 2 - 145, height - 18, 140, 14, Component.translatable("widget.buy_skill_button"), b -> buySkill());
 		addRenderableWidget(buySkillButton);
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) {
+			progressBar.visible = false;
+			buySkillButton.visible = false;
+		}
 	}
 
 	@Override
@@ -102,12 +106,18 @@ public class SkillTreeScreen extends Screen {
 		poseStack.popPose();
 		renderOverlay(poseStack, mouseX, mouseY, partialTick);
 		progressBar.render(poseStack, mouseX, mouseY, partialTick);
-		prepareTextureRendering(WIDGETS_TEXTURE);
-		blit(poseStack, width / 2 + 5, height - 18, 0, 10, 140, 14);
-		MutableComponent pointsLeft = Component.literal("" + skillPoints).withStyle(EXPERIENCE_COLOR);
-		drawCenteredString(poseStack, font, Component.translatable("widget.skill_points_left", pointsLeft), width / 2 + 75, height - 15, 0xFFFFFF);
+		renderPointsInfo(poseStack);
 		buySkillButton.render(poseStack, mouseX, mouseY, partialTick);
 		getChildAt(mouseX, mouseY).filter(SkillButton.class::isInstance).map(SkillButton.class::cast).ifPresent(button -> renderButtonTooltip(button, poseStack, mouseX, mouseY));
+	}
+
+	public void renderPointsInfo(PoseStack poseStack) {
+		prepareTextureRendering(WIDGETS_TEXTURE);
+		int x = width / 2 + 5;
+		if (!Config.COMMON_CONFIG.experienceGainEnabled()) x = width / 2 - 70;
+		blit(poseStack, x, height - 18, 0, 10, 140, 14);
+		MutableComponent pointsLeft = Component.literal("" + skillPoints).withStyle(EXPERIENCE_COLOR);
+		drawCenteredString(poseStack, font, Component.translatable("widget.skill_points_left", pointsLeft), x + 70, height - 15, 0xFFFFFF);
 	}
 
 	@Override
@@ -120,7 +130,7 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public Optional<GuiEventListener> getChildAt(double mouseX, double mouseY) {
-		var child = super.getChildAt(mouseX, mouseY);
+		Optional<GuiEventListener> child = super.getChildAt(mouseX, mouseY);
 		if (child.filter(ProgressBar.class::isInstance).isPresent()) return child;
 		return super.getChildAt(mouseX - scrollX, mouseY - scrollY);
 	}
@@ -130,8 +140,16 @@ public class SkillTreeScreen extends Screen {
 		learnedSkills = new ArrayList<>();
 		IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
 		List<PassiveSkill> skills = capability.getPlayerSkills();
-		skills.stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
-		skills.stream().filter(PassiveSkill::isGateway).map(PassiveSkill::getGatewayId).forEach(openedGateways::add);
+		// formatter:off
+		skills.stream()
+			.map(PassiveSkill::getId)
+			.forEach(learnedSkills::add);
+		skills.stream()
+			.filter(PassiveSkill::isGateway)
+			.map(PassiveSkill::getGatewayId)
+			.map(Optional::get)
+			.forEach(openedGateways::add);
+		// formatter:on
 		skillPoints = capability.getSkillPoints();
 	}
 
@@ -154,7 +172,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected boolean isSkillLearned(PassiveSkill skill) {
-		if (skill.isGateway() && openedGateways.contains(skill.getGatewayId())) return true;
+		if (skill.isGateway() && openedGateways.contains(skill.getGatewayId().get())) return true;
 		return learnedSkills.contains(skill.getId());
 	}
 
@@ -165,7 +183,7 @@ public class SkillTreeScreen extends Screen {
 		skills.forEach(this::addSkillConnection);
 		Map<ResourceLocation, List<PassiveSkill>> gateways = new HashMap<ResourceLocation, List<PassiveSkill>>();
 		skills.values().stream().filter(PassiveSkill::isGateway).forEach(skill -> {
-			ResourceLocation gatewayId = skill.getGatewayId();
+			ResourceLocation gatewayId = skill.getGatewayId().get();
 			if (!gateways.containsKey(gatewayId)) gateways.put(gatewayId, new ArrayList<>());
 			gateways.get(gatewayId).add(skill);
 		});
@@ -253,17 +271,16 @@ public class SkillTreeScreen extends Screen {
 			learnSkill(button.skill);
 			return;
 		}
-		var connectedTreeId = button.skill.getConnectedTreeId();
-		if (connectedTreeId != null) {
-			var connectedTreeScreen = new SkillTreeScreen(connectedTreeId);
-			minecraft.setScreen(connectedTreeScreen);
+		Optional<ResourceLocation> connectedTree = button.skill.getConnectedTreeId();
+		if (connectedTree.isPresent()) {
+			minecraft.setScreen(new SkillTreeScreen(connectedTree.get()));
 		}
 	}
 
 	protected void learnSkill(PassiveSkill skill) {
 		skillPoints--;
 		learnedSkills.add(skill.getId());
-		if (skill.isGateway()) openedGateways.add(skill.getGatewayId());
+		if (skill.isGateway()) openedGateways.add(skill.getGatewayId().get());
 		NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(skill));
 		rebuildWidgets();
 	}
@@ -345,14 +362,20 @@ public class SkillTreeScreen extends Screen {
 		SkillButton button1 = connection.getLeft();
 		SkillButton button2 = connection.getRight();
 		Optional<GuiEventListener> hoveredWidget = getChildAt(mouseX, mouseY);
-		if (hoveredWidget.isEmpty()) return;
-		boolean hovered = hoveredWidget.get() == button1 || hoveredWidget.get() == button2;
-		if (!hovered) return;
-		if (hoveredWidget.get() == button2) {
-			SkillButton temp = button1;
-			button1 = button2;
-			button2 = temp;
+		boolean learned = learnedSkills.contains(button1.skill.getId()) || learnedSkills.contains(button2.skill.getId());
+		if (learned) {
+			if (learnedSkills.contains(button2.skill.getId())) renderGatewayConnection(poseStack, button2, button1);
+			else renderGatewayConnection(poseStack, button1, button2);
+			return;
 		}
+		boolean hovered = !hoveredWidget.isEmpty() && (hoveredWidget.get() == button1 || hoveredWidget.get() == button2);
+		if (hovered) {
+			if (hoveredWidget.get() == button2) renderGatewayConnection(poseStack, button2, button1);
+			else renderGatewayConnection(poseStack, button1, button2);
+		}
+	}
+
+	private void renderGatewayConnection(PoseStack poseStack, SkillButton button1, SkillButton button2) {
 		poseStack.pushPose();
 		int connectionX = button1.x + button1.getWidth() / 2;
 		int connectionY = button1.y + button1.getHeight() / 2;
@@ -360,7 +383,7 @@ public class SkillTreeScreen extends Screen {
 		float rotation = getAngleBetweenButtons(button1, button2);
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
 		int length = getDistanceBetweenButtons(button1, button2);
-		boolean highlighted = openedGateways.contains(button1.skill.getGatewayId());
+		boolean highlighted = openedGateways.contains(button1.skill.getGatewayId().get());
 		blit(poseStack, 0, -3, length, 6, -renderAnimation, highlighted ? 0 : 6, length, 6, 30, 12);
 		poseStack.popPose();
 	}

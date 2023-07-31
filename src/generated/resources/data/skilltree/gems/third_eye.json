@@ -2,7 +2,7 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.maximum_sockets",
+      "attribute": "skilltree:maximum_equipment_sockets",
       "gem_class": {
         "key": "helmet",
         "types": [

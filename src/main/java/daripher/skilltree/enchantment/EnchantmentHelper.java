@@ -2,7 +2,7 @@ package daripher.skilltree.enchantment;
 
 import java.util.List;
 
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.init.PSTAttributes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -43,53 +43,35 @@ public class EnchantmentHelper {
 		return amplificationChance;
 	}
 
-	public static int reduceLevelRequirement(int levelRequirement, Player player) {
-		var reduction = getLevelRequirementReduction(player);
-		if (reduction == 0) {
-			return levelRequirement;
-		}
-		return reduceRequirement(levelRequirement, reduction);
+	public static int adjustLevelRequirement(int requirement, Player player) {
+		requirement *= getLevelRequirement(player);
+		if (requirement < 1) requirement = 1;
+		return requirement;
 	}
 
-	private static int reduceRequirement(int cost, double reduction) {
-		if (cost == 0) {
-			return cost;
-		}
-		cost *= (1 - reduction);
-		if (cost < 1) {
-			cost = 1;
-		}
-		return cost;
+	private static double getLevelRequirement(Player player) {
+		double requirement = player.getAttributeValue(PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get());
+		return Math.round(requirement * 100D) / 100D;
 	}
 
-	private static double getLevelRequirementReduction(Player player) {
-		var reduction = player.getAttributeValue(SkillTreeAttributes.ENCHANTMENT_LEVEL_REQUIREMENT_REDUCTION.get()) - 1;
-		var roundReduction = Math.round(reduction * 100D) / 100D;
-		return roundReduction;
-	}
-	
 	private static double getWeaponEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_WEAPON_ENCHANTMENT.get()) - 1;
+		return player.getAttributeValue(PSTAttributes.WEAPON_ENCHANTMENT_POWER.get()) - 1;
 	}
 
 	private static double getArmorEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ARMOR_ENCHANTMENT.get()) - 1;
+		return player.getAttributeValue(PSTAttributes.ARMOR_ENCHANTMENT_POWER.get()) - 1;
 	}
 
 	private static double getBaseEnchantmentAmplificationChance(Player player) {
-		return player.getAttributeValue(SkillTreeAttributes.CHANCE_TO_APPLY_BETTER_ENCHANTMENT.get()) - 1;
+		return player.getAttributeValue(PSTAttributes.ENCHANTMENT_POWER.get()) - 1;
 	}
-	
+
 	private static boolean isWeaponEnchantment(EnchantmentCategory enchantmentCategory) {
-		return enchantmentCategory == EnchantmentCategory.WEAPON
-			|| enchantmentCategory == EnchantmentCategory.BOW
-			|| enchantmentCategory == EnchantmentCategory.CROSSBOW;
+		return enchantmentCategory == EnchantmentCategory.WEAPON || enchantmentCategory == EnchantmentCategory.BOW || enchantmentCategory == EnchantmentCategory.CROSSBOW;
 	}
 
 	private static boolean isArmorEnchantment(EnchantmentCategory enchantmentCategory) {
-		return enchantmentCategory == EnchantmentCategory.ARMOR
-			|| enchantmentCategory == EnchantmentCategory.ARMOR_FEET
-			|| enchantmentCategory == EnchantmentCategory.ARMOR_LEGS
-			|| enchantmentCategory == EnchantmentCategory.ARMOR_HEAD;
+		return enchantmentCategory == EnchantmentCategory.ARMOR || enchantmentCategory == EnchantmentCategory.ARMOR_FEET || enchantmentCategory == EnchantmentCategory.ARMOR_LEGS
+				|| enchantmentCategory == EnchantmentCategory.ARMOR_HEAD;
 	}
 }

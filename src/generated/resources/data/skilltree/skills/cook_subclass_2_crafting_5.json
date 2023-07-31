@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:experience_from_fishing",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_subclass_special"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_subclass_2_crafting_1.png",
+  "position": {
+    "x": -192,
+    "y": -393
+  },
+  "tree": "skilltree:tree"
+}

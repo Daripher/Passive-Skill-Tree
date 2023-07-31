@@ -1,12 +1,12 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.3,
-      "attribute": "skilltree:player.enchantment_level_requirement_reduction",
+      "amount": -0.3,
+      "attribute": "skilltree:enchantment_level_requirement",
       "operation": "multiply_base"
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "background_texture": "skilltree:textures/icons/background/class.png",
   "button_size": 24,
   "connections": [
     "skilltree:enchanter_defensive_1",
@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_class.png",
   "position": {
-    "x": 85,
-    "y": -68
+    "x": 120,
+    "y": -88
   },
   "starting_point": true,
   "tree": "skilltree:tree"

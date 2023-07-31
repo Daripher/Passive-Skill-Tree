@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 5.0,
+      "attribute": "skilltree:crafted_quivers_maximum_life",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [],
+  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_life_notable_1.png",
+  "position": {
+    "x": 421,
+    "y": 119
+  },
+  "tree": "skilltree:tree"
+}

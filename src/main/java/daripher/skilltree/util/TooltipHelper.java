@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import daripher.skilltree.init.PSTAttributes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -24,6 +25,10 @@ public class TooltipHelper {
 	}
 
 	public static MutableComponent getAttributeBonusTooltip(Pair<Attribute, AttributeModifier> bonus) {
+		return getAttributeBonusTooltip(bonus, true);
+	}
+
+	public static MutableComponent getAttributeBonusTooltip(Pair<Attribute, AttributeModifier> bonus, boolean format) {
 		AttributeModifier modifier = bonus.getRight();
 		if (modifier == null) return ERROR;
 		Attribute attribute = bonus.getLeft();
@@ -38,12 +43,28 @@ public class TooltipHelper {
 		}
 		if (amount < 0D) visibleAmount *= -1D;
 		String textOperation = amount > 0 ? "plus" : "take";
-		ChatFormatting style = amount > 0 ? ChatFormatting.BLUE : ChatFormatting.RED;
+		ChatFormatting style = getModifierColor(attribute, amount, format);
 		MutableComponent attributeDescription = Component.translatable(attribute.getDescriptionId());
-		if (attribute.getDescriptionId().startsWith("can_")) return attributeDescription.withStyle(style);
+		if (!isNumeric(attribute)) return attributeDescription.withStyle(style);
 		String textAmount = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
 		textOperation = "attribute.modifier." + textOperation + "." + operation.toValue();
 		return Component.translatable(textOperation, textAmount, attributeDescription).withStyle(style);
+	}
+
+	public static ChatFormatting getModifierColor(Attribute attribute, double amount, boolean format) {
+		if (format && isNegative(attribute)) {
+			return amount > 0 ? ChatFormatting.RED : ChatFormatting.BLUE;
+		} else {
+			return amount > 0 ? ChatFormatting.BLUE : ChatFormatting.RED;
+		}
+	}
+
+	private static boolean isNumeric(Attribute attribute) {
+		return attribute != PSTAttributes.CAN_MIX_POTIONS.get() && attribute != PSTAttributes.CAN_POISON_WEAPONS.get();
+	}
+
+	private static boolean isNegative(Attribute attribute) {
+		return attribute == PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get();
 	}
 
 	public static MutableComponent getAttributeBonusTooltip(String slot, Optional<Pair<Attribute, AttributeModifier>> bonus) {
@@ -51,7 +72,7 @@ public class TooltipHelper {
 	}
 
 	public static MutableComponent getAttributeBonusTooltip(String slot, Pair<Attribute, AttributeModifier> bonus) {
-		Component slotTooltip = Component.translatable("gem.slot." + slot).withStyle(ChatFormatting.GOLD);
+		Component slotTooltip = Component.translatable("gem_class." + slot).withStyle(ChatFormatting.GRAY);
 		Component bonusTooltip = getAttributeBonusTooltip(bonus);
 		return Component.empty().append(slotTooltip).append(bonusTooltip);
 	}

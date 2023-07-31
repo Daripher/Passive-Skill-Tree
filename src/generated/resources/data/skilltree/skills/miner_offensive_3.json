@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:player.damage_with_gem_in_weapon",
+      "amount": 0.05,
+      "attribute": "skilltree:damage_with_gem_in_weapon",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_offensive_1.png",
   "position": {
-    "x": -187,
-    "y": 48
+    "x": -222,
+    "y": 68
   },
   "tree": "skilltree:tree"
 }

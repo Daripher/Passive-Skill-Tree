@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 2.0,
+      "attribute": "skilltree:experience_per_hour",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/class.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:enchanter_subclass_2_crafting_1",
+    "skilltree:enchanter_subclass_2_life_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2.png",
+  "position": {
+    "x": 189,
+    "y": -298
+  },
+  "tree": "skilltree:tree"
+}

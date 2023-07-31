@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.PSTRecipe;
+import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.SkillTreeClientData;
 import daripher.skilltree.client.widget.SkillButton;
@@ -45,11 +45,11 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 	@Inject(method = "containerTick", at = @At("HEAD"))
 	private void updateSkillButton(CallbackInfo callbackInfo) {
 		RecipeBookPage recipeBookPage = ObfuscationReflectionHelper.getPrivateValue(RecipeBookComponent.class, recipeBookComponent, "f_100284_");
-		if (!(recipeBookPage.getLastClickedRecipe() instanceof PSTRecipe)) {
+		if (!(recipeBookPage.getLastClickedRecipe() instanceof SkillRequiringRecipe)) {
 			if (requiredSkillButton != null) removeWidget(requiredSkillButton);
 			return;
 		}
-		var lastClickedRecipe = (PSTRecipe) recipeBookPage.getLastClickedRecipe();
+		var lastClickedRecipe = (SkillRequiringRecipe) recipeBookPage.getLastClickedRecipe();
 		if (requiredSkillButton == null) {
 			addRequiredSkillButton(lastClickedRecipe);
 		} else if (!requiredSkillButton.skill.getId().equals(lastClickedRecipe.getRequiredSkillId())) {
@@ -73,7 +73,7 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 		}
 	}
 	
-	private void addRequiredSkillButton(PSTRecipe recipe) {
+	private void addRequiredSkillButton(SkillRequiringRecipe recipe) {
 		PassiveSkill skill = SkillTreeClientData.getSkillsForTree(new ResourceLocation(SkillTreeMod.MOD_ID, "tree")).get(recipe.getRequiredSkillId());
 		requiredSkillButton = new SkillButton(() -> 0F, leftPos + 132, topPos + 69, skill, this::buttonPressed, this::renderButtonTooltip);
 		requiredSkillButton.x -= requiredSkillButton.getWidth() / 2;

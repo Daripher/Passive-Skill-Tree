@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.2,
-      "attribute": "skilltree:player.damage_with_enchanted_weapon",
+      "attribute": "skilltree:damage_with_enchanted_weapon",
       "operation": "multiply_base"
     }
   ],
@@ -11,12 +11,12 @@
   "connections": [
     "skilltree:enchanter_offensive_4",
     "skilltree:enchanter_offensive_crafting_5",
-    "skilltree:enchanter_offensive_9"
+    "skilltree:enchanter_subclass_1_defensive_1"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_notable_1.png",
   "position": {
-    "x": 195,
-    "y": -36
+    "x": 230,
+    "y": -56
   },
   "tree": "skilltree:tree"
 }

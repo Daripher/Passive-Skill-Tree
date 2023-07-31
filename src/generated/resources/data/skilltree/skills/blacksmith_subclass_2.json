@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:chance_to_save_crafitng_materials",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/class.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:blacksmith_subclass_2_crafting_1",
+    "skilltree:blacksmith_subclass_2_life_1"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2.png",
+  "position": {
+    "x": -358,
+    "y": -44
+  },
+  "tree": "skilltree:tree"
+}

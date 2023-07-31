@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.04,
-      "attribute": "skilltree:player.crafted_ranged_weapon_attack_speed",
+      "attribute": "skilltree:crafted_ranged_weapon_attack_speed",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting_1.png",
   "position": {
-    "x": 63,
-    "y": 63
+    "x": 98,
+    "y": 83
   },
   "tree": "skilltree:tree"
 }

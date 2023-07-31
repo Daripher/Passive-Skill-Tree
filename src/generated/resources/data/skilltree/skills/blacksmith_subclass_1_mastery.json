@@ -1,0 +1,30 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.1,
+      "attribute": "skilltree:block_chance",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "minecraft:generic.armor",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:melee_damage",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:blacksmith_subclass_1_offensive_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_mastery.png",
+  "position": {
+    "x": -330,
+    "y": -365
+  },
+  "tree": "skilltree:tree"
+}

@@ -1,20 +1,20 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.life_per_hit",
+      "amount": 0.25,
+      "attribute": "skilltree:life_per_hit",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:alchemist_healing_notable_1"
+    "skilltree:alchemist_healing_3"
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_healing_1.png",
   "position": {
-    "x": 80,
-    "y": 145
+    "x": 68,
+    "y": 161
   },
   "tree": "skilltree:tree"
 }

@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.mining_speed",
+      "attribute": "skilltree:mining_speed",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_lesser_1.png",
   "position": {
-    "x": -292,
-    "y": 123
+    "x": -327,
+    "y": 143
   },
   "tree": "skilltree:tree"
 }

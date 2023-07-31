@@ -1,20 +1,20 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.life_regeneration_bonus",
+      "amount": 0.25,
+      "attribute": "skilltree:life_regeneration_bonus",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:miner_offensive_crafting_2"
+    "skilltree:miner_offensive_crafting_3"
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_healing_1.png",
   "position": {
-    "x": -131,
-    "y": -8
+    "x": -192,
+    "y": 10
   },
   "tree": "skilltree:tree"
 }

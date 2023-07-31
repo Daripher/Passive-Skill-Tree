@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.chance_to_apply_better_enchantment",
+      "attribute": "skilltree:chance_to_apply_better_enchantment",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_mastery.png",
   "position": {
-    "x": 307,
-    "y": -195
+    "x": 342,
+    "y": -215
   },
   "tree": "skilltree:tree"
 }

@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.chance_to_brew_stronger_harmful_potion",
+      "attribute": "skilltree:brewed_harmful_potions_strength",
       "operation": "multiply_base"
     }
   ],
@@ -14,7 +14,7 @@
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_crafting_1.png",
   "position": {
     "x": -101,
-    "y": 233
+    "y": 273
   },
   "tree": "skilltree:tree"
 }

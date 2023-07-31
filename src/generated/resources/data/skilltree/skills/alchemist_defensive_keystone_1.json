@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 0.02,
-      "attribute": "skilltree:player.evasion_per_potion_effect",
+      "attribute": "skilltree:evasion_per_potion_effect",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_keystone_1.png",
   "position": {
     "x": 42,
-    "y": 329
+    "y": 369
   },
   "tree": "skilltree:tree"
 }

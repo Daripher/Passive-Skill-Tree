@@ -1,17 +1,18 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.25,
-      "attribute": "skilltree:player.crit_damage_with_shield",
+      "amount": 0.3,
+      "attribute": "skilltree:crit_damage_with_shield",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/blacksmith_crit_notable_1.png",
   "position": {
-    "x": -234,
-    "y": -140
+    "x": -269,
+    "y": -160
   },
   "tree": "skilltree:tree"
 }

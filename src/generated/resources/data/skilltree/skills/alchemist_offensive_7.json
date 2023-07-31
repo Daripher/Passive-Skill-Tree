@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:player.damage_against_poisoned",
+      "amount": 0.05,
+      "attribute": "skilltree:damage_against_poisoned",
       "operation": "multiply_base"
     }
   ],
@@ -15,7 +15,7 @@
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_1.png",
   "position": {
     "x": -62,
-    "y": 277
+    "y": 317
   },
   "tree": "skilltree:tree"
 }

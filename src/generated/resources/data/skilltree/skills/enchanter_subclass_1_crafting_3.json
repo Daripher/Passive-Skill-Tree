@@ -1,0 +1,21 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:crafted_weapon_chance_to_ignite",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:enchanter_subclass_1_crafting_4",
+    "skilltree:enchanter_subclass_1_crafting_5"
+  ],
+  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
+  "position": {
+    "x": 416,
+    "y": -66
+  },
+  "tree": "skilltree:tree"
+}

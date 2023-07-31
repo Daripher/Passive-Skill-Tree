@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:melee_damage",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:block_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_subclass_1_offensive_3"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_1.png",
+  "position": {
+    "x": -264,
+    "y": -307
+  },
+  "tree": "skilltree:tree"
+}

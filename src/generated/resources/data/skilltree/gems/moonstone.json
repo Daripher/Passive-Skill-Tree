@@ -2,7 +2,7 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.mining_speed",
+      "attribute": "skilltree:mining_speed",
       "gem_class": {
         "key": "pickaxe",
         "types": [
@@ -44,11 +44,11 @@
       "gem_class": {
         "key": "other_weapon",
         "types": [
-          "shovel",
           "sword",
-          "bow",
+          "shovel",
+          "heavy_weapon",
           "trident",
-          "heavy_weapon"
+          "bow"
         ]
       },
       "operation": "multiply_base",

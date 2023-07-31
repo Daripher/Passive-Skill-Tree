@@ -2,20 +2,19 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.chance_to_apply_better_armor_enchantment",
+      "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:enchanter_defensive_notable_1",
-    "skilltree:enchanter_healing_1"
+    "skilltree:enchanter_defensive_notable_1"
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
   "position": {
-    "x": 102,
-    "y": -148
+    "x": 137,
+    "y": -168
   },
   "tree": "skilltree:tree"
 }

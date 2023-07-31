@@ -1,20 +1,20 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:player.life_on_block",
+      "amount": 0.25,
+      "attribute": "skilltree:life_on_block",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/lesser.png",
   "button_size": 16,
   "connections": [
-    "skilltree:blacksmith_offensive_crafting_2"
+    "skilltree:blacksmith_offensive_crafting_3"
   ],
   "icon_texture": "skilltree:textures/icons/cook_healing_1.png",
   "position": {
-    "x": -70,
-    "y": -115
+    "x": -116,
+    "y": -159
   },
   "tree": "skilltree:tree"
 }

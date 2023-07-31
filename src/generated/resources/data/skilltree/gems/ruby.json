@@ -2,14 +2,14 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:player.life_regeneration_bonus",
+      "attribute": "skilltree:life_regeneration_bonus",
       "gem_class": {
         "key": "any_armor",
         "types": [
-          "helmet",
-          "chestplate",
+          "boots",
           "leggings",
-          "boots"
+          "chestplate",
+          "helmet"
         ]
       },
       "operation": "addition",

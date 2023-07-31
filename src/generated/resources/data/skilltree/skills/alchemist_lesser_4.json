@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:player.brewed_potions_duration",
+      "attribute": "skilltree:brewed_potions_duration",
       "operation": "multiply_base"
     }
   ],
@@ -14,7 +14,7 @@
   "icon_texture": "skilltree:textures/icons/alchemist_lesser_1.png",
   "position": {
     "x": -36,
-    "y": 303
+    "y": 343
   },
   "tree": "skilltree:tree"
 }

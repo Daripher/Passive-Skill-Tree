@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.crafted_helmets_additional_gemstone_slots",
+      "attribute": "skilltree:crafted_helmets_sockets",
       "operation": "addition"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 291,
-    "y": 55
+    "x": 326,
+    "y": 75
   },
   "tree": "skilltree:tree"
 }

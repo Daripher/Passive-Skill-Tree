@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 1.0,
-      "attribute": "skilltree:player.maximum_life_per_gem_in_helmet",
+      "attribute": "skilltree:maximum_life_per_gem_in_helmet",
       "operation": "addition"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_life_1.png",
   "position": {
-    "x": -172,
-    "y": 120
+    "x": -207,
+    "y": 140
   },
   "tree": "skilltree:tree"
 }

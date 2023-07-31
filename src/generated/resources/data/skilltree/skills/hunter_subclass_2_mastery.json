@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.25,
+      "attribute": "skilltree:crafted_quivers_capacity",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:hunter_subclass_2_life_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_mastery.png",
+  "position": {
+    "x": 451,
+    "y": 87
+  },
+  "tree": "skilltree:tree"
+}

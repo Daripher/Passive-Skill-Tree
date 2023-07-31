@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:player.attack_speed_with_shield",
+      "amount": 0.02,
+      "attribute": "skilltree:attack_speed_with_shield",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_speed_1.png",
   "position": {
-    "x": -195,
-    "y": -149
+    "x": -230,
+    "y": -169
   },
   "tree": "skilltree:tree"
 }

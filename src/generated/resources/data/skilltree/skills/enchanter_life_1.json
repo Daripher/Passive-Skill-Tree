@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 2.0,
-      "attribute": "skilltree:player.maximum_life_with_enchanted_item",
+      "attribute": "skilltree:maximum_life_with_enchanted_item",
       "operation": "addition"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_life_1.png",
   "position": {
-    "x": 156,
-    "y": -136
+    "x": 191,
+    "y": -156
   },
   "tree": "skilltree:tree"
 }

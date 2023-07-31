@@ -27,12 +27,7 @@
         {
           "type": "minecraft:item",
           "name": "skilltree:iriscite",
-          "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "name": "skilltree:opal",
-          "weight": 3
+          "quality": 1
         },
         {
           "type": "minecraft:item",
@@ -42,6 +37,26 @@
         {
           "type": "minecraft:item",
           "name": "skilltree:adamite",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:jade",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:sapphire",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:tourmaline",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "skilltree:turquoise",
           "weight": 3
         }
       ],

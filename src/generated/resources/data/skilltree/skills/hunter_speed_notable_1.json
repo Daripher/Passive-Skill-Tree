@@ -1,17 +1,18 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:player.attack_speed_with_ranged_weapon",
+      "amount": 0.05,
+      "attribute": "skilltree:attack_speed_with_ranged_weapon",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_speed_notable_1.png",
   "position": {
-    "x": 191,
-    "y": 107
+    "x": 226,
+    "y": 127
   },
   "tree": "skilltree:tree"
 }

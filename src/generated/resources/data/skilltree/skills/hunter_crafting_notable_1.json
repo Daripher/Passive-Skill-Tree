@@ -2,16 +2,17 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.chance_to_retrieve_arrows",
+      "attribute": "skilltree:chance_to_retrieve_arrows",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/notable.png",
   "button_size": 20,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_crafting_notable_1.png",
   "position": {
-    "x": 50,
-    "y": -10
+    "x": 23,
+    "y": 7
   },
   "tree": "skilltree:tree"
 }

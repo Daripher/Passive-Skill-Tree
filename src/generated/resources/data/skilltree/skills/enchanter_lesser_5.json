@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:player.enchantment_level_requirement_reduction",
+      "amount": -0.05,
+      "attribute": "skilltree:enchantment_level_requirement",
       "operation": "multiply_base"
     }
   ],
@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_lesser_1.png",
   "position": {
-    "x": 262,
-    "y": -163
+    "x": 297,
+    "y": -183
   },
   "tree": "skilltree:tree"
 }

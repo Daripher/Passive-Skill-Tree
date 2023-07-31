@@ -1,17 +1,18 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:player.triple_loot_chance",
+      "amount": 0.15,
+      "attribute": "skilltree:triple_loot_chance",
       "operation": "multiply_base"
     }
   ],
   "background_texture": "skilltree:textures/icons/background/keystone.png",
   "button_size": 24,
+  "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
   "position": {
-    "x": 307,
-    "y": 172
+    "x": 342,
+    "y": 192
   },
   "tree": "skilltree:tree"
 }

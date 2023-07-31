@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.evasion_chance_when_wounded",
+      "attribute": "skilltree:evasion_chance_when_wounded",
       "operation": "multiply_base"
     }
   ],
@@ -11,12 +11,12 @@
   "connections": [
     "skilltree:hunter_defensive_4",
     "skilltree:hunter_defensive_crafting_5",
-    "skilltree:enchanter_offensive_9"
+    "skilltree:hunter_subclass_2_defensive_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_notable_1.png",
   "position": {
-    "x": 195,
-    "y": 16
+    "x": 230,
+    "y": 36
   },
   "tree": "skilltree:tree"
 }

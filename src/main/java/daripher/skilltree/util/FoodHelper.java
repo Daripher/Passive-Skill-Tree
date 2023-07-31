@@ -2,7 +2,7 @@ package daripher.skilltree.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.init.PSTAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -14,23 +14,23 @@ public class FoodHelper {
 	private static final String HEALING_BONUS_TAG = "HealingBonus";
 
 	public static void setCraftedFoodBonuses(@NotNull ItemStack craftedItem, Player player) {
-		var restorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_SATURATION.get()) - 1;
+		var restorationBonus = player.getAttributeValue(PSTAttributes.COOKED_FOOD_SATURATION.get()) - 1;
 		if (restorationBonus > 0) {
 			FoodHelper.setRestorationBonus(craftedItem, (float) restorationBonus);
 		}
-		var lifeRegenerationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_LIFE_REGENERATION.get());
+		var lifeRegenerationBonus = player.getAttributeValue(PSTAttributes.COOKED_FOOD_LIFE_REGENERATION.get());
 		if (lifeRegenerationBonus > 0) {
 			FoodHelper.setLifeRegenerationBonus(craftedItem, (float) lifeRegenerationBonus);
 		}
-		var damagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_DAMAGE_PER_SATURATION.get()) - 1;
+		var damagePerRestorationBonus = player.getAttributeValue(PSTAttributes.COOKED_FOOD_DAMAGE_PER_SATURATION.get()) - 1;
 		if (damagePerRestorationBonus > 0) {
 			FoodHelper.setDamageBonus(craftedItem, (float) damagePerRestorationBonus);
 		}
-		var critDamagePerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_CRITICAL_DAMAGE_PER_SATURATION.get()) - 1;
+		var critDamagePerRestorationBonus = player.getAttributeValue(PSTAttributes.COOKED_FOOD_CRIT_DAMAGE_PER_SATURATION.get()) - 1;
 		if (critDamagePerRestorationBonus > 0) {
 			FoodHelper.setCritDamageBonus(craftedItem, (float) critDamagePerRestorationBonus);
 		}
-		var healingPerRestorationBonus = player.getAttributeValue(SkillTreeAttributes.COOKED_FOOD_HEALING_PER_SATURATION.get());
+		var healingPerRestorationBonus = player.getAttributeValue(PSTAttributes.COOKED_FOOD_HEALING_PER_SATURATION.get()) - 1;
 		if (healingPerRestorationBonus > 0) {
 			FoodHelper.setHealingBonus(craftedItem, (float) healingPerRestorationBonus);
 		}

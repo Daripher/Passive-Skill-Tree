@@ -1,11 +1,34 @@
-// 1.19.2	2023-06-14T09:01:58.8594821	Item Models: skilltree
+// 1.19.2	2023-07-27T16:32:28.9382711	Item Models: skilltree
 2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/skilltree/models/item/adamite.json
 7f105626d8a7ca598d2b0804d3cf871e12ebf6c0 assets/skilltree/models/item/amnesia_scroll.json
+694e18d4621f069f97383796e09d359d6c90882f assets/skilltree/models/item/armored_quiver.json
+2f8b19d5040230bb290e93743907c9ffbc6cc590 assets/skilltree/models/item/assassin_necklace.json
+eafb7376380bf954455e3f48dc144283927edffa assets/skilltree/models/item/bone_quiver.json
 bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/skilltree/models/item/citrine.json
+4edc69c003ad38c47b6b629c466a870d7b578304 assets/skilltree/models/item/copper_nugget.json
+50c767e9f51012abb9e221a888e725a1a47b6f10 assets/skilltree/models/item/copper_ring.json
+286f13e230d4f566b65edb905b44b7e9ed9b70d7 assets/skilltree/models/item/diamond_quiver.json
+81e0d0b8a7fc28b1026ac71825dd62782734b6e7 assets/skilltree/models/item/end_quiver.json
+9279cbbb760a89d5b78ba4c769951a78591a9247 assets/skilltree/models/item/explosive_quiver.json
+73f76d224b3b05d6ce116d82c7f5ac62b46eeaf8 assets/skilltree/models/item/fiery_quiver.json
+4cfda358b0302a839ef1d7595da9fc853abafb54 assets/skilltree/models/item/gilded_quiver.json
+fe57c993da264dad1d8a535a0349c67a270c3d9a assets/skilltree/models/item/golden_ring.json
+221c8b63eafc7b3a08a0b17d4a23d0cd50787742 assets/skilltree/models/item/healer_necklace.json
+9ea64e5faf593fd5a8b478939e3c4922271e4175 assets/skilltree/models/item/healing_quiver.json
 86ee96a5bb26d9ce68126aa175e2bffbb83af78c assets/skilltree/models/item/iriscite.json
+37a30c93acfb1c167cc8ff739f02b0b2828ec27d assets/skilltree/models/item/iron_ring.json
+411d876c04e01afdfe78c3e5139a8487b7affd86 assets/skilltree/models/item/jade.json
 2d816afa64598d863ab6b342002325909f839e44 assets/skilltree/models/item/moonstone.json
 c7974f3615f8e293e5f0c38211cba136ce359e0f assets/skilltree/models/item/onyx.json
-a7e6b611fae75f1acc47517176951caee14f42b0 assets/skilltree/models/item/opal.json
+67f15c2380f71d94ea28ecb9fcfce0d30c2fc80e assets/skilltree/models/item/quiver.json
 6b8f2b2fc2aed2aac3fbb0dad4e8d74c12c6e440 assets/skilltree/models/item/ruby.json
+77a1c6940d732d374a4f713fcedb6b285c62f4fc assets/skilltree/models/item/sapphire.json
+971a90d3ce9094deee4d06329efc5472ecbaf9d1 assets/skilltree/models/item/scholar_necklace.json
+da9410245414e10f4b4f6d17fe3b90e09dcb9746 assets/skilltree/models/item/silent_quiver.json
+cf9b85863a66b03b291a26781c327637dd60051c assets/skilltree/models/item/simple_necklace.json
+c8ac59767e9fbb5a3747b75dbdd5a5a4b39acca8 assets/skilltree/models/item/tourmaline.json
+6f4f646798ae4e319607da49237454e8bc0ec065 assets/skilltree/models/item/toxic_quiver.json
+12bd2f35d928716ca2382b6f012b00345d2f751e assets/skilltree/models/item/traveler_necklace.json
+3ef865ca38e0d16e21287061c19966b85ce8358a assets/skilltree/models/item/turquoise.json
 7deb5cee57bfd4c7ea45eb2bf03046c5abef91b1 assets/skilltree/models/item/vacucite.json
 b2dda19d8e8f5cd65954cc60490f1dab8dade95a assets/skilltree/models/item/wisdom_scroll.json

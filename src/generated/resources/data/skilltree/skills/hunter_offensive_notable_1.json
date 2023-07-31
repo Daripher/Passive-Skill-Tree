@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.2,
-      "attribute": "skilltree:player.projectile_damage",
+      "amount": 0.25,
+      "attribute": "skilltree:projectile_damage",
       "operation": "multiply_base"
     }
   ],
@@ -11,12 +11,12 @@
   "connections": [
     "skilltree:hunter_offensive_4",
     "skilltree:hunter_offensive_crafting_5",
-    "skilltree:hunter_offensive_9"
+    "skilltree:hunter_subclass_1_defensive_1"
   ],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_notable_1.png",
   "position": {
-    "x": 115,
-    "y": 156
+    "x": 150,
+    "y": 176
   },
   "tree": "skilltree:tree"
 }

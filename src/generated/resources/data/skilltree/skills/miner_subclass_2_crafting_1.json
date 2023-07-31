@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:gem_power_in_jewelry",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:miner_subclass_2_crafting_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/miner_subclass_2_crafting_1.png",
+  "position": {
+    "x": -225,
+    "y": 306
+  },
+  "tree": "skilltree:tree"
+}

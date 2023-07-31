@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import com.google.common.collect.Maps;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.SkillTreeItems;
+import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.item.gem.GemItem;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +28,7 @@ public class PSTBlockLoot extends BlockLoot {
 	protected LootTable.Builder gemsLootTable() {
 		LootPool.Builder gems = LootPool.lootPool();
 		// formatter:off
-		SkillTreeItems.REGISTRY.getEntries().stream()
+		PSTItems.REGISTRY.getEntries().stream()
 			.map(RegistryObject::get)
 			.filter(GemItem.class::isInstance)
 			.map(this::gemLootItem)
@@ -39,7 +39,8 @@ public class PSTBlockLoot extends BlockLoot {
 
 	protected LootPoolSingletonContainer.Builder<?> gemLootItem(Item item) {
 		LootPoolSingletonContainer.Builder<?> lootItem = LootItem.lootTableItem(item);
-		if (item == SkillTreeItems.VACUCITE.get()) lootItem.setQuality(1);
+		if (item == PSTItems.VACUCITE.get()) lootItem.setQuality(1);
+		else if (item == PSTItems.IRISCITE.get()) lootItem.setQuality(1);
 		else lootItem.setWeight(3);
 		return lootItem;
 	}

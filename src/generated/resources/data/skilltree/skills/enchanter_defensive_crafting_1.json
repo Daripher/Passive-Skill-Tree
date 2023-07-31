@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.1,
-      "attribute": "skilltree:player.chance_to_apply_better_armor_enchantment",
+      "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
   "position": {
-    "x": 63,
-    "y": -79
+    "x": 98,
+    "y": -99
   },
   "tree": "skilltree:tree"
 }

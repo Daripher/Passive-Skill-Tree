@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.5,
+      "attribute": "skilltree:experience_from_fishing",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 0.2,
+      "attribute": "skilltree:double_fishing_loot_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:cook_subclass_2_life_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_subclass_2_mastery.png",
+  "position": {
+    "x": -157,
+    "y": -464
+  },
+  "tree": "skilltree:tree"
+}

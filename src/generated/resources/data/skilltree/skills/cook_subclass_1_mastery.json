@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.15,
+      "attribute": "skilltree:crit_chance_if_wounded",
+      "operation": "multiply_base"
+    },
+    {
+      "amount": 1.0,
+      "attribute": "skilltree:life_per_hit_if_wounded",
+      "operation": "addition"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/keystone.png",
+  "button_size": 24,
+  "connections": [
+    "skilltree:cook_subclass_1_offensive_4"
+  ],
+  "icon_texture": "skilltree:textures/icons/cook_subclass_1_mastery.png",
+  "position": {
+    "x": 133,
+    "y": -464
+  },
+  "tree": "skilltree:tree"
+}

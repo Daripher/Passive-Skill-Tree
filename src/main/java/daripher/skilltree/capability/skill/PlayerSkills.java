@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.skill.SkillsReloader;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PlayerSkills implements IPlayerSkills {
-	private static final UUID TREE_VERSION = UUID.fromString("77fee779-4042-4312-8aca-5776af55238e");
+	private static final UUID TREE_VERSION = UUID.fromString("5e2d9257-f17a-47c5-80fe-0666538d3518");
 	private List<PassiveSkill> skills = new ArrayList<>();
 	private int skillPoints;
 	private boolean treeReset;
@@ -64,16 +64,7 @@ public class PlayerSkills implements IPlayerSkills {
 	@Override
 	public void resetTree(ServerPlayer player) {
 		skillPoints += getPlayerSkills().size();
-		getPlayerSkills().forEach(skill -> {
-			skill.getAttributeModifiers().forEach(pair -> {
-				var attribute = pair.getLeft();
-				var modifier = pair.getRight();
-				var playerAttribute = player.getAttribute(attribute);
-				if (playerAttribute.hasModifier(modifier)) {
-					playerAttribute.removeModifier(modifier);
-				}
-			});
-		});
+		getPlayerSkills().forEach(skill -> skill.remove(player));
 		getPlayerSkills().clear();
 	}
 

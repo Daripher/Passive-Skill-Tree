@@ -1,9 +1,11 @@
 package daripher.skilltree.client;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.util.ByteBufHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
@@ -14,19 +16,15 @@ public class SkillTreeClientData {
 	public static void loadFromByteBuf(FriendlyByteBuf buf) {
 		ALL_ASSIVE_SKILLS.clear();
 		SKILL_TREES.clear();
-		var skillsCount = buf.readInt();
+		List<PassiveSkill> skills = ByteBufHelper.readPassiveSkills(buf);
+		skills.forEach(SkillTreeClientData::storeSkill);
+	}
 
-		for (var i = 0; i < skillsCount; i++) {
-			var passiveSkill = PassiveSkill.loadFromByteBuf(buf);
-			ALL_ASSIVE_SKILLS.put(passiveSkill.getId(), passiveSkill);
-			var skillTreeId = passiveSkill.getTreeId();
-
-			if (SKILL_TREES.get(skillTreeId) == null) {
-				SKILL_TREES.put(skillTreeId, new HashMap<>());
-			}
-
-			SKILL_TREES.get(skillTreeId).put(passiveSkill.getId(), passiveSkill);
-		}
+	private static void storeSkill(PassiveSkill skill) {
+		ALL_ASSIVE_SKILLS.put(skill.getId(), skill);
+		ResourceLocation treeId = skill.getTreeId();
+		if (SKILL_TREES.get(treeId) == null) SKILL_TREES.put(treeId, new HashMap<>());
+		SKILL_TREES.get(treeId).put(skill.getId(), skill);
 	}
 
 	public static Map<ResourceLocation, PassiveSkill> getSkillsForTree(ResourceLocation skillTreeId) {

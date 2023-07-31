@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:player.crafted_armor_defence",
+      "amount": 0.1,
+      "attribute": "skilltree:crafted_armor_defence",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
   "position": {
-    "x": -262,
-    "y": -47
+    "x": -297,
+    "y": -67
   },
   "tree": "skilltree:tree"
 }

@@ -1,0 +1,20 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.01,
+      "attribute": "skilltree:crafted_melee_weapon_crit_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/lesser.png",
+  "button_size": 16,
+  "connections": [
+    "skilltree:blacksmith_subclass_1_crafting_2"
+  ],
+  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_crafting_1.png",
+  "position": {
+    "x": -225,
+    "y": -322
+  },
+  "tree": "skilltree:tree"
+}

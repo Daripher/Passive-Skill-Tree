@@ -1,0 +1,18 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": 0.05,
+      "attribute": "skilltree:crafted_axes_crit_chance",
+      "operation": "multiply_base"
+    }
+  ],
+  "background_texture": "skilltree:textures/icons/background/notable.png",
+  "button_size": 20,
+  "connections": [],
+  "icon_texture": "skilltree:textures/icons/cook_subclass_1_crafting_notable_1.png",
+  "position": {
+    "x": 177,
+    "y": -449
+  },
+  "tree": "skilltree:tree"
+}

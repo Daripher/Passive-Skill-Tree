@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.01,
-      "attribute": "skilltree:player.block_chance",
+      "attribute": "skilltree:block_chance",
       "operation": "multiply_base"
     }
   ],
@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_1.png",
   "position": {
-    "x": 130,
-    "y": -136
+    "x": 165,
+    "y": -156
   },
   "tree": "skilltree:tree"
 }
