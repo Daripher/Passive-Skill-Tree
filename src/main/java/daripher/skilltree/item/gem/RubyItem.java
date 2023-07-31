@@ -1,23 +1,17 @@
 package daripher.skilltree.item.gem;
 
-import java.util.List;
-
-import daripher.skilltree.init.SkillTreeAttributes;
-import daripher.skilltree.util.TooltipHelper;
-import net.minecraft.network.chat.Component;
+import daripher.skilltree.init.PSTAttributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class RubyItem extends SimpleGemItem {
 	public RubyItem() {
-		super(0xFE3521);
-		setArmorBonus(SkillTreeAttributes.LIFE_REGENERATION.get(), 0.5F, Operation.ADDITION);
-		setShieldBonus(Attributes.MAX_HEALTH, 2.5F, Operation.ADDITION);
-	}
-
-	@Override
-	protected void appenBonusesTooltip(List<Component> components) {
-		components.add(TooltipHelper.getAttributeBonusTooltip("armor", getHelmetBonus()));
-		components.add(TooltipHelper.getAttributeBonusTooltip("shield", getShieldBonus()));
+		super();
+		setBonuses(Attributes.MAX_HEALTH, 2F, Operation.ADDITION, "shield");
+		setBonuses(Attributes.MAX_HEALTH, 1F, Operation.ADDITION, "chestplate");
+		setBonuses(Attributes.MAX_HEALTH, 0.5F, Operation.ADDITION, "helmet");
+		setBonuses(PSTAttributes.LIFE_PER_HIT.get(), 0.1F, Operation.ADDITION, "melee_weapon", "ranged_weapon");
+		setBonuses(PSTAttributes.LIFE_ON_BLOCK.get(), 0.1F, Operation.ADDITION, "shield");
+		setBonuses(PSTAttributes.LIFE_REGENERATION.get(), 0.1F, Operation.ADDITION, "ring", "necklace");
 	}
 }

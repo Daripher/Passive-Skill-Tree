@@ -5,11 +5,11 @@ import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.gem.GemHelper;
-import daripher.skilltree.init.SkillTreeAttributes;
-import daripher.skilltree.init.SkillTreeRecipeSerializers;
+import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.item.gem.GemHelper;
 import daripher.skilltree.item.gem.GemItem;
+import daripher.skilltree.util.PlayerHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -31,13 +31,14 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
 		}
-		if (!isBaseIngredient(container.getItem(0))) return false;
-		if (!isAdditionIngredient(container.getItem(1))) return false;
-		var gem = (GemItem) container.getItem(1).getItem();
-		var playerContainer = (PlayerContainer) container;
-		var player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
-		var gemBonus = gem.getGemBonus(player, container.getItem(0));
-		return gemBonus != null;
+		ItemStack base = container.getItem(0);
+		if (!isBaseIngredient(base)) return false;
+		ItemStack ingredient = container.getItem(1);
+		if (!isAdditionIngredient(ingredient)) return false;
+		GemItem gem = (GemItem) ingredient.getItem();
+		PlayerContainer playerContainer = (PlayerContainer) container;
+		Player player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
+		return gem.canInsertInto(player, base, getEmptySocket(base, player));
 	}
 
 	@Override
@@ -53,24 +54,11 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 		var gem = (GemItem) container.getItem(1).getItem();
 		if (!gem.canInsertInto(player, baseItem, socket)) return ItemStack.EMPTY;
 		var resultItemStack = baseItem.copy();
+		resultItemStack.setCount(1);
 		if (baseItem.getTag() != null) resultItemStack.setTag(baseItem.getTag().copy());
-		var gemPower = getPlayerGemPower(player, baseItem);
+		var gemPower = PlayerHelper.getGemPower(player, baseItem);
 		gem.insertInto(player, resultItemStack, socket, gemPower);
 		return resultItemStack;
-	}
-
-	public double getPlayerGemPower(Player player, ItemStack itemStack) {
-		var gemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER.get()) - 1;
-		var isArmor = ItemHelper.isArmor(itemStack) || ItemHelper.isShield(itemStack);
-		var isWeapon = ItemHelper.isWeapon(itemStack);
-		if (isArmor) {
-			var armorGemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
-			gemPower += armorGemPower;
-		} else if (isWeapon) {
-			var weaponGemPower = player.getAttributeValue(SkillTreeAttributes.GEM_POWER_IN_WEAPON.get()) - 1;
-			gemPower += weaponGemPower;
-		}
-		return gemPower;
 	}
 
 	public int getEmptySocket(ItemStack baseItem, Player player) {
@@ -103,7 +91,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SkillTreeRecipeSerializers.GEMSTONE_INSERTION.get();
+		return PSTRecipeSerializers.GEMSTONE_INSERTION.get();
 	}
 
 	@Override

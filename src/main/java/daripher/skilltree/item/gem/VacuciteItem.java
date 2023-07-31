@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import daripher.skilltree.gem.GemHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class VacuciteItem extends GemItem {
 	public VacuciteItem() {
-		super(0x35866E);
+		super();
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class VacuciteItem extends GemItem {
 	}
 
 	@Override
-	protected void appenBonusesTooltip(List<Component> components) {
-		var slotTooltip = Component.translatable("gem.slot.anything").withStyle(ChatFormatting.GOLD);
-		var bonusTooltip = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
-		components.add(slotTooltip.append(bonusTooltip));
+	protected void appendBonusesTooltip(List<Component> components) {
+		MutableComponent slot = Component.translatable("gem_class.anything").withStyle(ChatFormatting.GRAY);
+		MutableComponent bonus = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
+		components.add(slot.append(bonus));
 	}
 }

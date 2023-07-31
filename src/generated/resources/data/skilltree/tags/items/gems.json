@@ -5,8 +5,11 @@
     "skilltree:moonstone",
     "skilltree:vacucite",
     "skilltree:iriscite",
-    "skilltree:opal",
     "skilltree:citrine",
-    "skilltree:adamite"
+    "skilltree:adamite",
+    "skilltree:jade",
+    "skilltree:sapphire",
+    "skilltree:tourmaline",
+    "skilltree:turquoise"
   ]
 }

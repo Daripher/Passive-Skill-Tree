@@ -22,7 +22,7 @@ import java.util.Set;
 import com.mojang.serialization.JsonOps;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.SkillTreeAttributes;
+import daripher.skilltree.init.PSTAttributes;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -57,23 +57,23 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
 		AttributeBonus.initCodecs();
 		var gems = new HashMap<ResourceLocation, Gem>();
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "ruby"), createGem(
-				new AttributeBonus(ARMOR_CLASS, SkillTreeAttributes.LIFE_REGENERATION.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F)),
+				new AttributeBonus(ARMOR_CLASS, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F)),
 				new AttributeBonus(SHIELDS_CLASS, Attributes.MAX_HEALTH, Operation.ADDITION, generateBonuses(0.5F, 5, 0.5F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "onyx"), createGem(
 				new AttributeBonus(MELEE_WEAPON_CLASS, Attributes.ATTACK_DAMAGE, Operation.ADDITION, generateBonuses(0.5F, 5, 0.5F)),
 				new AttributeBonus(ARMOR_OR_SHIELD_CLASS, Attributes.ARMOR, Operation.ADDITION, generateBonuses(0.5F, 5, 0.5F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "moonstone"), createGem(
-				new AttributeBonus(PICKAXE_CLASS, SkillTreeAttributes.MINING_SPEED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.02F)),
+				new AttributeBonus(PICKAXE_CLASS, PSTAttributes.MINING_SPEED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.02F)),
 				new AttributeBonus(WEAPON_WITHOUT_PICKAXE_CLASS, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, generateBonuses(0.005F, 5, 0.01F)),
 				new AttributeBonus(BOOTS_CLASS, Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.01F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "opal"), createGem(
-				new AttributeBonus(WEAPON_CLASS, SkillTreeAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F)),
-				new AttributeBonus(SHIELDS_CLASS, SkillTreeAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F))));
+				new AttributeBonus(WEAPON_CLASS, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F)),
+				new AttributeBonus(SHIELDS_CLASS, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION, generateBonuses(0.1F, 5, 0.1F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "adamite"), createGem(
-				new AttributeBonus(WEAPON_CLASS, SkillTreeAttributes.DAMAGE_AGAINST_POISONED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.015F)),
-				new AttributeBonus(HELMET_CLASS, SkillTreeAttributes.CHANCE_TO_BREW_STRONGER_HARMFUL_POTION.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.01F))));
+				new AttributeBonus(WEAPON_CLASS, PSTAttributes.DAMAGE_AGAINST_POISONED.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.015F)),
+				new AttributeBonus(HELMET_CLASS, PSTAttributes.BREWED_HARMFUL_POTIONS_STRENGTH.get(), Operation.MULTIPLY_BASE, generateBonuses(0.01F, 5, 0.01F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "third_eye"), createGem(0, 0.4F, true,
-				new AttributeBonus(HELMET_CLASS, SkillTreeAttributes.MAXIMUM_SOCKETS.get(), Operation.ADDITION, generateBonus(LootRarity.MYTHIC, 1F, 1, 0F))));
+				new AttributeBonus(HELMET_CLASS, PSTAttributes.MAXIMUM_EQUIPMENT_SOCKETS.get(), Operation.ADDITION, generateBonus(LootRarity.MYTHIC, 1F, 1, 0F))));
 		gems.put(new ResourceLocation(SkillTreeMod.MOD_ID, "citrine"), createGem(
 				new AttributeBonus(ANITHYNG_CLASS, Attributes.LUCK, Operation.ADDITION, generateBonuses(0.1F, 5, 0.15F))));
 		return gems;
