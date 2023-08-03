@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.PSTAttributes;
-import daripher.skilltree.util.PotionHelper;
+import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;

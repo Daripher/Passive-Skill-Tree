@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.util.PotionHelper;
+import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,10 +17,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mixin(PotionItem.class)
 public class MixinPotionItem extends Item {
@@ -45,25 +43,20 @@ public class MixinPotionItem extends Item {
 		return translatedName;
 	}
 
-	protected Component getSuperiorPotionName(ItemStack itemStack) {
-		ItemStack potionStack = PotionHelper.getActualPotionStack(itemStack);
-		Component potionName = super.getName(potionStack);
+	protected Component getSuperiorPotionName(ItemStack stack) {
+		Component potionName = super.getName(stack);
 		return Component.translatable("potion.superior").append(potionName);
 	}
 
 	@Inject(method = "appendHoverText", at = @At("TAIL"))
-	public void appendAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag, CallbackInfo callbackInfo) {
+	public void addAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag, CallbackInfo callbackInfo) {
 		if (tooltipFlag != TooltipFlag.Default.ADVANCED) return;
-		appendAdvancedTooltip(itemStack, level, components);
+		addAdvancedTooltip(itemStack, level, components);
 	}
 
-	private void appendAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components) {
-		if (PotionHelper.isSuperiorPotion(itemStack)) {
-			Potion potion = PotionHelper.getActualPotion(itemStack);
-			String potionId = ForgeRegistries.POTIONS.getKey(potion).toString();
-			components.add(Component.literal(potionId).withStyle(ChatFormatting.DARK_GRAY));
-		}
+	private void addAdvancedTooltip(ItemStack itemStack, Level level, List<Component> components) {
 		if (PotionHelper.isMixture(itemStack)) {
+			// formatter:off
 			PotionUtils.getMobEffects(itemStack).stream()
 				.map(MobEffectInstance::getEffect)
 				.map(MobEffect::getDescriptionId)
@@ -71,16 +64,19 @@ public class MixinPotionItem extends Item {
 				.map(Component::literal)
 				.map(c -> c.withStyle(ChatFormatting.DARK_GRAY))
 				.forEach(components::add);
+			// formatter:on
 		}
 	}
 
 	protected String getMixtureId(ItemStack itemStack) {
 		var name = new StringBuilder(getDescriptionId() + ".mixture");
+		// formatter:off
 		PotionUtils.getMobEffects(itemStack).stream()
 			.map(MobEffectInstance::getEffect)
 			.map(MobEffect::getDescriptionId)
 			.map(id -> id.replaceAll("effect.", ""))
 			.forEach(id -> name.append("." + id));
+		// formatter:on
 		return name.toString();
 	}
 }

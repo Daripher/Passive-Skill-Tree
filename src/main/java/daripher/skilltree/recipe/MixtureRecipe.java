@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTRecipeSerializers;
-import daripher.skilltree.util.PotionHelper;
+import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;

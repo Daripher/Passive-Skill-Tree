@@ -8,7 +8,7 @@ import java.util.function.Function;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTTags;
-import daripher.skilltree.util.PotionHelper;
+import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
