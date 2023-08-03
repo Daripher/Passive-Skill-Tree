@@ -91,7 +91,7 @@ public class GemBonusHandler {
 		if (player.isCreative()) return;
 		var level = player.getLevel();
 		if (level.isClientSide) return;
-		var dropChance = Config.COMMON_CONFIG.getGemDropChance();
+		var dropChance = Config.COMMON.getGemDropChance();
 		dropChance += player.getAttributeValue(PSTAttributes.GEM_DROP_CHANCE.get()) - 1;
 		if (dropChance == 0) return;
 		var blockPos = event.getPos();

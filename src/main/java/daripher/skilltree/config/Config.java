@@ -10,35 +10,42 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig.Type;
 
 public class Config {
-	public static final CommonConfig COMMON_CONFIG;
-	public static final ForgeConfigSpec COMMON_CONFIG_SPEC;
+	public static final CommonConfig COMMON;
+	public static final ForgeConfigSpec COMMON_SPEC;
 
 	public static class CommonConfig {
 		private final ConfigValue<Integer> maximumSkillPoints;
-		private final ConfigValue<Double> gemstoneDropChance;
+		private final ConfigValue<Double> gemDropChance;
+		private final ConfigValue<Double> amnesiaScrollPenalty;
 		private final ConfigValue<Boolean> showChatMessages;
-		private final ConfigValue<Boolean> enableExperienceGain;
+		private final ConfigValue<Boolean> enableExperienceExchange;
+		private final ConfigValue<Boolean> enableAmnesiaScrollDrop;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
-		private final ConfigValue<List<? extends String>> blacklistedGemstoneContainers;
+		private final ConfigValue<List<? extends String>> blacklistedGemContainers;
 
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
 			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer i && i >= 0;
 			Predicate<Object> potentialItemId = o -> o instanceof String s && s.contains(":");
-			builder.push("Skill points");
-			maximumSkillPoints = builder.defineInRange("Maximum skill points", 50, 1, 500);
+			builder.push("Skill Points");
+			maximumSkillPoints = builder.defineInRange("Maximum skill points", 85, 1, 1000);
 			builder.comment("This list's size must be equal to maximum skill points.");
 			skillPointsCosts = builder.defineList("Levelup costs", generateDefaultPointsCosts(50), positiveOrZeroInteger);
 			builder.comment("Disabling this will remove chat messages when you gain a skill point.");
 			showChatMessages = builder.define("Show chat messages", true);
 			builder.comment("Warning: If you disable this make sure you make alternative way of getting skill points.");
-			enableExperienceGain = builder.define("Enable exprerience exchange for skill points", true);
+			enableExperienceExchange = builder.define("Enable exprerience exchange for skill points", true);
 			builder.pop();
-			builder.push("Gemstones");
-			gemstoneDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
+			builder.push("Gems");
+			gemDropChance = builder.defineInRange("Base drop chance", 0.05, 0, 1);
 			builder.comment("This is how to blacklist specific items: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
 			builder.comment("You can also blacklist whole namespace like this: [\"<mod_id>:*\"]");
 			builder.comment("You can also blacklist all items like this: [\"*:*\"]");
-			blacklistedGemstoneContainers = builder.defineList("IDs of items that shouldn't have gemstone slots", new ArrayList<String>(), potentialItemId);
+			blacklistedGemContainers = builder.defineList("IDs of items that shouldn't have sockets", new ArrayList<String>(), potentialItemId);
+			builder.pop();
+			builder.push("Amnesia Scroll");
+			builder.comment("How much levels (percentage) player lose using amnesia scroll");
+			amnesiaScrollPenalty = builder.defineInRange("Amnesia scroll penalty", 0.2D, 0D, 1D);
+			enableAmnesiaScrollDrop = builder.define("Drop amnesia scrolls from the Ender Dragon", true);
 			builder.pop();
 		}
 
@@ -58,19 +65,19 @@ public class Config {
 		}
 
 		public List<? extends String> getBlacklistedGemstoneContainers() {
-			return blacklistedGemstoneContainers.get();
+			return blacklistedGemContainers.get();
 		}
 
 		public List<? extends Integer> getSkillPointCosts() {
-			var maximumPoints = maximumSkillPoints.get();
-			if (skillPointsCosts.get().size() < maximumPoints) {
-				skillPointsCosts.set(generateDefaultPointsCosts(maximumPoints));
+			int points = maximumSkillPoints.get();
+			if (skillPointsCosts.get().size() < points) {
+				skillPointsCosts.set(generateDefaultPointsCosts(points));
 			}
 			return skillPointsCosts.get();
 		}
 
 		public double getGemDropChance() {
-			return gemstoneDropChance.get();
+			return gemDropChance.get();
 		}
 
 		public boolean shouldShowChatMessages() {
@@ -78,17 +85,25 @@ public class Config {
 		}
 
 		public boolean experienceGainEnabled() {
-			return enableExperienceGain.get();
+			return enableExperienceExchange.get();
+		}
+
+		public double getAmnesiaScrollPenalty() {
+			return amnesiaScrollPenalty.get();
+		}
+
+		public boolean shouldDropAmnesiaScrolls() {
+			return enableAmnesiaScrollDrop.get();
 		}
 	}
 
 	public static void register() {
-		ModLoadingContext.get().registerConfig(Type.COMMON, COMMON_CONFIG_SPEC);
+		ModLoadingContext.get().registerConfig(Type.COMMON, COMMON_SPEC);
 	}
 
 	static {
 		var configPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
-		COMMON_CONFIG_SPEC = configPair.getRight();
-		COMMON_CONFIG = configPair.getLeft();
+		COMMON_SPEC = configPair.getRight();
+		COMMON = configPair.getLeft();
 	}
 }

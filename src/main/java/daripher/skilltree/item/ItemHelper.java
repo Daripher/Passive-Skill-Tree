@@ -84,7 +84,7 @@ public class ItemHelper {
 	}
 
 	public static boolean hasSockets(ItemStack stack) {
-		List<? extends String> blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
+		List<? extends String> blacklist = Config.COMMON.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) return false;
 		ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
 		if (itemId == null) return false;

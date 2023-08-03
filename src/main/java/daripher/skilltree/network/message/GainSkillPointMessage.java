@@ -26,7 +26,7 @@ public class GainSkillPointMessage {
 		var learnedSkills = skillsCapability.getPlayerSkills().size();
 		var skillPoints = skillsCapability.getSkillPoints();
 		var currentLevel = learnedSkills + skillPoints;
-		var levelupCosts = Config.COMMON_CONFIG.getSkillPointCosts();
+		var levelupCosts = Config.COMMON.getSkillPointCosts();
 		if (currentLevel >= levelupCosts.size()) {
 			return;
 		}

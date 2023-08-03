@@ -274,6 +274,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTItems.BONE_QUIVER.get(), "Bone Quiver");
 		addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
 		addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
+		addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
 		// attributes
 		add(PSTAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
 		add(PSTAttributes.LIFE_PER_HIT.get(), "Life per Hit");
@@ -465,6 +466,10 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 
 	private void addTooltip(Item item, String tooltip) {
 		add(item.getDescriptionId() + ".tooltip", tooltip);
+	}
+
+	private void addWarning(Item item, String tooltip) {
+		add(item.getDescriptionId() + ".warning", tooltip);
 	}
 
 	private void add(Attribute attribute, String name) {

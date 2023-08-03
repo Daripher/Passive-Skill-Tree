@@ -255,6 +255,7 @@
   "item.skilltree.adamite": "Adamite",
   "item.skilltree.amnesia_scroll": "Amnesia Scroll",
   "item.skilltree.amnesia_scroll.tooltip": "Resets your passive skill tree",
+  "item.skilltree.amnesia_scroll.warning": "%d%% of your skill points will be lost",
   "item.skilltree.armored_quiver": "Armored Quiver",
   "item.skilltree.arsonist_necklace": "Arsonist's Necklace",
   "item.skilltree.assassin_necklace": "Assassin's Necklace",

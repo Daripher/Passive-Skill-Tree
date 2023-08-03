@@ -274,6 +274,7 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTItems.BONE_QUIVER.get(), "Костяной колчан");
 		addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
 		addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
+		addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
 		// attributes
 		add(PSTAttributes.LIFE_REGENERATION.get(), "Регенерация здоровья");
 		add(PSTAttributes.LIFE_PER_HIT.get(), "Здоровье за удар");
@@ -465,6 +466,10 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 
 	private void addTooltip(Item item, String tooltip) {
 		add(item.getDescriptionId() + ".tooltip", tooltip);
+	}
+
+	private void addWarning(Item item, String tooltip) {
+		add(item.getDescriptionId() + ".warning", tooltip);
 	}
 
 	private void add(Attribute attribute, String name) {
