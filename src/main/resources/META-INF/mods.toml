@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 	modId="skilltree"
-	version="0.4.9e"
+	version="0.5"
 	displayName="Passive Skill Tree"
 	authors="Daripher"
 	description='''Adds passive skill tree with player class system'''
@@ -21,5 +21,12 @@ license="All rights reserved"
     modId="minecraft"
     mandatory=true
     versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="BOTH"
+    
+[[dependencies.skilltree]]
+    modId="apotheosis"
+    mandatory=false
+    versionRange="[6.3.0,)"
     ordering="NONE"
     side="BOTH"
