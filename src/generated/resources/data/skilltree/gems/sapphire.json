@@ -2,7 +2,7 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_duration",
+      "attribute": "skilltree:crafted_equipment_durability",
       "gem_class": {
         "key": "ring",
         "types": [
@@ -45,7 +45,7 @@
     },
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_strength",
+      "attribute": "skilltree:chance_to_craft_tougher_armor",
       "gem_class": {
         "key": "necklace",
         "types": [

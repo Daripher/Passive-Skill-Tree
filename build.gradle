@@ -107,7 +107,7 @@ repositories {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
+	minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 	//implementation fg.deobf("curse.maven:prism-lib-638111:3993293")
 	//implementation fg.deobf("curse.maven:iceberg-520110:4300529")
@@ -124,8 +124,8 @@ dependencies {
 	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
 	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
-	implementation fg.deobf("curse.maven:apotheosis-313970:4547399")
-	implementation fg.deobf("curse.maven:placebo-283644:4546960")
+	implementation fg.deobf("curse.maven:apotheosis-313970:4657323")
+	implementation fg.deobf("curse.maven:placebo-283644:4645998")
 	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
 	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
 	implementation fg.deobf("curse.maven:bookshelf-228525:4556697")

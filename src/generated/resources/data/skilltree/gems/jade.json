@@ -2,7 +2,7 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_duration",
+      "attribute": "skilltree:double_loot_chance",
       "gem_class": {
         "key": "ring",
         "types": [
@@ -45,7 +45,7 @@
     },
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_strength",
+      "attribute": "skilltree:triple_loot_chance",
       "gem_class": {
         "key": "necklace",
         "types": [

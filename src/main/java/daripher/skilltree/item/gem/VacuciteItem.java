@@ -35,8 +35,8 @@ public class VacuciteItem extends GemItem {
 
 	@Override
 	protected void appendBonusesTooltip(List<Component> components) {
-		MutableComponent slot = Component.translatable("gem_class.anything").withStyle(ChatFormatting.GRAY);
+		MutableComponent gemClass = formatGemClass("anything").withStyle(ChatFormatting.GRAY);
 		MutableComponent bonus = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
-		components.add(slot.append(bonus));
+		components.add(gemClass.append(bonus));
 	}
 }

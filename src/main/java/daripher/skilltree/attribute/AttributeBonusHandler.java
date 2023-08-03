@@ -13,6 +13,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.EquipmentContainer;
+import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTEffects;
 import daripher.skilltree.item.ItemHelper;
@@ -619,11 +620,11 @@ public class AttributeBonusHandler {
 		}
 		if (ItemHelper.isHelmet(stack)) {
 			double helmetSockets = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_HELMETS_SOCKETS.get());
-			if (helmetSockets > 0) GemHelper.setAdditionalSocket(stack);
+			if (helmetSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
 		}
 		if (ItemHelper.isBoots(stack)) {
 			double bootsSockets = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_SOCKETS.get());
-			if (bootsSockets > 0) GemHelper.setAdditionalSocket(stack);
+			if (bootsSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
 			double bootsMovementSpeed = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get()) - 1;
 			if (bootsMovementSpeed > 0) ItemHelper.setBonus(stack, ItemHelper.MOVEMENT_SPEED, bootsMovementSpeed);
 		}
@@ -773,7 +774,7 @@ public class AttributeBonusHandler {
 			attackSpeedBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get()) - 1;
 			if (attackSpeedBonus > 0) ItemHelper.setBonus(stack, ItemHelper.ATTACK_SPEED, attackSpeedBonus);
 			int additionalSockets = (int) event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_RANGED_WEAPON_SOCKETS.get());
-			if (additionalSockets > 0) GemHelper.setAdditionalSocket(stack);
+			if (additionalSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
 		}
 		if (ItemHelper.isMeleeWeapon(stack)) {
 			double damageBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get());
@@ -1114,8 +1115,16 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void addAdditionalSocketTooltip(ItemTooltipEvent event) {
-		if (GemHelper.hasAdditionalSocket(event.getItemStack())) {
-			Component additionalSocketTooltip = Component.translatable("gem.additional_socket").withStyle(ChatFormatting.YELLOW);
+		ItemStack stack = event.getItemStack();
+		int sockets = 0;
+		if (stack.getItem() instanceof HasAdditionalSockets item) {
+			sockets += item.getAdditionalSockets();
+		}
+		if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
+			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
+		}
+		if (sockets > 0) {
+			Component additionalSocketTooltip = Component.translatable("gem.additional_socket_" + sockets).withStyle(ChatFormatting.YELLOW);
 			event.getToolTip().add(1, additionalSocketTooltip);
 		}
 	}

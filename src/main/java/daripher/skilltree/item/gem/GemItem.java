@@ -45,6 +45,10 @@ public abstract class GemItem extends Item {
 		GemHelper.insertGem(player, itemStack, this, gemSlot, gemPower);
 	}
 
+	public static MutableComponent formatGemClass(String gemClass) {
+		return Component.translatable("gem_class_format", Component.translatable("gem_class." + gemClass));
+	}
+
 	public abstract Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack);
 
 	protected abstract void appendBonusesTooltip(List<Component> components);

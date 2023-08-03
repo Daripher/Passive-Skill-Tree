@@ -27,8 +27,6 @@
   	"farmersdelight/MixinStoveBlock",
   	"farmersdelight/MixinStoveBlockEntity",
   	"apotheosis/MixinApothEnchantContainer",
-  	"apotheosis/MixinSocketHelper",
-  	"apotheosis/MixinAddSocketsRecipe",
   	"apotheosis/MixinSocketingRecipe",
   	"apotheosis/MixinAttributeBonus",
   	"apotheosis/MixinEnchantmentBonus"

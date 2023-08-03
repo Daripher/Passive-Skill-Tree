@@ -205,24 +205,25 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		addMixture("Plague", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
 		add("gem.socket", "Empty Socket");
-		add("gem.additional_socket", "• Has an additional socket");
+		add("gem.additional_socket_1", "• Has an additional socket");
 		add("gem.disabled", "Disabled with Apotheosis adventure module enabled");
-		add("gem_class.helmet", "• Helmets: ");
-		add("gem_class.chestplate", "• Chestplates: ");
-		add("gem_class.boots", "• Boots: ");
-		add("gem_class.other_armor", "• Other Armor: ");
-		add("gem_class.weapon", "• Weapons: ");
-		add("gem_class.shield", "• Shields: ");
-		add("gem_class.bow", "• Bows: ");
-		add("gem_class.melee_weapon", "• Melee Weapon: ");
-		add("gem_class.armor_and_shield", "• Armor and Shields: ");
-		add("gem_class.anything", "• Anything: ");
-		add("gem_class.armor", "• Armor: ");
-		add("gem_class.pickaxe", "• Pickaxes: ");
-		add("gem_class.ring", "• Rings: ");
-		add("gem_class.necklace", "• Necklaces: ");
-		add("gem_class.jewelry", "• Jewelry: ");
-		add("gem_class.ranged_weapon", "• Ranged Weapon: ");
+		add("gem_class_format", "• %s: ");
+		add("gem_class.helmet", "Helmets");
+		add("gem_class.chestplate", "Chestplates");
+		add("gem_class.boots", "Boots");
+		add("gem_class.other_armor", "Other Armor");
+		add("gem_class.weapon", "Weapons");
+		add("gem_class.shield", "Shields");
+		add("gem_class.bow", "Bows");
+		add("gem_class.melee_weapon", "Melee Weapon");
+		add("gem_class.armor_and_shield", "Armor and Shields");
+		add("gem_class.anything", "Anything");
+		add("gem_class.armor", "Armor");
+		add("gem_class.pickaxe", "Pickaxes");
+		add("gem_class.ring", "Rings");
+		add("gem_class.necklace", "Necklaces");
+		add("gem_class.jewelry", "Jewelry");
+		add("gem_class.ranged_weapon", "Ranged Weapon");
 		add("gem.tooltip", "• Can be inserted into items with sockets");
 		addTooltip(PSTItems.VACUCITE.get(), "Destroys gems in the item");
 		addTooltip(PSTItems.IRISCITE.get(), "Outcome unpredictable");
@@ -447,8 +448,13 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add("item.apotheosis.gem.skilltree:moonstone", "Moonstone");
 		add("item.apotheosis.gem.skilltree:opal", "Opal");
 		add("item.apotheosis.gem.skilltree:adamite", "Adamite");
-		add("item.apotheosis.gem.skilltree:third_eye", "Third Eye");
 		add("item.apotheosis.gem.skilltree:citrine", "Citrine");
+		add("item.apotheosis.gem.skilltree:jade", "Jade");
+		add("item.apotheosis.gem.skilltree:sapphire", "Sapphire");
+		add("item.apotheosis.gem.skilltree:tourmaline", "Tourmaline");
+		add("item.apotheosis.gem.skilltree:turquoise", "Turquoise");
+		add("text.apotheosis.category.ring.plural", "Rings");
+		add("text.apotheosis.category.necklace.plural", "Necklaces");
 		// jei info
 		add("skilltree.jei.gem_info",
 				"Gems can be inserted into items with sockets on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).");

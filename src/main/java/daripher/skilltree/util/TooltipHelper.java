@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 
 import daripher.skilltree.init.PSTAttributes;
+import daripher.skilltree.item.gem.GemItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -72,7 +73,7 @@ public class TooltipHelper {
 	}
 
 	public static MutableComponent getAttributeBonusTooltip(String slot, Pair<Attribute, AttributeModifier> bonus) {
-		Component slotTooltip = Component.translatable("gem_class." + slot).withStyle(ChatFormatting.GRAY);
+		Component slotTooltip = GemItem.formatGemClass(slot).withStyle(ChatFormatting.GRAY);
 		Component bonusTooltip = getAttributeBonusTooltip(bonus);
 		return Component.empty().append(slotTooltip).append(bonusTooltip);
 	}

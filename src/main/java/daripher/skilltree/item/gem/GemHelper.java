@@ -37,35 +37,35 @@ public class GemHelper {
 	protected static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMSTONES";
 	protected static final String UUID_TAG = "ID";
 
-	public static boolean hasGem(ItemStack itemStack, int gemSlot) {
+	public static boolean hasGem(ItemStack stack, int socket) {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
 		}
-		if (!itemStack.hasTag()) return false;
-		if (!itemStack.getTag().contains(GEMS_TAG)) return false;
-		var gemsTagList = getGemsListTag(itemStack);
-		if (gemsTagList.size() <= gemSlot) return false;
-		return gemsTagList.get(gemSlot) != null;
+		if (!stack.hasTag()) return false;
+		if (!stack.getTag().contains(GEMS_TAG)) return false;
+		ListTag gems = getGemsListTag(stack);
+		if (gems.size() <= socket) return false;
+		return gems.get(socket) != null;
 	}
 
-	public static void insertGem(Player player, ItemStack itemStack, GemItem gem, int gemSlot, double gemPower) {
+	public static void insertGem(Player player, ItemStack stack, GemItem gem, int socket, double power) {
 		CompoundTag gemTag = new CompoundTag();
-		ListTag gemsTagList = getGemsListTag(itemStack);
-		if (gemsTagList.size() > gemSlot) gemTag = gemsTagList.getCompound(gemSlot);
-		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = gem.getGemBonus(player, itemStack);
+		ListTag gemsTagList = getGemsListTag(stack);
+		if (gemsTagList.size() > socket) gemTag = gemsTagList.getCompound(socket);
+		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = gem.getGemBonus(player, stack);
 		if (!optionalBonus.isPresent()) {
-			LOGGER.error("Cannot insert gem into {}", itemStack.getItem());
-			LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(itemStack));
+			LOGGER.error("Cannot insert gem into {}", stack.getItem());
+			LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(stack));
 			return;
 		}
 		Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
 		gemTag.putString(GEM_TAG, ForgeRegistries.ITEMS.getKey(gem).toString());
 		gemTag.putString(ATTRIBUTE_TAG, ForgeRegistries.ATTRIBUTES.getKey(bonus.getLeft()).toString());
-		gemTag.putDouble(AMOUNT_TAG, bonus.getRight().getAmount() * (1 + gemPower));
+		gemTag.putDouble(AMOUNT_TAG, bonus.getRight().getAmount() * (1 + power));
 		gemTag.putString(OPERATION_TAG, bonus.getRight().getOperation().toString());
 		gemTag.putString(UUID_TAG, UUID.randomUUID().toString());
-		gemsTagList.add(gemSlot, gemTag);
-		itemStack.getTag().put(GEMS_TAG, gemsTagList);
+		gemsTagList.add(socket, gemTag);
+		stack.getTag().put(GEMS_TAG, gemsTagList);
 	}
 
 	public static void removeGems(ItemStack itemStack) {
@@ -101,21 +101,13 @@ public class GemHelper {
 		return Optional.of(gem);
 	}
 
-	public static void setAdditionalSocket(ItemStack itemStack) {
-		itemStack.getOrCreateTag().putBoolean(ADDITIONAL_GEMS_TAG, true);
-	}
-
-	public static boolean hasAdditionalSocket(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(ADDITIONAL_GEMS_TAG);
-	}
-
 	public static int getGemsCount(ItemStack itemStack) {
 		if (ModList.get().isLoaded("apotheosis")) {
 			return ApotheosisCompatibility.ISNTANCE.getGemsCount(itemStack);
 		}
 		if (itemStack.isEmpty()) return 0;
-		var gemsCount = 0;
-		var socket = 0;
+		int gemsCount = 0;
+		int socket = 0;
 		while (hasGem(itemStack, socket)) {
 			gemsCount++;
 			socket++;
@@ -127,9 +119,9 @@ public class GemHelper {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
 		}
-		var sockets = getMaximumSockets(itemStack, player);
-		var emptySockets = sockets;
-		for (var socket = 0; socket < sockets; socket++) {
+		int sockets = getMaximumSockets(itemStack, player);
+		int emptySockets = sockets;
+		for (int socket = 0; socket < sockets; socket++) {
 			if (hasGem(itemStack, socket)) emptySockets--;
 		}
 		return emptySockets;
@@ -140,11 +132,18 @@ public class GemHelper {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
 		}
 		int sockets = 1;
-		if (hasAdditionalSocket(stack)) sockets++;
+		if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
+			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
+		}
 		if (stack.getItem() instanceof HasAdditionalSockets) {
 			sockets += ((HasAdditionalSockets) stack.getItem()).getAdditionalSockets();
 		}
-		if (player == null) return sockets;
+		if (player != null) sockets += getPlayerSockets(stack, player);
+		return sockets;
+	}
+
+	public static int getPlayerSockets(ItemStack stack, Player player) {
+		int sockets = 0;
 		if (ItemHelper.isEquipment(stack)) {
 			sockets += (int) player.getAttributeValue(PSTAttributes.MAXIMUM_EQUIPMENT_SOCKETS.get());
 		}

@@ -2,42 +2,42 @@
   "bonuses": [
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_duration",
+      "attribute": "skilltree:cooked_food_life_regeneration",
       "gem_class": {
         "key": "ring",
         "types": [
           "ring"
         ]
       },
-      "operation": "multiply_base",
+      "operation": "addition",
       "values": {
         "ancient": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         },
         "common": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         },
         "epic": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         },
         "mythic": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         },
         "rare": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         },
         "uncommon": {
-          "min": 0.02,
+          "min": 0.1,
           "step": 0.0,
           "steps": 1
         }
@@ -45,7 +45,7 @@
     },
     {
       "type": "apotheosis:attribute",
-      "attribute": "skilltree:brewed_potions_strength",
+      "attribute": "skilltree:cooked_food_saturation",
       "gem_class": {
         "key": "necklace",
         "types": [

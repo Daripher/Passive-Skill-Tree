@@ -71,8 +71,14 @@ public abstract class SimpleGemItem extends GemItem {
 		return bonus1.getRight().getAmount() == bonus2.getRight().getAmount() && bonus1.getRight().getOperation() == bonus2.getRight().getOperation();
 	}
 
-	public List<Pair<Attribute, AttributeModifier>> getBonuses() {
+	public List<Pair<Attribute, AttributeModifier>> getBonusesList() {
 		return bonuses.values().stream().toList();
+	}
+
+	public Map<String, Pair<Attribute, AttributeModifier>> getBonuses() {
+		HashMap<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<>(this.bonuses);
+		groupBonuses(bonuses);
+		return bonuses;
 	}
 
 	protected void setBonuses(Attribute attribute, double value, Operation operation, String... slots) {

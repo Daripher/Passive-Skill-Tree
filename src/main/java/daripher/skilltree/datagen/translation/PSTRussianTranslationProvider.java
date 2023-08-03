@@ -205,24 +205,25 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		addMixture("благословения", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
 		addMixture("чумы", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
 		// gems info
-		add("gem.socket", "[Пустое гнездо]");
-		add("gem.additional_socket", "• Имеет дополнительное гнездо");
+		add("gem.socket", "Пустое гнездо");
+		add("gem.additional_socket_1", "• Имеет дополнительное гнездо");
 		add("gem.disabled", "Отключено с модулем приключений Apotheosis");
-		add("gem_class.helmet", "• Шлемы: ");
-		add("gem_class.chestplate", "• Нагрудники: ");
-		add("gem_class.boots", "• Ботинки: ");
-		add("gem_class.other_armor", "• Другая броня: ");
-		add("gem_class.weapon", "• Оружие: ");
-		add("gem_class.shield", "• Щиты: ");
-		add("gem_class.bow", "• Луки: ");
-		add("gem_class.melee_weapon", "• Оружие ближнего боя: ");
-		add("gem_class.armor_and_shield", "• Броню и щиты: ");
-		add("gem_class.anything", "• Что угодно: ");
-		add("gem_class.armor", "• Броню: ");
-		add("gem_class.pickaxe", "• Кирки: ");
-		add("gem_class.ring", "• Кольца: ");
-		add("gem_class.necklace", "• Ожерелья: ");
-		add("gem_class.jewelry", "• Бижутерию: ");
+		add("gem_class_format", "• %s: ");
+		add("gem_class.helmet", "Шлемы");
+		add("gem_class.chestplate", "Нагрудники");
+		add("gem_class.boots", "Ботинки");
+		add("gem_class.other_armor", "Другая броня");
+		add("gem_class.weapon", "Оружие");
+		add("gem_class.shield", "Щиты");
+		add("gem_class.bow", "Луки");
+		add("gem_class.melee_weapon", "Оружие ближнего боя");
+		add("gem_class.armor_and_shield", "Броню и щиты");
+		add("gem_class.anything", "Что угодно");
+		add("gem_class.armor", "Броню");
+		add("gem_class.pickaxe", "Кирки");
+		add("gem_class.ring", "Кольца");
+		add("gem_class.necklace", "Ожерелья");
+		add("gem_class.jewelry", "Бижутерию");
 		add("gem.tooltip", "• Можно вставить в предметы с гнёздами");
 		addTooltip(PSTItems.VACUCITE.get(), "Уничтожает самоцветы в предмете");
 		addTooltip(PSTItems.IRISCITE.get(), "Результат непредсказуем");
@@ -447,8 +448,13 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add("item.apotheosis.gem.skilltree:moonstone", "Лунный камень");
 		add("item.apotheosis.gem.skilltree:opal", "Опал");
 		add("item.apotheosis.gem.skilltree:adamite", "Адамит");
-		add("item.apotheosis.gem.skilltree:third_eye", "Третий Глаз");
 		add("item.apotheosis.gem.skilltree:citrine", "Цитрин");
+		add("item.apotheosis.gem.skilltree:jade", "Нефрит");
+		add("item.apotheosis.gem.skilltree:sapphire", "Сапфир");
+		add("item.apotheosis.gem.skilltree:tourmaline", "Турмалин");
+		add("item.apotheosis.gem.skilltree:turquoise", "Бирюза");
+		add("text.apotheosis.category.ring.plural", "Колца");
+		add("text.apotheosis.category.necklace.plural", "Ожерелья");
 		// jei info
 		add("skilltree.jei.gem_info",
 				"Самоцветы можно вставлять в предметы с гнёздами на кузнечном столе. Выпадают из любой руды с небольшим шансом (требуется инструмент без шёлкового касания).");

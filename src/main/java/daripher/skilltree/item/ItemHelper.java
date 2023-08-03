@@ -53,6 +53,7 @@ public class ItemHelper {
 	public static final String CRIT_DAMAGE = "CritDamageBonus";
 	public static final String BLOCK_CHANCE = "BlockChanceBonus";
 	public static final String DOUBLE_LOOT = "DoubleLootBonus";
+	public static final String ADDITIONAL_SOCKETS = "AdditionalSocksetsBonus";
 
 	public static void setBonus(ItemStack itemStack, String type, double bonus) {
 		itemStack.getOrCreateTag().putDouble(type, bonus);
@@ -75,18 +76,22 @@ public class ItemHelper {
 		});
 	}
 
-	public static boolean canInsertGem(ItemStack itemStack) {
+	public static boolean canInsertGem(ItemStack stack) {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
 		}
+		return hasSockets(stack);
+	}
+
+	public static boolean hasSockets(ItemStack stack) {
 		List<? extends String> blacklist = Config.COMMON_CONFIG.getBlacklistedGemstoneContainers();
 		if (blacklist.contains("*:*")) return false;
-		ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
+		ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
 		if (itemId == null) return false;
 		if (blacklist.contains(itemId.toString())) return false;
-		String itemNamespace = itemId.getNamespace();
-		if (blacklist.contains(itemNamespace + ":*")) return false;
-		return isEquipment(itemStack) && !isLeggings(itemStack) || isJewelry(itemStack);
+		String namespace = itemId.getNamespace();
+		if (blacklist.contains(namespace + ":*")) return false;
+		return isEquipment(stack) && !isLeggings(stack) || isJewelry(stack);
 	}
 
 	public static boolean isPoison(ItemStack itemStack) {

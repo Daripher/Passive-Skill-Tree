@@ -41,7 +41,7 @@ public class IrisciteItem extends GemItem {
 			.map(RegistryObject::get)
 			.filter(SimpleGemItem.class::isInstance)
 			.map(SimpleGemItem.class::cast)
-			.map(SimpleGemItem::getBonuses)
+			.map(SimpleGemItem::getBonusesList)
 			.forEach(SIMPLE_GEM_BONUSES::addAll);
 		// formatter:on
 	}
@@ -56,8 +56,8 @@ public class IrisciteItem extends GemItem {
 
 	@Override
 	protected void appendBonusesTooltip(List<Component> components) {
-		MutableComponent slot = Component.translatable("gem_class.jewelry").withStyle(ChatFormatting.GRAY);
+		MutableComponent gemClass = formatGemClass("jewelry").withStyle(ChatFormatting.GRAY);
 		MutableComponent bonus = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
-		components.add(slot.append(bonus));
+		components.add(gemClass.append(bonus));
 	}
 }

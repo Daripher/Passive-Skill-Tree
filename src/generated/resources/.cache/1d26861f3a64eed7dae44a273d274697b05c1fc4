@@ -1,4 +1,13 @@
-// 1.19.2	2023-07-31T15:05:09.2241367	Item Models: skilltree
+// 1.19.2	2023-08-03T14:42:40.8980978	Item Models: skilltree
+2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/apotheosis/models/item/gems/adamite.json
+bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/apotheosis/models/item/gems/citrine.json
+411d876c04e01afdfe78c3e5139a8487b7affd86 assets/apotheosis/models/item/gems/jade.json
+2d816afa64598d863ab6b342002325909f839e44 assets/apotheosis/models/item/gems/moonstone.json
+c7974f3615f8e293e5f0c38211cba136ce359e0f assets/apotheosis/models/item/gems/onyx.json
+6b8f2b2fc2aed2aac3fbb0dad4e8d74c12c6e440 assets/apotheosis/models/item/gems/ruby.json
+77a1c6940d732d374a4f713fcedb6b285c62f4fc assets/apotheosis/models/item/gems/sapphire.json
+c8ac59767e9fbb5a3747b75dbdd5a5a4b39acca8 assets/apotheosis/models/item/gems/tourmaline.json
+3ef865ca38e0d16e21287061c19966b85ce8358a assets/apotheosis/models/item/gems/turquoise.json
 2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/skilltree/models/item/adamite.json
 7f105626d8a7ca598d2b0804d3cf871e12ebf6c0 assets/skilltree/models/item/amnesia_scroll.json
 694e18d4621f069f97383796e09d359d6c90882f assets/skilltree/models/item/armored_quiver.json

@@ -1,8 +1,10 @@
-// 1.19.2	2023-07-31T15:16:02.6080532	gems generator for skilltree
-976fd470133e76a4ce79493628933caed9153b82 data/skilltree/gems/adamite.json
-dcbedb664a3aba381505f93476cf2b2abf5070b3 data/skilltree/gems/citrine.json
-f0b1c69ab3bebe117580e7675af10712e8067c40 data/skilltree/gems/moonstone.json
-414f34595e082bb5c7c4aeff854e9eb268ce4ca9 data/skilltree/gems/onyx.json
-6b87b552dedfde99de0b765ad439cd26efb4101a data/skilltree/gems/opal.json
-fbbac9ac802142ff617b1f77ca10181d87efba5e data/skilltree/gems/ruby.json
-9957ccb9a68979e007f0053dc12dd6e97b9f49fe data/skilltree/gems/third_eye.json
+// 1.19.2	2023-08-03T14:42:40.8960959	gems generator for skilltree
+52e954541d92afb89511328d43a16d4d4758430a data/skilltree/gems/adamite.json
+a649b21183e5227c471c6dd2a6f00b2b1d4a0f66 data/skilltree/gems/citrine.json
+93353f9e1f3e18fc2998bd79f83463dc416505b6 data/skilltree/gems/jade.json
+b262ecb58ef4ff69a0a5e298f285a4f29602af98 data/skilltree/gems/moonstone.json
+e5cbd98c333876103418b185f0eaac5c1dc3a8a1 data/skilltree/gems/onyx.json
+041bec078c68487e92b731d83aed33177f8460c6 data/skilltree/gems/ruby.json
+a468dfaa81f9103e1bd2c7ebf6cde7f40406ac30 data/skilltree/gems/sapphire.json
+ed4e3a2891da0974cfffb4c25f99996910219d7e data/skilltree/gems/tourmaline.json
+cc740532a93a5de71a218242067fd710c16e618c data/skilltree/gems/turquoise.json

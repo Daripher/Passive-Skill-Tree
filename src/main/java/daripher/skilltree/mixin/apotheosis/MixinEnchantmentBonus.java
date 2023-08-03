@@ -7,27 +7,25 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.EnchantmentBonus;
-import shadows.apotheosis.adventure.loot.LootRarity;
 
 @Mixin(value = EnchantmentBonus.class, remap = false)
 public class MixinEnchantmentBonus {
 	@Redirect(method = "getSocketBonusTooltip", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"))
-	private Object amplifyGemPowerVisually(Map<?, ?> values, Object rarity, ItemStack gemStack, LootRarity rarity_, int facets) {
-		int level = (int) values.get(rarity);
-		if (!gemStack.hasTag()) return level;
-		if (!gemStack.getTag().contains("gem_power")) return level;
-		float gemPower = gemStack.getTag().getFloat("gem_power");
-		return (int) (level * gemPower);
+	private Object amplifyGemPowerVisually(Map<?, ?> values, Object rarity, ItemStack gem) {
+		return getGemPower(values, rarity, gem);
 	}
-	
+
 	@Redirect(method = "getEnchantmentLevels", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"))
-	private Object amplifyGemPower(Map<?, ?> values, Object rarity, ItemStack gemStack, LootRarity rarity_, int facets, Map<Enchantment, Integer> enchantments) {
+	private Object amplifyGemPower(Map<?, ?> values, Object rarity, ItemStack gem) {
+		return getGemPower(values, rarity, gem);
+	}
+
+	private int getGemPower(Map<?, ?> values, Object rarity, ItemStack gem) {
 		int level = (int) values.get(rarity);
-		if (!gemStack.hasTag()) return level;
-		if (!gemStack.getTag().contains("gem_power")) return level;
-		float gemPower = gemStack.getTag().getFloat("gem_power");
-		return (int) (level * gemPower);
+		if (!gem.hasTag()) return level;
+		if (!gem.getTag().contains("gem_power")) return level;
+		float power = gem.getTag().getFloat("gem_power") + 1;
+		return (int) (level * power);
 	}
 }
