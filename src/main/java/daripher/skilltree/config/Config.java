@@ -17,6 +17,7 @@ public class Config {
 		private final ConfigValue<Integer> maximumSkillPoints;
 		private final ConfigValue<Double> gemDropChance;
 		private final ConfigValue<Double> amnesiaScrollPenalty;
+		private final ConfigValue<Double> grindstoneExp;
 		private final ConfigValue<Boolean> showChatMessages;
 		private final ConfigValue<Boolean> enableExperienceExchange;
 		private final ConfigValue<Boolean> enableAmnesiaScrollDrop;
@@ -46,6 +47,9 @@ public class Config {
 			builder.comment("How much levels (percentage) player lose using amnesia scroll");
 			amnesiaScrollPenalty = builder.defineInRange("Amnesia scroll penalty", 0.2D, 0D, 1D);
 			enableAmnesiaScrollDrop = builder.define("Drop amnesia scrolls from the Ender Dragon", true);
+			builder.pop();
+			builder.push("Experience");
+			grindstoneExp = builder.defineInRange("Grindstone experience multiplier", 0.1D, 0D, 1D);
 			builder.pop();
 		}
 
@@ -94,6 +98,10 @@ public class Config {
 
 		public boolean shouldDropAmnesiaScrolls() {
 			return enableAmnesiaScrollDrop.get();
+		}
+
+		public double getGrindstoneExpMuliplier() {
+			return grindstoneExp.get();
 		}
 	}
 
