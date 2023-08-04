@@ -22,6 +22,7 @@
   	"minecraft/MixinAbstractArrow",
   	"minecraft/MixinFishingHook",
   	"minecraft/MixinPotionUtils",
+  	"minecraft/MixinAnvilMenu",
   	"easymagic/MixinModEnchantmentMenu",
   	"farmersdelight/MixinCookingPotBlockEntity",
   	"farmersdelight/MixinStoveBlock",
