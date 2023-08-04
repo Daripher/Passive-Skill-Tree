@@ -14,6 +14,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.EquipmentContainer;
 import daripher.skilltree.api.HasAdditionalSockets;
+import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTEffects;
 import daripher.skilltree.item.ItemHelper;
@@ -57,6 +58,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.GrindstoneEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -1243,5 +1245,10 @@ public class AttributeBonusHandler {
 		if (player.getRandom().nextFloat() >= chance) return;
 		LivingEntity target = event.getEntity();
 		target.level.explode(player, target.getX(), target.getEyeY(), target.getZ(), 2F, BlockInteraction.NONE);
+	}
+
+	@SubscribeEvent
+	public static void applyGrindstoneExpPenalty(GrindstoneEvent.OnTakeItem event) {
+		event.setXp((int) (event.getXp() * Config.COMMON.getGrindstoneExpMuliplier()));
 	}
 }
