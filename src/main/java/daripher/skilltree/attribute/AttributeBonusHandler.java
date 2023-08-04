@@ -1174,9 +1174,9 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyChanceToSaveMaterials(ItemCraftedEvent event) {
-		if (!(event.getInventory() instanceof CraftingContainer craftingContainer)) return;
+		if (!(event.getInventory() instanceof CraftingContainer container)) return;
 		for (CraftingRecipe recipe : IGNORED_RECIPES) {
-			if (recipe.matches(craftingContainer, event.getEntity().level)) return;
+			if (recipe.matches(container, event.getEntity().level)) return;
 		}
 		Player player = event.getEntity();
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_SAVE_CRAFITNG_MATERIALS.get()) - 1;
@@ -1208,7 +1208,7 @@ public class AttributeBonusHandler {
 						IGNORED_RECIPES.add(recipe2);
 					}
 					if (recipe1.isSpecial()) IGNORED_RECIPES.add(recipe1);
-					if (recipe2.isSpecial()) IGNORED_RECIPES.add(recipe1);
+					if (recipe2.isSpecial()) IGNORED_RECIPES.add(recipe2);
 				}
 			}
 		});
@@ -1216,8 +1216,11 @@ public class AttributeBonusHandler {
 
 	// checks if the recipe1 contains result of the recipe2 in its ingredients list and vice versa
 	private static boolean canAbuse(CraftingRecipe recipe1, CraftingRecipe recipe2) {
-		return recipe1.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe2.getResultItem()))
-				&& recipe2.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe1.getResultItem()));
+		return canUncraft(recipe1, recipe2) && canUncraft(recipe2, recipe1);
+	}
+
+	private static boolean canUncraft(CraftingRecipe recipe1, CraftingRecipe recipe2) {
+		return recipe1.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe2.getResultItem()));
 	}
 
 	@SubscribeEvent
