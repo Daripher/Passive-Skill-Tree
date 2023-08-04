@@ -165,6 +165,7 @@ dependencies {
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4679319")
 	implementation fg.deobf("curse.maven:jei-238222:4644453")
 	implementation fg.deobf("curse.maven:curios-309927:4583413")
+	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
 }
 
 mixin {
