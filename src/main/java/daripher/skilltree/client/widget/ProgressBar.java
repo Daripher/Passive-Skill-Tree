@@ -1,58 +1,59 @@
 package daripher.skilltree.client.widget;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import java.util.function.Supplier;
 
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
 public class ProgressBar extends Button {
 	public ProgressBar(int x, int y) {
-		super(x, y, 235, 19, Component.empty(), b -> {});
+		super(x, y, 235, 19, Component.empty(), b -> {
+		}, Supplier::get);
 	}
 
 	@Override
-	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		renderBackground(poseStack);
-		renderCurrentLevel(poseStack);
-		renderNextLevel(poseStack);
-		renderProgress(poseStack);
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		renderBackground(graphics);
+		renderCurrentLevel(graphics);
+		renderNextLevel(graphics);
+		renderProgress(graphics);
 	}
 
-	protected void renderBackground(PoseStack poseStack) {
+	protected void renderBackground(GuiGraphics graphics) {
 		var experienceProgress = getExperienceProgress();
 		var filledBarWidth = (int) (experienceProgress * 183);
-		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_TEXTURE);
-		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
+		graphics.blit(SkillTreeScreen.WIDGETS_TEXTURE, getX() + 26, getY() + 7, 0, 0, 182, 5);
 		if (filledBarWidth == 0) return;
-		blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
+		graphics.blit(SkillTreeScreen.WIDGETS_TEXTURE, getX() + 26, getY() + 7, 0, 5, filledBarWidth, 5);
 	}
 
-	protected void renderProgress(PoseStack poseStack) {
+	protected void renderProgress(GuiGraphics graphics) {
 		var experienceProgress = getExperienceProgress();
 		var percentageText = "" + (int) (experienceProgress * 100) + "%";
-		drawCenteredOutlinedText(poseStack, percentageText, getMinecraftFont(), x + width / 2, getTextY());
+		drawCenteredOutlinedText(graphics, percentageText, getMinecraftFont(), getX() + width / 2, getTextY());
 	}
 
-	protected void renderNextLevel(PoseStack poseStack) {
+	protected void renderNextLevel(GuiGraphics graphics) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
 		var nextLevel = currentLevel + 1;
-		drawCenteredOutlinedText(poseStack, "" + nextLevel, getMinecraftFont(), x + width - 17, getTextY());
+		drawCenteredOutlinedText(graphics, "" + nextLevel, getMinecraftFont(), getX() + width - 17, getTextY());
 	}
 
-	protected void renderCurrentLevel(PoseStack poseStack) {
+	protected void renderCurrentLevel(GuiGraphics graphics) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
-		drawCenteredOutlinedText(poseStack, "" + currentLevel, getMinecraftFont(), x + 17, getTextY());
+		drawCenteredOutlinedText(graphics, "" + currentLevel, getMinecraftFont(), getX() + 17, getTextY());
 	}
 
 	protected int getTextY() {
-		return y + 6;
+		return getY() + 6;
 	}
 
 	private static int getCurrentLevel() {
@@ -88,12 +89,12 @@ public class ProgressBar extends Button {
 		return minecraft.font;
 	}
 
-	protected void drawCenteredOutlinedText(PoseStack poseStack, String text, Font font, int x, int y) {
+	protected void drawCenteredOutlinedText(GuiGraphics graphics, String text, Font font, int x, int y) {
 		x -= font.width(text) / 2;
-		font.draw(poseStack, text, x + 1, y, 0);
-		font.draw(poseStack, text, x - 1, y, 0);
-		font.draw(poseStack, text, x, y + 1, 0);
-		font.draw(poseStack, text, x, y - 1, 0);
-		font.draw(poseStack, text, x, y, 0xFCE266);
+		graphics.drawString(font, text, x + 1, y, 0);
+		graphics.drawString(font, text, x - 1, y, 0);
+		graphics.drawString(font, text, x, y + 1, 0);
+		graphics.drawString(font, text, x, y - 1, 0);
+		graphics.drawString(font, text, x, y, 0xFCE266);
 	}
 }

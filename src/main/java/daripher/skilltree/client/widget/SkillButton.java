@@ -8,14 +8,13 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -41,41 +40,30 @@ public class SkillButton extends Button {
 	public boolean highlighted;
 	public boolean animated;
 
-	public SkillButton(Supplier<Float> animationFunction, int x, int y, PassiveSkill passiveSkill, OnPress pressFunction, OnTooltip tooltipFunction) {
-		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), pressFunction, tooltipFunction);
+	public SkillButton(Supplier<Float> animationFunction, int x, int y, PassiveSkill passiveSkill, OnPress pressFunction) {
+		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), pressFunction, Supplier::get);
 		this.skill = passiveSkill;
 		this.animationFunction = animationFunction;
 	}
 
 	@Override
-	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(skill.getBackgroundTexture());
-		blit(poseStack, x, y, width, height, 0, 0, width, height, width * 3, height);
-		poseStack.pushPose();
-		poseStack.translate(x + width / 2, y + height / 2, 0);
-		poseStack.scale(0.5F, 0.5F, 1);
-		RenderSystem.setShaderTexture(0, skill.getIconTexture());
-		blit(poseStack, -width / 2, -height / 2, width, height, 0, 0, width, height, width, height);
-		poseStack.popPose();
-		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
-		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, 0, 0, width, height, width * 3, height);
+		graphics.pose().pushPose();
+		graphics.pose().translate(getX() + width / 2, getY() + height / 2, 0);
+		graphics.pose().scale(0.5F, 0.5F, 1);
+		graphics.blit(skill.getIconTexture(), -width / 2, -height / 2, width, height, 0, 0, width, height, width, height);
+		graphics.pose().popPose();
+		graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, width + (highlighted ? width : 0), 0, width, height, width * 3,
+				height);
 		if (animated) {
 			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animationFunction.get() / 3F) + 1) / 2);
-			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
+			graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
 	}
 
-	private void prepareTextureRendering(ResourceLocation textureLocation) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, textureLocation);
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
-	}
-
-	public List<MutableComponent> getTooltip() {
+	public List<MutableComponent> getSkillTooltip() {
 		var tooltip = new ArrayList<MutableComponent>();
 		addTitleTooltip(tooltip);
 		addDescriptionTooltip(tooltip);
@@ -126,7 +114,8 @@ public class SkillButton extends Button {
 
 	protected MutableComponent generateTitle(List<Pair<Attribute, AttributeModifier>> attributeModifiers) {
 		var title = Component.empty();
-		var affectedAttributesNames = attributeModifiers.stream().map(Pair::getLeft).map(Attribute::getDescriptionId).map(Component::translatable).toList();
+		var affectedAttributesNames = attributeModifiers.stream().map(Pair::getLeft).map(Attribute::getDescriptionId).map(Component::translatable)
+				.toList();
 		title.append(affectedAttributesNames.get(0));
 		if (attributeModifiers.size() > 1) {
 			title.append(" and ");

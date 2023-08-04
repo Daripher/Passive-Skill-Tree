@@ -17,8 +17,8 @@ import net.minecraftforge.common.data.LanguageProvider;
 import top.theillusivec4.curios.common.CuriosHelper;
 
 public class PSTEnglishTranslationProvider extends LanguageProvider {
-	public PSTEnglishTranslationProvider(DataGenerator gen) {
-		super(gen, SkillTreeMod.MOD_ID, "en_us");
+	public PSTEnglishTranslationProvider(DataGenerator generator) {
+		super(generator.getPackOutput(), SkillTreeMod.MOD_ID, "en_us");
 	}
 
 	@Override

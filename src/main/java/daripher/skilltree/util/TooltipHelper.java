@@ -86,7 +86,7 @@ public class TooltipHelper {
 			tooltip = Component.translatable("potion.withAmplifier", tooltip, amplifier);
 		}
 		if (effectInstance.getDuration() > 20) {
-			String duration = MobEffectUtil.formatDuration(effectInstance, 1F);
+			Component duration = MobEffectUtil.formatDuration(effectInstance, 1F);
 			tooltip = Component.translatable("potion.withDuration", tooltip, duration);
 		}
 		tooltip = tooltip.withStyle(effect.getCategory().getTooltipFormatting());

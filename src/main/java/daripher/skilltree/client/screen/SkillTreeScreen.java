@@ -9,8 +9,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.IPlayerSkills;
@@ -25,9 +24,10 @@ import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -38,8 +38,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SkillTreeScreen extends Screen {
-	private static final ResourceLocation SKILL_CONNECTION_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_connection.png");
-	private static final ResourceLocation GATEWAY_CONNECTION_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/gateway_connection.png");
+	private static final ResourceLocation SKILL_CONNECTION_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID,
+			"textures/screen/skill_connection.png");
+	private static final ResourceLocation GATEWAY_CONNECTION_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID,
+			"textures/screen/gateway_connection.png");
 	private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_background.png");
 	private static final ResourceLocation OVERLAY_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_overlay.png");
 	public static final ResourceLocation WIDGETS_TEXTURE = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/skill_tree_widgets.png");
@@ -83,7 +85,8 @@ public class SkillTreeScreen extends Screen {
 		highlightSkillsThatCanBeLearned();
 		progressBar = new ProgressBar(width / 2 - 235 / 2, 2);
 		addRenderableWidget(progressBar);
-		buySkillButton = new SkillTreeButton(width / 2 - 145, height - 18, 140, 14, Component.translatable("widget.buy_skill_button"), b -> buySkill());
+		buySkillButton = new SkillTreeButton(width / 2 - 145, height - 18, 140, 14, Component.translatable("widget.buy_skill_button"),
+				b -> buySkill());
 		addRenderableWidget(buySkillButton);
 		if (!Config.COMMON.experienceGainEnabled()) {
 			progressBar.visible = false;
@@ -92,32 +95,33 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 		updateScreen(partialTick);
 		renderAnimation += partialTick;
-		renderBackground(poseStack);
-		renderConnections(poseStack, mouseX, mouseY, partialTick);
-		poseStack.pushPose();
-		poseStack.translate(scrollX, scrollY, 0);
-		for (Widget widget : renderables) {
+		renderBackground(graphics);
+		renderConnections(graphics, mouseX, mouseY, partialTick);
+		graphics.pose().pushPose();
+		graphics.pose().translate(scrollX, scrollY, 0);
+		for (Renderable widget : renderables) {
 			if (widget == progressBar || widget == buySkillButton) continue;
-			widget.render(poseStack, mouseX, mouseY, partialTick);
+			widget.render(graphics, mouseX, mouseY, partialTick);
 		}
-		poseStack.popPose();
-		renderOverlay(poseStack, mouseX, mouseY, partialTick);
-		progressBar.render(poseStack, mouseX, mouseY, partialTick);
-		renderPointsInfo(poseStack);
-		buySkillButton.render(poseStack, mouseX, mouseY, partialTick);
-		getChildAt(mouseX, mouseY).filter(SkillButton.class::isInstance).map(SkillButton.class::cast).ifPresent(button -> renderButtonTooltip(button, poseStack, mouseX, mouseY));
+		graphics.pose().popPose();
+		renderOverlay(graphics, mouseX, mouseY, partialTick);
+		progressBar.render(graphics, mouseX, mouseY, partialTick);
+		renderPointsInfo(graphics);
+		buySkillButton.render(graphics, mouseX, mouseY, partialTick);
+		getChildAt(mouseX, mouseY).filter(SkillButton.class::isInstance).map(SkillButton.class::cast)
+				.ifPresent(button -> renderButtonTooltip(graphics, button, mouseX, mouseY));
 	}
 
-	public void renderPointsInfo(PoseStack poseStack) {
+	public void renderPointsInfo(GuiGraphics graphics) {
 		prepareTextureRendering(WIDGETS_TEXTURE);
 		int x = width / 2 + 5;
 		if (!Config.COMMON.experienceGainEnabled()) x = width / 2 - 70;
-		blit(poseStack, x, height - 18, 0, 10, 140, 14);
+		graphics.blit(WIDGETS_TEXTURE, x, height - 18, 0, 10, 140, 14);
 		MutableComponent pointsLeft = Component.literal("" + skillPoints).withStyle(EXPERIENCE_COLOR);
-		drawCenteredString(poseStack, font, Component.translatable("widget.skill_points_left", pointsLeft), x + 70, height - 15, 0xFFFFFF);
+		graphics.drawCenteredString(font, Component.translatable("widget.skill_points_left", pointsLeft), x + 70, height - 15, 0xFFFFFF);
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class SkillTreeScreen extends Screen {
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + width / 2);
 		var buttonY = (int) (skill.getPositionY() + height / 2);
-		var button = new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
+		var button = new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
 		if (skill.isStartingPoint()) startingPoints.add(button);
@@ -224,11 +228,11 @@ public class SkillTreeScreen extends Screen {
 		if (!button2.highlighted) button2.animate();
 	}
 
-	public void renderButtonTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
+	public void renderButtonTooltip(GuiGraphics graphics, Button button, int mouseX, int mouseY) {
 		if (!(button instanceof SkillButton)) return;
 		var borderStyleStack = ((SkillButton) button).getTooltipBorderStyleStack();
-		var tooltip = ((SkillButton) button).getTooltip();
-		renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
+		var tooltip = ((SkillButton) button).getSkillTooltip();
+		graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY, borderStyleStack);
 	}
 
 	public void buttonPressed(Button button) {
@@ -308,19 +312,17 @@ public class SkillTreeScreen extends Screen {
 		buySkillButton.active = minecraft.player.totalExperience >= pointCost;
 	}
 
-	private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(OVERLAY_TEXTURE);
-		blit(poseStack, 0, 0, 0, 0F, 0F, width, height, width, height);
+	private void renderOverlay(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		graphics.blit(OVERLAY_TEXTURE, 0, 0, 0, 0F, 0F, width, height, width, height);
 	}
 
 	@Override
-	public void renderBackground(PoseStack poseStack) {
-		prepareTextureRendering(BACKGROUND_TEXTURE);
-		poseStack.pushPose();
-		poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
-		var size = getBackgroundSize();
-		blit(poseStack, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
-		poseStack.popPose();
+	public void renderBackground(GuiGraphics graphics) {
+		graphics.pose().pushPose();
+		graphics.pose().translate(scrollX / 3F, scrollY / 3F, 0);
+		int size = getBackgroundSize();
+		graphics.blit(BACKGROUND_TEXTURE, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
+		graphics.pose().popPose();
 	}
 
 	@Override
@@ -351,63 +353,61 @@ public class SkillTreeScreen extends Screen {
 		super.onClose();
 	}
 
-	protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(SKILL_CONNECTION_TEXTURE);
-		connections.forEach(connection -> renderConnection(poseStack, connection));
-		prepareTextureRendering(GATEWAY_CONNECTION_TEXTURE);
-		gatewayConnections.forEach(connection -> renderGatewayConnection(poseStack, connection, mouseX, mouseY));
+	protected void renderConnections(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		connections.forEach(connection -> renderConnection(graphics, connection));
+		gatewayConnections.forEach(connection -> renderGatewayConnection(graphics, connection, mouseX, mouseY));
 	}
 
-	private void renderGatewayConnection(PoseStack poseStack, Pair<SkillButton, SkillButton> connection, int mouseX, int mouseY) {
+	private void renderGatewayConnection(GuiGraphics graphics, Pair<SkillButton, SkillButton> connection, int mouseX, int mouseY) {
 		SkillButton button1 = connection.getLeft();
 		SkillButton button2 = connection.getRight();
 		Optional<GuiEventListener> hoveredWidget = getChildAt(mouseX, mouseY);
 		boolean learned = learnedSkills.contains(button1.skill.getId()) || learnedSkills.contains(button2.skill.getId());
 		if (learned) {
-			if (learnedSkills.contains(button2.skill.getId())) renderGatewayConnection(poseStack, button2, button1);
-			else renderGatewayConnection(poseStack, button1, button2);
+			if (learnedSkills.contains(button2.skill.getId())) renderGatewayConnection(graphics, button2, button1);
+			else renderGatewayConnection(graphics, button1, button2);
 			return;
 		}
 		boolean hovered = !hoveredWidget.isEmpty() && (hoveredWidget.get() == button1 || hoveredWidget.get() == button2);
 		if (hovered) {
-			if (hoveredWidget.get() == button2) renderGatewayConnection(poseStack, button2, button1);
-			else renderGatewayConnection(poseStack, button1, button2);
+			if (hoveredWidget.get() == button2) renderGatewayConnection(graphics, button2, button1);
+			else renderGatewayConnection(graphics, button1, button2);
 		}
 	}
 
-	private void renderGatewayConnection(PoseStack poseStack, SkillButton button1, SkillButton button2) {
-		poseStack.pushPose();
-		int connectionX = button1.x + button1.getWidth() / 2;
-		int connectionY = button1.y + button1.getHeight() / 2;
-		poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
+	private void renderGatewayConnection(GuiGraphics graphics, SkillButton button1, SkillButton button2) {
+		graphics.pose().pushPose();
+		int connectionX = button1.getX() + button1.getWidth() / 2;
+		int connectionY = button1.getY() + button1.getHeight() / 2;
+		graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
 		float rotation = getAngleBetweenButtons(button1, button2);
-		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
+		graphics.pose().mulPose(Axis.ZP.rotation(rotation));
 		int length = getDistanceBetweenButtons(button1, button2);
 		boolean highlighted = openedGateways.contains(button1.skill.getGatewayId().get());
-		blit(poseStack, 0, -3, length, 6, -renderAnimation, highlighted ? 0 : 6, length, 6, 30, 12);
-		poseStack.popPose();
+		graphics.blit(GATEWAY_CONNECTION_TEXTURE, 0, -3, length, 6, -renderAnimation, highlighted ? 0 : 6, length, 6, 30, 12);
+		graphics.pose().popPose();
 	}
 
-	private void renderConnection(PoseStack poseStack, Pair<SkillButton, SkillButton> connection) {
-		poseStack.pushPose();
+	private void renderConnection(GuiGraphics graphics, Pair<SkillButton, SkillButton> connection) {
+		graphics.pose().pushPose();
 		var button1 = connection.getLeft();
 		var button2 = connection.getRight();
-		var connectionX = button1.x + button1.getWidth() / 2;
-		var connectionY = button1.y + button1.getHeight() / 2;
-		poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
+		var connectionX = button1.getX() + button1.getWidth() / 2;
+		var connectionY = button1.getY() + button1.getHeight() / 2;
+		graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
 		var rotation = getAngleBetweenButtons(button1, button2);
-		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
+		graphics.pose().mulPose(Axis.ZP.rotation(rotation));
 		var length = getDistanceBetweenButtons(button1, button2);
 		var highlighted = button1.highlighted && button2.highlighted;
-		blit(poseStack, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
+		graphics.blit(SKILL_CONNECTION_TEXTURE, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
 		var shouldAnimate = button1.highlighted && button2.animated || button2.highlighted && button1.animated;
 		var isAnimated = !highlighted && shouldAnimate;
 		if (isAnimated) {
 			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(getAnimation() / 3F) + 1) / 2);
-			blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
+			graphics.blit(SKILL_CONNECTION_TEXTURE, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
-		poseStack.popPose();
+		graphics.pose().popPose();
 	}
 
 	public static void prepareTextureRendering(ResourceLocation textureLocation) {
@@ -424,19 +424,19 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected float getAngleBetweenButtons(Button button1, Button button2) {
-		var x1 = button1.x + button1.getWidth() / 2;
-		var y1 = button1.y + button1.getHeight() / 2;
-		var x2 = button2.x + button2.getWidth() / 2;
-		var y2 = button2.y + button2.getHeight() / 2;
+		var x1 = button1.getX() + button1.getWidth() / 2;
+		var y1 = button1.getY() + button1.getHeight() / 2;
+		var x2 = button2.getX() + button2.getWidth() / 2;
+		var y2 = button2.getY() + button2.getHeight() / 2;
 		var angle = getAngleBetweenPoints(x1, y1, x2, y2);
 		return angle;
 	}
 
 	protected int getDistanceBetweenButtons(Button button1, Button button2) {
-		var x1 = button1.x + button1.getWidth() / 2;
-		var y1 = button1.y + button1.getHeight() / 2;
-		var x2 = button2.x + button2.getWidth() / 2;
-		var y2 = button2.y + button2.getHeight() / 2;
+		var x1 = button1.getX() + button1.getWidth() / 2;
+		var y1 = button1.getY() + button1.getHeight() / 2;
+		var x2 = button2.getX() + button2.getWidth() / 2;
+		var y2 = button2.getY() + button2.getHeight() / 2;
 		return getDistanceBetweenPoints(x1, y1, x2, y2);
 	}
 

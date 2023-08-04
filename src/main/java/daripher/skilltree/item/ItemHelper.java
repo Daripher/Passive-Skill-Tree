@@ -5,13 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -31,7 +31,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
@@ -77,9 +76,6 @@ public class ItemHelper {
 	}
 
 	public static boolean canInsertGem(ItemStack stack) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
-		}
 		return hasSockets(stack);
 	}
 
@@ -168,14 +164,14 @@ public class ItemHelper {
 
 	public static boolean isAxe(ItemStack itemStack) {
 		if (itemStack.canPerformAction(ToolActions.AXE_DIG)) return true;
-		return itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES);
+		return itemStack.getItem() instanceof AxeItem || itemStack.is(ItemTags.AXES);
 	}
 
 	public static boolean isSword(ItemStack itemStack) {
 		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_sword")) return true;
 		if (itemStack.canPerformAction(ToolActions.SWORD_DIG)) return true;
 		if (itemStack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
-		return itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS);
+		return itemStack.getItem() instanceof SwordItem || itemStack.is(ItemTags.SWORDS);
 	}
 
 	public static boolean isWeapon(ItemStack itemStack) {
@@ -183,28 +179,28 @@ public class ItemHelper {
 	}
 
 	public static boolean isHelmet(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.HEAD) return true;
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.HEAD) return true;
 		return itemStack.is(Tags.Items.ARMORS_HELMETS);
 	}
 
 	public static boolean isChestplate(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.CHEST) return true;
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.CHEST) return true;
 		return itemStack.is(Tags.Items.ARMORS_CHESTPLATES);
 	}
 
 	public static boolean isLeggings(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.LEGS) return true;
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.LEGS) return true;
 		return itemStack.is(Tags.Items.ARMORS_LEGGINGS);
 	}
 
 	public static boolean isBoots(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getSlot() == EquipmentSlot.FEET) return true;
+		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.FEET) return true;
 		return itemStack.is(Tags.Items.ARMORS_BOOTS);
 	}
 
 	public static boolean isPickaxe(ItemStack itemStack) {
 		if (itemStack.canPerformAction(ToolActions.PICKAXE_DIG)) return true;
-		return itemStack.getItem() instanceof PickaxeItem || itemStack.is(Tags.Items.TOOLS_PICKAXES);
+		return itemStack.getItem() instanceof PickaxeItem || itemStack.is(ItemTags.PICKAXES);
 	}
 
 	public static boolean isFood(ItemStack itemStack) {

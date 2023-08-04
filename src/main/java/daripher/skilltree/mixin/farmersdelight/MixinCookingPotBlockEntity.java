@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import daripher.skilltree.util.FoodHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,9 +26,9 @@ public class MixinCookingPotBlockEntity {
 		this.player = player;
 	}
 
-	@Redirect(method = "processCooking", at = @At(value = "INVOKE", target = "Lvectorwing/farmersdelight/common/crafting/CookingPotRecipe;getResultItem()Lnet/minecraft/world/item/ItemStack;", remap = true))
-	private ItemStack setCookedFoodBonuses(CookingPotRecipe recipe) {
-		ItemStack result = recipe.getResultItem();
+	@Redirect(method = "processCooking", at = @At(value = "INVOKE", target = "Lvectorwing/farmersdelight/common/crafting/CookingPotRecipe;getResultItem(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;", remap = true))
+	private ItemStack setCookedFoodBonuses(CookingPotRecipe recipe, RegistryAccess access) {
+		ItemStack result = recipe.getResultItem(access);
 		if (player == null) return result;
 		FoodHelper.setCraftedFoodBonuses(result, player);
 		return result;

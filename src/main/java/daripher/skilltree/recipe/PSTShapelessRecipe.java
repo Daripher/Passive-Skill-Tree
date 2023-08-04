@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.init.PSTRecipeSerializers;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -12,12 +13,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequiringRecipe {
 	private final ResourceLocation requiredSkillId;
 
 	public PSTShapelessRecipe(ShapelessRecipe recipe, ResourceLocation requiredSkillId) {
-		super(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
+		super(recipe.getId(), recipe.getGroup(), recipe.category(),
+				ObfuscationReflectionHelper.getPrivateValue(ShapelessRecipe.class, recipe, "f_44243_"), recipe.getIngredients());
 		this.requiredSkillId = requiredSkillId;
 	}
 
@@ -26,13 +29,13 @@ public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequirin
 		if (!canCraftIn(container)) return false;
 		return super.matches(container, level);
 	}
-	
+
 	@Override
-	public ItemStack assemble(CraftingContainer container) {
+	public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
 		if (!canCraftIn(container)) return ItemStack.EMPTY;
-		return super.assemble(container);
+		return super.assemble(container, access);
 	}
-	
+
 	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return PSTRecipeSerializers.SHAPELESS_CRAFTING.get();

@@ -36,7 +36,7 @@ public class MixinCampfireBlockEntity implements PlayerContainer {
 
 	@Redirect(method = "cookTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Containers;dropItemStack(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V"))
 	private static void setCookedFoodBonuses(Level level, double x, double y, double z, ItemStack itemStack) {
-		var pos = new BlockPos(x, y, z);
+		var pos = new BlockPos((int)x, (int)y, (int)z);
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		var player = (Player) null;
 		if (blockEntity instanceof PlayerContainer playerContainer) {

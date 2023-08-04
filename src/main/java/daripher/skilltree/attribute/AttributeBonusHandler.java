@@ -24,6 +24,7 @@ import daripher.skilltree.util.FoodHelper;
 import daripher.skilltree.util.PlayerHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -31,6 +32,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -55,7 +57,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.GrindstoneEvent;
@@ -123,7 +125,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyDynamicAttributeBonuses(PlayerTickEvent event) {
-		if (event.player.level.isClientSide) return;
+		if (event.player.level().isClientSide) return;
 		ServerPlayer player = (ServerPlayer) event.player;
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "d1f7e78b-3368-409c-aa89-90f0f89a5524",
 				AttributeBonusHandler::getMaximumLifePerEvasion);
@@ -848,7 +850,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyLifeRegenerationBonus(PlayerTickEvent event) {
-		if (event.phase == Phase.END || event.player.level.isClientSide) return;
+		if (event.phase == Phase.END || event.player.level().isClientSide) return;
 		if (event.player.getFoodData().getFoodLevel() == 0) return;
 		float lifeRegeneration = (float) event.player.getAttributeValue(PSTAttributes.LIFE_REGENERATION.get());
 		if (event.player.getHealth() != event.player.getMaxHealth() && event.player.tickCount % 20 == 0) {
@@ -864,7 +866,7 @@ public class AttributeBonusHandler {
 		if (evasion == 0) return;
 		boolean canEvade = PlayerHelper.canEvadeDamage(event.getSource());
 		if (canEvade && player.getRandom().nextFloat() < evasion) {
-			player.level.playSound(null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
+			player.level().playSound(null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
 			event.setCanceled(true);
 		}
 	}
@@ -976,7 +978,7 @@ public class AttributeBonusHandler {
 	public static void applyBlockChanceBonus(LivingAttackEvent event) {
 		if (!(event.getEntity() instanceof Player)) return;
 		if (event.getAmount() <= 0) return;
-		if (event.getSource().isBypassArmor()) return;
+		if (event.getSource().is(DamageTypeTags.BYPASSES_SHIELD)) return;
 		if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) return;
 		var player = (Player) event.getEntity();
 		var offhandItem = player.getOffhandItem();
@@ -986,9 +988,9 @@ public class AttributeBonusHandler {
 		var shieldBlockEvent = ForgeHooks.onShieldBlock(player, event.getSource(), event.getAmount());
 		if (shieldBlockEvent.isCanceled()) return;
 		event.setCanceled(true);
-		player.level.broadcastEntityEvent(player, (byte) 29);
+		player.level().broadcastEntityEvent(player, (byte) 29);
 		if (shieldBlockEvent.shieldTakesDamage()) PlayerHelper.hurtShield(player, offhandItem, event.getAmount());
-		if (event.getSource().isProjectile()) return;
+		if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) return;
 		var attacker = event.getSource().getDirectEntity();
 		if (attacker instanceof LivingEntity livingAttacker) {
 			var blockUsingShieldMethod = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_6728_", LivingEntity.class);
@@ -1134,7 +1136,7 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyExperiencePerHourBonus(PlayerTickEvent event) {
-		if (event.player.level.isClientSide) return;
+		if (event.player.level().isClientSide) return;
 		float bonus = (float) (event.player.getAttributeValue(PSTAttributes.EXPERIENCE_PER_HOUR.get()));
 		int frequency = Math.max((int) (1000 / bonus), 1);
 		if (event.player.tickCount % frequency == 0) {
@@ -1172,7 +1174,7 @@ public class AttributeBonusHandler {
 	public static void applyChanceToSaveMaterials(ItemCraftedEvent event) {
 		if (!(event.getInventory() instanceof CraftingContainer container)) return;
 		for (CraftingRecipe recipe : IGNORED_RECIPES) {
-			if (recipe.matches(container, event.getEntity().level)) return;
+			if (recipe.matches(container, event.getEntity().level())) return;
 		}
 		Player player = event.getEntity();
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_SAVE_CRAFITNG_MATERIALS.get()) - 1;
@@ -1195,11 +1197,12 @@ public class AttributeBonusHandler {
 		server.submitAsync(() -> {
 			RecipeManager recipeManager = server.getRecipeManager();
 			List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(RecipeType.CRAFTING);
+			RegistryAccess access = server.registryAccess();
 			for (int i = 0; i < recipes.size() - 1; i++) {
 				for (int j = i + 1; j < recipes.size(); j++) {
 					CraftingRecipe recipe1 = recipes.get(i);
 					CraftingRecipe recipe2 = recipes.get(j);
-					if (canAbuse(recipe1, recipe2)) {
+					if (canAbuse(recipe1, recipe2, access)) {
 						IGNORED_RECIPES.add(recipe1);
 						IGNORED_RECIPES.add(recipe2);
 					}
@@ -1211,12 +1214,12 @@ public class AttributeBonusHandler {
 	}
 
 	// checks if the recipe1 contains result of the recipe2 in its ingredients list and vice versa
-	private static boolean canAbuse(CraftingRecipe recipe1, CraftingRecipe recipe2) {
-		return canUncraft(recipe1, recipe2) && canUncraft(recipe2, recipe1);
+	private static boolean canAbuse(CraftingRecipe recipe1, CraftingRecipe recipe2, RegistryAccess access) {
+		return canUncraft(recipe1, recipe2, access) && canUncraft(recipe2, recipe1, access);
 	}
 
-	private static boolean canUncraft(CraftingRecipe recipe1, CraftingRecipe recipe2) {
-		return recipe1.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe2.getResultItem()));
+	private static boolean canUncraft(CraftingRecipe recipe1, CraftingRecipe recipe2, RegistryAccess access) {
+		return recipe1.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe2.getResultItem(access)));
 	}
 
 	@SubscribeEvent
@@ -1226,8 +1229,8 @@ public class AttributeBonusHandler {
 		if (expBonus == 0) return;
 		int exp = (int) ((player.getRandom().nextInt(6) + 1) * expBonus);
 		if (exp == 0) return;
-		ExperienceOrb expOrb = new ExperienceOrb(player.level, player.getX(), player.getY() + 0.5D, player.getZ() + 0.5D, exp);
-		player.level.addFreshEntity(expOrb);
+		ExperienceOrb expOrb = new ExperienceOrb(player.level(), player.getX(), player.getY() + 0.5D, player.getZ() + 0.5D, exp);
+		player.level().addFreshEntity(expOrb);
 	}
 
 	@SubscribeEvent
@@ -1244,7 +1247,7 @@ public class AttributeBonusHandler {
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get()) - 1;
 		if (player.getRandom().nextFloat() >= chance) return;
 		LivingEntity target = event.getEntity();
-		target.level.explode(player, target.getX(), target.getEyeY(), target.getZ(), 2F, BlockInteraction.NONE);
+		target.level().explode(player, target.getX(), target.getEyeY(), target.getZ(), 2F, ExplosionInteraction.NONE);
 	}
 
 	@SubscribeEvent

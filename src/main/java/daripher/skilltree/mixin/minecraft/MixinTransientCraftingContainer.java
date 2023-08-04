@@ -6,10 +6,10 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import daripher.skilltree.api.PlayerContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 
-@Mixin(CraftingContainer.class)
-public class MixinCraftingContainer implements PlayerContainer {
+@Mixin(TransientCraftingContainer.class)
+public class MixinTransientCraftingContainer implements PlayerContainer {
 	private Optional<Player> player = Optional.empty();
 
 	@Override

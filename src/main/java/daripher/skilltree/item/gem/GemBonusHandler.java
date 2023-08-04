@@ -12,7 +12,6 @@ import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.SocketTooltipRenderer;
 import daripher.skilltree.client.tooltip.SocketTooltipRenderer.SocketComponent;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
@@ -27,7 +26,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -40,7 +39,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import top.theillusivec4.curios.api.SlotContext;
@@ -89,7 +87,7 @@ public class GemBonusHandler {
 	public static void dropGemFromOre(BlockEvent.BreakEvent event) {
 		var player = event.getPlayer();
 		if (player.isCreative()) return;
-		var level = player.getLevel();
+		var level = player.level();
 		if (level.isClientSide) return;
 		var dropChance = Config.COMMON.getGemDropChance();
 		dropChance += player.getAttributeValue(PSTAttributes.GEM_DROP_CHANCE.get()) - 1;
@@ -102,23 +100,17 @@ public class GemBonusHandler {
 		if (!usingCorrectTool) return;
 		var hasSilkTouch = player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0;
 		if (hasSilkTouch) return;
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
-				ApotheosisCompatibility.ISNTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
-				return;
-			}
-		}
 		var serverLevel = (ServerLevel) level;
-		var lootTable = serverLevel.getServer().getLootTables().get(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
+		var lootTable = serverLevel.getServer().getLootData().getLootTable(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
 		// formatter:off
-		var lootContext = new LootContext.Builder(serverLevel)
+		var params = new LootParams.Builder(serverLevel)
 				.withParameter(LootContextParams.BLOCK_STATE, event.getState())
 				.withParameter(LootContextParams.ORIGIN, new Vec3(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
 				.withParameter(LootContextParams.TOOL, player.getMainHandItem())
 				.withLuck(player.getLuck())
 				.create(LootContextParamSets.BLOCK);
 		// formatter:on
-		lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
+		lootTable.getRandomItems(params).forEach(item -> Block.popResource(level, blockPos, item));
 	}
 
 	private static void applyGemBonus(ItemAttributeModifierEvent event, int socket) {

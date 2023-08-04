@@ -8,12 +8,12 @@ import static net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED;
 import static net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH;
 import static net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nullable;
 
@@ -25,6 +25,7 @@ import daripher.skilltree.util.JsonHelper;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -35,11 +36,11 @@ import top.theillusivec4.curios.common.CuriosHelper;
 
 public class PSTSkillsProvider implements DataProvider {
 	private Map<ResourceLocation, PassiveSkill> data = new HashMap<>();
-	private DataGenerator dataGenerator;
+	private final PackOutput output;
 	private String[] playerClasses = new String[] { "alchemist", "hunter", "enchanter", "cook", "blacksmith", "miner" };
 
-	public PSTSkillsProvider(DataGenerator dataGenerator) {
-		this.dataGenerator = dataGenerator;
+	public PSTSkillsProvider(DataGenerator generator) {
+		this.output = generator.getPackOutput();
 	}
 
 	private void addSkills() {
@@ -599,21 +600,19 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	@Override
-	public void run(CachedOutput output) throws IOException {
-		addSkills();
-		shapeSkillTree();
-		setSkillsAttributeModifiers();
-		data.values().forEach(skill -> save(output, skill));
+	public CompletableFuture<?> run(CachedOutput output) {
+		return CompletableFuture.runAsync(() -> {
+			addSkills();
+			shapeSkillTree();
+			setSkillsAttributeModifiers();
+			data.values().forEach(skill -> save(output, skill));
+		});
 	}
 
 	private void save(CachedOutput output, PassiveSkill skill) {
-		Path path = dataGenerator.getOutputFolder().resolve(getSkillPath(skill));
+		Path path = this.output.getOutputFolder().resolve(getSkillPath(skill));
 		JsonObject json = JsonHelper.writePassiveSkill(skill);
-		try {
-			DataProvider.saveStable(output, json, path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		DataProvider.saveStable(output, json, path);
 	}
 
 	public String getSkillPath(PassiveSkill skill) {

@@ -19,10 +19,10 @@ public abstract class MixinAbstractArrow {
 	@Inject(method = "playerTouch", at = @At("HEAD"), cancellable = true)
 	private void pickupAsItem(Player player, CallbackInfo callback) {
 		AbstractArrow arrow = (AbstractArrow) (Object) this;
-		if (!arrow.level.isClientSide && (inGround || arrow.isNoPhysics()) && arrow.shakeTime <= 0) {
+		if (!arrow.level().isClientSide && (inGround || arrow.isNoPhysics()) && arrow.shakeTime <= 0) {
 			if (arrow.pickup == Pickup.ALLOWED) {
-				ItemEntity item = new ItemEntity(arrow.level, arrow.getX(), arrow.getY(), arrow.getZ(), getPickupItem().copy());
-				arrow.level.addFreshEntity(item);
+				ItemEntity item = new ItemEntity(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ(), getPickupItem().copy());
+				arrow.level().addFreshEntity(item);
 				item.setPickUpDelay(0);
 				arrow.discard();
 				callback.cancel();

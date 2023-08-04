@@ -17,8 +17,8 @@ import net.minecraftforge.common.data.LanguageProvider;
 import top.theillusivec4.curios.common.CuriosHelper;
 
 public class PSTRussianTranslationProvider extends LanguageProvider {
-	public PSTRussianTranslationProvider(DataGenerator gen) {
-		super(gen, SkillTreeMod.MOD_ID, "ru_ru");
+	public PSTRussianTranslationProvider(DataGenerator generator) {
+		super(generator.getPackOutput(), SkillTreeMod.MOD_ID, "ru_ru");
 	}
 
 	@Override

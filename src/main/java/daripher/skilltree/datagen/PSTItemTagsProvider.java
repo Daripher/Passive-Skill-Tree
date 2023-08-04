@@ -1,5 +1,7 @@
 package daripher.skilltree.datagen;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.jetbrains.annotations.Nullable;
 
 import daripher.skilltree.SkillTreeMod;
@@ -9,21 +11,23 @@ import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.necklace.NecklaceItem;
 import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.item.ring.RingItem;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class PSTItemTagsProvider extends ItemTagsProvider {
-	public PSTItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-		super(dataGenerator, blockTagsProvider, SkillTreeMod.MOD_ID, existingFileHelper);
+	public PSTItemTagsProvider(DataGenerator generator, CompletableFuture<Provider> provider, BlockTagsProvider blockTags,
+			@Nullable ExistingFileHelper fileHelper) {
+		super(generator.getPackOutput(), provider, blockTags.contentsGetter(), SkillTreeMod.MOD_ID, fileHelper);
 	}
 
 	@Override
-	protected void addTags() {
+	protected void addTags(Provider provider) {
 		add(PSTTags.GEMS, GemItem.class);
 		add(PSTTags.RINGS, RingItem.class);
 		add(PSTTags.NECKLACES, NecklaceItem.class);

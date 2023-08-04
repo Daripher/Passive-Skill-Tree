@@ -45,7 +45,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void persistThroughDeath(PlayerEvent.Clone event) {
-		if (event.getEntity().level.isClientSide) return;
+		if (event.getEntity().level().isClientSide) return;
 		event.getOriginal().reviveCaps();
 		IPlayerSkills originalData = get(event.getOriginal());
 		IPlayerSkills cloneData = get(event.getEntity());
@@ -55,7 +55,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
 	@SubscribeEvent
 	public static void syncSkills(PlayerLoggedInEvent event) {
-		if (!event.getEntity().level.isClientSide) {
+		if (!event.getEntity().level().isClientSide) {
 			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new SyncSkillsMessage());
 		}
 	}
@@ -69,7 +69,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 	@SubscribeEvent
 	public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
 		if (!(event.getEntity() instanceof Player player)) return;
-		if (event.getEntity().level.isClientSide) return;
+		if (event.getEntity().level().isClientSide) return;
 		IPlayerSkills capability = get(player);
 		if (capability.isTreeReset()) {
 			player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));

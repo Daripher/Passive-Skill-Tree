@@ -12,7 +12,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -35,7 +34,7 @@ public class QuiverItem extends Item implements ICurioItem {
 	private final int capacity;
 
 	public QuiverItem(int capacity) {
-		super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1).durability(capacity));
+		super(new Properties().stacksTo(1).durability(capacity));
 		this.capacity = capacity;
 	}
 
@@ -91,7 +90,7 @@ public class QuiverItem extends Item implements ICurioItem {
 				setArrows(quiver, arrowsStack.copy(), arrowsStack.getCount());
 				event.getItem().setItem(ItemStack.EMPTY);
 				event.setResult(Result.ALLOW);
-			} else if (ItemStack.isSame(getArrows(quiver), arrowsStack)) {
+			} else if (ItemStack.isSameItemSameTags(getArrows(quiver), arrowsStack)) {
 				int capacity = getCapacity(quiver);
 				int arrowsTaken = Math.min(capacity - getArrowsCount(quiver), arrowsStack.getCount());
 				addArrows(quiver, arrowsTaken);

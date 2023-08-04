@@ -12,8 +12,9 @@ import daripher.skilltree.client.screen.editor.tool.EditorTool;
 import daripher.skilltree.client.widget.EditorToolButton;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.skill.PassiveSkill;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.resources.ResourceLocation;
 
 public class SkillTreeEditorScreen extends SkillTreeScreen {
@@ -43,7 +44,7 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
 		var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
-		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
+		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
 		if (selectedSkills.contains(skill.getId())) {
@@ -56,22 +57,20 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 		addRenderableWidget(new EditorToolButton(this, EditorTool.CONNECT, 0, 15));
 	}
 
-	public void renderButtonTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
-		if (!(button instanceof SkillButton)) {
-			return;
-		}
+	public void renderButtonTooltip(GuiGraphics graphics, Button button, PoseStack poseStack, int mouseX, int mouseY) {
+		if (!(button instanceof SkillButton)) return;
 		var borderStyleStack = ((SkillButton) button).getTooltipBorderStyleStack();
-		var tooltip = ((SkillButton) button).getTooltip();
-		renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
+		var tooltip = ((SkillButton) button).getSkillTooltip();
+		graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY, borderStyleStack);
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 		renderAnimation += partialTick;
-		renderBackground(poseStack);
-		renderConnections(poseStack, mouseX, mouseY, partialTick);
-		for (Widget widget : renderables) {
-			widget.render(poseStack, mouseX, mouseY, partialTick);
+		renderBackground(graphics);
+		renderConnections(graphics, mouseX, mouseY, partialTick);
+		for (Renderable widget : renderables) {
+			widget.render(graphics, mouseX, mouseY, partialTick);
 		}
 	}
 

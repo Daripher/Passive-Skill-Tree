@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.util.PlayerHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -17,20 +17,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.UpgradeRecipe;
+import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.ModList;
 
-public class GemInsertionRecipe extends UpgradeRecipe {
+public class GemInsertionRecipe extends SmithingTransformRecipe {
 	public GemInsertionRecipe() {
-		super(new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"), Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
+		super(new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"), Ingredient.EMPTY, Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
 	}
 
 	@Override
 	public boolean matches(Container container, Level level) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
-		}
 		ItemStack base = container.getItem(0);
 		if (!isBaseIngredient(base)) return false;
 		ItemStack ingredient = container.getItem(1);
@@ -42,10 +38,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(Container container) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
-		}
+	public ItemStack assemble(Container container, RegistryAccess access) {
 		var playerContainer = (PlayerContainer) container;
 		if (!playerContainer.getPlayer().isPresent()) return ItemStack.EMPTY;
 		var player = playerContainer.getPlayer().get();
@@ -72,7 +65,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess access) {
 		return ItemStack.EMPTY;
 	}
 

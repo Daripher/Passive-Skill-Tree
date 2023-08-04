@@ -6,31 +6,29 @@ import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.potion.PotionHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class MixtureRecipe extends CustomRecipe {
 	public MixtureRecipe(ResourceLocation id) {
-		super(id);
+		super(id, CraftingBookCategory.MISC);
 	}
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
 		var playerContainer = (PlayerContainer) container;
-		if (!playerContainer.getPlayer().isPresent()) {
-			return false;
-		}
+		if (!playerContainer.getPlayer().isPresent()) return false;
 		var player = playerContainer.getPlayer().get();
 		var canMixPotions = player.getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
-		if (!canMixPotions) {
-			return false;
-		}
+		if (!canMixPotions) return false;
 		var potionStack1 = ItemStack.EMPTY;
 		var potionStack2 = ItemStack.EMPTY;
 		var potionsCount = 0;
@@ -48,14 +46,12 @@ public class MixtureRecipe extends CustomRecipe {
 				}
 			}
 		}
-		if (PotionUtils.getMobEffects(potionStack1).isEmpty() || PotionUtils.getMobEffects(potionStack2).isEmpty()) {
-			return false;
-		}
+		if (PotionUtils.getMobEffects(potionStack1).isEmpty() || PotionUtils.getMobEffects(potionStack2).isEmpty()) return false;
 		return potionsCount == 2 && potionStack1.getItem() == potionStack2.getItem();
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer container) {
+	public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
 		var potionStack1 = ItemStack.EMPTY;
 		var potionStack2 = ItemStack.EMPTY;
 		for (int slot = 0; slot < container.getContainerSize(); slot++) {

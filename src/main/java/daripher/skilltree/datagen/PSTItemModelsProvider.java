@@ -17,8 +17,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class PSTItemModelsProvider extends ItemModelProvider {
-	public PSTItemModelsProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
-		super(dataGenerator, SkillTreeMod.MOD_ID, existingFileHelper);
+	public PSTItemModelsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+		super(generator.getPackOutput(), SkillTreeMod.MOD_ID, existingFileHelper);
 	}
 
 	@Override

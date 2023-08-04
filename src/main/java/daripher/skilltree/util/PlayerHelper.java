@@ -10,7 +10,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -144,7 +143,7 @@ public class PlayerHelper {
 		if (spawnPos != null) {
 			distance = player.distanceToSqr(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 		} else {
-			BlockPos worldSpawnPos = player.level.getSharedSpawnPos();
+			BlockPos worldSpawnPos = player.level().getSharedSpawnPos();
 			distance = player.distanceToSqr(worldSpawnPos.getX(), worldSpawnPos.getY(), worldSpawnPos.getZ());
 		}
 		distance = Math.sqrt(distance);
@@ -153,8 +152,7 @@ public class PlayerHelper {
 	}
 
 	public static boolean canEvadeDamage(DamageSource source) {
-		if (!(source instanceof EntityDamageSource damageSource)) return false;
-		return damageSource.getDirectEntity() instanceof LivingEntity || damageSource.getEntity() instanceof LivingEntity;
+		return source.getDirectEntity() instanceof LivingEntity || source.getEntity() instanceof LivingEntity;
 	}
 
 	public static float getGemPower(Player player, ItemStack itemStack) {
@@ -173,7 +171,7 @@ public class PlayerHelper {
 
 	public static void hurtShield(Player player, final ItemStack shield, float amount) {
 		if (!shield.canPerformAction(ToolActions.SHIELD_BLOCK)) return;
-		if (!player.level.isClientSide) {
+		if (!player.level().isClientSide) {
 			player.awardStat(Stats.ITEM_USED.get(shield.getItem()));
 		}
 		if (amount < 3) return;
@@ -184,7 +182,7 @@ public class PlayerHelper {
 		});
 		if (shield.isEmpty()) {
 			player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-			player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level.random.nextFloat() * 0.4F);
+			player.playSound(SoundEvents.SHIELD_BREAK, 0.8F, 0.8F + player.level().random.nextFloat() * 0.4F);
 		}
 	}
 }

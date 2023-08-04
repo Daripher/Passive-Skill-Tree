@@ -19,10 +19,9 @@ import vectorwing.farmersdelight.common.block.StoveBlock;
 @Mixin(value = StoveBlock.class)
 public class MixinStoveBlock {
 	@Inject(method = "use", at = @At("HEAD"))
-	private void setCookingPlayer(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> callbackInfo) {
-		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity instanceof PlayerContainer playerContainer) {
-			playerContainer.setPlayer(player);
-		}
+	private void setCookingPlayer(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit,
+			CallbackInfoReturnable<InteractionResult> callback) {
+		BlockEntity entity = level.getBlockEntity(pos);
+		if (entity instanceof PlayerContainer container) container.setPlayer(player);
 	}
 }

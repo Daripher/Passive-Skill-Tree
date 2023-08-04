@@ -10,7 +10,7 @@
   	"minecraft/MixinPotionItem",
   	"minecraft/MixinSmithingMenu",
   	"minecraft/MixinSimpleContainer",
-  	"minecraft/MixinCraftingContainer",
+  	"minecraft/MixinTransientCraftingContainer",
   	"minecraft/MixinCraftingMenu",
   	"minecraft/MixinInventoryMenu",
   	"minecraft/MixinAbstractFurnaceMenu",
@@ -26,16 +26,11 @@
   	"easymagic/MixinModEnchantmentMenu",
   	"farmersdelight/MixinCookingPotBlockEntity",
   	"farmersdelight/MixinStoveBlock",
-  	"farmersdelight/MixinStoveBlockEntity",
-  	"apotheosis/MixinApothEnchantContainer",
-  	"apotheosis/MixinSocketingRecipe",
-  	"apotheosis/MixinAttributeBonus",
-  	"apotheosis/MixinEnchantmentBonus"
+  	"farmersdelight/MixinStoveBlockEntity"
   ],
   "client" : [
   	"minecraft/MixinRecipeBookComponent",
-  	"minecraft/MixinCraftingScreen",
-  	"apotheosis/MixinAdventureModuleClient"
+  	"minecraft/MixinCraftingScreen"
   ],
   "injectors" : {
     "defaultRequire" : 1

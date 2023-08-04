@@ -5,21 +5,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.gem.GemHelper;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.Font.DisplayMode;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -51,19 +51,18 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	}
 
 	@Override
-	public void renderImage(Font pFont, int x, int y, PoseStack stack, ItemRenderer itemRenderer, int pBlitOffset) {
+	public void renderImage(Font font, int x, int y, GuiGraphics graphics) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, SOCKET);
 		for (int i = 0; i < component.sockets; i++) {
-			GuiComponent.blit(stack, x, y + spacing * i, pBlitOffset, 0, 0, 9, 9, 9, 9);
+			graphics.blit(SOCKET, x, y + spacing * i, 0, 0, 9, 9, 9, 9);
 		}
 		for (ItemStack gem : component.gems) {
 			if (!gem.isEmpty()) {
 				PoseStack mvStack = RenderSystem.getModelViewStack();
 				mvStack.pushPose();
 				mvStack.scale(0.5F, 0.5F, 1);
-				itemRenderer.renderAndDecorateFakeItem(gem, 2 * x + 1, 2 * y + 1);
+				graphics.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
 				mvStack.popPose();
 				RenderSystem.applyModelViewMatrix();
 			}
@@ -74,7 +73,8 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	@Override
 	public void renderText(Font font, int x, int y, Matrix4f matrix, BufferSource buffer) {
 		for (int i = 0; i < component.sockets; i++) {
-			font.drawInBatch(getSocketDesc(component.stack, i), x + 12, y + 1 + spacing * i, 0xAABBCC, true, matrix, buffer, false, 0, 15728880);
+			font.drawInBatch(getSocketDesc(component.stack, i), x + 12, y + 1 + spacing * i, 0xAABBCC, true, matrix, buffer, DisplayMode.NORMAL, 0,
+					15728880);
 		}
 	}
 

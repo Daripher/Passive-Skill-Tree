@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.util.FoodHelper;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
@@ -19,9 +20,9 @@ import vectorwing.farmersdelight.common.block.entity.StoveBlockEntity;
 public class MixinStoveBlockEntity implements PlayerContainer {
 	private @Nullable Player player;
 
-	@Redirect(method = "cookAndOutputItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/CampfireCookingRecipe;getResultItem()Lnet/minecraft/world/item/ItemStack;", remap = true), remap = false)
-	private ItemStack setCookedFoodBonuses(CampfireCookingRecipe recipe) {
-		ItemStack result = recipe.getResultItem();
+	@Redirect(method = "cookAndOutputItems", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/CampfireCookingRecipe;getResultItem(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;", remap = true), remap = false)
+	private ItemStack setCookedFoodBonuses(CampfireCookingRecipe recipe, RegistryAccess access) {
+		ItemStack result = recipe.getResultItem(access);
 		if (player == null) return result;
 		FoodHelper.setCraftedFoodBonuses(result, player);
 		return result;

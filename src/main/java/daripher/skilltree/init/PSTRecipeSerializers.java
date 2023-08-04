@@ -1,7 +1,11 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.recipe.*;
+import daripher.skilltree.recipe.GemInsertionRecipe;
+import daripher.skilltree.recipe.MixtureRecipe;
+import daripher.skilltree.recipe.PSTShapedRecipe;
+import daripher.skilltree.recipe.PSTShapelessRecipe;
+import daripher.skilltree.recipe.WeaponPoisoningRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

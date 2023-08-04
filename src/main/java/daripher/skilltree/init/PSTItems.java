@@ -63,13 +63,13 @@ public class PSTItems {
 	public static final RegistryObject<Item> IRON_RING = REGISTRY.register("iron_ring", IronRingItem::new);
 	public static final RegistryObject<Item> GOLDEN_RING = REGISTRY.register("golden_ring", GoldenRingItem::new);
 	// necklaces
-	public static final RegistryObject<Item> ASSASSIN_NECKLACE = REGISTRY.register("assassin_necklace", AssassinNecklace::new);
-	public static final RegistryObject<Item> TRAVELER_NECKLACE = REGISTRY.register("traveler_necklace", TravelerNecklace::new);
-	public static final RegistryObject<Item> HEALER_NECKLACE = REGISTRY.register("healer_necklace", HealerNecklace::new);
 	public static final RegistryObject<Item> SIMPLE_NECKLACE = REGISTRY.register("simple_necklace", SimpleNecklace::new);
+	public static final RegistryObject<Item> TRAVELER_NECKLACE = REGISTRY.register("traveler_necklace", TravelerNecklace::new);
+	public static final RegistryObject<Item> FISHERMAN_NECKLACE = REGISTRY.register("fisherman_necklace", FishermanNecklace::new);
+	public static final RegistryObject<Item> ASSASSIN_NECKLACE = REGISTRY.register("assassin_necklace", AssassinNecklace::new);
+	public static final RegistryObject<Item> HEALER_NECKLACE = REGISTRY.register("healer_necklace", HealerNecklace::new);
 	public static final RegistryObject<Item> SCHOLAR_NECKLACE = REGISTRY.register("scholar_necklace", ScholarNecklace::new);
 	public static final RegistryObject<Item> ARSONIST_NECKLACE = REGISTRY.register("arsonist_necklace", ArsonistNecklace::new);
-	public static final RegistryObject<Item> FISHERMAN_NECKLACE = REGISTRY.register("fisherman_necklace", FishermanNecklace::new);
 	// quivers
 	public static final RegistryObject<Item> QUIVER = REGISTRY.register("quiver", QuiverItem::new);
 	public static final RegistryObject<Item> FIERY_QUIVER = REGISTRY.register("fiery_quiver", FieryQuiverItem::new);

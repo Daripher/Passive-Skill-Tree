@@ -1,50 +1,81 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }		
-        maven {
-            url = 'https://repo.spongepowered.org/repository/maven-public/'
-            content { includeGroup "org.spongepowered" }
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
-}
-
 plugins {
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-apply plugin: 'org.spongepowered.mixin'
+version = mod_version
+group = mod_group_id
 
-version = '0.5.1'
-group = 'daripher.skilltree'
-archivesBaseName = 'PassiveSkillTree-1.19.2-BETA'
+base {
+    archivesName = "${mod_file_name}-${minecraft_version}"
+}
 
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-mixin {
-    add sourceSets.main, "skilltree.refmap.json"
-    config "skilltree.mixins.json"
-}
-
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    // The mappings can be changed at any time and must be in the following format.
+    // Channel:   Version:
+    // official   MCVersion             Official field/method names from Mojang mapping files
+    // parchment  YYYY.MM.DD-MCVersion  Open community-sourced parameter names and javadocs layered on top of official
+    //
+    // You must be aware of the Mojang license when using the 'official' or 'parchment' mappings.
+    // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
+    //
+    // Parchment is an unofficial project maintained by ParchmentMC, separate from MinecraftForge
+    // Additional setup is needed to use their mappings: https://parchmentmc.org/docs/getting-started
+    //
+    // Use non-default mappings at your own risk. They may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    mappings channel: mapping_channel, version: mapping_version
 
+    // When true, this property will have all Eclipse run configurations run the "prepareX" task for the given run configuration before launching the game.
+    // In most cases, it is not necessary to enable.
+    // enableEclipsePrepareRuns = true
+
+    // When true, this property will have all IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
+    // In most cases, it is not necessary to enable.
+    // enableIdeaPrepareRuns = true
+
+    // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
+    // It is REQUIRED to be set to true for this template to function.
+    // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+    copyIdeResources = true
+
+    // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
+    // The folder name can be set on a run configuration using the "folderName" property.
+    // By default, the folder name of a run configuration is the name of the Gradle project containing it.
+    // generateRunFolders = true
+
+    // This property enables access transformers for use in development.
+    // They will be applied to the Minecraft artifact.
+    // The access transformer file can be anywhere in the project.
+    // However, it must be at "META-INF/accesstransformer.cfg" in the final mod jar to be loaded by Forge.
+    // This default location is a best practice to automatically put the file in the right place in the final jar.
+    // See https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/ for more information.
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
+            
+            arg "-mixin.config=${mod_id}.mixins.json"
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'skilltree'
+            property 'forge.enabledGameTestNamespaces', mod_id
+
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
-                skilltree {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -53,26 +84,38 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
+            arg "-mixin.config=${mod_id}.mixins.json"
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'skilltree'
+            property 'forge.enabledGameTestNamespaces', mod_id
+
+			property 'mixin.env.remapRefMap', 'true'
+			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
             mods {
-                skilltree {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
+            
+            
         }
 
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             workingDirectory project.file('run')
 
             property 'forge.logging.markers', 'REGISTRIES'
+
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'skilltree'
+
+            property 'forge.enabledGameTestNamespaces', mod_id
 
             mods {
-                skilltree {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -81,13 +124,16 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
+            arg "-mixin.config=${mod_id}.mixins.json"
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'skilltree', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                skilltree {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -95,10 +141,11 @@ minecraft {
     }
 }
 
+// Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-	maven {
+    maven {
         url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -107,51 +154,65 @@ repositories {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
-	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-	//implementation fg.deobf("curse.maven:prism-lib-638111:3993293")
-	//implementation fg.deobf("curse.maven:iceberg-520110:4300529")
-	//implementation fg.deobf("curse.maven:legendary-tooltips-532127:4278509")
-	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
-	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
-	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
-	implementation fg.deobf("curse.maven:selene-499980:4491267")
-	//implementation fg.deobf("curse.maven:epic-knights-armor-and-weapons-509041:4423962")
-	//implementation fg.deobf("curse.maven:cloth-config-348521:3972423")
-	//implementation fg.deobf("curse.maven:architectury-api-419699:4521273")
-	//implementation fg.deobf("curse.maven:corail-deconstruction-table-444880:4524451")
-	implementation fg.deobf("curse.maven:easy-magic-456239:4411042")
-	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
-	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
-	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
-	implementation fg.deobf("curse.maven:apotheosis-313970:4657323")
-	implementation fg.deobf("curse.maven:placebo-283644:4645998")
-	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
-	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
-	implementation fg.deobf("curse.maven:bookshelf-228525:4556697")
-	implementation fg.deobf("curse.maven:jei-238222:4494410")
-	implementation fg.deobf("curse.maven:simply-swords-659887:4553225")
-	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
-	implementation fg.deobf("curse.maven:tetra-289712:4487237")
-	implementation fg.deobf("curse.maven:mutil-351914:3941314")
-	implementation fg.deobf("curse.maven:curios-309927:4523009")
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+	implementation fg.deobf("curse.maven:attributefix-280510:4648448")
+	implementation fg.deobf("curse.maven:max-health-fix-492246:4648479")
+	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
+	implementation fg.deobf("curse.maven:selene-499980:4656567")
+	implementation fg.deobf("curse.maven:easy-magic-456239:4658750")
+	implementation fg.deobf("curse.maven:puzzles-lib-495476:4673053")
+	implementation fg.deobf("curse.maven:farmers-delight-398521:4679319")
+	implementation fg.deobf("curse.maven:jei-238222:4644453")
+	implementation fg.deobf("curse.maven:curios-309927:4583413")
 }
 
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+}
+
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
+// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
+def replaceProperties = [
+        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+        forge_version: forge_version, forge_version_range: forge_version_range,
+        loader_version_range: loader_version_range,
+        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+        mod_authors: mod_authors, mod_description: mod_description
+]
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+}
+
+// Example for how to get properties into the manifest for reading at runtime.
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "skilltree",
-                "Specification-Vendor"    : "Daripher",
-                "Specification-Version"   : project.jar.archiveVersion,
+                "Specification-Title"     : mod_id,
+                "Specification-Vendor"    : mod_authors,
+                "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Daripher",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Implementation-Vendor"   : mod_authors,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "${mod_id}.mixins.json"
         ])
     }
 }
 
+// Example configuration to allow publishing using the maven-publish plugin
+// This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+// publish.dependsOn('reobfJar')
 
 publishing {
     publications {
@@ -167,5 +228,5 @@ publishing {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

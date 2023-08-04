@@ -1,32 +1,24 @@
 modLoader="javafml"
-loaderVersion="[43,)"
-license="All rights reserved"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
 
 [[mods]]
-	modId="skilltree"
-	version="0.5.1"
-	displayName="Passive Skill Tree"
-	authors="Daripher"
-	description='''Adds passive skill tree with player class system'''
-	credits='''Thanks to: LittleOdie for some ideas. Prince_Vladislav for some of the icons. All the modpack makers who use my mod. All the people on my discord server.'''
-	
-[[dependencies.skilltree]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''${mod_description}'''
+
+[[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
-    versionRange="[43,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
     
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
-    ordering="NONE"
-    side="BOTH"
-    
-[[dependencies.skilltree]]
-    modId="apotheosis"
-    mandatory=false
-    versionRange="[6.3.0,)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"

@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.api.HasAdditionalSockets;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class GemHelper {
@@ -38,9 +36,6 @@ public class GemHelper {
 	protected static final String UUID_TAG = "ID";
 
 	public static boolean hasGem(ItemStack stack, int socket) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
-		}
 		if (!stack.hasTag()) return false;
 		if (!stack.getTag().contains(GEMS_TAG)) return false;
 		ListTag gems = getGemsListTag(stack);
@@ -90,9 +85,6 @@ public class GemHelper {
 	}
 
 	public static Optional<GemItem> getGem(ItemStack itemStack, int socket) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return Optional.empty();
-		}
 		if (!hasGem(itemStack, socket)) return Optional.empty();
 		CompoundTag gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
 		String gemId = gemTag.getString(GEM_TAG);
@@ -102,9 +94,6 @@ public class GemHelper {
 	}
 
 	public static int getGemsCount(ItemStack itemStack) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			return ApotheosisCompatibility.ISNTANCE.getGemsCount(itemStack);
-		}
 		if (itemStack.isEmpty()) return 0;
 		int gemsCount = 0;
 		int socket = 0;
@@ -116,9 +105,6 @@ public class GemHelper {
 	}
 
 	public static int getEmptySockets(@NotNull ItemStack itemStack, @Nullable Player player) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
-		}
 		int sockets = getMaximumSockets(itemStack, player);
 		int emptySockets = sockets;
 		for (int socket = 0; socket < sockets; socket++) {
@@ -128,9 +114,6 @@ public class GemHelper {
 	}
 
 	public static int getMaximumSockets(ItemStack stack, @Nullable Player player) {
-		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
-		}
 		int sockets = 1;
 		if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
 			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);

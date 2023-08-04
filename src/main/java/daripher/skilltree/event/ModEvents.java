@@ -19,7 +19,7 @@ public class ModEvents {
 		LivingEntity entity = event.getEntity();
 		if (entity.getType() == EntityType.ENDER_DRAGON) {
 			ItemStack scroll = new ItemStack(PSTItems.AMNESIA_SCROLL.get());
-			event.getDrops().add(new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), scroll));
+			event.getDrops().add(new ItemEntity(entity.level(), entity.getX(), entity.getY(), entity.getZ(), scroll));
 		}
 	}
 }

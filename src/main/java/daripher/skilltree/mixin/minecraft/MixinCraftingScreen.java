@@ -10,8 +10,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
@@ -20,6 +18,7 @@ import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
@@ -57,11 +56,11 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 			addRequiredSkillButton(lastClickedRecipe);
 		}
 	}
-	
+
 	@Inject(method = "render", at = @At("TAIL"))
-	private void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo callbackInfo) {
+	private void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick, CallbackInfo callbackInfo) {
 		if (requiredSkillButton != null && requiredSkillButton.isHoveredOrFocused()) {
-			requiredSkillButton.renderToolTip(poseStack, mouseX, mouseY);
+			renderButtonTooltip(graphics, requiredSkillButton, mouseX, mouseY);
 		}
 	}
 
@@ -72,12 +71,12 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 			requiredSkillButton = null;
 		}
 	}
-	
+
 	private void addRequiredSkillButton(SkillRequiringRecipe recipe) {
 		PassiveSkill skill = SkillTreeClientData.getSkillsForTree(new ResourceLocation(SkillTreeMod.MOD_ID, "tree")).get(recipe.getRequiredSkillId());
-		requiredSkillButton = new SkillButton(() -> 0F, leftPos + 132, topPos + 69, skill, this::buttonPressed, this::renderButtonTooltip);
-		requiredSkillButton.x -= requiredSkillButton.getWidth() / 2;
-		requiredSkillButton.y -= requiredSkillButton.getHeight() / 2;
+		requiredSkillButton = new SkillButton(() -> 0F, leftPos + 132, topPos + 69, skill, this::buttonPressed);
+		requiredSkillButton.setX(requiredSkillButton.getX() - requiredSkillButton.getWidth() / 2);
+		requiredSkillButton.setY(requiredSkillButton.getY() - requiredSkillButton.getHeight() / 2);
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (PlayerSkillsProvider.get(player).hasSkill(requiredSkillButton.skill.getId())) {
 			requiredSkillButton.highlighted = true;
@@ -88,15 +87,15 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 	private void buttonPressed(Button button) {
 	}
 
-	private void renderButtonTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
+	private void renderButtonTooltip(GuiGraphics graphics, Button button, int mouseX, int mouseY) {
 		if (!(button instanceof SkillButton)) return;
 		SkillButton skillButton = (SkillButton) button;
 		ItemStack borderStyleStack = skillButton.getTooltipBorderStyleStack();
-		List<MutableComponent> tooltip = skillButton.getTooltip();
+		List<MutableComponent> tooltip = skillButton.getSkillTooltip();
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (!PlayerSkillsProvider.get(player).hasSkill(skillButton.skill.getId())) {
 			tooltip.add(Component.translatable("widget.skill_button.not_learned").withStyle(ChatFormatting.RED));
 		}
-		renderComponentTooltip(poseStack, tooltip, mouseX, mouseY, borderStyleStack);
+		graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY, borderStyleStack);
 	}
 }
