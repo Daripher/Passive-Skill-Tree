@@ -152,7 +152,7 @@ public class GemBonusHandler {
 	private static void removeTooltip(List<Component> tooltips, MutableComponent tooltip) {
 		Iterator<Component> iterator = tooltips.iterator();
 		while (iterator.hasNext()) {
-			if (!iterator.next().equals(tooltip)) continue;
+			if (!iterator.next().getString().equals(tooltip.getString())) continue;
 			iterator.remove();
 			break;
 		}
