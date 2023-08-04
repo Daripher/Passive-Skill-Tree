@@ -26,6 +26,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -51,7 +52,6 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion.BlockInteraction;
@@ -1195,15 +1195,23 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void ignoreAbusableRecipes(ServerStartedEvent event) {
 		if (!IGNORED_RECIPES.isEmpty()) return;
-		RecipeManager recipeManager = event.getServer().getRecipeManager();
-		List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(RecipeType.CRAFTING);
-		recipes.forEach(recipe1 -> recipes.stream().forEach(recipe2 -> {
-			if (canAbuse(recipe1, recipe2)) {
-				IGNORED_RECIPES.add(recipe1);
-				IGNORED_RECIPES.add(recipe2);
+		MinecraftServer server = event.getServer();
+		server.submitAsync(() -> {
+			RecipeManager recipeManager = server.getRecipeManager();
+			List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(RecipeType.CRAFTING);
+			for (int i = 0; i < recipes.size() - 1; i++) {
+				for (int j = i + 1; j < recipes.size(); j++) {
+					CraftingRecipe recipe1 = recipes.get(i);
+					CraftingRecipe recipe2 = recipes.get(j);
+					if (canAbuse(recipe1, recipe2)) {
+						IGNORED_RECIPES.add(recipe1);
+						IGNORED_RECIPES.add(recipe2);
+					}
+					if (recipe1.isSpecial()) IGNORED_RECIPES.add(recipe1);
+					if (recipe2.isSpecial()) IGNORED_RECIPES.add(recipe1);
+				}
 			}
-		}));
-		recipes.stream().filter(Recipe::isSpecial).forEach(IGNORED_RECIPES::add);
+		});
 	}
 
 	// checks if the recipe1 contains result of the recipe2 in its ingredients list and vice versa
