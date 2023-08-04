@@ -95,6 +95,7 @@ public enum ApotheosisCompatibility {
 	}
 
 	private void removeDuplicateTooltips(ItemTooltipEvent event) {
+		if (!adventureModuleEnabled()) return;
 		ItemStack stack = event.getItemStack();
 		if (!ItemHelper.isJewelry(stack)) return;
 		if (!stack.hasTag()) return;
@@ -115,6 +116,7 @@ public enum ApotheosisCompatibility {
 	}
 
 	private void applyCurioGemBonuses(CurioAttributeModifierEvent event) {
+		if (!adventureModuleEnabled()) return;
 		ItemStack stack = event.getItemStack();
 		if (!stack.hasTag()) return;
 		String slot = event.getSlotContext().identifier();
@@ -128,6 +130,7 @@ public enum ApotheosisCompatibility {
 	}
 
 	private void addJewelrySocketTooltip(GatherComponents event) {
+		if (!adventureModuleEnabled()) return;
 		ItemStack stack = event.getItemStack();
 		if (!ItemHelper.isJewelry(stack)) return;
 		event.getTooltipElements().removeIf(component -> component.right().filter(SocketComponent.class::isInstance).isPresent());
@@ -145,7 +148,7 @@ public enum ApotheosisCompatibility {
 	}
 
 	public int getGemsCount(ItemStack itemStack) {
-		if (!ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
+		if (!adventureModuleEnabled()) return 0;
 		return SocketHelper.getActiveGems(itemStack).size();
 	}
 
