@@ -9,9 +9,8 @@
 			"skip": ""
         },
         {
-            "type": "legacy_unicode",
-            "sizes": "minecraft:font/glyph_sizes.bin",
-            "template": "minecraft:font/unicode_page_%s.png"
+            "type": "reference",
+            "id": "minecraft:include/unifont"
         }
 	]
 }
