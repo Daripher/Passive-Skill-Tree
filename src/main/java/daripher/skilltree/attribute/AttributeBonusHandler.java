@@ -912,19 +912,13 @@ public class AttributeBonusHandler {
 		if (!(event.getEntity() instanceof Player)) return;
 		var player = (Player) event.getEntity();
 		var restoration = event.getItem().getFoodProperties(player).getNutrition();
-		var finalRestoration = restoration;
-		if (FoodHelper.hasRestorationBonus(event.getItem())) {
-			var restorationBonus = FoodHelper.getRestorationBonus(event.getItem());
-			finalRestoration += restoration * restorationBonus;
-			player.getFoodData().eat((int) (restoration * restorationBonus), 0F);
-		}
 		if (FoodHelper.hasHealingBonus(event.getItem())) {
 			var healingBonus = FoodHelper.getHealingBonus(event.getItem());
-			player.heal(healingBonus * finalRestoration);
+			player.heal(healingBonus * restoration);
 		}
 		if (FoodHelper.hasDamageBonus(event.getItem())) {
 			var damageBonus = FoodHelper.getDamageBonus(event.getItem());
-			var effectAmplifier = (int) (damageBonus * finalRestoration * 100);
+			var effectAmplifier = (int) (damageBonus * restoration * 100);
 			var damageEffect = new MobEffectInstance(PSTEffects.DAMAGE_BONUS.get(), 20 * 60, effectAmplifier);
 			player.addEffect(damageEffect);
 		}
@@ -936,7 +930,7 @@ public class AttributeBonusHandler {
 		}
 		if (FoodHelper.hasCritDamageBonus(event.getItem())) {
 			var critDamageBonus = FoodHelper.getCritDamageBonus(event.getItem());
-			var effectAmplifier = (int) (critDamageBonus * finalRestoration * 100);
+			var effectAmplifier = (int) (critDamageBonus * restoration * 100);
 			var critDamageEffect = new MobEffectInstance(PSTEffects.CRIT_DAMAGE_BONUS.get(), 20 * 60, effectAmplifier);
 			player.addEffect(critDamageEffect);
 		}

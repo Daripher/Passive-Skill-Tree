@@ -7,14 +7,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.extensions.IForgeItemStack;
 
 @Mixin(ItemStack.class)
-public class MixinItemStack {
+public abstract class MixinItemStack implements IForgeItemStack {
 	@Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
-	private void getMaxDamage(CallbackInfoReturnable<Integer> callbackInfo) {
-		ItemStack itemStack = (ItemStack) (Object) this;
-		if (!ItemHelper.hasBonus(itemStack, ItemHelper.DURABILITY)) return;
-		double durabilityBonus = ItemHelper.getBonus(itemStack, ItemHelper.DURABILITY);
-		callbackInfo.setReturnValue((int) (callbackInfo.getReturnValue() * (1 + durabilityBonus)));
+	private void getMaxDamage(CallbackInfoReturnable<Integer> callback) {
+		ItemStack stack = (ItemStack) (Object) this;
+		if (!ItemHelper.hasBonus(stack, ItemHelper.DURABILITY)) return;
+		double durabilityBonus = ItemHelper.getBonus(stack, ItemHelper.DURABILITY);
+		callback.setReturnValue((int) (callback.getReturnValue() * (1 + durabilityBonus)));
 	}
 }

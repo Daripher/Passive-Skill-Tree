@@ -1,7 +1,6 @@
 package daripher.skilltree;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.compat.appleskin.AppleSkinCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTEffects;
@@ -39,7 +38,6 @@ public class SkillTreeMod {
 	}
 
 	protected void addCompatibilities() {
-		if (ModList.get().isLoaded("appleskin")) AppleSkinCompatibility.ISNTANCE.addCompatibility();
 		if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.ISNTANCE.addCompatibility();
 	}
 }
