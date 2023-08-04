@@ -17,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 
 import daripher.skilltree.SkillTreeMod;
@@ -601,18 +602,18 @@ public class PSTSkillsProvider implements DataProvider {
 
 	@Override
 	public CompletableFuture<?> run(CachedOutput output) {
-		return CompletableFuture.runAsync(() -> {
-			addSkills();
-			shapeSkillTree();
-			setSkillsAttributeModifiers();
-			data.values().forEach(skill -> save(output, skill));
-		});
+		ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+		addSkills();
+		shapeSkillTree();
+		setSkillsAttributeModifiers();
+		data.values().forEach(skill -> futuresBuilder.add(save(output, skill)));
+		return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
 	}
 
-	private void save(CachedOutput output, PassiveSkill skill) {
+	private CompletableFuture<?> save(CachedOutput output, PassiveSkill skill) {
 		Path path = this.output.getOutputFolder().resolve(getSkillPath(skill));
 		JsonObject json = JsonHelper.writePassiveSkill(skill);
-		DataProvider.saveStable(output, json, path);
+		return DataProvider.saveStable(output, json, path);
 	}
 
 	public String getSkillPath(PassiveSkill skill) {

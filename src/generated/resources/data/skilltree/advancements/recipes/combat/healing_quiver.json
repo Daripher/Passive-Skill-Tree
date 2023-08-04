@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gems_diamond": {
+    "has_ghast_tear": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/diamond"
+            "items": [
+              "minecraft:ghast_tear"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:diamond_quiver"
+        "recipe": "skilltree:healing_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_gems_diamond",
+      "has_ghast_tear",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:diamond_quiver"
+      "skilltree:healing_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bone": {
+    "has_fermented_spider_eye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:bone"
+              "minecraft:fermented_spider_eye"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:bone_quiver"
+        "recipe": "skilltree:toxic_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_bone",
+      "has_fermented_spider_eye",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:bone_quiver"
+      "skilltree:toxic_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

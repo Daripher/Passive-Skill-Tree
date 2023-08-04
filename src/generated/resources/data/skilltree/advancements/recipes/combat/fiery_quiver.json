@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_leather": {
+    "has_blaze_powder": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:leather"
+              "minecraft:blaze_powder"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:quiver"
+        "recipe": "skilltree:fiery_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_leather",
+      "has_blaze_powder",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:quiver"
+      "skilltree:fiery_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

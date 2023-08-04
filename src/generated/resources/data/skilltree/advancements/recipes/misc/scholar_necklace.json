@@ -30,5 +30,6 @@
     "recipes": [
       "skilltree:scholar_necklace"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

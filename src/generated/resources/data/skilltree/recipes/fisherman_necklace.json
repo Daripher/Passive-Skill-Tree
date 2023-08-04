@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "fisherman_necklace",
   "key": {
     "#": {
@@ -16,5 +17,6 @@
   ],
   "result": {
     "item": "skilltree:fisherman_necklace"
-  }
+  },
+  "show_notification": true
 }

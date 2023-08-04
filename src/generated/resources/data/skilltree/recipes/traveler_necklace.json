@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "traveler_necklace",
   "key": {
     "#": {
@@ -16,5 +17,6 @@
   ],
   "result": {
     "item": "skilltree:traveler_necklace"
-  }
+  },
+  "show_notification": true
 }

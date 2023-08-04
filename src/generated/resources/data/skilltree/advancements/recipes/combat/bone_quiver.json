@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ghast_tear": {
+    "has_bone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:ghast_tear"
+              "minecraft:bone"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:healing_quiver"
+        "recipe": "skilltree:bone_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_ghast_tear",
+      "has_bone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:healing_quiver"
+      "skilltree:bone_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

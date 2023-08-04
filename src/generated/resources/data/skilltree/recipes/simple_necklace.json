@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "simple_necklace",
   "key": {
     "n": {
@@ -13,5 +14,6 @@
   ],
   "result": {
     "item": "skilltree:simple_necklace"
-  }
+  },
+  "show_notification": true
 }

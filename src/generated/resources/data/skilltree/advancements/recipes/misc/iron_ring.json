@@ -28,5 +28,6 @@
     "recipes": [
       "skilltree:iron_ring"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gunpowder": {
+    "has_ingots_gold": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:gunpowder"
-            ]
+            "tag": "forge:ingots/gold"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:explosive_quiver"
+        "recipe": "skilltree:gilded_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_gunpowder",
+      "has_ingots_gold",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:explosive_quiver"
+      "skilltree:gilded_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

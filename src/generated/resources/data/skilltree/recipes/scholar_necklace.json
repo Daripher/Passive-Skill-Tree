@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "scholar_necklace",
   "key": {
     "#": {
@@ -16,5 +17,6 @@
   ],
   "result": {
     "item": "skilltree:scholar_necklace"
-  }
+  },
+  "show_notification": true
 }

@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_fermented_spider_eye": {
+    "has_ingots_iron": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:fermented_spider_eye"
-            ]
+            "tag": "forge:ingots/iron"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:toxic_quiver"
+        "recipe": "skilltree:armored_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_fermented_spider_eye",
+      "has_ingots_iron",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:toxic_quiver"
+      "skilltree:armored_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

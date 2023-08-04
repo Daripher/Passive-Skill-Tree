@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "group": "quiver",
   "key": {
     "l": {
@@ -16,5 +17,6 @@
   ],
   "result": {
     "item": "skilltree:quiver"
-  }
+  },
+  "show_notification": true
 }

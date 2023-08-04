@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "group": "explosive_quiver",
   "key": {
     "#": {
@@ -19,5 +20,6 @@
   ],
   "result": {
     "item": "skilltree:explosive_quiver"
-  }
+  },
+  "show_notification": true
 }

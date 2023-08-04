@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_blaze_powder": {
+    "has_gunpowder": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:blaze_powder"
+              "minecraft:gunpowder"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:fiery_quiver"
+        "recipe": "skilltree:explosive_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_blaze_powder",
+      "has_gunpowder",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:fiery_quiver"
+      "skilltree:explosive_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

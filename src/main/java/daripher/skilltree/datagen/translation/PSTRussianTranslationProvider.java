@@ -462,6 +462,8 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		// curios info
 		add("curios.identifier.quiver", "Колчан");
 		add("curios.modifiers.quiver", "Когда надет:");
+		// tabs
+		add("itemGroup.skilltree", "Passive Skill Tree");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "group": "healing_quiver",
   "key": {
     "#": {
@@ -19,5 +20,6 @@
   ],
   "result": {
     "item": "skilltree:healing_quiver"
-  }
+  },
+  "show_notification": true
 }

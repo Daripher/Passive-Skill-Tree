@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_feather": {
+    "has_gems_diamond": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:feather"
-            ]
+            "tag": "forge:gems/diamond"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:silent_quiver"
+        "recipe": "skilltree:diamond_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_feather",
+      "has_gems_diamond",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:silent_quiver"
+      "skilltree:diamond_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

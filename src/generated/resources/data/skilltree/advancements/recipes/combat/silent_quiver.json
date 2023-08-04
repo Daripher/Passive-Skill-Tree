@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingots_gold": {
+    "has_feather": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/gold"
+            "items": [
+              "minecraft:feather"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "skilltree:gilded_quiver"
+        "recipe": "skilltree:silent_quiver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_ingots_gold",
+      "has_feather",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "skilltree:gilded_quiver"
+      "skilltree:silent_quiver"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

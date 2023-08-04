@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "assassin_necklace",
   "key": {
     "#": {
@@ -16,5 +17,6 @@
   ],
   "result": {
     "item": "skilltree:assassin_necklace"
-  }
+  },
+  "show_notification": true
 }
