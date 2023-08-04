@@ -44,7 +44,6 @@ import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent
 import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public enum ApotheosisCompatibility {
 	ISNTANCE;
@@ -117,10 +116,10 @@ public enum ApotheosisCompatibility {
 
 	private void applyCurioGemBonuses(CurioAttributeModifierEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (!ItemHelper.isJewelry(stack)) return;
 		if (!stack.hasTag()) return;
-		if (!(stack.getItem() instanceof ICurioItem curio)) return;
-		if (!curio.canEquip(event.getSlotContext(), stack)) return;
+		String slot = event.getSlotContext().identifier();
+		if (ItemHelper.isRing(stack) && !slot.equals("ring")) return;
+		if (ItemHelper.isNecklace(stack) && !slot.equals("necklace")) return;
 		SocketHelper.getGemInstances(stack).forEach(gem -> {
 			gem.gem().getBonus(LootCategory.forItem(stack)).ifPresent(bonus -> {
 				bonus.addModifiers(gem.gemStack(), gem.rarity(), event::addModifier);
