@@ -50,7 +50,7 @@ public class PotionHelper {
 	}
 
 	public static boolean isSuperiorPotion(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains(EFFECT_STRENGTH_TAG);
+		return stack.hasTag() && (stack.getTag().contains(EFFECT_STRENGTH_TAG) || stack.getTag().contains(EFFECT_DURATION_TAG));
 	}
 
 	public static boolean isMixture(ItemStack stack) {
@@ -62,6 +62,7 @@ public class PotionHelper {
 	}
 
 	public static void enhancePotion(ItemStack stack, float amplificationChance, float durationBonus) {
+		if (PotionUtils.getMobEffects(stack).isEmpty()) return;
 		int strength = 0;
 		if (amplificationChance > 1) {
 			strength += (int) amplificationChance;

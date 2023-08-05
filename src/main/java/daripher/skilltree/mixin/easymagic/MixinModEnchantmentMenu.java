@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.api.EnchantmentMenuExtention;
+import daripher.skilltree.api.PlayerContainer;
 import fuzs.easymagic.mixin.accessor.EnchantmentMenuAccessor;
 import fuzs.easymagic.world.inventory.ModEnchantmentMenu;
 import net.minecraft.util.RandomSource;

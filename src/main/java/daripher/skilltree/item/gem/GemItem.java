@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.init.PSTCreativeTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.ModList;
 
 public abstract class GemItem extends Item {
 	public GemItem() {
-		super(new Properties().tab(CreativeModeTab.TAB_MATERIALS));
+		super(new Properties().tab(PSTCreativeTabs.SKILLTREE));
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -35,7 +35,7 @@ public class QuiverItem extends Item implements ICurioItem {
 	private final int capacity;
 
 	public QuiverItem(int capacity) {
-		super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1).durability(capacity));
+		super(new Properties().tab(PSTCreativeTabs.SKILLTREE).stacksTo(1).durability(capacity));
 		this.capacity = capacity;
 	}
 

@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 
-import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.api.SkillRequiringRecipe;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
