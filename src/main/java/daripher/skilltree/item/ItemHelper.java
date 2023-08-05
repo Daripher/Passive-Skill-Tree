@@ -216,15 +216,15 @@ public class ItemHelper {
 	}
 
 	public static boolean isRing(ItemStack stack) {
-		return stack.is(PSTTags.RINGS);
+		return !stack.isEmpty() && stack.is(PSTTags.RINGS);
 	}
 
 	public static boolean isNecklace(ItemStack stack) {
-		return stack.is(PSTTags.NECKLACES);
+		return !stack.isEmpty() && stack.is(PSTTags.NECKLACES);
 	}
 
 	public static boolean isQuiver(ItemStack stack) {
-		return stack.is(PSTTags.QUIVERS);
+		return !stack.isEmpty() && stack.is(PSTTags.QUIVERS);
 	}
 
 	public static List<String> getBonuses() {
