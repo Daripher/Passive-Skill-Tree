@@ -78,7 +78,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -1189,10 +1189,10 @@ public class AttributeBonusHandler {
 	}
 
 	@SubscribeEvent
-	public static void ignoreAbusableRecipes(ServerStartedEvent event) {
+	public static void ignoreAbusableRecipes(ServerStartingEvent event) {
 		if (!IGNORED_RECIPES.isEmpty()) return;
 		MinecraftServer server = event.getServer();
-		server.submitAsync(() -> {
+		new Thread(() -> {
 			RecipeManager recipeManager = server.getRecipeManager();
 			List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(RecipeType.CRAFTING);
 			for (int i = 0; i < recipes.size() - 1; i++) {
@@ -1207,7 +1207,7 @@ public class AttributeBonusHandler {
 					if (recipe2.isSpecial()) IGNORED_RECIPES.add(recipe2);
 				}
 			}
-		});
+		}).run();
 	}
 
 	// checks if the recipe1 contains result of the recipe2 in its ingredients list and vice versa
