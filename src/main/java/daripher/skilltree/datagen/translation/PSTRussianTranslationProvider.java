@@ -440,6 +440,7 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		// screen info
 		add("widget.skill_points_left", "Очков осталось: %s");
 		add("widget.skill_button.not_learned", "Умение не изучено");
+		add("widget.skill_button.multiple_bonuses", "%s и %s");
 		add("widget.buy_skill_button", "Купить очко умений");
 		add("key.categories.skilltree", "Древо пассивных умений");
 		add("key.display_skill_tree", "Открыть древо пассивных умений");
