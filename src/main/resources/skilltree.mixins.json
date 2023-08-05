@@ -15,7 +15,6 @@
   	"minecraft/MixinInventoryMenu",
   	"minecraft/MixinAbstractFurnaceMenu",
   	"minecraft/MixinCampfireBlockEntity",
-  	"minecraft/MixinVanillaBrewingRecipe",
   	"minecraft/MixinItemStack",
   	"minecraft/MixinItem",
   	"minecraft/MixinLivingEntity",

@@ -45,7 +45,7 @@ public class MixinPotionItem extends Item {
 
 	protected Component getSuperiorPotionName(ItemStack stack) {
 		Component potionName = super.getName(stack);
-		return Component.translatable("potion.superior").append(potionName);
+		return Component.translatable("potion.superior", potionName);
 	}
 
 	@Inject(method = "appendHoverText", at = @At("TAIL"))
