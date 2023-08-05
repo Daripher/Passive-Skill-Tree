@@ -290,6 +290,7 @@
   "item.skilltree.vacucite.tooltip": "Уничтожает самоцветы в предмете",
   "item.skilltree.wisdom_scroll": "Свиток мудрости",
   "item.skilltree.wisdom_scroll.tooltip": "Дарует одно очко пассивных умений",
+  "itemGroup.skilltree": "Passive Skill Tree",
   "key.categories.skilltree": "Древо пассивных умений",
   "key.display_skill_tree": "Открыть древо пассивных умений",
   "potion.superior": "Качественное %s",

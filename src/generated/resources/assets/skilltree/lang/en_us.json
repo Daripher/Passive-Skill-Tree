@@ -291,6 +291,7 @@
   "item.skilltree.vacucite.tooltip": "Destroys gems in the item",
   "item.skilltree.wisdom_scroll": "Wisdom Scroll",
   "item.skilltree.wisdom_scroll.tooltip": "Grants one passive skill point",
+  "itemGroup.skilltree": "Passive Skill Tree",
   "key.categories.skilltree": "Passive Skill Tree",
   "key.display_skill_tree": "Open Skill Tree",
   "potion.superior": "Superior %s",

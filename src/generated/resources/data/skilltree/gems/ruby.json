@@ -93,11 +93,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "bow",
           "crossbow",
           "trident",
           "heavy_weapon",
-          "sword"
+          "sword",
+          "bow"
         ]
       },
       "operation": "addition",

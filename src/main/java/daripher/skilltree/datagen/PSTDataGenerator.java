@@ -1,7 +1,8 @@
 package daripher.skilltree.datagen;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.datagen.translation.*;
+import daripher.skilltree.datagen.translation.PSTEnglishTranslationProvider;
+import daripher.skilltree.datagen.translation.PSTRussianTranslationProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;

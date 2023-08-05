@@ -462,6 +462,8 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		// curios info
 		add("curios.identifier.quiver", "Quiver");
 		add("curios.modifiers.quiver", "When worn:");
+		// tabs
+		add("itemGroup.skilltree", "Passive Skill Tree");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

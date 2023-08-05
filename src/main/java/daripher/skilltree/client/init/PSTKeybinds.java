@@ -4,7 +4,6 @@ import org.lwjgl.glfw.GLFW;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeScreen;
-import daripher.skilltree.client.screen.editor.SkillTreeEditorScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;

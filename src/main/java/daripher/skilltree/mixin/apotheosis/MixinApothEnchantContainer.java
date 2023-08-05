@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.api.EnchantmentMenuExtention;
+import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.enchantment.EnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;

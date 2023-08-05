@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.api.EnchantmentMenuExtention;
+import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.enchantment.EnchantmentHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
