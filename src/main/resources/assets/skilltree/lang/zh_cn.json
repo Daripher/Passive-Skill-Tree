@@ -449,6 +449,7 @@
   "text.apotheosis.category.ring.plural": "戒指",
   "weapon.poisoned": "附加的药水效果：",
   "widget.buy_skill_button": "购买技能点",
+  "widget.skill_button.multiple_bonuses": "%s和%s",
   "widget.skill_button.not_learned": "技能没有学习",
   "widget.skill_points_left": "技能点剩余：%s"
 }
