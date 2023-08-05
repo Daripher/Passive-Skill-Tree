@@ -257,7 +257,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTItems.COPPER_NUGGET.get(), "Copper Nugget");
 		add(PSTItems.ASSASSIN_NECKLACE.get(), "Assassin's Necklace");
 		add(PSTItems.HEALER_NECKLACE.get(), "Healer's Necklace");
-		add(PSTItems.TRAVELER_NECKLACE.get(), "Traveler's Traveler");
+		add(PSTItems.TRAVELER_NECKLACE.get(), "Traveler's Necklace");
 		add(PSTItems.SIMPLE_NECKLACE.get(), "Simple Necklace");
 		add(PSTItems.SCHOLAR_NECKLACE.get(), "Scholar's Necklace");
 		add(PSTItems.ARSONIST_NECKLACE.get(), "Arsonist's Necklace");
