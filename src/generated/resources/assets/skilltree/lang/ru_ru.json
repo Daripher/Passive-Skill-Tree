@@ -450,6 +450,7 @@
   "text.apotheosis.category.ring.plural": "Колца",
   "weapon.poisoned": "Отравлено:",
   "widget.buy_skill_button": "Купить очко умений",
+  "widget.skill_button.multiple_bonuses": "%s и %s",
   "widget.skill_button.not_learned": "Умение не изучено",
   "widget.skill_points_left": "Очков осталось: %s"
 }

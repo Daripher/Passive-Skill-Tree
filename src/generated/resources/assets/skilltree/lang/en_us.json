@@ -449,6 +449,7 @@
   "text.apotheosis.category.ring.plural": "Rings",
   "weapon.poisoned": "Poisoned:",
   "widget.buy_skill_button": "Buy Skill Point",
+  "widget.skill_button.multiple_bonuses": "%s and %s",
   "widget.skill_button.not_learned": "Skill not learned",
   "widget.skill_points_left": "Points left: %s"
 }

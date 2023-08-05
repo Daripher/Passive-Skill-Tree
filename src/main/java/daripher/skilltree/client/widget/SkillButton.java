@@ -124,15 +124,18 @@ public class SkillButton extends Button {
 		tooltip.add(title.withStyle(getTitleStyle()));
 	}
 
-	protected MutableComponent generateTitle(List<Pair<Attribute, AttributeModifier>> attributeModifiers) {
-		var title = Component.empty();
-		var affectedAttributesNames = attributeModifiers.stream().map(Pair::getLeft).map(Attribute::getDescriptionId).map(Component::translatable).toList();
-		title.append(affectedAttributesNames.get(0));
-		if (attributeModifiers.size() > 1) {
-			title.append(" and ");
-			title.append(affectedAttributesNames.get(1));
+	protected MutableComponent generateTitle(List<Pair<Attribute, AttributeModifier>> modifiers) {
+		// formatter:off
+		List<MutableComponent> attributes = modifiers.stream()
+				.map(Pair::getLeft)
+				.map(Attribute::getDescriptionId)
+				.map(Component::translatable).toList();
+		// formatter:on
+		if (modifiers.size() > 1) {
+			return Component.translatable("widget.skill_button.multiple_bonuses", attributes.get(0), attributes.get(1));
+		} else {
+			return Component.empty().append(attributes.get(0));
 		}
-		return title;
 	}
 
 	private Style getTitleStyle() {
