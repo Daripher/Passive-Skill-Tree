@@ -10,7 +10,6 @@ import com.mojang.datafixers.util.Either;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.HasAdditionalSockets;
-import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
 import net.minecraft.core.BlockPos;
@@ -48,8 +47,8 @@ import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 public enum ApotheosisCompatibility {
 	ISNTANCE;
 
-	public final LootCategory ring = LootCategory.register(null, "ring", stack -> stack.is(PSTTags.RINGS), new EquipmentSlot[0]);
-	public final LootCategory necklace = LootCategory.register(null, "necklace", stack -> stack.is(PSTTags.NECKLACES), new EquipmentSlot[0]);
+	public final LootCategory ring = LootCategory.register(null, "ring", ItemHelper::isRing, new EquipmentSlot[0]);
+	public final LootCategory necklace = LootCategory.register(null, "necklace", ItemHelper::isNecklace, new EquipmentSlot[0]);
 
 	public void addCompatibility() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
