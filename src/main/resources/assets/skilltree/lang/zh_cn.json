@@ -291,6 +291,7 @@
   "item.skilltree.vacucite.tooltip": "销毁物品中的宝石",
   "item.skilltree.wisdom_scroll": "智慧卷轴",
   "item.skilltree.wisdom_scroll.tooltip": "获得一个被动技能点",
+  "itemGroup.skilltree": "被动技能树",
   "key.categories.skilltree": "被动技能树",
   "key.display_skill_tree": "打开技能树",
   "potion.superior": "精炼%s",
