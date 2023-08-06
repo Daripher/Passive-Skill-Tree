@@ -114,7 +114,7 @@ public class GemHelper {
 	}
 
 	public static int getMaximumSockets(ItemStack stack, @Nullable Player player) {
-		int sockets = 1;
+		int sockets = ItemHelper.getDefaultSockets(stack);
 		if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
 			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
 		}

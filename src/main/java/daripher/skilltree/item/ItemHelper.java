@@ -130,6 +130,18 @@ public class ItemHelper {
 		return slot;
 	}
 
+	public static int getDefaultSockets(ItemStack stack) {
+		if (isHelmet(stack)) return Config.COMMON.defaultHelmetsSockets.get();
+		if (isChestplate(stack)) return Config.COMMON.defaultChestplatesSockets.get();
+		if (isLeggings(stack)) return Config.COMMON.defaultLeggingsSockets.get();
+		if (isBoots(stack)) return Config.COMMON.defaultBootsSockets.get();
+		if (isWeapon(stack)) return Config.COMMON.defaultWeaponsSockets.get();
+		if (isShield(stack)) return Config.COMMON.defaultShieldsSockets.get();
+		if (isRing(stack)) return Config.COMMON.defaultRingsSockets.get();
+		if (isNecklace(stack)) return Config.COMMON.defaultNecklacesSockets.get();
+		return 0;
+	}
+
 	public static boolean isArmor(ItemStack itemStack) {
 		return itemStack.getItem() instanceof ArmorItem || itemStack.is(Tags.Items.ARMORS);
 	}
