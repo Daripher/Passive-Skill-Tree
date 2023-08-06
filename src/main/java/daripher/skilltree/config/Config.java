@@ -23,6 +23,14 @@ public class Config {
 		private final ConfigValue<Boolean> enableAmnesiaScrollDrop;
 		private final ConfigValue<List<? extends Integer>> skillPointsCosts;
 		private final ConfigValue<List<? extends String>> blacklistedGemContainers;
+		public final ConfigValue<Integer> defaultHelmetsSockets;
+		public final ConfigValue<Integer> defaultChestplatesSockets;
+		public final ConfigValue<Integer> defaultLeggingsSockets;
+		public final ConfigValue<Integer> defaultBootsSockets;
+		public final ConfigValue<Integer> defaultWeaponsSockets;
+		public final ConfigValue<Integer> defaultShieldsSockets;
+		public final ConfigValue<Integer> defaultRingsSockets;
+		public final ConfigValue<Integer> defaultNecklacesSockets;
 
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
 			Predicate<Object> positiveOrZeroInteger = o -> o instanceof Integer i && i >= 0;
@@ -42,6 +50,14 @@ public class Config {
 			builder.comment("You can also blacklist whole namespace like this: [\"<mod_id>:*\"]");
 			builder.comment("You can also blacklist all items like this: [\"*:*\"]");
 			blacklistedGemContainers = builder.defineList("IDs of items that shouldn't have sockets", new ArrayList<String>(), potentialItemId);
+			defaultHelmetsSockets = builder.defineInRange("Default Helmets Sockets", 1, 0, 4);
+			defaultChestplatesSockets = builder.defineInRange("Default Chestplates Sockets", 1, 0, 4);
+			defaultLeggingsSockets = builder.defineInRange("Default Leggings Sockets", 0, 0, 4);
+			defaultBootsSockets = builder.defineInRange("Default Boots Sockets", 1, 0, 4);
+			defaultWeaponsSockets = builder.defineInRange("Default Weapons Sockets", 1, 0, 4);
+			defaultShieldsSockets = builder.defineInRange("Default Shields Sockets", 1, 0, 4);
+			defaultRingsSockets = builder.defineInRange("Default Rings Sockets", 1, 0, 4);
+			defaultNecklacesSockets = builder.defineInRange("Default Necklaces Sockets", 1, 0, 4);
 			builder.pop();
 			builder.push("Amnesia Scroll");
 			builder.comment("How much levels (percentage) player lose using amnesia scroll");

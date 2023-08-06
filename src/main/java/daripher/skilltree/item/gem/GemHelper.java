@@ -131,7 +131,7 @@ public class GemHelper {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return 0;
 		}
-		int sockets = 1;
+		int sockets = ItemHelper.getDefaultSockets(stack);
 		if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
 			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
 		}
