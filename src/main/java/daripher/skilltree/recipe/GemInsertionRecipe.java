@@ -27,9 +27,9 @@ public class GemInsertionRecipe extends SmithingTransformRecipe {
 
 	@Override
 	public boolean matches(Container container, Level level) {
-		ItemStack base = container.getItem(0);
+		ItemStack base = container.getItem(1);
 		if (!isBaseIngredient(base)) return false;
-		ItemStack ingredient = container.getItem(1);
+		ItemStack ingredient = container.getItem(2);
 		if (!isAdditionIngredient(ingredient)) return false;
 		GemItem gem = (GemItem) ingredient.getItem();
 		PlayerContainer playerContainer = (PlayerContainer) container;
@@ -42,9 +42,9 @@ public class GemInsertionRecipe extends SmithingTransformRecipe {
 		var playerContainer = (PlayerContainer) container;
 		if (!playerContainer.getPlayer().isPresent()) return ItemStack.EMPTY;
 		var player = playerContainer.getPlayer().get();
-		var baseItem = container.getItem(0);
+		var baseItem = container.getItem(1);
 		var socket = getEmptySocket(baseItem, player);
-		var gem = (GemItem) container.getItem(1).getItem();
+		var gem = (GemItem) container.getItem(2).getItem();
 		if (!gem.canInsertInto(player, baseItem, socket)) return ItemStack.EMPTY;
 		var resultItemStack = baseItem.copy();
 		resultItemStack.setCount(1);

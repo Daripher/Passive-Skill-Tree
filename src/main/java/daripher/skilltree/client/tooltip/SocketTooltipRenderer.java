@@ -8,7 +8,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.gem.GemHelper;
@@ -59,12 +58,10 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 		}
 		for (ItemStack gem : component.gems) {
 			if (!gem.isEmpty()) {
-				PoseStack mvStack = RenderSystem.getModelViewStack();
-				mvStack.pushPose();
-				mvStack.scale(0.5F, 0.5F, 1);
-				graphics.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
-				mvStack.popPose();
-				RenderSystem.applyModelViewMatrix();
+				graphics.pose().pushPose();
+				graphics.pose().scale(0.5F, 0.5F, 1);
+				graphics.renderItem(gem, 2 * x + 1, 2 * y + 1);
+				graphics.pose().popPose();
 			}
 			y += spacing;
 		}
