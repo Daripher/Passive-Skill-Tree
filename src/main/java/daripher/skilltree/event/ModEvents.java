@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class ModEvents {
 	@SubscribeEvent
 	public static void dropAmnesiaScroll(LivingDropsEvent event) {
-		if (!Config.COMMON.shouldDropAmnesiaScrolls()) return;
+		if (!Config.dragon_drops_amnesia_scroll) return;
 		LivingEntity entity = event.getEntity();
 		if (entity.getType() == EntityType.ENDER_DRAGON) {
 			ItemStack scroll = new ItemStack(PSTItems.AMNESIA_SCROLL.get());

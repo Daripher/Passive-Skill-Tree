@@ -30,7 +30,7 @@ public class WisdomScrollItem extends Item {
 		var itemInHand = player.getItemInHand(hand);
 		var skillsCapability = PlayerSkillsProvider.get(player);
 		var totalSkillPoints = skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
-		if (totalSkillPoints >= Config.COMMON.getMaximumSkillPoints()) {
+		if (totalSkillPoints >= Config.max_skill_points) {
 			return InteractionResultHolder.fail(itemInHand);
 		}
 		if (!player.getAbilities().instabuild) {
@@ -41,8 +41,7 @@ public class WisdomScrollItem extends Item {
 			level.playSound(null, player, SoundEvents.PLAYER_LEVELUP, player.getSoundSource(), 0.4F, 0.2F + player.getRandom().nextFloat() * 0.3F);
 			skillsCapability.grantSkillPoints(1);
 			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
-			var shouldShowChatMessages = Config.COMMON.shouldShowChatMessages();
-			if (shouldShowChatMessages) {
+			if (Config.show_chat_messages) {
 				player.sendSystemMessage(Component.translatable("skilltree.message.point_command").withStyle(ChatFormatting.YELLOW));
 			}
 		}

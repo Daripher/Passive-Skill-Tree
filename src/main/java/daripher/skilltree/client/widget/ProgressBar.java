@@ -65,7 +65,7 @@ public class ProgressBar extends Button {
 	}
 
 	private static boolean isMaxLevel(int currentLevel) {
-		var levelupCosts = Config.COMMON.getSkillPointCosts();
+		var levelupCosts = Config.level_up_costs;
 		return currentLevel >= levelupCosts.size();
 	}
 
@@ -73,7 +73,7 @@ public class ProgressBar extends Button {
 		var minecraft = Minecraft.getInstance();
 		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
 		var currentLevel = skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
-		var levelupCosts = Config.COMMON.getSkillPointCosts();
+		var levelupCosts = Config.level_up_costs;
 		var experienceProgress = 1F;
 		if (currentLevel < levelupCosts.size()) {
 			var levelupCost = levelupCosts.get(currentLevel);

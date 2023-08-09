@@ -11,7 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -27,7 +29,7 @@ public class SkillTreeMod {
 		PSTRecipeSerializers.REGISTRY.register(modEventBus);
 		PSTEffects.REGISTRY.register(modEventBus);
 		modEventBus.addListener(this::registerCurioSlots);
-		Config.register();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 		addCompatibilities();
 	}
 
