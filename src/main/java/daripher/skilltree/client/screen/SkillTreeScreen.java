@@ -88,7 +88,7 @@ public class SkillTreeScreen extends Screen {
 		buySkillButton = new SkillTreeButton(width / 2 - 145, height - 18, 140, 14, Component.translatable("widget.buy_skill_button"),
 				b -> buySkill());
 		addRenderableWidget(buySkillButton);
-		if (!Config.COMMON.experienceGainEnabled()) {
+		if (!Config.enable_exp_exchange) {
 			progressBar.visible = false;
 			buySkillButton.visible = false;
 		}
@@ -118,7 +118,7 @@ public class SkillTreeScreen extends Screen {
 	public void renderPointsInfo(GuiGraphics graphics) {
 		prepareTextureRendering(WIDGETS_TEXTURE);
 		int x = width / 2 + 5;
-		if (!Config.COMMON.experienceGainEnabled()) x = width / 2 - 70;
+		if (!Config.enable_exp_exchange) x = width / 2 - 70;
 		graphics.blit(WIDGETS_TEXTURE, x, height - 18, 0, 10, 140, 14);
 		MutableComponent pointsLeft = Component.literal("" + skillPoints).withStyle(EXPERIENCE_COLOR);
 		graphics.drawCenteredString(font, Component.translatable("widget.skill_points_left", pointsLeft), x + 70, height - 15, 0xFFFFFF);
@@ -243,21 +243,21 @@ public class SkillTreeScreen extends Screen {
 		var currentLevel = getCurrentLevel();
 		if (!canBuySkillPoint(currentLevel)) return;
 		var minecraft = Minecraft.getInstance();
-		var skillCosts = Config.COMMON.getSkillPointCosts();
+		var skillCosts = Config.level_up_costs;
 		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
 		minecraft.player.giveExperiencePoints(-skillCosts.get(currentLevel));
 	}
 
 	private static boolean canBuySkillPoint(int currentLevel) {
-		if (!Config.COMMON.experienceGainEnabled()) return false;
+		if (!Config.enable_exp_exchange) return false;
 		if (isMaxLevel(currentLevel)) return false;
 		var minecraft = Minecraft.getInstance();
-		var skillCosts = Config.COMMON.getSkillPointCosts();
+		var skillCosts = Config.level_up_costs;
 		return minecraft.player.totalExperience >= skillCosts.get(currentLevel);
 	}
 
 	private static boolean isMaxLevel(int currentLevel) {
-		var levelupCosts = Config.COMMON.getSkillPointCosts();
+		var levelupCosts = Config.level_up_costs;
 		return currentLevel >= levelupCosts.size();
 	}
 
@@ -307,7 +307,7 @@ public class SkillTreeScreen extends Screen {
 		int currentLevel = getCurrentLevel();
 		buySkillButton.active = false;
 		if (isMaxLevel(currentLevel)) return;
-		List<? extends Integer> pointCosts = Config.COMMON.getSkillPointCosts();
+		List<? extends Integer> pointCosts = Config.level_up_costs;
 		int pointCost = pointCosts.get(currentLevel);
 		buySkillButton.active = minecraft.player.totalExperience >= pointCost;
 	}
@@ -453,6 +453,6 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected int getMaximumSkillPoints() {
-		return Config.COMMON.getMaximumSkillPoints();
+		return Config.max_skill_points;
 	}
 }

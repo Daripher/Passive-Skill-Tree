@@ -7,7 +7,9 @@ import daripher.skilltree.init.PSTEffects;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(SkillTreeMod.MOD_ID)
@@ -21,6 +23,6 @@ public class SkillTreeMod {
 		PSTRecipeSerializers.REGISTRY.register(bus);
 		PSTEffects.REGISTRY.register(bus);
 		PSTCreativeTabs.REGISTRY.register(bus);
-		Config.register();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 	}
 }

@@ -37,7 +37,7 @@ public class AmnesiaScrollItem extends Item {
 			level.playSound(null, player, SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM, player.getSoundSource(), 0.4F,
 					0.2F + player.getRandom().nextFloat() * 0.2F);
 			skills.resetTree((ServerPlayer) player);
-			skills.setSkillPoints((int) (skills.getSkillPoints() * (1 - Config.COMMON.getAmnesiaScrollPenalty())));
+			skills.setSkillPoints((int) (skills.getSkillPoints() * (1 - Config.amnesia_scroll_penalty)));
 			player.sendSystemMessage(Component.translatable("skilltree.message.reset_command").withStyle(ChatFormatting.YELLOW));
 			NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncPlayerSkillsMessage(player));
 		}
@@ -47,7 +47,7 @@ public class AmnesiaScrollItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
 		components.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
-		double penalty = Config.COMMON.getAmnesiaScrollPenalty();
+		double penalty = Config.amnesia_scroll_penalty;
 		if (penalty > 0) {
 			int textPenalty = (int) (penalty * 100);
 			components.add(Component.translatable(getDescriptionId() + ".warning", textPenalty).withStyle(ChatFormatting.RED));

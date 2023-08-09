@@ -26,14 +26,10 @@ public class GainSkillPointMessage {
 		var learnedSkills = skillsCapability.getPlayerSkills().size();
 		var skillPoints = skillsCapability.getSkillPoints();
 		var currentLevel = learnedSkills + skillPoints;
-		var levelupCosts = Config.COMMON.getSkillPointCosts();
-		if (currentLevel >= levelupCosts.size()) {
-			return;
-		}
+		var levelupCosts = Config.level_up_costs;
+		if (currentLevel >= levelupCosts.size()) return;
 		var levelupCost = levelupCosts.get(currentLevel);
-		if (player.totalExperience < levelupCost) {
-			return;
-		}
+		if (player.totalExperience < levelupCost) return;
 		player.giveExperiencePoints(-levelupCost);
 		skillsCapability.grantSkillPoints(1);
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));

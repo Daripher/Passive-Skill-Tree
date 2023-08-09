@@ -54,16 +54,16 @@ public class ItemHelper {
 	public static final String DOUBLE_LOOT = "DoubleLootBonus";
 	public static final String ADDITIONAL_SOCKETS = "AdditionalSocksetsBonus";
 
-	public static void setBonus(ItemStack itemStack, String type, double bonus) {
-		itemStack.getOrCreateTag().putDouble(type, bonus);
+	public static void setBonus(ItemStack stack, String type, double bonus) {
+		stack.getOrCreateTag().putDouble(type, bonus);
 	}
 
-	public static boolean hasBonus(ItemStack itemStack, String type) {
-		return itemStack.hasTag() && itemStack.getTag().contains(type);
+	public static boolean hasBonus(ItemStack stack, String type) {
+		return stack.hasTag() && stack.getTag().contains(type);
 	}
 
-	public static double getBonus(ItemStack itemStack, String type) {
-		return itemStack.getTag().getDouble(type);
+	public static double getBonus(ItemStack stack, String type) {
+		return stack.getTag().getDouble(type);
 	}
 
 	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> func) {
@@ -80,7 +80,7 @@ public class ItemHelper {
 	}
 
 	public static boolean hasSockets(ItemStack stack) {
-		List<? extends String> blacklist = Config.COMMON.getBlacklistedGemstoneContainers();
+		List<? extends String> blacklist = Config.socket_blacklist;
 		if (blacklist.contains("*:*")) return false;
 		ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
 		if (itemId == null) return false;
@@ -90,12 +90,12 @@ public class ItemHelper {
 		return isEquipment(stack) && !isLeggings(stack) || isJewelry(stack);
 	}
 
-	public static boolean isPoison(ItemStack itemStack) {
-		return itemStack.getItem() instanceof PotionItem potion && PotionHelper.isHarmfulPotion(itemStack);
+	public static boolean isPoison(ItemStack stack) {
+		return stack.getItem() instanceof PotionItem potion && PotionHelper.isHarmfulPotion(stack);
 	}
 
-	public static boolean isPotion(ItemStack itemStack) {
-		return itemStack.getItem() instanceof PotionItem;
+	public static boolean isPotion(ItemStack stack) {
+		return stack.getItem() instanceof PotionItem;
 	}
 
 	public static void setPoisons(ItemStack result, ItemStack poisonStack) {
@@ -108,12 +108,12 @@ public class ItemHelper {
 		result.getOrCreateTag().put(POISONS, poisonsTag);
 	}
 
-	public static boolean hasPoisons(ItemStack itemStack) {
-		return itemStack.hasTag() && itemStack.getTag().contains(POISONS);
+	public static boolean hasPoisons(ItemStack stack) {
+		return stack.hasTag() && stack.getTag().contains(POISONS);
 	}
 
-	public static List<MobEffectInstance> getPoisons(ItemStack itemStack) {
-		var poisonsTag = itemStack.getTag().getList(POISONS, 10);
+	public static List<MobEffectInstance> getPoisons(ItemStack stack) {
+		var poisonsTag = stack.getTag().getList(POISONS, 10);
 		var effects = new ArrayList<MobEffectInstance>();
 		for (var tag : poisonsTag) {
 			var effect = MobEffectInstance.load((CompoundTag) tag);
@@ -122,101 +122,108 @@ public class ItemHelper {
 		return effects;
 	}
 
-	public static EquipmentSlot getSlotForItem(ItemStack itemStack) {
-		var slot = Player.getEquipmentSlotForItem(itemStack);
-		if (ItemHelper.isMeleeWeapon(itemStack) && slot == EquipmentSlot.OFFHAND) {
+	public static EquipmentSlot getSlotForItem(ItemStack stack) {
+		var slot = Player.getEquipmentSlotForItem(stack);
+		if (ItemHelper.isMeleeWeapon(stack) && slot == EquipmentSlot.OFFHAND) {
 			slot = EquipmentSlot.MAINHAND;
 		}
 		return slot;
 	}
 
 	public static int getDefaultSockets(ItemStack stack) {
-		if (isHelmet(stack)) return Config.COMMON.defaultHelmetsSockets.get();
-		if (isChestplate(stack)) return Config.COMMON.defaultChestplatesSockets.get();
-		if (isLeggings(stack)) return Config.COMMON.defaultLeggingsSockets.get();
-		if (isBoots(stack)) return Config.COMMON.defaultBootsSockets.get();
-		if (isWeapon(stack)) return Config.COMMON.defaultWeaponsSockets.get();
-		if (isShield(stack)) return Config.COMMON.defaultShieldsSockets.get();
-		if (isRing(stack)) return Config.COMMON.defaultRingsSockets.get();
-		if (isNecklace(stack)) return Config.COMMON.defaultNecklacesSockets.get();
+		if (isHelmet(stack)) return Config.default_helmet_sockets;
+		if (isChestplate(stack)) return Config.default_chestplate_sockets;
+		if (isLeggings(stack)) return Config.default_leggings_sockets;
+		if (isBoots(stack)) return Config.default_boots_sockets;
+		if (isWeapon(stack)) return Config.default_weapon_sockets;
+		if (isShield(stack)) return Config.default_shield_sockets;
+		if (isRing(stack)) return Config.default_ring_sockets;
+		if (isNecklace(stack)) return Config.default_necklace_sockets;
 		return 0;
 	}
 
-	public static boolean isArmor(ItemStack itemStack) {
-		return itemStack.getItem() instanceof ArmorItem || itemStack.is(Tags.Items.ARMORS);
+	public static boolean isArmor(ItemStack stack) {
+		return isHelmet(stack) || isChestplate(stack) || isLeggings(stack) || isBoots(stack) || stack.is(Tags.Items.ARMORS);
 	}
 
-	public static boolean isShield(ItemStack itemStack) {
-		if (itemStack.canPerformAction(ToolActions.SHIELD_BLOCK)) return true;
-		return itemStack.getItem() instanceof ShieldItem || itemStack.is(Tags.Items.TOOLS_SHIELDS);
+	public static boolean isShield(ItemStack stack) {
+		if (stack.canPerformAction(ToolActions.SHIELD_BLOCK)) return true;
+		if (Config.forced_shields.contains(stack.getItem())) return true;
+		return stack.getItem() instanceof ShieldItem || stack.is(Tags.Items.TOOLS_SHIELDS);
 	}
 
-	public static boolean isMeleeWeapon(ItemStack itemStack) {
-		return isSword(itemStack) || isAxe(itemStack) || isTrident(itemStack);
+	public static boolean isMeleeWeapon(ItemStack stack) {
+		if (Config.forced_melee_weapon.contains(stack.getItem())) return true;
+		return isSword(stack) || isAxe(stack) || isTrident(stack);
 	}
 
-	public static boolean isRangedWeapon(ItemStack itemStack) {
-		return isCrossbow(itemStack) || isBow(itemStack) || isTrident(itemStack);
+	public static boolean isRangedWeapon(ItemStack stack) {
+		if (Config.forced_ranged_weapon.contains(stack.getItem())) return true;
+		return isCrossbow(stack) || isBow(stack) || isTrident(stack);
 	}
 
-	public static boolean isCrossbow(ItemStack itemStack) {
-		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_crossbow")) return true;
-		return itemStack.getItem() instanceof CrossbowItem || itemStack.is(Tags.Items.TOOLS_CROSSBOWS);
+	public static boolean isCrossbow(ItemStack stack) {
+		if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_crossbow")) return true;
+		return stack.getItem() instanceof CrossbowItem || stack.is(Tags.Items.TOOLS_CROSSBOWS);
 	}
 
-	public static boolean isBow(ItemStack itemStack) {
-		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_bow")) return true;
-		return itemStack.getItem() instanceof BowItem || itemStack.is(Tags.Items.TOOLS_BOWS);
+	public static boolean isBow(ItemStack stack) {
+		if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_bow")) return true;
+		return stack.getItem() instanceof BowItem || stack.is(Tags.Items.TOOLS_BOWS);
 	}
 
-	public static boolean isTrident(ItemStack itemStack) {
-		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_single")) return true;
-		return itemStack.getItem() instanceof TridentItem || itemStack.is(Tags.Items.TOOLS_TRIDENTS);
+	public static boolean isTrident(ItemStack stack) {
+		if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_single")) return true;
+		return stack.getItem() instanceof TridentItem || stack.is(Tags.Items.TOOLS_TRIDENTS);
 	}
 
-	public static boolean isAxe(ItemStack itemStack) {
-		if (itemStack.canPerformAction(ToolActions.AXE_DIG)) return true;
-		return itemStack.getItem() instanceof AxeItem || itemStack.is(ItemTags.AXES);
+	public static boolean isAxe(ItemStack stack) {
+		if (stack.canPerformAction(ToolActions.AXE_DIG)) return true;
+		return stack.getItem() instanceof AxeItem || stack.is(ItemTags.AXES);
 	}
 
-	public static boolean isSword(ItemStack itemStack) {
-		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_sword")) return true;
-		if (itemStack.canPerformAction(ToolActions.SWORD_DIG)) return true;
-		if (itemStack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
-		return itemStack.getItem() instanceof SwordItem || itemStack.is(ItemTags.SWORDS);
+	public static boolean isSword(ItemStack stack) {
+		if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_sword")) return true;
+		if (stack.canPerformAction(ToolActions.SWORD_DIG)) return true;
+		if (stack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
+		return stack.getItem() instanceof SwordItem || stack.is(ItemTags.SWORDS);
 	}
 
-	public static boolean isWeapon(ItemStack itemStack) {
-		return isMeleeWeapon(itemStack) || isRangedWeapon(itemStack);
+	public static boolean isWeapon(ItemStack stack) {
+		return isMeleeWeapon(stack) || isRangedWeapon(stack);
 	}
 
-	public static boolean isHelmet(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.HEAD) return true;
-		return itemStack.is(Tags.Items.ARMORS_HELMETS);
+	public static boolean isHelmet(ItemStack stack) {
+		if (Config.forced_helmets.contains(stack.getItem())) return true;
+		if (stack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.HEAD) return true;
+		return stack.is(Tags.Items.ARMORS_HELMETS);
 	}
 
-	public static boolean isChestplate(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.CHEST) return true;
-		return itemStack.is(Tags.Items.ARMORS_CHESTPLATES);
+	public static boolean isChestplate(ItemStack stack) {
+		if (Config.forced_chestplates.contains(stack.getItem())) return true;
+		if (stack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.CHEST) return true;
+		return stack.is(Tags.Items.ARMORS_CHESTPLATES);
 	}
 
-	public static boolean isLeggings(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.LEGS) return true;
-		return itemStack.is(Tags.Items.ARMORS_LEGGINGS);
+	public static boolean isLeggings(ItemStack stack) {
+		if (Config.forced_leggings.contains(stack.getItem())) return true;
+		if (stack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.LEGS) return true;
+		return stack.is(Tags.Items.ARMORS_LEGGINGS);
 	}
 
-	public static boolean isBoots(ItemStack itemStack) {
-		if (itemStack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.FEET) return true;
-		return itemStack.is(Tags.Items.ARMORS_BOOTS);
+	public static boolean isBoots(ItemStack stack) {
+		if (Config.forced_boots.contains(stack.getItem())) return true;
+		if (stack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == EquipmentSlot.FEET) return true;
+		return stack.is(Tags.Items.ARMORS_BOOTS);
 	}
 
-	public static boolean isPickaxe(ItemStack itemStack) {
-		if (itemStack.canPerformAction(ToolActions.PICKAXE_DIG)) return true;
-		return itemStack.getItem() instanceof PickaxeItem || itemStack.is(ItemTags.PICKAXES);
+	public static boolean isPickaxe(ItemStack stack) {
+		if (stack.canPerformAction(ToolActions.PICKAXE_DIG)) return true;
+		return stack.getItem() instanceof PickaxeItem || stack.is(ItemTags.PICKAXES);
 	}
 
-	public static boolean isFood(ItemStack itemStack) {
-		return itemStack.getFoodProperties(null) != null;
+	public static boolean isFood(ItemStack stack) {
+		return stack.getFoodProperties(null) != null;
 	}
 
 	public static boolean isEquipment(ItemStack stack) {

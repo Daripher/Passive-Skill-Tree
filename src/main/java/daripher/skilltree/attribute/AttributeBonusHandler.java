@@ -1252,6 +1252,6 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyGrindstoneExpPenalty(GrindstoneEvent.OnTakeItem event) {
-		event.setXp((int) (event.getXp() * Config.COMMON.getGrindstoneExpMuliplier()));
+		event.setXp((int) (event.getXp() * Config.grindstone_exp_multiplier));
 	}
 }
