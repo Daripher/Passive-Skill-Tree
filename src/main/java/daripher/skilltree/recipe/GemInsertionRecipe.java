@@ -91,7 +91,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return PSTRecipeSerializers.GEMSTONE_INSERTION.get();
+		return PSTRecipeSerializers.GEM_INSERTION.get();
 	}
 
 	@Override

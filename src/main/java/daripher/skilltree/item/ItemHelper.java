@@ -12,6 +12,7 @@ import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -248,6 +249,10 @@ public class ItemHelper {
 
 	public static boolean isQuiver(ItemStack stack) {
 		return !stack.isEmpty() && stack.is(PSTTags.QUIVERS);
+	}
+
+	public static boolean isArrow(ItemStack stack) {
+		return stack.is(ItemTags.ARROWS);
 	}
 
 	public static List<String> getBonuses() {
