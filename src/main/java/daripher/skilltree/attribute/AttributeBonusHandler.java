@@ -589,7 +589,7 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getMaximumLifePerArrowInQuiver(ServerPlayer player) {
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(player, QuiverItem::isQuiver);
+		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(player, ItemHelper::isQuiver);
 		if (!quiverCurio.isPresent()) return 0D;
 		double lifeBonus = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get());
 		if (lifeBonus == 0) return 0D;

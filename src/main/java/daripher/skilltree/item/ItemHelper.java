@@ -246,6 +246,10 @@ public class ItemHelper {
 		return !stack.isEmpty() && stack.is(PSTTags.QUIVERS);
 	}
 
+	public static boolean isArrow(ItemStack stack) {
+		return stack.is(ItemTags.ARROWS);
+	}
+
 	public static List<String> getBonuses() {
 		return List.of(POISONS, IGNITE_CHANCE, DAMAGE_AGAINST_BURNING, LIFE_PER_HIT, ATTACK_SPEED, DAMAGE, CRIT_CHANCE, DURABILITY, MAXIMUM_LIFE,
 				CAPACITY, TOUGHNESS, DEFENCE, MOVEMENT_SPEED, STEALTH, EVASION, CRIT_DAMAGE, BLOCK_CHANCE, DOUBLE_LOOT, ADDITIONAL_SOCKETS);

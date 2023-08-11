@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.quiver.QuiverItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -34,7 +35,7 @@ public enum QuiverHud implements IGuiOverlay {
 	@Override
 	public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
 		LocalPlayer player = Minecraft.getInstance().player;
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(player, QuiverItem::isQuiver);
+		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(player, ItemHelper::isQuiver);
 		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);

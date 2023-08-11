@@ -81,21 +81,21 @@ public class QuiverItem extends Item implements ICurioItem {
 
 	@SubscribeEvent
 	public static void storeArrowsOnPickup(EntityItemPickupEvent event) {
-		ItemStack arrowsStack = event.getItem().getItem();
-		if (!(arrowsStack.getItem() instanceof ArrowItem arrow)) return;
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), QuiverItem::isQuiver);
+		ItemStack arrows = event.getItem().getItem();
+		if (!(arrows.getItem() instanceof ArrowItem arrow)) return;
+		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
 		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
 			if (isFull(quiver)) return;
 			if (!containsArrows(quiver)) {
-				setArrows(quiver, arrowsStack.copy(), arrowsStack.getCount());
+				setArrows(quiver, arrows.copy(), arrows.getCount());
 				event.getItem().setItem(ItemStack.EMPTY);
 				event.setResult(Result.ALLOW);
-			} else if (ItemStack.isSameItemSameTags(getArrows(quiver), arrowsStack)) {
+			} else if (ItemStack.isSameItemSameTags(getArrows(quiver), arrows)) {
 				int capacity = getCapacity(quiver);
-				int arrowsTaken = Math.min(capacity - getArrowsCount(quiver), arrowsStack.getCount());
+				int arrowsTaken = Math.min(capacity - getArrowsCount(quiver), arrows.getCount());
 				addArrows(quiver, arrowsTaken);
-				if (arrowsStack.getCount() == arrowsTaken) event.getItem().setItem(ItemStack.EMPTY);
-				else arrowsStack.shrink(arrowsTaken);
+				if (arrows.getCount() == arrowsTaken) event.getItem().setItem(ItemStack.EMPTY);
+				else arrows.shrink(arrowsTaken);
 				event.setResult(Result.ALLOW);
 			}
 		});
@@ -103,7 +103,7 @@ public class QuiverItem extends Item implements ICurioItem {
 
 	@SubscribeEvent
 	public static void takeArrowFromQuiver(LivingGetProjectileEvent event) {
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), QuiverItem::isQuiver);
+		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
 		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
 			if (containsArrows(quiver)) event.setProjectileItemStack(getArrows(quiver).copy());
 		});
@@ -112,7 +112,7 @@ public class QuiverItem extends Item implements ICurioItem {
 	@SubscribeEvent
 	public static void removeArrowFromQuiver(ArrowLooseEvent event) {
 		if (event.getEntity().isCreative()) return;
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), QuiverItem::isQuiver);
+		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
 		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
 			if (containsArrows(quiver)) addArrows(quiver, -1);
 		});
@@ -124,11 +124,15 @@ public class QuiverItem extends Item implements ICurioItem {
 		player.spawnAtLocation(arrowsStack);
 	}
 
-	private static boolean isFull(ItemStack quiver) {
+	public static boolean isFull(ItemStack quiver) {
 		return getArrowsCount(quiver) == getCapacity(quiver);
 	}
 
-	private static int getCapacity(ItemStack quiver) {
+	public static boolean isEmpty(ItemStack quiver) {
+		return getArrowsCount(quiver) == 0;
+	}
+
+	public static int getCapacity(ItemStack quiver) {
 		int capacity = ((QuiverItem) quiver.getItem()).capacity;
 		if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
 			capacity *= 1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY);
@@ -148,6 +152,11 @@ public class QuiverItem extends Item implements ICurioItem {
 		return stack.getOrCreateTag().getInt(ARROWS_COUNT_TAG);
 	}
 
+	public static void addArrows(ItemStack stack, ItemStack arrows, int count) {
+		if (isEmpty(stack)) setArrows(stack, arrows);
+		addArrows(stack, count);
+	}
+
 	public static void setArrows(ItemStack stack, ItemStack arrows, int count) {
 		arrows = arrows.copy();
 		arrows.setCount(1);
@@ -165,9 +174,5 @@ public class QuiverItem extends Item implements ICurioItem {
 
 	public static void addArrows(ItemStack stack, int count) {
 		stack.getOrCreateTag().putInt(ARROWS_COUNT_TAG, getArrowsCount(stack) + count);
-	}
-
-	public static boolean isQuiver(ItemStack stack) {
-		return stack.getItem() instanceof QuiverItem;
 	}
 }

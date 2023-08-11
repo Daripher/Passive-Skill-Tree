@@ -110,7 +110,7 @@ public class Config {
 		return object instanceof String name && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(name));
 	}
 
-	static final ForgeConfigSpec SPEC = BUILDER.build();
+	public static final ForgeConfigSpec SPEC = BUILDER.build();
 
 	public static int max_skill_points;
 	public static int default_helmet_sockets;
