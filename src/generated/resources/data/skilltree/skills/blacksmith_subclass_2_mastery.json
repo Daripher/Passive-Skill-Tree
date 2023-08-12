@@ -2,7 +2,7 @@
   "attribute_modifiers": [
     {
       "amount": 0.05,
-      "attribute": "skilltree:chance_to_save_crafitng_materials",
+      "attribute": "skilltree:equipment_repair_efficiency",
       "operation": "multiply_base"
     },
     {

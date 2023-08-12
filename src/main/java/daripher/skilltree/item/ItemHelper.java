@@ -48,6 +48,7 @@ public class ItemHelper {
 	public static final String BLOCK_CHANCE = "BlockChanceBonus";
 	public static final String DOUBLE_LOOT = "DoubleLootBonus";
 	public static final String ADDITIONAL_SOCKETS = "AdditionalSocksetsBonus";
+	public static final String CHANCE_TO_RETRIEVE_ARROWS = "ChanceToRetrieveArrowsBonus";
 
 	public static void setBonus(ItemStack stack, String type, double bonus) {
 		stack.getOrCreateTag().putDouble(type, bonus);
@@ -238,6 +239,7 @@ public class ItemHelper {
 
 	public static List<String> getBonuses() {
 		return List.of(POISONS, IGNITE_CHANCE, DAMAGE_AGAINST_BURNING, LIFE_PER_HIT, ATTACK_SPEED, DAMAGE, CRIT_CHANCE, DURABILITY, MAXIMUM_LIFE,
-				CAPACITY, TOUGHNESS, DEFENCE, MOVEMENT_SPEED, STEALTH, EVASION, CRIT_DAMAGE, BLOCK_CHANCE, DOUBLE_LOOT, ADDITIONAL_SOCKETS);
+				CAPACITY, TOUGHNESS, DEFENCE, MOVEMENT_SPEED, STEALTH, EVASION, CRIT_DAMAGE, BLOCK_CHANCE, DOUBLE_LOOT, ADDITIONAL_SOCKETS,
+				CHANCE_TO_RETRIEVE_ARROWS);
 	}
 }

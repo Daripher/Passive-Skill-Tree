@@ -282,10 +282,10 @@ public class PSTSkillsProvider implements DataProvider {
 		// fletcher skills
 		addSkillBranchAttributeModifier("hunter_subclass_2_defensive", EVASION, 0.005, MULTIPLY_BASE, 1, 4);
 		addSkillBranchAttributeModifier("hunter_subclass_2_defensive", BLOCK_CHANCE, 0.005, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("hunter_subclass_2", CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS, 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_subclass_2", CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS, 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_subclass_2_life", MAXIMUM_LIFE_PER_ARROW_IN_QUIVER, 0.01, ADDITION, 1, 4);
 		addSkillBranchAttributeModifier("hunter_subclass_2_crafting", CRAFTED_QUIVERS_CAPACITY, 0.05, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("hunter_subclass_2_crafting_notable_1", CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS, 0.02, MULTIPLY_BASE);
+		addSkillAttributeModifier("hunter_subclass_2_crafting_notable_1", CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("hunter_subclass_2_life_notable_1", CRAFTED_QUIVERS_MAXIMUM_LIFE, 5, ADDITION);
 		addSkillAttributeModifier("hunter_subclass_2_mastery", CRAFTED_QUIVERS_CAPACITY, 0.25, MULTIPLY_BASE);
 		// miner skills
@@ -375,12 +375,12 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_subclass_special", CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE, 0.05, MULTIPLY_BASE);
 		// artisan skills
 		addSkillBranchAttributeModifier("blacksmith_subclass_2_defensive", ARMOR, 1, ADDITION, 1, 4);
-		addSkillAttributeModifier("blacksmith_subclass_2", CHANCE_TO_SAVE_CRAFITNG_MATERIALS, 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_subclass_2", EQUIPMENT_REPAIR_EFFICIENCY, 1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_subclass_2_life", CRAFTED_ARMOR_MAXIMUM_LIFE, 1, ADDITION, 1, 4);
-		addSkillBranchAttributeModifier("blacksmith_subclass_2_crafting", CHANCE_TO_SAVE_CRAFITNG_MATERIALS, 0.01, MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("blacksmith_subclass_2_crafting", EQUIPMENT_REPAIR_EFFICIENCY, 0.05, MULTIPLY_BASE, 1, 5);
 		addSkillAttributeModifier("blacksmith_subclass_2_crafting_notable_1", CRAFTED_SHIELDS_BLOCK_CHANCE, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_life_notable_1", CRAFTED_SHIELDS_MAXIMUM_LIFE, 5, ADDITION);
-		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CHANCE_TO_SAVE_CRAFITNG_MATERIALS, 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_subclass_2_mastery", EQUIPMENT_REPAIR_EFFICIENCY, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CRAFTED_EQUIPMENT_DURABILITY, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CRAFTED_WEAPON_ATTACK_SPEED, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CHANCE_TO_CRAFT_TOUGHER_ARMOR, 0.05, MULTIPLY_BASE);

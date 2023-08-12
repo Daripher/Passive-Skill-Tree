@@ -1,8 +1,8 @@
 {
   "attribute_modifiers": [
     {
-      "amount": 0.02,
-      "attribute": "skilltree:chance_to_save_arrows_crafting_materials",
+      "amount": 0.1,
+      "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
       "operation": "multiply_base"
     }
   ],
