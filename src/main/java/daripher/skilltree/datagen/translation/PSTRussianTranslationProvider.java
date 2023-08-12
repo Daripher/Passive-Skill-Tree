@@ -296,7 +296,7 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.LIFE_PER_PROJECTILE_HIT.get(), "Здоровье за попадание снарядом");
 		add(PSTAttributes.MAXIMUM_LIFE_PER_EVASION.get(), "Максимум здоровья за уклонение");
 		add(PSTAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get(), "Скорость атаки с оружием дальнего боя");
-		add(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Шанс вернуть стрелу");
+		add(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Шанс вернуть стрелы");
 		add(PSTAttributes.PROJECTILE_CRIT_CHANCE.get(), "Шанс критического удара снарядов");
 		add(PSTAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), "Максимум здоровя под эффектом зелья");
 		add(PSTAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get(), "Скорость атаки под эффектом зелья");
@@ -401,7 +401,6 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get(), "Скорость передвижения создаваемых ботинок");
 		add(PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get(), "Урон за расстояние до точки возрождения (максимум 50%)");
 		add(PSTAttributes.CRAFTED_ARMOR_MAXIMUM_LIFE.get(), "Максимальное здоровье создаваемой брони");
-		add(PSTAttributes.CHANCE_TO_SAVE_CRAFITNG_MATERIALS.get(), "Шанс сохранить материалы при создании предмета");
 		add(PSTAttributes.CRAFTED_SHIELDS_MAXIMUM_LIFE.get(), "Максимальное здоровье создаваемых щитов");
 		add(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get(), "Скорость атаки создаваемого оружия");
 		add(PSTAttributes.CRAFTED_SHIELDS_BLOCK_CHANCE.get(), "Шанс блока создаваемых щитов");
@@ -411,7 +410,6 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRIT_CHANCE_AGAINST_BURNING.get(), "Шанс критического удара по горящим врагам");
 		add(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_IGNITE.get(), "Шанс поджога создаваемых колчанов");
 		add(PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get(), "Урон по горящим врагам создаваемых колчанов");
-		add(PSTAttributes.CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS.get(), "Шанс сохранить материалы при создании стрел");
 		add(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get(), "Максимальное здоровье за стрелу в колчане");
 		add(PSTAttributes.CRAFTED_QUIVERS_CAPACITY.get(), "Вместимость создаваемых колчанов");
 		add(PSTAttributes.CRAFTED_QUIVERS_MAXIMUM_LIFE.get(), "Максимальное здоровье создаваемых колчанов");
@@ -429,6 +427,8 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get(), "Здоровье за удар создаваемого оружия");
 		add(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get(), "Урон по горящим врагам создаваемого оружия");
 		add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Шанс взорвать врага");
+		add(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get(), "Шанс вернуть стрелы создаваемых колчанов");
+		add(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get(), "Эффективность починки экипировки");
 		// effects
 		add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
 		add(PSTEffects.DAMAGE_BONUS.get(), "Урон");

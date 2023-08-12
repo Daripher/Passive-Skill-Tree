@@ -2,12 +2,12 @@ package daripher.skilltree.attribute;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.util.concurrent.AtomicDouble;
 
@@ -27,12 +27,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -49,15 +46,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.GrindstoneEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -78,7 +72,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -708,30 +701,36 @@ public class AttributeBonusHandler {
 		if (igniteChanceBonus > 0) ItemHelper.setBonus(stack, ItemHelper.IGNITE_CHANCE, igniteChanceBonus);
 		double damageAgainstBurningBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get()) - 1;
 		if (damageAgainstBurningBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DAMAGE_AGAINST_BURNING, damageAgainstBurningBonus);
+		double chanceToRetrieveArrows = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get()) - 1;
+		if (chanceToRetrieveArrows > 0) ItemHelper.setBonus(stack, ItemHelper.CHANCE_TO_RETRIEVE_ARROWS, chanceToRetrieveArrows);
 	}
 
 	@SubscribeEvent
 	public static void applyCraftedCuriosBonuses(CurioAttributeModifierEvent event) {
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.CRIT_DAMAGE)) {
-			double critDamageBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.CRIT_DAMAGE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", critDamageBonus, Operation.MULTIPLY_BASE);
+			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.CRIT_DAMAGE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.CRIT_DAMAGE.get(), modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE)) {
-			double maximumLifeBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", maximumLifeBonus, Operation.ADDITION);
+			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.ADDITION);
 			event.addModifier(Attributes.MAX_HEALTH, modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.IGNITE_CHANCE)) {
-			double igniteChanceBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.IGNITE_CHANCE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", igniteChanceBonus, Operation.MULTIPLY_BASE);
+			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.IGNITE_CHANCE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.CHANCE_TO_IGNITE.get(), modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.DAMAGE_AGAINST_BURNING)) {
-			double damageAgainstBurningBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.DAMAGE_AGAINST_BURNING);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", damageAgainstBurningBonus,
-					Operation.MULTIPLY_BASE);
+			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.DAMAGE_AGAINST_BURNING);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.DAMAGE_AGAINST_BURNING.get(), modifier);
+		}
+		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.CHANCE_TO_RETRIEVE_ARROWS)) {
+			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.CHANCE_TO_RETRIEVE_ARROWS);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
+			event.addModifier(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), modifier);
 		}
 	}
 
@@ -1177,59 +1176,6 @@ public class AttributeBonusHandler {
 		}
 	}
 
-	private static final Set<CraftingRecipe> IGNORED_RECIPES = new HashSet<>();
-
-	@SubscribeEvent
-	public static void applyChanceToSaveMaterials(ItemCraftedEvent event) {
-		if (!(event.getInventory() instanceof CraftingContainer container)) return;
-		for (CraftingRecipe recipe : IGNORED_RECIPES) {
-			if (recipe.matches(container, event.getEntity().level)) return;
-		}
-		Player player = event.getEntity();
-		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_SAVE_CRAFITNG_MATERIALS.get()) - 1;
-		if (event.getCrafting().is(ItemTags.ARROWS)) {
-			chance += player.getAttributeValue(PSTAttributes.CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS.get()) - 1;
-		}
-		if (chance == 0) return;
-		Container inventory = event.getInventory();
-		for (int i = 0; i < inventory.getContainerSize(); i++) {
-			if (inventory.getItem(i).isEmpty()) continue;
-			if (player.getRandom().nextFloat() >= chance) continue;
-			inventory.getItem(i).grow(1);
-		}
-	}
-
-	@SubscribeEvent
-	public static void ignoreAbusableRecipes(ServerStartingEvent event) {
-		if (!IGNORED_RECIPES.isEmpty()) return;
-		MinecraftServer server = event.getServer();
-		new Thread(() -> {
-			RecipeManager recipeManager = server.getRecipeManager();
-			List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(RecipeType.CRAFTING);
-			for (int i = 0; i < recipes.size() - 1; i++) {
-				for (int j = i + 1; j < recipes.size(); j++) {
-					CraftingRecipe recipe1 = recipes.get(i);
-					CraftingRecipe recipe2 = recipes.get(j);
-					if (canAbuse(recipe1, recipe2)) {
-						IGNORED_RECIPES.add(recipe1);
-						IGNORED_RECIPES.add(recipe2);
-					}
-					if (recipe1.isSpecial()) IGNORED_RECIPES.add(recipe1);
-					if (recipe2.isSpecial()) IGNORED_RECIPES.add(recipe2);
-				}
-			}
-		}).run();
-	}
-
-	// checks if the recipe1 contains result of the recipe2 in its ingredients list and vice versa
-	private static boolean canAbuse(CraftingRecipe recipe1, CraftingRecipe recipe2) {
-		return canUncraft(recipe1, recipe2) && canUncraft(recipe2, recipe1);
-	}
-
-	private static boolean canUncraft(CraftingRecipe recipe1, CraftingRecipe recipe2) {
-		return recipe1.getIngredients().stream().anyMatch(ingredient -> ingredient.test(recipe2.getResultItem()));
-	}
-
 	@SubscribeEvent
 	public static void applyFishingExperienceBonus(ItemFishedEvent event) {
 		Player player = event.getEntity();
@@ -1261,5 +1207,37 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void applyGrindstoneExpPenalty(GrindstoneEvent.OnTakeItem event) {
 		event.setXp((int) (event.getXp() * Config.grindstone_exp_multiplier));
+	}
+
+	@SubscribeEvent
+	public static void applyRepairEfficiencyBonus(AnvilUpdateEvent event) {
+		double repairEfficiency = event.getPlayer().getAttributeValue(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get()) - 1;
+		if (repairEfficiency == 0) return;
+		ItemStack stack = event.getLeft();
+		if (!stack.isDamageableItem() || !stack.isDamaged()) return;
+		ItemStack material = event.getRight();
+		if (!stack.getItem().isValidRepairItem(stack, material)) return;
+		ItemStack result = stack.copy();
+		int durabilityPerMaterial = (int) (result.getMaxDamage() * 12 * (1 + repairEfficiency) / 100);
+		int durabilityRestored = durabilityPerMaterial;
+		int materialsUsed;
+		int cost = 0;
+		for (materialsUsed = 0; durabilityRestored > 0 && materialsUsed < material.getCount(); materialsUsed++) {
+			result.setDamageValue(result.getDamageValue() - durabilityRestored);
+			cost++;
+			durabilityRestored = Math.min(result.getDamageValue(), durabilityPerMaterial);
+		}
+		if (event.getName() != null && !StringUtils.isBlank(event.getName())) {
+			if (!event.getName().equals(stack.getHoverName().getString())) {
+				cost++;
+				result.setHoverName(Component.literal(event.getName()));
+			}
+		} else if (stack.hasCustomHoverName()) {
+			cost++;
+			result.resetHoverName();
+		}
+		event.setMaterialCost(materialsUsed);
+		event.setCost(cost);
+		event.setOutput(result);
 	}
 }

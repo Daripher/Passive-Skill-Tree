@@ -39,9 +39,11 @@ public class PSTBlockLoot extends BlockLoot {
 
 	protected LootPoolSingletonContainer.Builder<?> gemLootItem(Item item) {
 		LootPoolSingletonContainer.Builder<?> lootItem = LootItem.lootTableItem(item);
-		if (item == PSTItems.VACUCITE.get()) lootItem.setQuality(1);
-		else if (item == PSTItems.IRISCITE.get()) lootItem.setQuality(1);
-		else lootItem.setWeight(3);
+		if (item == PSTItems.VACUCITE.get() || item == PSTItems.IRISCITE.get()) {
+			lootItem.setQuality(1);
+		} else {
+			lootItem.setWeight(3);
+		}
 		return lootItem;
 	}
 

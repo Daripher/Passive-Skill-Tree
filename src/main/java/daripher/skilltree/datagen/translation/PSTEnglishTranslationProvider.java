@@ -401,7 +401,6 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get(), "Crafted Boots Movement Speed");
 		add(PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get(), "Damage per Distance to Spawn (up to 50%)");
 		add(PSTAttributes.CRAFTED_ARMOR_MAXIMUM_LIFE.get(), "Crafted Armored Maximum Life");
-		add(PSTAttributes.CHANCE_TO_SAVE_CRAFITNG_MATERIALS.get(), "Chance to save Crafting Materials");
 		add(PSTAttributes.CRAFTED_SHIELDS_MAXIMUM_LIFE.get(), "Crafted Shields Maximum Life");
 		add(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get(), "Crafted Weapon Attack Speed");
 		add(PSTAttributes.CRAFTED_SHIELDS_BLOCK_CHANCE.get(), "Crafted Shields Block chance");
@@ -411,7 +410,6 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRIT_CHANCE_AGAINST_BURNING.get(), "Critical Hit chance against Burning enemies");
 		add(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_IGNITE.get(), "Crafted Quivers chance to Ignite");
 		add(PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get(), "Crafted Quivers Damage against Burning enemies");
-		add(PSTAttributes.CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS.get(), "Chance to save Arrow Crafting Materials");
 		add(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get(), "Maximum Life per Arrow in Quiver");
 		add(PSTAttributes.CRAFTED_QUIVERS_CAPACITY.get(), "Crafted Quivers Capacity");
 		add(PSTAttributes.CRAFTED_QUIVERS_MAXIMUM_LIFE.get(), "Crafted Quivers Maximum Life");
@@ -429,6 +427,8 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get(), "Crafted Weapon Life per Hit");
 		add(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get(), "Crafted Weapon Damage against Burning enemies");
 		add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Chance to Explode enemy");
+		add(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get(), "Crafted Quivers chance to retrieve Arrows");
+		add(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get(), "Equipment repair efficiency");
 		// effects
 		add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Critical Damage");
 		add(PSTEffects.DAMAGE_BONUS.get(), "Damage");

@@ -90,7 +90,7 @@ public class PSTAttributes {
 	public static final RegistryObject<Attribute> CHESTPLATE_ARMOR = create("chestplate_armor", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_EQUIPMENT_DURABILITY = create("crafted_equipment_durability", 1D, 1D);
 	// artisan attributes
-	public static final RegistryObject<Attribute> CHANCE_TO_SAVE_CRAFITNG_MATERIALS = create("chance_to_save_crafitng_materials", 1D, 1D);
+	public static final RegistryObject<Attribute> EQUIPMENT_REPAIR_EFFICIENCY = create("equipment_repair_efficiency", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_ARMOR_MAXIMUM_LIFE = create("crafted_armor_maximum_life", 0D, 0D);
 	public static final RegistryObject<Attribute> CRAFTED_SHIELDS_MAXIMUM_LIFE = create("crafted_shields_maximum_life", 0D, 0D);
 	public static final RegistryObject<Attribute> CRAFTED_WEAPON_ATTACK_SPEED = create("crafted_weapon_attack_speed", 1D, 1D);
@@ -153,10 +153,9 @@ public class PSTAttributes {
 	public static final RegistryObject<Attribute> CRAFTED_BOOTS_STEALTH = create("crafted_boots_stealth", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_WEAPON_LIFE_PER_HIT = create("crafted_weapon_life_per_hit", 0D, 0D);
 	// fletcher attributes
+	public static final RegistryObject<Attribute> CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS = create("crafted_quivers_chance_to_retrieve_arrows", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_QUIVERS_CAPACITY = create("crafted_quivers_capacity", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_QUIVERS_MAXIMUM_LIFE = create("crafted_quivers_maximum_life", 0D, 0D);
-	public static final RegistryObject<Attribute> CHANCE_TO_SAVE_ARROWS_CRAFTING_MATERIALS = create("chance_to_save_arrows_crafting_materials", 1D,
-			1D);
 	public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_ARROW_IN_QUIVER = create("maximum_life_per_arrow_in_quiver", 0D, 0D);
 	// cook attriutes
 	public static final RegistryObject<Attribute> COOKED_FOOD_SATURATION = create("cooked_food_saturation", 1D, 1D);
