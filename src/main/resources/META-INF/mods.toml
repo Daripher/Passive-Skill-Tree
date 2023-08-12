@@ -23,6 +23,27 @@ license="All rights reserved"
     versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
+	
+[[dependencies.skilltree]]
+    modId="attributefix"
+    mandatory=true
+    versionRange="[17.2.6,)"
+    ordering="NONE"
+    side="BOTH"
+	
+[[dependencies.skilltree]]
+    modId="maxhealthfix"
+    mandatory=true
+    versionRange="[8.0.1,)"
+    ordering="NONE"
+    side="BOTH"
+	
+[[dependencies.skilltree]]
+    modId="curios"
+    mandatory=true
+    versionRange="[1.19.2-5.1.4.1,)"
+    ordering="NONE"
+    side="BOTH"
     
 [[dependencies.skilltree]]
     modId="apotheosis"
