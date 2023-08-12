@@ -634,22 +634,34 @@ public class AttributeBonusHandler {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void applyArmorBonuses(ItemAttributeModifierEvent event) {
 		ItemStack stack = event.getItemStack();
 		if (!ItemHelper.isArmor(stack)) return;
 		if (ItemHelper.hasBonus(stack, ItemHelper.DEFENCE)) {
-			double defenceBonus = ItemHelper.getBonus(stack, ItemHelper.DEFENCE);
-			ItemHelper.applyBaseModifierBonus(event, Attributes.ARMOR, d -> d * (1 + defenceBonus));
+			double bonus = ItemHelper.getBonus(stack, ItemHelper.DEFENCE);
+			applyBaseModifierBonus(event, Attributes.ARMOR, d -> bonus * d);
 		}
-		if (ItemHelper.hasBonus(stack, ItemHelper.TOUGHNESS)) {
-			double toughnessBonus = ItemHelper.getBonus(stack, ItemHelper.TOUGHNESS);
-			ItemHelper.applyBaseModifierBonus(event, Attributes.ARMOR_TOUGHNESS, d -> d + toughnessBonus);
-		}
+		applyArmorBonus(event, ItemHelper.TOUGHNESS, Attributes.ARMOR_TOUGHNESS, Operation.ADDITION);
 		applyArmorBonus(event, ItemHelper.MOVEMENT_SPEED, Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_BASE);
 		applyArmorBonus(event, ItemHelper.MAXIMUM_LIFE, Attributes.MAX_HEALTH, Operation.ADDITION);
 		applyArmorBonus(event, ItemHelper.STEALTH, PSTAttributes.STEALTH.get(), Operation.MULTIPLY_BASE);
 		applyArmorBonus(event, ItemHelper.EVASION, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE);
+	}
+
+	private static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> func) {
+		double baseValue = 0D;
+		for (AttributeModifier modifier : event.getOriginalModifiers().get(attribute)) {
+			if (modifier.getOperation() == Operation.ADDITION) {
+				baseValue += modifier.getAmount();
+			}
+		}
+		double value = func.apply(baseValue);
+		if (value != 0) {
+			UUID id = UUID.fromString("d57e6ff6-4665-417b-8bdb-1b0f58261814");
+			AttributeModifier modifier = new AttributeModifier(id, "CraftedItemBonus", value, Operation.ADDITION);
+			event.addModifier(attribute, modifier);
+		}
 	}
 
 	private static void applyArmorBonus(ItemAttributeModifierEvent event, String type, Attribute attribute, Operation operation) {
@@ -663,9 +675,9 @@ public class AttributeBonusHandler {
 		// formatter:on
 		EquipmentSlot slot = Player.getEquipmentSlotForItem(event.getItemStack());
 		if (ItemHelper.hasBonus(event.getItemStack(), type) && slot == event.getSlotType()) {
-			double evasionBonus = ItemHelper.getBonus(event.getItemStack(), type);
+			double bonus = ItemHelper.getBonus(event.getItemStack(), type);
 			UUID modifierId = UUID.fromString(modifierIds[event.getSlotType().getIndex()]);
-			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedArmorBonus", evasionBonus, operation);
+			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedArmorBonus", bonus, operation);
 			event.addModifier(attribute, modifier);
 		}
 	}
@@ -800,15 +812,14 @@ public class AttributeBonusHandler {
 		if (ItemHelper.isMeleeWeapon(stack)) {
 			if (ItemHelper.hasBonus(stack, ItemHelper.DAMAGE)) {
 				double damageBonus = ItemHelper.getBonus(stack, ItemHelper.DAMAGE);
-				ItemHelper.applyBaseModifierBonus(event, Attributes.ATTACK_DAMAGE, d -> d + damageBonus);
+				applyBaseModifierBonus(event, Attributes.ATTACK_DAMAGE, d -> damageBonus);
 			}
 			if (ItemHelper.hasBonus(stack, ItemHelper.ATTACK_SPEED)) {
 				double attackSpeedBonus = ItemHelper.getBonus(stack, ItemHelper.ATTACK_SPEED);
-				ItemHelper.applyBaseModifierBonus(event, Attributes.ATTACK_SPEED, d -> {
+				applyBaseModifierBonus(event, Attributes.ATTACK_SPEED, d -> {
 					double basePlayerAttackSpeed = 4;
 					double oldAttackSpeed = basePlayerAttackSpeed + d;
-					double newAttackSpeed = oldAttackSpeed * (1 + attackSpeedBonus);
-					return newAttackSpeed - basePlayerAttackSpeed;
+					return oldAttackSpeed * attackSpeedBonus;
 				});
 			}
 		}

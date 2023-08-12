@@ -1,9 +1,7 @@
 package daripher.skilltree.item;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTTags;
@@ -14,8 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
@@ -30,7 +26,6 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
@@ -64,15 +59,6 @@ public class ItemHelper {
 
 	public static double getBonus(ItemStack stack, String type) {
 		return stack.getTag().getDouble(type);
-	}
-
-	public static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> func) {
-		Collection<AttributeModifier> modifiers = event.getOriginalModifiers().get(attribute);
-		modifiers.forEach(modifier -> {
-			event.removeModifier(attribute, modifier);
-			modifier = new AttributeModifier(modifier.getId(), modifier.getName(), func.apply(modifier.getAmount()), modifier.getOperation());
-			event.addModifier(attribute, modifier);
-		});
 	}
 
 	public static boolean canInsertGem(ItemStack stack) {
