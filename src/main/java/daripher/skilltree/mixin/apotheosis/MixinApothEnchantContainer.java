@@ -33,13 +33,13 @@ public class MixinApothEnchantContainer {
 		return reducedRequirement;
 	}
 
-	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
 	private List<EnchantmentInstance> amplifyEnchantmentsVisually(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
 		List<EnchantmentInstance> enchantments = amplifyEnchantments(itemStack, slot);
 		return enchantments;
 	}
 
-	@Redirect(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;"))
+	@Redirect(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
 	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
 		List<EnchantmentInstance> enchantments = amplifyEnchantments(itemStack, slot);
 		return enchantments;
@@ -57,7 +57,8 @@ public class MixinApothEnchantContainer {
 		return enchantments;
 	}
 
-	private @Shadow List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
+	@Shadow(remap = true)
+	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		return null;
 	}
 }

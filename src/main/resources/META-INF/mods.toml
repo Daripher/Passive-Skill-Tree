@@ -48,6 +48,6 @@ license="All rights reserved"
 [[dependencies.skilltree]]
     modId="apotheosis"
     mandatory=false
-    versionRange="[6.3.0,)"
+    versionRange="[6.3.3,)"
     ordering="NONE"
     side="BOTH"

@@ -109,22 +109,15 @@ repositories {
 dependencies {
 	minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-	//implementation fg.deobf("curse.maven:prism-lib-638111:3993293")
-	//implementation fg.deobf("curse.maven:iceberg-520110:4300529")
-	//implementation fg.deobf("curse.maven:legendary-tooltips-532127:4278509")
 	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
 	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
 	implementation fg.deobf("curse.maven:selene-499980:4491267")
-	//implementation fg.deobf("curse.maven:epic-knights-armor-and-weapons-509041:4423962")
-	//implementation fg.deobf("curse.maven:cloth-config-348521:3972423")
-	//implementation fg.deobf("curse.maven:architectury-api-419699:4521273")
-	//implementation fg.deobf("curse.maven:corail-deconstruction-table-444880:4524451")
 	implementation fg.deobf("curse.maven:easy-magic-456239:4411042")
 	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
 	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
-	implementation fg.deobf("curse.maven:apotheosis-313970:4682578")
+	implementation fg.deobf("curse.maven:apotheosis-313970:4701855")
 	implementation fg.deobf("curse.maven:placebo-283644:4677899")
 	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
 	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
@@ -135,6 +128,7 @@ dependencies {
 	implementation fg.deobf("curse.maven:tetra-289712:4487237")
 	implementation fg.deobf("curse.maven:mutil-351914:3941314")
 	implementation fg.deobf("curse.maven:curios-309927:4523009")
+	implementation fg.deobf("curse.maven:modern-ui-352491:4634827")
 }
 
 jar {
