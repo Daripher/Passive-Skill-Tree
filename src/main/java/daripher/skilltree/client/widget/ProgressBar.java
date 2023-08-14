@@ -3,6 +3,7 @@ package daripher.skilltree.client.widget;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
+import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.config.Config;
 import net.minecraft.client.Minecraft;
@@ -12,7 +13,8 @@ import net.minecraft.network.chat.Component;
 
 public class ProgressBar extends Button {
 	public ProgressBar(int x, int y) {
-		super(x, y, 235, 19, Component.empty(), b -> {});
+		super(x, y, 235, 19, Component.empty(), b -> {
+		});
 	}
 
 	@Override
@@ -35,20 +37,20 @@ public class ProgressBar extends Button {
 	protected void renderProgress(PoseStack poseStack) {
 		var experienceProgress = getExperienceProgress();
 		var percentageText = "" + (int) (experienceProgress * 100) + "%";
-		drawCenteredOutlinedText(poseStack, percentageText, getMinecraftFont(), x + width / 2, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(poseStack, percentageText, getMinecraftFont(), x + width / 2, getTextY(), 0xFCE266);
 	}
 
 	protected void renderNextLevel(PoseStack poseStack) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
 		var nextLevel = currentLevel + 1;
-		drawCenteredOutlinedText(poseStack, "" + nextLevel, getMinecraftFont(), x + width - 17, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(poseStack, "" + nextLevel, getMinecraftFont(), x + width - 17, getTextY(), 0xFCE266);
 	}
 
 	protected void renderCurrentLevel(PoseStack poseStack) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
-		drawCenteredOutlinedText(poseStack, "" + currentLevel, getMinecraftFont(), x + 17, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(poseStack, "" + currentLevel, getMinecraftFont(), x + 17, getTextY(), 0xFCE266);
 	}
 
 	protected int getTextY() {
@@ -86,14 +88,5 @@ public class ProgressBar extends Button {
 	protected Font getMinecraftFont() {
 		var minecraft = Minecraft.getInstance();
 		return minecraft.font;
-	}
-
-	protected void drawCenteredOutlinedText(PoseStack poseStack, String text, Font font, int x, int y) {
-		x -= font.width(text) / 2;
-		font.draw(poseStack, text, x + 1, y, 0);
-		font.draw(poseStack, text, x - 1, y, 0);
-		font.draw(poseStack, text, x, y + 1, 0);
-		font.draw(poseStack, text, x, y - 1, 0);
-		font.draw(poseStack, text, x, y, 0xFCE266);
 	}
 }

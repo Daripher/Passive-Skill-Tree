@@ -579,23 +579,26 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	private void addGateway(String playerClass, String gatewayId) {
-		var skillId = new ResourceLocation(SkillTreeMod.MOD_ID, playerClass + "_gateway");
-		var treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
-		var backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/gateway.png");
-		var iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
-		PassiveSkill skill = new PassiveSkill(skillId, treeId, 33, backgroundTexture, iconTexture, false);
+		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, playerClass + "_gateway");
+		ResourceLocation treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
+		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/gateway.png");
+		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
+		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/gateway.png");
+		PassiveSkill skill = new PassiveSkill(skillId, treeId, 33, backgroundTexture, iconTexture, borderTexture, false);
 		skill.setGatewayId(new ResourceLocation(SkillTreeMod.MOD_ID, gatewayId));
 		data.put(skillId, skill);
 	}
 
 	private void addSkill(String name, String icon, int size) {
-		var skillId = new ResourceLocation(SkillTreeMod.MOD_ID, name);
-		var treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
-		var backgroundName = name.endsWith("class") || name.endsWith("subclass_1") || name.endsWith("subclass_2") ? "class"
+		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, name);
+		ResourceLocation treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
+		String background = name.endsWith("class") || name.endsWith("subclass_1") || name.endsWith("subclass_2") ? "class"
 				: size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
-		var backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + backgroundName + ".png");
-		var iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + icon + ".png");
-		data.put(skillId, new PassiveSkill(skillId, treeId, size, backgroundTexture, iconTexture, name.endsWith("class")));
+		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + background + ".png");
+		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + icon + ".png");
+		String border = size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
+		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/" + border + ".png");
+		data.put(skillId, new PassiveSkill(skillId, treeId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
 	}
 
 	@Override

@@ -14,5 +14,6 @@
     "x": 203,
     "y": -133
   },
+  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"
 }

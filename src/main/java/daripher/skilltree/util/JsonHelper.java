@@ -80,6 +80,7 @@ public class JsonHelper {
 		json.addProperty("tree", skill.getTreeId().toString());
 		json.addProperty("background_texture", skill.getBackgroundTexture().toString());
 		json.addProperty("icon_texture", skill.getIconTexture().toString());
+		json.addProperty("tooltip_texture", skill.getBorderTexture().toString());
 		writeOptionalResourceLocation(json, skill.getConnectedTreeId(), "connected_tree");
 		writeOptionalBoolean(json, skill.isStartingPoint(), "starting_point");
 		writeAttributeModifiers(json, skill.getAttributeModifiers());
@@ -150,8 +151,9 @@ public class JsonHelper {
 		int size = json.get("button_size").getAsInt();
 		ResourceLocation background = readResourceLocation(json, "background_texture");
 		ResourceLocation icon = readResourceLocation(json, "icon_texture");
+		ResourceLocation border = readResourceLocation(json, "tooltip_texture");
 		boolean startingPoint = readOptionalBoolean(json, "starting_point");
-		PassiveSkill skill = new PassiveSkill(id, tree, size, background, icon, startingPoint);
+		PassiveSkill skill = new PassiveSkill(id, tree, size, background, icon, border, startingPoint);
 		skill.setConnectedTree(readOptionalResourceLocation(json, "connected_tree"));
 		readAttributeModifiers(json).forEach(skill::addAttributeBonus);
 		skill.setPosition(readPosition(json));
