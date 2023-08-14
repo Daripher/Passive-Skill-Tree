@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 	modId="skilltree"
-	version="0.5.4"
+	version="0.5.5"
 	displayName="Passive Skill Tree"
 	authors="Daripher"
 	description='''Adds passive skill tree with player class system'''
