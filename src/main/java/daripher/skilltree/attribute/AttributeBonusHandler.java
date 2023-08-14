@@ -598,30 +598,46 @@ public class AttributeBonusHandler {
 		ItemStack stack = event.getCrafting();
 		if (!ItemHelper.isArmor(stack)) return;
 		double defenceBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_DEFENCE.get()) - 1;
-		if (defenceBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DEFENCE, defenceBonus);
+		if (defenceBonus > 0) {
+			ItemHelper.setBonus(stack, ItemHelper.DEFENCE, defenceBonus);
+		}
 		double lifeBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_MAXIMUM_LIFE.get());
-		if (lifeBonus > 0) ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
+		if (lifeBonus > 0) {
+			ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
+		}
 		double toughnessBonus = event.getEntity().getAttributeValue(PSTAttributes.CHANCE_TO_CRAFT_TOUGHER_ARMOR.get()) - 1;
-		double evasionBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_EVASION.get()) - 1;
-		if (evasionBonus > 0) ItemHelper.setBonus(stack, ItemHelper.EVASION, evasionBonus);
-		double stealthBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_STEALTH.get()) - 1;
-		if (ItemHelper.isBoots(stack)) stealthBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_STEALTH.get()) - 1;
-		if (stealthBonus > 0) ItemHelper.setBonus(stack, ItemHelper.STEALTH, stealthBonus);
 		if (toughnessBonus > 0) {
 			double toughness = Math.floor(toughnessBonus);
 			toughnessBonus -= toughness;
 			if (event.getEntity().getRandom().nextFloat() < toughnessBonus) toughness++;
 			ItemHelper.setBonus(stack, ItemHelper.TOUGHNESS, toughness);
 		}
+		double evasionBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_EVASION.get()) - 1;
+		if (evasionBonus > 0) {
+			ItemHelper.setBonus(stack, ItemHelper.EVASION, evasionBonus);
+		}
+		double stealthBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_STEALTH.get()) - 1;
+		if (ItemHelper.isBoots(stack)) {
+			stealthBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_STEALTH.get()) - 1;
+		}
+		if (stealthBonus > 0) {
+			ItemHelper.setBonus(stack, ItemHelper.STEALTH, stealthBonus);
+		}
 		if (ItemHelper.isHelmet(stack)) {
 			double helmetSockets = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_HELMETS_SOCKETS.get());
-			if (helmetSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
+			if (helmetSockets > 0) {
+				ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
+			}
 		}
 		if (ItemHelper.isBoots(stack)) {
 			double bootsSockets = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_SOCKETS.get());
-			if (bootsSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
+			if (bootsSockets > 0) {
+				ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
+			}
 			double bootsMovementSpeed = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get()) - 1;
-			if (bootsMovementSpeed > 0) ItemHelper.setBonus(stack, ItemHelper.MOVEMENT_SPEED, bootsMovementSpeed);
+			if (bootsMovementSpeed > 0) {
+				ItemHelper.setBonus(stack, ItemHelper.MOVEMENT_SPEED, bootsMovementSpeed);
+			}
 		}
 	}
 
@@ -658,10 +674,10 @@ public class AttributeBonusHandler {
 	private static void applyArmorBonus(ItemAttributeModifierEvent event, String type, Attribute attribute, Operation operation) {
 		// formatter:off
 		String[] modifierIds = new String[] {
-			"845DB27C-C624-495F-8C9F-6020A9A58B6B",
-			"D8499B04-0E66-4726-AB29-64469D734E0D",
-			"9F3D476D-C118-4544-8365-64846904B48E",
-			"2AD3F246-FEE1-4E67-B886-69FD380BB150"
+			"2493d298-ea9f-46b9-8769-4362dbada80e",
+			"e78c1b0b-9109-413d-9351-da90388496e6",
+			"58562319-48ee-43f4-8cc4-9e7b011d6773",
+			"4a9913ec-0bc5-42d3-9922-fc35684bd67f"
 		};
 		// formatter:on
 		EquipmentSlot slot = Player.getEquipmentSlotForItem(event.getItemStack());
