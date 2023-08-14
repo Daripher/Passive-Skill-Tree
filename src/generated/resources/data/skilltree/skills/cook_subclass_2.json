@@ -17,5 +17,6 @@
     "x": -157,
     "y": -330
   },
+  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"
 }

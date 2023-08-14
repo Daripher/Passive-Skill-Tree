@@ -3,6 +3,7 @@ package daripher.skilltree.client.widget;
 import java.util.function.Supplier;
 
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
+import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.config.Config;
 import net.minecraft.client.Minecraft;
@@ -36,20 +37,20 @@ public class ProgressBar extends Button {
 	protected void renderProgress(GuiGraphics graphics) {
 		var experienceProgress = getExperienceProgress();
 		var percentageText = "" + (int) (experienceProgress * 100) + "%";
-		drawCenteredOutlinedText(graphics, percentageText, getMinecraftFont(), getX() + width / 2, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(graphics, percentageText, getMinecraftFont(), getX() + width / 2, getTextY(), 0xFCE266);
 	}
 
 	protected void renderNextLevel(GuiGraphics graphics) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
 		var nextLevel = currentLevel + 1;
-		drawCenteredOutlinedText(graphics, "" + nextLevel, getMinecraftFont(), getX() + width - 17, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(graphics, "" + nextLevel, getMinecraftFont(), getX() + width - 17, getTextY(), 0xFCE266);
 	}
 
 	protected void renderCurrentLevel(GuiGraphics graphics) {
 		var currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
-		drawCenteredOutlinedText(graphics, "" + currentLevel, getMinecraftFont(), getX() + 17, getTextY());
+		ScreenHelper.drawCenteredOutlinedText(graphics, "" + currentLevel, getMinecraftFont(), getX() + 17, getTextY(), 0xFCE266);
 	}
 
 	protected int getTextY() {
@@ -87,14 +88,5 @@ public class ProgressBar extends Button {
 	protected Font getMinecraftFont() {
 		var minecraft = Minecraft.getInstance();
 		return minecraft.font;
-	}
-
-	protected void drawCenteredOutlinedText(GuiGraphics graphics, String text, Font font, int x, int y) {
-		x -= font.width(text) / 2;
-		graphics.drawString(font, text, x + 1, y, 0);
-		graphics.drawString(font, text, x - 1, y, 0);
-		graphics.drawString(font, text, x, y + 1, 0);
-		graphics.drawString(font, text, x, y - 1, 0);
-		graphics.drawString(font, text, x, y, 0xFCE266);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 
 import daripher.skilltree.SkillTreeMod;
@@ -31,6 +32,7 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -229,10 +231,59 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	public void renderButtonTooltip(GuiGraphics graphics, Button button, int mouseX, int mouseY) {
-		if (!(button instanceof SkillButton)) return;
-		var borderStyleStack = ((SkillButton) button).getTooltipBorderStyleStack();
-		var tooltip = ((SkillButton) button).getSkillTooltip();
-		graphics.renderComponentTooltip(font, tooltip, mouseX, mouseY, borderStyleStack);
+		if (!(button instanceof SkillButton skillButton)) return;
+		List<MutableComponent> tooltip = skillButton.getSkillTooltip();
+		if (tooltip.isEmpty()) return;
+		int tooltipWidth = 0;
+		int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
+
+		for (MutableComponent component : tooltip) {
+			int k = font.width(component);
+			if (k > tooltipWidth) tooltipWidth = k;
+			tooltipHeight += font.lineHeight;
+		}
+		tooltipWidth += 42;
+		int tooltipX = mouseX + 12;
+		int tooltipY = mouseY - 12;
+		if (tooltipX + tooltipWidth > width) {
+			tooltipX -= 28 + tooltipWidth;
+		}
+
+		if (tooltipY + tooltipHeight + 6 > height) {
+			tooltipY = height - tooltipHeight - 6;
+		}
+
+		graphics.pose().pushPose();
+		graphics.fill(tooltipX + 1, tooltipY - 4, tooltipX + tooltipWidth - 1, tooltipY + tooltipHeight + 4, 0xDD000000);
+		MultiBufferSource.BufferSource buffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+		graphics.pose().translate(0.0D, 0.0D, 400.0D);
+		int textX = tooltipX + 5;
+		int textY = tooltipY + 2;
+
+		prepareTextureRendering(skillButton.skill.getBorderTexture());
+		graphics.blit(skillButton.skill.getBorderTexture(), tooltipX - 4, tooltipY - 4, 0, 0, 21, 20, 110, 20);
+		graphics.blit(skillButton.skill.getBorderTexture(), tooltipX + tooltipWidth + 4 - 21, tooltipY - 4, -21, 0, 21, 20, 110, 20);
+		int centerWidth = tooltipWidth + 8 - 42;
+		int centerX = tooltipX - 4 + 21;
+
+		while (centerWidth > 0) {
+			int partWidth = Math.min(centerWidth, 68);
+			graphics.blit(skillButton.skill.getBorderTexture(), centerX, tooltipY - 4, 21, 0, partWidth, 20, 110, 20);
+			centerX += partWidth;
+			centerWidth -= partWidth;
+		}
+
+		MutableComponent title = tooltip.remove(0);
+		graphics.drawCenteredString(font, title, tooltipX + tooltipWidth / 2, textY, 0xFFFFFF);
+		textY += 17;
+
+		for (MutableComponent component : tooltip) {
+			graphics.drawString(font, component, textX, textY, 0xFFFFFF);
+			textY += font.lineHeight;
+		}
+
+		buffer.endBatch();
+		graphics.pose().popPose();
 	}
 
 	public void buttonPressed(Button button) {

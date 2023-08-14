@@ -16,5 +16,6 @@
     "x": 211,
     "y": -243
   },
+  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"
 }

@@ -11,5 +11,6 @@
     "x": -228,
     "y": -16
   },
+  "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
   "tree": "skilltree:tree"
 }

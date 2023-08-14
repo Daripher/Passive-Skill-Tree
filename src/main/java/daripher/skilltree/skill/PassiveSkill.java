@@ -23,6 +23,7 @@ public class PassiveSkill {
 	private final ResourceLocation treeId;
 	private final ResourceLocation backgroundTexture;
 	private final ResourceLocation iconTexture;
+	private final ResourceLocation borderTexture;
 	private Optional<ResourceLocation> connectedTreeId = Optional.empty();
 	private Optional<ResourceLocation> gatewayId = Optional.empty();
 	private final int buttonSize;
@@ -31,11 +32,12 @@ public class PassiveSkill {
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
 	private int positionX, positionY;
 
-	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, boolean isStartingPoint) {
+	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
 		this.id = id;
 		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
 		this.iconTexture = iconTexture;
+		this.borderTexture = borderTexture;
 		this.buttonSize = buttonSize;
 		this.isStartingPoint = isStartingPoint;
 	}
@@ -58,6 +60,10 @@ public class PassiveSkill {
 
 	public ResourceLocation getIconTexture() {
 		return iconTexture;
+	}
+
+	public ResourceLocation getBorderTexture() {
+		return borderTexture;
 	}
 
 	public Optional<ResourceLocation> getConnectedTreeId() {
