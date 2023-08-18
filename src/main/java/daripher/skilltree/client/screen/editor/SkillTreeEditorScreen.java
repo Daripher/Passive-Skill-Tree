@@ -34,16 +34,10 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 		addToolButtons();
 	}
 
-	@Override
-	public void addSkillConnections() {
-		super.addSkillConnections();
-		newConnections.forEach(idPair -> connectSkills(idPair.getLeft(), idPair.getRight()));
-	}
-
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
 		var buttonX = (int) (skill.getPositionX() + scrollX + width / 2);
 		var buttonY = (int) (skill.getPositionY() + scrollY + height / 2);
-		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed, this::renderButtonTooltip);
+		var button = new SkillButton(() -> renderAnimation, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
 		if (selectedSkills.contains(skill.getId())) {
@@ -56,7 +50,7 @@ public class SkillTreeEditorScreen extends SkillTreeScreen {
 		addRenderableWidget(new EditorToolButton(this, EditorTool.CONNECT, 0, 15));
 	}
 
-	public void renderButtonTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
+	public void renderSkillTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
 		if (!(button instanceof SkillButton)) {
 			return;
 		}

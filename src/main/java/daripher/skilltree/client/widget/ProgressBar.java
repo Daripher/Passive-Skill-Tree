@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 public class ProgressBar extends Button {
 	public ProgressBar(int x, int y) {
@@ -28,7 +29,7 @@ public class ProgressBar extends Button {
 	protected void renderBackground(PoseStack poseStack) {
 		var experienceProgress = getExperienceProgress();
 		var filledBarWidth = (int) (experienceProgress * 183);
-		SkillTreeScreen.prepareTextureRendering(SkillTreeScreen.WIDGETS_TEXTURE);
+		SkillTreeScreen.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/progress_bars.png"));
 		blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
 		if (filledBarWidth == 0) return;
 		blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);
@@ -54,7 +55,7 @@ public class ProgressBar extends Button {
 	}
 
 	protected int getTextY() {
-		return y + 6;
+		return y + 5;
 	}
 
 	private static int getCurrentLevel() {

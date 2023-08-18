@@ -35,32 +35,44 @@ public class SkillButton extends Button {
 	private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
 	private final Supplier<Float> animationFunction;
 	public final PassiveSkill skill;
+	public double x;
+	public double y;
 	public boolean highlighted;
 	public boolean animated;
 
-	public SkillButton(Supplier<Float> animationFunction, int x, int y, PassiveSkill passiveSkill, OnPress pressFunction, OnTooltip tooltipFunction) {
-		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), pressFunction, tooltipFunction);
-		this.skill = passiveSkill;
-		this.animationFunction = animationFunction;
+	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc, OnTooltip tooltipFunc) {
+		super((int) x, (int) y, skill.getButtonSize(), skill.getButtonSize(), Component.empty(), pressFunc, tooltipFunc);
+		this.x = x;
+		this.y = y;
+		this.skill = skill;
+		this.animationFunction = animationFunc;
+	}
+
+	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc) {
+		this(animationFunc, x, y, skill, pressFunc, (b, s, mx, my) -> {});
 	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		prepareTextureRendering(skill.getBackgroundTexture());
-		blit(poseStack, x, y, width, height, 0, 0, width, height, width * 3, height);
 		poseStack.pushPose();
-		poseStack.translate(x + width / 2, y + height / 2, 0);
+		poseStack.translate(x, y, 0);
+		blit(poseStack, 0, 0, width, height, 0, 0, width, height, width * 3, height);
+		poseStack.pushPose();
+		poseStack.translate(width / 2, height / 2, 0);
 		poseStack.scale(0.5F, 0.5F, 1);
+		poseStack.translate(-width / 2, -height / 2, 0);
 		RenderSystem.setShaderTexture(0, skill.getIconTexture());
-		blit(poseStack, -width / 2, -height / 2, width, height, 0, 0, width, height, width, height);
+		blit(poseStack, 0, 0, width, height, 0, 0, width, height, width, height);
 		poseStack.popPose();
 		RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
-		blit(poseStack, x, y, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
+		blit(poseStack, 0, 0, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
 		if (animated) {
 			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animationFunction.get() / 3F) + 1) / 2);
-			blit(poseStack, x, y, width, height, width * 2, 0, width, height, width * 3, height);
+			blit(poseStack, 0, 0, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
+		poseStack.popPose();
 	}
 
 	private void prepareTextureRendering(ResourceLocation textureLocation) {

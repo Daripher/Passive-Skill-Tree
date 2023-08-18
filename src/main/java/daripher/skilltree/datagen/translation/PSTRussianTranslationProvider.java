@@ -442,6 +442,9 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add("widget.skill_button.not_learned", "Умение не изучено");
 		add("widget.skill_button.multiple_bonuses", "%s и %s");
 		add("widget.buy_skill_button", "Купить очко умений");
+		add("widget.confirm_button", "Подтвердить");
+		add("widget.cancel_button", "Отмена");
+		add("widget.show_stats", "Список бонусов");
 		add("key.categories.skilltree", "Древо пассивных умений");
 		add("key.display_skill_tree", "Открыть древо пассивных умений");
 		// apotheosis compatibility

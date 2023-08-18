@@ -5,23 +5,22 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class SkillTreeButton extends Button {
-	public SkillTreeButton(int x, int y, int width, int height, Component message, OnPress pressFunction) {
-		super(x, y, width, height, message, pressFunction, (b, s, mx, my) -> {
-		});
+public class InfoPanel extends AbstractWidget {
+	public InfoPanel(int x, int y, int width, int height, Component message) {
+		super(x, y, width, height, message);
 	}
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		SkillTreeScreen.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
-		int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;
-		blit(poseStack, x, y, 0, v, width / 2, height);
-		blit(poseStack, x + width / 2, y, 140 - width / 2, v, width / 2, height);
+		blit(poseStack, x, y, 0, 14, width / 2, height);
+		blit(poseStack, x + width / 2, y, 140 - width / 2, 14, width / 2, height);
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
 		int textColor = getFGColor();
@@ -29,7 +28,6 @@ public class SkillTreeButton extends Button {
 	}
 
 	@Override
-	public boolean isMouseOver(double mouseX, double mouseY) {
-		return visible && mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+	public void updateNarration(NarrationElementOutput output) {
 	}
 }
