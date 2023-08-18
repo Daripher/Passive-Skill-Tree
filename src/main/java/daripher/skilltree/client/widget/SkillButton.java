@@ -33,30 +33,37 @@ public class SkillButton extends Button {
 	private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
 	private final Supplier<Float> animationFunction;
 	public final PassiveSkill skill;
+	public double x;
+	public double y;
 	public boolean highlighted;
 	public boolean animated;
 
-	public SkillButton(Supplier<Float> animationFunction, int x, int y, PassiveSkill passiveSkill, OnPress pressFunction) {
-		super(x, y, passiveSkill.getButtonSize(), passiveSkill.getButtonSize(), Component.empty(), pressFunction, Supplier::get);
-		this.skill = passiveSkill;
-		this.animationFunction = animationFunction;
+	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc) {
+		super((int) x, (int) y, skill.getButtonSize(), skill.getButtonSize(), Component.empty(), pressFunc, Supplier::get);
+		this.x = x;
+		this.y = y;
+		this.skill = skill;
+		this.animationFunction = animationFunc;
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, 0, 0, width, height, width * 3, height);
+	public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 		graphics.pose().pushPose();
-		graphics.pose().translate(getX() + width / 2, getY() + height / 2, 0);
+		graphics.pose().translate(x, y, 0);
+		graphics.blit(skill.getBackgroundTexture(), 0, 0, width, height, 0, 0, width, height, width * 3, height);
+		graphics.pose().pushPose();
+		graphics.pose().translate(width / 2, height / 2, 0);
 		graphics.pose().scale(0.5F, 0.5F, 1);
-		graphics.blit(skill.getIconTexture(), -width / 2, -height / 2, width, height, 0, 0, width, height, width, height);
+		graphics.pose().translate(-width / 2, -height / 2, 0);
+		graphics.blit(skill.getIconTexture(), 0, 0, width, height, 0, 0, width, height, width, height);
 		graphics.pose().popPose();
-		graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, width + (highlighted ? width : 0), 0, width, height, width * 3,
-				height);
+		graphics.blit(skill.getBackgroundTexture(), 0, 0, width, height, width + (highlighted ? width : 0), 0, width, height, width * 3, height);
 		if (animated) {
 			RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animationFunction.get() / 3F) + 1) / 2);
-			graphics.blit(skill.getBackgroundTexture(), getX(), getY(), width, height, width * 2, 0, width, height, width * 3, height);
+			graphics.blit(skill.getBackgroundTexture(), 0, 0, width, height, width * 2, 0, width, height, width * 3, height);
 			RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 		}
+		graphics.pose().popPose();
 	}
 
 	public List<MutableComponent> getSkillTooltip() {
