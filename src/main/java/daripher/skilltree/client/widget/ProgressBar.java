@@ -2,20 +2,21 @@ package daripher.skilltree.client.widget;
 
 import java.util.function.Supplier;
 
+import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.config.Config;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class ProgressBar extends Button {
-	public ProgressBar(int x, int y) {
-		super(x, y, 235, 19, Component.empty(), b -> {
-		}, Supplier::get);
+	public boolean showProgressInNumbers;
+
+	public ProgressBar(int x, int y, OnPress pressFunc) {
+		super(x, y, 235, 19, Component.empty(), pressFunc, Supplier::get);
 	}
 
 	@Override
@@ -28,30 +29,37 @@ public class ProgressBar extends Button {
 
 	protected void renderBackground(GuiGraphics graphics) {
 		ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/widgets/progress_bars.png");
-		var experienceProgress = getExperienceProgress();
-		var filledBarWidth = (int) (experienceProgress * 183);
+		float experienceProgress = getExperienceProgress();
+		int filledBarWidth = (int) (experienceProgress * 183);
 		graphics.blit(texture, getX() + 26, getY() + 7, 0, 0, 182, 5);
 		if (filledBarWidth == 0) return;
 		graphics.blit(texture, getX() + 26, getY() + 7, 0, 5, filledBarWidth, 5);
 	}
 
 	protected void renderProgress(GuiGraphics graphics) {
-		var experienceProgress = getExperienceProgress();
-		var percentageText = "" + (int) (experienceProgress * 100) + "%";
-		ScreenHelper.drawCenteredOutlinedText(graphics, percentageText, getMinecraftFont(), getX() + width / 2, getTextY(), 0xFCE266);
+		if (showProgressInNumbers) {
+			int cost = Config.getSkillPointCost(getCurrentLevel());
+			int exp = Minecraft.getInstance().player.totalExperience;
+			String text = "" + exp + "/" + cost;
+			ScreenHelper.drawCenteredOutlinedText(graphics, text, Minecraft.getInstance().font, getX() + width / 2, getTextY(), 0xFCE266);
+		} else {
+			float experienceProgress = getExperienceProgress();
+			String text = "" + (int) (experienceProgress * 100) + "%";
+			ScreenHelper.drawCenteredOutlinedText(graphics, text, Minecraft.getInstance().font, getX() + width / 2, getTextY(), 0xFCE266);
+		}
 	}
 
 	protected void renderNextLevel(GuiGraphics graphics) {
-		var currentLevel = getCurrentLevel();
+		int currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
-		var nextLevel = currentLevel + 1;
-		ScreenHelper.drawCenteredOutlinedText(graphics, "" + nextLevel, getMinecraftFont(), getX() + width - 17, getTextY(), 0xFCE266);
+		int nextLevel = currentLevel + 1;
+		ScreenHelper.drawCenteredOutlinedText(graphics, "" + nextLevel, Minecraft.getInstance().font, getX() + width - 17, getTextY(), 0xFCE266);
 	}
 
 	protected void renderCurrentLevel(GuiGraphics graphics) {
-		var currentLevel = getCurrentLevel();
+		int currentLevel = getCurrentLevel();
 		if (isMaxLevel(currentLevel)) currentLevel--;
-		ScreenHelper.drawCenteredOutlinedText(graphics, "" + currentLevel, getMinecraftFont(), getX() + 17, getTextY(), 0xFCE266);
+		ScreenHelper.drawCenteredOutlinedText(graphics, "" + currentLevel, Minecraft.getInstance().font, getX() + 17, getTextY(), 0xFCE266);
 	}
 
 	protected int getTextY() {
@@ -59,35 +67,25 @@ public class ProgressBar extends Button {
 	}
 
 	private static int getCurrentLevel() {
-		var minecraft = Minecraft.getInstance();
-		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
-		var learnedSkills = skillsCapability.getPlayerSkills().size();
-		var skillPoints = skillsCapability.getSkillPoints();
-		var currentLevel = learnedSkills + skillPoints;
-		return currentLevel;
+		Minecraft minecraft = Minecraft.getInstance();
+		IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+		int skills = capability.getPlayerSkills().size();
+		int points = capability.getSkillPoints();
+		return skills + points;
 	}
 
 	private static boolean isMaxLevel(int currentLevel) {
-		var levelupCosts = Config.level_up_costs;
-		return currentLevel >= levelupCosts.size();
+		return currentLevel >= Config.max_skill_points;
 	}
 
 	private float getExperienceProgress() {
-		var minecraft = Minecraft.getInstance();
-		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
-		var currentLevel = skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
-		var levelupCosts = Config.level_up_costs;
-		var experienceProgress = 1F;
-		if (currentLevel < levelupCosts.size()) {
-			var levelupCost = levelupCosts.get(currentLevel);
-			experienceProgress = (float) minecraft.player.totalExperience / levelupCost;
-			experienceProgress = Math.min(1F, experienceProgress);
+		int level = getCurrentLevel();
+		float progress = 1F;
+		if (level < Config.max_skill_points) {
+			int levelupCost = Config.getSkillPointCost(level);
+			progress = (float) Minecraft.getInstance().player.totalExperience / levelupCost;
+			progress = Math.min(1F, progress);
 		}
-		return experienceProgress;
-	}
-
-	protected Font getMinecraftFont() {
-		var minecraft = Minecraft.getInstance();
-		return minecraft.font;
+		return progress;
 	}
 }

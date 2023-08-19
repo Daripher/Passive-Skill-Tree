@@ -2,36 +2,37 @@ package daripher.skilltree.network.message;
 
 import java.util.function.Supplier;
 
+import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 public class GainSkillPointMessage {
 	public static GainSkillPointMessage decode(FriendlyByteBuf buf) {
-		var message = new GainSkillPointMessage();
-		return message;
+		return new GainSkillPointMessage();
 	}
 
 	public void encode(FriendlyByteBuf buf) {
 	}
 
 	public static void receive(GainSkillPointMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
-		var ctx = ctxSupplier.get();
+		Context ctx = ctxSupplier.get();
 		ctx.setPacketHandled(true);
-		var player = ctx.getSender();
-		var skillsCapability = PlayerSkillsProvider.get(player);
-		var learnedSkills = skillsCapability.getPlayerSkills().size();
-		var skillPoints = skillsCapability.getSkillPoints();
-		var currentLevel = learnedSkills + skillPoints;
-		var levelupCosts = Config.level_up_costs;
-		if (currentLevel >= levelupCosts.size()) return;
-		var levelupCost = levelupCosts.get(currentLevel);
-		if (player.totalExperience < levelupCost) return;
-		player.giveExperiencePoints(-levelupCost);
-		skillsCapability.grantSkillPoints(1);
+		ServerPlayer player = ctx.getSender();
+		IPlayerSkills capability = PlayerSkillsProvider.get(player);
+		int skills = capability.getPlayerSkills().size();
+		int points = capability.getSkillPoints();
+		int level = skills + points;
+		if (level >= Config.max_skill_points) return;
+		int cost = Config.getSkillPointCost(level);
+		if (player.totalExperience < cost) return;
+		player.giveExperiencePoints(-cost);
+		capability.grantSkillPoints(1);
 		NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
 	}
 }

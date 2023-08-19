@@ -56,15 +56,16 @@ public class SkillTreeScreen extends Screen {
 	private final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
 	private final List<SkillButton> startingPoints = new ArrayList<>();
 	private final ResourceLocation treeId;
-	private AbstractWidget progressBar;
 	private AbstractWidget buyButton;
 	private AbstractWidget pointsInfo;
 	private AbstractWidget confirmButton;
 	private AbstractWidget cancelButton;
 	private AbstractWidget showStatsButton;
+	private ProgressBar progressBar;
 	private StatsList statsInfo;
 	private boolean firstInitDone;
 	private boolean showStats;
+	private boolean showProgressInNumbers;
 	private int prevMouseX;
 	private int prevMouseY;
 	private float zoom = 1F;
@@ -86,7 +87,11 @@ public class SkillTreeScreen extends Screen {
 	@Override
 	public void init() {
 		clearWidgets();
-		progressBar = new ProgressBar(width / 2 - 235 / 2, height - 17);
+		progressBar = new ProgressBar(width / 2 - 235 / 2, height - 17, b -> {
+			progressBar.showProgressInNumbers ^= true;
+			showProgressInNumbers ^= true;
+		});
+		progressBar.showProgressInNumbers = showProgressInNumbers;
 		addRenderableWidget(progressBar);
 		addTopButtons();
 		if (!Config.enable_exp_exchange) {
@@ -161,6 +166,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void renderSkillTooltip(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+		if (getWidgetAt(mouseX, mouseY).isPresent()) return;
 		getSkillAt(mouseX, mouseY).ifPresent(button -> {
 			renderSkillTooltip(button, graphics, mouseX + (prevMouseX - mouseX) * partialTick, mouseY + (prevMouseY - mouseY) * partialTick);
 		});
@@ -385,7 +391,7 @@ public class SkillTreeScreen extends Screen {
 	private void buySkillPoint() {
 		int currentLevel = getCurrentLevel();
 		if (!canBuySkillPoint(currentLevel)) return;
-		int cost = Config.level_up_costs.get(currentLevel);
+		int cost = Config.getSkillPointCost(currentLevel);
 		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
 		Minecraft.getInstance().player.giveExperiencePoints(-cost);
 	}
@@ -393,12 +399,12 @@ public class SkillTreeScreen extends Screen {
 	private static boolean canBuySkillPoint(int currentLevel) {
 		if (!Config.enable_exp_exchange) return false;
 		if (isMaxLevel(currentLevel)) return false;
-		int cost = Config.level_up_costs.get(currentLevel);
+		int cost = Config.getSkillPointCost(currentLevel);
 		return Minecraft.getInstance().player.totalExperience >= cost;
 	}
 
 	private static boolean isMaxLevel(int currentLevel) {
-		return currentLevel >= Config.level_up_costs.size();
+		return currentLevel >= Config.max_skill_points;
 	}
 
 	private static int getCurrentLevel() {
@@ -444,8 +450,7 @@ public class SkillTreeScreen extends Screen {
 		int currentLevel = getCurrentLevel();
 		buyButton.active = false;
 		if (isMaxLevel(currentLevel)) return;
-		List<? extends Integer> pointCosts = Config.level_up_costs;
-		int pointCost = pointCosts.get(currentLevel);
+		int pointCost = Config.getSkillPointCost(currentLevel);
 		buyButton.active = minecraft.player.totalExperience >= pointCost;
 	}
 
