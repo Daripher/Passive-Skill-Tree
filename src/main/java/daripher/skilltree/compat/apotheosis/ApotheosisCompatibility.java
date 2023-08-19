@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.mojang.datafixers.util.Either;
 
 import daripher.skilltree.SkillTreeMod;
@@ -21,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -42,6 +45,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootCategory;
+import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 public enum ApotheosisCompatibility {
@@ -55,6 +59,7 @@ public enum ApotheosisCompatibility {
 		modEventBus.addListener(this::generateGems);
 		IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 		forgeEventBus.addListener(this::addItemSockets);
+		forgeEventBus.addListener(this::ignoreGemTooltips);
 		forgeEventBus.addListener(EventPriority.LOW, this::addJewelrySocketTooltip);
 		forgeEventBus.addListener(this::applyCurioGemBonuses);
 		forgeEventBus.addListener(EventPriority.LOWEST, this::removeDuplicateTooltips);
@@ -68,6 +73,20 @@ public enum ApotheosisCompatibility {
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public void ignoreGemTooltips(GatherSkippedAttributeTooltipsEvent event) {
+		ItemStack stack = event.getStack();
+		int socket = 0;
+		while (GemHelper.hasGem(stack, socket)) {
+			// formatter:off
+			GemHelper.getAttributeBonus(stack, socket)
+				.map(Pair::getRight)
+				.map(AttributeModifier::getId)
+				.ifPresent(event::skipUUID);
+			// formatter:on
+			socket++;
 		}
 	}
 
