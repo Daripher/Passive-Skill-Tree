@@ -87,7 +87,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	public static class SocketComponent implements TooltipComponent {
 		private final ItemStack stack;
 		private final List<ItemStack> gems;
-		private final int sockets;
+		private int sockets;
 
 		public SocketComponent(ItemStack stack) {
 			this.stack = stack;
@@ -99,6 +99,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 				gems.add(gem);
 				socket++;
 			}
+			if (sockets < gems.size()) sockets = gems.size();
 		}
 	}
 }
