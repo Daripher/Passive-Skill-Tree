@@ -29,12 +29,15 @@ public class Config {
 	private static final ConfigValue<Integer> DEFAULT_SHIELD_SOCKETS;
 	private static final ConfigValue<Integer> DEFAULT_NECKLACE_SOCKETS;
 	private static final ConfigValue<Integer> DEFAULT_RING_SOCKETS;
+	private static final ConfigValue<Integer> FIRST_POINT_COST;
+	private static final ConfigValue<Integer> LAST_POINT_COST;
 	private static final ConfigValue<Double> GEM_DROP_CHANCE;
 	private static final ConfigValue<Double> AMNESIA_SCROLL_PENALTY;
 	private static final ConfigValue<Double> GRINDSTONE_EXP_MULTIPLIER;
 	private static final ConfigValue<Boolean> SHOW_CHAT_MESSAGES;
 	private static final ConfigValue<Boolean> ENABLE_EXP_EXCHANGE;
 	private static final ConfigValue<Boolean> DRAGON_DROPS_AMNESIA_SCROLL;
+	private static final ConfigValue<Boolean> USE_POINTS_COSTS_ARRAY;
 	private static final ConfigValue<List<? extends Integer>> LEVEL_UP_COSTS;
 	private static final ConfigValue<List<? extends String>> SOCKET_BLACKLIST;
 	private static final ConfigValue<List<? extends String>> FORCED_HELMETS;
@@ -48,8 +51,12 @@ public class Config {
 	static {
 		BUILDER.push("Skill Points");
 		MAX_SKILL_POINTS = BUILDER.defineInRange("Maximum skill points", 85, 1, 1000);
+		FIRST_POINT_COST = BUILDER.defineInRange("First skill point cost", 15, 0, Integer.MAX_VALUE);
+		LAST_POINT_COST = BUILDER.defineInRange("Last skill point cost", 1400, 0, Integer.MAX_VALUE);
+		BUILDER.comment("You can set cost for each skill point instead");
+		USE_POINTS_COSTS_ARRAY = BUILDER.define("Use skill points costs array", false);
 		BUILDER.comment("This list's size must be equal to maximum skill points.");
-		LEVEL_UP_COSTS = BUILDER.defineList("Levelup costs", generateDefaultPointsCosts(50), o -> o instanceof Integer i && i > 0);
+		LEVEL_UP_COSTS = BUILDER.defineList("Levelup costs", generateDefaultPointsCosts(85), o -> o instanceof Integer i && i > 0);
 		BUILDER.comment("Disabling this will remove chat messages when you gain a skill point.");
 		SHOW_CHAT_MESSAGES = BUILDER.define("Show chat messages", true);
 		BUILDER.comment("Warning: If you disable this make sure you make alternative way of getting skill points.");
@@ -73,7 +80,8 @@ public class Config {
 		BUILDER.comment("Example: Blacklisting specific items: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
 		BUILDER.comment("Example: Blacklisting whole mod: [\"<mod_id>:*\"]");
 		BUILDER.comment("Example: Blacklisting all items: [\"*:*\"]");
-		SOCKET_BLACKLIST = BUILDER.defineListAllowEmpty(List.of("IDs of items that shouldn't have sockets"), ArrayList::new, Config::validateItemName);
+		SOCKET_BLACKLIST = BUILDER.defineListAllowEmpty(List.of("IDs of items that shouldn't have sockets"), ArrayList::new,
+				Config::validateItemName);
 		BUILDER.comment("You can force items from other mods into equipment categories here");
 		FORCED_HELMETS = BUILDER.defineListAllowEmpty(List.of("Force into helmets category"), ArrayList::new, Config::validateItemName);
 		FORCED_CHESTPLATES = BUILDER.defineListAllowEmpty(List.of("Force into chestplates category"), ArrayList::new, Config::validateItemName);
@@ -127,7 +135,6 @@ public class Config {
 	public static boolean show_chat_messages;
 	public static boolean enable_exp_exchange;
 	public static boolean dragon_drops_amnesia_scroll;
-	public static List<Integer> level_up_costs;
 	public static List<? extends String> socket_blacklist;
 	public static Set<Item> forced_helmets;
 	public static Set<Item> forced_chestplates;
@@ -154,7 +161,6 @@ public class Config {
 		show_chat_messages = SHOW_CHAT_MESSAGES.get();
 		enable_exp_exchange = ENABLE_EXP_EXCHANGE.get();
 		dragon_drops_amnesia_scroll = DRAGON_DROPS_AMNESIA_SCROLL.get();
-		level_up_costs = LEVEL_UP_COSTS.get().stream().collect(Collectors.toList());
 		socket_blacklist = SOCKET_BLACKLIST.get();
 		forced_helmets = getItems(FORCED_HELMETS.get());
 		forced_chestplates = getItems(FORCED_CHESTPLATES.get());
@@ -163,6 +169,17 @@ public class Config {
 		forced_shields = getItems(FORCED_SHIELDS.get());
 		forced_melee_weapon = getItems(FORCED_MELEE_WEAPON.get());
 		forced_ranged_weapon = getItems(FORCED_RANGED_WEAPON.get());
+	}
+
+	public static int getSkillPointCost(int level) {
+		if (USE_POINTS_COSTS_ARRAY.get()) {
+			List<? extends Integer> costs = LEVEL_UP_COSTS.get();
+			if (level > costs.size()) {
+				return costs.get(costs.size() - 1);
+			}
+			return costs.get(level);
+		}
+		return FIRST_POINT_COST.get() + (LAST_POINT_COST.get() - FIRST_POINT_COST.get()) * level / max_skill_points;
 	}
 
 	static Set<Item> getItems(List<? extends String> names) {
