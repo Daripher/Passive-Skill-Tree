@@ -184,7 +184,7 @@ public enum ApotheosisCompatibility {
 		if (!ItemHelper.hasSockets(stack)) return;
 		int sockets = event.getSockets();
 		if (event.getSockets() == 0) {
-			SocketHelper.setSockets(stack, 1);
+			SocketHelper.setSockets(stack, ItemHelper.getDefaultSockets(stack));
 			sockets++;
 		}
 		if (stack.getItem() instanceof HasAdditionalSockets item) {
