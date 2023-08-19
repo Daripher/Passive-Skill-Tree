@@ -1,6 +1,9 @@
 package daripher.skilltree.recipe;
 
+import org.slf4j.Logger;
+
 import com.google.gson.JsonObject;
+import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.PSTAttributes;
@@ -9,6 +12,7 @@ import daripher.skilltree.potion.PotionHelper;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -18,25 +22,28 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class MixtureRecipe extends CustomRecipe {
+	private static final Logger LOGGER = LogUtils.getLogger();
+
 	public MixtureRecipe(ResourceLocation id) {
 		super(id, CraftingBookCategory.MISC);
 	}
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
-		var playerContainer = (PlayerContainer) container;
+		if (!(container instanceof PlayerContainer playerContainer)) {
+			LOGGER.error("Container of type {} is not a PlayerContainer, can't mix potions here!", container.getClass());
+		}
+		PlayerContainer playerContainer = (PlayerContainer) container;
 		if (!playerContainer.getPlayer().isPresent()) return false;
-		var player = playerContainer.getPlayer().get();
-		var canMixPotions = player.getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
+		Player player = playerContainer.getPlayer().get();
+		boolean canMixPotions = player.getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
 		if (!canMixPotions) return false;
-		var potionStack1 = ItemStack.EMPTY;
-		var potionStack2 = ItemStack.EMPTY;
-		var potionsCount = 0;
+		ItemStack potionStack1 = ItemStack.EMPTY;
+		ItemStack potionStack2 = ItemStack.EMPTY;
+		int potionsCount = 0;
 		for (int slot = 0; slot < container.getContainerSize(); slot++) {
-			var stackInSlot = container.getItem(slot);
-			if (stackInSlot.isEmpty()) {
-				continue;
-			}
+			ItemStack stackInSlot = container.getItem(slot);
+			if (stackInSlot.isEmpty()) continue;
 			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isMixture(stackInSlot)) {
 				potionsCount++;
 				if (potionStack1.isEmpty()) {
@@ -52,13 +59,11 @@ public class MixtureRecipe extends CustomRecipe {
 
 	@Override
 	public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
-		var potionStack1 = ItemStack.EMPTY;
-		var potionStack2 = ItemStack.EMPTY;
+		ItemStack potionStack1 = ItemStack.EMPTY;
+		ItemStack potionStack2 = ItemStack.EMPTY;
 		for (int slot = 0; slot < container.getContainerSize(); slot++) {
-			var stackInSlot = container.getItem(slot);
-			if (stackInSlot.isEmpty()) {
-				continue;
-			}
+			ItemStack stackInSlot = container.getItem(slot);
+			if (stackInSlot.isEmpty()) continue;
 			if (PotionHelper.isPotion(stackInSlot) && !PotionHelper.isMixture(stackInSlot)) {
 				if (potionStack1.isEmpty()) {
 					potionStack1 = stackInSlot;
@@ -67,8 +72,7 @@ public class MixtureRecipe extends CustomRecipe {
 				}
 			}
 		}
-		var result = PotionHelper.mixPotions(potionStack1, potionStack2);
-		return result;
+		return PotionHelper.mixPotions(potionStack1, potionStack2);
 	}
 
 	@Override

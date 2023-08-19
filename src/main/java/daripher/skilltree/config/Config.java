@@ -34,6 +34,8 @@ public class Config {
 	private static final ConfigValue<Double> GEM_DROP_CHANCE;
 	private static final ConfigValue<Double> AMNESIA_SCROLL_PENALTY;
 	private static final ConfigValue<Double> GRINDSTONE_EXP_MULTIPLIER;
+	private static final ConfigValue<Double> MIXTURE_EFFECTS_DURATION;
+	private static final ConfigValue<Double> MIXTURE_EFFECTS_STRENGTH;
 	private static final ConfigValue<Boolean> SHOW_CHAT_MESSAGES;
 	private static final ConfigValue<Boolean> ENABLE_EXP_EXCHANGE;
 	private static final ConfigValue<Boolean> DRAGON_DROPS_AMNESIA_SCROLL;
@@ -100,6 +102,11 @@ public class Config {
 		BUILDER.push("Experience");
 		GRINDSTONE_EXP_MULTIPLIER = BUILDER.defineInRange("Grindstone experience multiplier", 0.1D, 0D, 1D);
 		BUILDER.pop();
+		
+		BUILDER.push("Mixtures");
+		MIXTURE_EFFECTS_DURATION = BUILDER.defineInRange("Effects duration multiplier", 1D, 0D, 2D);
+		MIXTURE_EFFECTS_STRENGTH = BUILDER.defineInRange("Effects strength multiplier", 1D, 0D, 2D);
+		BUILDER.pop();
 	}
 
 	static List<Integer> generateDefaultPointsCosts(int maximumPoints) {
@@ -131,6 +138,8 @@ public class Config {
 	public static double gem_drop_chance;
 	public static double amnesia_scroll_penalty;
 	public static double grindstone_exp_multiplier;
+	public static double mixture_effects_duration;
+	public static double mixture_effects_strength;
 	public static boolean show_chat_messages;
 	public static boolean enable_exp_exchange;
 	public static boolean dragon_drops_amnesia_scroll;
@@ -168,6 +177,8 @@ public class Config {
 		forced_shields = getItems(FORCED_SHIELDS.get());
 		forced_melee_weapon = getItems(FORCED_MELEE_WEAPON.get());
 		forced_ranged_weapon = getItems(FORCED_RANGED_WEAPON.get());
+		mixture_effects_duration = MIXTURE_EFFECTS_DURATION.get();
+		mixture_effects_strength = MIXTURE_EFFECTS_STRENGTH.get();
 	}
 
 	public static int getSkillPointCost(int level) {
