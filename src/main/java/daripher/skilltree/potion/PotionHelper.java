@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import daripher.skilltree.config.Config;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -89,12 +90,18 @@ public class PotionHelper {
 		if (tag != null) tag.putInt(CUSTOM_COLOR_TAG, color);
 	}
 
-	public static ItemStack mixPotions(ItemStack potionStack1, ItemStack potionStack2) {
-		List<ItemStack> potions = Arrays.asList(potionStack1, potionStack2);
+	public static ItemStack mixPotions(ItemStack potion1, ItemStack potion2) {
+		List<ItemStack> potions = Arrays.asList(potion1, potion2);
 		potions = potions.stream().sorted(PotionHelper::comparePotions).toList();
-		var result = new ItemStack(potionStack1.getItem(), 2);
-		var effects = new ArrayList<MobEffectInstance>();
-		potions.stream().map(PotionUtils::getMobEffects).forEach(effects::addAll);
+		ItemStack result = new ItemStack(potion1.getItem(), 2);
+		List<MobEffectInstance> effects = new ArrayList<>();
+		potions.stream().map(PotionUtils::getMobEffects).forEach(originalEffects -> {
+			originalEffects.forEach(effect -> {
+				int duration = (int) (effect.getDuration() * Config.mixture_effects_duration);
+				int amplifier = (int) (effect.getAmplifier() * Config.mixture_effects_strength);
+				effects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
+			});
+		});
 		PotionUtils.setCustomEffects(result, effects);
 		setPotionColor(result, PotionUtils.getColor(potions.get(0)));
 		result.getOrCreateTag().putBoolean(MIXED_POTION_TAG, true);
