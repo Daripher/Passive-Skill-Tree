@@ -15,8 +15,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_offensive_notable_1.png",
   "position": {
-    "x": -250,
-    "y": 36
+    "x": -249.63829,
+    "y": 35.99579
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

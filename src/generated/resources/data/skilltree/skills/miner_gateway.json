@@ -8,8 +8,8 @@
   "gateway": "skilltree:astral_gateway",
   "icon_texture": "skilltree:textures/icons/void.png",
   "position": {
-    "x": -122,
-    "y": 168
+    "x": -122.038315,
+    "y": 166.7773
   },
   "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
   "tree": "skilltree:tree"

@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_mastery.png",
   "position": {
-    "x": 306,
-    "y": -365
+    "x": 303.95526,
+    "y": -361.7826
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

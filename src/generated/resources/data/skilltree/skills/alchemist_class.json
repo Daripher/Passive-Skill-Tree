@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_class.png",
   "position": {
-    "x": -12,
-    "y": 140
+    "x": -12.0,
+    "y": 140.0
   },
   "starting_point": true,
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",

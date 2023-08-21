@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_crafting_1.png",
   "position": {
-    "x": 176,
-    "y": 377
+    "x": 175.47227,
+    "y": 373.80008
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

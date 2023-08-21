@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_crit_notable_1.png",
   "position": {
-    "x": -269,
-    "y": 139
+    "x": -267.67392,
+    "y": 138.76059
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

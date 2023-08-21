@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_subclass_1_defensive_1.png",
   "position": {
-    "x": 139,
-    "y": 216
+    "x": 138.6677,
+    "y": 214.0563
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

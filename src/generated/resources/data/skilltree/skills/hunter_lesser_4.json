@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
   "position": {
-    "x": 283,
-    "y": 192
+    "x": 280.69278,
+    "y": 191.03079
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

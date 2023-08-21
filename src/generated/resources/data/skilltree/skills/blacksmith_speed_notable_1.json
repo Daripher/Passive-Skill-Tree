@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/blacksmith_speed_notable_1.png",
   "position": {
-    "x": -246,
-    "y": -147
+    "x": -245.14684,
+    "y": -145.77867
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

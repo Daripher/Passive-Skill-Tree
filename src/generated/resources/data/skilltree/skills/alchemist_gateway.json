@@ -8,8 +8,8 @@
   "gateway": "skilltree:etherial_gateway",
   "icon_texture": "skilltree:textures/icons/void.png",
   "position": {
-    "x": 90,
-    "y": 168
+    "x": 89.45949,
+    "y": 166.53412
   },
   "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
   "tree": "skilltree:tree"

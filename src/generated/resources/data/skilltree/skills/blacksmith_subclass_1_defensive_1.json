@@ -18,8 +18,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_defensive_1.png",
   "position": {
-    "x": -142,
-    "y": -209
+    "x": -141.66553,
+    "y": -207.53923
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

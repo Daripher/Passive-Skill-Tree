@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_crafting_1.png",
   "position": {
-    "x": -432,
-    "y": -66
+    "x": -430.37445,
+    "y": -66.01307
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

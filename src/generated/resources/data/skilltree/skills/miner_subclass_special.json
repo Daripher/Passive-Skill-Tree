@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_subclass_special_1.png",
   "position": {
-    "x": -434,
-    "y": -10
+    "x": -432.38455,
+    "y": -10.007257
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

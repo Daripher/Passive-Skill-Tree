@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_subclass_2_life_notable_1.png",
   "position": {
-    "x": 421,
-    "y": 119
+    "x": 418.8894,
+    "y": 118.727844
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_healing_1.png",
   "position": {
-    "x": -78,
-    "y": 113
+    "x": -77.2976,
+    "y": 112.78715
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

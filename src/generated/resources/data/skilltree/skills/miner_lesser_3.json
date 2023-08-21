@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_lesser_1.png",
   "position": {
-    "x": -299,
-    "y": 192
+    "x": -296.71185,
+    "y": 191.00313
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

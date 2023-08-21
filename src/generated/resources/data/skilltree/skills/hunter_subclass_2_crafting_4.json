@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_subclass_2_crafting_1.png",
   "position": {
-    "x": 439,
-    "y": 63
+    "x": 436.8903,
+    "y": 63.01451
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

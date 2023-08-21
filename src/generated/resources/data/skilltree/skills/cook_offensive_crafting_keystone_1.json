@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/cook_offensive_crafting_keystone_1.png",
   "position": {
-    "x": 81,
-    "y": -349
+    "x": 80.98723,
+    "y": -347.04144
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

@@ -23,8 +23,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_mastery.png",
   "position": {
-    "x": -330,
-    "y": -365
+    "x": -327.92178,
+    "y": -361.80984
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
   "position": {
-    "x": 45,
-    "y": 85
+    "x": 44.9606,
+    "y": 84.42358
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

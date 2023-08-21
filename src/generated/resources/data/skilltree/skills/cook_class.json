@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/cook_class.png",
   "position": {
-    "x": -12,
-    "y": -164
+    "x": -12.0,
+    "y": -164.0
   },
   "starting_point": true,
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",

@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
   "position": {
-    "x": 165,
-    "y": -217
+    "x": 164.6659,
+    "y": -215.04056
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

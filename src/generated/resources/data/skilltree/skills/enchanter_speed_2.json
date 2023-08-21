@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_speed_1.png",
   "position": {
-    "x": 242,
-    "y": -120
+    "x": 241.15608,
+    "y": -119.512146
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

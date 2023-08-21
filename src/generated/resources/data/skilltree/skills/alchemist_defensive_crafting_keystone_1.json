@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 81,
-    "y": 325
+    "x": 80.97753,
+    "y": 323.05035
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

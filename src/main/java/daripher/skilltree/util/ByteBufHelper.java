@@ -65,8 +65,8 @@ public class ByteBufHelper {
 		buf.writeUtf(skill.getIconTexture().toString());
 		buf.writeUtf(skill.getBorderTexture().toString());
 		buf.writeBoolean(skill.isStartingPoint());
-		buf.writeInt(skill.getPositionX());
-		buf.writeInt(skill.getPositionY());
+		buf.writeFloat(skill.getPositionX());
+		buf.writeFloat(skill.getPositionY());
 		writeResourceLocations(buf, skill.getConnectedSkills());
 		writeOptionalResourceLocation(buf, skill.getConnectedTreeId());
 		writeAttributeModifiers(buf, skill.getAttributeModifiers());
@@ -126,7 +126,7 @@ public class ByteBufHelper {
 		ResourceLocation border = new ResourceLocation(buf.readUtf());
 		boolean startingPoint = buf.readBoolean();
 		PassiveSkill skill = new PassiveSkill(id, treeId, size, background, icon, border, startingPoint);
-		skill.setPosition(buf.readInt(), buf.readInt());
+		skill.setPosition(buf.readFloat(), buf.readFloat());
 		readResourceLocations(buf).forEach(skill.getConnectedSkills()::add);
 		skill.setConnectedTree(readOptionalResourceLocation(buf));
 		readAttributeModifiers(buf).forEach(skill::addAttributeBonus);

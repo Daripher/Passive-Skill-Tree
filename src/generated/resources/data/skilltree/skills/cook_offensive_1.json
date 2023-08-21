@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/cook_offensive_1.png",
   "position": {
-    "x": 7,
-    "y": -186
+    "x": 7.0016613,
+    "y": -185.9798
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

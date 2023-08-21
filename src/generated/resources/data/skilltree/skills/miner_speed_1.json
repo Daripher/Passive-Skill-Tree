@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_speed_1.png",
   "position": {
-    "x": -230,
-    "y": 153
+    "x": -229.16061,
+    "y": 152.00528
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

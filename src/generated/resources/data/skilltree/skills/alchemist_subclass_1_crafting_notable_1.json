@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_crafting_notable_1.png",
   "position": {
-    "x": -197,
-    "y": 429
+    "x": -196.93625,
+    "y": 425.78738
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

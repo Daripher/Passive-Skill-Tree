@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_offensive_keystone_1.png",
   "position": {
-    "x": 346,
-    "y": -155
+    "x": 343.68784,
+    "y": -154.9921
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"
