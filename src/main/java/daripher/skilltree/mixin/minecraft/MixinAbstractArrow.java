@@ -21,7 +21,7 @@ public abstract class MixinAbstractArrow {
 		AbstractArrow arrow = (AbstractArrow) (Object) this;
 		if (!arrow.level().isClientSide && (inGround || arrow.isNoPhysics()) && arrow.shakeTime <= 0) {
 			if (arrow.pickup == Pickup.ALLOWED) {
-				ItemEntity item = new ItemEntity(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ(), getPickupItem().copy());
+				ItemEntity item = new ItemEntity(arrow.level(), player.getX(), player.getY(), player.getZ(), getPickupItem().copy());
 				arrow.level().addFreshEntity(item);
 				item.setPickUpDelay(0);
 				arrow.discard();
