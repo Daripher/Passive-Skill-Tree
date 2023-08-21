@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_life_1.png",
   "position": {
-    "x": -235,
-    "y": -107
+    "x": -234.62956,
+    "y": -106.52425
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

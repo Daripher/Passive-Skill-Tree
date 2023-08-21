@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_crafting_1.png",
   "position": {
-    "x": 188,
-    "y": 214
+    "x": 187.16331,
+    "y": 212.05856
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

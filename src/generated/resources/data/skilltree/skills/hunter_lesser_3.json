@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
   "position": {
-    "x": 311,
-    "y": 143
+    "x": 308.69507,
+    "y": 142.53
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

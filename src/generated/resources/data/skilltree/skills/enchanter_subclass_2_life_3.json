@@ -18,8 +18,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_life_1.png",
   "position": {
-    "x": 271,
-    "y": -320
+    "x": 269.43643,
+    "y": -317.07153
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

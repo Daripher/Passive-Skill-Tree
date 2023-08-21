@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_crit_1.png",
   "position": {
-    "x": -281,
-    "y": -133
+    "x": -279.66122,
+    "y": -132.52713
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

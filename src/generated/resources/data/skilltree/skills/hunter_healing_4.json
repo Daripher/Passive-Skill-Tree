@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_healing_1.png",
   "position": {
-    "x": 132,
-    "y": -8
+    "x": 131.24799,
+    "y": -8.378124
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

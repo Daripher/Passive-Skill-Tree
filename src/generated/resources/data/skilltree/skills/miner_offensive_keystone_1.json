@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
   "position": {
-    "x": -370,
-    "y": 131
+    "x": -367.68784,
+    "y": 130.9921
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

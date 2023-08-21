@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
   "position": {
-    "x": -432,
-    "y": 50
+    "x": -430.3858,
+    "y": 49.99346
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_lesser_1.png",
   "position": {
-    "x": 20,
-    "y": 343
+    "x": 19.99701,
+    "y": 341.53247
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

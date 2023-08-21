@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_defensive_crafting_1.png",
   "position": {
-    "x": 44,
-    "y": 175
+    "x": 43.9798,
+    "y": 174.03497
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

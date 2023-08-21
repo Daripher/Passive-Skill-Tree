@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_speed_1.png",
   "position": {
-    "x": 214,
-    "y": 153
+    "x": 213.14528,
+    "y": 152.02649
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

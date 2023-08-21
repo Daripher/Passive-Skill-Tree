@@ -18,8 +18,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
   "position": {
-    "x": -168,
-    "y": 239
+    "x": -167.68753,
+    "y": 236.55804
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

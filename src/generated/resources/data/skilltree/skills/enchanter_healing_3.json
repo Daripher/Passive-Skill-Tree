@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_healing_1.png",
   "position": {
-    "x": 75,
-    "y": -152
+    "x": 74.29904,
+    "y": -151.30298
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

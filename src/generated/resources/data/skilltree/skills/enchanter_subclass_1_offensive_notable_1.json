@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
   "position": {
-    "x": 421,
-    "y": -139
+    "x": 418.90466,
+    "y": -138.70454
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/blacksmith_crit_notable_1.png",
   "position": {
-    "x": -269,
-    "y": -160
+    "x": -267.66266,
+    "y": -158.7801
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

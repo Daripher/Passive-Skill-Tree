@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_crit_1.png",
   "position": {
-    "x": -36,
-    "y": 291
+    "x": -35.997005,
+    "y": 289.52728
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

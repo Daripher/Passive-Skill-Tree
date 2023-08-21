@@ -18,8 +18,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/hunter_subclass_1_mastery.png",
   "position": {
-    "x": 306,
-    "y": 341
+    "x": 303.92465,
+    "y": 337.80984
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

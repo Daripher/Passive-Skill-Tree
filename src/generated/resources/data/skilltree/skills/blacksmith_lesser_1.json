@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_lesser_1.png",
   "position": {
-    "x": -304,
-    "y": -146
+    "x": -302.17706,
+    "y": -145.52856
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

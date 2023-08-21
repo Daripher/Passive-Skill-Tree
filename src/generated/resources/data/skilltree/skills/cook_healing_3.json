@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/cook_healing_1.png",
   "position": {
-    "x": -91,
-    "y": -152
+    "x": -90.95905,
+    "y": -150.92189
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

@@ -19,8 +19,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1.png",
   "position": {
-    "x": -213,
-    "y": -298
+    "x": -212.37517,
+    "y": -295.09222
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

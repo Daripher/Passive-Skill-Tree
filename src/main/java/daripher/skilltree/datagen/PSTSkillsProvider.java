@@ -527,27 +527,22 @@ public class PSTSkillsProvider implements DataProvider {
 	private void setSkillPosition(int classId, @Nullable String previousSkillName, float distance, float angle, String skillName) {
 		angle *= Mth.PI / 180F;
 		angle += getClassBranchRotation(classId);
-		var previousSkill = previousSkillName == null ? null : getSkill(previousSkillName);
-		var skill = getSkill(skillName);
-		var centerX = 0F;
-		var centerY = 0F;
-		var buttonSize = skill.getButtonSize();
+		PassiveSkill previous = previousSkillName == null ? null : getSkill(previousSkillName);
+		PassiveSkill skill = getSkill(skillName);
+		float centerX = 0F;
+		float centerY = 0F;
+		int buttonSize = skill.getButtonSize();
 		distance += buttonSize / 2F;
-
-		if (previousSkill != null) {
-			var previousButtonRadius = previousSkill.getButtonSize() / 2;
+		if (previous != null) {
+			int previousButtonRadius = previous.getButtonSize() / 2;
 			distance += previousButtonRadius;
-			centerX = previousSkill.getPositionX() + previousButtonRadius;
-			centerY = previousSkill.getPositionY() + previousButtonRadius;
+			centerX = previous.getPositionX() + previousButtonRadius;
+			centerY = previous.getPositionY() + previousButtonRadius;
 		}
-
-		var skillX = centerX + Mth.sin(angle) * distance - buttonSize / 2F;
-		var skillY = centerY + Mth.cos(angle) * distance - buttonSize / 2F;
-		skill.setPosition(Math.round(skillX), Math.round(skillY));
-
-		if (previousSkill != null) {
-			previousSkill.connect(skill);
-		}
+		float skillX = centerX + Mth.sin(angle) * distance - buttonSize / 2F;
+		float skillY = centerY + Mth.cos(angle) * distance - buttonSize / 2F;
+		skill.setPosition(skillX, skillY);
+		if (previous != null) previous.connect(skill);
 	}
 
 	protected int getClassId(String playerClass) {

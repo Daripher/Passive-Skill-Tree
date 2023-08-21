@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_class.png",
   "position": {
-    "x": 120,
-    "y": -88
+    "x": 119.63829,
+    "y": -87.99579
   },
   "starting_point": true,
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",

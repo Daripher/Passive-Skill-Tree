@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_life_1.png",
   "position": {
-    "x": -36,
-    "y": 239
+    "x": -35.997005,
+    "y": 237.52727
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

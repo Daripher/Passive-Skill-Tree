@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",
   "position": {
-    "x": 292,
-    "y": 226
+    "x": 289.6711,
+    "y": 224.54828
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

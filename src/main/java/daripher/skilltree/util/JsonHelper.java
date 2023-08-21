@@ -1,6 +1,5 @@
 package daripher.skilltree.util;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +52,7 @@ public class JsonHelper {
 		json.addProperty("attribute", attributeId);
 	}
 
-	public static void writePosition(JsonObject json, int x, int y) {
+	public static void writePosition(JsonObject json, float x, float y) {
 		JsonObject positionJson = new JsonObject();
 		positionJson.addProperty("x", x);
 		positionJson.addProperty("y", y);
@@ -132,13 +131,6 @@ public class JsonHelper {
 		return json.has(name) && json.get(name).getAsBoolean();
 	}
 
-	public static Point readPosition(JsonObject json) {
-		JsonObject positionJson = json.get("position").getAsJsonObject();
-		int x = positionJson.get("x").getAsInt();
-		int y = positionJson.get("y").getAsInt();
-		return new Point(x, y);
-	}
-
 	public static Iterable<ResourceLocation> readResourceLocations(JsonObject json, String name) {
 		JsonArray locationsJson = json.get(name).getAsJsonArray();
 		List<ResourceLocation> locations = new ArrayList<ResourceLocation>();
@@ -156,7 +148,10 @@ public class JsonHelper {
 		PassiveSkill skill = new PassiveSkill(id, tree, size, background, icon, border, startingPoint);
 		skill.setConnectedTree(readOptionalResourceLocation(json, "connected_tree"));
 		readAttributeModifiers(json).forEach(skill::addAttributeBonus);
-		skill.setPosition(readPosition(json));
+		JsonObject positionJson = json.get("position").getAsJsonObject();
+		float x = positionJson.get("x").getAsFloat();
+		float y = positionJson.get("y").getAsFloat();
+		skill.setPosition(x, y);
 		readResourceLocations(json, "connections").forEach(skill.getConnectedSkills()::add);
 		skill.setGatewayId(readOptionalResourceLocation(json, "gateway"));
 		return skill;

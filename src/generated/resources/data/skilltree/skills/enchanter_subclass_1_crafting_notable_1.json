@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_crafting_notable_1.png",
   "position": {
-    "x": 463,
-    "y": -66
+    "x": 460.8827,
+    "y": -65.99108
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

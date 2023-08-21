@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone_1.png",
   "position": {
-    "x": -350,
-    "y": -99
+    "x": -348.64246,
+    "y": -99.01296
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

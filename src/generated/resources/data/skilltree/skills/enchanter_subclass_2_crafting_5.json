@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_crafting_1.png",
   "position": {
-    "x": 232,
-    "y": -361
+    "x": 230.92113,
+    "y": -357.78406
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

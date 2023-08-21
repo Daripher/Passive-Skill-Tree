@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
   "position": {
-    "x": -181,
-    "y": -217
+    "x": -180.64606,
+    "y": -215.05713
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

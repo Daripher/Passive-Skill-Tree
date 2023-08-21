@@ -17,8 +17,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_class.png",
   "position": {
-    "x": -144,
-    "y": 64
+    "x": -143.63829,
+    "y": 63.99579
   },
   "starting_point": true,
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",

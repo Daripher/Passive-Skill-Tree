@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/blacksmith_healing_1.png",
   "position": {
-    "x": -174,
-    "y": -8
+    "x": -173.24622,
+    "y": -7.62364
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

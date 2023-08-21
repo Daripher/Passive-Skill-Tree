@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/cook_subclass_2.png",
   "position": {
-    "x": -157,
-    "y": -330
+    "x": -156.95734,
+    "y": -327.08533
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

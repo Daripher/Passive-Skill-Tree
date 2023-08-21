@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_speed_notable_1.png",
   "position": {
-    "x": -10,
-    "y": 263
+    "x": -9.997005,
+    "y": 261.52728
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

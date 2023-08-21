@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_offensive_notable_1.png",
   "position": {
-    "x": -113,
-    "y": 429
+    "x": -112.97842,
+    "y": 425.79138
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

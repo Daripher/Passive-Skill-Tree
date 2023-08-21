@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_offensive_1.png",
   "position": {
-    "x": 400,
-    "y": -94
+    "x": 398.38757,
+    "y": -93.70526
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

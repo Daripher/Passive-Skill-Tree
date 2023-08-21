@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting_keystone_1.png",
   "position": {
-    "x": 326,
-    "y": 75
+    "x": 324.64246,
+    "y": 75.01296
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

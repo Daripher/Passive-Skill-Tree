@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/enchanter_crit_1.png",
   "position": {
-    "x": 265,
-    "y": -133
+    "x": 263.67316,
+    "y": -132.51143
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

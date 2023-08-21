@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
   "position": {
-    "x": -127,
-    "y": 106
+    "x": -126.65993,
+    "y": 105.51328
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

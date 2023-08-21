@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/miner_speed_notable_1.png",
   "position": {
-    "x": -246,
-    "y": 126
+    "x": -245.15685,
+    "y": 125.76131
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

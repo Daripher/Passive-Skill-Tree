@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/alchemist_offensive_keystone_1.png",
   "position": {
-    "x": -66,
-    "y": 369
+    "x": -65.99701,
+    "y": 367.52728
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"

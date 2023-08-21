@@ -1,6 +1,5 @@
 package daripher.skilltree.skill;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +29,7 @@ public class PassiveSkill {
 	private final boolean isStartingPoint;
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
-	private int positionX, positionY;
+	private float positionX, positionY;
 
 	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
 		this.id = id;
@@ -98,20 +97,16 @@ public class PassiveSkill {
 		connectedSkills.add(otherSkill.getId());
 	}
 
-	public void setPosition(int x, int y) {
+	public void setPosition(float x, float y) {
 		positionX = x;
 		positionY = y;
 	}
 
-	public void setPosition(Point position) {
-		setPosition(position.x, position.y);
-	}
-
-	public int getPositionX() {
+	public float getPositionX() {
 		return positionX;
 	}
 
-	public int getPositionY() {
+	public float getPositionY() {
 		return positionY;
 	}
 

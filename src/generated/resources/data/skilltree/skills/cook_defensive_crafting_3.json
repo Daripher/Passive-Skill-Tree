@@ -14,8 +14,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/cook_defensive_crafting_1.png",
   "position": {
-    "x": -60,
-    "y": -191
+    "x": -59.979797,
+    "y": -190.03497
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

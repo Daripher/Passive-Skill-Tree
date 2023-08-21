@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_defensive_1.png",
   "position": {
-    "x": 137,
-    "y": 278
+    "x": 136.95734,
+    "y": 275.08533
   },
   "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
   "tree": "skilltree:tree"

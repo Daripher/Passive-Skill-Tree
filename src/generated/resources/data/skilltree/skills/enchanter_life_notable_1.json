@@ -11,8 +11,8 @@
   "connections": [],
   "icon_texture": "skilltree:textures/icons/enchanter_life_notable_1.png",
   "position": {
-    "x": 203,
-    "y": -133
+    "x": 202.63979,
+    "y": -132.76202
   },
   "tooltip_texture": "skilltree:textures/tooltip/notable.png",
   "tree": "skilltree:tree"

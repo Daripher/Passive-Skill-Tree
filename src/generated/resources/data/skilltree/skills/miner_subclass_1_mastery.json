@@ -13,8 +13,8 @@
   ],
   "icon_texture": "skilltree:textures/icons/miner_subclass_1_mastery.png",
   "position": {
-    "x": -475,
-    "y": 87
+    "x": -472.90466,
+    "y": 86.70454
   },
   "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
   "tree": "skilltree:tree"
