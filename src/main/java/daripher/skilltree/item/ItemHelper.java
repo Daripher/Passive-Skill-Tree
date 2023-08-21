@@ -151,7 +151,7 @@ public class ItemHelper {
 
 	public static boolean isRangedWeapon(ItemStack stack) {
 		if (Config.forced_ranged_weapon.contains(stack.getItem())) return true;
-		return isCrossbow(stack) || isBow(stack) || isTrident(stack);
+		return isCrossbow(stack) || isBow(stack);
 	}
 
 	public static boolean isCrossbow(ItemStack stack) {
