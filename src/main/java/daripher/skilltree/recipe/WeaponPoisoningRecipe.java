@@ -1,6 +1,9 @@
 package daripher.skilltree.recipe;
 
+import org.slf4j.Logger;
+
 import com.google.gson.JsonObject;
+import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.init.PSTAttributes;
@@ -17,16 +20,19 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class WeaponPoisoningRecipe extends CustomRecipe {
+	private static final Logger LOGGER = LogUtils.getLogger();
+
 	public WeaponPoisoningRecipe(ResourceLocation id) {
 		super(id, CraftingBookCategory.MISC);
 	}
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
-		var playerContainer = (PlayerContainer) container;
-		if (!playerContainer.getPlayer().isPresent()) {
-			return false;
+		if (!(container instanceof PlayerContainer playerContainer)) {
+			LOGGER.error("Container of type {} is not a PlayerContainer, can't poison weapons here!", container.getClass());
 		}
+		PlayerContainer playerContainer = (PlayerContainer) container;
+		if (!playerContainer.getPlayer().isPresent()) return false;
 		var player = playerContainer.getPlayer().get();
 		var canPoison = player.getAttributeValue(PSTAttributes.CAN_POISON_WEAPONS.get()) >= 1;
 		if (!canPoison) {
