@@ -513,7 +513,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void renderGatewayConnection(GuiGraphics graphics, SkillButton button1, SkillButton button2) {
-		ResourceLocation texture = new ResourceLocation("skilltree:/textures/screen/gateway_connection.png");
+		ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/gateway_connection.png");
 		graphics.pose().pushPose();
 		double connectionX = button1.x + button1.getWidth() / 2F;
 		double connectionY = button1.y + button1.getHeight() / 2F;
@@ -528,7 +528,7 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void renderConnection(GuiGraphics graphics, SkillConnection connection) {
-		ResourceLocation texture = new ResourceLocation("skilltree:/textures/screen/skill_connection.png");
+		ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/skill_connection.png");
 		graphics.pose().pushPose();
 		SkillButton button1 = connection.getFirstButton();
 		SkillButton button2 = connection.getSecondButton();
