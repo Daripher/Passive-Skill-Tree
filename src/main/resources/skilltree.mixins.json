@@ -10,7 +10,6 @@
   	"minecraft/MixinPotionItem",
   	"minecraft/MixinSmithingMenu",
   	"minecraft/MixinSimpleContainer",
-  	"minecraft/MixinTransientCraftingContainer",
   	"minecraft/MixinCraftingMenu",
   	"minecraft/MixinInventoryMenu",
   	"minecraft/MixinAbstractFurnaceMenu",
@@ -22,9 +21,10 @@
   	"minecraft/MixinFishingHook",
   	"minecraft/MixinPotionUtils",
   	"minecraft/MixinAnvilMenu",
+  	"minecraft/MixinAbstractContainerMenu",
+  	"minecraft/MixinBlockEntity",
   	"easymagic/MixinModEnchantmentMenu",
   	"farmersdelight/MixinCookingPotBlockEntity",
-  	"farmersdelight/MixinStoveBlock",
   	"farmersdelight/MixinStoveBlockEntity"
   ],
   "client" : [

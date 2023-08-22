@@ -12,7 +12,7 @@ public interface SkillRequiringRecipe {
 	}
 	
 	default boolean canCraftIn(PlayerContainer container) {
-		Player player = container.getPlayer().orElse(null);
+		Player player = container.getViewingPlayer().orElse(null);
 		if (player == null) return false;
 		return PlayerSkillsProvider.get(player).hasSkill(getRequiredSkillId());
 	}

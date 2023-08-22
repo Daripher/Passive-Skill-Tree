@@ -6,19 +6,19 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import daripher.skilltree.api.PlayerContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.TransientCraftingContainer;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-@Mixin(TransientCraftingContainer.class)
-public class MixinTransientCraftingContainer implements PlayerContainer {
+@Mixin(BlockEntity.class)
+public class MixinBlockEntity implements PlayerContainer {
 	private Optional<Player> player = Optional.empty();
 
 	@Override
-	public Optional<Player> getPlayer() {
+	public Optional<Player> getViewingPlayer() {
 		return player;
 	}
 
 	@Override
-	public void setPlayer(Player player) {
-		this.player = Optional.of(player);
+	public void setViewingPlayer(Optional<Player> player) {
+		this.player = player;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 
 public interface PlayerContainer {
-	Optional<Player> getPlayer();
+	Optional<Player> getViewingPlayer();
 
-	void setPlayer(Player player);
+	void setViewingPlayer(Optional<Player> player);
 }
