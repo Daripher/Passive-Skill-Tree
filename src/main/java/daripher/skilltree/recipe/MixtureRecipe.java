@@ -28,7 +28,7 @@ public class MixtureRecipe extends CustomRecipe {
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
-		if (!(container instanceof PlayerContainer playerContainer)) {
+		if (!(container instanceof PlayerContainer)) {
 			LOGGER.error("Container of type {} is not a PlayerContainer, can't mix potions here!", container.getClass());
 		}
 		PlayerContainer playerContainer = (PlayerContainer) container;
