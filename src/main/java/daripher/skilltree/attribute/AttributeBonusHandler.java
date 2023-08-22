@@ -1288,35 +1288,35 @@ public class AttributeBonusHandler {
 
 	// Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void mergeDualHandTooltips(ItemTooltipEvent event) {
-		if (ModList.get().isLoaded("apotheosis")) return;
-		ItemStack stack = event.getItemStack();
-		List<Component> tooltip = event.getToolTip();
-		int flags = stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags")
-				: stack.getItem().getDefaultTooltipHideFlags(stack);
-		int markIdx1 = -1, markIdx2 = -1;
-		for (int i = 0; i < tooltip.size(); i++) {
-			if (tooltip.get(i).getContents() instanceof LiteralContents contents) {
-				if ("PST_REMOVE_MARKER".equals(contents.text())) {
-					markIdx1 = i;
-				}
-				if ("PST_REMOVE_MARKER_2".equals(contents.text())) {
-					markIdx2 = i;
-					break;
-				}
-			}
-		}
-		if (markIdx1 == -1 || markIdx2 == -1) return;
-		ListIterator<Component> iterator = tooltip.listIterator(markIdx1);
-		for (int i = markIdx1; i < markIdx2 + 1; i++) {
-			iterator.next();
-			iterator.remove();
-		}
-		if ((flags & TooltipPart.MODIFIERS.getMask()) == 0) {
-			mergeDualHandTooltips(event.getEntity(), stack, iterator::add, event.getFlags());
-		}
-	}
+//	@SubscribeEvent(priority = EventPriority.HIGHEST)
+//	public void mergeDualHandTooltips(ItemTooltipEvent event) {
+//		if (ModList.get().isLoaded("apotheosis")) return;
+//		ItemStack stack = event.getItemStack();
+//		List<Component> tooltip = event.getToolTip();
+//		int flags = stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags")
+//				: stack.getItem().getDefaultTooltipHideFlags(stack);
+//		int markIdx1 = -1, markIdx2 = -1;
+//		for (int i = 0; i < tooltip.size(); i++) {
+//			if (tooltip.get(i).getContents() instanceof LiteralContents contents) {
+//				if ("PST_REMOVE_MARKER".equals(contents.text())) {
+//					markIdx1 = i;
+//				}
+//				if ("PST_REMOVE_MARKER_2".equals(contents.text())) {
+//					markIdx2 = i;
+//					break;
+//				}
+//			}
+//		}
+//		if (markIdx1 == -1 || markIdx2 == -1) return;
+//		ListIterator<Component> iterator = tooltip.listIterator(markIdx1);
+//		for (int i = markIdx1; i < markIdx2 + 1; i++) {
+//			iterator.next();
+//			iterator.remove();
+//		}
+//		if ((flags & TooltipPart.MODIFIERS.getMask()) == 0) {
+//			mergeDualHandTooltips(event.getEntity(), stack, iterator::add, event.getFlags());
+//		}
+//	}
 
 	private static void mergeDualHandTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, TooltipFlag flag) {
 		Multimap<Attribute, AttributeModifier> mainhand = getSortedModifiers(stack, EquipmentSlot.MAINHAND);
