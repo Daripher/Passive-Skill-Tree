@@ -185,10 +185,8 @@ public enum ApotheosisCompatibility {
 		int sockets = event.getSockets();
 		if (event.getSockets() == 0) {
 			int defaultSockets = ItemHelper.getDefaultSockets(stack);
-			if (defaultSockets > 0) {
-				SocketHelper.setSockets(stack, defaultSockets);
-				sockets += defaultSockets;
-			}
+			SocketHelper.setSockets(stack, defaultSockets);
+			sockets += defaultSockets;
 		}
 		if (stack.getItem() instanceof HasAdditionalSockets item) {
 			sockets += item.getAdditionalSockets();
