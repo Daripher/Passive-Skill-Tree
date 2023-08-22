@@ -79,7 +79,7 @@ public class ItemHelper {
 		if (blacklist.contains(itemId.toString())) return false;
 		String namespace = itemId.getNamespace();
 		if (blacklist.contains(namespace + ":*")) return false;
-		return isEquipment(stack) && !isLeggings(stack) || isJewelry(stack);
+		return isEquipment(stack) || isJewelry(stack);
 	}
 
 	public static boolean isPoison(ItemStack stack) {
