@@ -2,12 +2,28 @@ package daripher.skilltree.attribute;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 import com.google.common.util.concurrent.AtomicDouble;
+import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.EquipmentContainer;
@@ -26,6 +42,9 @@ import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -48,8 +67,11 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStack.TooltipPart;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.GrindstoneEvent;
@@ -75,14 +97,19 @@ import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class AttributeBonusHandler {
+	private static final Logger LOGGER = LogUtils.getLogger();
+
 	@SubscribeEvent
 	public static void applyDamageBonus(LivingHurtEvent event) {
 		if (!(event.getSource().getDirectEntity() instanceof ServerPlayer player)) return;
@@ -819,9 +846,13 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyCraftedWeaponAttributeBonuses(ItemAttributeModifierEvent event) {
-		if (event.getSlotType() != EquipmentSlot.MAINHAND) return;
 		ItemStack stack = event.getItemStack();
 		if (!ItemHelper.isWeapon(stack)) return;
+		if (ItemHelper.isRangedWeapon(stack)) {
+			if (event.getSlotType() != EquipmentSlot.MAINHAND && event.getSlotType() != EquipmentSlot.OFFHAND) return;
+		} else if (ItemHelper.isMeleeWeapon(stack)) {
+			if (event.getSlotType() != EquipmentSlot.MAINHAND) return;
+		}
 		if (ItemHelper.isMeleeWeapon(stack)) {
 			if (ItemHelper.hasBonus(stack, ItemHelper.DAMAGE)) {
 				double damageBonus = ItemHelper.getBonus(stack, ItemHelper.DAMAGE);
@@ -1255,5 +1286,117 @@ public class AttributeBonusHandler {
 		event.setMaterialCost(materialsUsed);
 		event.setCost(cost);
 		event.setOutput(result);
+	}
+
+	// Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void mergeDualHandTooltips(ItemTooltipEvent event) {
+		if (ModList.get().isLoaded("apotheosis")) return;
+		ItemStack stack = event.getItemStack();
+		List<Component> tooltip = event.getToolTip();
+		int flags = stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags")
+				: stack.getItem().getDefaultTooltipHideFlags(stack);
+		int markIdx1 = -1, markIdx2 = -1;
+		for (int i = 0; i < tooltip.size(); i++) {
+			if (tooltip.get(i).getContents() instanceof LiteralContents contents) {
+				if ("PST_REMOVE_MARKER".equals(contents.text())) {
+					markIdx1 = i;
+				}
+				if ("PST_REMOVE_MARKER_2".equals(contents.text())) {
+					markIdx2 = i;
+					break;
+				}
+			}
+		}
+		if (markIdx1 == -1 || markIdx2 == -1) return;
+		ListIterator<Component> iterator = tooltip.listIterator(markIdx1);
+		for (int i = markIdx1; i < markIdx2 + 1; i++) {
+			iterator.next();
+			iterator.remove();
+		}
+		if ((flags & TooltipPart.MODIFIERS.getMask()) == 0) {
+			mergeDualHandTooltips(event.getEntity(), stack, iterator::add, event.getFlags());
+		}
+	}
+
+	private static void mergeDualHandTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, TooltipFlag flag) {
+		Multimap<Attribute, AttributeModifier> mainhand = getSortedModifiers(stack, EquipmentSlot.MAINHAND);
+		Multimap<Attribute, AttributeModifier> offhand = getSortedModifiers(stack, EquipmentSlot.OFFHAND);
+		Multimap<Attribute, AttributeModifier> dualHand = sortedMap();
+		for (Attribute atr : mainhand.keys()) {
+			Collection<AttributeModifier> modifMh = mainhand.get(atr);
+			Collection<AttributeModifier> modifOh = offhand.get(atr);
+			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getId().equals(a2.getId()))).forEach(modif -> dualHand.put(atr, modif));
+		}
+		dualHand.values().forEach(m -> {
+			mainhand.values().remove(m);
+			offhand.values().removeIf(m1 -> m1.getId().equals(m.getId()));
+		});
+		Set<UUID> skips = new HashSet<>();
+		MinecraftForge.EVENT_BUS.post(new GatherSkippedAttributeTooltipsEvent(stack, player, skips, flag));
+		applyTextFor(player, stack, tooltip, dualHand, "both_hands", skips, flag);
+		applyTextFor(player, stack, tooltip, mainhand, EquipmentSlot.MAINHAND.getName(), skips, flag);
+		applyTextFor(player, stack, tooltip, offhand, EquipmentSlot.OFFHAND.getName(), skips, flag);
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (slot.ordinal() < 2) continue;
+			Multimap<Attribute, AttributeModifier> modifiers = getSortedModifiers(stack, slot);
+			applyTextFor(player, stack, tooltip, modifiers, slot.getName(), skips, flag);
+		}
+	}
+
+	private static void applyTextFor(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip,
+			Multimap<Attribute, AttributeModifier> modifierMap, String group, Set<UUID> skips, TooltipFlag flag) {
+		if (!modifierMap.isEmpty()) {
+			modifierMap.values().removeIf(m -> skips.contains(m.getId()));
+			tooltip.accept(Component.empty());
+			tooltip.accept(Component.translatable("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
+			if (modifierMap.isEmpty()) return;
+			Map<Attribute, AttributeModifier> baseModifs = new IdentityHashMap<>();
+			modifierMap.forEach((attr, modif) -> {
+				// Item.BASE_ATTACK_DAMAGE_UUID
+				if (modif.getId().equals(UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF"))) {
+					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 1, modif.getOperation()));
+				}
+				// Item.BASE_ATTACK_SPEED_UUID
+				else if (modif.getId().equals(UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3"))) {
+					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 4, modif.getOperation()));
+				}
+			});
+			for (Map.Entry<Attribute, AttributeModifier> entry : baseModifs.entrySet()) {
+				Attribute attr = entry.getKey();
+				AttributeModifier baseModif = entry.getValue();
+				MutableComponent text = TooltipHelper.getAttributeBonusTooltip(Pair.of(attr, baseModif));
+				tooltip.accept(Component.literal(" ").append(text).withStyle(ChatFormatting.DARK_GREEN));
+			}
+			for (Attribute attr : modifierMap.keySet()) {
+				if (baseModifs.containsKey(attr)) continue;
+				modifierMap.get(attr).forEach(m -> {
+					if (m.getAmount() != 0) TooltipHelper.getAttributeBonusTooltip(Pair.of(attr, m));
+				});
+			}
+		}
+	}
+
+	private static Multimap<Attribute, AttributeModifier> getSortedModifiers(ItemStack stack, EquipmentSlot slot) {
+		Multimap<Attribute, AttributeModifier> unsorted = stack.getAttributeModifiers(slot);
+		Multimap<Attribute, AttributeModifier> map = sortedMap();
+		for (Map.Entry<Attribute, AttributeModifier> ent : unsorted.entries()) {
+			if (ent.getKey() != null && ent.getValue() != null) map.put(ent.getKey(), ent.getValue());
+			else LOGGER.debug("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", stack, ent.getKey(), ent.getValue());
+		}
+		return map;
+	}
+
+	private static Multimap<Attribute, AttributeModifier> sortedMap() {
+		return TreeMultimap.create(Comparator.comparing(ForgeRegistries.ATTRIBUTES::getKey, ResourceLocation::compareTo), modifierComparator());
+	}
+
+	private static Comparator<AttributeModifier> modifierComparator() {
+		// formatter:off
+		return Comparator.comparing(AttributeModifier::getOperation)
+				.thenComparing(Comparator.comparing(AttributeModifier::getAmount))
+				.thenComparing(Comparator.comparing(AttributeModifier::getId));
+		// formatter:off
 	}
 }
