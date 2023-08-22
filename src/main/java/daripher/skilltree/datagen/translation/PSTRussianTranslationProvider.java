@@ -468,6 +468,8 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add("curios.modifiers.quiver", "Когда надет:");
 		// tabs
 		add("itemGroup.skilltree", "Passive Skill Tree");
+		// misc
+		add("item.modifiers.both_hands", "Когда в руке:");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

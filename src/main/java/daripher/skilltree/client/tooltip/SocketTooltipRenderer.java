@@ -27,6 +27,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 
+// Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
 public class SocketTooltipRenderer implements ClientTooltipComponent {
 	public static final ResourceLocation SOCKET = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/socket.png");
 	private final SocketComponent component;
