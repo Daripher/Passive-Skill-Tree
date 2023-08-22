@@ -493,9 +493,9 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(new ResourceLocation("skilltree:/textures/screen/skill_connection.png"));
+		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
 		skillConnections.forEach(connection -> renderConnection(poseStack, connection));
-		prepareTextureRendering(new ResourceLocation("skilltree:/textures/screen/gateway_connection.png"));
+		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
 		gatewayConnections.forEach(connection -> renderGatewayConnection(poseStack, connection, mouseX, mouseY));
 	}
 
