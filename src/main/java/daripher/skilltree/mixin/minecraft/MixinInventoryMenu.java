@@ -3,12 +3,7 @@ package daripher.skilltree.mixin.minecraft;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import daripher.skilltree.api.PlayerContainer;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -25,11 +20,6 @@ public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContaine
 
 	public MixinInventoryMenu() {
 		super(null, 0);
-	}
-
-	@Inject(method = "<init>(Lnet/minecraft/world/entity/player/Inventory;ZLnet/minecraft/world/entity/player/Player;)V", at = @At("TAIL"))
-	private void setPlayerIntoContainer(Inventory inventory, boolean isServerSide, Player player, CallbackInfo callbackInfo) {
-		((PlayerContainer) craftSlots).setPlayer(player);
 	}
 
 	@Override

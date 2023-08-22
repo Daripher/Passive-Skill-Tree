@@ -1,10 +1,12 @@
 package daripher.skilltree.recipe;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.PlayerContainer;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
@@ -36,9 +38,9 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 		ItemStack ingredient = container.getItem(1);
 		if (!isAdditionIngredient(ingredient)) return false;
 		GemItem gem = (GemItem) ingredient.getItem();
-		PlayerContainer playerContainer = (PlayerContainer) container;
-		Player player = playerContainer.getPlayer().orElseThrow(NullPointerException::new);
-		return gem.canInsertInto(player, base, getEmptySocket(base, player));
+		Optional<Player> player = ContainerHelper.getViewingPlayer(container);
+		if (!player.isPresent()) return false;
+		return gem.canInsertInto(player.get(), base, getEmptySocket(base, player.get()));
 	}
 
 	@Override
@@ -46,24 +48,23 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
 		}
-		var playerContainer = (PlayerContainer) container;
-		if (!playerContainer.getPlayer().isPresent()) return ItemStack.EMPTY;
-		var player = playerContainer.getPlayer().get();
-		var baseItem = container.getItem(0);
-		var socket = getEmptySocket(baseItem, player);
-		var gem = (GemItem) container.getItem(1).getItem();
-		if (!gem.canInsertInto(player, baseItem, socket)) return ItemStack.EMPTY;
-		var resultItemStack = baseItem.copy();
-		resultItemStack.setCount(1);
-		if (baseItem.getTag() != null) resultItemStack.setTag(baseItem.getTag().copy());
-		var gemPower = PlayerHelper.getGemPower(player, baseItem);
-		gem.insertInto(player, resultItemStack, socket, gemPower);
-		return resultItemStack;
+		Optional<Player> player = ContainerHelper.getViewingPlayer(container);
+		if (!player.isPresent()) return ItemStack.EMPTY;
+		ItemStack base = container.getItem(0);
+		int socket = getEmptySocket(base, player.get());
+		GemItem gem = (GemItem) container.getItem(1).getItem();
+		if (!gem.canInsertInto(player.get(), base, socket)) return ItemStack.EMPTY;
+		ItemStack result = base.copy();
+		result.setCount(1);
+		if (base.getTag() != null) result.setTag(base.getTag().copy());
+		float gemPower = PlayerHelper.getGemPower(player.get(), base);
+		gem.insertInto(player.get(), result, socket, gemPower);
+		return result;
 	}
 
 	public int getEmptySocket(ItemStack baseItem, Player player) {
-		var sockets = GemHelper.getMaximumSockets(baseItem, player);
-		var socket = 0;
+		int sockets = GemHelper.getMaximumSockets(baseItem, player);
+		int socket = 0;
 		for (int i = 0; i < sockets; i++) {
 			socket = i;
 			if (!GemHelper.hasGem(baseItem, socket)) break;

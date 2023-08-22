@@ -32,12 +32,12 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 	@Inject(method = "doBrew", at = @At("TAIL"))
 	private static void enhanceBrewedPotions(Level level, BlockPos blockPos, NonNullList<ItemStack> itemStacks, CallbackInfo callbackInfo) {
 		BlockEntity blockEntity = level.getBlockEntity(blockPos);
-		if (!(blockEntity instanceof PlayerContainer)) return;
-		var playerContainer = (PlayerContainer) blockEntity;
-		Player player = playerContainer.getPlayer().get();
+		if (!(blockEntity instanceof PlayerContainer playerContainer)) return;
+		Optional<Player> player = playerContainer.getViewingPlayer();
+		if (!player.isPresent()) return;
 		for (int slot = 0; slot < 3; slot++) {
 			ItemStack potionStack = itemStacks.get(slot);
-			enhancePotion(potionStack, player);
+			enhancePotion(potionStack, player.get());
 		}
 	}
 
@@ -46,7 +46,7 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 		float durationBonus = (float) player.getAttributeValue(PSTAttributes.BREWED_POTIONS_DURATION.get()) - 1;
 		if (PotionHelper.isHarmfulPotion(potionStack)) {
 			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_STRENGTH.get()) - 1;
-			durationBonus += player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_DURATION.get()) - 1;			
+			durationBonus += player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_DURATION.get()) - 1;
 		}
 		if (PotionHelper.isBeneficialPotion(potionStack)) {
 			strengthBonus += player.getAttributeValue(PSTAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH.get()) - 1;
@@ -64,17 +64,12 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
 
 	@Override
 	public AbstractContainerMenu createMenu(int window, Inventory inventory, Player player) {
-		setPlayer(player);
+		this.player = Optional.of(player);
 		return super.createMenu(window, inventory, player);
 	}
 
 	@Override
-	public Optional<Player> getPlayer() {
+	public Optional<Player> getViewingPlayer() {
 		return player;
-	}
-
-	@Override
-	public void setPlayer(Player player) {
-		this.player = Optional.of(player);
 	}
 }

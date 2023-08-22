@@ -13,12 +13,12 @@ public class MixinSimpleContainer implements PlayerContainer {
 	private Optional<Player> player = Optional.empty();
 
 	@Override
-	public Optional<Player> getPlayer() {
+	public Optional<Player> getViewingPlayer() {
 		return player;
 	}
 
 	@Override
-	public void setPlayer(Player player) {
-		this.player = Optional.of(player);
+	public void setViewingPlayer(Optional<Player> player) {
+		this.player = player;
 	}
 }

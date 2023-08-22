@@ -1,11 +1,10 @@
 package daripher.skilltree.recipe;
 
-import org.slf4j.Logger;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
-import com.mojang.logging.LogUtils;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.potion.PotionHelper;
@@ -20,21 +19,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class MixtureRecipe extends CustomRecipe {
-	private static final Logger LOGGER = LogUtils.getLogger();
-
 	public MixtureRecipe(ResourceLocation id) {
 		super(id);
 	}
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
-		if (!(container instanceof PlayerContainer)) {
-			LOGGER.error("Container of type {} is not a PlayerContainer, can't mix potions here!", container.getClass());
-		}
-		PlayerContainer playerContainer = (PlayerContainer) container;
-		if (!playerContainer.getPlayer().isPresent()) return false;
-		Player player = playerContainer.getPlayer().get();
-		boolean canMixPotions = player.getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
+		Optional<Player> player = ContainerHelper.getViewingPlayer(container);
+		if (!player.isPresent()) return false;
+		boolean canMixPotions = player.get().getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
 		if (!canMixPotions) return false;
 		ItemStack potionStack1 = ItemStack.EMPTY;
 		ItemStack potionStack2 = ItemStack.EMPTY;

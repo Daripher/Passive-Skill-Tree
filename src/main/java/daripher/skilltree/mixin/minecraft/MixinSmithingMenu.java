@@ -1,5 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
+import java.util.Optional;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,7 +25,7 @@ public abstract class MixinSmithingMenu extends ItemCombinerMenu {
 
 	@Inject(method = "<init>(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V", at = @At("TAIL"))
 	private void setPlayerIntoContainer(int windowId, Inventory inventory, ContainerLevelAccess levelAccess, CallbackInfo callbackInfo) {
-		((PlayerContainer) inputSlots).setPlayer(inventory.player);
+		((PlayerContainer) inputSlots).setViewingPlayer(Optional.of(inventory.player));
 	}
 
 	@Inject(method = "onTake", at = @At("HEAD"))

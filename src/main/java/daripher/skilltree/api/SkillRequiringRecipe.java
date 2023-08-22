@@ -10,9 +10,9 @@ public interface SkillRequiringRecipe {
 		if (!(container instanceof PlayerContainer)) return false;
 		return canCraftIn((PlayerContainer) container);
 	}
-	
+
 	default boolean canCraftIn(PlayerContainer container) {
-		Player player = container.getPlayer().orElse(null);
+		Player player = container.getViewingPlayer().orElse(null);
 		if (player == null) return false;
 		return PlayerSkillsProvider.get(player).hasSkill(getRequiredSkillId());
 	}
