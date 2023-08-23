@@ -35,7 +35,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -320,7 +319,7 @@ public class SkillTreeScreen extends Screen {
 			startingPoints.forEach(SkillButton::animate);
 			return;
 		}
-		if (learnedSkills.size() + newlyLearnedSkills.size() >= getMaximumSkillPoints()) return;
+		if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points) return;
 		skillConnections.forEach(SkillConnection::updateAnimation);
 	}
 
@@ -353,7 +352,7 @@ public class SkillTreeScreen extends Screen {
 		poseStack.translate(0.0D, 0.0D, 400.0D);
 		int textX = 5;
 		int textY = 2;
-		prepareTextureRendering(button.skill.getBorderTexture());
+		ScreenHelper.prepareTextureRendering(button.skill.getBorderTexture());
 		blit(poseStack, -4, -4, 0, 0, 21, 20, 110, 20);
 		blit(poseStack, tooltipWidth + 4 - 21, -4, -21, 0, 21, 20, 110, 20);
 		int centerWidth = tooltipWidth + 8 - 42;
@@ -460,13 +459,13 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png"));
+		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png"));
 		blit(poseStack, 0, 0, 0, 0F, 0F, width, height, width, height);
 	}
 
 	@Override
 	public void renderBackground(PoseStack poseStack) {
-		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
+		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
 		poseStack.pushPose();
 		poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
 		int size = getBackgroundSize();
@@ -493,9 +492,9 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
+		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
 		skillConnections.forEach(connection -> renderConnection(poseStack, connection));
-		prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
+		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
 		gatewayConnections.forEach(connection -> renderGatewayConnection(poseStack, connection, mouseX, mouseY));
 	}
 
@@ -524,9 +523,9 @@ public class SkillTreeScreen extends Screen {
 		double connectionX = button1.x + button1.getWidth() / 2F;
 		double connectionY = button1.y + button1.getHeight() / 2F;
 		poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
-		float rotation = getAngleBetweenButtons(button1, button2);
+		float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
-		int length = (int) (getDistanceBetweenButtons(button1, button2) / zoom);
+		int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
 		boolean highlighted = isSkillLearned(button1.skill);
 		poseStack.scale(zoom, zoom, 1F);
 		blit(poseStack, 0, -3, length, 6, -renderAnimation, highlighted ? 0 : 6, length, 6, 30, 12);
@@ -540,9 +539,9 @@ public class SkillTreeScreen extends Screen {
 		double connectionX = button1.x + button1.getWidth() / 2F;
 		double connectionY = button1.y + button1.getHeight() / 2F;
 		poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
-		float rotation = getAngleBetweenButtons(button1, button2);
+		float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
-		int length = (int) getDistanceBetweenButtons(button1, button2);
+		int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
 		boolean highlighted = button1.highlighted && button2.highlighted;
 		poseStack.scale(1F, zoom, 1F);
 		blit(poseStack, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
@@ -555,48 +554,11 @@ public class SkillTreeScreen extends Screen {
 		poseStack.popPose();
 	}
 
-	public static void prepareTextureRendering(ResourceLocation textureLocation) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, textureLocation);
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
-	}
-
 	public float getAnimation() {
 		return renderAnimation;
 	}
 
-	protected float getAngleBetweenButtons(Button button1, Button button2) {
-		float x1 = button1.x + button1.getWidth() / 2F;
-		float y1 = button1.y + button1.getHeight() / 2F;
-		float x2 = button2.x + button2.getWidth() / 2F;
-		float y2 = button2.y + button2.getHeight() / 2F;
-		return getAngleBetweenPoints(x1, y1, x2, y2);
-	}
-
-	protected float getDistanceBetweenButtons(Button button1, Button button2) {
-		float x1 = button1.x + button1.getWidth() / 2F;
-		float y1 = button1.y + button1.getHeight() / 2F;
-		float x2 = button2.x + button2.getWidth() / 2F;
-		float y2 = button2.y + button2.getHeight() / 2F;
-		return getDistanceBetweenPoints(x1, y1, x2, y2);
-	}
-
-	protected float getDistanceBetweenPoints(float x1, float y1, float x2, float y2) {
-		return Mth.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-	}
-
-	protected float getAngleBetweenPoints(float x1, float y1, float x2, float y2) {
-		return (float) Mth.atan2(y2 - y1, x2 - x1);
-	}
-
 	protected int getBackgroundSize() {
 		return 2048;
-	}
-
-	protected int getMaximumSkillPoints() {
-		return Config.max_skill_points;
 	}
 }

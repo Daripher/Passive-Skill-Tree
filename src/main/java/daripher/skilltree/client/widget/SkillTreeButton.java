@@ -2,7 +2,7 @@ package daripher.skilltree.client.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import daripher.skilltree.client.screen.SkillTreeScreen;
+import daripher.skilltree.client.screen.ScreenHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
@@ -18,7 +18,7 @@ public class SkillTreeButton extends Button {
 
 	@Override
 	public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		SkillTreeScreen.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
+		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
 		int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;
 		blit(poseStack, x, y, 0, v, width / 2, height);
 		blit(poseStack, x + width / 2, y, 140 - width / 2, v, width / 2, height);
