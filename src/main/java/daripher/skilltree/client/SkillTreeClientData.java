@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
@@ -38,6 +39,10 @@ public class SkillTreeClientData {
 		ResourceLocation treeId = skill.getTreeId();
 		if (SKILL_TREES.get(treeId) == null) SKILL_TREES.put(treeId, new HashMap<>());
 		SKILL_TREES.get(treeId).put(skill.getId(), skill);
+	}
+
+	public static Set<ResourceLocation> getTreeIds() {
+		return SKILL_TREES.keySet();
 	}
 
 	public static Map<ResourceLocation, PassiveSkill> getSkillsForTree(ResourceLocation skillTreeId) {
