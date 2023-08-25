@@ -447,6 +447,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add("widget.show_stats", "Show Stats");
 		add("key.categories.skilltree", "Passive Skill Tree");
 		add("key.display_skill_tree", "Open Skill Tree");
+		add("key.display_skill_tree_editor", "Open Skill Tree Editor");
 		// apotheosis compatibility
 		add("item.apotheosis.gem.skilltree:ruby", "Ruby");
 		add("item.apotheosis.gem.skilltree:onyx", "Onyx");

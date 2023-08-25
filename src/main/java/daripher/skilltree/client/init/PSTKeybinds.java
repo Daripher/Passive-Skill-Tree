@@ -25,6 +25,7 @@ public class PSTKeybinds {
 	@SubscribeEvent
 	public static void registerKeybinds(RegisterKeyMappingsEvent event) {
 		event.register(SKILL_TREE_KEY);
+		event.register(EDITOR_KEY);
 	}
 
 	@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)

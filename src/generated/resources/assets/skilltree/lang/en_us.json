@@ -295,6 +295,7 @@
   "itemGroup.skilltree": "Passive Skill Tree",
   "key.categories.skilltree": "Passive Skill Tree",
   "key.display_skill_tree": "Open Skill Tree",
+  "key.display_skill_tree_editor": "Open Skill Tree Editor",
   "potion.superior": "Superior %s",
   "quiver.capacity": "• Can hold up to %s arrows",
   "quiver.contents": "• Contents: %s",
