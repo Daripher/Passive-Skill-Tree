@@ -26,6 +26,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class SkillTreeClientData {
 	private static final Map<ResourceLocation, PassiveSkill> ALL_ASSIVE_SKILLS = new HashMap<>();
 	private static final Map<ResourceLocation, Map<ResourceLocation, PassiveSkill>> SKILL_TREES = new HashMap<>();
+	private static final Map<ResourceLocation, Map<ResourceLocation, PassiveSkill>> EDITOR_TREES = new HashMap<>();
 
 	public static void loadFromByteBuf(FriendlyByteBuf buf) {
 		ALL_ASSIVE_SKILLS.clear();
@@ -56,7 +57,11 @@ public class SkillTreeClientData {
 			treeSavesFolder.mkdirs();
 			saveEditorTree(treeSavesFolder, treeId);
 		}
-		return loadEditorTree(treeSavesFolder, treeId);
+		if (!EDITOR_TREES.containsKey(treeId)) {
+			return loadEditorTree(treeSavesFolder, treeId);
+		} else {
+			return EDITOR_TREES.get(treeId);
+		}
 	}
 
 	private static void saveEditorTree(File folder, ResourceLocation treeId) {
@@ -92,6 +97,7 @@ public class SkillTreeClientData {
 				}
 			});
 		// formatter:on
+		EDITOR_TREES.put(treeId, skills);
 		return skills;
 	}
 }
