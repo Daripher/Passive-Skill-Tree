@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,13 @@ public class ScreenHelper {
 		font.draw(poseStack, text, x, y + 1, 0);
 		font.draw(poseStack, text, x, y - 1, 0);
 		font.draw(poseStack, text, x, y, color);
+	}
+
+	public static void drawRectangle(PoseStack poseStack, int x, int y, int width, int height, int color) {
+		GuiComponent.fill(poseStack, x, y, x + width, y + 1, color);
+		GuiComponent.fill(poseStack, x, y + height - 1, x + width, y + height, color);
+		GuiComponent.fill(poseStack, x, y + 1, x + 1, y + height - 1, color);
+		GuiComponent.fill(poseStack, x + width - 1, y + 1, x + width, y + height - 1, color);
 	}
 
 	public static void prepareTextureRendering(ResourceLocation textureLocation) {

@@ -46,7 +46,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 
 public class SkillTreeScreen extends Screen {
-	protected final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
+	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<SkillConnection> skillConnections = new ArrayList<>();
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
 	private final List<ResourceLocation> learnedGateways = new ArrayList<>();
@@ -190,7 +190,7 @@ public class SkillTreeScreen extends Screen {
 		Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
 		if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
 		Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-		if (skill.isPresent()) return skill.get().mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
+		if (skill.isPresent()) return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
 	}
 

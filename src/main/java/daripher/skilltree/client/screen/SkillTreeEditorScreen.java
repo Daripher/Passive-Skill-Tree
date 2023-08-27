@@ -1,10 +1,12 @@
-package daripher.skilltree.client.screen.editor;
+package daripher.skilltree.client.screen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.google.common.base.Predicates;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,7 +15,6 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 
 import daripher.skilltree.client.SkillTreeClientData;
-import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
 import daripher.skilltree.client.widget.StatsList;
@@ -30,9 +31,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SkillTreeEditorScreen extends Screen {
-	protected final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
+	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<SkillConnection> skillConnections = new ArrayList<>();
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
+	private final Set<ResourceLocation> selectedSkills = new HashSet<>();
 	private final ResourceLocation treeId;
 	private int prevMouseX;
 	private int prevMouseY;
@@ -97,6 +99,12 @@ public class SkillTreeEditorScreen extends Screen {
 			poseStack.scale(zoom, zoom, 1F);
 			poseStack.translate(-widget.x - widget.getWidth() / 2, -widget.y - widget.getHeight() / 2, 0F);
 			widget.render(poseStack, mouseX, mouseY, partialTick);
+			if (selectedSkills.contains(widget.skill.getId())) {
+				poseStack.pushPose();
+				poseStack.translate(widget.x, widget.y, 0);
+				ScreenHelper.drawRectangle(poseStack, -1, -1, widget.getWidth() + 2, widget.getHeight() + 2, 0xAA32FF00);
+				poseStack.popPose();
+			}
 			poseStack.popPose();
 		}
 		poseStack.popPose();
@@ -107,7 +115,7 @@ public class SkillTreeEditorScreen extends Screen {
 		Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
 		if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
 		Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-		if (skill.isPresent()) return skill.get().mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
+		if (skill.isPresent()) return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
 	}
 
@@ -141,6 +149,7 @@ public class SkillTreeEditorScreen extends Screen {
 		double buttonY = skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
 		SkillButton button = new SkillButton(() -> 0F, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
+		button.highlighted = true;
 		skillButtons.put(skillId, button);
 		if (maxScrollX < Mth.abs(skillX)) maxScrollX = (int) Mth.abs(skillX);
 		if (maxScrollY < Mth.abs(skillY)) maxScrollY = (int) Mth.abs(skillY);
@@ -233,6 +242,10 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	protected void skillButtonPressed(SkillButton button) {
+		if (!hasShiftDown() && !selectedSkills.isEmpty()) {
+			selectedSkills.clear();
+		}
+		selectedSkills.add(button.skill.getId());
 	}
 
 	private void updateScreen(float partialTick) {
@@ -288,6 +301,15 @@ public class SkillTreeEditorScreen extends Screen {
 		SkillButton button1 = connection.getFirstButton();
 		SkillButton button2 = connection.getSecondButton();
 		Optional<SkillButton> hoveredSkill = getSkillAt(mouseX, mouseY);
+		boolean selected = selectedSkills.contains(button1.skill.getId()) || selectedSkills.contains(button2.skill.getId());
+		if (selected) {
+			if (selectedSkills.contains(button2.skill.getId())) {
+				renderGatewayConnection(poseStack, button2, button1);
+			} else {
+				renderGatewayConnection(poseStack, button1, button2);
+			}
+			return;
+		}
 		boolean hovered = !hoveredSkill.isEmpty() && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
 		if (hovered) {
 			if (hoveredSkill.get() == button2) renderGatewayConnection(poseStack, button2, button1);
@@ -304,7 +326,7 @@ public class SkillTreeEditorScreen extends Screen {
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
 		int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
 		poseStack.scale(zoom, zoom, 1F);
-		blit(poseStack, 0, -3, length, 6, 0, 6, length, 6, 30, 12);
+		blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 30, 12);
 		poseStack.popPose();
 	}
 
@@ -319,7 +341,7 @@ public class SkillTreeEditorScreen extends Screen {
 		poseStack.mulPose(Vector3f.ZP.rotation(rotation));
 		int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
 		poseStack.scale(1F, zoom, 1F);
-		blit(poseStack, 0, -3, length, 6, 0, 6, length, 6, 50, 12);
+		blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
 		poseStack.popPose();
 	}
 

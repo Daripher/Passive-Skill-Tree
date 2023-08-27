@@ -47,7 +47,7 @@ public class SkillTreeClientData {
 	}
 
 	public static Map<ResourceLocation, PassiveSkill> getSkillsForTree(ResourceLocation skillTreeId) {
-		return SKILL_TREES.get(skillTreeId);
+		return SKILL_TREES.getOrDefault(skillTreeId, new HashMap<>());
 	}
 
 	public static Map<ResourceLocation, PassiveSkill> getOrCreateEditorTree(ResourceLocation treeId) {
@@ -76,6 +76,7 @@ public class SkillTreeClientData {
 				e.printStackTrace();
 			}
 		});
+		EDITOR_TREES.put(treeId, skills);
 	}
 
 	private static Map<ResourceLocation, PassiveSkill> loadEditorTree(File folder, ResourceLocation treeId) {
