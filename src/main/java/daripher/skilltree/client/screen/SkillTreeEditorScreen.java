@@ -1,13 +1,14 @@
-package daripher.skilltree.client.screen.editor;
+package daripher.skilltree.client.screen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.google.common.base.Predicates;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 
@@ -22,7 +23,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -30,9 +30,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SkillTreeEditorScreen extends Screen {
-	protected final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
+	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<SkillConnection> skillConnections = new ArrayList<>();
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
+	private final Set<ResourceLocation> selectedSkills = new HashSet<>();
 	private final ResourceLocation treeId;
 	private int prevMouseX;
 	private int prevMouseY;
@@ -97,6 +98,12 @@ public class SkillTreeEditorScreen extends Screen {
 			graphics.pose().scale(zoom, zoom, 1F);
 			graphics.pose().translate(-widget.x - widget.getWidth() / 2, -widget.y - widget.getHeight() / 2, 0F);
 			widget.render(graphics, mouseX, mouseY, partialTick);
+			if (selectedSkills.contains(widget.skill.getId())) {
+				graphics.pose().pushPose();
+				graphics.pose().translate(widget.x, widget.y, 0);
+				ScreenHelper.drawRectangle(graphics, -1, -1, widget.getWidth() + 2, widget.getHeight() + 2, 0xAA32FF00);
+				graphics.pose().popPose();
+			}
 			graphics.pose().popPose();
 		}
 		graphics.pose().popPose();
@@ -107,7 +114,7 @@ public class SkillTreeEditorScreen extends Screen {
 		Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
 		if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
 		Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-		if (skill.isPresent()) return skill.get().mouseClicked(mouseX - scrollX, mouseY - scrollY, button);
+		if (skill.isPresent()) return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
 	}
 
@@ -141,6 +148,7 @@ public class SkillTreeEditorScreen extends Screen {
 		double buttonY = skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
 		SkillButton button = new SkillButton(() -> 0F, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
+		button.highlighted = true;
 		skillButtons.put(skillId, button);
 		if (maxScrollX < Mth.abs(skillX)) maxScrollX = (int) Mth.abs(skillX);
 		if (maxScrollY < Mth.abs(skillY)) maxScrollY = (int) Mth.abs(skillY);
@@ -228,6 +236,10 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	protected void skillButtonPressed(SkillButton button) {
+		if (!hasShiftDown() && !selectedSkills.isEmpty()) {
+			selectedSkills.clear();
+		}
+		selectedSkills.add(button.skill.getId());
 	}
 
 	private void updateScreen(float partialTick) {
@@ -281,6 +293,15 @@ public class SkillTreeEditorScreen extends Screen {
 		SkillButton button1 = connection.getFirstButton();
 		SkillButton button2 = connection.getSecondButton();
 		Optional<SkillButton> hoveredSkill = getSkillAt(mouseX, mouseY);
+		boolean selected = selectedSkills.contains(button1.skill.getId()) || selectedSkills.contains(button2.skill.getId());
+		if (selected) {
+			if (selectedSkills.contains(button2.skill.getId())) {
+				renderGatewayConnection(graphics, button2, button1);
+			} else {
+				renderGatewayConnection(graphics, button1, button2);
+			}
+			return;
+		}
 		boolean hovered = !hoveredSkill.isEmpty() && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
 		if (hovered) {
 			if (hoveredSkill.get() == button2) renderGatewayConnection(graphics, button2, button1);
@@ -294,9 +315,9 @@ public class SkillTreeEditorScreen extends Screen {
 		double connectionX = button1.x + button1.getWidth() / 2F;
 		double connectionY = button1.y + button1.getHeight() / 2F;
 		graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-		float rotation = getAngleBetweenButtons(button1, button2);
+		float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
 		graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-		int length = (int) (getDistanceBetweenButtons(button1, button2) / zoom);
+		int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
 		graphics.pose().scale(zoom, zoom, 1F);
 		graphics.blit(texture, 0, -3, length, 6, 0, 6, length, 6, 30, 12);
 		graphics.pose().popPose();
@@ -310,46 +331,13 @@ public class SkillTreeEditorScreen extends Screen {
 		double connectionX = button1.x + button1.getWidth() / 2F;
 		double connectionY = button1.y + button1.getHeight() / 2F;
 		graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-		float rotation = getAngleBetweenButtons(button1, button2);
+		float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
 		graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-		int length = (int) getDistanceBetweenButtons(button1, button2);
+		int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
 		boolean highlighted = button1.highlighted && button2.highlighted;
 		graphics.pose().scale(1F, zoom, 1F);
 		graphics.blit(texture, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
 		graphics.pose().popPose();
-	}
-
-	public static void prepareTextureRendering(ResourceLocation textureLocation) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, textureLocation);
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
-	}
-
-	protected float getAngleBetweenButtons(Button button1, Button button2) {
-		float x1 = button1.getX() + button1.getWidth() / 2F;
-		float y1 = button1.getY() + button1.getHeight() / 2F;
-		float x2 = button2.getX() + button2.getWidth() / 2F;
-		float y2 = button2.getY() + button2.getHeight() / 2F;
-		return getAngleBetweenPoints(x1, y1, x2, y2);
-	}
-
-	protected float getDistanceBetweenButtons(Button button1, Button button2) {
-		float x1 = button1.getX() + button1.getWidth() / 2F;
-		float y1 = button1.getY() + button1.getHeight() / 2F;
-		float x2 = button2.getX() + button2.getWidth() / 2F;
-		float y2 = button2.getY() + button2.getHeight() / 2F;
-		return getDistanceBetweenPoints(x1, y1, x2, y2);
-	}
-
-	protected float getDistanceBetweenPoints(float x1, float y1, float x2, float y2) {
-		return Mth.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-	}
-
-	protected float getAngleBetweenPoints(float x1, float y1, float x2, float y2) {
-		return (float) Mth.atan2(y2 - y1, x2 - x1);
 	}
 
 	protected int getBackgroundSize() {
