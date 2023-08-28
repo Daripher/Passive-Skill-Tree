@@ -17,6 +17,7 @@ import com.mojang.math.Vector3f;
 import daripher.skilltree.client.SkillTreeClientData;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
+import daripher.skilltree.client.widget.SkillTreeButton;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.Minecraft;
@@ -61,6 +62,7 @@ public class SkillTreeEditorScreen extends Screen {
 		if (maxScrollX < 0) maxScrollX = 0;
 		if (maxScrollY < 0) maxScrollY = 0;
 		addSkillConnections();
+		addToolButtons();
 	}
 
 	@Override
@@ -137,9 +139,35 @@ public class SkillTreeEditorScreen extends Screen {
 		return Optional.empty();
 	}
 
-	public void addSkillButtons() {
+	private void addSkillButtons() {
 		skillButtons.clear();
 		SkillTreeClientData.getOrCreateEditorTree(treeId).forEach(this::addSkillButton);
+	}
+
+	private void addToolButtons() {
+		if (selectedSkills.size() == 2) {
+			ResourceLocation first = (ResourceLocation) selectedSkills.toArray()[0];
+			ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
+			if (areSkillsConnected(first, second)) {
+				addRenderableWidget(new SkillTreeButton(width - 110, 10, 100, 14, Component.literal("Disconnect"), b -> {
+					skillButtons.get(first).skill.getConnectedSkills().remove(second);
+					skillButtons.get(second).skill.getConnectedSkills().remove(first);
+					selectedSkills.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+					rebuildWidgets();
+				}));
+			} else {
+				addRenderableWidget(new SkillTreeButton(width - 110, 10, 100, 14, Component.literal("Connect"), b -> {
+					skillButtons.get(first).skill.getConnectedSkills().add(second);
+					selectedSkills.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+					rebuildWidgets();
+				}));
+			}
+		}
+	}
+
+	private boolean areSkillsConnected(ResourceLocation first, ResourceLocation second) {
+		return skillButtons.get(first).skill.getConnectedSkills().contains(second)
+				|| skillButtons.get(second).skill.getConnectedSkills().contains(first);
 	}
 
 	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
@@ -158,7 +186,7 @@ public class SkillTreeEditorScreen extends Screen {
 	public void addSkillConnections() {
 		skillConnections.clear();
 		gatewayConnections.clear();
-		Map<ResourceLocation, PassiveSkill> skills = SkillTreeClientData.getSkillsForTree(treeId);
+		Map<ResourceLocation, PassiveSkill> skills = SkillTreeClientData.getOrCreateEditorTree(treeId);
 		skills.forEach((skillId1, skill) -> {
 			skill.getConnectedSkills().forEach(skillId2 -> {
 				connectSkills(skillConnections, skillId1, skillId2);
@@ -246,6 +274,7 @@ public class SkillTreeEditorScreen extends Screen {
 			selectedSkills.clear();
 		}
 		selectedSkills.add(button.skill.getId());
+		rebuildWidgets();
 	}
 
 	private void updateScreen(float partialTick) {

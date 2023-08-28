@@ -51,11 +51,10 @@ public class SkillTreeClientData {
 	}
 
 	public static Map<ResourceLocation, PassiveSkill> getOrCreateEditorTree(ResourceLocation treeId) {
-		File savesFolder = new File(FMLPaths.GAMEDIR.get().toFile(), "skilltree/editor");
-		File treeSavesFolder = new File(savesFolder, treeId.toString().replace(":", "/"));
+		File treeSavesFolder = new File(getSavesFolder(), treeId.toString().replace(":", "/"));
 		if (!treeSavesFolder.exists()) {
 			treeSavesFolder.mkdirs();
-			saveEditorTree(treeSavesFolder, treeId);
+			saveEditorTree(treeId);
 		}
 		if (!EDITOR_TREES.containsKey(treeId)) {
 			return loadEditorTree(treeSavesFolder, treeId);
@@ -64,19 +63,26 @@ public class SkillTreeClientData {
 		}
 	}
 
-	private static void saveEditorTree(File folder, ResourceLocation treeId) {
+	private static File getSavesFolder() {
+		return new File(FMLPaths.GAMEDIR.get().toFile(), "skilltree/editor");
+	}
+
+	private static void saveEditorTree(ResourceLocation treeId) {
 		Map<ResourceLocation, PassiveSkill> skills = getSkillsForTree(treeId);
-		skills.forEach((id, skill) -> {
-			JsonObject json = JsonHelper.writePassiveSkill(skill);
-			try {
-				PrintWriter out = new PrintWriter(new FileWriter(new File(folder, id.getPath() + ".json")));
-				out.write(json.toString());
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		skills.forEach((id, skill) -> saveEditorSkill(treeId, id, skill));
 		EDITOR_TREES.put(treeId, skills);
+	}
+
+	public static void saveEditorSkill(ResourceLocation treeId, ResourceLocation id, PassiveSkill skill) {
+		File folder = new File(getSavesFolder(), treeId.toString().replace(":", "/"));
+		JsonObject json = JsonHelper.writePassiveSkill(skill);
+		try {
+			PrintWriter out = new PrintWriter(new FileWriter(new File(folder, id.getPath() + ".json")));
+			out.write(json.toString());
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static Map<ResourceLocation, PassiveSkill> loadEditorTree(File folder, ResourceLocation treeId) {
