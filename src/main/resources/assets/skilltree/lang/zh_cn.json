@@ -252,6 +252,7 @@
   "item.minecraft.splash_potion.mixture.minecraft.slow_falling.minecraft.slowness": "喷溅型慢动作合剂",
   "item.minecraft.splash_potion.mixture.minecraft.slowness.minecraft.weakness": "喷溅型衰老合剂",
   "item.minecraft.splash_potion.mixture.minecraft.strength.minecraft.speed": "喷溅型忍者合剂",
+  "item.modifiers.both_hands": "手持时：",
   "item.skilltree.adamite": "金刚石",
   "item.skilltree.amnesia_scroll": "遗忘卷轴",
   "item.skilltree.amnesia_scroll.tooltip": "重置你的被动技能树",
@@ -449,6 +450,9 @@
   "text.apotheosis.category.ring.plural": "戒指",
   "weapon.poisoned": "附加的药水效果：",
   "widget.buy_skill_button": "购买技能点",
+  "widget.cancel_button": "取消",
+  "widget.confirm_button": "确认",
+  "widget.show_stats": "显示加成信息",
   "widget.skill_button.multiple_bonuses": "%s和%s",
   "widget.skill_button.not_learned": "技能没有学习",
   "widget.skill_points_left": "技能点剩余：%s"
