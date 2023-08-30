@@ -23,6 +23,7 @@
   	"minecraft/MixinAnvilMenu",
   	"minecraft/MixinAbstractContainerMenu",
   	"minecraft/MixinBlockEntity",
+  	"minecraft/MixinCraftingContainer",
   	"easymagic/MixinModEnchantmentMenu",
   	"farmersdelight/MixinCookingPotBlockEntity",
   	"farmersdelight/MixinStoveBlockEntity",
