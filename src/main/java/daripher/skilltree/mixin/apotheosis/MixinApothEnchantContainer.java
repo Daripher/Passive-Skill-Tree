@@ -19,9 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
-import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu;
 
-@Mixin(value = ApothEnchantContainer.class, remap = false)
+@Mixin(value = ApothEnchantmentMenu.class, remap = false)
 public class MixinApothEnchantContainer {
 	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
 	private int reduceLevelRequirements(Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
@@ -29,18 +29,18 @@ public class MixinApothEnchantContainer {
 		int levelRequirement = ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
 		int[] costsBeforeReduction = ((EnchantmentMenuExtention) (Object) this).getCostsBeforeReduction();
 		costsBeforeReduction[slot] = levelRequirement;
-		Optional<Player> player = ContainerHelper.getViewingPlayer((ApothEnchantContainer) (Object) this);
+		Optional<Player> player = ContainerHelper.getViewingPlayer((ApothEnchantmentMenu) (Object) this);
 		if (!player.isPresent()) return levelRequirement;
 		return EnchantmentHelper.adjustLevelRequirement(levelRequirement, player.get());
 	}
 
-	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
-	private List<EnchantmentInstance> amplifyEnchantmentsVisually(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
+	@Redirect(method = "lambda$slotsChanged$1", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
+	private List<EnchantmentInstance> amplifyEnchantmentsVisually(ApothEnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		return amplifyEnchantments(itemStack, slot);
 	}
 
-	@Redirect(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantContainer;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
-	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(ApothEnchantContainer menu, ItemStack itemStack, int slot, int cost) {
+	@Redirect(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lshadows/apotheosis/ench/table/ApothEnchantmentMenu;getEnchantmentList(Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;", remap = true))
+	private List<EnchantmentInstance> amplifyEnchantmentsOnButtonClick(ApothEnchantmentMenu menu, ItemStack itemStack, int slot, int cost) {
 		return amplifyEnchantments(itemStack, slot);
 	}
 
@@ -50,7 +50,7 @@ public class MixinApothEnchantContainer {
 		List<EnchantmentInstance> enchantments = getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);
 		int enchantmentSeed = enchantmentMenu.getEnchantmentSeed();
 		RandomSource random = RandomSource.create(enchantmentSeed);
-		Optional<Player> player = ContainerHelper.getViewingPlayer((ApothEnchantContainer) (Object) this);
+		Optional<Player> player = ContainerHelper.getViewingPlayer((ApothEnchantmentMenu) (Object) this);
 		if (!player.isPresent()) return enchantments;
 		EnchantmentHelper.amplifyEnchantments(enchantments, random, player.get());
 		return enchantments;

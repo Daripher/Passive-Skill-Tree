@@ -1,13 +1,13 @@
 package daripher.skilltree.compat.apotheosis;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 
 import daripher.skilltree.SkillTreeMod;
@@ -15,6 +15,7 @@ import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -35,11 +36,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
@@ -65,15 +66,23 @@ public enum ApotheosisCompatibility {
 		forgeEventBus.addListener(EventPriority.LOWEST, this::removeDuplicateTooltips);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ItemStack> getGems(ItemStack stack, int sockets) {
-		try {
-			Method getGems = ObfuscationReflectionHelper.findMethod(SocketHelper.class, "getGems", ItemStack.class, int.class);
-			return (List<ItemStack>) getGems.invoke(null, stack, sockets);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-			return null;
+		if (sockets == 0 || stack.isEmpty()) return Collections.emptyList();
+		List<ItemStack> gems = NonNullList.withSize(sockets, ItemStack.EMPTY);
+		int i = 0;
+		CompoundTag afxData = stack.getTagElement(SocketHelper.AFFIX_DATA);
+		if (afxData != null && afxData.contains(SocketHelper.GEMS)) {
+			ListTag gemData = afxData.getList(SocketHelper.GEMS, Tag.TAG_COMPOUND);
+			for (Tag tag : gemData) {
+				ItemStack gemStack = ItemStack.of((CompoundTag) tag);
+				gemStack.setCount(1);
+				if (GemInstance.unsocketed(gemStack).isValidUnsocketed()) {
+					gems.set(i++, gemStack);
+				}
+				if (i >= sockets) break;
+			}
 		}
+		return ImmutableList.copyOf(gems);
 	}
 
 	public void ignoreGemTooltips(GatherSkippedAttributeTooltipsEvent event) {
