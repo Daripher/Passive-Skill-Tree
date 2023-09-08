@@ -9,9 +9,25 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class SkillTreeButton extends Button {
-	public SkillTreeButton(int x, int y, int width, int height, Component message, OnPress pressFunction) {
-		super(x, y, width, height, message, pressFunction, Supplier::get);
+public class PSTButton extends Button {
+	protected Button.OnPress pressFunc;
+
+	public PSTButton(int x, int y, int width, int height, Component message, OnPress pressFunc) {
+		super(x, y, width, height, message, pressFunc, Supplier::get);
+		this.pressFunc = pressFunc;
+	}
+
+	public PSTButton(int x, int y, int width, int height, Component message) {
+		this(x, y, width, height, message, b -> {});
+	}
+
+	public void setPressFunc(Button.OnPress pressFunc) {
+		this.pressFunc = pressFunc;
+	}
+
+	@Override
+	public void onPress() {
+		pressFunc.onPress(this);
 	}
 
 	@Override

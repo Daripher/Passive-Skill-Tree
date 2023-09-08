@@ -31,7 +31,8 @@ public class PassiveSkill {
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
 	private float positionX, positionY;
 
-	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
+	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture,
+			ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
 		this.id = id;
 		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
@@ -156,5 +157,18 @@ public class PassiveSkill {
 		}
 		AttributeInstance instance = player.getAttribute(attribute);
 		if (instance.hasModifier(modifier)) instance.removeModifier(modifier);
+	}
+
+	public boolean sameBonuses(PassiveSkill other) {
+		if (other == this) return true;
+		if (attributeModifiers.size() != other.attributeModifiers.size()) return false;
+		for (int i = 0; i < attributeModifiers.size(); i++) {
+			if (attributeModifiers.get(i).getLeft() != other.attributeModifiers.get(i).getLeft()) return false;
+			AttributeModifier modifier = attributeModifiers.get(i).getRight();
+			AttributeModifier otherModifier = other.attributeModifiers.get(i).getRight();
+			if (modifier.getAmount() != otherModifier.getAmount()) return false;
+			if (modifier.getOperation() != otherModifier.getOperation()) return false;
+		}
+		return true;
 	}
 }

@@ -20,7 +20,7 @@ import daripher.skilltree.client.widget.InfoPanel;
 import daripher.skilltree.client.widget.ProgressBar;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
-import daripher.skilltree.client.widget.SkillTreeButton;
+import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
@@ -122,9 +122,9 @@ public class SkillTreeScreen extends Screen {
 		buttonWidth = Math.max(buttonWidth, font.width(cancelButtonText));
 		buttonWidth += 20;
 		int buttonsY = 8;
-		showStatsButton = new SkillTreeButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText, b -> showStats ^= true);
+		showStatsButton = new PSTButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText, b -> showStats ^= true);
 		addRenderableWidget(showStatsButton);
-		buyButton = new SkillTreeButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText, b -> buySkillPoint());
+		buyButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText, b -> buySkillPoint());
 		addRenderableWidget(buyButton);
 		pointsInfo = new InfoPanel(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
 		if (!Config.enable_exp_exchange) {
@@ -132,9 +132,9 @@ public class SkillTreeScreen extends Screen {
 		}
 		addRenderableWidget(pointsInfo);
 		buttonsY += 20;
-		confirmButton = new SkillTreeButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText, b -> confirmLearnSkills());
+		confirmButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText, b -> confirmLearnSkills());
 		addRenderableWidget(confirmButton);
-		cancelButton = new SkillTreeButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText, b -> cancelLearnSkills());
+		cancelButton = new PSTButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText, b -> cancelLearnSkills());
 		addRenderableWidget(cancelButton);
 		confirmButton.active = cancelButton.active = !newlyLearnedSkills.isEmpty();
 		buttonWidth = font.width(showStatsButtonText) + 20;
