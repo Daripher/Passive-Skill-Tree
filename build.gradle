@@ -99,6 +99,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
 	maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+	maven {
         url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -109,6 +112,8 @@ repositories {
 dependencies {
 	minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+	runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.4.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.4.1:api")
 	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
 	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
@@ -127,7 +132,6 @@ dependencies {
 	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
 	implementation fg.deobf("curse.maven:tetra-289712:4487237")
 	implementation fg.deobf("curse.maven:mutil-351914:3941314")
-	implementation fg.deobf("curse.maven:curios-309927:4523009")
 	implementation fg.deobf("curse.maven:modern-ui-352491:4634827")
 }
 
