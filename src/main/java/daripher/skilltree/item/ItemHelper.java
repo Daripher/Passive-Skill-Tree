@@ -169,16 +169,16 @@ public class ItemHelper {
 		return stack.getItem() instanceof TridentItem || stack.is(Tags.Items.TOOLS_TRIDENTS);
 	}
 
-	public static boolean isAxe(ItemStack itemStack) {
-		if (itemStack.canPerformAction(ToolActions.AXE_DIG)) return true;
-		return itemStack.getItem() instanceof AxeItem || itemStack.is(Tags.Items.TOOLS_AXES);
+	public static boolean isAxe(ItemStack stack) {
+		if (stack.canPerformAction(ToolActions.AXE_DIG)) return true;
+		return stack.getItem() instanceof AxeItem || stack.is(Tags.Items.TOOLS_AXES);
 	}
 
-	public static boolean isSword(ItemStack itemStack) {
-		if (ForgeRegistries.ITEMS.getKey(itemStack.getItem()).toString().equals("tetra:modular_sword")) return true;
-		if (itemStack.canPerformAction(ToolActions.SWORD_DIG)) return true;
-		if (itemStack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
-		return itemStack.getItem() instanceof SwordItem || itemStack.is(Tags.Items.TOOLS_SWORDS);
+	public static boolean isSword(ItemStack stack) {
+		if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_sword")) return true;
+		if (stack.canPerformAction(ToolActions.SWORD_DIG)) return true;
+		if (stack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
+		return stack.getItem() instanceof SwordItem || stack.is(Tags.Items.TOOLS_SWORDS);
 	}
 	
 	public static boolean isWeapon(ItemStack stack) {
