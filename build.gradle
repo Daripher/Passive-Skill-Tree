@@ -145,6 +145,9 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+	maven {
+        url = "https://maven.theillusivec4.top/"
+    }
     maven {
         url "https://www.cursemaven.com"
         content {
@@ -156,6 +159,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.3.1+1.20.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.3.1+1.20.1:api")
 	implementation fg.deobf("curse.maven:attributefix-280510:4648448")
 	implementation fg.deobf("curse.maven:max-health-fix-492246:4648479")
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
@@ -164,7 +169,6 @@ dependencies {
 	implementation fg.deobf("curse.maven:puzzles-lib-495476:4673053")
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4679319")
 	implementation fg.deobf("curse.maven:jei-238222:4644453")
-	implementation fg.deobf("curse.maven:curios-309927:4583413")
 	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
 }
 
