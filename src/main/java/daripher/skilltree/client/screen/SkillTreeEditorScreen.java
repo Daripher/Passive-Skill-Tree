@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.base.Predicates;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 
@@ -68,6 +69,7 @@ public class SkillTreeEditorScreen extends Screen {
 		renderBackground(graphics);
 		renderConnections(graphics, mouseX, mouseY, partialTick);
 		renderSkills(graphics, mouseX, mouseY, partialTick);
+		RenderSystem.enableBlend();
 		renderOverlay(graphics, mouseX, mouseY, partialTick);
 		renderWidgets(graphics, mouseX, mouseY, partialTick);
 		renderSkillTooltip(graphics, mouseX, mouseY, partialTick);
@@ -210,6 +212,7 @@ public class SkillTreeEditorScreen extends Screen {
 		graphics.pose().translate(0.0D, 0.0D, 400.0D);
 		int textX = 5;
 		int textY = 2;
+		RenderSystem.enableBlend();
 		graphics.blit(button.skill.getBorderTexture(), -4, -4, 0, 0, 21, 20, 110, 20);
 		graphics.blit(button.skill.getBorderTexture(), tooltipWidth + 4 - 21, -4, -21, 0, 21, 20, 110, 20);
 		int centerWidth = tooltipWidth + 8 - 42;
