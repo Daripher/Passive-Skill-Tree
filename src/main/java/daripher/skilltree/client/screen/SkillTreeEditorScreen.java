@@ -24,6 +24,7 @@ import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.util.AttributeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -39,9 +40,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.common.CuriosHelper;
-import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class SkillTreeEditorScreen extends Screen {
 	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
@@ -193,16 +191,9 @@ public class SkillTreeEditorScreen extends Screen {
 			if (selectedSkills.stream().map(this::getSkill).allMatch(firstSkill::sameBonuses)) {
 				for (int i = 0; i < firstSkill.getAttributeModifiers().size(); i++) {
 					Attribute attribute = firstSkill.getAttributeModifiers().get(i).getLeft();
-					String attributeId;
-					if (attribute instanceof SlotAttributeWrapper wrapper) {
-						attributeId = "curios:" + wrapper.identifier;
-					} else {
-						attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-					}
+					String attributeId = AttributeHelper.getAttributeId(attribute);
 					PSTEditBox attributeEditor = new PSTEditBox(font, widgetX, widgetY, 200, 14, attributeId);
-					attributeEditor.setFilter(s -> {
-						return s.startsWith("curios:") || ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(s)) != null;
-					});
+					attributeEditor.setFilter(AttributeHelper::isAttributeId);
 					addRenderableWidget(attributeEditor);
 					AttributeModifier modifier = firstSkill.getAttributeModifiers().get(i).getRight();
 					NumberEditBox valueEditor = new NumberEditBox(font, widgetX + 210, widgetY, 40, 14, Component.empty());
@@ -215,12 +206,7 @@ public class SkillTreeEditorScreen extends Screen {
 						if (!attributeEditor.isValueValid()) return;
 						selectedSkills.stream().map(this::getSkill).forEach(skill -> {
 							String newAttributeId = attributeEditor.getValue();
-							Attribute newAttribute;
-							if (newAttributeId.startsWith("curios:")) {
-								newAttribute = CuriosHelper.getOrCreateSlotAttribute(newAttributeId.replace("curios:", ""));
-							} else {
-								newAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-							}
+							Attribute newAttribute = AttributeHelper.getAttributeById(newAttributeId);
 							AttributeModifier oldModifier = skill.getAttributeModifiers().get(modifierIndex).getRight();
 							double amount = valueEditor.getNumericValue();
 							Operation operation = operationButton.getValue();

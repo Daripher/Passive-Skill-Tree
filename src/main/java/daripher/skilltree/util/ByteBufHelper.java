@@ -16,9 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.common.CuriosHelper;
-import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class ByteBufHelper {
 	private static final Logger LOGGER = LogUtils.getLogger();
@@ -38,13 +35,7 @@ public class ByteBufHelper {
 	}
 
 	public static void writeAttribute(FriendlyByteBuf buf, Attribute attribute) {
-		String attributeId;
-		if (attribute instanceof SlotAttributeWrapper wrapper) {
-			attributeId = "curios:" + wrapper.identifier;
-		} else {
-			attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-		}
-		buf.writeUtf(attributeId);
+		buf.writeUtf(AttributeHelper.getAttributeId(attribute));
 	}
 
 	public static void writeResourceLocations(FriendlyByteBuf buf, List<ResourceLocation> locations) {
@@ -106,13 +97,7 @@ public class ByteBufHelper {
 
 	public static Attribute readAttribute(FriendlyByteBuf buf) {
 		String attributeId = buf.readUtf();
-		Attribute attribute;
-		if (attributeId.startsWith("curios:")) {
-			attributeId = attributeId.replace("curios:", "");
-			attribute = CuriosHelper.getOrCreateSlotAttribute(attributeId);
-		} else {
-			attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-		}
+		Attribute attribute = AttributeHelper.getAttributeById(attributeId);
 		if (attribute == null) LOGGER.error("Attribute {} does not exist", attributeId);
 		return attribute;
 	}

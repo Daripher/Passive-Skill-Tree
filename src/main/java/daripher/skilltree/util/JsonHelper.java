@@ -17,9 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.common.CuriosHelper;
-import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class JsonHelper {
 	private static final Logger LOGGER = LogUtils.getLogger();
@@ -43,13 +40,7 @@ public class JsonHelper {
 	}
 
 	public static void writeAttribute(JsonObject json, Attribute attribute) {
-		String attributeId;
-		if (attribute instanceof SlotAttributeWrapper wrapper) {
-			attributeId = "curios:" + wrapper.identifier;
-		} else {
-			attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-		}
-		json.addProperty("attribute", attributeId);
+		json.addProperty("attribute", AttributeHelper.getAttributeId(attribute));
 	}
 
 	public static void writePosition(JsonObject json, float x, float y) {
@@ -117,12 +108,7 @@ public class JsonHelper {
 
 	public static Attribute readAttribute(JsonObject json) {
 		String attributeId = json.get("attribute").getAsString();
-		Attribute attribute;
-		if (attributeId.startsWith("curios:")) {
-			attribute = CuriosHelper.getOrCreateSlotAttribute(attributeId.replace("curios:", ""));
-		} else {
-			attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-		}
+		Attribute attribute = AttributeHelper.getAttributeById(attributeId);
 		if (attribute == null) LOGGER.error("Attribute {} does not exist", attributeId);
 		return attribute;
 	}
