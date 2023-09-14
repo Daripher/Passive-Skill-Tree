@@ -44,7 +44,7 @@ public class MixtureRecipe extends CustomRecipe {
 				} else {
 					potionStack2 = stackInSlot;
 				}
-			}
+			} else return false;
 		}
 		if (PotionUtils.getMobEffects(potionStack1).isEmpty() || PotionUtils.getMobEffects(potionStack2).isEmpty()) return false;
 		return potionsCount == 2 && potionStack1.getItem() == potionStack2.getItem();
@@ -63,7 +63,7 @@ public class MixtureRecipe extends CustomRecipe {
 				} else {
 					potionStack2 = stackInSlot;
 				}
-			}
+			} else return ItemStack.EMPTY;
 		}
 		return PotionHelper.mixPotions(potionStack1, potionStack2);
 	}
