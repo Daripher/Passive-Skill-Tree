@@ -132,7 +132,6 @@ dependencies {
 	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
 	implementation fg.deobf("curse.maven:tetra-289712:4487237")
 	implementation fg.deobf("curse.maven:mutil-351914:3941314")
-	implementation fg.deobf("curse.maven:modern-ui-352491:4634827")
 }
 
 jar {
