@@ -1,12 +1,10 @@
 package daripher.skilltree.client.widget;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.network.chat.Component;
 
-public class NumberEditBox extends EditBox {
-	public NumberEditBox(Font font, int x, int y, int width, int height, Component title) {
-		super(font, x, y, width, height, title);
+public class NumberEditBox extends PSTEditBox {
+	public NumberEditBox(Font font, int x, int y, int width, int height, double defaultValue) {
+		super(font, x, y, width, height, "" + defaultValue);
 		setFilter(s -> {
 			try {
 				Double.parseDouble(s);

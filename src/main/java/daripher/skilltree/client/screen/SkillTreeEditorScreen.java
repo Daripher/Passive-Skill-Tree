@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -21,6 +23,7 @@ import daripher.skilltree.client.widget.EnumCycleButton;
 import daripher.skilltree.client.widget.NumberEditBox;
 import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.PSTEditBox;
+import daripher.skilltree.client.widget.RemoveButton;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
 import daripher.skilltree.client.widget.StatsList;
@@ -38,6 +41,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.common.CuriosHelper;
@@ -58,7 +62,8 @@ public class SkillTreeEditorScreen extends Screen {
 	protected double scrollY;
 	protected int maxScrollX;
 	protected int maxScrollY;
-	protected int toolsHeight;
+	protected int toolsY;
+	protected int toolsX;
 
 	public SkillTreeEditorScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
@@ -72,8 +77,10 @@ public class SkillTreeEditorScreen extends Screen {
 		addSkillButtons();
 		maxScrollX -= width / 2 - 80;
 		maxScrollY -= height / 2 - 80;
-		if (maxScrollX < 0) maxScrollX = 0;
-		if (maxScrollY < 0) maxScrollY = 0;
+		if (maxScrollX < 0)
+			maxScrollX = 0;
+		if (maxScrollY < 0)
+			maxScrollY = 0;
 		addSkillConnections();
 		addToolButtons();
 	}
@@ -93,18 +100,21 @@ public class SkillTreeEditorScreen extends Screen {
 
 	private void renderWidgets(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
 		if (selectedSkills.size() > 0) {
-			fill(poseStack, width - 380, 0, width, toolsHeight, 0xDD000000);
+			fill(poseStack, toolsX - 5, 0, width, toolsY, 0xDD000000);
 		}
 		for (Widget widget : renderables) {
-			if (widget instanceof SkillButton) continue;
+			if (widget instanceof SkillButton)
+				continue;
 			widget.render(poseStack, mouseX, mouseY, partialTick);
 		}
 	}
 
 	private void renderSkillTooltip(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		if (getWidgetAt(mouseX, mouseY).isPresent()) return;
+		if (getWidgetAt(mouseX, mouseY).isPresent())
+			return;
 		getSkillAt(mouseX, mouseY).ifPresent(button -> {
-			renderSkillTooltip(button, poseStack, mouseX + (prevMouseX - mouseX) * partialTick, mouseY + (prevMouseY - mouseY) * partialTick);
+			renderSkillTooltip(button, poseStack, mouseX + (prevMouseX - mouseX) * partialTick,
+					mouseY + (prevMouseY - mouseY) * partialTick);
 		});
 	}
 
@@ -120,7 +130,8 @@ public class SkillTreeEditorScreen extends Screen {
 			if (selectedSkills.contains(widget.skill.getId())) {
 				poseStack.pushPose();
 				poseStack.translate(widget.x, widget.y, 0);
-				ScreenHelper.drawRectangle(poseStack, -1, -1, widget.getWidth() + 2, widget.getHeight() + 2, 0xAA32FF00);
+				ScreenHelper.drawRectangle(poseStack, -1, -1, widget.getWidth() + 2, widget.getHeight() + 2,
+						0xAA32FF00);
 				poseStack.popPose();
 			}
 			poseStack.popPose();
@@ -130,34 +141,55 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		renderables.stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).forEach(b -> b.mouseClicked(mouseX, mouseY, button));
-		Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
-		if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
+		AtomicBoolean pressedEditBox = new AtomicBoolean();
+		children().stream()
+				.filter(EditBox.class::isInstance)
+				.forEach(b -> {
+					if (b.mouseClicked(mouseX, mouseY, button))
+						pressedEditBox.set(true);
+				});
+		if (pressedEditBox.get())
+			return true;
+		Optional<? extends GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
+		if (widget.isPresent())
+			return widget.get().mouseClicked(mouseX, mouseY, button);
 		Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-		if (skill.isPresent()) return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
+		if (skill.isPresent())
+			return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
 	}
 
 	@Override
-	public boolean keyPressed(int keyCode, int p_96553_, int p_96554_) {
-		renderables.stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).forEach(b -> b.keyPressed(keyCode, p_96553_, p_96554_));
-		return super.keyPressed(keyCode, p_96553_, p_96554_);
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		children().stream()
+				.filter(EditBox.class::isInstance)
+				.forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
-	public boolean keyReleased(int keyCode, int p_96553_, int p_96554_) {
-		renderables.stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).forEach(b -> b.keyReleased(keyCode, p_96553_, p_96554_));
-		return super.keyPressed(keyCode, p_96553_, p_96554_);
+	public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+		children().stream()
+				.filter(EditBox.class::isInstance)
+				.forEach(b -> b.keyReleased(keyCode, scanCode, modifiers));
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
 	public boolean charTyped(char character, int keyCode) {
-		renderables.stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).forEach(b -> b.charTyped(character, keyCode));
+		children().stream()
+				.filter(EditBox.class::isInstance)
+				.map(EditBox.class::cast)
+				.forEach(b -> b.charTyped(character, keyCode));
 		return super.charTyped(character, keyCode);
 	}
 
-	public Optional<GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
-		return super.getChildAt(mouseX, mouseY).filter(Predicates.not(SkillButton.class::isInstance));
+	public Optional<? extends GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
+		return children()
+				.stream()
+				.filter(Predicates.not(SkillButton.class::isInstance))
+				.filter(e -> e.isMouseOver(mouseX, mouseY))
+				.findFirst();
 	}
 
 	public Optional<SkillButton> getSkillAt(double mouseX, double mouseY) {
@@ -180,79 +212,121 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	private void addToolButtons() {
-		int widgetY = 10;
-		int widgetX = width - 370;
-		toolsHeight = 0;
+		toolsX = width - 379;
+		toolsY = 0;
 		if (selectedSkills.size() > 0) {
-			toolsHeight += 10;
-			PassiveSkill firstSkill = getSkill((ResourceLocation) selectedSkills.toArray()[0]);
-			if (selectedSkills.stream().map(this::getSkill).allMatch(firstSkill::sameBonuses)) {
-				for (int i = 0; i < firstSkill.getAttributeModifiers().size(); i++) {
-					Attribute attribute = firstSkill.getAttributeModifiers().get(i).getLeft();
-					String attributeId;
-					if (attribute instanceof SlotAttributeWrapper wrapper) {
-						attributeId = "curios:" + wrapper.identifier;
-					} else {
-						attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-					}
-					PSTEditBox attributeEditor = new PSTEditBox(font, widgetX, widgetY, 200, 14, attributeId);
-					attributeEditor.setFilter(s -> {
-						return s.startsWith("curios:") || ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(s)) != null;
-					});
-					addRenderableWidget(attributeEditor);
-					AttributeModifier modifier = firstSkill.getAttributeModifiers().get(i).getRight();
-					NumberEditBox valueEditor = new NumberEditBox(font, widgetX + 210, widgetY, 40, 14, Component.empty());
-					valueEditor.setValue("" + modifier.getAmount());
-					addRenderableWidget(valueEditor);
-					EnumCycleButton<Operation> operationButton = new EnumCycleButton<>(widgetX + 260, widgetY, 100, 14, modifier.getOperation());
-					addRenderableWidget(operationButton);
-					final int modifierIndex = i;
-					Runnable onChange = () -> {
-						if (!attributeEditor.isValueValid()) return;
-						selectedSkills.stream().map(this::getSkill).forEach(skill -> {
-							String newAttributeId = attributeEditor.getValue();
-							Attribute newAttribute;
-							if (newAttributeId.startsWith("curios:")) {
-								newAttribute = CuriosHelper.getOrCreateSlotAttribute(newAttributeId.replace("curios:", ""));
-							} else {
-								newAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-							}
-							AttributeModifier oldModifier = skill.getAttributeModifiers().get(modifierIndex).getRight();
-							double amount = valueEditor.getNumericValue();
-							Operation operation = operationButton.getValue();
-							AttributeModifier newModifier = new AttributeModifier(oldModifier.getId(), oldModifier.getName(), amount, operation);
-							skill.getAttributeModifiers().set(modifierIndex, Pair.of(newAttribute, newModifier));
-							SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
-						});
-					};
-					attributeEditor.setResponder(s -> onChange.run());
-					valueEditor.setResponder(s -> onChange.run());
-					operationButton.setPressFunc(b -> onChange.run());
-					widgetY += 24;
-					toolsHeight += 24;
-				}
-			}
+			addAttributeToolsButtons();
 		}
 		if (selectedSkills.size() == 2) {
-			ResourceLocation first = (ResourceLocation) selectedSkills.toArray()[0];
-			ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
-			if (areSkillsConnected(first, second)) {
-				addRenderableWidget(new PSTButton(widgetX, widgetY, 100, 14, Component.literal("Disconnect"), b -> {
-					SkillTreeClientData.getOrCreateEditorTree(treeId).get(first).getConnectedSkills().remove(second);
-					SkillTreeClientData.getOrCreateEditorTree(treeId).get(second).getConnectedSkills().remove(first);
-					selectedSkills.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
-					rebuildWidgets();
-				}));
-			} else {
-				addRenderableWidget(new PSTButton(widgetX, widgetY, 100, 14, Component.literal("Connect"), b -> {
-					skillButtons.get(first).skill.getConnectedSkills().add(second);
-					selectedSkills.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
-					rebuildWidgets();
-				}));
-			}
-			widgetY += 24;
-			toolsHeight += 24;
+			addConnectionToolsButton();
 		}
+	}
+
+	private void addAttributeToolsButtons() {
+		PassiveSkill skill = getSkill((ResourceLocation) selectedSkills.toArray()[0]);
+		toolsY += 5;
+		if (selectedSkills.stream().map(this::getSkill).allMatch(skill::sameBonuses)) {
+			for (int row = 0; row < skill.getAttributeModifiers().size(); row++) {
+				addAttributeToolsButtonsRow(skill, row);
+				toolsY += 19;
+			}
+			addAddModifierButton();
+			toolsY += 19;
+		}
+	}
+
+	private void addAddModifierButton() {
+		Button addModifierButton = new PSTButton(toolsX, toolsY, 100, 14,
+				Component.translatable("Add Modifier"),
+				b -> {
+					selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+						skill.getAttributeModifiers().add(Pair.of(Attributes.ARMOR,
+								new AttributeModifier(UUID.randomUUID(), "Skill Tree Bonus",
+										1, Operation.ADDITION)));
+						SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+						rebuildWidgets();
+					});
+				});
+		addRenderableWidget(addModifierButton);
+	}
+
+	private void addAttributeToolsButtonsRow(PassiveSkill firstSkill, int row) {
+		Attribute attribute = firstSkill.getAttributeModifiers().get(row).getLeft();
+		String attributeId;
+		if (attribute instanceof SlotAttributeWrapper wrapper) {
+			attributeId = "curios:" + wrapper.identifier;
+		} else {
+			attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
+		}
+		PSTEditBox attributeEditor = new PSTEditBox(font, toolsX, toolsY, 220, 14, attributeId);
+		attributeEditor.setSoftFilter(s -> {
+			if (s.startsWith("curios:"))
+				return true;
+			if (!ResourceLocation.isValidResourceLocation(s))
+				return false;
+			return ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(s)) != null;
+		});
+		addRenderableWidget(attributeEditor);
+		AttributeModifier modifier = firstSkill.getAttributeModifiers().get(row).getRight();
+		NumberEditBox valueEditor = new NumberEditBox(font, toolsX + 225, toolsY, 30, 14, modifier.getAmount());
+		addRenderableWidget(valueEditor);
+		EnumCycleButton<Operation> operationButton = new EnumCycleButton<>(toolsX + 260, toolsY, 95, 14,
+				modifier.getOperation());
+		addRenderableWidget(operationButton);
+		Button removeButton = new RemoveButton(toolsX + 360, toolsY, 14, 14, b -> {
+			selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+				skill.getAttributeModifiers().remove(row);
+				SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+				rebuildWidgets();
+			});
+		});
+		addRenderableWidget(removeButton);
+		final int modifierIndex = row;
+		Runnable onChange = () -> {
+			if (!attributeEditor.isValueValid())
+				return;
+			selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+				String newAttributeId = attributeEditor.getValue();
+				Attribute newAttribute;
+				if (newAttributeId.startsWith("curios:")) {
+					newAttribute = CuriosHelper.getOrCreateSlotAttribute(newAttributeId.replace("curios:", ""));
+				} else {
+					newAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(newAttributeId));
+				}
+				AttributeModifier oldModifier = skill.getAttributeModifiers().get(modifierIndex).getRight();
+				double amount = valueEditor.getNumericValue();
+				Operation operation = operationButton.getValue();
+				AttributeModifier newModifier = new AttributeModifier(oldModifier.getId(), oldModifier.getName(),
+						amount, operation);
+				skill.getAttributeModifiers().set(modifierIndex, Pair.of(newAttribute, newModifier));
+				SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+			});
+		};
+		attributeEditor.setResponder(s -> onChange.run());
+		valueEditor.setResponder(s -> onChange.run());
+		operationButton.setPressFunc(b -> onChange.run());
+	}
+
+	private void addConnectionToolsButton() {
+		ResourceLocation first = (ResourceLocation) selectedSkills.toArray()[0];
+		ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
+		if (areSkillsConnected(first, second)) {
+			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Disconnect"), b -> {
+				SkillTreeClientData.getOrCreateEditorTree(treeId).get(first).getConnectedSkills().remove(second);
+				SkillTreeClientData.getOrCreateEditorTree(treeId).get(second).getConnectedSkills().remove(first);
+				selectedSkills
+						.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+				rebuildWidgets();
+			}));
+		} else {
+			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Connect"), b -> {
+				skillButtons.get(first).skill.getConnectedSkills().add(second);
+				selectedSkills
+						.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+				rebuildWidgets();
+			}));
+		}
+		toolsY += 19;
 	}
 
 	private PassiveSkill getSkill(ResourceLocation id) {
@@ -273,8 +347,10 @@ public class SkillTreeEditorScreen extends Screen {
 		addRenderableWidget(button);
 		button.highlighted = true;
 		skillButtons.put(skillId, button);
-		if (maxScrollX < Mth.abs(skillX)) maxScrollX = (int) Mth.abs(skillX);
-		if (maxScrollY < Mth.abs(skillY)) maxScrollY = (int) Mth.abs(skillY);
+		if (maxScrollX < Mth.abs(skillX))
+			maxScrollX = (int) Mth.abs(skillX);
+		if (maxScrollY < Mth.abs(skillY))
+			maxScrollY = (int) Mth.abs(skillY);
 	}
 
 	public void addSkillConnections() {
@@ -301,7 +377,8 @@ public class SkillTreeEditorScreen extends Screen {
 		});
 	}
 
-	protected void connectSkills(List<SkillConnection> connections, ResourceLocation skillId1, ResourceLocation skillId2) {
+	protected void connectSkills(List<SkillConnection> connections, ResourceLocation skillId1,
+			ResourceLocation skillId2) {
 		SkillButton button1 = skillButtons.get(skillId1);
 		SkillButton button2 = skillButtons.get(skillId2);
 		connections.add(new SkillConnection(button1, button2));
@@ -309,12 +386,14 @@ public class SkillTreeEditorScreen extends Screen {
 
 	public void renderSkillTooltip(SkillButton button, PoseStack poseStack, float mouseX, float mouseY) {
 		List<MutableComponent> tooltip = button.getTooltip();
-		if (tooltip.isEmpty()) return;
+		if (tooltip.isEmpty())
+			return;
 		int tooltipWidth = 0;
 		int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
 		for (MutableComponent component : tooltip) {
 			int k = font.width(component);
-			if (k > tooltipWidth) tooltipWidth = k;
+			if (k > tooltipWidth)
+				tooltipWidth = k;
 			tooltipHeight += font.lineHeight;
 		}
 		tooltipWidth += 42;
@@ -360,7 +439,8 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	public void buttonPressed(Button button) {
-		if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
+		if (button instanceof SkillButton skillButton)
+			skillButtonPressed(skillButton);
 	}
 
 	protected void skillButtonPressed(SkillButton button) {
@@ -368,8 +448,10 @@ public class SkillTreeEditorScreen extends Screen {
 			selectedSkills.clear();
 		}
 		ResourceLocation skillId = button.skill.getId();
-		if (selectedSkills.contains(skillId)) selectedSkills.remove(skillId);
-		else selectedSkills.add(skillId);
+		if (selectedSkills.contains(skillId))
+			selectedSkills.remove(skillId);
+		else
+			selectedSkills.add(skillId);
 		rebuildWidgets();
 	}
 
@@ -389,7 +471,8 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public void renderBackground(PoseStack poseStack) {
-		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
+		ScreenHelper
+				.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
 		poseStack.pushPose();
 		poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
 		int size = getBackgroundSize();
@@ -399,17 +482,22 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragAmountX, double dragAmountY) {
-		if (mouseButton != 0 && mouseButton != 2) return false;
-		if (maxScrollX > 0) scrollSpeedX += dragAmountX * 0.25;
-		if (maxScrollY > 0) scrollSpeedY += dragAmountY * 0.25;
+		if (mouseButton != 0 && mouseButton != 2)
+			return false;
+		if (maxScrollX > 0)
+			scrollSpeedX += dragAmountX * 0.25;
+		if (maxScrollY > 0)
+			scrollSpeedY += dragAmountY * 0.25;
 		return true;
 	}
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
 		if (!getWidgetAt(mouseX, mouseY).filter(StatsList.class::isInstance).isPresent()) {
-			if (amount > 0 && zoom < 2F) zoom += 0.05;
-			if (amount < 0 && zoom > 0.25F) zoom -= 0.05;
+			if (amount > 0 && zoom < 2F)
+				zoom += 0.05;
+			if (amount < 0 && zoom > 0.25F)
+				zoom -= 0.05;
 			rebuildWidgets();
 		}
 		return super.mouseScrolled(mouseX, mouseY, amount);
@@ -426,7 +514,8 @@ public class SkillTreeEditorScreen extends Screen {
 		SkillButton button1 = connection.getFirstButton();
 		SkillButton button2 = connection.getSecondButton();
 		Optional<SkillButton> hoveredSkill = getSkillAt(mouseX, mouseY);
-		boolean selected = selectedSkills.contains(button1.skill.getId()) || selectedSkills.contains(button2.skill.getId());
+		boolean selected = selectedSkills.contains(button1.skill.getId())
+				|| selectedSkills.contains(button2.skill.getId());
 		if (selected) {
 			if (selectedSkills.contains(button2.skill.getId())) {
 				renderGatewayConnection(poseStack, button2, button1);
@@ -437,8 +526,10 @@ public class SkillTreeEditorScreen extends Screen {
 		}
 		boolean hovered = !hoveredSkill.isEmpty() && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
 		if (hovered) {
-			if (hoveredSkill.get() == button2) renderGatewayConnection(poseStack, button2, button1);
-			else renderGatewayConnection(poseStack, button1, button2);
+			if (hoveredSkill.get() == button2)
+				renderGatewayConnection(poseStack, button2, button1);
+			else
+				renderGatewayConnection(poseStack, button1, button2);
 		}
 	}
 
