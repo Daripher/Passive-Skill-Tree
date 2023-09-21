@@ -778,7 +778,15 @@ public class AttributeBonusHandler {
 		}
 		double value = func.apply(baseValue);
 		if (value != 0) {
-			UUID id = UUID.fromString("d57e6ff6-4665-417b-8bdb-1b0f58261814");
+			String[] modifierIds = new String[] {
+					"1fb59b87-3a0d-4480-87bf-308bbbca0bf6",
+					"12533fc7-f6eb-450a-9ebc-2214aed0a1d9",
+					"a64e1e16-ee46-4818-89ab-80adbd46bd18",
+					"010bfed7-6f2e-484c-b94f-0800c1baeefe",
+					"17cba728-d06d-4a49-9fdf-415b7c1d2b15",
+					"fc87d30e-e1e1-4076-b096-ae3fea92a6da"
+			};
+			UUID id = UUID.fromString(modifierIds[event.getSlotType().ordinal()]);
 			AttributeModifier modifier = new AttributeModifier(id, "CraftedItemBonus", value, Operation.ADDITION);
 			event.addModifier(attribute, modifier);
 		}
@@ -786,14 +794,12 @@ public class AttributeBonusHandler {
 
 	private static void applyArmorBonus(ItemAttributeModifierEvent event, String type, Attribute attribute,
 			Operation operation) {
-		// formatter:off
 		String[] modifierIds = new String[] {
 				"2493d298-ea9f-46b9-8769-4362dbada80e",
 				"e78c1b0b-9109-413d-9351-da90388496e6",
 				"58562319-48ee-43f4-8cc4-9e7b011d6773",
 				"4a9913ec-0bc5-42d3-9922-fc35684bd67f"
 		};
-		// formatter:on
 		EquipmentSlot slot = Player.getEquipmentSlotForItem(event.getItemStack());
 		if (ItemHelper.hasBonus(event.getItemStack(), type) && slot == event.getSlotType()) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), type);
