@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -15,6 +14,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,7 +43,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -66,11 +65,9 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.GrindstoneEvent;
@@ -96,7 +93,6 @@ import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -110,7 +106,8 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyDamageBonus(LivingHurtEvent event) {
-		if (!(event.getSource().getDirectEntity() instanceof ServerPlayer player)) return;
+		if (!(event.getSource().getDirectEntity() instanceof ServerPlayer player))
+			return;
 		float damage = event.getAmount();
 		float multiplier = PlayerHelper.getDamageMultiplier(player, event.getEntity(), true);
 		event.setAmount(damage * multiplier);
@@ -118,19 +115,25 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyProjectileDamageBonus(LivingHurtEvent event) {
-		if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
-		if (!(event.getSource().getDirectEntity() instanceof Projectile projectile)) return;
+		if (!(event.getSource().getEntity() instanceof ServerPlayer player))
+			return;
+		if (!(event.getSource().getDirectEntity() instanceof Projectile projectile))
+			return;
 		float damage = event.getAmount();
-		float multiplier = PlayerHelper.getProjectileDamageMultiplier(player, event.getEntity(), projectile, event.getSource());
+		float multiplier = PlayerHelper.getProjectileDamageMultiplier(player, event.getEntity(), projectile,
+				event.getSource());
 		event.setAmount(damage * multiplier);
 	}
 
 	@SubscribeEvent
 	public static void applyCritBonus(CriticalHitEvent event) {
-		if (!(event.getEntity() instanceof ServerPlayer player)) return;
-		if (!(event.getTarget() instanceof LivingEntity target)) return;
+		if (!(event.getEntity() instanceof ServerPlayer player))
+			return;
+		if (!(event.getTarget() instanceof LivingEntity target))
+			return;
 		float critChance = PlayerHelper.getCritChance(player, target);
-		if (!event.isVanillaCritical() && event.getEntity().getRandom().nextFloat() >= critChance) return;
+		if (!event.isVanillaCritical() && event.getEntity().getRandom().nextFloat() >= critChance)
+			return;
 		float critDamage = PlayerHelper.getCritDamage(player, target, true);
 		event.setDamageModifier(event.getDamageModifier() + critDamage);
 		if (!event.isVanillaCritical()) {
@@ -141,11 +144,14 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyDynamicAttributeBonuses(PlayerTickEvent event) {
-		if (event.player.level.isClientSide) return;
+		if (event.player.level.isClientSide)
+			return;
 		ServerPlayer player = (ServerPlayer) event.player;
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "d1f7e78b-3368-409c-aa89-90f0f89a5524",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"d1f7e78b-3368-409c-aa89-90f0f89a5524",
 				AttributeBonusHandler::getMaximumLifePerEvasion);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "b68181bd-fbc4-4a63-95d4-df386fe3f71f",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"b68181bd-fbc4-4a63-95d4-df386fe3f71f",
 				AttributeBonusHandler::getMaximumLifePerGemInArmor);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "7cb71ee5-8715-40ae-a877-72ec3b49b33e",
 				AttributeBonusHandler::getArmorPerEvasion);
@@ -153,105 +159,145 @@ public class AttributeBonusHandler {
 				AttributeBonusHandler::getArmorPerGemInChestplate);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "1080308c-bdd4-4693-876c-a36390b66b73",
 				AttributeBonusHandler::getArmorPerGemInHelmet);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.ADDITION, "d1079882-dd8c-42b7-9a43-3928553193c8",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.ADDITION,
+				"d1079882-dd8c-42b7-9a43-3928553193c8",
 				AttributeBonusHandler::getDamagePerArmor);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9199d7cf-c7e4-4123-b636-6f6591e1137d",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"9199d7cf-c7e4-4123-b636-6f6591e1137d",
 				AttributeBonusHandler::getMaximumLifePerArmor);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "8810227f-9798-4890-8400-91c0941a3fc0",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"8810227f-9798-4890-8400-91c0941a3fc0",
 				AttributeBonusHandler::getMaximumLifePerBootsArmor);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "98a17cd0-68c8-4808-8981-1796c33295e7",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"98a17cd0-68c8-4808-8981-1796c33295e7",
 				AttributeBonusHandler::getMaximumLifePerSatisfiedHunger);
-		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE, "4aa87d74-b729-4e1d-9c76-893495050416",
+		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
+				"4aa87d74-b729-4e1d-9c76-893495050416",
 				AttributeBonusHandler::getEvasionUnderPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "a4daf7f8-29e3-404d-8277-9215a16ef4c8",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL,
+				"a4daf7f8-29e3-404d-8277-9215a16ef4c8",
 				AttributeBonusHandler::getAttackSpeedUnderPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "de712f9d-9f47-475c-8b86-188bca70d1df",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"de712f9d-9f47-475c-8b86-188bca70d1df",
 				AttributeBonusHandler::getMaximumLifeUnderPotionEffect);
-		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE, "282c4f81-7b6d-48e0-82c9-c4ebd58265cb",
+		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
+				"282c4f81-7b6d-48e0-82c9-c4ebd58265cb",
 				AttributeBonusHandler::getEvasionPerPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "16c35c5c-56da-4d21-ad56-bd6618fee711",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"16c35c5c-56da-4d21-ad56-bd6618fee711",
 				AttributeBonusHandler::getMaximumLifeWithEnchantedItem);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "8b836bea-4c28-4430-8184-7330530239f6",
 				AttributeBonusHandler::getArmorWithEnchantedShield);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "27b4644b-96a0-4443-89e5-1700af61d602",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"27b4644b-96a0-4443-89e5-1700af61d602",
 				AttributeBonusHandler::getMaximumLifePerEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "55c3cb58-c09e-465a-a812-6a18ae587ec0",
 				AttributeBonusHandler::getArmorPerChestplateEnchantment);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "9b1e9aac-fa58-4343-ba88-7541eca2836f",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"9b1e9aac-fa58-4343-ba88-7541eca2836f",
 				AttributeBonusHandler::getMaximumLifePerArmorEnchantment);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, "5e2d6a95-bc70-4f3d-a348-307b49f5bc84",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL,
+				"5e2d6a95-bc70-4f3d-a348-307b49f5bc84",
 				AttributeBonusHandler::getAttackSpeedWithGemInWeapon);
-		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE, "bfbc3d6b-7c37-498b-888c-3b05c921f24a",
+		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"bfbc3d6b-7c37-498b-888c-3b05c921f24a",
 				AttributeBonusHandler::getBlockChanceWithEnchantedShield);
-		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE, "d2865c2c-d5cc-4de9-a793-752349d27da0",
+		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
+				"d2865c2c-d5cc-4de9-a793-752349d27da0",
 				AttributeBonusHandler::getEvasionChanceWhenWounded);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "f6dbc327-88c0-4704-b230-91fe1642dc7a",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
+				"f6dbc327-88c0-4704-b230-91fe1642dc7a",
 				AttributeBonusHandler::getAttackSpeedIfNotHungry);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "5d449ea8-12dd-4596-a6e1-e4837946acb6",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
+				"5d449ea8-12dd-4596-a6e1-e4837946acb6",
 				AttributeBonusHandler::getAttackSpeedWithRangedWeapon);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "e37a2257-8511-4ffb-a5dd-913b591dd520",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
+				"e37a2257-8511-4ffb-a5dd-913b591dd520",
 				AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
-		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "44984187-74c8-4927-be18-1e187ca9babe",
+		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"44984187-74c8-4927-be18-1e187ca9babe",
 				AttributeBonusHandler::getCritChanceIfNotHungry);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "7bd1d9fb-4a20-41f3-89df-7cb42e849c5f",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
+				"7bd1d9fb-4a20-41f3-89df-7cb42e849c5f",
 				AttributeBonusHandler::getAttackWithEnchantedWeapon);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, "9c36d4dc-06e3-4f42-b8e6-abb0fb6b344c",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION,
+				"9c36d4dc-06e3-4f42-b8e6-abb0fb6b344c",
 				AttributeBonusHandler::getLifePerHitUnderPotionEffect);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "77353761-61e2-4f3c-b0e4-2abef4b75d76",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"77353761-61e2-4f3c-b0e4-2abef4b75d76",
 				AttributeBonusHandler::getMaximumLifePerGemInHelmet);
-		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "636b118d-478b-4c4e-9785-b6e7da876828",
+		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"636b118d-478b-4c4e-9785-b6e7da876828",
 				AttributeBonusHandler::getCritChancePerGemInWeapon);
-		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_DAMAGE.get(), Operation.MULTIPLY_BASE, "3051c828-7281-458c-b6fc-df9d93b31d30",
+		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_DAMAGE.get(), Operation.MULTIPLY_BASE,
+				"3051c828-7281-458c-b6fc-df9d93b31d30",
 				AttributeBonusHandler::getCritDamagePerGemInWeapon);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION, "6732aed2-1948-4e86-a83c-aad617cd4387",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION,
+				"6732aed2-1948-4e86-a83c-aad617cd4387",
 				AttributeBonusHandler::getLifeRegenerationPerGemInHelmet);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE, "b983bec3-a049-49d7-855e-3025b283c7d2",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
+				"b983bec3-a049-49d7-855e-3025b283c7d2",
 				AttributeBonusHandler::getAttackSpeedWithShield);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION, "d86d8efb-4539-46f3-b157-672b2e1241d6",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION,
+				"d86d8efb-4539-46f3-b157-672b2e1241d6",
 				AttributeBonusHandler::getLifeRegenerationWithShield);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "f11460ca-56f9-4cff-98ea-791ed27f6639",
 				AttributeBonusHandler::getBonusChestplateArmor);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION, "6dccce60-76e9-4ca0-8497-8352ba26620d",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION,
+				"6dccce60-76e9-4ca0-8497-8352ba26620d",
 				AttributeBonusHandler::getLifeOnBlockPerShieldEnchantment);
-		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE, "7ea18323-13e4-43ee-bb30-decfdc1b1299",
+		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"7ea18323-13e4-43ee-bb30-decfdc1b1299",
 				AttributeBonusHandler::getBlockChancePerShieldEnchantment);
-		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE, "629ecea2-51b4-415a-80ff-4137a0f0dce1",
+		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"629ecea2-51b4-415a-80ff-4137a0f0dce1",
 				AttributeBonusHandler::getBlockChanceIfNotHungry);
-		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE, "fb0934db-cdbb-4fa6-bf4f-d3c0c12f50be",
+		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"fb0934db-cdbb-4fa6-bf4f-d3c0c12f50be",
 				AttributeBonusHandler::getBlockChancePerSatisfiedHunger);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION, "793d56a0-7d0c-4bec-a328-65d6d681ec44",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION,
+				"793d56a0-7d0c-4bec-a328-65d6d681ec44",
 				AttributeBonusHandler::getLifeOnBlockIfNotHungry);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "e529b2e9-2170-430c-b77d-cfe829f66c69",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"e529b2e9-2170-430c-b77d-cfe829f66c69",
 				AttributeBonusHandler::getMaximumLifeIfNotHungry);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "c5fae151-36ee-4f93-a917-500b524587ec",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"c5fae151-36ee-4f93-a917-500b524587ec",
 				AttributeBonusHandler::getMaximumLifePerEquippedJewelry);
-		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.MULTIPLY_BASE, "7a6b2991-006d-4858-8369-185169fc72a4",
+		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.MULTIPLY_BASE,
+				"7a6b2991-006d-4858-8369-185169fc72a4",
 				AttributeBonusHandler::getAttackSpeedIfWounded);
-		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE, "f752700c-d928-40c2-8f53-870e89669fc4",
+		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
+				"f752700c-d928-40c2-8f53-870e89669fc4",
 				AttributeBonusHandler::getCritChanceIfWounded);
-		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION, "40b4ee8a-0547-47dd-838b-022f9fd67428",
+		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION,
+				"40b4ee8a-0547-47dd-838b-022f9fd67428",
 				AttributeBonusHandler::getLifePerHitIfWounded);
-		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION, "b9d32a75-969c-4261-8d3e-91bc87fcffe0",
+		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
+				"b9d32a75-969c-4261-8d3e-91bc87fcffe0",
 				AttributeBonusHandler::getMaximumLifePerArrowInQuiver);
 		applyDynamicAttributeBonus(player, Attributes.LUCK, Operation.ADDITION, "f1d6e303-1682-4e13-9548-cde588b4e306",
 				AttributeBonusHandler::getLuckWhileFishing);
 	}
 
-	private static void applyDynamicAttributeBonus(ServerPlayer player, Attribute attribute, Operation operation, String id,
-			Function<ServerPlayer, Double> function) {
+	private static void applyDynamicAttributeBonus(ServerPlayer player, Attribute attribute, Operation operation,
+			String id, Function<ServerPlayer, Double> function) {
 		double bonus = function.apply(player);
 		UUID modifierId = UUID.fromString(id);
 		AttributeInstance playerAttribute = player.getAttribute(attribute);
+		if (playerAttribute == null)
+			return;
 		AttributeModifier oldModifier = playerAttribute.getModifier(modifierId);
 		if (oldModifier != null) {
-			if (oldModifier.getAmount() == bonus) return;
+			if (oldModifier.getAmount() == bonus)
+				return;
 			playerAttribute.removeModifier(modifierId);
 		}
 		if (attribute == Attributes.MAX_HEALTH) {
-			playerAttribute.addPermanentModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", bonus, operation));
+			playerAttribute.addPermanentModifier(new AttributeModifier(modifierId, "DynamicBonus", bonus, operation));
 			player.setHealth(player.getHealth());
 		} else {
-			playerAttribute.addTransientModifier(new AttributeModifier(modifierId, "Skill Tree Bonus", bonus, operation));
+			playerAttribute.addTransientModifier(new AttributeModifier(modifierId, "DynamicBonus", bonus, operation));
 		}
 	}
 
@@ -317,12 +363,14 @@ public class AttributeBonusHandler {
 				bootsArmor.addAndGet(modifier.getAmount());
 			}
 		});
-		if (bootsArmor.get() == 0) return 0;
+		if (bootsArmor.get() == 0)
+			return 0;
 		return bootsArmor.doubleValue() * maximumLifePerBootsArmor;
 	}
 
 	private static double getMaximumLifePerSatisfiedHunger(ServerPlayer player) {
-		var maximumLifePerSatisfiedHunger = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get());
+		var maximumLifePerSatisfiedHunger = player
+				.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get());
 		var satisfiedHunger = player.getFoodData().getFoodLevel();
 		return satisfiedHunger * maximumLifePerSatisfiedHunger;
 	}
@@ -334,13 +382,15 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getAttackSpeedUnderPotionEffect(ServerPlayer player) {
-		var attackSpeedUnderPotionEffect = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get()) - 1;
+		var attackSpeedUnderPotionEffect = player
+				.getAttributeValue(PSTAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get()) - 1;
 		var hasPotionEffect = !player.getActiveEffects().isEmpty();
 		return hasPotionEffect ? attackSpeedUnderPotionEffect : 0;
 	}
 
 	private static double getMaximumLifeUnderPotionEffect(ServerPlayer player) {
-		var maximumLifeUnderPotionEffect = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get());
+		var maximumLifeUnderPotionEffect = player
+				.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get());
 		var hasPotionEffect = !player.getActiveEffects().isEmpty();
 		return hasPotionEffect ? maximumLifeUnderPotionEffect : 0;
 	}
@@ -352,17 +402,20 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getMaximumLifeWithEnchantedItem(ServerPlayer player) {
-		var maximumLifeWithEnchantedItem = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get());
+		var maximumLifeWithEnchantedItem = player
+				.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get());
 		for (var slot : EquipmentSlot.values()) {
 			var isItemEnchanted = player.getItemBySlot(slot).isEnchanted();
-			if (isItemEnchanted) return maximumLifeWithEnchantedItem;
+			if (isItemEnchanted)
+				return maximumLifeWithEnchantedItem;
 		}
 		return 0D;
 	}
 
 	private static double getArmorWithEnchantedShield(ServerPlayer player) {
 		var offhandItem = player.getOffhandItem();
-		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) return 0D;
+		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted())
+			return 0D;
 		var armorWithEnchantedShield = player.getAttributeValue(PSTAttributes.ARMOR_WITH_ENCHANTED_SHIELD.get());
 		return armorWithEnchantedShield;
 	}
@@ -372,38 +425,44 @@ public class AttributeBonusHandler {
 		var enchantmentCount = 0;
 		for (var slot : EquipmentSlot.values()) {
 			var itemInSlot = player.getItemBySlot(slot);
-			if (!itemInSlot.isEnchanted()) continue;
+			if (!itemInSlot.isEnchanted())
+				continue;
 			enchantmentCount += itemInSlot.getAllEnchantments().size();
 		}
 		return maximumLifePerEnchantment * enchantmentCount;
 	}
 
 	private static double getArmorPerChestplateEnchantment(ServerPlayer player) {
-		var armorPerChestplateEnchantment = player.getAttributeValue(PSTAttributes.ARMOR_PER_CHESTPLATE_ENCHANTMENT.get());
+		var armorPerChestplateEnchantment = player
+				.getAttributeValue(PSTAttributes.ARMOR_PER_CHESTPLATE_ENCHANTMENT.get());
 		var chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
 		var enchantmentCount = chestplate.getAllEnchantments().size();
 		return armorPerChestplateEnchantment * enchantmentCount;
 	}
 
 	private static double getMaximumLifePerArmorEnchantment(ServerPlayer player) {
-		var maximumLifePerArmorEnchantment = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get());
+		var maximumLifePerArmorEnchantment = player
+				.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get());
 		var enchantmentCount = 0;
 		for (var slot = 0; slot < 4; slot++) {
 			var itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
-			if (!itemInSlot.isEnchanted()) continue;
+			if (!itemInSlot.isEnchanted())
+				continue;
 			enchantmentCount += itemInSlot.getAllEnchantments().size();
 		}
 		return maximumLifePerArmorEnchantment * enchantmentCount;
 	}
 
 	private static double getAttackSpeedWithGemInWeapon(ServerPlayer player) {
-		if (!GemHelper.hasGem(player.getMainHandItem(), 0)) return 0;
+		if (!GemHelper.hasGem(player.getMainHandItem(), 0))
+			return 0;
 		return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_GEM_IN_WEAPON.get()) - 1;
 	}
 
 	private static double getBlockChanceWithEnchantedShield(ServerPlayer player) {
 		var offhandItem = player.getOffhandItem();
-		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) return 0D;
+		if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted())
+			return 0D;
 		return player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get()) - 1;
 	}
 
@@ -427,17 +486,21 @@ public class AttributeBonusHandler {
 
 	private static double getAttackSpeedWithRangedWeapon(ServerPlayer player) {
 		var hasRangedWeapon = ItemHelper.isRangedWeapon(player.getMainHandItem());
-		if (!hasRangedWeapon) return 0D;
+		if (!hasRangedWeapon)
+			return 0D;
 		var attackSpeedWithBow = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get()) - 1;
 		return attackSpeedWithBow;
 	}
 
 	private static double getAttackSpeedPerGemInWeapon(ServerPlayer player) {
 		var mainHandItem = player.getMainHandItem();
-		if (!ItemHelper.isWeapon(mainHandItem)) return 0D;
+		if (!ItemHelper.isWeapon(mainHandItem))
+			return 0D;
 		var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
-		if (gemstonesInWeapon == 0) return 0D;
-		var attackSpeedPerGemInWeapon = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_PER_GEM_IN_WEAPON.get()) - 1;
+		if (gemstonesInWeapon == 0)
+			return 0D;
+		var attackSpeedPerGemInWeapon = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_PER_GEM_IN_WEAPON.get())
+				- 1;
 		return attackSpeedPerGemInWeapon * gemstonesInWeapon;
 	}
 
@@ -468,12 +531,14 @@ public class AttributeBonusHandler {
 		if (!ItemHelper.isWeapon(mainHandItem) || !mainHandItem.isEnchanted()) {
 			return 0D;
 		}
-		var attackWithEnchantedWeapon = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get()) - 1;
+		var attackWithEnchantedWeapon = player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get())
+				- 1;
 		return attackWithEnchantedWeapon;
 	}
 
 	private static double getLifePerHitUnderPotionEffect(ServerPlayer player) {
-		var lifePerHitUnderPotionEffect = player.getAttributeValue(PSTAttributes.LIFE_PER_HIT_UNDER_POTION_EFFECT.get());
+		var lifePerHitUnderPotionEffect = player
+				.getAttributeValue(PSTAttributes.LIFE_PER_HIT_UNDER_POTION_EFFECT.get());
 		var hasPotionEffect = !player.getActiveEffects().isEmpty();
 		return hasPotionEffect ? lifePerHitUnderPotionEffect : 0;
 	}
@@ -492,7 +557,8 @@ public class AttributeBonusHandler {
 	}
 
 	private static double getLifeRegenerationPerGemInHelmet(ServerPlayer player) {
-		var lifeRegenerationPerGemInHelmet = player.getAttributeValue(PSTAttributes.LIFE_REGENERATION_PER_GEM_IN_HELMET.get());
+		var lifeRegenerationPerGemInHelmet = player
+				.getAttributeValue(PSTAttributes.LIFE_REGENERATION_PER_GEM_IN_HELMET.get());
 		var getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
 		return lifeRegenerationPerGemInHelmet * getmstonesInHelmet;
 	}
@@ -542,86 +608,103 @@ public class AttributeBonusHandler {
 		if (enchantmentsCount == 0) {
 			return 0D;
 		}
-		var lifeOnBlockPerShieldEnchantment = player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT.get());
+		var lifeOnBlockPerShieldEnchantment = player
+				.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT.get());
 		return lifeOnBlockPerShieldEnchantment * enchantmentsCount;
 	}
 
 	private static double getBlockChancePerShieldEnchantment(ServerPlayer player) {
 		var offhandItem = player.getOffhandItem();
-		if (!ItemHelper.isShield(offhandItem)) return 0D;
+		if (!ItemHelper.isShield(offhandItem))
+			return 0D;
 		int enchantments = offhandItem.getAllEnchantments().size();
-		if (enchantments == 0) return 0D;
-		var blockChancePerShieldEnchantment = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get()) - 1;
+		if (enchantments == 0)
+			return 0D;
+		var blockChancePerShieldEnchantment = player
+				.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get()) - 1;
 		return blockChancePerShieldEnchantment * enchantments;
 	}
 
 	private static double getBlockChanceIfNotHungry(ServerPlayer player) {
 		var isHungry = player.getFoodData().getFoodLevel() < 10;
-		if (isHungry) return 0D;
+		if (isHungry)
+			return 0D;
 		var blockChanceIfNotHungry = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_IF_NOT_HUNGRY.get()) - 1;
 		return blockChanceIfNotHungry;
 	}
 
 	private static double getLifeOnBlockIfNotHungry(ServerPlayer player) {
 		var isHungry = player.getFoodData().getFoodLevel() < 10;
-		if (isHungry) return 0D;
+		if (isHungry)
+			return 0D;
 		var lifeOnBlockIfNotHungry = player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get());
 		return lifeOnBlockIfNotHungry;
 	}
 
 	private static double getMaximumLifeIfNotHungry(ServerPlayer player) {
 		var isHungry = player.getFoodData().getFoodLevel() < 10;
-		if (isHungry) return 0D;
+		if (isHungry)
+			return 0D;
 		var maximumLifeIfNotHungry = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get());
 		return maximumLifeIfNotHungry;
 	}
 
 	private static double getBlockChancePerSatisfiedHunger(ServerPlayer player) {
 		var satisfiedHunger = player.getFoodData().getFoodLevel();
-		if (satisfiedHunger == 0) return 0D;
-		var blockChancePerSatisfiedHunger = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get()) - 1;
+		if (satisfiedHunger == 0)
+			return 0D;
+		var blockChancePerSatisfiedHunger = player
+				.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get()) - 1;
 		return satisfiedHunger * blockChancePerSatisfiedHunger;
 	}
 
-	private static double getMaximumLifePerEquippedJewelry(ServerPlayer player) {
-		int jewelry = CuriosApi.getCuriosHelper().findCurios(player, "ring", "necklace").size();
-		if (jewelry == 0) return 0D;
-		return jewelry * player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_EQUIPPED_JEWELRY.get());
+	private static double getMaximumLifePerEquippedJewelry(@Nonnull ServerPlayer player) {
+		int jewelryCount = CuriosApi.getCuriosHelper().findCurios(player, "ring", "necklace").size();
+		if (jewelryCount == 0)
+			return 0;
+		return jewelryCount * player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_EQUIPPED_JEWELRY.get());
 	}
 
 	private static double getAttackSpeedIfWounded(ServerPlayer player) {
-		if (player.getHealth() >= player.getMaxHealth() / 2) return 0D;
+		if (player.getHealth() >= player.getMaxHealth() / 2)
+			return 0D;
 		return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_IF_WOUNDED.get()) - 1;
 	}
 
 	private static double getCritChanceIfWounded(ServerPlayer player) {
-		if (player.getHealth() >= player.getMaxHealth() / 2) return 0D;
+		if (player.getHealth() >= player.getMaxHealth() / 2)
+			return 0D;
 		return player.getAttributeValue(PSTAttributes.CRIT_CHANCE_IF_WOUNDED.get()) - 1;
 	}
 
 	private static double getLifePerHitIfWounded(ServerPlayer player) {
-		if (player.getHealth() >= player.getMaxHealth() / 2) return 0D;
+		if (player.getHealth() >= player.getMaxHealth() / 2)
+			return 0D;
 		return player.getAttributeValue(PSTAttributes.LIFE_PER_HIT_IF_WOUNDED.get());
 	}
 
-	private static double getMaximumLifePerArrowInQuiver(ServerPlayer player) {
+	private static double getMaximumLifePerArrowInQuiver(@Nonnull ServerPlayer player) {
 		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(player, ItemHelper::isQuiver);
-		if (!quiverCurio.isPresent()) return 0D;
+		if (!quiverCurio.isPresent())
+			return 0;
 		double lifeBonus = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get());
-		if (lifeBonus == 0) return 0D;
+		if (lifeBonus == 0)
+			return 0;
 		ItemStack quiver = quiverCurio.map(SlotResult::stack).orElse(ItemStack.EMPTY);
 		return QuiverItem.getArrowsCount(quiver) * lifeBonus;
 	}
 
 	private static double getLuckWhileFishing(ServerPlayer player) {
-		if (player.fishing == null) return 0D;
+		if (player.fishing == null)
+			return 0D;
 		return player.getAttributeValue(PSTAttributes.LUCK_WHILE_FISHING.get());
 	}
 
 	@SubscribeEvent
 	public static void setCraftedArmorBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isArmor(stack)) return;
+		if (!ItemHelper.isArmor(stack))
+			return;
 		double defenceBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_DEFENCE.get()) - 1;
 		if (defenceBonus > 0) {
 			ItemHelper.setBonus(stack, ItemHelper.DEFENCE, defenceBonus);
@@ -630,11 +713,13 @@ public class AttributeBonusHandler {
 		if (lifeBonus > 0) {
 			ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
 		}
-		double toughnessBonus = event.getEntity().getAttributeValue(PSTAttributes.CHANCE_TO_CRAFT_TOUGHER_ARMOR.get()) - 1;
+		double toughnessBonus = event.getEntity().getAttributeValue(PSTAttributes.CHANCE_TO_CRAFT_TOUGHER_ARMOR.get())
+				- 1;
 		if (toughnessBonus > 0) {
 			double toughness = Math.floor(toughnessBonus);
 			toughnessBonus -= toughness;
-			if (event.getEntity().getRandom().nextFloat() < toughnessBonus) toughness++;
+			if (event.getEntity().getRandom().nextFloat() < toughnessBonus)
+				toughness++;
 			ItemHelper.setBonus(stack, ItemHelper.TOUGHNESS, toughness);
 		}
 		double evasionBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_ARMOR_EVASION.get()) - 1;
@@ -659,7 +744,8 @@ public class AttributeBonusHandler {
 			if (bootsSockets > 0) {
 				ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
 			}
-			double bootsMovementSpeed = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get()) - 1;
+			double bootsMovementSpeed = event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get()) - 1;
 			if (bootsMovementSpeed > 0) {
 				ItemHelper.setBonus(stack, ItemHelper.MOVEMENT_SPEED, bootsMovementSpeed);
 			}
@@ -669,7 +755,8 @@ public class AttributeBonusHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void applyArmorBonuses(ItemAttributeModifierEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (!ItemHelper.isArmor(stack)) return;
+		if (!ItemHelper.isArmor(stack))
+			return;
 		if (ItemHelper.hasBonus(stack, ItemHelper.DEFENCE)) {
 			double bonus = ItemHelper.getBonus(stack, ItemHelper.DEFENCE);
 			applyBaseModifierBonus(event, Attributes.ARMOR, d -> bonus * d);
@@ -681,7 +768,8 @@ public class AttributeBonusHandler {
 		applyArmorBonus(event, ItemHelper.EVASION, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE);
 	}
 
-	private static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute, Function<Double, Double> func) {
+	private static void applyBaseModifierBonus(ItemAttributeModifierEvent event, Attribute attribute,
+			Function<Double, Double> func) {
 		double baseValue = 0D;
 		for (AttributeModifier modifier : event.getOriginalModifiers().get(attribute)) {
 			if (modifier.getOperation() == Operation.ADDITION) {
@@ -696,13 +784,14 @@ public class AttributeBonusHandler {
 		}
 	}
 
-	private static void applyArmorBonus(ItemAttributeModifierEvent event, String type, Attribute attribute, Operation operation) {
+	private static void applyArmorBonus(ItemAttributeModifierEvent event, String type, Attribute attribute,
+			Operation operation) {
 		// formatter:off
 		String[] modifierIds = new String[] {
-			"2493d298-ea9f-46b9-8769-4362dbada80e",
-			"e78c1b0b-9109-413d-9351-da90388496e6",
-			"58562319-48ee-43f4-8cc4-9e7b011d6773",
-			"4a9913ec-0bc5-42d3-9922-fc35684bd67f"
+				"2493d298-ea9f-46b9-8769-4362dbada80e",
+				"e78c1b0b-9109-413d-9351-da90388496e6",
+				"58562319-48ee-43f4-8cc4-9e7b011d6773",
+				"4a9913ec-0bc5-42d3-9922-fc35684bd67f"
 		};
 		// formatter:on
 		EquipmentSlot slot = Player.getEquipmentSlotForItem(event.getItemStack());
@@ -717,60 +806,79 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedRingsBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isRing(stack)) return;
-		double critDamageBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_RINGS_CRITICAL_DAMAGE.get()) - 1;
-		if (critDamageBonus > 0) ItemHelper.setBonus(stack, ItemHelper.CRIT_DAMAGE, critDamageBonus);
+		if (!ItemHelper.isRing(stack))
+			return;
+		double critDamageBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_RINGS_CRITICAL_DAMAGE.get())
+				- 1;
+		if (critDamageBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.CRIT_DAMAGE, critDamageBonus);
 	}
 
 	@SubscribeEvent
 	public static void setCraftedNecklacesBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isNecklace(stack)) return;
+		if (!ItemHelper.isNecklace(stack))
+			return;
 		double lifeBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_NECKLACES_MAXIMUM_LIFE.get());
-		if (lifeBonus > 0) ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
+		if (lifeBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
 	}
 
 	@SubscribeEvent
 	public static void setCraftedQuiverBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isQuiver(stack)) return;
+		if (!ItemHelper.isQuiver(stack))
+			return;
 		double lifeBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_MAXIMUM_LIFE.get());
-		if (lifeBonus > 0) ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
+		if (lifeBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
 		double capacityBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CAPACITY.get()) - 1;
-		if (capacityBonus > 0) ItemHelper.setBonus(stack, ItemHelper.CAPACITY, capacityBonus);
-		double igniteChanceBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_IGNITE.get()) - 1;
-		if (igniteChanceBonus > 0) ItemHelper.setBonus(stack, ItemHelper.IGNITE_CHANCE, igniteChanceBonus);
-		double damageAgainstBurningBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get()) - 1;
-		if (damageAgainstBurningBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DAMAGE_AGAINST_BURNING, damageAgainstBurningBonus);
-		double chanceToRetrieveArrows = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get()) - 1;
-		if (chanceToRetrieveArrows > 0) ItemHelper.setBonus(stack, ItemHelper.CHANCE_TO_RETRIEVE_ARROWS, chanceToRetrieveArrows);
+		if (capacityBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.CAPACITY, capacityBonus);
+		double igniteChanceBonus = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_IGNITE.get()) - 1;
+		if (igniteChanceBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.IGNITE_CHANCE, igniteChanceBonus);
+		double damageAgainstBurningBonus = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get()) - 1;
+		if (damageAgainstBurningBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.DAMAGE_AGAINST_BURNING, damageAgainstBurningBonus);
+		double chanceToRetrieveArrows = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get()) - 1;
+		if (chanceToRetrieveArrows > 0)
+			ItemHelper.setBonus(stack, ItemHelper.CHANCE_TO_RETRIEVE_ARROWS, chanceToRetrieveArrows);
 	}
 
 	@SubscribeEvent
 	public static void applyCraftedCuriosBonuses(CurioAttributeModifierEvent event) {
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.CRIT_DAMAGE)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.CRIT_DAMAGE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus,
+					Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.CRIT_DAMAGE.get(), modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.ADDITION);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus,
+					Operation.ADDITION);
 			event.addModifier(Attributes.MAX_HEALTH, modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.IGNITE_CHANCE)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.IGNITE_CHANCE);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus,
+					Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.CHANCE_TO_IGNITE.get(), modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.DAMAGE_AGAINST_BURNING)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.DAMAGE_AGAINST_BURNING);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus,
+					Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.DAMAGE_AGAINST_BURNING.get(), modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.CHANCE_TO_RETRIEVE_ARROWS)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.CHANCE_TO_RETRIEVE_ARROWS);
-			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus, Operation.MULTIPLY_BASE);
+			AttributeModifier modifier = new AttributeModifier(event.getUuid(), "CraftedCurioBonus", bonus,
+					Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), modifier);
 		}
 	}
@@ -778,35 +886,44 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedShieldBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isShield(stack)) return;
+		if (!ItemHelper.isShield(stack))
+			return;
 		double armorBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_SHIELDS_ARMOR.get());
-		if (armorBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DEFENCE, armorBonus);
+		if (armorBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.DEFENCE, armorBonus);
 		double lifeBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_SHIELDS_MAXIMUM_LIFE.get());
-		if (lifeBonus > 0) ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
+		if (lifeBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.MAXIMUM_LIFE, lifeBonus);
 		double blockBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_SHIELDS_BLOCK_CHANCE.get()) - 1;
-		if (blockBonus > 0) ItemHelper.setBonus(stack, ItemHelper.BLOCK_CHANCE, blockBonus);
+		if (blockBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.BLOCK_CHANCE, blockBonus);
 	}
 
 	@SubscribeEvent
 	public static void applyShieldAttributeBonuses(ItemAttributeModifierEvent event) {
-		if (!ItemHelper.isShield(event.getItemStack())) return;
-		if (event.getSlotType() != EquipmentSlot.OFFHAND) return;
+		if (!ItemHelper.isShield(event.getItemStack()))
+			return;
+		if (event.getSlotType() != EquipmentSlot.OFFHAND)
+			return;
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.DEFENCE)) {
 			double armorBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.DEFENCE);
 			UUID modifierId = UUID.fromString("7174b3ef-e310-4b60-9535-eeddc741fcf5");
-			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", armorBonus, Operation.ADDITION);
+			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", armorBonus,
+					Operation.ADDITION);
 			event.addModifier(Attributes.ARMOR, modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE)) {
 			double lifeBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.MAXIMUM_LIFE);
 			UUID modifierId = UUID.fromString("9f696045-500c-437d-8c20-0560271e0a45");
-			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", lifeBonus, Operation.ADDITION);
+			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", lifeBonus,
+					Operation.ADDITION);
 			event.addModifier(Attributes.MAX_HEALTH, modifier);
 		}
 		if (ItemHelper.hasBonus(event.getItemStack(), ItemHelper.BLOCK_CHANCE)) {
 			double blockBonus = ItemHelper.getBonus(event.getItemStack(), ItemHelper.BLOCK_CHANCE);
 			UUID modifierId = UUID.fromString("dd4374cc-3783-4953-9413-080d0b0d9e87");
-			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", blockBonus, Operation.MULTIPLY_BASE);
+			AttributeModifier modifier = new AttributeModifier(modifierId, "CraftedShieldBonus", blockBonus,
+					Operation.MULTIPLY_BASE);
 			event.addModifier(PSTAttributes.BLOCK_CHANCE.get(), modifier);
 		}
 	}
@@ -814,42 +931,67 @@ public class AttributeBonusHandler {
 	@SubscribeEvent
 	public static void setCraftedWeaponBonuses(ItemCraftedEvent event) {
 		ItemStack stack = event.getCrafting();
-		if (!ItemHelper.isWeapon(stack)) return;
-		double igniteChanceBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_CHANCE_TO_IGNITE.get()) - 1;
-		if (igniteChanceBonus > 0) ItemHelper.setBonus(stack, ItemHelper.IGNITE_CHANCE, igniteChanceBonus);
-		double damageAgainstBurningBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get()) - 1;
-		if (damageAgainstBurningBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DAMAGE_AGAINST_BURNING, damageAgainstBurningBonus);
+		if (!ItemHelper.isWeapon(stack))
+			return;
+		double igniteChanceBonus = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_WEAPON_CHANCE_TO_IGNITE.get()) - 1;
+		if (igniteChanceBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.IGNITE_CHANCE, igniteChanceBonus);
+		double damageAgainstBurningBonus = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get()) - 1;
+		if (damageAgainstBurningBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.DAMAGE_AGAINST_BURNING, damageAgainstBurningBonus);
 		double lifePerHitBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get());
-		if (lifePerHitBonus > 0) ItemHelper.setBonus(stack, ItemHelper.LIFE_PER_HIT, lifePerHitBonus);
-		double doubleLootBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE.get()) - 1;
-		if (doubleLootBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DOUBLE_LOOT, doubleLootBonus);
+		if (lifePerHitBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.LIFE_PER_HIT, lifePerHitBonus);
+		double doubleLootBonus = event.getEntity()
+				.getAttributeValue(PSTAttributes.CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE.get()) - 1;
+		if (doubleLootBonus > 0)
+			ItemHelper.setBonus(stack, ItemHelper.DOUBLE_LOOT, doubleLootBonus);
 		if (ItemHelper.isRangedWeapon(stack)) {
-			double attackSpeedBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_RANGED_WEAPON_ATTACK_SPEED.get()) - 1;
-			attackSpeedBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get()) - 1;
-			if (attackSpeedBonus > 0) ItemHelper.setBonus(stack, ItemHelper.ATTACK_SPEED, attackSpeedBonus);
-			int additionalSockets = (int) event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_RANGED_WEAPON_SOCKETS.get());
-			if (additionalSockets > 0) ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
+			double attackSpeedBonus = event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_RANGED_WEAPON_ATTACK_SPEED.get()) - 1;
+			attackSpeedBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get())
+					- 1;
+			if (attackSpeedBonus > 0)
+				ItemHelper.setBonus(stack, ItemHelper.ATTACK_SPEED, attackSpeedBonus);
+			int additionalSockets = (int) event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_RANGED_WEAPON_SOCKETS.get());
+			if (additionalSockets > 0)
+				ItemHelper.setBonus(stack, ItemHelper.ADDITIONAL_SOCKETS, 1);
 		}
 		if (ItemHelper.isMeleeWeapon(stack)) {
-			double damageBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get());
-			if (damageBonus > 0) ItemHelper.setBonus(stack, ItemHelper.DAMAGE, damageBonus);
-			double attackSpeedBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_ATTACK_SPEED.get()) - 1;
-			attackSpeedBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get()) - 1;
-			if (attackSpeedBonus > 0) ItemHelper.setBonus(stack, ItemHelper.ATTACK_SPEED, attackSpeedBonus);
-			double critChanceBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_CRIT_CHANCE.get()) - 1;
-			if (ItemHelper.isAxe(stack)) critChanceBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_AXES_CRIT_CHANCE.get()) - 1;
-			if (critChanceBonus > 0) ItemHelper.setBonus(stack, ItemHelper.CRIT_CHANCE, critChanceBonus);
+			double damageBonus = event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get());
+			if (damageBonus > 0)
+				ItemHelper.setBonus(stack, ItemHelper.DAMAGE, damageBonus);
+			double attackSpeedBonus = event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_ATTACK_SPEED.get()) - 1;
+			attackSpeedBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get())
+					- 1;
+			if (attackSpeedBonus > 0)
+				ItemHelper.setBonus(stack, ItemHelper.ATTACK_SPEED, attackSpeedBonus);
+			double critChanceBonus = event.getEntity()
+					.getAttributeValue(PSTAttributes.CRAFTED_MELEE_WEAPON_CRIT_CHANCE.get()) - 1;
+			if (ItemHelper.isAxe(stack))
+				critChanceBonus += event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_AXES_CRIT_CHANCE.get())
+						- 1;
+			if (critChanceBonus > 0)
+				ItemHelper.setBonus(stack, ItemHelper.CRIT_CHANCE, critChanceBonus);
 		}
 	}
 
 	@SubscribeEvent
 	public static void applyCraftedWeaponAttributeBonuses(ItemAttributeModifierEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (!ItemHelper.isWeapon(stack)) return;
+		if (!ItemHelper.isWeapon(stack))
+			return;
 		if (ItemHelper.isRangedWeapon(stack)) {
-			if (event.getSlotType() != EquipmentSlot.MAINHAND && event.getSlotType() != EquipmentSlot.OFFHAND) return;
+			if (event.getSlotType() != EquipmentSlot.MAINHAND && event.getSlotType() != EquipmentSlot.OFFHAND)
+				return;
 		} else if (ItemHelper.isMeleeWeapon(stack)) {
-			if (event.getSlotType() != EquipmentSlot.MAINHAND) return;
+			if (event.getSlotType() != EquipmentSlot.MAINHAND)
+				return;
 		}
 		if (ItemHelper.isMeleeWeapon(stack)) {
 			if (ItemHelper.hasBonus(stack, ItemHelper.DAMAGE)) {
@@ -874,17 +1016,23 @@ public class AttributeBonusHandler {
 				double attackSpeedBonus = ItemHelper.getBonus(stack, ItemHelper.ATTACK_SPEED);
 				modifierAmount += attackSpeedBonus;
 			}
-			AttributeModifier modifier = new AttributeModifier(modifierId, "BaseAttackSpeed", modifierAmount, Operation.ADDITION);
+			AttributeModifier modifier = new AttributeModifier(modifierId, "BaseAttackSpeed", modifierAmount,
+					Operation.ADDITION);
 			event.addModifier(Attributes.ATTACK_SPEED, modifier);
 		}
-		applyCraftedWeaponBonus(event, ItemHelper.IGNITE_CHANCE, PSTAttributes.CHANCE_TO_IGNITE.get(), Operation.MULTIPLY_BASE);
-		applyCraftedWeaponBonus(event, ItemHelper.CRIT_CHANCE, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE);
-		applyCraftedWeaponBonus(event, ItemHelper.DAMAGE_AGAINST_BURNING, PSTAttributes.DAMAGE_AGAINST_BURNING.get(), Operation.MULTIPLY_BASE);
+		applyCraftedWeaponBonus(event, ItemHelper.IGNITE_CHANCE, PSTAttributes.CHANCE_TO_IGNITE.get(),
+				Operation.MULTIPLY_BASE);
+		applyCraftedWeaponBonus(event, ItemHelper.CRIT_CHANCE, PSTAttributes.CRIT_CHANCE.get(),
+				Operation.MULTIPLY_BASE);
+		applyCraftedWeaponBonus(event, ItemHelper.DAMAGE_AGAINST_BURNING, PSTAttributes.DAMAGE_AGAINST_BURNING.get(),
+				Operation.MULTIPLY_BASE);
 		applyCraftedWeaponBonus(event, ItemHelper.LIFE_PER_HIT, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION);
-		applyCraftedWeaponBonus(event, ItemHelper.DOUBLE_LOOT, PSTAttributes.DOUBLE_LOOT_CHANCE.get(), Operation.MULTIPLY_BASE);
+		applyCraftedWeaponBonus(event, ItemHelper.DOUBLE_LOOT, PSTAttributes.DOUBLE_LOOT_CHANCE.get(),
+				Operation.MULTIPLY_BASE);
 	}
 
-	private static void applyCraftedWeaponBonus(ItemAttributeModifierEvent event, String type, Attribute attribute, Operation operation) {
+	private static void applyCraftedWeaponBonus(ItemAttributeModifierEvent event, String type, Attribute attribute,
+			Operation operation) {
 		if (ItemHelper.hasBonus(event.getItemStack(), type)) {
 			double bonus = ItemHelper.getBonus(event.getItemStack(), type);
 			UUID modifierId = UUID.fromString("ad214d33-db04-4a52-8d66-06b3ad38d76b");
@@ -903,8 +1051,10 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyLifeRegenerationBonus(PlayerTickEvent event) {
-		if (event.phase == Phase.END || event.player.level.isClientSide) return;
-		if (event.player.getFoodData().getFoodLevel() == 0) return;
+		if (event.phase == Phase.END || event.player.level.isClientSide)
+			return;
+		if (event.player.getFoodData().getFoodLevel() == 0)
+			return;
 		float lifeRegeneration = (float) event.player.getAttributeValue(PSTAttributes.LIFE_REGENERATION.get());
 		if (event.player.getHealth() != event.player.getMaxHealth() && event.player.tickCount % 20 == 0) {
 			event.player.heal(lifeRegeneration);
@@ -914,9 +1064,11 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyEvasionBonus(LivingAttackEvent event) {
-		if (!(event.getEntity() instanceof Player player)) return;
+		if (!(event.getEntity() instanceof Player player))
+			return;
 		float evasion = (float) player.getAttributeValue(PSTAttributes.EVASION.get()) - 1;
-		if (evasion == 0) return;
+		if (evasion == 0)
+			return;
 		boolean canEvade = PlayerHelper.canEvadeDamage(event.getSource());
 		if (canEvade && player.getRandom().nextFloat() < evasion) {
 			player.level.playSound(null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
@@ -927,8 +1079,10 @@ public class AttributeBonusHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void applyLootDuplicationChanceBonus(LivingDropsEvent event) {
 		// shoudln't multiply player's loot
-		if (event.getEntity() instanceof Player) return;
-		if (!(event.getSource().getEntity() instanceof Player player)) return;
+		if (event.getEntity() instanceof Player)
+			return;
+		if (!(event.getSource().getEntity() instanceof Player player))
+			return;
 		double doubleLootChance = player.getAttributeValue(PSTAttributes.DOUBLE_LOOT_CHANCE.get()) - 1;
 		double tripleLootChance = player.getAttributeValue(PSTAttributes.TRIPLE_LOOT_CHANCE.get()) - 1;
 		if (player.getRandom().nextFloat() < doubleLootChance) {
@@ -945,28 +1099,33 @@ public class AttributeBonusHandler {
 	protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
 		List<ItemEntity> drops = new ArrayList<ItemEntity>();
 		event.getDrops().stream().map(ItemEntity::copy).forEach(drops::add);
-		if (event.getEntity() instanceof EquipmentContainer entity) drops.removeIf(entity::equipped);
+		if (event.getEntity() instanceof EquipmentContainer entity)
+			drops.removeIf(entity::equipped);
 		return drops;
 	}
 
 	@SubscribeEvent
 	public static void setCraftedFoodBonuses(ItemCraftedEvent event) {
-		if (!ItemHelper.isFood(event.getCrafting())) return;
+		if (!ItemHelper.isFood(event.getCrafting()))
+			return;
 		FoodHelper.setCraftedFoodBonuses(event.getCrafting(), event.getEntity());
 	}
 
 	@SubscribeEvent
 	public static void setCraftedFoodBonuses(ItemSmeltedEvent event) {
 		ItemStack craftedItem = event.getSmelting();
-		if (!ItemHelper.isFood(craftedItem)) return;
+		if (!ItemHelper.isFood(craftedItem))
+			return;
 		Player player = event.getEntity();
 		FoodHelper.setCraftedFoodBonuses(craftedItem, player);
 	}
 
 	@SubscribeEvent
 	public static void applyCraftedFoodBonuses(LivingEntityUseItemEvent.Finish event) {
-		if (!ItemHelper.isFood(event.getItem())) return;
-		if (!(event.getEntity() instanceof Player)) return;
+		if (!ItemHelper.isFood(event.getItem()))
+			return;
+		if (!(event.getEntity() instanceof Player))
+			return;
 		var player = (Player) event.getEntity();
 		var restoration = event.getItem().getFoodProperties(player).getNutrition();
 		if (FoodHelper.hasHealingBonus(event.getItem())) {
@@ -982,7 +1141,8 @@ public class AttributeBonusHandler {
 		if (FoodHelper.hasLifeRegenerationBonus(event.getItem())) {
 			var lifeRegenerationBonus = FoodHelper.getLifeRegenerationBonus(event.getItem());
 			var effectAmplifier = (int) (lifeRegenerationBonus * 100);
-			var lifeRegenerationEffect = new MobEffectInstance(PSTEffects.LIFE_REGENERATION_BONUS.get(), 20 * 60, effectAmplifier);
+			var lifeRegenerationEffect = new MobEffectInstance(PSTEffects.LIFE_REGENERATION_BONUS.get(), 20 * 60,
+					effectAmplifier);
 			player.addEffect(lifeRegenerationEffect);
 		}
 		if (FoodHelper.hasCritDamageBonus(event.getItem())) {
@@ -995,7 +1155,8 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void addFoodBonusesTooltips(ItemTooltipEvent event) {
-		if (!ItemHelper.isFood(event.getItemStack())) return;
+		if (!ItemHelper.isFood(event.getItemStack()))
+			return;
 		float restoration = event.getItemStack().getFoodProperties(event.getEntity()).getNutrition();
 		if (FoodHelper.hasRestorationBonus(event.getItemStack())) {
 			float restorationBonus = FoodHelper.getRestorationBonus(event.getItemStack());
@@ -1006,47 +1167,61 @@ public class AttributeBonusHandler {
 			String formatted = String.format("%.1f", healing);
 			formatted = formatted.replace(".0", "");
 			Component component = Component.literal(formatted).withStyle(ChatFormatting.BLUE);
-			event.getToolTip().add(Component.translatable("food.bonus.healing", component).withStyle(ChatFormatting.YELLOW));
+			event.getToolTip()
+					.add(Component.translatable("food.bonus.healing", component).withStyle(ChatFormatting.YELLOW));
 		}
 		if (FoodHelper.hasCritDamageBonus(event.getItemStack())) {
 			int critDamage = (int) (FoodHelper.getCritDamageBonus(event.getItemStack()) * restoration * 100);
 			Component component = Component.literal("+" + critDamage + "%").withStyle(ChatFormatting.BLUE);
-			event.getToolTip().add(Component.translatable("food.bonus.crit_damage", component).withStyle(ChatFormatting.YELLOW));
+			event.getToolTip()
+					.add(Component.translatable("food.bonus.crit_damage", component).withStyle(ChatFormatting.YELLOW));
 		}
 		if (FoodHelper.hasDamageBonus(event.getItemStack())) {
 			int damage = (int) (FoodHelper.getDamageBonus(event.getItemStack()) * restoration * 100);
 			Component component = Component.literal("+" + damage + "%").withStyle(ChatFormatting.BLUE);
-			event.getToolTip().add(Component.translatable("food.bonus.damage", component).withStyle(ChatFormatting.YELLOW));
+			event.getToolTip()
+					.add(Component.translatable("food.bonus.damage", component).withStyle(ChatFormatting.YELLOW));
 		}
 		if (FoodHelper.hasLifeRegenerationBonus(event.getItemStack())) {
 			float lifeRegeneration = FoodHelper.getLifeRegenerationBonus(event.getItemStack());
 			String formatted = String.format("%.1f", lifeRegeneration);
 			formatted = formatted.replace(".0", "");
 			Component component = Component.literal("+" + formatted).withStyle(ChatFormatting.BLUE);
-			event.getToolTip().add(Component.translatable("food.bonus.life_regeneration", component).withStyle(ChatFormatting.YELLOW));
+			event.getToolTip().add(
+					Component.translatable("food.bonus.life_regeneration", component).withStyle(ChatFormatting.YELLOW));
 		}
 	}
 
 	@SubscribeEvent
 	public static void applyBlockChanceBonus(LivingAttackEvent event) {
-		if (!(event.getEntity() instanceof Player)) return;
-		if (event.getAmount() <= 0) return;
-		if (event.getSource().isBypassArmor()) return;
-		if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) return;
+		if (!(event.getEntity() instanceof Player))
+			return;
+		if (event.getAmount() <= 0)
+			return;
+		if (event.getSource().isBypassArmor())
+			return;
+		if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0)
+			return;
 		var player = (Player) event.getEntity();
 		var offhandItem = player.getOffhandItem();
-		if (!ItemHelper.isShield(offhandItem)) return;
+		if (!ItemHelper.isShield(offhandItem))
+			return;
 		var blockChance = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE.get()) - 1;
-		if (player.getRandom().nextFloat() >= blockChance) return;
+		if (player.getRandom().nextFloat() >= blockChance)
+			return;
 		var shieldBlockEvent = ForgeHooks.onShieldBlock(player, event.getSource(), event.getAmount());
-		if (shieldBlockEvent.isCanceled()) return;
+		if (shieldBlockEvent.isCanceled())
+			return;
 		event.setCanceled(true);
 		player.level.broadcastEntityEvent(player, (byte) 29);
-		if (shieldBlockEvent.shieldTakesDamage()) PlayerHelper.hurtShield(player, offhandItem, event.getAmount());
-		if (event.getSource().isProjectile()) return;
+		if (shieldBlockEvent.shieldTakesDamage())
+			PlayerHelper.hurtShield(player, offhandItem, event.getAmount());
+		if (event.getSource().isProjectile())
+			return;
 		var attacker = event.getSource().getDirectEntity();
 		if (attacker instanceof LivingEntity livingAttacker) {
-			var blockUsingShieldMethod = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_6728_", LivingEntity.class);
+			var blockUsingShieldMethod = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_6728_",
+					LivingEntity.class);
 			try {
 				blockUsingShieldMethod.invoke(player, livingAttacker);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -1057,30 +1232,33 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyLifeOnBlockBonus(ShieldBlockEvent event) {
-		if (!(event.getEntity() instanceof Player player)) return;
-		if (player.getFoodData().getFoodLevel() == 0) return;
+		if (!(event.getEntity() instanceof Player player))
+			return;
+		if (player.getFoodData().getFoodLevel() == 0)
+			return;
 		float lifeOnBlock = (float) player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK.get());
-		if (lifeOnBlock == 0) return;
+		if (lifeOnBlock == 0)
+			return;
 		player.getFoodData().addExhaustion(lifeOnBlock / 5F);
 		player.heal(lifeOnBlock);
 	}
 
 	@SubscribeEvent
 	public static void applyPoisonedWeaponEffects(LivingHurtEvent event) {
-		var damageSource = event.getSource();
-		if (!(damageSource.getDirectEntity() instanceof Player)) return;
-		var player = (Player) damageSource.getDirectEntity();
+		if (!(event.getSource().getDirectEntity() instanceof Player player))
+			return;
 		var weapon = player.getMainHandItem();
-		if (!ItemHelper.hasPoisons(weapon)) return;
+		if (!ItemHelper.hasPoisons(weapon))
+			return;
 		var poisons = ItemHelper.getPoisons(weapon);
-		var target = event.getEntity();
-		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
+		poisons.stream().forEach(event.getEntity()::addEffect);
 	}
 
 	@SubscribeEvent
 	public static void applyPoisonedThrownTridentEffects(LivingHurtEvent event) {
 		var damageSource = event.getSource();
-		if (!(damageSource.getDirectEntity() instanceof ThrownTrident)) return;
+		if (!(damageSource.getDirectEntity() instanceof ThrownTrident))
+			return;
 		var trident = (ThrownTrident) damageSource.getDirectEntity();
 		var getPickupItemMethod = ObfuscationReflectionHelper.findMethod(AbstractArrow.class, "m_7941_");
 		var weapon = (ItemStack) null;
@@ -1089,7 +1267,8 @@ public class AttributeBonusHandler {
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		if (!ItemHelper.hasPoisons(weapon)) return;
+		if (!ItemHelper.hasPoisons(weapon))
+			return;
 		var poisons = ItemHelper.getPoisons(weapon);
 		var target = event.getEntity();
 		poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
@@ -1098,7 +1277,8 @@ public class AttributeBonusHandler {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void addPoisonedWeaponTooltips(ItemTooltipEvent event) {
 		ItemStack weapon = event.getItemStack();
-		if (!ItemHelper.hasPoisons(weapon)) return;
+		if (!ItemHelper.hasPoisons(weapon))
+			return;
 		event.getToolTip().add(Component.empty());
 		event.getToolTip().add(Component.translatable("weapon.poisoned").withStyle(ChatFormatting.DARK_PURPLE));
 		ItemHelper.getPoisons(weapon).stream().map(TooltipHelper::getEffectTooltip).forEach(event.getToolTip()::add);
@@ -1114,8 +1294,10 @@ public class AttributeBonusHandler {
 		} else if (directAttacker instanceof AbstractArrow && indirectAttacker instanceof Player) {
 			player = (Player) indirectAttacker;
 		}
-		if (player == null) return;
-		if (player.getFoodData().getFoodLevel() == 0) return;
+		if (player == null)
+			return;
+		if (player.getFoodData().getFoodLevel() == 0)
+			return;
 		double lifePerHit = player.getAttributeValue(PSTAttributes.LIFE_PER_HIT.get());
 		if (directAttacker instanceof AbstractArrow) {
 			lifePerHit += player.getAttributeValue(PSTAttributes.LIFE_PER_PROJECTILE_HIT.get());
@@ -1126,10 +1308,13 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyChanceToRetrieveArrowsBonus(LivingHurtEvent event) {
-		if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
-		if (!(event.getSource().getEntity() instanceof Player player)) return;
+		if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow))
+			return;
+		if (!(event.getSource().getEntity() instanceof Player player))
+			return;
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get()) - 1;
-		if (player.getRandom().nextFloat() >= chance) return;
+		if (player.getRandom().nextFloat() >= chance)
+			return;
 		LivingEntity target = event.getEntity();
 		CompoundTag targetData = target.getPersistentData();
 		ListTag stuckArrowsTag = targetData.getList("StuckArrows", new CompoundTag().getId());
@@ -1151,16 +1336,20 @@ public class AttributeBonusHandler {
 	public static void retrieveArrows(LivingDeathEvent event) {
 		LivingEntity entity = event.getEntity();
 		ListTag stuckArrowsTag = entity.getPersistentData().getList("StuckArrows", new CompoundTag().getId());
-		if (stuckArrowsTag.isEmpty()) return;
+		if (stuckArrowsTag.isEmpty())
+			return;
 		stuckArrowsTag.stream().map(CompoundTag.class::cast).map(ItemStack::of).forEach(entity::spawnAtLocation);
 	}
 
 	@SubscribeEvent
 	public static void setCraftedEquipmentBonuses(ItemCraftedEvent event) {
 		ItemStack craftedStack = event.getCrafting();
-		if (!ItemHelper.isEquipment(craftedStack)) return;
-		double durabilityBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_EQUIPMENT_DURABILITY.get()) - 1;
-		if (durabilityBonus == 0) return;
+		if (!ItemHelper.isEquipment(craftedStack))
+			return;
+		double durabilityBonus = event.getEntity().getAttributeValue(PSTAttributes.CRAFTED_EQUIPMENT_DURABILITY.get())
+				- 1;
+		if (durabilityBonus == 0)
+			return;
 		ItemHelper.setBonus(craftedStack, ItemHelper.DURABILITY, durabilityBonus);
 	}
 
@@ -1175,21 +1364,24 @@ public class AttributeBonusHandler {
 			sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
 		}
 		if (sockets > 0) {
-			Component additionalSocketTooltip = Component.translatable("gem.additional_socket_" + sockets).withStyle(ChatFormatting.YELLOW);
+			Component additionalSocketTooltip = Component.translatable("gem.additional_socket_" + sockets)
+					.withStyle(ChatFormatting.YELLOW);
 			event.getToolTip().add(1, additionalSocketTooltip);
 		}
 	}
 
 	@SubscribeEvent
 	public static void applyIncomingHealingBonus(LivingHealEvent event) {
-		if (!(event.getEntity() instanceof Player player)) return;
+		if (!(event.getEntity() instanceof Player player))
+			return;
 		float multiplier = (float) (player.getAttributeValue(PSTAttributes.INCOMING_HEALING.get()));
 		event.setAmount(event.getAmount() * multiplier);
 	}
 
 	@SubscribeEvent
 	public static void applyExperiencePerHourBonus(PlayerTickEvent event) {
-		if (event.player.level.isClientSide) return;
+		if (event.player.level.isClientSide)
+			return;
 		float bonus = (float) (event.player.getAttributeValue(PSTAttributes.EXPERIENCE_PER_HOUR.get()));
 		int frequency = Math.max((int) (1000 / bonus), 1);
 		if (event.player.tickCount % frequency == 0) {
@@ -1199,24 +1391,29 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyExperienceFromMobsBonus(LivingExperienceDropEvent event) {
-		if (event.getAttackingPlayer() == null) return;
+		if (event.getAttackingPlayer() == null)
+			return;
 		float bonus = (float) (event.getAttackingPlayer().getAttributeValue(PSTAttributes.EXPERIENCE_FROM_MOBS.get()));
 		event.setDroppedExperience((int) (event.getDroppedExperience() * bonus));
 	}
 
 	@SubscribeEvent
 	public static void applyExperienceFromOreBonus(BreakEvent event) {
-		if (!event.getState().is(Tags.Blocks.ORES)) return;
+		if (!event.getState().is(Tags.Blocks.ORES))
+			return;
 		float bonus = (float) (event.getPlayer().getAttributeValue(PSTAttributes.EXPERIENCE_FROM_ORE.get()));
 		event.setExpToDrop((int) (event.getExpToDrop() * bonus));
 	}
 
 	@SubscribeEvent
 	public static void applyStealthBonus(LivingChangeTargetEvent event) {
-		if (!(event.getNewTarget() instanceof Player player)) return;
+		if (!(event.getNewTarget() instanceof Player player))
+			return;
 		double stealth = player.getAttributeValue(PSTAttributes.STEALTH.get()) - 1;
-		if (stealth == 0) return;
-		if (event.getEntity().distanceTo(player) > event.getEntity().getAttributeValue(Attributes.FOLLOW_RANGE) * (1 - stealth)) {
+		if (stealth == 0)
+			return;
+		if (event.getEntity().distanceTo(player) > event.getEntity().getAttributeValue(Attributes.FOLLOW_RANGE)
+				* (1 - stealth)) {
 			event.setCanceled(true);
 		}
 	}
@@ -1225,26 +1422,33 @@ public class AttributeBonusHandler {
 	public static void applyFishingExperienceBonus(ItemFishedEvent event) {
 		Player player = event.getEntity();
 		double expBonus = player.getAttributeValue(PSTAttributes.EXPERIENCE_FROM_FISHING.get()) - 1;
-		if (expBonus == 0) return;
+		if (expBonus == 0)
+			return;
 		int exp = (int) ((player.getRandom().nextInt(6) + 1) * expBonus);
-		if (exp == 0) return;
-		ExperienceOrb expOrb = new ExperienceOrb(player.level, player.getX(), player.getY() + 0.5D, player.getZ() + 0.5D, exp);
+		if (exp == 0)
+			return;
+		ExperienceOrb expOrb = new ExperienceOrb(player.level, player.getX(), player.getY() + 0.5D,
+				player.getZ() + 0.5D, exp);
 		player.level.addFreshEntity(expOrb);
 	}
 
 	@SubscribeEvent
 	public static void applyChanceToIgnite(LivingHurtEvent event) {
-		if (!(event.getSource().getEntity() instanceof Player player)) return;
+		if (!(event.getSource().getEntity() instanceof Player player))
+			return;
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_IGNITE.get()) - 1;
-		if (player.getRandom().nextFloat() >= chance) return;
+		if (player.getRandom().nextFloat() >= chance)
+			return;
 		event.getEntity().setSecondsOnFire(5);
 	}
 
 	@SubscribeEvent
 	public static void applyChanceToExplodeEnemy(LivingHurtEvent event) {
-		if (!(event.getSource().getEntity() instanceof Player player)) return;
+		if (!(event.getSource().getEntity() instanceof Player player))
+			return;
 		double chance = player.getAttributeValue(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get()) - 1;
-		if (player.getRandom().nextFloat() >= chance) return;
+		if (player.getRandom().nextFloat() >= chance)
+			return;
 		LivingEntity target = event.getEntity();
 		target.level.explode(player, target.getX(), target.getEyeY(), target.getZ(), 2F, BlockInteraction.NONE);
 	}
@@ -1256,12 +1460,16 @@ public class AttributeBonusHandler {
 
 	@SubscribeEvent
 	public static void applyRepairEfficiencyBonus(AnvilUpdateEvent event) {
-		double repairEfficiency = event.getPlayer().getAttributeValue(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get()) - 1;
-		if (repairEfficiency == 0) return;
+		double repairEfficiency = event.getPlayer().getAttributeValue(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get())
+				- 1;
+		if (repairEfficiency == 0)
+			return;
 		ItemStack stack = event.getLeft();
-		if (!stack.isDamageableItem() || !stack.isDamaged()) return;
+		if (!stack.isDamageableItem() || !stack.isDamaged())
+			return;
 		ItemStack material = event.getRight();
-		if (!stack.getItem().isValidRepairItem(stack, material)) return;
+		if (!stack.getItem().isValidRepairItem(stack, material))
+			return;
 		ItemStack result = stack.copy();
 		int durabilityPerMaterial = (int) (result.getMaxDamage() * 12 * (1 + repairEfficiency) / 100);
 		int durabilityRestored = durabilityPerMaterial;
@@ -1288,44 +1496,48 @@ public class AttributeBonusHandler {
 
 	// Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
 
-//	@SubscribeEvent(priority = EventPriority.HIGHEST)
-//	public void mergeDualHandTooltips(ItemTooltipEvent event) {
-//		if (ModList.get().isLoaded("apotheosis")) return;
-//		ItemStack stack = event.getItemStack();
-//		List<Component> tooltip = event.getToolTip();
-//		int flags = stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags")
-//				: stack.getItem().getDefaultTooltipHideFlags(stack);
-//		int markIdx1 = -1, markIdx2 = -1;
-//		for (int i = 0; i < tooltip.size(); i++) {
-//			if (tooltip.get(i).getContents() instanceof LiteralContents contents) {
-//				if ("PST_REMOVE_MARKER".equals(contents.text())) {
-//					markIdx1 = i;
-//				}
-//				if ("PST_REMOVE_MARKER_2".equals(contents.text())) {
-//					markIdx2 = i;
-//					break;
-//				}
-//			}
-//		}
-//		if (markIdx1 == -1 || markIdx2 == -1) return;
-//		ListIterator<Component> iterator = tooltip.listIterator(markIdx1);
-//		for (int i = markIdx1; i < markIdx2 + 1; i++) {
-//			iterator.next();
-//			iterator.remove();
-//		}
-//		if ((flags & TooltipPart.MODIFIERS.getMask()) == 0) {
-//			mergeDualHandTooltips(event.getEntity(), stack, iterator::add, event.getFlags());
-//		}
-//	}
+	// @SubscribeEvent(priority = EventPriority.HIGHEST)
+	// public void mergeDualHandTooltips(ItemTooltipEvent event) {
+	// if (ModList.get().isLoaded("apotheosis")) return;
+	// ItemStack stack = event.getItemStack();
+	// List<Component> tooltip = event.getToolTip();
+	// int flags = stack.hasTag() && stack.getTag().contains("HideFlags", 99) ?
+	// stack.getTag().getInt("HideFlags")
+	// : stack.getItem().getDefaultTooltipHideFlags(stack);
+	// int markIdx1 = -1, markIdx2 = -1;
+	// for (int i = 0; i < tooltip.size(); i++) {
+	// if (tooltip.get(i).getContents() instanceof LiteralContents contents) {
+	// if ("PST_REMOVE_MARKER".equals(contents.text())) {
+	// markIdx1 = i;
+	// }
+	// if ("PST_REMOVE_MARKER_2".equals(contents.text())) {
+	// markIdx2 = i;
+	// break;
+	// }
+	// }
+	// }
+	// if (markIdx1 == -1 || markIdx2 == -1) return;
+	// ListIterator<Component> iterator = tooltip.listIterator(markIdx1);
+	// for (int i = markIdx1; i < markIdx2 + 1; i++) {
+	// iterator.next();
+	// iterator.remove();
+	// }
+	// if ((flags & TooltipPart.MODIFIERS.getMask()) == 0) {
+	// mergeDualHandTooltips(event.getEntity(), stack, iterator::add,
+	// event.getFlags());
+	// }
+	// }
 
-	private static void mergeDualHandTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, TooltipFlag flag) {
+	private static void mergeDualHandTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip,
+			TooltipFlag flag) {
 		Multimap<Attribute, AttributeModifier> mainhand = getSortedModifiers(stack, EquipmentSlot.MAINHAND);
 		Multimap<Attribute, AttributeModifier> offhand = getSortedModifiers(stack, EquipmentSlot.OFFHAND);
 		Multimap<Attribute, AttributeModifier> dualHand = sortedMap();
 		for (Attribute atr : mainhand.keys()) {
 			Collection<AttributeModifier> modifMh = mainhand.get(atr);
 			Collection<AttributeModifier> modifOh = offhand.get(atr);
-			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getId().equals(a2.getId()))).forEach(modif -> dualHand.put(atr, modif));
+			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getId().equals(a2.getId())))
+					.forEach(modif -> dualHand.put(atr, modif));
 		}
 		dualHand.values().forEach(m -> {
 			mainhand.values().remove(m);
@@ -1336,7 +1548,8 @@ public class AttributeBonusHandler {
 		applyTextFor(player, stack, tooltip, mainhand, EquipmentSlot.MAINHAND.getName(), skips, flag);
 		applyTextFor(player, stack, tooltip, offhand, EquipmentSlot.OFFHAND.getName(), skips, flag);
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot.ordinal() < 2) continue;
+			if (slot.ordinal() < 2)
+				continue;
 			Multimap<Attribute, AttributeModifier> modifiers = getSortedModifiers(stack, slot);
 			applyTextFor(player, stack, tooltip, modifiers, slot.getName(), skips, flag);
 		}
@@ -1348,16 +1561,19 @@ public class AttributeBonusHandler {
 			modifierMap.values().removeIf(m -> skips.contains(m.getId()));
 			tooltip.accept(Component.empty());
 			tooltip.accept(Component.translatable("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
-			if (modifierMap.isEmpty()) return;
+			if (modifierMap.isEmpty())
+				return;
 			Map<Attribute, AttributeModifier> baseModifs = new IdentityHashMap<>();
 			modifierMap.forEach((attr, modif) -> {
 				// Item.BASE_ATTACK_DAMAGE_UUID
 				if (modif.getId().equals(UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF"))) {
-					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 1, modif.getOperation()));
+					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 1,
+							modif.getOperation()));
 				}
 				// Item.BASE_ATTACK_SPEED_UUID
 				else if (modif.getId().equals(UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3"))) {
-					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 4, modif.getOperation()));
+					baseModifs.put(attr, new AttributeModifier(modif.getId(), modif.getName(), modif.getAmount() + 4,
+							modif.getOperation()));
 				}
 			});
 			for (Map.Entry<Attribute, AttributeModifier> entry : baseModifs.entrySet()) {
@@ -1367,9 +1583,11 @@ public class AttributeBonusHandler {
 				tooltip.accept(Component.literal(" ").append(text).withStyle(ChatFormatting.DARK_GREEN));
 			}
 			for (Attribute attr : modifierMap.keySet()) {
-				if (baseModifs.containsKey(attr)) continue;
+				if (baseModifs.containsKey(attr))
+					continue;
 				modifierMap.get(attr).forEach(m -> {
-					if (m.getAmount() != 0) TooltipHelper.getAttributeBonusTooltip(Pair.of(attr, m));
+					if (m.getAmount() != 0)
+						TooltipHelper.getAttributeBonusTooltip(Pair.of(attr, m));
 				});
 			}
 		}
@@ -1379,14 +1597,19 @@ public class AttributeBonusHandler {
 		Multimap<Attribute, AttributeModifier> unsorted = stack.getAttributeModifiers(slot);
 		Multimap<Attribute, AttributeModifier> map = sortedMap();
 		for (Map.Entry<Attribute, AttributeModifier> ent : unsorted.entries()) {
-			if (ent.getKey() != null && ent.getValue() != null) map.put(ent.getKey(), ent.getValue());
-			else LOGGER.debug("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", stack, ent.getKey(), ent.getValue());
+			if (ent.getKey() != null && ent.getValue() != null)
+				map.put(ent.getKey(), ent.getValue());
+			else
+				LOGGER.debug("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", stack,
+						ent.getKey(), ent.getValue());
 		}
 		return map;
 	}
 
 	private static Multimap<Attribute, AttributeModifier> sortedMap() {
-		return TreeMultimap.create(Comparator.comparing(ForgeRegistries.ATTRIBUTES::getKey, ResourceLocation::compareTo), modifierComparator());
+		return TreeMultimap.create(
+				Comparator.comparing(ForgeRegistries.ATTRIBUTES::getKey, ResourceLocation::compareTo),
+				modifierComparator());
 	}
 
 	private static Comparator<AttributeModifier> modifierComparator() {
