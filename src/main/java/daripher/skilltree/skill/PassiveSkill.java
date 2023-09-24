@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -30,9 +32,11 @@ public class PassiveSkill {
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
 	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
 	private float positionX, positionY;
+	private NonNullList<String> commands = NonNullList.create();
 
-	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize, ResourceLocation backgroundTexture,
-			ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
+	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize,
+			ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture,
+			boolean isStartingPoint) {
 		this.id = id;
 		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
@@ -131,18 +135,42 @@ public class PassiveSkill {
 		return gatewayId.isPresent();
 	}
 
+	public NonNullList<String> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(NonNullList<String> commands) {
+		this.commands = commands;
+	}
+
 	public void learn(ServerPlayer player, boolean restoring) {
-		getAttributeModifiers().forEach(pair -> addAttributeModifier(player, pair.getLeft(), pair.getRight(), restoring));
+		getAttributeModifiers()
+				.forEach(pair -> addAttributeModifier(player, pair.getLeft(), pair.getRight(), restoring));
+		if (!restoring)
+			executeCommands(player);
+	}
+
+	private void executeCommands(ServerPlayer player) {
+		MinecraftServer server = player.getServer();
+		commands.forEach(command -> {
+			command = command.replaceAll("<p>", player.getGameProfile().getName());
+			server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
+		});
 	}
 
 	@SuppressWarnings("deprecation")
-	public void addAttributeModifier(ServerPlayer player, Attribute attribute, AttributeModifier modifier, boolean restoring) {
+	public void addAttributeModifier(ServerPlayer player, Attribute attribute, AttributeModifier modifier,
+			boolean restoring) {
 		if (attribute instanceof SlotAttributeWrapper wrapper) {
-			if (!restoring) CuriosApi.getSlotHelper().growSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
+			if (!restoring)
+				CuriosApi.getSlotHelper().growSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
 			return;
 		}
 		AttributeInstance instance = player.getAttribute(attribute);
-		if (!instance.hasModifier(modifier)) instance.addTransientModifier(modifier);
+		if (instance == null)
+			return;
+		if (!instance.hasModifier(modifier))
+			instance.addTransientModifier(modifier);
 	}
 
 	public void remove(ServerPlayer player) {
@@ -156,18 +184,26 @@ public class PassiveSkill {
 			return;
 		}
 		AttributeInstance instance = player.getAttribute(attribute);
-		if (instance.hasModifier(modifier)) instance.removeModifier(modifier);
+		if (instance == null)
+			return;
+		if (instance.hasModifier(modifier))
+			instance.removeModifier(modifier);
 	}
 
 	public boolean sameBonuses(PassiveSkill other) {
-		if (other == this) return true;
-		if (attributeModifiers.size() != other.attributeModifiers.size()) return false;
+		if (other == this)
+			return true;
+		if (attributeModifiers.size() != other.attributeModifiers.size())
+			return false;
 		for (int i = 0; i < attributeModifiers.size(); i++) {
-			if (attributeModifiers.get(i).getLeft() != other.attributeModifiers.get(i).getLeft()) return false;
+			if (attributeModifiers.get(i).getLeft() != other.attributeModifiers.get(i).getLeft())
+				return false;
 			AttributeModifier modifier = attributeModifiers.get(i).getRight();
 			AttributeModifier otherModifier = other.attributeModifiers.get(i).getRight();
-			if (modifier.getAmount() != otherModifier.getAmount()) return false;
-			if (modifier.getOperation() != otherModifier.getOperation()) return false;
+			if (modifier.getAmount() != otherModifier.getAmount())
+				return false;
+			if (modifier.getOperation() != otherModifier.getOperation())
+				return false;
 		}
 		return true;
 	}

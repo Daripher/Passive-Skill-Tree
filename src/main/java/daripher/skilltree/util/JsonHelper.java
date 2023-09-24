@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.skill.PassiveSkill;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -24,7 +25,8 @@ import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 public class JsonHelper {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public static void writeAttributeModifiers(JsonObject json, Iterable<Pair<Attribute, AttributeModifier>> modifiers) {
+	public static void writeAttributeModifiers(JsonObject json,
+			Iterable<Pair<Attribute, AttributeModifier>> modifiers) {
 		JsonArray modifiersJson = new JsonArray();
 		modifiers.forEach(pair -> writeAttributeModifier(modifiersJson, pair));
 		json.add("attribute_modifiers", modifiersJson);
@@ -65,12 +67,21 @@ public class JsonHelper {
 		return json;
 	}
 
-	public static void writeOptionalResourceLocation(JsonObject json, Optional<ResourceLocation> location, String name) {
-		if (location.isPresent()) json.addProperty(name, location.get().toString());
+	public static void writeOptionalResourceLocation(JsonObject json, Optional<ResourceLocation> location,
+			String name) {
+		if (location.isPresent())
+			json.addProperty(name, location.get().toString());
 	}
 
 	public static void writeOptionalBoolean(JsonObject json, boolean flag, String name) {
-		if (flag) json.addProperty(name, flag);
+		if (flag)
+			json.addProperty(name, flag);
+	}
+
+	public static JsonArray writeStrings(NonNullList<String> strings) {
+		JsonArray json = new JsonArray();
+		strings.forEach(string -> json.add(string));
+		return json;
 	}
 
 	public static JsonObject writePassiveSkill(PassiveSkill skill) {
@@ -86,6 +97,7 @@ public class JsonHelper {
 		writePosition(json, skill.getPositionX(), skill.getPositionY());
 		json.add("connections", writeResourceLocations(skill.getConnectedSkills()));
 		writeOptionalResourceLocation(json, skill.getGatewayId(), "gateway");
+		json.add("commands", writeStrings(skill.getCommands()));
 		return json;
 	}
 
@@ -123,7 +135,8 @@ public class JsonHelper {
 		} else {
 			attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
 		}
-		if (attribute == null) LOGGER.error("Attribute {} does not exist", attributeId);
+		if (attribute == null)
+			LOGGER.error("Attribute {} does not exist", attributeId);
 		return attribute;
 	}
 
@@ -136,6 +149,13 @@ public class JsonHelper {
 		List<ResourceLocation> locations = new ArrayList<ResourceLocation>();
 		locationsJson.forEach(element -> locations.add(new ResourceLocation(element.getAsString())));
 		return locations;
+	}
+
+	public static NonNullList<String> readStrings(JsonObject json, String name) {
+		JsonArray stringsJson = json.get(name).getAsJsonArray();
+		NonNullList<String> strings = NonNullList.create();
+		stringsJson.forEach(element -> strings.add(element.getAsString()));
+		return strings;
 	}
 
 	public static PassiveSkill readPassiveSkill(ResourceLocation id, JsonObject json) {
@@ -154,6 +174,7 @@ public class JsonHelper {
 		skill.setPosition(x, y);
 		readResourceLocations(json, "connections").forEach(skill.getConnectedSkills()::add);
 		skill.setGatewayId(readOptionalResourceLocation(json, "gateway"));
+		skill.setCommands(readStrings(json, "commands"));
 		return skill;
 	}
 }
