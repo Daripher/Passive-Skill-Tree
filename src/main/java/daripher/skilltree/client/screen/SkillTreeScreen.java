@@ -97,15 +97,18 @@ public class SkillTreeScreen extends Screen {
 			progressBar.visible = false;
 			buyButton.visible = false;
 		}
-		if (!firstInitDone) firstInit();
+		if (!firstInitDone)
+			firstInit();
 		addSkillButtons();
 		statsInfo = new StatsList(48, height - 60);
 		statsInfo.setStats(calculateStatsList());
 		addRenderableWidget(statsInfo);
 		maxScrollX -= width / 2 - 80;
 		maxScrollY -= height / 2 - 80;
-		if (maxScrollX < 0) maxScrollX = 0;
-		if (maxScrollY < 0) maxScrollY = 0;
+		if (maxScrollX < 0)
+			maxScrollX = 0;
+		if (maxScrollY < 0)
+			maxScrollY = 0;
 		addSkillConnections();
 		highlightSkillsThatCanBeLearned();
 	}
@@ -121,9 +124,11 @@ public class SkillTreeScreen extends Screen {
 		buttonWidth = Math.max(buttonWidth, font.width(cancelButtonText));
 		buttonWidth += 20;
 		int buttonsY = 8;
-		showStatsButton = new PSTButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText, b -> showStats ^= true);
+		showStatsButton = new PSTButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText,
+				b -> showStats ^= true);
 		addRenderableWidget(showStatsButton);
-		buyButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText, b -> buySkillPoint());
+		buyButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText,
+				b -> buySkillPoint());
 		addRenderableWidget(buyButton);
 		pointsInfo = new InfoPanel(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
 		if (!Config.enable_exp_exchange) {
@@ -131,9 +136,11 @@ public class SkillTreeScreen extends Screen {
 		}
 		addRenderableWidget(pointsInfo);
 		buttonsY += 20;
-		confirmButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText, b -> confirmLearnSkills());
+		confirmButton = new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText,
+				b -> confirmLearnSkills());
 		addRenderableWidget(confirmButton);
-		cancelButton = new PSTButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText, b -> cancelLearnSkills());
+		cancelButton = new PSTButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText,
+				b -> cancelLearnSkills());
 		addRenderableWidget(cancelButton);
 		confirmButton.active = cancelButton.active = !newlyLearnedSkills.isEmpty();
 		buttonWidth = font.width(showStatsButtonText) + 20;
@@ -159,15 +166,18 @@ public class SkillTreeScreen extends Screen {
 		statsInfo.x = width - statsInfo.getWidth() - 10;
 		statsInfo.visible = showStats;
 		for (Widget widget : renderables) {
-			if (widget instanceof SkillButton) continue;
+			if (widget instanceof SkillButton)
+				continue;
 			widget.render(poseStack, mouseX, mouseY, partialTick);
 		}
 	}
 
 	private void renderSkillTooltip(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-		if (getWidgetAt(mouseX, mouseY).isPresent()) return;
+		if (getWidgetAt(mouseX, mouseY).isPresent())
+			return;
 		getSkillAt(mouseX, mouseY).ifPresent(button -> {
-			renderSkillTooltip(button, poseStack, mouseX + (prevMouseX - mouseX) * partialTick, mouseY + (prevMouseY - mouseY) * partialTick);
+			renderSkillTooltip(button, poseStack, mouseX + (prevMouseX - mouseX) * partialTick,
+					mouseY + (prevMouseY - mouseY) * partialTick);
 		});
 	}
 
@@ -188,9 +198,11 @@ public class SkillTreeScreen extends Screen {
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
-		if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
+		if (widget.isPresent())
+			return widget.get().mouseClicked(mouseX, mouseY, button);
 		Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-		if (skill.isPresent()) return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
+		if (skill.isPresent())
+			return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
 	}
 
@@ -214,16 +226,18 @@ public class SkillTreeScreen extends Screen {
 
 	private List<Component> calculateStatsList() {
 		Map<Pair<Attribute, Operation>, Double> stats = new HashMap<>();
-		learnedSkills.stream().map(skillButtons::get).map(button -> button.skill).map(PassiveSkill::getAttributeModifiers).forEach(list -> {
-			list.forEach(pair -> {
-				Pair<Attribute, Operation> attributeOperation = Pair.of(pair.getLeft(), pair.getRight().getOperation());
-				if (!stats.containsKey(attributeOperation)) {
-					stats.put(attributeOperation, pair.getRight().getAmount());
-				} else {
-					stats.put(attributeOperation, pair.getRight().getAmount() + stats.get(attributeOperation));
-				}
-			});
-		});
+		learnedSkills.stream().map(skillButtons::get).map(button -> button.skill)
+				.map(PassiveSkill::getAttributeModifiers).forEach(list -> {
+					list.forEach(pair -> {
+						Pair<Attribute, Operation> attributeOperation = Pair.of(pair.getLeft(),
+								pair.getRight().getOperation());
+						if (!stats.containsKey(attributeOperation)) {
+							stats.put(attributeOperation, pair.getRight().getAmount());
+						} else {
+							stats.put(attributeOperation, pair.getRight().getAmount() + stats.get(attributeOperation));
+						}
+					});
+				});
 		List<Component> statTooltips = new ArrayList<>();
 		stats.keySet().stream().forEach(pair -> {
 			AttributeModifier modifier = new AttributeModifier("FakeModifier", stats.get(pair), pair.getRight());
@@ -239,16 +253,14 @@ public class SkillTreeScreen extends Screen {
 	protected void firstInit() {
 		IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
 		List<PassiveSkill> skills = capability.getPlayerSkills();
-		// formatter:off
 		skills.stream()
-			.map(PassiveSkill::getId)
-			.forEach(learnedSkills::add);
+				.map(PassiveSkill::getId)
+				.forEach(learnedSkills::add);
 		skills.stream()
-			.filter(PassiveSkill::isGateway)
-			.map(PassiveSkill::getGatewayId)
-			.map(Optional::get)
-			.forEach(learnedGateways::add);
-		// formatter:on
+				.filter(PassiveSkill::isGateway)
+				.map(PassiveSkill::getGatewayId)
+				.map(Optional::get)
+				.forEach(learnedGateways::add);
 		skillPoints = capability.getSkillPoints();
 		firstInitDone = true;
 	}
@@ -267,10 +279,14 @@ public class SkillTreeScreen extends Screen {
 		SkillButton button = new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
-		if (skill.isStartingPoint()) startingPoints.add(button);
-		if (isSkillLearned(skill)) button.highlighted = true;
-		if (maxScrollX < Mth.abs(skillX)) maxScrollX = (int) Mth.abs(skillX);
-		if (maxScrollY < Mth.abs(skillY)) maxScrollY = (int) Mth.abs(skillY);
+		if (skill.isStartingPoint())
+			startingPoints.add(button);
+		if (isSkillLearned(skill))
+			button.highlighted = true;
+		if (maxScrollX < Mth.abs(skillX))
+			maxScrollX = (int) Mth.abs(skillX);
+		if (maxScrollY < Mth.abs(skillY))
+			maxScrollY = (int) Mth.abs(skillY);
 	}
 
 	protected boolean isSkillLearned(PassiveSkill skill) {
@@ -278,7 +294,8 @@ public class SkillTreeScreen extends Screen {
 			return true;
 		}
 		if (skill.isGateway()) {
-			return learnedGateways.contains(skill.getGatewayId().get()) || newlyLearnedGateways.contains(skill.getGatewayId().get());
+			return learnedGateways.contains(skill.getGatewayId().get())
+					|| newlyLearnedGateways.contains(skill.getGatewayId().get());
 		}
 		return false;
 	}
@@ -307,30 +324,35 @@ public class SkillTreeScreen extends Screen {
 		});
 	}
 
-	protected void connectSkills(List<SkillConnection> connections, ResourceLocation skillId1, ResourceLocation skillId2) {
+	protected void connectSkills(List<SkillConnection> connections, ResourceLocation skillId1,
+			ResourceLocation skillId2) {
 		SkillButton button1 = skillButtons.get(skillId1);
 		SkillButton button2 = skillButtons.get(skillId2);
 		connections.add(new SkillConnection(button1, button2));
 	}
 
 	private void highlightSkillsThatCanBeLearned() {
-		if (skillPoints == 0) return;
+		if (skillPoints == 0)
+			return;
 		if (learnedSkills.isEmpty() && newlyLearnedSkills.isEmpty()) {
 			startingPoints.forEach(SkillButton::animate);
 			return;
 		}
-		if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points) return;
+		if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points)
+			return;
 		skillConnections.forEach(SkillConnection::updateAnimation);
 	}
 
 	public void renderSkillTooltip(SkillButton button, PoseStack poseStack, float mouseX, float mouseY) {
 		List<MutableComponent> tooltip = button.getTooltip();
-		if (tooltip.isEmpty()) return;
+		if (tooltip.isEmpty())
+			return;
 		int tooltipWidth = 0;
 		int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
 		for (MutableComponent component : tooltip) {
 			int k = font.width(component);
-			if (k > tooltipWidth) tooltipWidth = k;
+			if (k > tooltipWidth)
+				tooltipWidth = k;
 			tooltipHeight += font.lineHeight;
 		}
 		tooltipWidth += 42;
@@ -376,7 +398,8 @@ public class SkillTreeScreen extends Screen {
 	}
 
 	public void buttonPressed(Button button) {
-		if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
+		if (button instanceof SkillButton skillButton)
+			skillButtonPressed(skillButton);
 	}
 
 	private void confirmLearnSkills() {
@@ -394,15 +417,18 @@ public class SkillTreeScreen extends Screen {
 
 	private void buySkillPoint() {
 		int currentLevel = getCurrentLevel();
-		if (!canBuySkillPoint(currentLevel)) return;
+		if (!canBuySkillPoint(currentLevel))
+			return;
 		int cost = Config.getSkillPointCost(currentLevel);
 		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
 		Minecraft.getInstance().player.giveExperiencePoints(-cost);
 	}
 
 	private static boolean canBuySkillPoint(int currentLevel) {
-		if (!Config.enable_exp_exchange) return false;
-		if (isMaxLevel(currentLevel)) return false;
+		if (!Config.enable_exp_exchange)
+			return false;
+		if (isMaxLevel(currentLevel))
+			return false;
 		int cost = Config.getSkillPointCost(currentLevel);
 		return Minecraft.getInstance().player.totalExperience >= cost;
 	}
@@ -423,7 +449,8 @@ public class SkillTreeScreen extends Screen {
 		if (button.animated) {
 			skillPoints--;
 			newlyLearnedSkills.add(skill.getId());
-			if (skill.isGateway()) newlyLearnedGateways.add(skill.getGatewayId().get());
+			if (skill.isGateway())
+				newlyLearnedGateways.add(skill.getGatewayId().get());
 			rebuildWidgets();
 			return;
 		}
@@ -435,7 +462,8 @@ public class SkillTreeScreen extends Screen {
 
 	protected void learnSkill(PassiveSkill skill) {
 		learnedSkills.add(skill.getId());
-		if (skill.isGateway()) learnedGateways.add(skill.getGatewayId().get());
+		if (skill.isGateway())
+			learnedGateways.add(skill.getGatewayId().get());
 		NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(skill));
 		rebuildWidgets();
 	}
@@ -453,7 +481,8 @@ public class SkillTreeScreen extends Screen {
 	protected void updateBuyPointButton() {
 		int currentLevel = getCurrentLevel();
 		buyButton.active = false;
-		if (isMaxLevel(currentLevel)) return;
+		if (isMaxLevel(currentLevel))
+			return;
 		int pointCost = Config.getSkillPointCost(currentLevel);
 		buyButton.active = minecraft.player.totalExperience >= pointCost;
 	}
@@ -465,7 +494,8 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public void renderBackground(PoseStack poseStack) {
-		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
+		ScreenHelper
+				.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
 		poseStack.pushPose();
 		poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
 		int size = getBackgroundSize();
@@ -475,17 +505,22 @@ public class SkillTreeScreen extends Screen {
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragAmountX, double dragAmountY) {
-		if (mouseButton != 0 && mouseButton != 2) return false;
-		if (maxScrollX > 0) scrollSpeedX += dragAmountX * 0.25;
-		if (maxScrollY > 0) scrollSpeedY += dragAmountY * 0.25;
+		if (mouseButton != 0 && mouseButton != 2)
+			return false;
+		if (maxScrollX > 0)
+			scrollSpeedX += dragAmountX * 0.25;
+		if (maxScrollY > 0)
+			scrollSpeedY += dragAmountY * 0.25;
 		return true;
 	}
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
 		if (!getWidgetAt(mouseX, mouseY).filter(StatsList.class::isInstance).isPresent()) {
-			if (amount > 0 && zoom < 2F) zoom += 0.05;
-			if (amount < 0 && zoom > 0.25F) zoom -= 0.05;
+			if (amount > 0 && zoom < 2F)
+				zoom += 0.05;
+			if (amount < 0 && zoom > 0.25F)
+				zoom -= 0.05;
 			rebuildWidgets();
 		}
 		return super.mouseScrolled(mouseX, mouseY, amount);
@@ -513,8 +548,10 @@ public class SkillTreeScreen extends Screen {
 		}
 		boolean hovered = !hoveredSkill.isEmpty() && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
 		if (hovered) {
-			if (hoveredSkill.get() == button2) renderGatewayConnection(poseStack, button2, button1);
-			else renderGatewayConnection(poseStack, button1, button2);
+			if (hoveredSkill.get() == button2)
+				renderGatewayConnection(poseStack, button2, button1);
+			else
+				renderGatewayConnection(poseStack, button1, button2);
 		}
 	}
 

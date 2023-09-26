@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "bc2c2744-4f7f-4b00-9e28-558e37e947c1",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_life_1",
     "skilltree:miner_defensive_5"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_1.png",
-  "position": {
-    "x": -193.64426,
-    "y": 161.52307
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_defensive_1.png",
+  "id": "skilltree:miner_defensive_4",
+  "isStartingPoint": false,
+  "positionX": -193.64426,
+  "positionY": 161.52307
 }

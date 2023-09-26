@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:crit_chance_if_not_hungry",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "eab4c53e-342e-434d-a247-c783c2e242e6",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_crit_1.png",
-  "position": {
-    "x": 20.005981,
-    "y": -305.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_crit_1.png",
+  "id": "skilltree:cook_crit_2",
+  "isStartingPoint": false,
+  "positionX": 20.005981,
+  "positionY": -305.52728
 }

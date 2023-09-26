@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:attack_speed_with_ranged_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "83bbf39b-3159-4343-babc-b156df92feb2",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_speed_notable_1.png",
-  "position": {
-    "x": 225.14684,
-    "y": 125.77867
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_speed_notable_1.png",
+  "id": "skilltree:hunter_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": 225.14684,
+  "positionY": 125.77867
 }

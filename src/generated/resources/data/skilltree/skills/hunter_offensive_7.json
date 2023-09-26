@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:projectile_damage",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "5d78a8ac-e19e-40fb-ae96-bb72219a3434",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_offensive_8",
     "skilltree:hunter_lesser_2"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_offensive_1.png",
-  "position": {
-    "x": 245.17549,
-    "y": 200.54518
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_offensive_1.png",
+  "id": "skilltree:hunter_offensive_7",
+  "isStartingPoint": false,
+  "positionX": 245.17549,
+  "positionY": 200.54518
 }

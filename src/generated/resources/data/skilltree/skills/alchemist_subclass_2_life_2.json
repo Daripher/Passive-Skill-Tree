@@ -1,26 +1,34 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "5e6df078-4eef-44f1-b87c-3cc747c56708",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     },
     {
-      "amount": 0.05,
       "attribute": "skilltree:incoming_healing",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "bc78c827-a050-4271-a5c4-1e663474f2da",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_2_life_3"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_life_1.png",
-  "position": {
-    "x": 120.95822,
-    "y": 360.79712
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_life_1.png",
+  "id": "skilltree:alchemist_subclass_2_life_2",
+  "isStartingPoint": false,
+  "positionX": 120.95822,
+  "positionY": 360.79712
 }

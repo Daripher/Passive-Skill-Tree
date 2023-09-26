@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "skilltree:experience_per_hour",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "a90a7dc6-4f23-486b-b902-5388e20f67f7",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_2_crafting_1",
     "skilltree:enchanter_subclass_2_life_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2.png",
-  "position": {
-    "x": 188.40228,
-    "y": -295.073
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_2.png",
+  "id": "skilltree:enchanter_subclass_2",
+  "isStartingPoint": false,
+  "positionX": 188.40228,
+  "positionY": -295.073
 }

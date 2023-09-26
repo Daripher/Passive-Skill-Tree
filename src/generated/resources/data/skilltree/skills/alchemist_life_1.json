@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "skilltree:maximum_life_under_potion_effect",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "652813f0-a4e8-43b0-bf4e-6495804adb1b",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_life_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_life_1.png",
-  "position": {
-    "x": 19.99701,
-    "y": 237.53247
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_life_1.png",
+  "id": "skilltree:alchemist_life_1",
+  "isStartingPoint": false,
+  "positionX": 19.99701,
+  "positionY": 237.53247
 }

@@ -1,24 +1,32 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "a3cdb1aa-7a89-45b4-8c8e-f5b92775e6f4",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.05,
       "attribute": "minecraft:generic.movement_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "ee8df181-e1dd-4f58-b57e-6b696d6b0896",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": -438.90466,
-    "y": 118.704544
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:miner_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -438.90466,
+  "positionY": 118.704544
 }

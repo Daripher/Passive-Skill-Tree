@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.3,
       "attribute": "skilltree:crafted_armor_defence",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.3,
+        "id": "d01967c6-4577-49a1-aa28-e0d869ccb0c0",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone_1.png",
-  "position": {
-    "x": -348.64246,
-    "y": -99.01296
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone_1.png",
+  "id": "skilltree:blacksmith_defensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -348.64246,
+  "positionY": -99.01296
 }

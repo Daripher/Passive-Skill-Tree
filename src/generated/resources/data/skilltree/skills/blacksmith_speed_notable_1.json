@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:attack_speed_with_shield",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "ed30badb-5a62-4d20-9115-4bfb98d4dfbb",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_speed_notable_1.png",
-  "position": {
-    "x": -245.14684,
-    "y": -145.77867
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_speed_notable_1.png",
+  "id": "skilltree:blacksmith_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": -245.14684,
+  "positionY": -145.77867
 }

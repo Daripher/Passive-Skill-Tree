@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "skilltree:life_on_block_if_not_hungry",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "9f74a76e-c7d3-4ffb-ada1-45d5da215402",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/cook_healing_notable_1.png",
-  "position": {
-    "x": -64.9606,
-    "y": -104.42358
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/cook_healing_notable_1.png",
+  "id": "skilltree:cook_healing_notable_1",
+  "isStartingPoint": false,
+  "positionX": -64.9606,
+  "positionY": -104.42358
 }

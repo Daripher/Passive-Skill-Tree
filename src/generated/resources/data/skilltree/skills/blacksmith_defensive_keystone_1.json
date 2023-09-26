@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:chestplate_armor",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 1.0,
+        "id": "9ac7ac79-0073-4d05-a5a6-89e6fe72dd63",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_keystone_1.png",
-  "position": {
-    "x": -367.67413,
-    "y": -155.01584
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_keystone_1.png",
+  "id": "skilltree:blacksmith_defensive_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -367.67413,
+  "positionY": -155.01584
 }

@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.25,
+        "id": "0c7ff047-f999-4872-8e1d-20e7a1fe6343",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_healing_2",
     "skilltree:enchanter_healing_4"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_healing_1.png",
-  "position": {
-    "x": 74.29904,
-    "y": -151.30298
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_healing_1.png",
+  "id": "skilltree:enchanter_healing_3",
+  "isStartingPoint": false,
+  "positionX": 74.29904,
+  "positionY": -151.30298
 }

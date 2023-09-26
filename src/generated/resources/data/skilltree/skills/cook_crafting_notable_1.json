@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.2,
       "attribute": "skilltree:cooked_food_life_regeneration",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.2,
+        "id": "aa53ea80-4ce6-4031-b6ea-dcd3b430b9a8",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/cook_crafting_notable_1.png",
-  "position": {
-    "x": -10.0,
-    "y": -47.0
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/cook_crafting_notable_1.png",
+  "id": "skilltree:cook_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": -10.0,
+  "positionY": -47.0
 }

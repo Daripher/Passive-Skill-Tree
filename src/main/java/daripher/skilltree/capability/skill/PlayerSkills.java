@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.SkillsReloader;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;

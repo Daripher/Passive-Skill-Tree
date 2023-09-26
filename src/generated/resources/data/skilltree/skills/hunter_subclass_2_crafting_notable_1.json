@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "4f8ae0f1-39c6-49f8-a078-131a7ac125c9",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_crafting_notable_1.png",
-  "position": {
-    "x": 460.87152,
-    "y": 46.015343
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_crafting_notable_1.png",
+  "id": "skilltree:hunter_subclass_2_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": 460.87152,
+  "positionY": 46.015343
 }

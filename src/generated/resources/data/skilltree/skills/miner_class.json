@@ -1,26 +1,29 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.15,
       "attribute": "skilltree:mining_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.15,
+        "id": "e80a5211-67a0-446c-b882-a5a2705c25ab",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_defensive_1",
     "skilltree:miner_offensive_1",
     "skilltree:miner_defensive_crafting_1",
     "skilltree:miner_offensive_crafting_1",
     "skilltree:miner_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_class.png",
-  "position": {
-    "x": -143.63829,
-    "y": 63.99579
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_class.png",
+  "id": "skilltree:miner_class",
+  "isStartingPoint": true,
+  "positionX": -143.63829,
+  "positionY": 63.99579
 }

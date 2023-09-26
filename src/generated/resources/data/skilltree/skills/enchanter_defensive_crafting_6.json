@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "58d41dcb-8d83-4bb2-9416-2301c6ba4589",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_defensive_crafting_7"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
-  "position": {
-    "x": 187.18297,
-    "y": -228.03984
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
+  "id": "skilltree:enchanter_defensive_crafting_6",
+  "isStartingPoint": false,
+  "positionX": 187.18297,
+  "positionY": -228.03984
 }

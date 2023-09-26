@@ -1,26 +1,34 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.005,
       "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.005,
+        "id": "81e01b29-1325-4a38-933c-9325a29c91da",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "ea943c48-c62d-4e5f-9e9f-76a2018d5eaf",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_defensive_1.png",
-  "position": {
-    "x": -152.95734,
-    "y": 275.07642
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_defensive_1.png",
+  "id": "skilltree:alchemist_subclass_1_defensive_4",
+  "isStartingPoint": false,
+  "positionX": -152.95734,
+  "positionY": 275.07642
 }

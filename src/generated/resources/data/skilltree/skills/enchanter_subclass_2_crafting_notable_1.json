@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "skilltree:experience_from_ore",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.5,
+        "id": "be3aa47a-dc55-4cc1-80a1-34e2f5323be8",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_crafting_notable_1.png",
-  "position": {
-    "x": 273.95526,
-    "y": -389.7826
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_crafting_notable_1.png",
+  "id": "skilltree:enchanter_subclass_2_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": 273.95526,
+  "positionY": -389.7826
 }

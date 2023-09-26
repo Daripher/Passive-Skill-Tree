@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "82479486-7726-41c6-ac4c-36a6c6ecd3b1",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_2"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_defensive_1.png",
-  "position": {
-    "x": -325.63098,
-    "y": -24.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_defensive_1.png",
+  "id": "skilltree:blacksmith_subclass_2_defensive_4",
+  "isStartingPoint": false,
+  "positionX": -325.63098,
+  "positionY": -24.008415
 }

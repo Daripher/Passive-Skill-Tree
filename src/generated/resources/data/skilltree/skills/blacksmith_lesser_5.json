@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_equipment_durability",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "1ca85170-dacc-4e67-88f4-51461b94daf9",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_lesser_3",
     "skilltree:blacksmith_lesser_6"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_lesser_1.png",
-  "position": {
-    "x": -310.6943,
-    "y": -182.78297
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_lesser_1.png",
+  "id": "skilltree:blacksmith_lesser_5",
+  "isStartingPoint": false,
+  "positionX": -310.6943,
+  "positionY": -182.78297
 }

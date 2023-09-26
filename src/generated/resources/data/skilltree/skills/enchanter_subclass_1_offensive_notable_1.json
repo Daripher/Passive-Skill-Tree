@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:crit_chance_against_burning",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "7ba4efb8-3d37-4bb9-8092-b49565f65213",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": 418.90466,
-    "y": -138.70454
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:enchanter_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 418.90466,
+  "positionY": -138.70454
 }

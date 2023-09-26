@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.01,
       "attribute": "skilltree:crit_chance_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.01,
+        "id": "3e5874e1-16eb-460e-98cd-f80bf646cbbb",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_crit_1.png",
-  "position": {
-    "x": -251.67769,
-    "y": 165.00456
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_crit_1.png",
+  "id": "skilltree:miner_crit_1",
+  "isStartingPoint": false,
+  "positionX": -251.67769,
+  "positionY": 165.00456
 }

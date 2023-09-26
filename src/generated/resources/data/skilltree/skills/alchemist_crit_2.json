@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:crit_chance_against_poisoned",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "895f4492-6955-4151-a274-baceb3d4594e",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_crit_1.png",
-  "position": {
-    "x": -35.997005,
-    "y": 289.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_crit_1.png",
+  "id": "skilltree:alchemist_crit_2",
+  "isStartingPoint": false,
+  "positionX": -35.997005,
+  "positionY": 289.52728
 }

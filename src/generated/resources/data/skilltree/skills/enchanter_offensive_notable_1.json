@@ -1,23 +1,27 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.2,
       "attribute": "skilltree:damage_with_enchanted_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.2,
+        "id": "5f6cc25e-2c2a-4b73-977d-0fc401dc83a3",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_offensive_4",
     "skilltree:enchanter_offensive_crafting_5",
     "skilltree:enchanter_subclass_1_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_offensive_notable_1.png",
-  "position": {
-    "x": 229.63829,
-    "y": -55.99579
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_offensive_notable_1.png",
+  "id": "skilltree:enchanter_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 229.63829,
+  "positionY": -55.99579
 }

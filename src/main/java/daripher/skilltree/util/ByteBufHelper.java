@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 
@@ -59,7 +61,6 @@ public class ByteBufHelper {
 
 	public static void writePassiveSkill(FriendlyByteBuf buf, PassiveSkill skill) {
 		buf.writeUtf(skill.getId().toString());
-		buf.writeUtf(skill.getTreeId().toString());
 		buf.writeInt(skill.getButtonSize());
 		buf.writeUtf(skill.getBackgroundTexture().toString());
 		buf.writeUtf(skill.getIconTexture().toString());
@@ -104,7 +105,7 @@ public class ByteBufHelper {
 		return Pair.of(attribute, modifier);
 	}
 
-	public static Attribute readAttribute(FriendlyByteBuf buf) {
+	public static @Nullable Attribute readAttribute(FriendlyByteBuf buf) {
 		String attributeId = buf.readUtf();
 		Attribute attribute;
 		if (attributeId.startsWith("curios:")) {
@@ -119,13 +120,12 @@ public class ByteBufHelper {
 
 	public static PassiveSkill readPassiveSkill(FriendlyByteBuf buf) {
 		ResourceLocation id = new ResourceLocation(buf.readUtf());
-		ResourceLocation treeId = new ResourceLocation(buf.readUtf());
 		int size = buf.readInt();
 		ResourceLocation background = new ResourceLocation(buf.readUtf());
 		ResourceLocation icon = new ResourceLocation(buf.readUtf());
 		ResourceLocation border = new ResourceLocation(buf.readUtf());
 		boolean startingPoint = buf.readBoolean();
-		PassiveSkill skill = new PassiveSkill(id, treeId, size, background, icon, border, startingPoint);
+		PassiveSkill skill = new PassiveSkill(id, size, background, icon, border, startingPoint);
 		skill.setPosition(buf.readFloat(), buf.readFloat());
 		readResourceLocations(buf).forEach(skill.getConnectedSkills()::add);
 		skill.setConnectedTree(readOptionalResourceLocation(buf));

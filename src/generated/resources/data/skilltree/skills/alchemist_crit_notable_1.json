@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.35,
       "attribute": "skilltree:crit_damage_against_poisoned",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.35,
+        "id": "8f844389-22be-432e-8f46-8e048fe1f6df",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_crit_notable_1.png",
-  "position": {
-    "x": -9.997005,
-    "y": 287.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_crit_notable_1.png",
+  "id": "skilltree:alchemist_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": -9.997005,
+  "positionY": 287.52728
 }

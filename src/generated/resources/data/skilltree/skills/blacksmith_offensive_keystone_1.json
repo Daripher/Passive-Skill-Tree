@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:attack_damage_per_armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.1,
+        "id": "79668f31-f911-44ba-a5d4-784f02c9ce3f",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_keystone_1.png",
-  "position": {
-    "x": -313.6711,
-    "y": -248.54828
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_offensive_keystone_1.png",
+  "id": "skilltree:blacksmith_offensive_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -313.6711,
+  "positionY": -248.54828
 }

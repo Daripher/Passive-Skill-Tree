@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:double_loot_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "8596a77d-4d28-47f2-864d-94a8cbe3a419",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_lesser_3",
     "skilltree:hunter_lesser_6"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
-  "position": {
-    "x": 294.69434,
-    "y": 166.78297
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_lesser_1.png",
+  "id": "skilltree:hunter_lesser_5",
+  "isStartingPoint": false,
+  "positionX": 294.69434,
+  "positionY": 166.78297
 }

@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:crit_damage_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "d28b845b-b7f2-4545-bd3a-71299d086105",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_crit_notable_1.png",
-  "position": {
-    "x": -267.67392,
-    "y": 138.76059
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_crit_notable_1.png",
+  "id": "skilltree:miner_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": -267.67392,
+  "positionY": 138.76059
 }

@@ -1,8 +1,10 @@
 package daripher.skilltree.skill;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -20,25 +22,23 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class PassiveSkill {
-	private final ResourceLocation id;
-	private final ResourceLocation treeId;
-	private final ResourceLocation backgroundTexture;
-	private final ResourceLocation iconTexture;
-	private final ResourceLocation borderTexture;
-	private Optional<ResourceLocation> connectedTreeId = Optional.empty();
-	private Optional<ResourceLocation> gatewayId = Optional.empty();
-	private final int buttonSize;
-	private final boolean isStartingPoint;
+	private ResourceLocation id;
+	private ResourceLocation backgroundTexture;
+	private ResourceLocation iconTexture;
+	private ResourceLocation borderTexture;
+	private @Nullable ResourceLocation connectedTreeId;
+	private @Nullable ResourceLocation gatewayId;
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
-	private final List<ResourceLocation> connectedSkills = new ArrayList<>();
-	private float positionX, positionY;
-	private NonNullList<String> commands = NonNullList.create();
+	private List<String> commands = new ArrayList<>();
+	private List<ResourceLocation> connectedSkills = new ArrayList<>();
+	private float positionX, positionY;	
+	private int buttonSize;
+	private boolean isStartingPoint;
 
-	public PassiveSkill(ResourceLocation id, ResourceLocation treeId, int buttonSize,
+	public PassiveSkill(ResourceLocation id, int buttonSize,
 			ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture,
 			boolean isStartingPoint) {
 		this.id = id;
-		this.treeId = treeId;
 		this.backgroundTexture = backgroundTexture;
 		this.iconTexture = iconTexture;
 		this.borderTexture = borderTexture;
@@ -48,10 +48,6 @@ public class PassiveSkill {
 
 	public ResourceLocation getId() {
 		return id;
-	}
-
-	public ResourceLocation getTreeId() {
-		return treeId;
 	}
 
 	public int getButtonSize() {
@@ -71,19 +67,23 @@ public class PassiveSkill {
 	}
 
 	public Optional<ResourceLocation> getConnectedTreeId() {
-		return connectedTreeId;
+		return Optional.ofNullable(connectedTreeId);
 	}
 
 	public void setConnectedTree(@Nullable ResourceLocation treeId) {
-		this.connectedTreeId = Optional.ofNullable(treeId);
+		this.connectedTreeId = treeId;
 	}
 
 	public void setConnectedTree(Optional<ResourceLocation> treeId) {
-		this.connectedTreeId = treeId;
+		this.connectedTreeId = treeId.orElse(null);
 	}
 
 	public boolean isStartingPoint() {
 		return isStartingPoint;
+	}
+
+	public void setStartingPoint(boolean isStartingPoint) {
+		this.isStartingPoint = isStartingPoint;
 	}
 
 	public List<Pair<Attribute, AttributeModifier>> getAttributeModifiers() {
@@ -120,22 +120,22 @@ public class PassiveSkill {
 	}
 
 	public void setGatewayId(@Nullable ResourceLocation gatewayId) {
-		this.gatewayId = Optional.ofNullable(gatewayId);
-	}
-
-	public void setGatewayId(Optional<ResourceLocation> gatewayId) {
 		this.gatewayId = gatewayId;
 	}
 
+	public void setGatewayId(Optional<ResourceLocation> gatewayId) {
+		this.gatewayId = gatewayId.orElse(null);
+	}
+
 	public Optional<ResourceLocation> getGatewayId() {
-		return gatewayId;
+		return Optional.ofNullable(gatewayId);
 	}
 
 	public boolean isGateway() {
-		return gatewayId.isPresent();
+		return gatewayId != null;
 	}
 
-	public NonNullList<String> getCommands() {
+	public List<String> getCommands() {
 		return commands;
 	}
 

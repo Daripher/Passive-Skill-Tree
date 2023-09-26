@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:projectile_crit_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "07b8699a-85f7-4a1c-8039-8b9be5d75119",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_crit_1.png",
-  "position": {
-    "x": 263.6634,
-    "y": 116.52713
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_crit_1.png",
+  "id": "skilltree:hunter_crit_1",
+  "isStartingPoint": false,
+  "positionX": 263.6634,
+  "positionY": 116.52713
 }

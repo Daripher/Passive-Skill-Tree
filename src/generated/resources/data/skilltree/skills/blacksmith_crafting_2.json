@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "skilltree:crafted_shields_armor_bonus",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "7e582d8a-795c-466b-b372-67ed62f700e2",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_crafting_3"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_crafting_1.png",
-  "position": {
-    "x": -89.40338,
-    "y": -55.005203
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_crafting_1.png",
+  "id": "skilltree:blacksmith_crafting_2",
+  "isStartingPoint": false,
+  "positionX": -89.40338,
+  "positionY": -55.005203
 }

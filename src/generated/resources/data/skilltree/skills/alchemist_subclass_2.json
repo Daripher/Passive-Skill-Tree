@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.15,
       "attribute": "skilltree:incoming_healing",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.15,
+        "id": "88a6d811-1271-4096-ab7a-9215c10d6e19",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_2_crafting_1",
     "skilltree:alchemist_subclass_2_life_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2.png",
-  "position": {
-    "x": 132.95734,
-    "y": 303.08533
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_2.png",
+  "id": "skilltree:alchemist_subclass_2",
+  "isStartingPoint": false,
+  "positionX": 132.95734,
+  "positionY": 303.08533
 }

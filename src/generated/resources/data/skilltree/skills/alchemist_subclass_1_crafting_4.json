@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:brewed_poisons_strength",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "ece76499-b9cc-49e2-b72a-c7bce5ab4522",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_1_mastery",
     "skilltree:alchemist_subclass_1_crafting_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_crafting_1.png",
-  "position": {
-    "x": -168.95645,
-    "y": 412.7882
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_crafting_1.png",
+  "id": "skilltree:alchemist_subclass_1_crafting_4",
+  "isStartingPoint": false,
+  "positionX": -168.95645,
+  "positionY": 412.7882
 }

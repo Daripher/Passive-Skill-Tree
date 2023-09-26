@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:maximum_life_per_boots_armor_bonus",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "9d35fdf5-3e64-4233-928b-d4d6eb468619",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_life_notable_1.png",
-  "position": {
-    "x": -222.63101,
-    "y": -132.77724
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_life_notable_1.png",
+  "id": "skilltree:blacksmith_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": -222.63101,
+  "positionY": -132.77724
 }

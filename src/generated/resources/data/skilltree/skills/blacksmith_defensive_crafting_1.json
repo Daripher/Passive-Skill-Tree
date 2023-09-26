@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:crafted_armor_defence",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "647caa1d-d5a3-47ce-8194-a9b4103fcb9f",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_crafting_2"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
-  "position": {
-    "x": -139.631,
-    "y": -54.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
+  "id": "skilltree:blacksmith_defensive_crafting_1",
+  "isStartingPoint": false,
+  "positionX": -139.631,
+  "positionY": -54.008415
 }

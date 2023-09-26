@@ -1,41 +1,61 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:equipment_repair_efficiency",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "c6d9c1bf-3474-4e10-96bf-8ec0c144b18a",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_equipment_durability",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "3f61bbce-8991-441d-994a-a00b0e9739de",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_weapon_attack_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "580a4326-3b50-42e4-be45-6c6b8232878e",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.05,
       "attribute": "skilltree:chance_to_craft_tougher_armor",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "b1ebbf19-5b9d-41bb-bc1c-994665dc0c03",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 5.0,
       "attribute": "skilltree:crafted_shields_armor_bonus",
-      "operation": "addition"
+      "modifier": {
+        "amount": 5.0,
+        "id": "36b8ed0c-37db-4bf7-88c9-a0c72daf4cd6",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
-  "position": {
-    "x": -472.8894,
-    "y": -110.72784
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
+  "id": "skilltree:blacksmith_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": -472.8894,
+  "positionY": -110.72784
 }

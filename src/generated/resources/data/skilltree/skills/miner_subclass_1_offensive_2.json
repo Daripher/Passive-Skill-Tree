@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "ad3673a9-a2a7-45d3-9c02-304f83b2c046",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_1_offensive_3"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_1_offensive_1.png",
-  "position": {
-    "x": -391.87048,
-    "y": 64.70598
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_1_offensive_1.png",
+  "id": "skilltree:miner_subclass_1_offensive_2",
+  "isStartingPoint": false,
+  "positionX": -391.87048,
+  "positionY": 64.70598
 }

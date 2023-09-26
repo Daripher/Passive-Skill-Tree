@@ -3,7 +3,7 @@ package daripher.skilltree.network.message;
 import java.util.function.Supplier;
 
 import daripher.skilltree.client.SkillTreeClientData;
-import daripher.skilltree.skill.SkillsReloader;
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.util.ByteBufHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

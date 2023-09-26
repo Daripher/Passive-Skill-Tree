@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "skilltree:crafted_weapon_life_per_hit",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "0d32036c-bfed-43e4-a4b2-156818d833c3",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_special_1.png",
-  "position": {
-    "x": 201.1812,
-    "y": 355.8061
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_special_1.png",
+  "id": "skilltree:hunter_subclass_special",
+  "isStartingPoint": false,
+  "positionX": 201.1812,
+  "positionY": 355.8061
 }

@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:attack_speed_under_potion_effect",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "62703046-8668-43d4-92fd-31207c6ead72",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_speed_notable_1.png",
-  "position": {
-    "x": -9.997005,
-    "y": 261.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_speed_notable_1.png",
+  "id": "skilltree:alchemist_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": -9.997005,
+  "positionY": 261.52728
 }

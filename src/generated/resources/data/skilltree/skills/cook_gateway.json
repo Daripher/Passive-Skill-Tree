@@ -1,16 +1,16 @@
 {
-  "attribute_modifiers": [],
-  "background_texture": "skilltree:textures/icons/background/gateway.png",
-  "button_size": 33,
-  "connections": [
+  "attributeModifiers": [],
+  "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
+  "borderTexture": "skilltree:textures/tooltip/gateway.png",
+  "buttonSize": 33,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_1_defensive_1"
   ],
-  "gateway": "skilltree:etherial_gateway",
-  "icon_texture": "skilltree:textures/icons/void.png",
-  "position": {
-    "x": -122.45949,
-    "y": -199.53412
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
-  "tree": "skilltree:tree"
+  "gatewayId": "skilltree:etherial_gateway",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "id": "skilltree:cook_gateway",
+  "isStartingPoint": false,
+  "positionX": -122.45949,
+  "positionY": -199.53412
 }

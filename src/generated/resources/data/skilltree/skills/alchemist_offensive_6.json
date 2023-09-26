@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:damage_against_poisoned",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "ccfc8208-1b31-4892-9209-312dee86a535",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_offensive_7",
     "skilltree:alchemist_crit_2"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_offensive_1.png",
-  "position": {
-    "x": -61.997005,
-    "y": 289.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_offensive_1.png",
+  "id": "skilltree:alchemist_offensive_6",
+  "isStartingPoint": false,
+  "positionX": -61.997005,
+  "positionY": 289.52728
 }

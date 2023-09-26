@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "curios:ring",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "f72a36b0-4e6a-4bec-9a84-61150edd5a6c",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_mastery.png",
-  "position": {
-    "x": -327.95526,
-    "y": 337.7826
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_mastery.png",
+  "id": "skilltree:miner_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": -327.95526,
+  "positionY": 337.7826
 }

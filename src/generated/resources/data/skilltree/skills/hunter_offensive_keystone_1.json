@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:damage_per_distance_to_enemy",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "6fa062d4-1537-4198-9a84-9d5b61c83de8",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",
-  "position": {
-    "x": 289.6711,
-    "y": 224.54828
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",
+  "id": "skilltree:hunter_offensive_keystone_1",
+  "isStartingPoint": false,
+  "positionX": 289.6711,
+  "positionY": 224.54828
 }

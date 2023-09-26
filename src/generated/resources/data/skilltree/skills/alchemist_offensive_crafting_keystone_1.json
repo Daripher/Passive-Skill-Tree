@@ -1,24 +1,32 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.3,
       "attribute": "skilltree:brewed_harmful_potions_strength",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.3,
+        "id": "517c62ff-af71-4471-8996-12aa06a054d1",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 1.0,
       "attribute": "skilltree:can_poison_weapons",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "22817277-c1e4-4cbf-a2ae-4ca3c377dcf1",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_offensive_crafting_keystone_1.png",
-  "position": {
-    "x": -104.97753,
-    "y": 323.0439
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_offensive_crafting_keystone_1.png",
+  "id": "skilltree:alchemist_offensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -104.97753,
+  "positionY": 323.0439
 }

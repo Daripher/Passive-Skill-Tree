@@ -1,26 +1,34 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.005,
       "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.005,
+        "id": "02e8c369-1431-4666-b0e9-399bc921dfdf",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "01049858-a1b2-4a0c-bc87-93ea364f399c",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_defensive_3"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
-  "position": {
-    "x": -154.6861,
-    "y": 214.04222
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
+  "id": "skilltree:miner_subclass_2_defensive_2",
+  "isStartingPoint": false,
+  "positionX": -154.6861,
+  "positionY": 214.04222
 }

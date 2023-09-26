@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:gem_power_in_armor",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "2709b813-8206-474a-9748-e5fa35bc787c",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_defensive_crafting_keystone_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
-  "position": {
-    "x": -225.70004,
-    "y": 225.03912
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
+  "id": "skilltree:miner_defensive_crafting_7",
+  "isStartingPoint": false,
+  "positionX": -225.70004,
+  "positionY": 225.03912
 }

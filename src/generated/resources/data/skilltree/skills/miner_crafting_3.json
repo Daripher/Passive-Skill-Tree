@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:chance_to_find_gemstone",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "8d63500f-0018-439a-b95e-39c399a2d05f",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_crafting_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_crafting_1.png",
-  "position": {
-    "x": -66.02477,
-    "y": 25.498142
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_crafting_1.png",
+  "id": "skilltree:miner_crafting_3",
+  "isStartingPoint": false,
+  "positionX": -66.02477,
+  "positionY": 25.498142
 }

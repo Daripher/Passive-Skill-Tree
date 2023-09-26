@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.util.ByteBufHelper;
-import daripher.skilltree.util.JsonHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -37,7 +37,8 @@ public class SkillTreeClientData {
 
 	private static void storeSkill(PassiveSkill skill) {
 		ALL_ASSIVE_SKILLS.put(skill.getId(), skill);
-		ResourceLocation treeId = skill.getTreeId();
+		// TODO: remove when tree system is implemented
+		ResourceLocation treeId = new ResourceLocation("skilltree", "tree");
 		if (SKILL_TREES.get(treeId) == null) SKILL_TREES.put(treeId, new HashMap<>());
 		SKILL_TREES.get(treeId).put(skill.getId(), skill);
 	}
@@ -75,7 +76,7 @@ public class SkillTreeClientData {
 
 	public static void saveEditorSkill(ResourceLocation treeId, ResourceLocation id, PassiveSkill skill) {
 		File folder = new File(getSavesFolder(), treeId.toString().replace(":", "/"));
-		JsonObject json = JsonHelper.writePassiveSkill(skill);
+		JsonElement json = SkillsReloader.GSON.toJsonTree(skill);
 		try {
 			PrintWriter out = new PrintWriter(new FileWriter(new File(folder, id.getPath() + ".json")));
 			out.write(json.toString());
@@ -94,9 +95,9 @@ public class SkillTreeClientData {
 			.forEach(file -> {
 				try {
 					JsonReader reader = new JsonReader(new FileReader(file));
-					JsonObject json = (JsonObject) JsonParser.parseReader(reader);
+					JsonElement json = JsonParser.parseReader(reader);
 					ResourceLocation skillId = new ResourceLocation("skilltree:" + FilenameUtils.removeExtension(file.getName()));
-					PassiveSkill skill = JsonHelper.readPassiveSkill(skillId, json);
+					PassiveSkill skill = SkillsReloader.GSON.fromJson(json, PassiveSkill.class);
 					skills.put(skillId, skill);
 					reader.close();
 				} catch (Exception e) {

@@ -1,28 +1,36 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.005,
       "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.005,
+        "id": "844e6435-e850-469d-acd6-b5f25d2728e0",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.005,
       "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.005,
+        "id": "7601228e-1c24-459f-ad7b-2094b000631c",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_2_defensive_2",
     "skilltree:hunter_gateway",
     "skilltree:enchanter_subclass_1_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_defensive_1.png",
-  "position": {
-    "x": 231.631,
-    "y": 8.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_defensive_1.png",
+  "id": "skilltree:hunter_subclass_2_defensive_1",
+  "isStartingPoint": false,
+  "positionX": 231.631,
+  "positionY": 8.008415
 }

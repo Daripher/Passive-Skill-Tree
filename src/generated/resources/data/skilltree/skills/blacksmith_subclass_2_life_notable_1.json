@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 5.0,
       "attribute": "skilltree:crafted_shields_maximum_life",
-      "operation": "addition"
+      "modifier": {
+        "amount": 5.0,
+        "id": "b6c43317-6105-4232-b87e-7bcfe0a6d4fe",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_life_notable_1.png",
-  "position": {
-    "x": -438.8894,
-    "y": -138.72784
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_life_notable_1.png",
+  "id": "skilltree:blacksmith_subclass_2_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": -438.8894,
+  "positionY": -138.72784
 }

@@ -1,23 +1,27 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "f9429bcb-9cdc-4ea4-9b7a-7c53d7e0d61d",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_4",
     "skilltree:blacksmith_defensive_crafting_5",
     "skilltree:blacksmith_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
-  "position": {
-    "x": -249.631,
-    "y": -56.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
+  "id": "skilltree:blacksmith_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -249.631,
+  "positionY": -56.008415
 }

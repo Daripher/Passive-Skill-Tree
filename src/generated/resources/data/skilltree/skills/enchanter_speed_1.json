@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:attack_speed_with_enchanted_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "6134819d-4542-4ae7-a44a-7483e48d020e",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_speed_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_speed_1.png",
-  "position": {
-    "x": 213.16061,
-    "y": -168.00528
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_speed_1.png",
+  "id": "skilltree:enchanter_speed_1",
+  "isStartingPoint": false,
+  "positionX": 213.16061,
+  "positionY": -168.00528
 }

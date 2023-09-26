@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.04,
       "attribute": "skilltree:attack_speed_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.04,
+        "id": "5c047e77-45a7-4f33-960b-95fc0221c943",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_speed_notable_1.png",
-  "position": {
-    "x": -245.15685,
-    "y": 125.76131
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_speed_notable_1.png",
+  "id": "skilltree:miner_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": -245.15685,
+  "positionY": 125.76131
 }

@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:cooked_food_saturation",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "6154793c-2688-40dc-a2b9-4d2a58094db2",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_lesser_4"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_lesser_1.png",
-  "position": {
-    "x": 20.005981,
-    "y": -331.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_lesser_1.png",
+  "id": "skilltree:cook_lesser_2",
+  "isStartingPoint": false,
+  "positionX": 20.005981,
+  "positionY": -331.52728
 }

@@ -1,23 +1,27 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:evasion_under_potion_effect",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "a5f7f221-46b9-42b1-bbb6-213c96fd0076",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_defensive_4",
     "skilltree:alchemist_defensive_crafting_5",
     "skilltree:alchemist_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_defensive_notable_1.png",
-  "position": {
-    "x": 69.97825,
-    "y": 220.5333
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_defensive_notable_1.png",
+  "id": "skilltree:alchemist_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 69.97825,
+  "positionY": 220.5333
 }

@@ -17,11 +17,11 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.util.JsonHelper;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -486,7 +486,7 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	private void addSkillAttributeModifier(String skillName, Attribute attribute, double amount, Operation operation) {
-		getSkill(skillName).addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "Passive Skill Bonus", amount, operation));
+		getSkill(skillName).addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "PassiveSkill", amount, operation));
 	}
 
 	private void addSkillBranchAttributeModifier(String branchName, RegistryObject<Attribute> attribute, double amount, Operation operation, int from,
@@ -575,25 +575,23 @@ public class PSTSkillsProvider implements DataProvider {
 
 	private void addGateway(String playerClass, String gatewayId) {
 		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, playerClass + "_gateway");
-		ResourceLocation treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
 		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/gateway.png");
 		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
 		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/gateway.png");
-		PassiveSkill skill = new PassiveSkill(skillId, treeId, 33, backgroundTexture, iconTexture, borderTexture, false);
+		PassiveSkill skill = new PassiveSkill(skillId, 33, backgroundTexture, iconTexture, borderTexture, false);
 		skill.setGatewayId(new ResourceLocation(SkillTreeMod.MOD_ID, gatewayId));
 		data.put(skillId, skill);
 	}
 
 	private void addSkill(String name, String icon, int size) {
 		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, name);
-		ResourceLocation treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
 		String background = name.endsWith("class") || name.endsWith("subclass_1") || name.endsWith("subclass_2") ? "class"
 				: size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
 		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + background + ".png");
 		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + icon + ".png");
 		String border = size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
 		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/" + border + ".png");
-		data.put(skillId, new PassiveSkill(skillId, treeId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
+		data.put(skillId, new PassiveSkill(skillId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
 	}
 
 	@Override
@@ -606,7 +604,7 @@ public class PSTSkillsProvider implements DataProvider {
 
 	private void save(CachedOutput output, PassiveSkill skill) {
 		Path path = dataGenerator.getOutputFolder().resolve(getSkillPath(skill));
-		JsonObject json = JsonHelper.writePassiveSkill(skill);
+		JsonElement json = SkillsReloader.GSON.toJsonTree(skill);
 		try {
 			DataProvider.saveStable(output, json, path);
 		} catch (IOException e) {

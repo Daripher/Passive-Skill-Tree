@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "skilltree:maximum_life_with_enchanted_item",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "22566b4a-74c0-4030-ba6f-fcb241d29335",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_life_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_life_1.png",
-  "position": {
-    "x": 190.64354,
-    "y": -155.006
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_life_1.png",
+  "id": "skilltree:enchanter_life_1",
+  "isStartingPoint": false,
+  "positionX": 190.64354,
+  "positionY": -155.006
 }

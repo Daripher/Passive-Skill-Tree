@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:gem_power_in_jewelry",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "99ae8818-d2ce-4177-98ff-0e280c5a7f92",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_mastery",
     "skilltree:miner_subclass_2_crafting_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_crafting_1.png",
-  "position": {
-    "x": -291.95526,
-    "y": 341.7826
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_crafting_1.png",
+  "id": "skilltree:miner_subclass_2_crafting_4",
+  "isStartingPoint": false,
+  "positionX": -291.95526,
+  "positionY": 341.7826
 }

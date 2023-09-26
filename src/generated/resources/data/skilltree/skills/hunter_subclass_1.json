@@ -1,27 +1,35 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:stealth",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "824b6510-d8f0-4080-ac58-060080c513df",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.1,
       "attribute": "skilltree:jump_height",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "90453e18-5dea-420b-89ed-e3b6803edc18",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_1",
     "skilltree:hunter_subclass_1_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_1.png",
-  "position": {
-    "x": 188.37805,
-    "y": 271.09222
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_1.png",
+  "id": "skilltree:hunter_subclass_1",
+  "isStartingPoint": false,
+  "positionX": 188.37805,
+  "positionY": 271.09222
 }

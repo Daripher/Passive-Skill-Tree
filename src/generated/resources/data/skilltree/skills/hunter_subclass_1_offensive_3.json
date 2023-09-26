@@ -1,26 +1,34 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:stealth",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "96571722-8810-4998-8131-f519ba592546",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "8913c9e1-228b-4991-aeca-b057d3bb1b1b",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_1_offensive_1.png",
-  "position": {
-    "x": 269.4097,
-    "y": 301.0951
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_1_offensive_1.png",
+  "id": "skilltree:hunter_subclass_1_offensive_3",
+  "isStartingPoint": false,
+  "positionX": 269.4097,
+  "positionY": 301.0951
 }

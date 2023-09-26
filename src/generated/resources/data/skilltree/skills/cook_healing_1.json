@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.25,
+        "id": "58b645ef-4c3f-4621-8bc4-92047dec42d7",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_healing_3"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_healing_1.png",
-  "position": {
-    "x": -84.22896,
-    "y": -176.03575
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_healing_1.png",
+  "id": "skilltree:cook_healing_1",
+  "isStartingPoint": false,
+  "positionX": -84.22896,
+  "positionY": -176.03575
 }

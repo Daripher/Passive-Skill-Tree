@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 5.0,
       "attribute": "skilltree:crafted_necklaces_maximum_life",
-      "operation": "addition"
+      "modifier": {
+        "amount": 5.0,
+        "id": "33144c43-46ed-40d0-a55e-a6b149bda211",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_life_notable_1.png",
-  "position": {
-    "x": -335.93335,
-    "y": 297.06915
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_life_notable_1.png",
+  "id": "skilltree:miner_subclass_2_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": -335.93335,
+  "positionY": 297.06915
 }

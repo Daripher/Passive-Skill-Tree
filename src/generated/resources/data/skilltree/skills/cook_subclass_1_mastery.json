@@ -1,26 +1,34 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.15,
       "attribute": "skilltree:crit_chance_if_wounded",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.15,
+        "id": "1075f357-0301-4608-b864-4e357f7def9b",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 1.0,
       "attribute": "skilltree:life_per_hit_if_wounded",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "57d0a064-bb0e-44d8-8829-6e9ecfc108c6",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_1_mastery.png",
-  "position": {
-    "x": 132.97256,
-    "y": -460.49655
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_subclass_1_mastery.png",
+  "id": "skilltree:cook_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": 132.97256,
+  "positionY": -460.49655
 }

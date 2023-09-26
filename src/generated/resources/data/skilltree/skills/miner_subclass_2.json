@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:maximum_ring_sockets",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "6b9d81a8-92f6-4867-a286-1f9acf0508e7",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_crafting_1",
     "skilltree:miner_subclass_2_life_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2.png",
-  "position": {
-    "x": -212.40228,
-    "y": 271.073
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2.png",
+  "id": "skilltree:miner_subclass_2",
+  "isStartingPoint": false,
+  "positionX": -212.40228,
+  "positionY": 271.073
 }

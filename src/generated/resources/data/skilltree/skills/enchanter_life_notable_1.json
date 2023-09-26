@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:maximum_life_per_armor_enchantment",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "f3f9a53d-779d-4648-9dfc-40967a0aab20",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_life_notable_1.png",
-  "position": {
-    "x": 202.63979,
-    "y": -132.76202
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_life_notable_1.png",
+  "id": "skilltree:enchanter_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": 202.63979,
+  "positionY": -132.76202
 }

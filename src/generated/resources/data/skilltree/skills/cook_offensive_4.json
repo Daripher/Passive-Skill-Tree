@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:damage_if_not_hungry",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "fec96927-192c-4cd0-969d-5e608d832ece",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_life_2",
     "skilltree:cook_offensive_5"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_offensive_1.png",
-  "position": {
-    "x": 46.00598,
-    "y": -253.52727
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_offensive_1.png",
+  "id": "skilltree:cook_offensive_4",
+  "isStartingPoint": false,
+  "positionX": 46.00598,
+  "positionY": -253.52727
 }

@@ -1,28 +1,36 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "2960389a-74f3-49ca-afda-a0d5639e732a",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     },
     {
-      "amount": 0.005,
       "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.005,
+        "id": "180bec8c-7fa4-4533-8684-3d610c9de626",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_subclass_2_defensive_2",
     "skilltree:cook_gateway",
     "skilltree:blacksmith_subclass_1_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_2_defensive_1.png",
-  "position": {
-    "x": -113.95949,
-    "y": -223.53412
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_subclass_2_defensive_1.png",
+  "id": "skilltree:cook_subclass_2_defensive_1",
+  "isStartingPoint": false,
+  "positionX": -113.95949,
+  "positionY": -223.53412
 }

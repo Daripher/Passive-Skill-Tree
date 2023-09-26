@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:damage_with_shield",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "6efedcd3-6764-41ba-8a51-83f6b9ae6375",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_offensive_6",
     "skilltree:blacksmith_speed_2"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_1.png",
-  "position": {
-    "x": -216.14384,
-    "y": -190.54231
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_offensive_1.png",
+  "id": "skilltree:blacksmith_offensive_5",
+  "isStartingPoint": false,
+  "positionX": -216.14384,
+  "positionY": -190.54231
 }

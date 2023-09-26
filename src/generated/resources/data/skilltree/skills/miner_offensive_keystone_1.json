@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:damage_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "c3e8c310-8318-419b-9800-e7daf0c84da3",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
-  "position": {
-    "x": -367.68784,
-    "y": 130.9921
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
+  "id": "skilltree:miner_offensive_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -367.68784,
+  "positionY": 130.9921
 }

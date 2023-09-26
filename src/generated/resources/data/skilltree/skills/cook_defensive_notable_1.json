@@ -1,23 +1,27 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:block_chance_if_not_hungry",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "af1a53c6-7074-4170-a500-d8441f07c3f0",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_defensive_4",
     "skilltree:cook_defensive_crafting_5",
     "skilltree:cook_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_defensive_notable_1.png",
-  "position": {
-    "x": -89.97825,
-    "y": -240.5333
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_defensive_notable_1.png",
+  "id": "skilltree:cook_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -89.97825,
+  "positionY": -240.5333
 }

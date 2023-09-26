@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:chance_to_apply_better_weapon_enchantment",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "337f3495-9a10-4b4a-8fc9-2833d3704ce7",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_offensive_crafting_keystone_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_offensive_crafting_1.png",
-  "position": {
-    "x": 302.6725,
-    "y": -79.994354
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_offensive_crafting_1.png",
+  "id": "skilltree:enchanter_offensive_crafting_7",
+  "isStartingPoint": false,
+  "positionX": 302.6725,
+  "positionY": -79.994354
 }

@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:free_enchantment_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "796d9045-6311-4d21-aacd-ea34b4c8f0c5",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_crafting_notable_1.png",
-  "position": {
-    "x": 22.043533,
-    "y": -28.49897
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_crafting_notable_1.png",
+  "id": "skilltree:enchanter_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": 22.043533,
+  "positionY": -28.49897
 }

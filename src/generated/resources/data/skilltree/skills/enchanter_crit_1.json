@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:crit_chance_with_enchanted_weapon",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "b86ee8c4-e09f-4e32-ba9a-2da57b5cf529",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_crit_1.png",
-  "position": {
-    "x": 235.67769,
-    "y": -181.00456
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_crit_1.png",
+  "id": "skilltree:enchanter_crit_1",
+  "isStartingPoint": false,
+  "positionX": 235.67769,
+  "positionY": -181.00456
 }

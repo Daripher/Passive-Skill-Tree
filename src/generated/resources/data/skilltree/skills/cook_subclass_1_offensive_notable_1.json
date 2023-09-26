@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:attack_speed_if_wounded",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "a879462b-f371-4313-8bb3-0c970a5ac875",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": 92.99099,
-    "y": -445.7864
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/cook_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:cook_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 92.99099,
+  "positionY": -445.7864
 }

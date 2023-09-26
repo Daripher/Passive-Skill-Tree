@@ -1,23 +1,27 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 2.0,
       "attribute": "skilltree:armor_per_gem_in_helmet",
-      "operation": "addition"
+      "modifier": {
+        "amount": 2.0,
+        "id": "1f29aabd-9db2-404b-be78-01c2612f1c06",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_defensive_4",
     "skilltree:miner_defensive_crafting_5",
     "skilltree:miner_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_notable_1.png",
-  "position": {
-    "x": -169.66446,
-    "y": 174.52473
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_defensive_notable_1.png",
+  "id": "skilltree:miner_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -169.66446,
+  "positionY": 174.52473
 }

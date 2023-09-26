@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:maximum_life_per_gem_in_helmet",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "efb1a1e0-cdbd-45f9-9b11-52b1727d3f93",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_life_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_life_1.png",
-  "position": {
-    "x": -206.64354,
-    "y": 139.006
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_life_1.png",
+  "id": "skilltree:miner_life_1",
+  "isStartingPoint": false,
+  "positionX": -206.64354,
+  "positionY": 139.006
 }

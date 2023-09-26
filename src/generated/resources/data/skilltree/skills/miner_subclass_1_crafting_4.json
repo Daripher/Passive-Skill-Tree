@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.02,
       "attribute": "skilltree:crafted_boots_movement_speed",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.02,
+        "id": "4d8605f7-62d6-4dce-aa25-3fb369710dd3",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_1_mastery",
     "skilltree:miner_subclass_1_crafting_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
-  "position": {
-    "x": -452.9029,
-    "y": 62.992744
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
+  "id": "skilltree:miner_subclass_1_crafting_4",
+  "isStartingPoint": false,
+  "positionX": -452.9029,
+  "positionY": 62.992744
 }

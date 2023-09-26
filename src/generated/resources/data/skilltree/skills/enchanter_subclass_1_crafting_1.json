@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_weapon_chance_to_ignite",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "850c2a47-cb20-4249-b08a-f9e641a5f122",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_crafting_2"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
-  "position": {
-    "x": 369.35162,
-    "y": -39.994904
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
+  "id": "skilltree:enchanter_subclass_1_crafting_1",
+  "isStartingPoint": false,
+  "positionX": 369.35162,
+  "positionY": -39.994904
 }

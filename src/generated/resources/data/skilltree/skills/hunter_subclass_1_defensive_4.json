@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.01,
       "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.01,
+        "id": "c358ea48-8d9a-4677-91a9-f560460e226a",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_1_defensive_1.png",
-  "position": {
-    "x": 164.66626,
-    "y": 259.09045
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_1_defensive_1.png",
+  "id": "skilltree:hunter_subclass_1_defensive_4",
+  "isStartingPoint": false,
+  "positionX": 164.66626,
+  "positionY": 259.09045
 }

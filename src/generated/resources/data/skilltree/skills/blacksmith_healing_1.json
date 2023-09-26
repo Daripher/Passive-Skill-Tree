@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:life_regeneration_bonus",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.25,
+        "id": "05914f00-8fce-4e7a-a8fc-6a0b2f8bb9b2",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:blacksmith_healing_3"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_healing_1.png",
-  "position": {
-    "x": -191.631,
-    "y": -26.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_healing_1.png",
+  "id": "skilltree:blacksmith_healing_1",
+  "isStartingPoint": false,
+  "positionX": -191.631,
+  "positionY": -26.008415
 }

@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_weapon_double_loot_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "8a3ec4d5-9eb0-4a5d-923b-3d3ad3149c0d",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_special_1.png",
-  "position": {
-    "x": -221.17679,
-    "y": -375.8061
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_special_1.png",
+  "id": "skilltree:blacksmith_subclass_special",
+  "isStartingPoint": false,
+  "positionX": -221.17679,
+  "positionY": -375.8061
 }

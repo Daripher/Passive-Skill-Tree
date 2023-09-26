@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.4,
       "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.4,
+        "id": "5dd6515b-6656-4f33-add3-007ffd9e3cae",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_crafting_keystone_1.png",
-  "position": {
-    "x": 231.68129,
-    "y": -260.0383
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_defensive_crafting_keystone_1.png",
+  "id": "skilltree:enchanter_defensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": 231.68129,
+  "positionY": -260.0383
 }

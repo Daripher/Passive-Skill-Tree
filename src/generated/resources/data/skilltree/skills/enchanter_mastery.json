@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:chance_to_apply_better_enchantment",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 1.0,
+        "id": "866c0ebb-2fc5-4c41-9cdb-62eb7a9952a7",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_mastery.png",
-  "position": {
-    "x": 339.2064,
-    "y": -214.75761
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_mastery.png",
+  "id": "skilltree:enchanter_mastery",
+  "isStartingPoint": false,
+  "positionX": 339.2064,
+  "positionY": -214.75761
 }

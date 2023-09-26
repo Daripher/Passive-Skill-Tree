@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:maximum_life_per_evasion",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.05,
+        "id": "fa3d9a0b-c5ee-4ad2-9e2b-0e6a44febf2e",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_life_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_life_1.png",
-  "position": {
-    "x": 218.63171,
-    "y": 90.52425
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_life_1.png",
+  "id": "skilltree:hunter_life_1",
+  "isStartingPoint": false,
+  "positionX": 218.63171,
+  "positionY": 90.52425
 }

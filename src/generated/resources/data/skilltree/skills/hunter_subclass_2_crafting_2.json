@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:crafted_quivers_capacity",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "d42ce82a-9ee0-4f7d-8a85-ae4c9da475f1",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_2_crafting_3",
     "skilltree:hunter_subclass_2_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_crafting_1.png",
-  "position": {
-    "x": 391.8586,
-    "y": 37.011627
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_crafting_1.png",
+  "id": "skilltree:hunter_subclass_2_crafting_2",
+  "isStartingPoint": false,
+  "positionX": 391.8586,
+  "positionY": 37.011627
 }

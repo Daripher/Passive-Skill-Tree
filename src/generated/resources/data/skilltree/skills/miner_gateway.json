@@ -1,16 +1,16 @@
 {
-  "attribute_modifiers": [],
-  "background_texture": "skilltree:textures/icons/background/gateway.png",
-  "button_size": 33,
-  "connections": [
+  "attributeModifiers": [],
+  "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
+  "borderTexture": "skilltree:textures/tooltip/gateway.png",
+  "buttonSize": 33,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_1_defensive_1"
   ],
-  "gateway": "skilltree:astral_gateway",
-  "icon_texture": "skilltree:textures/icons/void.png",
-  "position": {
-    "x": -122.038315,
-    "y": 166.7773
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
-  "tree": "skilltree:tree"
+  "gatewayId": "skilltree:astral_gateway",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "id": "skilltree:miner_gateway",
+  "isStartingPoint": false,
+  "positionX": -122.038315,
+  "positionY": 166.7773
 }

@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:attack_speed_under_potion_effect",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "af646066-2882-4887-8331-1da200f95f86",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_speed_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_speed_1.png",
-  "position": {
-    "x": -35.997005,
-    "y": 263.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_speed_1.png",
+  "id": "skilltree:alchemist_speed_2",
+  "isStartingPoint": false,
+  "positionX": -35.997005,
+  "positionY": 263.52728
 }

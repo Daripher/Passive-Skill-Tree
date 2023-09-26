@@ -1,26 +1,29 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.2,
       "attribute": "skilltree:cooked_food_saturation",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.2,
+        "id": "dd11aa37-0524-4694-9d1c-3313c79532b4",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_defensive_1",
     "skilltree:cook_offensive_1",
     "skilltree:cook_defensive_crafting_1",
     "skilltree:cook_offensive_crafting_1",
     "skilltree:cook_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_class.png",
-  "position": {
-    "x": -12.0,
-    "y": -164.0
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_class.png",
+  "id": "skilltree:cook_class",
+  "isStartingPoint": true,
+  "positionX": -12.0,
+  "positionY": -164.0
 }

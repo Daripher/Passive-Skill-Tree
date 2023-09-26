@@ -1,22 +1,26 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:cooked_food_healing_per_saturation",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "a4b51f25-0e2a-4756-b08b-c4195156227d",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:cook_defensive_crafting_4",
     "skilltree:cook_healing_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_defensive_crafting_1.png",
-  "position": {
-    "x": -59.979797,
-    "y": -190.03497
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_defensive_crafting_1.png",
+  "id": "skilltree:cook_defensive_crafting_3",
+  "isStartingPoint": false,
+  "positionX": -59.979797,
+  "positionY": -190.03497
 }

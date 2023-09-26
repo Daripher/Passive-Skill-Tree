@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:damage_against_burning",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "8c7214c0-2698-4aaf-a484-7bd7e1e538df",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_3"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_offensive_1.png",
-  "position": {
-    "x": 375.87048,
-    "y": -80.70598
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_1.png",
+  "id": "skilltree:enchanter_subclass_1_offensive_2",
+  "isStartingPoint": false,
+  "positionX": 375.87048,
+  "positionY": -80.70598
 }

@@ -4,9 +4,9 @@ import java.util.function.Supplier;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
+import daripher.skilltree.data.SkillsReloader;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.SkillsReloader;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

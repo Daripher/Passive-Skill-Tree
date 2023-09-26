@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "skilltree:life_per_hit_under_potion_effect",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.5,
+        "id": "180de7f3-fb82-4af6-be6f-b6ce0c7de42d",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
-  "position": {
-    "x": 44.9606,
-    "y": 84.42358
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
+  "id": "skilltree:alchemist_healing_notable_1",
+  "isStartingPoint": false,
+  "positionX": 44.9606,
+  "positionY": 84.42358
 }

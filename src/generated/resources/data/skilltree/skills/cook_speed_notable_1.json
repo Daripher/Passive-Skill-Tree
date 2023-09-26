@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:attack_speed_if_not_hungry",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "f8d24c0d-edbb-40a6-82a0-be621b4809f5",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/cook_speed_notable_1.png",
-  "position": {
-    "x": -9.994019,
-    "y": -281.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/cook_speed_notable_1.png",
+  "id": "skilltree:cook_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": -9.994019,
+  "positionY": -281.52728
 }

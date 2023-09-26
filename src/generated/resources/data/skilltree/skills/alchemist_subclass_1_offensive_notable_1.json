@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.05,
       "attribute": "skilltree:crit_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.05,
+        "id": "12838749-9a71-4d4b-b0eb-91fd4ffb8c00",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": -112.97842,
-    "y": 425.79138
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:alchemist_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -112.97842,
+  "positionY": 425.79138
 }

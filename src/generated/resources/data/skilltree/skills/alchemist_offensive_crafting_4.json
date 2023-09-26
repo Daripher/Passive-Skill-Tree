@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:brewed_harmful_potions_strength",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "cbe0655d-a50e-4e68-ba87-c0041459d986",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:alchemist_offensive_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_offensive_crafting_1.png",
-  "position": {
-    "x": -72.97908,
-    "y": 196.5483
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_offensive_crafting_1.png",
+  "id": "skilltree:alchemist_offensive_crafting_4",
+  "isStartingPoint": false,
+  "positionX": -72.97908,
+  "positionY": 196.5483
 }

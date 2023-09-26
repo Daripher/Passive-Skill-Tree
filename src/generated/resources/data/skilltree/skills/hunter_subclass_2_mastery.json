@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:crafted_quivers_capacity",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.25,
+        "id": "aaa0a59c-d3c9-401e-a12e-8d82cb7d2ccc",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_mastery.png",
-  "position": {
-    "x": 448.8894,
-    "y": 86.72784
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_mastery.png",
+  "id": "skilltree:hunter_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": 448.8894,
+  "positionY": 86.72784
 }

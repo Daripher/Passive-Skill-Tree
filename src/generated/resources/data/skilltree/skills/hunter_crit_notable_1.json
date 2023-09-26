@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:projectile_crit_damage",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.25,
+        "id": "682160f7-b50b-4635-aff2-93d945d5de0d",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_crit_notable_1.png",
-  "position": {
-    "x": 247.66266,
-    "y": 138.7801
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_crit_notable_1.png",
+  "id": "skilltree:hunter_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": 247.66266,
+  "positionY": 138.7801
 }

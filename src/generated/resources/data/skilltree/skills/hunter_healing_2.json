@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.25,
       "attribute": "skilltree:life_per_hit",
-      "operation": "addition"
+      "modifier": {
+        "amount": 0.25,
+        "id": "e596f5c0-02a5-42cd-9048-68a9d5bfcb83",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_offensive_crafting_3"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_healing_1.png",
-  "position": {
-    "x": 175.63277,
-    "y": -26.7629
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_healing_1.png",
+  "id": "skilltree:hunter_healing_2",
+  "isStartingPoint": false,
+  "positionX": 175.63277,
+  "positionY": -26.7629
 }

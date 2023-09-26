@@ -6,8 +6,8 @@
       "gem_class": {
         "key": "jewelry",
         "types": [
-          "ring",
-          "necklace"
+          "necklace",
+          "ring"
         ]
       },
       "operation": "addition",
@@ -93,11 +93,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "bow",
-          "sword",
-          "heavy_weapon",
+          "crossbow",
           "trident",
-          "crossbow"
+          "heavy_weapon",
+          "sword",
+          "bow"
         ]
       },
       "operation": "addition",

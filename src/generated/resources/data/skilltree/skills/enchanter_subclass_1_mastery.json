@@ -1,31 +1,43 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.1,
       "attribute": "skilltree:chance_to_ignite",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "57327b64-b3ff-4ceb-94ba-48b3a89ca7b1",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.1,
       "attribute": "skilltree:damage_against_burning",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "0329d59c-8cb7-4622-b46d-7b7b1dd9d676",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     },
     {
-      "amount": 0.1,
       "attribute": "skilltree:crit_chance_against_burning",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.1,
+        "id": "3972cf81-96af-4ff0-8cfe-77c8e6dafffb",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
-  "position": {
-    "x": 448.90466,
-    "y": -110.70454
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
+  "id": "skilltree:enchanter_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": 448.90466,
+  "positionY": -110.70454
 }

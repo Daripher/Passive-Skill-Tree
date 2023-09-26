@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.15,
       "attribute": "skilltree:triple_loot_chance",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.15,
+        "id": "ae0e078e-86fc-4e70-bb75-c03a958ef569",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
-  "position": {
-    "x": 339.18997,
-    "y": 190.78607
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_mastery.png",
+  "id": "skilltree:hunter_mastery",
+  "isStartingPoint": false,
+  "positionX": 339.18997,
+  "positionY": 190.78607
 }

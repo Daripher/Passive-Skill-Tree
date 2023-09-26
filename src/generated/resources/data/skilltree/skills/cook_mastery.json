@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.5,
       "attribute": "skilltree:cooked_food_saturation",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.5,
+        "id": "412eb0da-3cc9-47b0-8c7e-2d81afea6313",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/cook_mastery.png",
-  "position": {
-    "x": -11.994019,
-    "y": -417.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/cook_mastery.png",
+  "id": "skilltree:cook_mastery",
+  "isStartingPoint": false,
+  "positionX": -11.994019,
+  "positionY": -417.52728
 }

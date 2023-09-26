@@ -1,19 +1,23 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 1.0,
       "attribute": "skilltree:can_mix_potions",
-      "operation": "addition"
+      "modifier": {
+        "amount": 1.0,
+        "id": "f8422354-219f-4945-bc04-e9b5ec11ff2c",
+        "nameGetter": "PassiveSkill",
+        "operation": "ADDITION"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_crafting_notable_1.png",
-  "position": {
-    "x": -10.0,
-    "y": 27.0
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "commands": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_crafting_notable_1.png",
+  "id": "skilltree:alchemist_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": -10.0,
+  "positionY": 27.0
 }

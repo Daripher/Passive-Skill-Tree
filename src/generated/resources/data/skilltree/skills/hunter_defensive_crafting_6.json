@@ -1,21 +1,25 @@
 {
-  "attribute_modifiers": [
+  "attributeModifiers": [
     {
-      "amount": 0.01,
       "attribute": "skilltree:crafted_armor_evasion",
-      "operation": "multiply_base"
+      "modifier": {
+        "amount": 0.01,
+        "id": "6cfbfcd7-1c7d-45de-98d4-dd94d77aa709",
+        "nameGetter": "PassiveSkill",
+        "operation": "MULTIPLY_BASE"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "commands": [],
+  "connectedSkills": [
     "skilltree:hunter_defensive_crafting_7"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_defensive_crafting_1.png",
-  "position": {
-    "x": 280.14682,
-    "y": 51.009857
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_defensive_crafting_1.png",
+  "id": "skilltree:hunter_defensive_crafting_6",
+  "isStartingPoint": false,
+  "positionX": 280.14682,
+  "positionY": 51.009857
 }
