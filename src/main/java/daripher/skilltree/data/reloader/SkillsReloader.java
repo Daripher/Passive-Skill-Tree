@@ -1,4 +1,4 @@
-package daripher.skilltree.data;
+package daripher.skilltree.data.reloader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +40,7 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
 			.registerTypeAdapter(new TypeToken<Supplier<String>>() {}.getType(), new SupplierSerializer<>(String.class))
 			.registerTypeAdapter(new TypeToken<Pair<Attribute, AttributeModifier>>() {}.getType(),
 					new PairSerializer<>("attribute", "modifier", Attribute.class, AttributeModifier.class))
+			.setPrettyPrinting()
 			.create();
 
 	public SkillsReloader() {

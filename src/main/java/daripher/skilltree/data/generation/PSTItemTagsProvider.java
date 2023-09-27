@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen;
+package daripher.skilltree.data.generation;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen.translation;
+package daripher.skilltree.data.generation.translation;
 
 import java.util.Arrays;
 

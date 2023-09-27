@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -18,7 +19,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 
-import daripher.skilltree.client.SkillTreeClientData;
+import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.EnumCycleButton;
 import daripher.skilltree.client.widget.NumberEditBox;
 import daripher.skilltree.client.widget.PSTButton;
@@ -28,6 +29,7 @@ import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.skill.PassiveSkillTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -41,8 +43,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.common.CuriosHelper;
 import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
@@ -52,7 +54,7 @@ public class SkillTreeEditorScreen extends Screen {
 	private final List<SkillConnection> skillConnections = new ArrayList<>();
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
 	private final Set<ResourceLocation> selectedSkills = new HashSet<>();
-	private final ResourceLocation treeId;
+	private final PassiveSkillTree skillTree;
 	private int prevMouseX;
 	private int prevMouseY;
 	private float zoom = 1F;
@@ -67,7 +69,7 @@ public class SkillTreeEditorScreen extends Screen {
 
 	public SkillTreeEditorScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
-		this.treeId = skillTreeId;
+		this.skillTree = SkillTreeClientData.getOrCreateEditorTree(skillTreeId);
 		this.minecraft = Minecraft.getInstance();
 	}
 
@@ -82,6 +84,7 @@ public class SkillTreeEditorScreen extends Screen {
 		if (maxScrollY < 0)
 			maxScrollY = 0;
 		addSkillConnections();
+		addGatewayConnections();
 		addToolButtons();
 	}
 
@@ -208,7 +211,7 @@ public class SkillTreeEditorScreen extends Screen {
 
 	private void addSkillButtons() {
 		skillButtons.clear();
-		SkillTreeClientData.getOrCreateEditorTree(treeId).forEach(this::addSkillButton);
+		getTreeSkills().forEach(this::addSkillButton);
 	}
 
 	private void addToolButtons() {
@@ -223,9 +226,10 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	private void addAttributeToolsButtons() {
-		PassiveSkill skill = getSkill((ResourceLocation) selectedSkills.toArray()[0]);
+		ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
+		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
 		toolsY += 5;
-		if (selectedSkills.stream().map(this::getSkill).allMatch(skill::sameBonuses)) {
+		if (selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).allMatch(skill::sameBonuses)) {
 			for (int row = 0; row < skill.getAttributeModifiers().size(); row++) {
 				addAttributeToolsButtonsRow(skill, row);
 				toolsY += 19;
@@ -239,11 +243,11 @@ public class SkillTreeEditorScreen extends Screen {
 		Button addModifierButton = new PSTButton(toolsX, toolsY, 100, 14,
 				Component.translatable("Add Modifier"),
 				b -> {
-					selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+					selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
 						skill.getAttributeModifiers().add(Pair.of(Attributes.ARMOR,
-								new AttributeModifier(UUID.randomUUID(), "Skill Tree Bonus",
+								new AttributeModifier(UUID.randomUUID(), "SkillTree",
 										1, Operation.ADDITION)));
-						SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+						SkillTreeClientData.saveEditorSkill(skill);
 						rebuildWidgets();
 					});
 				});
@@ -274,9 +278,9 @@ public class SkillTreeEditorScreen extends Screen {
 				modifier.getOperation());
 		addRenderableWidget(operationButton);
 		Button removeButton = new RemoveButton(toolsX + 360, toolsY, 14, 14, b -> {
-			selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+			selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
 				skill.getAttributeModifiers().remove(row);
-				SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+				SkillTreeClientData.saveEditorSkill(skill);
 				rebuildWidgets();
 			});
 		});
@@ -285,7 +289,7 @@ public class SkillTreeEditorScreen extends Screen {
 		Runnable onChange = () -> {
 			if (!attributeEditor.isValueValid())
 				return;
-			selectedSkills.stream().map(this::getSkill).forEach(skill -> {
+			selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
 				String newAttributeId = attributeEditor.getValue();
 				Attribute newAttribute;
 				if (newAttributeId.startsWith("curios:")) {
@@ -299,7 +303,7 @@ public class SkillTreeEditorScreen extends Screen {
 				AttributeModifier newModifier = new AttributeModifier(oldModifier.getId(), oldModifier.getName(),
 						amount, operation);
 				skill.getAttributeModifiers().set(modifierIndex, Pair.of(newAttribute, newModifier));
-				SkillTreeClientData.saveEditorSkill(treeId, skill.getId(), skill);
+				SkillTreeClientData.saveEditorSkill(skill);
 			});
 		};
 		attributeEditor.setResponder(s -> onChange.run());
@@ -312,25 +316,24 @@ public class SkillTreeEditorScreen extends Screen {
 		ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
 		if (areSkillsConnected(first, second)) {
 			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Disconnect"), b -> {
-				SkillTreeClientData.getOrCreateEditorTree(treeId).get(first).getConnectedSkills().remove(second);
-				SkillTreeClientData.getOrCreateEditorTree(treeId).get(second).getConnectedSkills().remove(first);
-				selectedSkills
-						.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+				SkillTreeClientData.getEditorSkill(first).getConnectedSkills().remove(second);
+				SkillTreeClientData.getEditorSkill(second).getConnectedSkills().remove(first);
+				saveSelectedSkills();
 				rebuildWidgets();
 			}));
 		} else {
 			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Connect"), b -> {
 				skillButtons.get(first).skill.getConnectedSkills().add(second);
-				selectedSkills
-						.forEach(id -> SkillTreeClientData.saveEditorSkill(treeId, id, skillButtons.get(id).skill));
+				saveSelectedSkills();
 				rebuildWidgets();
 			}));
 		}
 		toolsY += 19;
 	}
 
-	private PassiveSkill getSkill(ResourceLocation id) {
-		return SkillTreeClientData.getOrCreateEditorTree(treeId).get(id);
+	private void saveSelectedSkills() {
+		selectedSkills.stream().map(skillButtons::get).map(button -> button.skill)
+				.forEach(id -> SkillTreeClientData.saveEditorSkill(id));
 	}
 
 	private boolean areSkillsConnected(ResourceLocation first, ResourceLocation second) {
@@ -338,7 +341,7 @@ public class SkillTreeEditorScreen extends Screen {
 				|| skillButtons.get(second).skill.getConnectedSkills().contains(first);
 	}
 
-	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
+	protected void addSkillButton(PassiveSkill skill) {
 		float skillX = skill.getPositionX();
 		float skillY = skill.getPositionY();
 		double buttonX = skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
@@ -346,7 +349,7 @@ public class SkillTreeEditorScreen extends Screen {
 		SkillButton button = new SkillButton(() -> 0F, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		button.highlighted = true;
-		skillButtons.put(skillId, button);
+		skillButtons.put(skill.getId(), button);
 		if (maxScrollX < Mth.abs(skillX))
 			maxScrollX = (int) Mth.abs(skillX);
 		if (maxScrollY < Mth.abs(skillY))
@@ -355,15 +358,13 @@ public class SkillTreeEditorScreen extends Screen {
 
 	public void addSkillConnections() {
 		skillConnections.clear();
+		getTreeSkills().forEach(this::addSkillConnections);
+	}
+
+	public void addGatewayConnections() {
 		gatewayConnections.clear();
-		Map<ResourceLocation, PassiveSkill> skills = SkillTreeClientData.getOrCreateEditorTree(treeId);
-		skills.forEach((skillId1, skill) -> {
-			skill.getConnectedSkills().forEach(skillId2 -> {
-				connectSkills(skillConnections, skillId1, skillId2);
-			});
-		});
 		Map<ResourceLocation, List<PassiveSkill>> gateways = new HashMap<ResourceLocation, List<PassiveSkill>>();
-		skills.values().stream().filter(PassiveSkill::isGateway).forEach(skill -> {
+		getTreeSkills().filter(PassiveSkill::isGateway).forEach(skill -> {
 			ResourceLocation gatewayId = skill.getGatewayId().get();
 			if (!gateways.containsKey(gatewayId)) {
 				gateways.put(gatewayId, new ArrayList<>());
@@ -374,6 +375,16 @@ public class SkillTreeEditorScreen extends Screen {
 			for (int i = 1; i < list.size(); i++) {
 				connectSkills(gatewayConnections, list.get(0).getId(), list.get(i).getId());
 			}
+		});
+	}
+
+	private Stream<PassiveSkill> getTreeSkills() {
+		return skillTree.getSkillIds().stream().map(SkillTreeClientData::getEditorSkill);
+	}
+
+	private void addSkillConnections(PassiveSkill skill) {
+		skill.getConnectedSkills().forEach(connectedSkillId -> {
+			connectSkills(skillConnections, skill.getId(), connectedSkillId);
 		});
 	}
 

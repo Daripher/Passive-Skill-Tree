@@ -31,7 +31,7 @@ public class PSTKeybinds {
 			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.player == null || minecraft.screen != null) return;
 			if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
-				minecraft.setScreen(new SkillTreeScreen(new ResourceLocation(SkillTreeMod.MOD_ID, "tree")));
+				minecraft.setScreen(new SkillTreeScreen(new ResourceLocation(SkillTreeMod.MOD_ID, "main_tree")));
 			}
 		}
 	}

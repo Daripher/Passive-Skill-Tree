@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
+import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -58,8 +58,11 @@ public class SyncPlayerSkillsMessage {
 		var minecraft = Minecraft.getInstance();
 		var skillsCapability = PlayerSkillsProvider.get(minecraft.player);
 		skillsCapability.getPlayerSkills().clear();
-		var skillTreeId = new ResourceLocation(SkillTreeMod.MOD_ID, "tree");
-		message.learnedSkills.stream().map(SkillTreeClientData.getSkillsForTree(skillTreeId)::get).forEach(skillsCapability.getPlayerSkills()::add);
+		// TODO: replace with actual tree
+		var skillTreeId = new ResourceLocation(SkillTreeMod.MOD_ID, "main_tree");
+		message.learnedSkills.stream()
+				.map(SkillTreeClientData::getSkill)
+				.forEach(skillsCapability.getPlayerSkills()::add);
 		skillsCapability.setSkillPoints(message.skillPoints);
 		if (minecraft.screen instanceof SkillTreeScreen skillTreeScreen) {
 			skillTreeScreen.skillPoints = skillsCapability.getSkillPoints();

@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen;
+package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
 import net.minecraft.data.DataGenerator;

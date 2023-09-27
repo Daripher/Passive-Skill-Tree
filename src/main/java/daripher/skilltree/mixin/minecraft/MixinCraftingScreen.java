@@ -15,7 +15,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.SkillTreeClientData;
+import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.ChatFormatting;
@@ -74,11 +74,12 @@ public abstract class MixinCraftingScreen extends AbstractContainerScreen<Crafti
 	}
 	
 	private void addRequiredSkillButton(SkillRequiringRecipe recipe) {
-		PassiveSkill skill = SkillTreeClientData.getSkillsForTree(new ResourceLocation(SkillTreeMod.MOD_ID, "tree")).get(recipe.getRequiredSkillId());
+		PassiveSkill skill = SkillTreeClientData.getSkill(recipe.getRequiredSkillId());
 		requiredSkillButton = new SkillButton(() -> 0F, leftPos + 132, topPos + 69, skill, this::buttonPressed, this::renderButtonTooltip);
 		requiredSkillButton.x -= requiredSkillButton.getWidth() / 2;
 		requiredSkillButton.y -= requiredSkillButton.getHeight() / 2;
-		LocalPlayer player = Minecraft.getInstance().player;
+		Minecraft minecraft = Minecraft.getInstance();
+		LocalPlayer player = minecraft.player;
 		if (PlayerSkillsProvider.get(player).hasSkill(requiredSkillButton.skill.getId())) {
 			requiredSkillButton.highlighted = true;
 		}

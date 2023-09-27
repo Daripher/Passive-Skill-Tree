@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen;
+package daripher.skilltree.data.generation;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
-import daripher.skilltree.datagen.loot.PSTBlockLoot;
+import daripher.skilltree.data.generation.loot.PSTBlockLoot;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;

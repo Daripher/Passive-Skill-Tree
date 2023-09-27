@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.data.SkillsReloader;
+import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.network.FriendlyByteBuf;

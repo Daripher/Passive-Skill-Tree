@@ -7,8 +7,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.skill.SkillTreeClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -26,7 +26,8 @@ public class PSTClientCommands {
 	private static int timer;
 
 	public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER = (ctx, builder) -> {
-		return SharedSuggestionProvider.suggest(SkillTreeClientData.getTreeIds().stream().map(ResourceLocation::toString), builder);
+		return SharedSuggestionProvider
+				.suggest(SkillTreeClientData.getAllTreesIds().stream().map(ResourceLocation::toString), builder);
 	};
 
 	@SubscribeEvent

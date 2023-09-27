@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.skill.PassiveSkillTree;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -27,7 +28,8 @@ public class ByteBufHelper {
 
 	public static void writeOptionalResourceLocation(FriendlyByteBuf buf, Optional<ResourceLocation> location) {
 		buf.writeBoolean(location.isPresent());
-		if (location.isPresent()) buf.writeUtf(location.get().toString());
+		if (location.isPresent())
+			buf.writeUtf(location.get().toString());
 	}
 
 	public static void writeAttributeModifier(FriendlyByteBuf buf, Pair<Attribute, AttributeModifier> pair) {
@@ -54,7 +56,8 @@ public class ByteBufHelper {
 		locations.forEach(location -> buf.writeUtf(location.toString()));
 	}
 
-	public static void writeAttributeModifiers(FriendlyByteBuf buf, List<Pair<Attribute, AttributeModifier>> modifiers) {
+	public static void writeAttributeModifiers(FriendlyByteBuf buf,
+			List<Pair<Attribute, AttributeModifier>> modifiers) {
 		buf.writeInt(modifiers.size());
 		modifiers.forEach(modifier -> writeAttributeModifier(buf, modifier));
 	}
@@ -82,7 +85,8 @@ public class ByteBufHelper {
 	public static List<ResourceLocation> readResourceLocations(FriendlyByteBuf buf) {
 		int count = buf.readInt();
 		List<ResourceLocation> locations = new ArrayList<>();
-		for (int i = 0; i < count; i++) locations.add(new ResourceLocation(buf.readUtf()));
+		for (int i = 0; i < count; i++)
+			locations.add(new ResourceLocation(buf.readUtf()));
 		return locations;
 	}
 
@@ -93,7 +97,8 @@ public class ByteBufHelper {
 	public static List<Pair<Attribute, AttributeModifier>> readAttributeModifiers(FriendlyByteBuf buf) {
 		int count = buf.readInt();
 		List<Pair<Attribute, AttributeModifier>> modifiers = new ArrayList<>();
-		for (int i = 0; i < count; i++) modifiers.add(readAttributeModifier(buf));
+		for (int i = 0; i < count; i++)
+			modifiers.add(readAttributeModifier(buf));
 		return modifiers;
 	}
 
@@ -114,7 +119,8 @@ public class ByteBufHelper {
 		} else {
 			attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
 		}
-		if (attribute == null) LOGGER.error("Attribute {} does not exist", attributeId);
+		if (attribute == null)
+			LOGGER.error("Attribute {} does not exist", attributeId);
 		return attribute;
 	}
 
@@ -137,7 +143,33 @@ public class ByteBufHelper {
 	public static List<PassiveSkill> readPassiveSkills(FriendlyByteBuf buf) {
 		int count = buf.readInt();
 		List<PassiveSkill> skills = new ArrayList<>();
-		for (int i = 0; i < count; i++) skills.add(readPassiveSkill(buf));
+		for (int i = 0; i < count; i++)
+			skills.add(readPassiveSkill(buf));
 		return skills;
+	}
+
+	public static void writePassiveSkillTrees(FriendlyByteBuf buf, Collection<PassiveSkillTree> skillTrees) {
+		buf.writeInt(skillTrees.size());
+		skillTrees.forEach(skillTree -> writePassiveSkillTree(buf, skillTree));
+	}
+
+	public static void writePassiveSkillTree(FriendlyByteBuf buf, PassiveSkillTree skillTree) {
+		buf.writeUtf(skillTree.getId().toString());
+		writeResourceLocations(buf, skillTree.getSkillIds());
+	}
+
+	public static List<PassiveSkillTree> readPassiveSkillTrees(FriendlyByteBuf buf) {
+		int count = buf.readInt();
+		List<PassiveSkillTree> skillTrees = new ArrayList<>();
+		for (int i = 0; i < count; i++)
+			skillTrees.add(readPassiveSkillTree(buf));
+		return skillTrees;
+	}
+
+	public static PassiveSkillTree readPassiveSkillTree(FriendlyByteBuf buf) {
+		ResourceLocation id = new ResourceLocation(buf.readUtf());
+		PassiveSkillTree skillTree = new PassiveSkillTree(id);
+		readResourceLocations(buf).forEach(skillTree.getSkillIds()::add);
+		return skillTree;
 	}
 }

@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen.loot;
+package daripher.skilltree.data.generation.loot;
 
 import java.util.Map;
 import java.util.function.BiConsumer;

@@ -1,4 +1,4 @@
-package daripher.skilltree.datagen;
+package daripher.skilltree.data.generation.skills;
 
 import static daripher.skilltree.init.PSTAttributes.*;
 import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION;
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonElement;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.data.SkillsReloader;
+import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -34,7 +34,7 @@ import net.minecraftforge.registries.RegistryObject;
 import top.theillusivec4.curios.common.CuriosHelper;
 
 public class PSTSkillsProvider implements DataProvider {
-	private Map<ResourceLocation, PassiveSkill> data = new HashMap<>();
+	private Map<ResourceLocation, PassiveSkill> skills = new HashMap<>();
 	private DataGenerator dataGenerator;
 	private String[] playerClasses = new String[] { "alchemist", "hunter", "enchanter", "cook", "blacksmith", "miner" };
 
@@ -580,7 +580,7 @@ public class PSTSkillsProvider implements DataProvider {
 		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/gateway.png");
 		PassiveSkill skill = new PassiveSkill(skillId, 33, backgroundTexture, iconTexture, borderTexture, false);
 		skill.setGatewayId(new ResourceLocation(SkillTreeMod.MOD_ID, gatewayId));
-		data.put(skillId, skill);
+		skills.put(skillId, skill);
 	}
 
 	private void addSkill(String name, String icon, int size) {
@@ -591,7 +591,7 @@ public class PSTSkillsProvider implements DataProvider {
 		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + icon + ".png");
 		String border = size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
 		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/" + border + ".png");
-		data.put(skillId, new PassiveSkill(skillId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
+		skills.put(skillId, new PassiveSkill(skillId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
 	}
 
 	@Override
@@ -599,7 +599,7 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkills();
 		shapeSkillTree();
 		setSkillsAttributeModifiers();
-		data.values().forEach(skill -> save(output, skill));
+		skills.values().forEach(skill -> save(output, skill));
 	}
 
 	private void save(CachedOutput output, PassiveSkill skill) {
@@ -613,11 +613,12 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	public String getSkillPath(PassiveSkill skill) {
-		return "data/" + skill.getId().getNamespace() + "/skills/" + skill.getId().getPath() + ".json";
+		ResourceLocation id = skill.getId();
+		return "data/" + id.getNamespace() + "/skills/" + id.getPath() + ".json";
 	}
 
 	public Map<ResourceLocation, PassiveSkill> getSkills() {
-		return data;
+		return skills;
 	}
 
 	@Override

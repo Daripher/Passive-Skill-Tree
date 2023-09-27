@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -16,18 +17,19 @@ import com.mojang.math.Vector3f;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.SkillTreeClientData;
+import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.InfoPanel;
+import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.ProgressBar;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
-import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.util.TooltipHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -54,7 +56,7 @@ public class SkillTreeScreen extends Screen {
 	private final List<ResourceLocation> learnedSkills = new ArrayList<>();
 	private final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
 	private final List<SkillButton> startingPoints = new ArrayList<>();
-	private final ResourceLocation treeId;
+	private final PassiveSkillTree skillTree;
 	private AbstractWidget buyButton;
 	private AbstractWidget pointsInfo;
 	private AbstractWidget confirmButton;
@@ -79,7 +81,7 @@ public class SkillTreeScreen extends Screen {
 
 	public SkillTreeScreen(ResourceLocation skillTreeId) {
 		super(Component.empty());
-		this.treeId = skillTreeId;
+		this.skillTree = SkillTreeClientData.getSkillTree(skillTreeId);
 		this.minecraft = Minecraft.getInstance();
 	}
 
@@ -110,6 +112,7 @@ public class SkillTreeScreen extends Screen {
 		if (maxScrollY < 0)
 			maxScrollY = 0;
 		addSkillConnections();
+		addGatewayConnections();
 		highlightSkillsThatCanBeLearned();
 	}
 
@@ -268,10 +271,11 @@ public class SkillTreeScreen extends Screen {
 	public void addSkillButtons() {
 		startingPoints.clear();
 		skillButtons.clear();
-		SkillTreeClientData.getSkillsForTree(treeId).forEach(this::addSkillButton);
+		skillTree.getSkillIds().forEach(this::addSkillButton);
 	}
 
-	protected void addSkillButton(ResourceLocation skillId, PassiveSkill skill) {
+	protected void addSkillButton(ResourceLocation skillId) {
+		PassiveSkill skill = SkillTreeClientData.getSkill(skillId);
 		float skillX = skill.getPositionX();
 		float skillY = skill.getPositionY();
 		double buttonX = skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
@@ -302,15 +306,13 @@ public class SkillTreeScreen extends Screen {
 
 	public void addSkillConnections() {
 		skillConnections.clear();
+		getTreeSkills().forEach(this::addSkillConnections);
+	}
+
+	public void addGatewayConnections() {
 		gatewayConnections.clear();
-		Map<ResourceLocation, PassiveSkill> skills = SkillTreeClientData.getSkillsForTree(treeId);
-		skills.forEach((skillId1, skill) -> {
-			skill.getConnectedSkills().forEach(skillId2 -> {
-				connectSkills(skillConnections, skillId1, skillId2);
-			});
-		});
 		Map<ResourceLocation, List<PassiveSkill>> gateways = new HashMap<ResourceLocation, List<PassiveSkill>>();
-		skills.values().stream().filter(PassiveSkill::isGateway).forEach(skill -> {
+		getTreeSkills().filter(PassiveSkill::isGateway).forEach(skill -> {
 			ResourceLocation gatewayId = skill.getGatewayId().get();
 			if (!gateways.containsKey(gatewayId)) {
 				gateways.put(gatewayId, new ArrayList<>());
@@ -321,6 +323,16 @@ public class SkillTreeScreen extends Screen {
 			for (int i = 1; i < list.size(); i++) {
 				connectSkills(gatewayConnections, list.get(0).getId(), list.get(i).getId());
 			}
+		});
+	}
+
+	private Stream<PassiveSkill> getTreeSkills() {
+		return skillTree.getSkillIds().stream().map(SkillTreeClientData::getSkill);
+	}
+
+	private void addSkillConnections(PassiveSkill skill) {
+		skill.getConnectedSkills().forEach(connectedSkillId -> {
+			connectSkills(skillConnections, skill.getId(), connectedSkillId);
 		});
 	}
 
@@ -421,24 +433,24 @@ public class SkillTreeScreen extends Screen {
 			return;
 		int cost = Config.getSkillPointCost(currentLevel);
 		NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
-		Minecraft.getInstance().player.giveExperiencePoints(-cost);
+		minecraft.player.giveExperiencePoints(-cost);
 	}
 
-	private static boolean canBuySkillPoint(int currentLevel) {
+	private boolean canBuySkillPoint(int currentLevel) {
 		if (!Config.enable_exp_exchange)
 			return false;
 		if (isMaxLevel(currentLevel))
 			return false;
 		int cost = Config.getSkillPointCost(currentLevel);
-		return Minecraft.getInstance().player.totalExperience >= cost;
+		return minecraft.player.totalExperience >= cost;
 	}
 
-	private static boolean isMaxLevel(int currentLevel) {
+	private boolean isMaxLevel(int currentLevel) {
 		return currentLevel >= Config.max_skill_points;
 	}
 
-	private static int getCurrentLevel() {
-		IPlayerSkills capability = PlayerSkillsProvider.get(Minecraft.getInstance().player);
+	private int getCurrentLevel() {
+		IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
 		int learnedSkills = capability.getPlayerSkills().size();
 		int skillPoints = capability.getSkillPoints();
 		return learnedSkills + skillPoints;
