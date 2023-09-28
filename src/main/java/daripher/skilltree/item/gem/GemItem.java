@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.init.PSTCreativeTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -20,8 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 
 public abstract class GemItem extends Item {
-	public GemItem() {
-		super(new Properties().tab(PSTCreativeTabs.SKILLTREE));
+	public GemItem(Properties properties) {
+		super(properties);
 	}
 
 	@Override

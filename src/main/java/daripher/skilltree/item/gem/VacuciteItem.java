@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import daripher.skilltree.init.PSTCreativeTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class VacuciteItem extends GemItem {
 	public VacuciteItem() {
-		super();
+		super(new Properties().tab(PSTCreativeTabs.SKILLTREE));
 	}
 
 	@Override
