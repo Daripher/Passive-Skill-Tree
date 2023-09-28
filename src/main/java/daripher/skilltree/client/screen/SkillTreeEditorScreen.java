@@ -413,38 +413,48 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	private void addConnectionToolsButton() {
+		addRenderableOnly(
+				new PSTLabel(toolsX, toolsY, Component.literal("• Connections").withStyle(ChatFormatting.GOLD)));
+		toolsY += 19;
 		ResourceLocation first = (ResourceLocation) selectedSkills.toArray()[0];
 		ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
-		if (areSkillsConnected(first, second)) {
+		PassiveSkill firstSkill = SkillTreeClientData.getEditorSkill(first);
+		PassiveSkill secondSkill = SkillTreeClientData.getEditorSkill(second);
+		if (areSkillsConnected(firstSkill, secondSkill)) {
 			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Disconnect"), b -> {
-				SkillTreeClientData.getEditorSkill(first).getConnectedSkills().remove(second);
-				SkillTreeClientData.getEditorSkill(second).getConnectedSkills().remove(first);
+				firstSkill.getConnectedSkills().remove(second);
+				firstSkill.getConnectedAsGateways().remove(second);
+				secondSkill.getConnectedSkills().remove(first);
+				secondSkill.getConnectedAsGateways().remove(first);
 				saveSelectedSkills();
 				rebuildWidgets();
 			}));
 		} else {
-			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Connect"), b -> {
+			addRenderableWidget(new PSTButton(toolsX, toolsY, 110, 14, Component.literal("Connect"), b -> {
 				skillButtons.get(first).skill.getConnectedSkills().add(second);
 				saveSelectedSkills();
 				rebuildWidgets();
 			}));
-			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Connect with Gateway"), b -> {
-				skillButtons.get(first).skill.getConnectedAsGateways().add(second);
-				saveSelectedSkills();
-				rebuildWidgets();
-			}));
+			addRenderableWidget(
+					new PSTButton(toolsX + 115, toolsY, 110, 14, Component.literal("Connect as Gateway"), b -> {
+						skillButtons.get(first).skill.getConnectedAsGateways().add(second);
+						saveSelectedSkills();
+						rebuildWidgets();
+					}));
 		}
 		toolsY += 19;
+	}
+
+	private boolean areSkillsConnected(PassiveSkill first, PassiveSkill second) {
+		return first.getConnectedSkills().contains(second.getId())
+				|| second.getConnectedSkills().contains(first.getId())
+				|| first.getConnectedAsGateways().contains(second.getId())
+				|| second.getConnectedAsGateways().contains(first.getId());
 	}
 
 	private void saveSelectedSkills() {
 		selectedSkills.stream().map(skillButtons::get).map(button -> button.skill)
 				.forEach(id -> SkillTreeClientData.saveEditorSkill(id));
-	}
-
-	private boolean areSkillsConnected(ResourceLocation first, ResourceLocation second) {
-		return skillButtons.get(first).skill.getConnectedSkills().contains(second)
-				|| skillButtons.get(second).skill.getConnectedSkills().contains(first);
 	}
 
 	protected void addSkillButton(PassiveSkill skill) {
