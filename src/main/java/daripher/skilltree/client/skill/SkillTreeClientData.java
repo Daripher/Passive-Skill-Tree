@@ -112,7 +112,7 @@ public class SkillTreeClientData {
 		}
 	}
 
-	private static void loadEditorSkill(ResourceLocation skillId) {
+	public static void loadEditorSkill(ResourceLocation skillId) {
 		PassiveSkill skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
 		EDITOR_PASSIVE_SKILLS.put(skillId, skill);
 	}

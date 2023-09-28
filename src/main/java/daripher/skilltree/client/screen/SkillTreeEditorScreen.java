@@ -19,6 +19,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.EnumCycleButton;
 import daripher.skilltree.client.widget.NumberEditBox;
@@ -79,8 +80,8 @@ public class SkillTreeEditorScreen extends Screen {
 	public void init() {
 		clearWidgets();
 		addSkillButtons();
-		maxScrollX -= width / 2 - 80;
-		maxScrollY -= height / 2 - 80;
+		maxScrollX -= width / 2;
+		maxScrollY -= height / 2;
 		if (maxScrollX < 0)
 			maxScrollX = 0;
 		if (maxScrollY < 0)
@@ -224,10 +225,65 @@ public class SkillTreeEditorScreen extends Screen {
 			addAttributeToolsButtons();
 			addTextureToolsButtons();
 			addButtonToolsButtons();
+			addNodeToolsButtons();
 		}
 		if (selectedSkills.size() == 2) {
 			addConnectionToolsButton();
 		}
+	}
+
+	private void addNodeToolsButtons() {
+		ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
+		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+		if (selectedSkills.size() == 1) {
+			addRenderableOnly(new PSTLabel(toolsX, toolsY,
+					Component.literal("- Attach New Skill -").withStyle(ChatFormatting.GREEN)));
+			toolsY += 19;
+			addRenderableOnly(
+					new PSTLabel(toolsX, toolsY, Component.literal("• Distance").withStyle(ChatFormatting.GOLD)));
+			addRenderableOnly(
+					new PSTLabel(toolsX + 45, toolsY, Component.literal("• Angle").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
+			NumberEditBox distanceEditor = new NumberEditBox(font, toolsX, toolsY, 40, 14, 10);
+			addRenderableWidget(distanceEditor);
+			NumberEditBox angleEditor = new NumberEditBox(font, toolsX + 45, toolsY, 40, 14, 0);
+			addRenderableWidget(angleEditor);
+			Button addButton = new PSTButton(toolsX + 90, toolsY, 50, 14, Component.literal("Add"), b -> {
+				ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
+						"textures/icons/background/lesser.png");
+				ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
+				ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
+						"textures/tooltip/lesser.png");
+				PassiveSkill newSkill = new PassiveSkill(createNewSkillId(), 16, backgroundTexture, iconTexture,
+						borderTexture, false);
+				float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
+				float distance = (float) distanceEditor.getNumericValue();
+				distance += skill.getButtonSize() / 2 + newSkill.getButtonSize() / 2;
+				float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+				float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+				newSkill.setPosition(skillX, skillY);
+				newSkill.connect(skill);
+				SkillTreeClientData.saveEditorSkill(newSkill);
+				SkillTreeClientData.loadEditorSkill(newSkill.getId());
+				skillTree.getSkillIds().add(newSkill.getId());
+				SkillTreeClientData.saveEditorSkillTree(skillTree);
+				rebuildWidgets();
+			});
+			addRenderableWidget(addButton);
+			toolsY += 19;
+		}
+		addRenderableOnly(new PSTLabel(toolsX, toolsY,
+				Component.literal("- To remove selected skills press CTRL+DELETE -").withStyle(ChatFormatting.RED)));
+		toolsY += 19;
+	}
+
+	private ResourceLocation createNewSkillId() {
+		ResourceLocation id;
+		int counter = 1;
+		do {
+			id = new ResourceLocation("skilltree", "new_skill_" + counter++);
+		} while (SkillTreeClientData.getEditorSkill(id) != null);
+		return id;
 	}
 
 	private void addButtonToolsButtons() {
@@ -236,7 +292,7 @@ public class SkillTreeEditorScreen extends Screen {
 		if (getSelectedSkills().allMatch(otherSkill -> sameSize(skill, otherSkill))) {
 			addRenderableOnly(new PSTLabel(toolsX, toolsY, Component.literal("• Size").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
-			NumberEditBox sizeEditor = new NumberEditBox(font, toolsX, toolsY, 60, 14, skill.getButtonSize());
+			NumberEditBox sizeEditor = new NumberEditBox(font, toolsX, toolsY, 40, 14, skill.getButtonSize());
 			sizeEditor.setNumericFilter(d -> d >= 2);
 			sizeEditor.setResponder(s -> {
 				getSelectedSkills().forEach(skill_ -> {
