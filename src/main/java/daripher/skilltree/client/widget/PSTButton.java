@@ -36,11 +36,12 @@ public class PSTButton extends Button {
 		ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
 		int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;
 		blit(poseStack, x, y, 0, v, width / 2, height);
-		blit(poseStack, x + width / 2, y, 140 - width / 2, v, width / 2, height);
+		blit(poseStack, x + width / 2, y, -width / 2, v, width / 2, height);
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
 		int textColor = getFGColor();
-		drawCenteredString(poseStack, font, getMessage(), x + width / 2, y + (height - 8) / 2, textColor | Mth.ceil(alpha * 255F) << 24);
+		textColor |= Mth.ceil(alpha * 255F) << 24;
+		drawCenteredString(poseStack, font, getMessage(), x + width / 2, y + (height - 8) / 2, textColor);
 	}
 
 	@Override

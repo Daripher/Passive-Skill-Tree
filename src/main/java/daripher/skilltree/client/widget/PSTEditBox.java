@@ -35,11 +35,12 @@ public class PSTEditBox extends EditBox {
 			ScreenHelper.prepareTextureRendering(new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
 			int v = isHoveredOrFocused() ? 42 : 56;
 			blit(poseStack, x, y, 0, v, width / 2, height);
-			blit(poseStack, x + width / 2, y, 140 - width / 2, v, width / 2, height);
+			blit(poseStack, x + width / 2, y, -width / 2, v, width / 2, height);
 			int textColor = isValueValid() ? DEFAULT_TEXT_COLOR : 0xD80000;
 			int cursorVisiblePosition = getCursorPosition() - getDisplayPosition();
 			int highlightWidth = getHighlightPos() - getDisplayPosition();
-			Font font = Minecraft.getInstance().font;
+			Minecraft minecraft = Minecraft.getInstance();
+			Font font = minecraft.font;
 			String visibleText = font.plainSubstrByWidth(getValue().substring(getDisplayPosition()), getInnerWidth());
 			boolean isTextSplitByCursor = cursorVisiblePosition >= 0 && cursorVisiblePosition <= visibleText.length();
 			boolean isCursorVisible = isFocused() && getFrame() / 6 % 2 == 0 && isTextSplitByCursor;
@@ -50,7 +51,8 @@ public class PSTEditBox extends EditBox {
 				highlightWidth = visibleText.length();
 			if (!visibleText.isEmpty()) {
 				String s1 = isTextSplitByCursor ? visibleText.substring(0, cursorVisiblePosition) : visibleText;
-				textX = font.drawShadow(poseStack, getFormatter().apply(s1, getDisplayPosition()), textX, textY, textColor);
+				textX = font.drawShadow(poseStack, getFormatter().apply(s1, getDisplayPosition()), textX, textY,
+						textColor);
 			}
 			boolean isCursorSurrounded = getCursorPosition() < getValue().length()
 					|| getValue().length() >= getMaxLength();

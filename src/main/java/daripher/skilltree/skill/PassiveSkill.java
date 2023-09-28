@@ -1,10 +1,8 @@
 package daripher.skilltree.skill;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -31,7 +29,7 @@ public class PassiveSkill {
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
 	private List<String> commands = new ArrayList<>();
 	private List<ResourceLocation> connectedSkills = new ArrayList<>();
-	private float positionX, positionY;	
+	private float positionX, positionY;
 	private int buttonSize;
 	private boolean isStartingPoint;
 
@@ -54,16 +52,32 @@ public class PassiveSkill {
 		return buttonSize;
 	}
 
+	public void setButtonSize(int buttonSize) {
+		this.buttonSize = buttonSize;
+	}
+
 	public ResourceLocation getBackgroundTexture() {
 		return backgroundTexture;
+	}
+
+	public void setBackgroundTexture(ResourceLocation texture) {
+		this.backgroundTexture = texture;
 	}
 
 	public ResourceLocation getIconTexture() {
 		return iconTexture;
 	}
 
+	public void setIconTexture(ResourceLocation texture) {
+		this.iconTexture = texture;
+	}
+
 	public ResourceLocation getBorderTexture() {
 		return borderTexture;
+	}
+
+	public void setBorderTexture(ResourceLocation texture) {
+		this.borderTexture = texture;
 	}
 
 	public Optional<ResourceLocation> getConnectedTreeId() {
@@ -188,23 +202,5 @@ public class PassiveSkill {
 			return;
 		if (instance.hasModifier(modifier))
 			instance.removeModifier(modifier);
-	}
-
-	public boolean sameBonuses(PassiveSkill other) {
-		if (other == this)
-			return true;
-		if (attributeModifiers.size() != other.attributeModifiers.size())
-			return false;
-		for (int i = 0; i < attributeModifiers.size(); i++) {
-			if (attributeModifiers.get(i).getLeft() != other.attributeModifiers.get(i).getLeft())
-				return false;
-			AttributeModifier modifier = attributeModifiers.get(i).getRight();
-			AttributeModifier otherModifier = other.attributeModifiers.get(i).getRight();
-			if (modifier.getAmount() != otherModifier.getAmount())
-				return false;
-			if (modifier.getOperation() != otherModifier.getOperation())
-				return false;
-		}
-		return true;
 	}
 }

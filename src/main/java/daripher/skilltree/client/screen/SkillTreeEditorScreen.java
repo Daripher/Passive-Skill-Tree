@@ -24,12 +24,14 @@ import daripher.skilltree.client.widget.EnumCycleButton;
 import daripher.skilltree.client.widget.NumberEditBox;
 import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.PSTEditBox;
+import daripher.skilltree.client.widget.PSTLabel;
 import daripher.skilltree.client.widget.RemoveButton;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
 import daripher.skilltree.client.widget.StatsList;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -218,18 +220,69 @@ public class SkillTreeEditorScreen extends Screen {
 		toolsX = width - 379;
 		toolsY = 0;
 		if (selectedSkills.size() > 0) {
+			toolsY += 5;
 			addAttributeToolsButtons();
+			addTextureToolsButtons();
+			addButtonToolsButtons();
 		}
 		if (selectedSkills.size() == 2) {
 			addConnectionToolsButton();
 		}
 	}
 
+	private void addButtonToolsButtons() {
+		ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
+		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+		if (getSelectedSkills().allMatch(otherSkill -> sameSize(skill, otherSkill))) {
+			addRenderableOnly(new PSTLabel(toolsX, toolsY, Component.literal("• Size").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
+			NumberEditBox sizeEditor = new NumberEditBox(font, toolsX, toolsY, 60, 14, skill.getButtonSize());
+			sizeEditor.setResponder(s -> {
+				getSelectedSkills().forEach(skill_ -> {
+					skill_.setButtonSize((int) sizeEditor.getNumericValue());
+				});
+				getSelectedSkillButtons().forEach(button -> {
+					button.setButtonSize((int) sizeEditor.getNumericValue());
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(sizeEditor);
+			toolsY += 19;
+		}
+		if (selectedSkills.size() == 1) {
+			toolsY -= 38;
+			addRenderableOnly(
+					new PSTLabel(toolsX + 85, toolsY, Component.literal("• Position").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
+			NumberEditBox xPosEditor = new NumberEditBox(font, toolsX + 85, toolsY, 60, 14, skill.getPositionX());
+			xPosEditor.setResponder(s -> {
+				skill.setPosition((float) xPosEditor.getNumericValue(), skill.getPositionY());
+				getSelectedSkillButtons().forEach(button -> {
+					button.setPosition(getSkillButtonX(skill), getSkillButtonY(skill));
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(xPosEditor);
+			NumberEditBox yPosEditor = new NumberEditBox(font, toolsX + 150, toolsY, 60, 14, skill.getPositionY());
+			yPosEditor.setResponder(s -> {
+				skill.setPosition(skill.getPositionX(), (float) yPosEditor.getNumericValue());
+				getSelectedSkillButtons().forEach(button -> {
+					button.setPosition(getSkillButtonX(skill), getSkillButtonY(skill));
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(yPosEditor);
+			toolsY += 19;
+		}
+	}
+
 	private void addAttributeToolsButtons() {
 		ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
 		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
-		toolsY += 5;
-		if (selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).allMatch(skill::sameBonuses)) {
+		if (getSelectedSkills().allMatch(otherSkill -> sameAttributeModifiers(skill, otherSkill))) {
+			addRenderableOnly(new PSTLabel(toolsX, toolsY,
+					Component.literal("• Attribute Modifiers").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
 			for (int row = 0; row < skill.getAttributeModifiers().size(); row++) {
 				addAttributeToolsButtonsRow(skill, row);
 				toolsY += 19;
@@ -239,11 +292,58 @@ public class SkillTreeEditorScreen extends Screen {
 		}
 	}
 
+	private void addTextureToolsButtons() {
+		ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
+		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+		if (getSelectedSkills().allMatch(otherSkill -> sameTextures(skill, otherSkill))) {
+			addRenderableOnly(
+					new PSTLabel(toolsX, toolsY, Component.literal("• Textures").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
+			PSTEditBox backgroundEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14,
+					skill.getBackgroundTexture().toString());
+			backgroundEditor.setResponder(value -> {
+				getSelectedSkills().forEach(s -> {
+					s.setBackgroundTexture(new ResourceLocation(value));
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(backgroundEditor);
+			toolsY += 19;
+			PSTEditBox iconEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14, skill.getIconTexture().toString());
+			iconEditor.setResponder(value -> {
+				getSelectedSkills().forEach(s -> {
+					s.setIconTexture(new ResourceLocation(value));
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(iconEditor);
+			toolsY += 19;
+			PSTEditBox borderEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14,
+					skill.getBorderTexture().toString());
+			borderEditor.setResponder(value -> {
+				getSelectedSkills().forEach(s -> {
+					s.setBorderTexture(new ResourceLocation(value));
+				});
+				saveSelectedSkills();
+			});
+			addRenderableWidget(borderEditor);
+			toolsY += 19;
+		}
+	}
+
+	private Stream<PassiveSkill> getSelectedSkills() {
+		return selectedSkills.stream().map(SkillTreeClientData::getEditorSkill);
+	}
+
+	private Stream<SkillButton> getSelectedSkillButtons() {
+		return selectedSkills.stream().map(skillButtons::get);
+	}
+
 	private void addAddModifierButton() {
 		Button addModifierButton = new PSTButton(toolsX, toolsY, 100, 14,
 				Component.translatable("Add Modifier"),
 				b -> {
-					selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
+					getSelectedSkills().forEach(skill -> {
 						skill.getAttributeModifiers().add(Pair.of(Attributes.ARMOR,
 								new AttributeModifier(UUID.randomUUID(), "SkillTree",
 										1, Operation.ADDITION)));
@@ -278,7 +378,7 @@ public class SkillTreeEditorScreen extends Screen {
 				modifier.getOperation());
 		addRenderableWidget(operationButton);
 		Button removeButton = new RemoveButton(toolsX + 360, toolsY, 14, 14, b -> {
-			selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
+			getSelectedSkills().forEach(skill -> {
 				skill.getAttributeModifiers().remove(row);
 				SkillTreeClientData.saveEditorSkill(skill);
 				rebuildWidgets();
@@ -289,7 +389,7 @@ public class SkillTreeEditorScreen extends Screen {
 		Runnable onChange = () -> {
 			if (!attributeEditor.isValueValid())
 				return;
-			selectedSkills.stream().map(SkillTreeClientData::getEditorSkill).forEach(skill -> {
+			getSelectedSkills().forEach(skill -> {
 				String newAttributeId = attributeEditor.getValue();
 				Attribute newAttribute;
 				if (newAttributeId.startsWith("curios:")) {
@@ -344,9 +444,8 @@ public class SkillTreeEditorScreen extends Screen {
 	protected void addSkillButton(PassiveSkill skill) {
 		float skillX = skill.getPositionX();
 		float skillY = skill.getPositionY();
-		double buttonX = skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
-		double buttonY = skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
-		SkillButton button = new SkillButton(() -> 0F, buttonX, buttonY, skill, this::buttonPressed);
+		SkillButton button = new SkillButton(() -> 0F, getSkillButtonX(skill), getSkillButtonY(skill), skill,
+				this::buttonPressed);
 		addRenderableWidget(button);
 		button.highlighted = true;
 		skillButtons.put(skill.getId(), button);
@@ -354,6 +453,16 @@ public class SkillTreeEditorScreen extends Screen {
 			maxScrollX = (int) Mth.abs(skillX);
 		if (maxScrollY < Mth.abs(skillY))
 			maxScrollY = (int) Mth.abs(skillY);
+	}
+
+	private float getSkillButtonX(PassiveSkill skill) {
+		float skillX = skill.getPositionX();
+		return skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
+	}
+
+	private float getSkillButtonY(PassiveSkill skill) {
+		float skillY = skill.getPositionY();
+		return skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
 	}
 
 	public void addSkillConnections() {
@@ -574,5 +683,43 @@ public class SkillTreeEditorScreen extends Screen {
 
 	protected int getBackgroundSize() {
 		return 2048;
+	}
+
+	protected boolean sameAttributeModifiers(PassiveSkill skill, PassiveSkill otherSkill) {
+		if (skill == otherSkill)
+			return true;
+		List<Pair<Attribute, AttributeModifier>> modifiers = skill.getAttributeModifiers();
+		List<Pair<Attribute, AttributeModifier>> otherModifiers = otherSkill.getAttributeModifiers();
+		if (modifiers.size() != otherModifiers.size())
+			return false;
+		for (int i = 0; i < modifiers.size(); i++) {
+			if (modifiers.get(i).getLeft() != otherModifiers.get(i).getLeft())
+				return false;
+			AttributeModifier modifier = modifiers.get(i).getRight();
+			AttributeModifier otherModifier = otherModifiers.get(i).getRight();
+			if (modifier.getAmount() != otherModifier.getAmount())
+				return false;
+			if (modifier.getOperation() != otherModifier.getOperation())
+				return false;
+		}
+		return true;
+	}
+
+	protected boolean sameTextures(PassiveSkill skill, PassiveSkill otherSkill) {
+		if (skill == otherSkill)
+			return true;
+		if (!skill.getBackgroundTexture().equals(otherSkill.getBackgroundTexture()))
+			return false;
+		if (!skill.getIconTexture().equals(otherSkill.getIconTexture()))
+			return false;
+		if (!skill.getBorderTexture().equals(otherSkill.getBorderTexture()))
+			return false;
+		return true;
+	}
+
+	protected boolean sameSize(PassiveSkill skill, PassiveSkill otherSkill) {
+		if (skill == otherSkill)
+			return true;
+		return skill.getButtonSize() == otherSkill.getButtonSize();
 	}
 }

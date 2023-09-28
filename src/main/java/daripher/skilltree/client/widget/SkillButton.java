@@ -40,8 +40,10 @@ public class SkillButton extends Button {
 	public boolean highlighted;
 	public boolean animated;
 
-	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc, OnTooltip tooltipFunc) {
-		super((int) x, (int) y, skill.getButtonSize(), skill.getButtonSize(), Component.empty(), pressFunc, tooltipFunc);
+	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc,
+			OnTooltip tooltipFunc) {
+		super((int) x, (int) y, skill.getButtonSize(), skill.getButtonSize(), Component.empty(), pressFunc,
+				tooltipFunc);
 		this.x = x;
 		this.y = y;
 		this.skill = skill;
@@ -49,7 +51,8 @@ public class SkillButton extends Button {
 	}
 
 	public SkillButton(Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc) {
-		this(animationFunc, x, y, skill, pressFunc, (b, s, mx, my) -> {});
+		this(animationFunc, x, y, skill, pressFunc, (b, s, mx, my) -> {
+		});
 	}
 
 	@Override
@@ -75,6 +78,17 @@ public class SkillButton extends Button {
 		poseStack.popPose();
 	}
 
+	public void setButtonSize(int size) {
+		width = height = size;
+	}
+
+	public void setPosition(double x, double y) {
+		this.x = x;
+		super.x = (int) x;
+		this.y = y;
+		super.y = (int) y;
+	}
+
 	private void prepareTextureRendering(ResourceLocation textureLocation) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, textureLocation);
@@ -91,7 +105,8 @@ public class SkillButton extends Button {
 		addLoreTooltip(tooltip);
 		var minecraft = Minecraft.getInstance();
 		var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
-		if (useAdvancedTooltip) addAdvancedTooltip(tooltip);
+		if (useAdvancedTooltip)
+			addAdvancedTooltip(tooltip);
 		return tooltip;
 	}
 
@@ -111,14 +126,16 @@ public class SkillButton extends Button {
 			addAttributeModifiersTooltip(tooltip);
 		} else {
 			var descriptionStrings = Arrays.asList(description.split("/n"));
-			descriptionStrings.stream().map(Component::translatable).map(this::applyDescriptionStyle).forEach(tooltip::add);
+			descriptionStrings.stream().map(Component::translatable).map(this::applyDescriptionStyle)
+					.forEach(tooltip::add);
 		}
 	}
 
 	private void addLoreTooltip(ArrayList<MutableComponent> tooltip) {
 		String loreId = getSkillId() + ".lore";
 		MutableComponent loreComponent = Component.translatable(loreId);
-		if (loreId.equals(loreComponent.getString())) return;
+		if (loreId.equals(loreComponent.getString()))
+			return;
 		tooltip.add(loreComponent.withStyle(LORE_STYLE));
 	}
 
@@ -148,7 +165,8 @@ public class SkillButton extends Button {
 	}
 
 	private Style getTitleStyle() {
-		return width == 33 ? GATEWAY_TITLE_STYLE : width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+		return width == 33 ? GATEWAY_TITLE_STYLE
+				: width == 24 ? KEYSTONE_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
 	}
 
 	protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {
@@ -161,7 +179,8 @@ public class SkillButton extends Button {
 	}
 
 	protected void addAttributeModifiersTooltip(ArrayList<MutableComponent> tooltip) {
-		skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip).map(this::applyDescriptionStyle).forEach(tooltip::add);
+		skill.getAttributeModifiers().stream().map(TooltipHelper::getAttributeBonusTooltip)
+				.map(this::applyDescriptionStyle).forEach(tooltip::add);
 	}
 
 	public void animate() {
