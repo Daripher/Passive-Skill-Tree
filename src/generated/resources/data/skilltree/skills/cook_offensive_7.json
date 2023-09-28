@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_if_not_hungry",
       "modifier": {
         "amount": 0.05,
-        "id": "d7a93002-b6f7-46d8-8f15-fa09c263894e",
+        "id": "9750ad36-fc36-4ba9-bf65-b53f783ef3c8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_offensive_8",
     "skilltree:cook_lesser_2"

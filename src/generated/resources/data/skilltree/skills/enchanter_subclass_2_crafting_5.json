@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_per_hour",
       "modifier": {
         "amount": 0.2,
-        "id": "28644040-2e0e-42cc-91ab-18a85f561807",
+        "id": "9aba7cf3-cede-47e6-ae04-6dcc0739c672",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_special"
   ],

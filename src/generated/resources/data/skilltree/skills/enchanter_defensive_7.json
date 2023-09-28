@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "9f547b7e-39af-446e-8356-7795f075ad70",
+        "id": "1d409fae-69dc-49ba-9b94-0945cffc1a20",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_defensive_8",
     "skilltree:enchanter_lesser_1"

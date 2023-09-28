@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block",
       "modifier": {
         "amount": 0.25,
-        "id": "7ef90a9c-2218-4c13-8448-0e3ce0fee46b",
+        "id": "7b687674-9484-4263-9a22-53887fcff995",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_healing_notable_1"
   ],

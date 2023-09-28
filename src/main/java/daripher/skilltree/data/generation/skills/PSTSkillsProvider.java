@@ -93,12 +93,10 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	protected void addGateways() {
-		addGateway("alchemist", "etherial_gateway");
-		addGateway("cook", "etherial_gateway");
-		addGateway("hunter", "dimensional_gateway");
-		addGateway("blacksmith", "dimensional_gateway");
-		addGateway("enchanter", "astral_gateway");
-		addGateway("miner", "astral_gateway");
+		Arrays.stream(playerClasses).forEach(this::addGateway);
+		addGatewayConnection("alchemist_gateway", "cook_gateway");
+		addGatewayConnection("hunter_gateway", "blacksmith_gateway");
+		addGatewayConnection("enchanter_gateway", "miner_gateway");
 	}
 
 	private void shapeSkillTree() {
@@ -195,8 +193,10 @@ public class PSTSkillsProvider implements DataProvider {
 	private void setSkillsAttributeModifiers() {
 		// alchemist skills
 		addSkillAttributeModifier("alchemist_class", BREWED_POTIONS_DURATION, 0.4, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("alchemist_defensive_crafting", BREWED_BENEFICIAL_POTIONS_STRENGTH, 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("alchemist_offensive_crafting", BREWED_HARMFUL_POTIONS_STRENGTH, 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("alchemist_defensive_crafting", BREWED_BENEFICIAL_POTIONS_STRENGTH, 0.1,
+				MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("alchemist_offensive_crafting", BREWED_HARMFUL_POTIONS_STRENGTH, 0.1,
+				MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("alchemist_defensive", EVASION, 0.01, MULTIPLY_BASE, 1, 8);
 		addSkillBranchAttributeModifier("alchemist_offensive", DAMAGE_AGAINST_POISONED, 0.05, MULTIPLY_BASE, 1, 8);
 		addSkillAttributeModifier("alchemist_defensive_notable_1", EVASION_UNDER_POTION_EFFECT, 0.1, MULTIPLY_BASE);
@@ -210,8 +210,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("alchemist_crit", CRIT_CHANCE_AGAINST_POISONED, 0.02, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("alchemist_crit_notable_1", CRIT_DAMAGE_AGAINST_POISONED, 0.35, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_crafting", BREWED_POTIONS_STRENGTH, 0.05, MULTIPLY_BASE, 1, 3);
-		addSkillAttributeModifier("alchemist_defensive_crafting_keystone_1", BREWED_BENEFICIAL_POTIONS_STRENGTH, 1, MULTIPLY_BASE);
-		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", BREWED_HARMFUL_POTIONS_STRENGTH, 0.3, MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_defensive_crafting_keystone_1", BREWED_BENEFICIAL_POTIONS_STRENGTH, 1,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", BREWED_HARMFUL_POTIONS_STRENGTH, 0.3,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_offensive_crafting_keystone_1", CAN_POISON_WEAPONS, 1, ADDITION);
 		addSkillBranchAttributeModifier("alchemist_healing", LIFE_PER_HIT, 0.25, ADDITION, 1, 4);
 		addSkillAttributeModifier("alchemist_healing_notable_1", LIFE_PER_HIT_UNDER_POTION_EFFECT, 0.5, ADDITION);
@@ -224,8 +226,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_subclass_1", CRIT_CHANCE, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_1", CRIT_DAMAGE, 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_subclass_1_offensive", CRIT_CHANCE, 0.02, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("alchemist_subclass_1_crafting", BREWED_POISONS_STRENGTH, 0.1, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("alchemist_subclass_1_crafting_notable_1", BREWED_HARMFUL_POTIONS_DURATION, 0.25, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("alchemist_subclass_1_crafting", BREWED_POISONS_STRENGTH, 0.1, MULTIPLY_BASE, 1,
+				5);
+		addSkillAttributeModifier("alchemist_subclass_1_crafting_notable_1", BREWED_HARMFUL_POTIONS_DURATION, 0.25,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_1_offensive_notable_1", CRIT_CHANCE, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_1_mastery", CRIT_DAMAGE, 0.5, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_special", CRAFTED_RINGS_CRITICAL_DAMAGE, 0.1, MULTIPLY_BASE);
@@ -234,8 +238,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("alchemist_subclass_2", INCOMING_HEALING, 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("alchemist_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
 		addSkillBranchAttributeModifier("alchemist_subclass_2_life", INCOMING_HEALING, 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("alchemist_subclass_2_crafting", BREWED_HEALING_POTIONS_STRENGTH, 0.1, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("alchemist_subclass_2_crafting_notable_1", BREWED_BENEFICIAL_POTIONS_DURATION, 0.25, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("alchemist_subclass_2_crafting", BREWED_HEALING_POTIONS_STRENGTH, 0.1,
+				MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("alchemist_subclass_2_crafting_notable_1", BREWED_BENEFICIAL_POTIONS_DURATION, 0.25,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_2_life_notable_1", MAX_HEALTH, 4, ADDITION);
 		addSkillAttributeModifier("alchemist_subclass_2_life_notable_1", INCOMING_HEALING, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("alchemist_subclass_2_mastery", MAX_HEALTH, 10, ADDITION);
@@ -243,7 +249,8 @@ public class PSTSkillsProvider implements DataProvider {
 		// hunter skills
 		addSkillAttributeModifier("hunter_class", DOUBLE_LOOT_CHANCE, 0.15, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("hunter_defensive_crafting", CRAFTED_ARMOR_EVASION, 0.01, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("hunter_offensive_crafting", CRAFTED_RANGED_WEAPON_ATTACK_SPEED, 0.04, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("hunter_offensive_crafting", CRAFTED_RANGED_WEAPON_ATTACK_SPEED, 0.04,
+				MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("hunter_defensive", EVASION, 0.01, MULTIPLY_BASE, 1, 8);
 		addSkillBranchAttributeModifier("hunter_offensive", PROJECTILE_DAMAGE, 0.1, MULTIPLY_BASE, 1, 8);
 		addSkillAttributeModifier("hunter_defensive_notable_1", EVASION_CHANCE_WHEN_WOUNDED, 0.1, MULTIPLY_BASE);
@@ -281,9 +288,12 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("hunter_subclass_2_defensive", EVASION, 0.005, MULTIPLY_BASE, 1, 4);
 		addSkillBranchAttributeModifier("hunter_subclass_2_defensive", BLOCK_CHANCE, 0.005, MULTIPLY_BASE, 1, 4);
 		addSkillAttributeModifier("hunter_subclass_2", CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS, 0.05, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("hunter_subclass_2_life", MAXIMUM_LIFE_PER_ARROW_IN_QUIVER, 0.01, ADDITION, 1, 4);
-		addSkillBranchAttributeModifier("hunter_subclass_2_crafting", CRAFTED_QUIVERS_CAPACITY, 0.05, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("hunter_subclass_2_crafting_notable_1", CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS, 0.1, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("hunter_subclass_2_life", MAXIMUM_LIFE_PER_ARROW_IN_QUIVER, 0.01, ADDITION, 1,
+				4);
+		addSkillBranchAttributeModifier("hunter_subclass_2_crafting", CRAFTED_QUIVERS_CAPACITY, 0.05, MULTIPLY_BASE, 1,
+				5);
+		addSkillAttributeModifier("hunter_subclass_2_crafting_notable_1", CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS,
+				0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("hunter_subclass_2_life_notable_1", CRAFTED_QUIVERS_MAXIMUM_LIFE, 5, ADDITION);
 		addSkillAttributeModifier("hunter_subclass_2_mastery", CRAFTED_QUIVERS_CAPACITY, 0.25, MULTIPLY_BASE);
 		// miner skills
@@ -317,8 +327,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("miner_subclass_1", ATTACK_SPEED, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_subclass_1", MOVEMENT_SPEED, 0.1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("miner_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("miner_subclass_1_crafting", CRAFTED_BOOTS_MOVEMENT_SPEED, 0.02, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("miner_subclass_1_crafting_notable_1", CRAFTED_BOOTS_MOVEMENT_SPEED, 0.05, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("miner_subclass_1_crafting", CRAFTED_BOOTS_MOVEMENT_SPEED, 0.02, MULTIPLY_BASE,
+				1, 5);
+		addSkillAttributeModifier("miner_subclass_1_crafting_notable_1", CRAFTED_BOOTS_MOVEMENT_SPEED, 0.05,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_subclass_1_offensive_notable_1", MOVEMENT_SPEED, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_subclass_1_mastery", DAMAGE_PER_DISTANCE_TO_SPAWN, 0.0001, MULTIPLY_BASE);
@@ -331,11 +343,14 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("miner_subclass_2_crafting", GEM_POWER_IN_JEWELRY, 0.05, MULTIPLY_BASE, 1, 5);
 		addSkillAttributeModifier("miner_subclass_2_crafting_notable_1", GEM_POWER_IN_JEWELRY, 0.25, MULTIPLY_BASE);
 		addSkillAttributeModifier("miner_subclass_2_life_notable_1", CRAFTED_NECKLACES_MAXIMUM_LIFE, 5, ADDITION);
-		addSkillAttributeModifier("miner_subclass_2_mastery", CuriosHelper.getOrCreateSlotAttribute("ring"), 1, ADDITION);
+		addSkillAttributeModifier("miner_subclass_2_mastery", CuriosHelper.getOrCreateSlotAttribute("ring"), 1,
+				ADDITION);
 		// blacksmith skills
 		addSkillAttributeModifier("blacksmith_class", CRAFTED_EQUIPMENT_DURABILITY, 0.25, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("blacksmith_defensive_crafting", CRAFTED_ARMOR_DEFENCE, 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("blacksmith_offensive_crafting", CRAFTED_MELEE_WEAPON_DAMAGE_BONUS, 1, ADDITION, 1, 7);
+		addSkillBranchAttributeModifier("blacksmith_defensive_crafting", CRAFTED_ARMOR_DEFENCE, 0.1, MULTIPLY_BASE, 1,
+				7);
+		addSkillBranchAttributeModifier("blacksmith_offensive_crafting", CRAFTED_MELEE_WEAPON_DAMAGE_BONUS, 1, ADDITION,
+				1, 7);
 		addSkillBranchAttributeModifier("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 8);
 		addSkillBranchAttributeModifier("blacksmith_offensive", DAMAGE_WITH_SHIELD, 0.05, MULTIPLY_BASE, 1, 8);
 		addSkillAttributeModifier("blacksmith_defensive_notable_1", ARMOR, 0.05, MULTIPLY_BASE);
@@ -349,8 +364,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("blacksmith_crit", CRIT_CHANCE_WITH_SHIELD, 0.02, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("blacksmith_crit_notable_1", CRIT_DAMAGE_WITH_SHIELD, 0.3, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_crafting", CRAFTED_SHIELDS_ARMOR, 2, ADDITION, 1, 3);
-		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", CRAFTED_ARMOR_DEFENCE, 0.30, MULTIPLY_BASE);
-		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", CRAFTED_MELEE_WEAPON_ATTACK_SPEED, 0.25, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_defensive_crafting_keystone_1", CRAFTED_ARMOR_DEFENCE, 0.30,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_offensive_crafting_keystone_1", CRAFTED_MELEE_WEAPON_ATTACK_SPEED, 0.25,
+				MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_healing", LIFE_REGENERATION, 0.25, ADDITION, 1, 4);
 		addSkillAttributeModifier("blacksmith_healing_notable_1", LIFE_REGENERATION_WITH_SHIELD, 0.5, ADDITION);
 		addSkillAttributeModifier("blacksmith_crafting_notable_1", CRAFTED_SHIELDS_ARMOR, 4, ADDITION);
@@ -363,20 +380,25 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_subclass_1", BLOCK_CHANCE, 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_subclass_1_offensive", MELEE_DAMAGE, 0.01, MULTIPLY_BASE, 1, 4);
 		addSkillBranchAttributeModifier("blacksmith_subclass_1_offensive", BLOCK_CHANCE, 0.01, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("blacksmith_subclass_1_crafting", CRAFTED_MELEE_WEAPON_CRIT_CHANCE, 0.01, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("blacksmith_subclass_1_crafting_notable_1", CRAFTED_MELEE_WEAPON_CRIT_CHANCE, 0.05, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_subclass_1_crafting", CRAFTED_MELEE_WEAPON_CRIT_CHANCE, 0.01,
+				MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("blacksmith_subclass_1_crafting_notable_1", CRAFTED_MELEE_WEAPON_CRIT_CHANCE, 0.05,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_1_offensive_notable_1", MELEE_DAMAGE, 0.2, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_1_offensive_notable_1", MELEE_CRIT_DAMAGE, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_1_mastery", BLOCK_CHANCE, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_1_mastery", ARMOR, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_1_mastery", MELEE_DAMAGE, 0.05, MULTIPLY_BASE);
-		addSkillAttributeModifier("blacksmith_subclass_special", CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE, 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("blacksmith_subclass_special", CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE, 0.05,
+				MULTIPLY_BASE);
 		// artisan skills
 		addSkillBranchAttributeModifier("blacksmith_subclass_2_defensive", ARMOR, 1, ADDITION, 1, 4);
 		addSkillAttributeModifier("blacksmith_subclass_2", EQUIPMENT_REPAIR_EFFICIENCY, 1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("blacksmith_subclass_2_life", CRAFTED_ARMOR_MAXIMUM_LIFE, 1, ADDITION, 1, 4);
-		addSkillBranchAttributeModifier("blacksmith_subclass_2_crafting", EQUIPMENT_REPAIR_EFFICIENCY, 0.05, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("blacksmith_subclass_2_crafting_notable_1", CRAFTED_SHIELDS_BLOCK_CHANCE, 0.05, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("blacksmith_subclass_2_crafting", EQUIPMENT_REPAIR_EFFICIENCY, 0.05,
+				MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("blacksmith_subclass_2_crafting_notable_1", CRAFTED_SHIELDS_BLOCK_CHANCE, 0.05,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_life_notable_1", CRAFTED_SHIELDS_MAXIMUM_LIFE, 5, ADDITION);
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", EQUIPMENT_REPAIR_EFFICIENCY, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CRAFTED_EQUIPMENT_DURABILITY, 0.05, MULTIPLY_BASE);
@@ -385,41 +407,54 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("blacksmith_subclass_2_mastery", CRAFTED_SHIELDS_ARMOR, 5, ADDITION);
 		// enchanter skills
 		addSkillAttributeModifier("enchanter_class", ENCHANTMENT_LEVEL_REQUIREMENT, -0.3, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("enchanter_defensive_crafting", ARMOR_ENCHANTMENT_POWER, 0.1, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("enchanter_offensive_crafting", WEAPON_ENCHANTMENT_POWER, 0.1, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("enchanter_defensive_crafting", ARMOR_ENCHANTMENT_POWER, 0.1, MULTIPLY_BASE, 1,
+				7);
+		addSkillBranchAttributeModifier("enchanter_offensive_crafting", WEAPON_ENCHANTMENT_POWER, 0.1, MULTIPLY_BASE, 1,
+				7);
 		addSkillBranchAttributeModifier("enchanter_defensive", BLOCK_CHANCE, 0.01, MULTIPLY_BASE, 1, 8);
 		addSkillBranchAttributeModifier("enchanter_offensive", DAMAGE_WITH_ENCHANTED_WEAPON, 0.05, MULTIPLY_BASE, 1, 8);
-		addSkillAttributeModifier("enchanter_defensive_notable_1", BLOCK_CHANCE_WITH_ENCHANTED_SHIELD, 0.1, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_defensive_notable_1", BLOCK_CHANCE_WITH_ENCHANTED_SHIELD, 0.1,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_offensive_notable_1", DAMAGE_WITH_ENCHANTED_WEAPON, 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_life", MAXIMUM_LIFE_WITH_ENCHANTED_ITEM, 2, ADDITION, 1, 2);
 		addSkillAttributeModifier("enchanter_life_notable_1", MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT, 1, ADDITION);
-		addSkillBranchAttributeModifier("enchanter_speed", ATTACK_SPEED_WITH_ENCHANTED_WEAPON, 0.02, MULTIPLY_BASE, 1, 2);
+		addSkillBranchAttributeModifier("enchanter_speed", ATTACK_SPEED_WITH_ENCHANTED_WEAPON, 0.02, MULTIPLY_BASE, 1,
+				2);
 		addSkillAttributeModifier("enchanter_speed_notable_1", ATTACK_SPEED_WITH_ENCHANTED_WEAPON, 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_lesser", ENCHANTMENT_LEVEL_REQUIREMENT, -0.05, MULTIPLY_BASE, 1, 6);
 		addSkillAttributeModifier("enchanter_mastery", ENCHANTMENT_POWER, 1, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_crit", CRIT_CHANCE_WITH_ENCHANTED_WEAPON, 0.02, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("enchanter_crit_notable_1", CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT, 0.05, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_crafting", FREE_ENCHANTMENT_CHANCE, 0.05, MULTIPLY_BASE, 1, 3);
-		addSkillAttributeModifier("enchanter_defensive_crafting_keystone_1", ARMOR_ENCHANTMENT_POWER, 0.4, MULTIPLY_BASE);
-		addSkillAttributeModifier("enchanter_offensive_crafting_keystone_1", WEAPON_ENCHANTMENT_POWER, 0.4, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_defensive_crafting_keystone_1", ARMOR_ENCHANTMENT_POWER, 0.4,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_crafting_keystone_1", WEAPON_ENCHANTMENT_POWER, 0.4,
+				MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("enchanter_healing", LIFE_ON_BLOCK, 0.25, ADDITION, 1, 4);
 		addSkillAttributeModifier("enchanter_healing_notable_1", LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT, 0.25, ADDITION);
 		addSkillAttributeModifier("enchanter_crafting_notable_1", FREE_ENCHANTMENT_CHANCE, 0.1, MULTIPLY_BASE);
-		addSkillAttributeModifier("enchanter_defensive_keystone_1", BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT, 0.05, MULTIPLY_BASE);
-		addSkillAttributeModifier("enchanter_offensive_keystone_1", DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL, 0.05, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_defensive_keystone_1", BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT, 0.05,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_offensive_keystone_1", DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL, 0.05,
+				MULTIPLY_BASE);
 		// arsonist skills
 		addSkillBranchAttributeModifier("enchanter_subclass_1_defensive", EVASION, 0.005, MULTIPLY_BASE, 1, 4);
 		addSkillBranchAttributeModifier("enchanter_subclass_1_defensive", BLOCK_CHANCE, 0.005, MULTIPLY_BASE, 1, 4);
 		addSkillAttributeModifier("enchanter_subclass_1", DAMAGE_AGAINST_BURNING, 0.15, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_1", CHANCE_TO_IGNITE, 0.15, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("enchanter_subclass_1_offensive", DAMAGE_AGAINST_BURNING, 0.05, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("enchanter_subclass_1_crafting", CRAFTED_WEAPON_CHANCE_TO_IGNITE, 0.05, MULTIPLY_BASE, 1, 5);
-		addSkillAttributeModifier("enchanter_subclass_1_crafting_notable_1", CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING, 0.2, MULTIPLY_BASE);
-		addSkillAttributeModifier("enchanter_subclass_1_offensive_notable_1", CRIT_CHANCE_AGAINST_BURNING, 0.1, MULTIPLY_BASE);
+		addSkillBranchAttributeModifier("enchanter_subclass_1_offensive", DAMAGE_AGAINST_BURNING, 0.05, MULTIPLY_BASE,
+				1, 4);
+		addSkillBranchAttributeModifier("enchanter_subclass_1_crafting", CRAFTED_WEAPON_CHANCE_TO_IGNITE, 0.05,
+				MULTIPLY_BASE, 1, 5);
+		addSkillAttributeModifier("enchanter_subclass_1_crafting_notable_1", CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING, 0.2,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_subclass_1_offensive_notable_1", CRIT_CHANCE_AGAINST_BURNING, 0.1,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_1_mastery", CHANCE_TO_IGNITE, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_1_mastery", DAMAGE_AGAINST_BURNING, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_1_mastery", CRIT_CHANCE_AGAINST_BURNING, 0.1, MULTIPLY_BASE);
-		addSkillAttributeModifier("enchanter_subclass_special", CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING, 0.1, MULTIPLY_BASE);
+		addSkillAttributeModifier("enchanter_subclass_special", CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING, 0.1,
+				MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_special", CRAFTED_QUIVERS_CHANCE_TO_IGNITE, 0.1, MULTIPLY_BASE);
 		// scholar skills
 		addSkillBranchAttributeModifier("enchanter_subclass_2_defensive", BLOCK_CHANCE, 0.01, MULTIPLY_BASE, 1, 4);
@@ -433,8 +468,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("enchanter_subclass_2_mastery", EXPERIENCE_PER_HOUR, 1.5, ADDITION);
 		// cook skills
 		addSkillAttributeModifier("cook_class", COOKED_FOOD_SATURATION, 0.2, MULTIPLY_BASE);
-		addSkillBranchAttributeModifier("cook_defensive_crafting", COOKED_FOOD_HEALING_PER_SATURATION, 0.05, MULTIPLY_BASE, 1, 7);
-		addSkillBranchAttributeModifier("cook_offensive_crafting", COOKED_FOOD_DAMAGE_PER_SATURATION, 0.0025, MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("cook_defensive_crafting", COOKED_FOOD_HEALING_PER_SATURATION, 0.05,
+				MULTIPLY_BASE, 1, 7);
+		addSkillBranchAttributeModifier("cook_offensive_crafting", COOKED_FOOD_DAMAGE_PER_SATURATION, 0.0025,
+				MULTIPLY_BASE, 1, 7);
 		addSkillBranchAttributeModifier("cook_defensive", BLOCK_CHANCE, 0.01, MULTIPLY_BASE, 1, 8);
 		addSkillBranchAttributeModifier("cook_offensive", DAMAGE_IF_NOT_HUNGRY, 0.05, MULTIPLY_BASE, 1, 8);
 		addSkillAttributeModifier("cook_defensive_notable_1", BLOCK_CHANCE_IF_NOT_HUNGRY, 0.1, MULTIPLY_BASE);
@@ -448,8 +485,10 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillBranchAttributeModifier("cook_crit", CRIT_CHANCE_IF_NOT_HUNGRY, 0.02, MULTIPLY_BASE, 1, 2);
 		addSkillAttributeModifier("cook_crit_notable_1", CRIT_DAMAGE_PER_SATISFIED_HUNGER, 0.02, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_crafting", COOKED_FOOD_LIFE_REGENERATION, 0.1, ADDITION, 1, 3);
-		addSkillAttributeModifier("cook_defensive_crafting_keystone_1", COOKED_FOOD_HEALING_PER_SATURATION, 0.2, MULTIPLY_BASE);
-		addSkillAttributeModifier("cook_offensive_crafting_keystone_1", COOKED_FOOD_CRIT_DAMAGE_PER_SATURATION, 0.01, MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_defensive_crafting_keystone_1", COOKED_FOOD_HEALING_PER_SATURATION, 0.2,
+				MULTIPLY_BASE);
+		addSkillAttributeModifier("cook_offensive_crafting_keystone_1", COOKED_FOOD_CRIT_DAMAGE_PER_SATURATION, 0.01,
+				MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_healing", LIFE_ON_BLOCK, 0.25, ADDITION, 1, 4);
 		addSkillAttributeModifier("cook_healing_notable_1", LIFE_ON_BLOCK_IF_NOT_HUNGRY, 0.5, ADDITION);
 		addSkillAttributeModifier("cook_crafting_notable_1", COOKED_FOOD_LIFE_REGENERATION, 0.2, ADDITION);
@@ -460,7 +499,8 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("cook_subclass_1", DAMAGE_IF_DAMAGED, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_subclass_1", DAMAGE_IF_WOUNDED, 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_subclass_1_offensive", ATTACK_SPEED, 0.01, MULTIPLY_BASE, 1, 4);
-		addSkillBranchAttributeModifier("cook_subclass_1_crafting", CRAFTED_AXES_CRIT_CHANCE, 0.01, MULTIPLY_BASE, 1, 5);
+		addSkillBranchAttributeModifier("cook_subclass_1_crafting", CRAFTED_AXES_CRIT_CHANCE, 0.01, MULTIPLY_BASE, 1,
+				5);
 		addSkillAttributeModifier("cook_subclass_1_crafting_notable_1", CRAFTED_AXES_CRIT_CHANCE, 0.05, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_subclass_1_offensive_notable_1", ATTACK_SPEED_IF_WOUNDED, 0.1, MULTIPLY_BASE);
 		addSkillAttributeModifier("cook_subclass_1_mastery", CRIT_CHANCE_IF_WOUNDED, 0.15, MULTIPLY_BASE);
@@ -479,22 +519,26 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("cook_subclass_2_mastery", DOUBLE_FISHING_LOOT_CHANCE, 0.2, MULTIPLY_BASE);
 	}
 
-	private void addSkillBranchAttributeModifier(String branchName, Attribute attribute, double amount, Operation operation, int from, int to) {
+	private void addSkillBranchAttributeModifier(String branchName, Attribute attribute, double amount,
+			Operation operation, int from, int to) {
 		for (int node = from; node <= to; node++) {
 			addSkillAttributeModifier(branchName + "_" + node, attribute, amount, operation);
 		}
 	}
 
 	private void addSkillAttributeModifier(String skillName, Attribute attribute, double amount, Operation operation) {
-		getSkill(skillName).addAttributeBonus(attribute, new AttributeModifier(UUID.randomUUID(), "PassiveSkill", amount, operation));
+		getSkill(skillName).addAttributeBonus(attribute,
+				new AttributeModifier(UUID.randomUUID(), "PassiveSkill", amount, operation));
 	}
 
-	private void addSkillBranchAttributeModifier(String branchName, RegistryObject<Attribute> attribute, double amount, Operation operation, int from,
+	private void addSkillBranchAttributeModifier(String branchName, RegistryObject<Attribute> attribute, double amount,
+			Operation operation, int from,
 			int to) {
 		addSkillBranchAttributeModifier(branchName, attribute.get(), amount, operation, from, to);
 	}
 
-	private void addSkillAttributeModifier(String skillName, RegistryObject<Attribute> attribute, double amount, Operation operation) {
+	private void addSkillAttributeModifier(String skillName, RegistryObject<Attribute> attribute, double amount,
+			Operation operation) {
 		addSkillAttributeModifier(skillName, attribute.get(), amount, operation);
 	}
 
@@ -511,20 +555,25 @@ public class PSTSkillsProvider implements DataProvider {
 		connectSkills(playerClasses[5] + "_" + from, playerClasses[0] + "_" + to);
 	}
 
-	private void setSkillBranchPosition(String playerClass, String nodeName, int distance, String branchName, float rotation, float rotationPerNode,
+	private void setSkillBranchPosition(String playerClass, String nodeName, int distance, String branchName,
+			float rotation, float rotationPerNode,
 			int from, int to) {
 		String branchNode = nodeName;
 		for (int node = from; node <= to; node++) {
-			setSkillPosition(playerClass, branchNode, distance, rotation + (node - from) * rotationPerNode, branchName + "_" + node);
+			setSkillPosition(playerClass, branchNode, distance, rotation + (node - from) * rotationPerNode,
+					branchName + "_" + node);
 			branchNode = branchName + "_" + node;
 		}
 	}
 
-	private void setSkillPosition(String playerClass, @Nullable String previousSkillName, float distance, float angle, String skillName) {
-		setSkillPosition(getClassId(playerClass), playerClass + "_" + previousSkillName, distance, angle, playerClass + "_" + skillName);
+	private void setSkillPosition(String playerClass, @Nullable String previousSkillName, float distance, float angle,
+			String skillName) {
+		setSkillPosition(getClassId(playerClass), playerClass + "_" + previousSkillName, distance, angle,
+				playerClass + "_" + skillName);
 	}
 
-	private void setSkillPosition(int classId, @Nullable String previousSkillName, float distance, float angle, String skillName) {
+	private void setSkillPosition(int classId, @Nullable String previousSkillName, float distance, float angle,
+			String skillName) {
 		angle *= Mth.PI / 180F;
 		angle += getClassBranchRotation(classId);
 		PassiveSkill previous = previousSkillName == null ? null : getSkill(previousSkillName);
@@ -542,7 +591,8 @@ public class PSTSkillsProvider implements DataProvider {
 		float skillX = centerX + Mth.sin(angle) * distance;
 		float skillY = centerY + Mth.cos(angle) * distance;
 		skill.setPosition(skillX, skillY);
-		if (previous != null) previous.connect(skill);
+		if (previous != null)
+			previous.connect(skill);
 	}
 
 	protected int getClassId(String playerClass) {
@@ -573,25 +623,33 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkill(playerClass + "_" + skillName, playerClass + "_" + iconName, buttonSize);
 	}
 
-	private void addGateway(String playerClass, String gatewayId) {
+	private void addGateway(String playerClass) {
 		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, playerClass + "_gateway");
-		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/gateway.png");
+		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
+				"textures/icons/background/gateway.png");
 		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
 		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/gateway.png");
 		PassiveSkill skill = new PassiveSkill(skillId, 33, backgroundTexture, iconTexture, borderTexture, false);
-		skill.setGatewayId(new ResourceLocation(SkillTreeMod.MOD_ID, gatewayId));
 		skills.put(skillId, skill);
+	}
+
+	private void addGatewayConnection(String gatewayId1, String gatewayId2) {
+		getSkill(gatewayId1).getConnectedAsGateways().add(new ResourceLocation("skilltree", gatewayId2));
 	}
 
 	private void addSkill(String name, String icon, int size) {
 		ResourceLocation skillId = new ResourceLocation(SkillTreeMod.MOD_ID, name);
-		String background = name.endsWith("class") || name.endsWith("subclass_1") || name.endsWith("subclass_2") ? "class"
+		String background = name.endsWith("class") || name.endsWith("subclass_1") || name.endsWith("subclass_2")
+				? "class"
 				: size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
-		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/" + background + ".png");
+		ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
+				"textures/icons/background/" + background + ".png");
 		ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/" + icon + ".png");
 		String border = size == 24 ? "keystone" : size == 20 ? "notable" : "lesser";
-		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/" + border + ".png");
-		skills.put(skillId, new PassiveSkill(skillId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
+		ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
+				"textures/tooltip/" + border + ".png");
+		skills.put(skillId,
+				new PassiveSkill(skillId, size, backgroundTexture, iconTexture, borderTexture, name.endsWith("class")));
 	}
 
 	@Override

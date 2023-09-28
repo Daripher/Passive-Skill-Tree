@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "97c1ac89-1b22-460a-987c-77b20e30049f",
+        "id": "1b15dc88-b671-42d3-9976-aadf4e10f49d",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_offensive_crafting_3"
   ],

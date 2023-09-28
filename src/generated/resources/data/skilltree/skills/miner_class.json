@@ -4,7 +4,7 @@
       "attribute": "skilltree:mining_speed",
       "modifier": {
         "amount": 0.15,
-        "id": "4fd619d0-6e50-44c6-b2ba-d7453248a1d8",
+        "id": "dd4075cc-49d5-43bc-bd11-07ab235fda3a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_defensive_1",
     "skilltree:miner_offensive_1",

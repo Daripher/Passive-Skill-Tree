@@ -4,7 +4,7 @@
       "attribute": "skilltree:projectile_crit_chance",
       "modifier": {
         "amount": 0.02,
-        "id": "25f3ec04-710d-44aa-b038-a5075a84da38",
+        "id": "f661fc9d-570b-463c-a0ef-2bf47ae5c3d8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_crit_notable_1"
   ],

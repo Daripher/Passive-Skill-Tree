@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_distance_to_enemy",
       "modifier": {
         "amount": 0.05,
-        "id": "0f5f6cbd-76d0-4271-9a6b-3474a0868bec",
+        "id": "2b35a262-7d7b-4b05-86d0-b9fe72cb9257",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",
   "id": "skilltree:hunter_offensive_keystone_1",

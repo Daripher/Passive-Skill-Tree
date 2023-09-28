@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 1.0,
-        "id": "c03ed3dd-5b17-4645-9f6b-e80f3a741d72",
+        "id": "0ae62e9d-d34a-4767-b878-38a205ecb838",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_life_1",
     "skilltree:blacksmith_defensive_5"

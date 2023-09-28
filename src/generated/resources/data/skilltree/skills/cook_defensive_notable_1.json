@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_if_not_hungry",
       "modifier": {
         "amount": 0.1,
-        "id": "c912d013-500a-45df-90f6-9cc057a31e4d",
+        "id": "049d64e6-5d10-4af6-a61d-e0512afc8fb1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_defensive_4",
     "skilltree:cook_defensive_crafting_5",

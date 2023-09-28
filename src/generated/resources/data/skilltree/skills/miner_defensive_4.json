@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 1.0,
-        "id": "f83f8f9c-a6bd-4f71-9839-a47f69ba35c3",
+        "id": "41f8a963-044c-4e02-a9c1-f4d5547a1e16",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_life_1",
     "skilltree:miner_defensive_5"

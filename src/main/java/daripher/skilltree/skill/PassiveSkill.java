@@ -25,10 +25,10 @@ public class PassiveSkill {
 	private ResourceLocation iconTexture;
 	private ResourceLocation borderTexture;
 	private @Nullable ResourceLocation connectedTreeId;
-	private @Nullable ResourceLocation gatewayId;
 	private List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
 	private List<String> commands = new ArrayList<>();
 	private List<ResourceLocation> connectedSkills = new ArrayList<>();
+	private List<ResourceLocation> connectedAsGateways = new ArrayList<>();
 	private float positionX, positionY;
 	private int buttonSize;
 	private boolean isStartingPoint;
@@ -133,20 +133,12 @@ public class PassiveSkill {
 		return connectedSkills;
 	}
 
-	public void setGatewayId(@Nullable ResourceLocation gatewayId) {
-		this.gatewayId = gatewayId;
-	}
-
-	public void setGatewayId(Optional<ResourceLocation> gatewayId) {
-		this.gatewayId = gatewayId.orElse(null);
-	}
-
-	public Optional<ResourceLocation> getGatewayId() {
-		return Optional.ofNullable(gatewayId);
+	public List<ResourceLocation> getConnectedAsGateways() {
+		return connectedAsGateways;
 	}
 
 	public boolean isGateway() {
-		return gatewayId != null;
+		return !connectedAsGateways.isEmpty();
 	}
 
 	public List<String> getCommands() {

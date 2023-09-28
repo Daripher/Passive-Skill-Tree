@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_fishing",
       "modifier": {
         "amount": 0.2,
-        "id": "98c5584d-c097-40f7-bcf8-2a5ede3cf1c8",
+        "id": "197485e3-3cbe-4b99-ae75-516ace801bb5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_2_crafting_3",
     "skilltree:cook_subclass_2_crafting_5"

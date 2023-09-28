@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_against_poisoned",
       "modifier": {
         "amount": 0.02,
-        "id": "0ec478cd-a3df-44e0-98c5-0ee76b1119cb",
+        "id": "6d867453-0398-4765-a414-1083cd50d90b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_crit_notable_1"
   ],

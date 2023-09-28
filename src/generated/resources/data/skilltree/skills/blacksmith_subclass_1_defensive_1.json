@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "ea9a80e4-80c0-43c5-aaf9-47231ae578ec",
+        "id": "67b10161-3e27-44b2-9e3c-40c877fb8c2b",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "8e35dd98-88ff-4532-8ffc-acf114f6f1ef",
+        "id": "4c823030-fd3b-4d9c-8a1a-a5d901615860",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_1_defensive_2"
   ],

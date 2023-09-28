@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_poisons_strength",
       "modifier": {
         "amount": 0.1,
-        "id": "025b191e-5b9f-4372-8080-0991e511d11f",
+        "id": "eb27a792-ee30-4fa6-acb7-51b8f482db33",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_1_crafting_4",
     "skilltree:alchemist_subclass_1_crafting_5"

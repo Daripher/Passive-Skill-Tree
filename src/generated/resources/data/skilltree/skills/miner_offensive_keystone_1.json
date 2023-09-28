@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_gem_in_weapon",
       "modifier": {
         "amount": 0.1,
-        "id": "02ad20fe-9810-4580-8755-b2c5091b719b",
+        "id": "758c777a-d56d-480d-a753-d2755a900e78",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
   "id": "skilltree:miner_offensive_keystone_1",

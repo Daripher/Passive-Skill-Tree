@@ -4,7 +4,7 @@
       "attribute": "skilltree:stealth",
       "modifier": {
         "amount": 0.05,
-        "id": "3f24a518-542e-49e9-a95b-992b0601695e",
+        "id": "93dbd4bd-7f1e-4949-9b5c-2f1c22e567b3",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "4d934aa1-bc78-4002-81cc-d3799bf55c72",
+        "id": "eef4a5ac-c863-4157-bc6c-ca8b94824a6d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_2"
   ],

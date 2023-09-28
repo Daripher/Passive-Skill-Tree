@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance",
       "modifier": {
         "amount": 0.02,
-        "id": "f4ffc059-8f11-4c55-855e-4dcc8471f24e",
+        "id": "aba923b6-9bf2-42da-8bb5-4a1beeeeaa51",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_1_offensive_4"
   ],

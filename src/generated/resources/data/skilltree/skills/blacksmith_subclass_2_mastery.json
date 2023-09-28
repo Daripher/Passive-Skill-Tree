@@ -4,7 +4,7 @@
       "attribute": "skilltree:equipment_repair_efficiency",
       "modifier": {
         "amount": 0.05,
-        "id": "96ab1cfe-c554-4a3c-9737-945510ca7c0d",
+        "id": "4a980b2d-e2f3-4c6e-8d8a-ccd91a44717a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:crafted_equipment_durability",
       "modifier": {
         "amount": 0.05,
-        "id": "3d27dce2-35d2-4b56-84c7-eb937511f3a8",
+        "id": "ce21f57b-f15a-42cb-804a-4c78a6be7378",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,7 +22,7 @@
       "attribute": "skilltree:crafted_weapon_attack_speed",
       "modifier": {
         "amount": 0.05,
-        "id": "366a2b1a-01bc-46fa-b74e-12c00ce6c2dd",
+        "id": "cd40aa91-6974-42d4-a77f-107cf405d2c5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -31,7 +31,7 @@
       "attribute": "skilltree:chance_to_craft_tougher_armor",
       "modifier": {
         "amount": 0.05,
-        "id": "fb8bd4e8-f20c-45eb-8f8e-dd63fd06f6b3",
+        "id": "61c32e4d-6204-45f4-b6fd-425ac2e272a4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -40,7 +40,7 @@
       "attribute": "skilltree:crafted_shields_armor_bonus",
       "modifier": {
         "amount": 5.0,
-        "id": "da470ad8-6708-4bba-926a-5f120d925638",
+        "id": "76e286a5-e61c-4665-b0a5-e60f6f5432fe",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -50,6 +50,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_4"
   ],

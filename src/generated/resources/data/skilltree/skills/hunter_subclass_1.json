@@ -4,7 +4,7 @@
       "attribute": "skilltree:stealth",
       "modifier": {
         "amount": 0.1,
-        "id": "59c7eb09-3489-40f7-a006-36d9f34496c3",
+        "id": "a86c48b1-a0b4-4940-baed-2c864147ba39",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:jump_height",
       "modifier": {
         "amount": 0.1,
-        "id": "e623cb0e-3d09-4d26-8ec3-754383d81bf9",
+        "id": "acf42294-4fda-40ac-841e-ec75e456bdbd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_1",
     "skilltree:hunter_subclass_1_crafting_1"

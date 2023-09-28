@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_per_hit_under_potion_effect",
       "modifier": {
         "amount": 0.5,
-        "id": "8220101c-8c53-4581-a84c-92557c9ce1e7",
+        "id": "85361636-0bc8-459b-be06-b9f1d8e9b477",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
   "id": "skilltree:alchemist_healing_notable_1",

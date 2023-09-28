@@ -428,6 +428,11 @@ public class SkillTreeEditorScreen extends Screen {
 				saveSelectedSkills();
 				rebuildWidgets();
 			}));
+			addRenderableWidget(new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Connect with Gateway"), b -> {
+				skillButtons.get(first).skill.getConnectedAsGateways().add(second);
+				saveSelectedSkills();
+				rebuildWidgets();
+			}));
 		}
 		toolsY += 19;
 	}
@@ -473,19 +478,7 @@ public class SkillTreeEditorScreen extends Screen {
 
 	public void addGatewayConnections() {
 		gatewayConnections.clear();
-		Map<ResourceLocation, List<PassiveSkill>> gateways = new HashMap<ResourceLocation, List<PassiveSkill>>();
-		getTreeSkills().filter(PassiveSkill::isGateway).forEach(skill -> {
-			ResourceLocation gatewayId = skill.getGatewayId().get();
-			if (!gateways.containsKey(gatewayId)) {
-				gateways.put(gatewayId, new ArrayList<>());
-			}
-			gateways.get(gatewayId).add(skill);
-		});
-		gateways.forEach((gatewayId, list) -> {
-			for (int i = 1; i < list.size(); i++) {
-				connectSkills(gatewayConnections, list.get(0).getId(), list.get(i).getId());
-			}
-		});
+		getTreeSkills().forEach(this::addGatewayConnections);
 	}
 
 	private Stream<PassiveSkill> getTreeSkills() {
@@ -495,6 +488,12 @@ public class SkillTreeEditorScreen extends Screen {
 	private void addSkillConnections(PassiveSkill skill) {
 		skill.getConnectedSkills().forEach(connectedSkillId -> {
 			connectSkills(skillConnections, skill.getId(), connectedSkillId);
+		});
+	}
+
+	private void addGatewayConnections(PassiveSkill skill) {
+		skill.getConnectedAsGateways().forEach(connectedSkillId -> {
+			connectSkills(gatewayConnections, skill.getId(), connectedSkillId);
 		});
 	}
 

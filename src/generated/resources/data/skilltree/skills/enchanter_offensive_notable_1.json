@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_with_enchanted_weapon",
       "modifier": {
         "amount": 0.2,
-        "id": "b958a8f4-b12e-4cf1-a95f-bd59298673fd",
+        "id": "421a7c46-4f38-419c-9a6d-a06b009ae323",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_offensive_4",
     "skilltree:enchanter_offensive_crafting_5",

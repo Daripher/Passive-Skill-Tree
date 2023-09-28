@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_maximum_life",
       "modifier": {
         "amount": 1.0,
-        "id": "1b3cff60-415c-4b61-9ca7-8b31cda34962",
+        "id": "0c2f453b-2dd6-4f41-999e-d33f3749096f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_notable_1"
   ],

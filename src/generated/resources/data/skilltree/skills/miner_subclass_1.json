@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.1,
-        "id": "86026a1c-a5c1-45c0-b4ef-5ac75cf65ebb",
+        "id": "8085457f-0ab8-46a8-881e-b3c73995730f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.movement_speed",
       "modifier": {
         "amount": 0.1,
-        "id": "287be465-8764-42a3-ba51-0fd43ab74833",
+        "id": "1b107397-d978-43e4-aac7-6a0081af808d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_subclass_1_offensive_1",
     "skilltree:miner_subclass_1_crafting_1"

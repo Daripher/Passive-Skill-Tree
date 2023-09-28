@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_defence",
       "modifier": {
         "amount": 0.1,
-        "id": "8b6e613f-f99b-4814-8c89-7d131acf1286",
+        "id": "cb1e8577-59f0-4b2c-9f82-d14dfc840f85",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_defensive_crafting_4",
     "skilltree:blacksmith_healing_1"

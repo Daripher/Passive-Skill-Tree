@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage",
       "modifier": {
         "amount": 0.5,
-        "id": "7ff4536e-5c1d-470a-9787-b4d5d7731aa3",
+        "id": "e265c971-b1b3-4aa5-8a42-25ac816811db",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_1_offensive_4"
   ],

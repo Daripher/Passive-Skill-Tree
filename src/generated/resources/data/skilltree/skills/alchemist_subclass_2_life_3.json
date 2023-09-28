@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 2.0,
-        "id": "e7f2607c-dfde-4da9-b967-06de14e71c84",
+        "id": "d38e0bfe-2668-4f3e-a80f-bc9f45f1d7a5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:incoming_healing",
       "modifier": {
         "amount": 0.05,
-        "id": "8469c89e-bfcd-4594-b2ff-1eb353072b88",
+        "id": "dac8c6ea-56c8-4e1b-91d1-d8e21b022abe",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_2_life_4"
   ],

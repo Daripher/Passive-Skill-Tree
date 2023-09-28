@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_if_wounded",
       "modifier": {
         "amount": 0.1,
-        "id": "6fea910a-7772-4aa2-9722-5ca246182790",
+        "id": "7f6e8210-bd9d-4539-b854-93c394a1467c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_offensive_notable_1.png",
   "id": "skilltree:cook_subclass_1_offensive_notable_1",

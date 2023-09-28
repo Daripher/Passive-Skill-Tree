@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_evasion",
       "modifier": {
         "amount": 0.1,
-        "id": "c4d7a677-27cb-410a-ad86-10719dc96c9a",
+        "id": "795028c3-b64f-4f03-a8ce-da08bd7fa562",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_life_notable_1.png",
   "id": "skilltree:hunter_life_notable_1",

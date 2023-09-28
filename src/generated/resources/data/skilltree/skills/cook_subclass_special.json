@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_mobs",
       "modifier": {
         "amount": 0.5,
-        "id": "17f62ac7-e882-4da1-aabf-4a91461197d0",
+        "id": "ee20432a-5677-43ee-ae0e-4370a5374cf4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/cook_subclass_special_1.png",
   "id": "skilltree:cook_subclass_special",

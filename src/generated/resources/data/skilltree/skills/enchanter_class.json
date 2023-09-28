@@ -4,7 +4,7 @@
       "attribute": "skilltree:enchantment_level_requirement",
       "modifier": {
         "amount": -0.3,
-        "id": "a4c728f7-40ff-43ce-8e76-efa4d3853cb0",
+        "id": "1c9ca91c-1957-459a-987c-6d76d73db520",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_defensive_1",
     "skilltree:enchanter_offensive_1",

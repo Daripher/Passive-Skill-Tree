@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_per_potion_effect",
       "modifier": {
         "amount": 0.02,
-        "id": "faef5121-6ad5-40aa-824f-fb9a2ae0ca67",
+        "id": "24856c34-4895-4a7c-8eaf-0867331b6904",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_defensive_keystone_1.png",
   "id": "skilltree:alchemist_defensive_keystone_1",

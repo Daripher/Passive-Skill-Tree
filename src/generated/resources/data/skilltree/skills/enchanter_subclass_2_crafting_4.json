@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_per_hour",
       "modifier": {
         "amount": 0.2,
-        "id": "b15758d5-342e-425d-95f2-303ab7abebfb",
+        "id": "2f3bf023-73d3-4431-8937-f36d85697ff7",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_2_mastery",
     "skilltree:enchanter_subclass_2_crafting_notable_1"

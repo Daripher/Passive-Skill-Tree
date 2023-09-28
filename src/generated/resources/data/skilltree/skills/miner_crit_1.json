@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_per_gem_in_weapon",
       "modifier": {
         "amount": 0.01,
-        "id": "17d8037a-2de1-4190-8704-2776d4dacfb7",
+        "id": "dbc8cb73-d2ca-400f-8aaa-d8ee9aac5354",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_crit_notable_1"
   ],

@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_strength",
       "modifier": {
         "amount": 1.0,
-        "id": "9643991e-50a3-43a3-a537-c0c609e8ed8f",
+        "id": "54f7446f-cb86-4106-8ff0-87e31db46276",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_mastery.png",
   "id": "skilltree:alchemist_mastery",

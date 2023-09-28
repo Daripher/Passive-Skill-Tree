@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage_per_gem_in_weapon",
       "modifier": {
         "amount": 0.1,
-        "id": "646e349e-71c5-4cc4-8adf-24b257ecd3ab",
+        "id": "f0ddff0d-5407-4169-b998-c8962edc1d97",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/miner_crit_notable_1.png",
   "id": "skilltree:miner_crit_notable_1",

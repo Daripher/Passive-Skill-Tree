@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_if_wounded",
       "modifier": {
         "amount": 0.15,
-        "id": "70545f86-5f65-42e6-812a-e63b3235be85",
+        "id": "8fc54403-05c9-4f9b-8a5b-6ef334a59cc7",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:life_per_hit_if_wounded",
       "modifier": {
         "amount": 1.0,
-        "id": "adcc3833-07e7-4222-8308-935deeb3b26a",
+        "id": "8f472611-bf7e-41d5-9953-e1f8bae224e5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_1_offensive_4"
   ],

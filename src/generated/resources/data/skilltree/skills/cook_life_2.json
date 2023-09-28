@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_if_not_hungry",
       "modifier": {
         "amount": 2.0,
-        "id": "107a75c0-7b7d-4c50-a6e8-a72f6e940c9f",
+        "id": "6e7ed743-f6d2-4566-85cd-4718254f6ce7",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_life_notable_1"
   ],

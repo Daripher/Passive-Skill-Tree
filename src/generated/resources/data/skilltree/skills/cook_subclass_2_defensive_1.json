@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "7e970c7d-8fb7-49c5-bd95-c9367af899bd",
+        "id": "fef7bc7d-a21e-469a-aade-005492bfb8fa",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "82744385-7452-4f44-8f7c-9657fe98b237",
+        "id": "587b2730-9b04-444b-bc11-f9355997998d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_2_defensive_2",
     "skilltree:cook_gateway",

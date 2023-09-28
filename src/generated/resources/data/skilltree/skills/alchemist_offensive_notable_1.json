@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_poisoned",
       "modifier": {
         "amount": 0.25,
-        "id": "46818a27-489e-4341-b9c8-8bc3884ef144",
+        "id": "86b76606-dd32-4d24-8b68-c142b381567b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_offensive_4",
     "skilltree:alchemist_offensive_crafting_5",

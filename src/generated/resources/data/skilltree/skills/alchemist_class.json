@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_duration",
       "modifier": {
         "amount": 0.4,
-        "id": "06765264-e972-47de-9408-856b9d395fbb",
+        "id": "ae96b388-647f-4ef3-a3c2-bcbaff94a513",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_defensive_1",
     "skilltree:alchemist_offensive_1",

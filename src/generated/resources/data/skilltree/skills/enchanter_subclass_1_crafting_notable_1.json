@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_damage_against_burning",
       "modifier": {
         "amount": 0.2,
-        "id": "33e31957-5131-437f-9bfb-7ad00d3eb82d",
+        "id": "76ff8ba1-9767-4946-b696-63ef3f33725b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_notable_1.png",
   "id": "skilltree:enchanter_subclass_1_crafting_notable_1",

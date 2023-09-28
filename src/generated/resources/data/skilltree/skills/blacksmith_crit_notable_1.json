@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage_with_shield",
       "modifier": {
         "amount": 0.3,
-        "id": "eb2368bb-144a-4fbf-9f0c-8a7e3ab583da",
+        "id": "c043de86-130f-473d-8736-eaec91fa6a69",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_crit_notable_1.png",
   "id": "skilltree:blacksmith_crit_notable_1",

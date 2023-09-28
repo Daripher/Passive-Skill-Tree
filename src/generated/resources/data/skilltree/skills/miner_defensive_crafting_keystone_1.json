@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_armor",
       "modifier": {
         "amount": 0.3,
-        "id": "bb23085a-bedc-4f51-b8b7-83e18da2817b",
+        "id": "22bac2bd-74d4-4f7c-afb8-534187cd0c03",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:maximum_chestplate_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "53a533a6-d288-4e03-a979-385ec0550085",
+        "id": "f4cab7ab-2388-4b45-b1fd-0775da3fd6e1",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_keystone_1.png",
   "id": "skilltree:miner_defensive_crafting_keystone_1",

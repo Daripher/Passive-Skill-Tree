@@ -51,8 +51,6 @@ public class SkillTreeScreen extends Screen {
 	private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
 	private final List<SkillConnection> skillConnections = new ArrayList<>();
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
-	private final List<ResourceLocation> learnedGateways = new ArrayList<>();
-	private final List<ResourceLocation> newlyLearnedGateways = new ArrayList<>();
 	private final List<ResourceLocation> learnedSkills = new ArrayList<>();
 	private final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
 	private final List<SkillButton> startingPoints = new ArrayList<>();
@@ -256,14 +254,7 @@ public class SkillTreeScreen extends Screen {
 	protected void firstInit() {
 		IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
 		List<PassiveSkill> skills = capability.getPlayerSkills();
-		skills.stream()
-				.map(PassiveSkill::getId)
-				.forEach(learnedSkills::add);
-		skills.stream()
-				.filter(PassiveSkill::isGateway)
-				.map(PassiveSkill::getGatewayId)
-				.map(Optional::get)
-				.forEach(learnedGateways::add);
+		skills.stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
 		skillPoints = capability.getSkillPoints();
 		firstInitDone = true;
 	}
@@ -305,10 +296,6 @@ public class SkillTreeScreen extends Screen {
 		if (learnedSkills.contains(skill.getId()) || newlyLearnedSkills.contains(skill.getId())) {
 			return true;
 		}
-		if (skill.isGateway()) {
-			return learnedGateways.contains(skill.getGatewayId().get())
-					|| newlyLearnedGateways.contains(skill.getGatewayId().get());
-		}
 		return false;
 	}
 
@@ -319,19 +306,7 @@ public class SkillTreeScreen extends Screen {
 
 	public void addGatewayConnections() {
 		gatewayConnections.clear();
-		Map<ResourceLocation, List<PassiveSkill>> gateways = new HashMap<ResourceLocation, List<PassiveSkill>>();
-		getTreeSkills().filter(PassiveSkill::isGateway).forEach(skill -> {
-			ResourceLocation gatewayId = skill.getGatewayId().get();
-			if (!gateways.containsKey(gatewayId)) {
-				gateways.put(gatewayId, new ArrayList<>());
-			}
-			gateways.get(gatewayId).add(skill);
-		});
-		gateways.forEach((gatewayId, list) -> {
-			for (int i = 1; i < list.size(); i++) {
-				connectSkills(gatewayConnections, list.get(0).getId(), list.get(i).getId());
-			}
-		});
+		getTreeSkills().forEach(this::addGatewayConnections);
 	}
 
 	private Stream<PassiveSkill> getTreeSkills() {
@@ -341,6 +316,12 @@ public class SkillTreeScreen extends Screen {
 	private void addSkillConnections(PassiveSkill skill) {
 		skill.getConnectedSkills().forEach(connectedSkillId -> {
 			connectSkills(skillConnections, skill.getId(), connectedSkillId);
+		});
+	}
+
+	private void addGatewayConnections(PassiveSkill skill) {
+		skill.getConnectedAsGateways().forEach(connectedSkillId -> {
+			connectSkills(gatewayConnections, skill.getId(), connectedSkillId);
 		});
 	}
 
@@ -361,6 +342,7 @@ public class SkillTreeScreen extends Screen {
 		if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points)
 			return;
 		skillConnections.forEach(SkillConnection::updateAnimation);
+		gatewayConnections.forEach(SkillConnection::updateAnimation);
 	}
 
 	public void renderSkillTooltip(SkillButton button, PoseStack poseStack, float mouseX, float mouseY) {
@@ -425,13 +407,11 @@ public class SkillTreeScreen extends Screen {
 	private void confirmLearnSkills() {
 		newlyLearnedSkills.forEach(id -> learnSkill(skillButtons.get(id).skill));
 		newlyLearnedSkills.clear();
-		newlyLearnedGateways.clear();
 	}
 
 	private void cancelLearnSkills() {
 		skillPoints += newlyLearnedSkills.size();
 		newlyLearnedSkills.clear();
-		newlyLearnedGateways.clear();
 		rebuildWidgets();
 	}
 
@@ -469,8 +449,6 @@ public class SkillTreeScreen extends Screen {
 		if (button.animated) {
 			skillPoints--;
 			newlyLearnedSkills.add(skill.getId());
-			if (skill.isGateway())
-				newlyLearnedGateways.add(skill.getGatewayId().get());
 			rebuildWidgets();
 			return;
 		}
@@ -482,8 +460,6 @@ public class SkillTreeScreen extends Screen {
 
 	protected void learnSkill(PassiveSkill skill) {
 		learnedSkills.add(skill.getId());
-		if (skill.isGateway())
-			learnedGateways.add(skill.getGatewayId().get());
 		NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(skill));
 		rebuildWidgets();
 	}

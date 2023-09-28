@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.05,
-        "id": "8bb6db82-d919-4d4e-989e-67457d7ccf7b",
+        "id": "00db8400-30a5-43ed-8d39-1d933aa1ca9d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_defensive_4",
     "skilltree:blacksmith_defensive_crafting_5",

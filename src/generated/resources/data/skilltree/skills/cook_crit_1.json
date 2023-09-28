@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_if_not_hungry",
       "modifier": {
         "amount": 0.02,
-        "id": "83bbec9b-0cbf-4252-ade5-c6ef3ff327e1",
+        "id": "a28077a6-0e39-422b-a716-08f61c086658",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_crit_notable_1"
   ],

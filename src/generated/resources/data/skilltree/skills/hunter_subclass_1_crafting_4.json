@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_stealth",
       "modifier": {
         "amount": 0.01,
-        "id": "6038dd8d-0b74-4e4a-bf57-250ed80f1231",
+        "id": "f82187ac-bf65-4ba7-9e62-3cfda43722e1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_subclass_1_mastery",
     "skilltree:hunter_subclass_1_crafting_notable_1"

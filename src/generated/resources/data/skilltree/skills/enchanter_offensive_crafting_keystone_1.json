@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_weapon_enchantment",
       "modifier": {
         "amount": 0.4,
-        "id": "936eb5b1-d2ae-4185-be24-aba59232e4a4",
+        "id": "dc958754-71ef-47fa-b419-2b2d3086398f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_offensive_crafting_keystone_1.png",
   "id": "skilltree:enchanter_offensive_crafting_keystone_1",

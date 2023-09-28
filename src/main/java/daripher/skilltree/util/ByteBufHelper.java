@@ -74,7 +74,7 @@ public class ByteBufHelper {
 		writeResourceLocations(buf, skill.getConnectedSkills());
 		writeOptionalResourceLocation(buf, skill.getConnectedTreeId());
 		writeAttributeModifiers(buf, skill.getAttributeModifiers());
-		writeOptionalResourceLocation(buf, skill.getGatewayId());
+		writeResourceLocations(buf, skill.getConnectedAsGateways());
 	}
 
 	public static void writePassiveSkills(FriendlyByteBuf buf, Collection<PassiveSkill> skills) {
@@ -136,7 +136,7 @@ public class ByteBufHelper {
 		readResourceLocations(buf).forEach(skill.getConnectedSkills()::add);
 		skill.setConnectedTree(readOptionalResourceLocation(buf));
 		readAttributeModifiers(buf).forEach(skill::addAttributeBonus);
-		skill.setGatewayId(readOptionalResourceLocation(buf));
+		readResourceLocations(buf).forEach(skill.getConnectedAsGateways()::add);
 		return skill;
 	}
 

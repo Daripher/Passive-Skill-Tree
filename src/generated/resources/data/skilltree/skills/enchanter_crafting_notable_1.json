@@ -4,7 +4,7 @@
       "attribute": "skilltree:free_enchantment_chance",
       "modifier": {
         "amount": 0.1,
-        "id": "5d5cf716-10c9-411c-a35f-a76b0db2c5fc",
+        "id": "ccd465ee-fdad-4731-8ad2-6ab81b967267",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_crafting_notable_1.png",
   "id": "skilltree:enchanter_crafting_notable_1",

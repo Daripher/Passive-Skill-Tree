@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_helmets_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "4832bb62-1751-491a-b33c-ef0f8d06603a",
+        "id": "7cea47b6-7976-47a0-82b9-d97d77eeea36",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_defensive_crafting_keystone_1.png",
   "id": "skilltree:hunter_defensive_crafting_keystone_1",

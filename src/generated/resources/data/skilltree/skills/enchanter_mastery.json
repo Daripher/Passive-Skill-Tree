@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_enchantment",
       "modifier": {
         "amount": 1.0,
-        "id": "00f6d3c6-71f5-447a-9a31-3615355dd5ff",
+        "id": "4df6189b-464a-4620-9585-5db255a1d4cd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_mastery.png",
   "id": "skilltree:enchanter_mastery",

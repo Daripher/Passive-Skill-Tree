@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_ore",
       "modifier": {
         "amount": 0.5,
-        "id": "62d37f70-640d-49e6-881c-eba94b1eb213",
+        "id": "47f55d48-b7a7-4db2-98f6-56919eb43ba9",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_crafting_notable_1.png",
   "id": "skilltree:enchanter_subclass_2_crafting_notable_1",

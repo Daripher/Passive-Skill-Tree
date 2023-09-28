@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_life_per_hit",
       "modifier": {
         "amount": 0.5,
-        "id": "fc5b105c-22dd-45be-be85-ab98219395c4",
+        "id": "f9adf27e-4b1e-4811-8405-46b9aad9e479",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_special_1.png",
   "id": "skilltree:hunter_subclass_special",

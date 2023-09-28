@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_harmful_potions_duration",
       "modifier": {
         "amount": 0.25,
-        "id": "f118ff9a-8a09-46ac-b53b-dde6f47e579d",
+        "id": "20d3951e-31ce-463e-8d8c-1feae08236a7",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_crafting_notable_1.png",
   "id": "skilltree:alchemist_subclass_1_crafting_notable_1",

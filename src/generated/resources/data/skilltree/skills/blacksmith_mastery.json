@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_craft_tougher_armor",
       "modifier": {
         "amount": 1.0,
-        "id": "f3b3624a-9534-4051-9b17-960e4975c27a",
+        "id": "0ff26cd3-3d6a-49d8-ba84-7d373c5c325f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_mastery.png",
   "id": "skilltree:blacksmith_mastery",

@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.1,
-        "id": "4115f625-f8a5-44af-a65c-bd57438f80c6",
+        "id": "f9f090f8-6435-4e5a-92a5-9401c8225215",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.05,
-        "id": "8852e927-1d21-45fd-9b35-10a19fd949ee",
+        "id": "cfdb81dc-e262-4be8-b1b4-260c3239d36d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,7 +22,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.05,
-        "id": "bfaf5294-9fe5-4457-b588-f5e4ad4198df",
+        "id": "2c7a648b-a8ed-4477-9738-556d227740fd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -32,6 +32,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_4"
   ],

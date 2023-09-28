@@ -4,7 +4,7 @@
       "attribute": "skilltree:can_mix_potions",
       "modifier": {
         "amount": 1.0,
-        "id": "b4342977-79fc-4e96-84b9-f9329de6a425",
+        "id": "31e1b12e-898d-4cf2-82f8-2cf0f6214a09",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_crafting_notable_1.png",
   "id": "skilltree:alchemist_crafting_notable_1",

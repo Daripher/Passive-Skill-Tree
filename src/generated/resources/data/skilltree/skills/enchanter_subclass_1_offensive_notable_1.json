@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_against_burning",
       "modifier": {
         "amount": 0.1,
-        "id": "6a7f3011-0dae-4bf0-938d-d9ae9a3099cc",
+        "id": "4a7d1358-5855-4650-a6a3-c163a5b8801b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
   "id": "skilltree:enchanter_subclass_1_offensive_notable_1",

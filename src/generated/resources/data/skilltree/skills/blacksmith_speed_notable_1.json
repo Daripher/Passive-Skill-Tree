@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_shield",
       "modifier": {
         "amount": 0.05,
-        "id": "fc88be47-c572-494f-842e-02bef994d902",
+        "id": "f152d31a-c0fb-4256-b622-b107fee67db5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_speed_notable_1.png",
   "id": "skilltree:blacksmith_speed_notable_1",

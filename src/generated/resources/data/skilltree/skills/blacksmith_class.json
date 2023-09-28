@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_equipment_durability",
       "modifier": {
         "amount": 0.25,
-        "id": "4575e5b2-c33e-4e50-9680-942b423327d7",
+        "id": "4fd8dcb9-1545-4343-afc3-278e09ae35f4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_defensive_1",
     "skilltree:blacksmith_offensive_1",

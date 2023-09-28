@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "0673f174-18d5-426c-bc05-1b7d85142000",
+        "id": "f20b49c3-5917-4bd0-9791-998abd6a9faa",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:crit_damage",
       "modifier": {
         "amount": 0.15,
-        "id": "3da13948-ed8a-4acd-94cd-c7d57e89c317",
+        "id": "d4e8e116-50c2-48d5-8a62-4c12a863b50f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_1_offensive_1",
     "skilltree:alchemist_subclass_1_crafting_1"

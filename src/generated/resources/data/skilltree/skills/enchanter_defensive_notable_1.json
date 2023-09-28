@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_with_enchanted_shield",
       "modifier": {
         "amount": 0.1,
-        "id": "b1dfc4be-e823-48a3-b1ce-d9485e4f0275",
+        "id": "b06106e2-d0b6-4dc5-a745-507d0ffba6fc",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_defensive_4",
     "skilltree:enchanter_defensive_crafting_5",

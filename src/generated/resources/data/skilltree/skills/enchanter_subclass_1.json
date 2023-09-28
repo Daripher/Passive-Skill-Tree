@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_burning",
       "modifier": {
         "amount": 0.15,
-        "id": "8dd77933-7ce3-4740-87cb-e564b915277d",
+        "id": "c0abfa81-0032-45ea-9035-50fe5c475710",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:chance_to_ignite",
       "modifier": {
         "amount": 0.15,
-        "id": "97fdcb8a-05ee-47ec-ab08-7508aa971b21",
+        "id": "7b1b0f57-cc3e-4e27-8801-f38c49a97b57",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -23,6 +23,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_1",
     "skilltree:enchanter_subclass_1_crafting_1"

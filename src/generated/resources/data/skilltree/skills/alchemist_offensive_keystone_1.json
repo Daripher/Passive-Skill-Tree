@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_potion_effect",
       "modifier": {
         "amount": 0.15,
-        "id": "1f8d9c99-7426-4f75-8fa6-4b3270436785",
+        "id": "3362cecb-5099-471e-adc5-d648480e6183",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_offensive_keystone_1.png",
   "id": "skilltree:alchemist_offensive_keystone_1",

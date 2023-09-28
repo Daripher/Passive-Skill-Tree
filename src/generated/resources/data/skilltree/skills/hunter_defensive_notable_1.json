@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance_when_wounded",
       "modifier": {
         "amount": 0.1,
-        "id": "289e5577-c7d4-4191-9646-70b3ad2186f1",
+        "id": "e5a5bc6e-ab82-49f3-a2a3-02619b9c0c85",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_defensive_4",
     "skilltree:hunter_defensive_crafting_5",

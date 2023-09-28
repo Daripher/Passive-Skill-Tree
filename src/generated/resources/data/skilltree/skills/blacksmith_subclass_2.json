@@ -4,7 +4,7 @@
       "attribute": "skilltree:equipment_repair_efficiency",
       "modifier": {
         "amount": 1.0,
-        "id": "f1c00598-23f7-4d25-b4ff-318b8f028309",
+        "id": "6a2f3c2e-af46-46b2-86c6-cfce6353ea1b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_2_crafting_1",
     "skilltree:blacksmith_subclass_2_life_1"

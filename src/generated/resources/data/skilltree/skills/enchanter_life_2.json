@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_with_enchanted_item",
       "modifier": {
         "amount": 2.0,
-        "id": "ccbf7d56-6009-46b7-98b5-64b40badbd76",
+        "id": "9e89da08-fe43-4e97-be72-ed2699884a6b",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_life_notable_1"
   ],

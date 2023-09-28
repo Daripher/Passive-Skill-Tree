@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_healing_potions_strength",
       "modifier": {
         "amount": 0.1,
-        "id": "8789a0dd-5031-4bc0-9ab0-7c0430f99931",
+        "id": "57cc74d9-04b9-4e4c-8ec4-5aef01e62085",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_2_crafting_4",
     "skilltree:alchemist_subclass_2_crafting_5"

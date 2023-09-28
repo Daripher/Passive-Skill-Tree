@@ -4,10 +4,12 @@
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
   "buttonSize": 33,
   "commands": [],
+  "connectedAsGateways": [
+    "skilltree:cook_gateway"
+  ],
   "connectedSkills": [
     "skilltree:hunter_subclass_1_defensive_1"
   ],
-  "gatewayId": "skilltree:etherial_gateway",
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:alchemist_gateway",
   "isStartingPoint": false,

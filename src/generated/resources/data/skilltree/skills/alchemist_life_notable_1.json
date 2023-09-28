@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_under_potion_effect",
       "modifier": {
         "amount": 6.0,
-        "id": "24c08b95-d9a8-469f-8a8e-419ababd5a2c",
+        "id": "a6538359-70f2-43fb-b588-bc17cec1bb84",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_life_notable_1.png",
   "id": "skilltree:alchemist_life_notable_1",

@@ -4,7 +4,7 @@
       "attribute": "skilltree:armor_per_evasion_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "6e3f3f7d-9522-4c0b-844a-74efa84c5989",
+        "id": "536cfc00-075e-4972-811d-565b9af24924",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -14,6 +14,7 @@
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
   "commands": [],
+  "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_defensive_keystone_1.png",
   "id": "skilltree:hunter_defensive_keystone_1",
