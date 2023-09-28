@@ -237,6 +237,7 @@ public class SkillTreeEditorScreen extends Screen {
 			addRenderableOnly(new PSTLabel(toolsX, toolsY, Component.literal("• Size").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
 			NumberEditBox sizeEditor = new NumberEditBox(font, toolsX, toolsY, 60, 14, skill.getButtonSize());
+			sizeEditor.setNumericFilter(d -> d >= 2);
 			sizeEditor.setResponder(s -> {
 				getSelectedSkills().forEach(skill_ -> {
 					skill_.setButtonSize((int) sizeEditor.getNumericValue());
@@ -457,14 +458,12 @@ public class SkillTreeEditorScreen extends Screen {
 
 	private float getSkillButtonX(PassiveSkill skill) {
 		float skillX = skill.getPositionX();
-		int skillRadius = skill.getButtonSize() / 2;
-		return skillX - skillRadius + width / 2F + skillX * (zoom - 1);
+		return skillX - skill.getButtonSize() / 2F + width / 2F + skillX * (zoom - 1);
 	}
 
 	private float getSkillButtonY(PassiveSkill skill) {
 		float skillY = skill.getPositionY();
-		int skillRadius = skill.getButtonSize() / 2;
-		return skillY - skillRadius + height / 2F + skillY * (zoom - 1);
+		return skillY - skill.getButtonSize() / 2F + height / 2F + skillY * (zoom - 1);
 	}
 
 	public void addSkillConnections() {

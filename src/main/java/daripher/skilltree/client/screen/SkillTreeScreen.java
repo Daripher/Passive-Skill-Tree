@@ -293,14 +293,12 @@ public class SkillTreeScreen extends Screen {
 
 	private float getSkillButtonX(PassiveSkill skill) {
 		float skillX = skill.getPositionX();
-		int skillRadius = skill.getButtonSize() / 2;
-		return skillX - skillRadius + width / 2F + skillX * (zoom - 1);
+		return skillX - skill.getButtonSize() / 2F + width / 2F + skillX * (zoom - 1);
 	}
 
 	private float getSkillButtonY(PassiveSkill skill) {
 		float skillY = skill.getPositionY();
-		int skillRadius = skill.getButtonSize() / 2;
-		return skillY - skillRadius + height / 2F + skillY * (zoom - 1);
+		return skillY - skill.getButtonSize() / 2F + height / 2F + skillY * (zoom - 1);
 	}
 
 	protected boolean isSkillLearned(PassiveSkill skill) {
