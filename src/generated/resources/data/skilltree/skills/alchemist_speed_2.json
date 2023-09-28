@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_under_potion_effect",
       "modifier": {
         "amount": 0.05,
-        "id": "af646066-2882-4887-8331-1da200f95f86",
+        "id": "ba662847-320a-4134-9680-34a8a2187da2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_speed_1.png",
   "id": "skilltree:alchemist_speed_2",
   "isStartingPoint": false,
-  "positionX": -35.997005,
-  "positionY": 263.52728
+  "positionX": -27.99701,
+  "positionY": 271.52728
 }

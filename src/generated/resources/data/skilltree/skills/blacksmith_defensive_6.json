@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 1.0,
-        "id": "dfe3185f-27bc-459a-aa26-a3fc818d2220",
+        "id": "ef9c5ea3-f874-4cf5-a268-9fd749d71441",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_defensive_1.png",
   "id": "skilltree:blacksmith_defensive_6",
   "isStartingPoint": false,
-  "positionX": -292.66266,
-  "positionY": -110.0113
+  "positionX": -284.66266,
+  "positionY": -102.0113
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage",
       "modifier": {
         "amount": 0.5,
-        "id": "2816bdd5-6ba7-46cc-9f36-f8210b052db7",
+        "id": "7ff4536e-5c1d-470a-9787-b4d5d7731aa3",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_mastery.png",
   "id": "skilltree:alchemist_subclass_1_mastery",
   "isStartingPoint": false,
-  "positionX": -156.95734,
-  "positionY": 436.50153
+  "positionX": -144.95734,
+  "positionY": 448.50153
 }

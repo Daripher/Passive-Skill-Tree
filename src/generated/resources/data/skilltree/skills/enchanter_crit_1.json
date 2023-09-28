@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_with_enchanted_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "b86ee8c4-e09f-4e32-ba9a-2da57b5cf529",
+        "id": "51d57270-3121-4ada-ae0c-44ddc3d55c07",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_crit_1.png",
   "id": "skilltree:enchanter_crit_1",
   "isStartingPoint": false,
-  "positionX": 235.67769,
-  "positionY": -181.00456
+  "positionX": 243.67769,
+  "positionY": -173.00456
 }

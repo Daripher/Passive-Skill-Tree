@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_gem_in_armor",
       "modifier": {
         "amount": 1.0,
-        "id": "93011f8b-37f9-46e5-aa7a-316d372fc6a7",
+        "id": "19ec91c0-2f20-48bc-880c-1dafe04c929b",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/miner_life_notable_1.png",
   "id": "skilltree:miner_life_notable_1",
   "isStartingPoint": false,
-  "positionX": -222.63979,
-  "positionY": 112.762024
+  "positionX": -212.63979,
+  "positionY": 122.762024
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "0338dc3a-08cd-459c-8dad-5f0d4c573795",
+        "id": "97c1ac89-1b22-460a-987c-77b20e30049f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_healing_1.png",
   "id": "skilltree:blacksmith_healing_2",
   "isStartingPoint": false,
-  "positionX": -191.631,
-  "positionY": 10.761135
+  "positionX": -183.631,
+  "positionY": 18.761135
 }

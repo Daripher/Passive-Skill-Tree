@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_fishing",
       "modifier": {
         "amount": 0.5,
-        "id": "753098d8-8e70-49d3-bdf3-d4b59e2fdb33",
+        "id": "bbaaeb06-6033-4f8f-9929-9f3eb171c39e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_crafting_notable_1.png",
   "id": "skilltree:cook_subclass_2_crafting_notable_1",
   "isStartingPoint": false,
-  "positionX": -196.93625,
-  "positionY": -445.8003
+  "positionX": -186.93625,
+  "positionY": -435.8003
 }

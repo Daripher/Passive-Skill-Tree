@@ -536,11 +536,11 @@ public class PSTSkillsProvider implements DataProvider {
 		if (previous != null) {
 			int previousButtonRadius = previous.getButtonSize() / 2;
 			distance += previousButtonRadius;
-			centerX = previous.getPositionX() + previousButtonRadius;
-			centerY = previous.getPositionY() + previousButtonRadius;
+			centerX = previous.getPositionX();
+			centerY = previous.getPositionY();
 		}
-		float skillX = centerX + Mth.sin(angle) * distance - buttonSize / 2F;
-		float skillY = centerY + Mth.cos(angle) * distance - buttonSize / 2F;
+		float skillX = centerX + Mth.sin(angle) * distance;
+		float skillY = centerY + Mth.cos(angle) * distance;
 		skill.setPosition(skillX, skillY);
 		if (previous != null) previous.connect(skill);
 	}

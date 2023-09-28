@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_crit_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "c8da18b4-959f-4ec7-917f-6a9d727a1168",
+        "id": "272c2e19-5b0b-4059-9310-fd92bc9fab3d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_crafting_1.png",
   "id": "skilltree:blacksmith_subclass_1_crafting_4",
   "isStartingPoint": false,
-  "positionX": -291.92178,
-  "positionY": -357.80984
+  "positionX": -283.92178,
+  "positionY": -349.80984
 }

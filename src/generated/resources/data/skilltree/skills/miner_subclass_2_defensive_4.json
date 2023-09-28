@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "04064a4c-222e-4f5c-91ef-5c6417e3c38b",
+        "id": "621145a9-f5c4-4afe-ad16-b95dd3ede404",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "38ad3899-de02-4eca-91c5-ac844d8d9ca5",
+        "id": "65c2c956-4c5d-4e6e-8b61-e5d2fa97e1f4",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
   "id": "skilltree:miner_subclass_2_defensive_4",
   "isStartingPoint": false,
-  "positionX": -180.68896,
-  "positionY": 259.07388
+  "positionX": -172.68896,
+  "positionY": 267.07388
 }

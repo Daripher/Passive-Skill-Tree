@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "491d5afc-7129-49eb-8704-4d177c15c072",
+        "id": "938bd846-7c7a-4975-bcae-c9fa4d0006a6",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_healing_1.png",
   "id": "skilltree:miner_healing_4",
   "isStartingPoint": false,
-  "positionX": -77.2976,
-  "positionY": 112.78715
+  "positionX": -69.2976,
+  "positionY": 120.78715
 }

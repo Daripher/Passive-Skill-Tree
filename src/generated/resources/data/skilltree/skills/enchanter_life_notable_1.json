@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_armor_enchantment",
       "modifier": {
         "amount": 1.0,
-        "id": "f3f9a53d-779d-4648-9dfc-40967a0aab20",
+        "id": "0c0fef03-e8f8-4856-a56f-ad205c4cc66f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_life_notable_1.png",
   "id": "skilltree:enchanter_life_notable_1",
   "isStartingPoint": false,
-  "positionX": 202.63979,
-  "positionY": -132.76202
+  "positionX": 212.63979,
+  "positionY": -122.762024
 }

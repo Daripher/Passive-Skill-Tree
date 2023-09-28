@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_boots_movement_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "d4115690-29e3-4baa-9c39-3ce60da3cfd0",
+        "id": "bce724cc-56be-40f6-ad3b-2d23f801e171",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
   "id": "skilltree:miner_subclass_1_crafting_1",
   "isStartingPoint": false,
-  "positionX": -385.35162,
-  "positionY": 23.994904
+  "positionX": -377.35162,
+  "positionY": 31.994904
 }

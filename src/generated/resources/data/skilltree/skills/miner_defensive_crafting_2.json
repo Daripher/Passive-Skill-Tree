@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_armor",
       "modifier": {
         "amount": 0.1,
-        "id": "f5df5835-51ab-42b0-a114-007aa48f9334",
+        "id": "60cab8ab-8a37-479e-8a18-360f0f58933f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
   "id": "skilltree:miner_defensive_crafting_2",
   "isStartingPoint": false,
-  "positionX": -126.65993,
-  "positionY": 105.51328
+  "positionX": -118.65993,
+  "positionY": 113.51328
 }

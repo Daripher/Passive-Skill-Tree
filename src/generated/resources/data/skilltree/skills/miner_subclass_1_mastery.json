@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_distance_to_spawn",
       "modifier": {
         "amount": 1.0E-4,
-        "id": "d1816d53-f4f5-4b82-91ee-9aa18fe1c3a1",
+        "id": "4efe17d8-c1e0-4e42-a9ce-cddc70710201",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_mastery.png",
   "id": "skilltree:miner_subclass_1_mastery",
   "isStartingPoint": false,
-  "positionX": -472.90466,
-  "positionY": 86.70454
+  "positionX": -460.90466,
+  "positionY": 98.70454
 }

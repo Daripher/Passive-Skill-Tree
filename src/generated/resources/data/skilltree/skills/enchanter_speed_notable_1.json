@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_enchanted_weapon",
       "modifier": {
         "amount": 0.05,
-        "id": "fbe106e7-3944-44f1-bc47-1ba0140ac33c",
+        "id": "5f2c6f86-efb7-4c21-837c-f7225aba1e98",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_speed_notable_1.png",
   "id": "skilltree:enchanter_speed_notable_1",
   "isStartingPoint": false,
-  "positionX": 225.15686,
-  "positionY": -145.7613
+  "positionX": 235.15686,
+  "positionY": -135.7613
 }

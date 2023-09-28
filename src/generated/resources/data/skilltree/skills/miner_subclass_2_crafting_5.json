@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_jewelry",
       "modifier": {
         "amount": 0.05,
-        "id": "4aedbd5c-ff5e-4149-b674-a9d32446cc31",
+        "id": "b00e7b43-9c94-4701-9e1f-853c9a001142",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_crafting_1.png",
   "id": "skilltree:miner_subclass_2_crafting_5",
   "isStartingPoint": false,
-  "positionX": -246.92113,
-  "positionY": 341.78406
+  "positionX": -238.92113,
+  "positionY": 349.78406
 }

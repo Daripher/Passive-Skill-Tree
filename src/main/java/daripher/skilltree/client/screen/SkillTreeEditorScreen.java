@@ -457,12 +457,14 @@ public class SkillTreeEditorScreen extends Screen {
 
 	private float getSkillButtonX(PassiveSkill skill) {
 		float skillX = skill.getPositionX();
-		return skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
+		int skillRadius = skill.getButtonSize() / 2;
+		return skillX - skillRadius + width / 2F + skillX * (zoom - 1);
 	}
 
 	private float getSkillButtonY(PassiveSkill skill) {
 		float skillY = skill.getPositionY();
-		return skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
+		int skillRadius = skill.getButtonSize() / 2;
+		return skillY - skillRadius + height / 2F + skillY * (zoom - 1);
 	}
 
 	public void addSkillConnections() {

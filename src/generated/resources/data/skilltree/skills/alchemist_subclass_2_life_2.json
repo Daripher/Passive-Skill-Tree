@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 2.0,
-        "id": "5e6df078-4eef-44f1-b87c-3cc747c56708",
+        "id": "c360291a-98a6-4f5f-bcc8-ca73eb8f9a3c",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:incoming_healing",
       "modifier": {
         "amount": 0.05,
-        "id": "bc78c827-a050-4271-a5c4-1e663474f2da",
+        "id": "cf7a4b5e-abb3-4ddd-93af-e712cd08df2d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_life_1.png",
   "id": "skilltree:alchemist_subclass_2_life_2",
   "isStartingPoint": false,
-  "positionX": 120.95822,
-  "positionY": 360.79712
+  "positionX": 128.95822,
+  "positionY": 368.79712
 }

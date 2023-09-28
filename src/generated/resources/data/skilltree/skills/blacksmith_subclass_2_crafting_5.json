@@ -4,7 +4,7 @@
       "attribute": "skilltree:equipment_repair_efficiency",
       "modifier": {
         "amount": 0.05,
-        "id": "b0588295-8f4c-49b3-91f4-70e069635b33",
+        "id": "547b37ba-7533-4e8a-aeaa-d1dbd1a657e3",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_crafting_1.png",
   "id": "skilltree:blacksmith_subclass_2_crafting_5",
   "isStartingPoint": false,
-  "positionX": -430.37567,
-  "positionY": -40.01235
+  "positionX": -422.37567,
+  "positionY": -32.01235
 }

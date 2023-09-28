@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_life_regeneration",
       "modifier": {
         "amount": 0.1,
-        "id": "e4cd0785-aa06-40f1-aaf2-c84886d9a846",
+        "id": "300f1604-fa53-45a1-ac40-d08ea3affde1",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_crafting_1.png",
   "id": "skilltree:cook_crafting_2",
   "isStartingPoint": false,
-  "positionX": -8.0,
-  "positionY": -102.0
+  "positionX": 1.8614632E-14,
+  "positionY": -94.0
 }

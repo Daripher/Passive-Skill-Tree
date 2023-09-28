@@ -4,7 +4,7 @@
       "attribute": "skilltree:incoming_healing",
       "modifier": {
         "amount": 0.15,
-        "id": "88a6d811-1271-4096-ab7a-9215c10d6e19",
+        "id": "591a2299-e4e0-43f6-9bc8-69af376e262f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_2.png",
   "id": "skilltree:alchemist_subclass_2",
   "isStartingPoint": false,
-  "positionX": 132.95734,
-  "positionY": 303.08533
+  "positionX": 144.95734,
+  "positionY": 315.08533
 }

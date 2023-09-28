@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_capacity",
       "modifier": {
         "amount": 0.05,
-        "id": "197140c2-ca6e-48b6-9bba-f61873ffcbbe",
+        "id": "bba151ae-9eb0-43c9-9ac8-32ce31f900ad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2_crafting_1.png",
   "id": "skilltree:hunter_subclass_2_crafting_3",
   "isStartingPoint": false,
-  "positionX": 414.37445,
-  "positionY": 50.01307
+  "positionX": 422.37445,
+  "positionY": 58.01307
 }

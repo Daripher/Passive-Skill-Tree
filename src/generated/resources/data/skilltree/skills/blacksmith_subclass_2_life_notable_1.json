@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_maximum_life",
       "modifier": {
         "amount": 5.0,
-        "id": "b6c43317-6105-4232-b87e-7bcfe0a6d4fe",
+        "id": "720dd888-28f0-4125-9097-7489092d4ebc",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_life_notable_1.png",
   "id": "skilltree:blacksmith_subclass_2_life_notable_1",
   "isStartingPoint": false,
-  "positionX": -438.8894,
-  "positionY": -138.72784
+  "positionX": -428.8894,
+  "positionY": -128.72784
 }

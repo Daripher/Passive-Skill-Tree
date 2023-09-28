@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_per_hit",
       "modifier": {
         "amount": 0.25,
-        "id": "71a106d7-52a1-457a-9d36-7f44e4c1cfd5",
+        "id": "544bdeee-1027-4604-b5a8-36dabf106e23",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_healing_1.png",
   "id": "skilltree:hunter_healing_1",
   "isStartingPoint": false,
-  "positionX": 175.631,
-  "positionY": 10.008415
+  "positionX": 183.631,
+  "positionY": 18.008415
 }

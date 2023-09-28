@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_if_not_hungry",
       "modifier": {
         "amount": 0.02,
-        "id": "eab4c53e-342e-434d-a247-c783c2e242e6",
+        "id": "4db01350-0135-41ce-afd1-25be87dcfc31",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_crit_1.png",
   "id": "skilltree:cook_crit_2",
   "isStartingPoint": false,
-  "positionX": 20.005981,
-  "positionY": -305.52728
+  "positionX": 28.005981,
+  "positionY": -297.52728
 }

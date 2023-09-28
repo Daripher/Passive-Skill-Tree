@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "6a6972c9-dc62-4986-96ca-b5b78c4324c5",
+        "id": "a0020c36-c598-4eb8-89d8-b4884dd38975",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_defensive_1.png",
   "id": "skilltree:enchanter_subclass_2_defensive_4",
   "isStartingPoint": false,
-  "positionX": 164.68896,
-  "positionY": -275.07388
+  "positionX": 172.68896,
+  "positionY": -267.07388
 }

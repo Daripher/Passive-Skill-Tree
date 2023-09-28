@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_per_hour",
       "modifier": {
         "amount": 0.2,
-        "id": "0e8a96c0-17a7-406a-8af8-367c67d8d83f",
+        "id": "b465f856-6b80-44e8-901a-8bee7ebdad12",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_crafting_1.png",
   "id": "skilltree:enchanter_subclass_2_crafting_3",
   "isStartingPoint": false,
-  "positionX": 253.4382,
-  "positionY": -344.78333
+  "positionX": 261.4382,
+  "positionY": -336.78333
 }

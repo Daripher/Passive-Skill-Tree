@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_with_shield",
       "modifier": {
         "amount": 0.02,
-        "id": "0423ea66-f955-45a9-ad6b-0057c80a3728",
+        "id": "3a3d1626-b73a-45f5-9157-0039a3dc41f2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_crit_1.png",
   "id": "skilltree:blacksmith_crit_2",
   "isStartingPoint": false,
-  "positionX": -251.6611,
-  "positionY": -181.02792
+  "positionX": -243.6611,
+  "positionY": -173.02792
 }

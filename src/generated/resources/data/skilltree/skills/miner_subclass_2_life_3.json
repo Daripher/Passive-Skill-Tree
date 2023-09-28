@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_equipped_jewelry",
       "modifier": {
         "amount": 1.0,
-        "id": "0355900c-5042-4383-af38-e22f1ffd191a",
+        "id": "0c0c6b97-5415-435a-b6b7-209c3b76fef4",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_life_1.png",
   "id": "skilltree:miner_subclass_2_life_3",
   "isStartingPoint": false,
-  "positionX": -285.43646,
-  "positionY": 301.07153
+  "positionX": -277.43643,
+  "positionY": 309.07153
 }

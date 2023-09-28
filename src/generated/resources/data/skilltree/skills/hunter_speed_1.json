@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_ranged_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "de863fe2-b1af-4b0f-afab-b337e11ea300",
+        "id": "a6531a5c-88e2-49ce-b46b-740cf0d2b086",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_speed_1.png",
   "id": "skilltree:hunter_speed_1",
   "isStartingPoint": false,
-  "positionX": 241.14754,
-  "positionY": 103.52569
+  "positionX": 249.14754,
+  "positionY": 111.52569
 }

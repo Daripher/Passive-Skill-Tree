@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_if_damaged",
       "modifier": {
         "amount": 0.1,
-        "id": "fc15c57e-ee71-49e9-acd6-2e3abee5dd3b",
+        "id": "a7f3ce5e-6b05-435c-944c-5506ed99d3eb",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:damage_if_wounded",
       "modifier": {
         "amount": 0.2,
-        "id": "6a4cf98f-fe5b-407e-8b5d-076b6248bda7",
+        "id": "1650d219-1f8c-4d7b-ab84-4081e47b2a34",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -30,6 +30,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_1.png",
   "id": "skilltree:cook_subclass_1",
   "isStartingPoint": false,
-  "positionX": 132.96991,
-  "positionY": -327.07144
+  "positionX": 144.96991,
+  "positionY": -315.07144
 }

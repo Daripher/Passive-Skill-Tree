@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_with_shield",
       "modifier": {
         "amount": 0.05,
-        "id": "7adaaf73-2817-4b16-8bdb-7b577356e6ef",
+        "id": "23af4974-e560-424d-9fa9-5c91babc954d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_offensive_1.png",
   "id": "skilltree:blacksmith_offensive_4",
   "isStartingPoint": false,
-  "positionX": -193.62802,
-  "positionY": -177.54088
+  "positionX": -185.62802,
+  "positionY": -169.54088
 }

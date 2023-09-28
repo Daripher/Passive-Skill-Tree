@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_if_not_hungry",
       "modifier": {
         "amount": 0.05,
-        "id": "01f96dcf-0af7-460c-84de-bc06f423ead9",
+        "id": "8f9b35fe-26db-40ad-bf9c-d623850a0f07",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_offensive_1.png",
   "id": "skilltree:cook_offensive_3",
   "isStartingPoint": false,
-  "positionX": 33.00454,
-  "positionY": -231.01144
+  "positionX": 41.00454,
+  "positionY": -223.01144
 }

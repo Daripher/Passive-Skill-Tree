@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_equipment_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "4f8edfa5-00c8-433c-bf5e-4c089d7e456e",
+        "id": "e3947705-6726-4c1a-8ebf-1e2dec97d5c7",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/miner_mastery.png",
   "id": "skilltree:miner_mastery",
   "isStartingPoint": false,
-  "positionX": -363.2064,
-  "positionY": 190.75761
+  "positionX": -351.2064,
+  "positionY": 202.75761
 }

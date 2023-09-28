@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_weapon_enchantment",
       "modifier": {
         "amount": 0.1,
-        "id": "337f3495-9a10-4b4a-8fc9-2833d3704ce7",
+        "id": "4b195a17-95be-43ca-8b8a-d4d675a47c07",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_offensive_crafting_1.png",
   "id": "skilltree:enchanter_offensive_crafting_7",
   "isStartingPoint": false,
-  "positionX": 302.6725,
-  "positionY": -79.994354
+  "positionX": 310.6725,
+  "positionY": -71.99435
 }

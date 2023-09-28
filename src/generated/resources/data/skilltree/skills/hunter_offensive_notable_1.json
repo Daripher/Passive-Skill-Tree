@@ -4,7 +4,7 @@
       "attribute": "skilltree:projectile_damage",
       "modifier": {
         "amount": 0.25,
-        "id": "b4c3ffda-7a63-4bdd-9f26-8ddad5a86a1f",
+        "id": "68f4114e-7bee-419b-84fa-964740761549",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_offensive_notable_1.png",
   "id": "skilltree:hunter_offensive_notable_1",
   "isStartingPoint": false,
-  "positionX": 149.64821,
-  "positionY": 174.54005
+  "positionX": 159.64821,
+  "positionY": 184.54005
 }

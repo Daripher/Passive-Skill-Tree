@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_duration",
       "modifier": {
         "amount": 0.4,
-        "id": "0a44ab14-9b14-4a6c-9673-b278b571cf97",
+        "id": "06765264-e972-47de-9408-856b9d395fbb",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -24,6 +24,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_class.png",
   "id": "skilltree:alchemist_class",
   "isStartingPoint": true,
-  "positionX": -12.0,
-  "positionY": 140.0
+  "positionX": 0.0,
+  "positionY": 152.0
 }

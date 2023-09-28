@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_strength",
       "modifier": {
         "amount": 0.05,
-        "id": "4da106ed-61be-486b-9e74-cfa079999009",
+        "id": "d991d284-34ba-4aee-8034-135309910088",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_crafting_1.png",
   "id": "skilltree:alchemist_crafting_2",
   "isStartingPoint": false,
-  "positionX": -8.0,
-  "positionY": 86.0
+  "positionX": 7.1029515E-15,
+  "positionY": 94.0
 }

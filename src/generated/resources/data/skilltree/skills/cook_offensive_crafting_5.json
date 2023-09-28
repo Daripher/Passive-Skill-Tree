@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_damage_per_saturation",
       "modifier": {
         "amount": 0.0025,
-        "id": "ce4b2ec8-767f-49f0-98fc-1429cfdbe356",
+        "id": "b1f4744b-fa4b-4a3d-b477-5a5c666bd5c2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
   "id": "skilltree:cook_offensive_crafting_5",
   "isStartingPoint": false,
-  "positionX": 84.98723,
-  "positionY": -261.04144
+  "positionX": 92.98723,
+  "positionY": -253.04143
 }

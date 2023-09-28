@@ -4,7 +4,7 @@
       "attribute": "skilltree:stealth",
       "modifier": {
         "amount": 0.1,
-        "id": "5bcc3bbf-dd5e-4d44-88f3-832df9862ce6",
+        "id": "40036edb-9127-401d-92d8-e815b61313fd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:jump_height",
       "modifier": {
         "amount": 0.5,
-        "id": "878f6515-1e86-4f62-96d6-01bcef86e414",
+        "id": "8e54494b-5e43-4793-9c03-67e85f169e86",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_subclass_1_mastery.png",
   "id": "skilltree:hunter_subclass_1_mastery",
   "isStartingPoint": false,
-  "positionX": 303.92465,
-  "positionY": 337.80984
+  "positionX": 315.92465,
+  "positionY": 349.80984
 }

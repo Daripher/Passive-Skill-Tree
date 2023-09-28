@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_harmful_potions_strength",
       "modifier": {
         "amount": 0.1,
-        "id": "195f70b7-ae5f-489f-89f6-b5b8465be5f5",
+        "id": "2a51a57f-60c7-48af-87d8-d540a7c2059e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_offensive_crafting_1.png",
   "id": "skilltree:alchemist_offensive_crafting_6",
   "isStartingPoint": false,
-  "positionX": -100.97753,
-  "positionY": 271.0439
+  "positionX": -92.97753,
+  "positionY": 279.0439
 }

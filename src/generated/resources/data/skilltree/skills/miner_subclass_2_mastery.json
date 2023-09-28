@@ -4,7 +4,7 @@
       "attribute": "curios:ring",
       "modifier": {
         "amount": 1.0,
-        "id": "f72a36b0-4e6a-4bec-9a84-61150edd5a6c",
+        "id": "1e98cb25-b368-46e4-bdcb-84db301e4461",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_mastery.png",
   "id": "skilltree:miner_subclass_2_mastery",
   "isStartingPoint": false,
-  "positionX": -327.95526,
-  "positionY": 337.7826
+  "positionX": -315.95526,
+  "positionY": 349.7826
 }

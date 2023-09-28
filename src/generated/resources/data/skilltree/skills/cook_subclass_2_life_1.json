@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 1.0,
-        "id": "ef0aae74-4135-4f3a-bdb3-fcbff098b5c8",
+        "id": "35f84459-2966-41ff-98e4-d7c42b4c5e22",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_life_1.png",
   "id": "skilltree:cook_subclass_2_life_1",
   "isStartingPoint": false,
-  "positionX": -136.95557,
-  "positionY": -350.79712
+  "positionX": -128.95557,
+  "positionY": -342.79712
 }

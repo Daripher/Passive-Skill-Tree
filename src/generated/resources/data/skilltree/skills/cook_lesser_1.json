@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_saturation",
       "modifier": {
         "amount": 0.05,
-        "id": "25f01d97-146e-42f0-81e5-fc9df92dfe9b",
+        "id": "2d93ba10-fa09-487c-a63e-84cb862a8eeb",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_lesser_1.png",
   "id": "skilltree:cook_lesser_1",
   "isStartingPoint": false,
-  "positionX": -35.997005,
-  "positionY": -331.53247
+  "positionX": -27.99701,
+  "positionY": -323.53247
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
       "modifier": {
         "amount": 0.05,
-        "id": "34c41249-2132-4d19-b891-2884f6e72298",
+        "id": "cc8d0b20-5d20-49c5-9169-0ff054661f06",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2.png",
   "id": "skilltree:hunter_subclass_2",
   "isStartingPoint": false,
-  "positionX": 333.34277,
-  "positionY": 20.010185
+  "positionX": 345.34277,
+  "positionY": 32.010185
 }

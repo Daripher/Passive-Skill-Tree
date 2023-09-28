@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.05,
-        "id": "f9429bcb-9cdc-4ea4-9b7a-7c53d7e0d61d",
+        "id": "8bb6db82-d919-4d4e-989e-67457d7ccf7b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
   "id": "skilltree:blacksmith_defensive_notable_1",
   "isStartingPoint": false,
-  "positionX": -249.631,
-  "positionY": -56.008415
+  "positionX": -239.631,
+  "positionY": -46.008415
 }

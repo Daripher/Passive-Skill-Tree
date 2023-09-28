@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_defence",
       "modifier": {
         "amount": 0.1,
-        "id": "647caa1d-d5a3-47ce-8194-a9b4103fcb9f",
+        "id": "effc8549-e071-410f-b984-88b3e16004e8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
   "id": "skilltree:blacksmith_defensive_crafting_1",
   "isStartingPoint": false,
-  "positionX": -139.631,
-  "positionY": -54.008415
+  "positionX": -131.631,
+  "positionY": -46.008415
 }

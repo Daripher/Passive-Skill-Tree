@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_weapon",
       "modifier": {
         "amount": 0.1,
-        "id": "1a7ee8f6-63aa-4d4b-83d6-ce210511f6b6",
+        "id": "4f156cc2-93b1-4898-93cc-78deb063397d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_offensive_crafting_1.png",
   "id": "skilltree:miner_offensive_crafting_7",
   "isStartingPoint": false,
-  "positionX": -318.6725,
-  "positionY": 63.994347
+  "positionX": -310.6725,
+  "positionY": 71.99435
 }

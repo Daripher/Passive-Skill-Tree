@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
       "modifier": {
         "amount": 0.1,
-        "id": "79f2a034-4aa4-4eff-b7ef-fc07cb847720",
+        "id": "c98d1524-4d3c-40a5-92d7-ddec14cfbac0",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_defensive_crafting_1.png",
   "id": "skilltree:enchanter_defensive_crafting_4",
   "isStartingPoint": false,
-  "positionX": 136.6628,
-  "positionY": -166.54494
+  "positionX": 144.6628,
+  "positionY": -158.54494
 }

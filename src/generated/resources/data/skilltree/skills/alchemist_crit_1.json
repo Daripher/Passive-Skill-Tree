@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_against_poisoned",
       "modifier": {
         "amount": 0.02,
-        "id": "6f1a2a92-4a35-4e0e-9e3b-312d46857286",
+        "id": "6d637288-30ae-4f02-9aeb-56fb58e21bad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_crit_1.png",
   "id": "skilltree:alchemist_crit_1",
   "isStartingPoint": false,
-  "positionX": 19.99701,
-  "positionY": 289.53247
+  "positionX": 27.99701,
+  "positionY": 297.53247
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_if_not_hungry",
       "modifier": {
         "amount": 0.02,
-        "id": "d87e36f7-1694-49dd-8bd7-070b5a8550d3",
+        "id": "50f1dd22-2645-4b1e-a08e-da02fb209155",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_speed_1.png",
   "id": "skilltree:cook_speed_2",
   "isStartingPoint": false,
-  "positionX": 20.005981,
-  "positionY": -279.52728
+  "positionX": 28.005981,
+  "positionY": -271.52728
 }

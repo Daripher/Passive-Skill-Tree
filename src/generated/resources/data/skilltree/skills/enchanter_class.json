@@ -4,7 +4,7 @@
       "attribute": "skilltree:enchantment_level_requirement",
       "modifier": {
         "amount": -0.3,
-        "id": "a946bcc6-1202-4cc9-86d4-7b3adbfcc8a0",
+        "id": "a4c728f7-40ff-43ce-8e76-efa4d3853cb0",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -24,6 +24,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_class.png",
   "id": "skilltree:enchanter_class",
   "isStartingPoint": true,
-  "positionX": 119.63829,
-  "positionY": -87.99579
+  "positionX": 131.63829,
+  "positionY": -75.99579
 }

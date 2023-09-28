@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_duration",
       "modifier": {
         "amount": 0.05,
-        "id": "12b7ee4e-73f9-4ffb-b1d6-ef36db4f2f1e",
+        "id": "8c76c65f-6122-49a4-8f3c-58540dccfa98",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_lesser_1.png",
   "id": "skilltree:alchemist_lesser_3",
   "isStartingPoint": false,
-  "positionX": 19.99701,
-  "positionY": 341.53247
+  "positionX": 27.99701,
+  "positionY": 349.53247
 }

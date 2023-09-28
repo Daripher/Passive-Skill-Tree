@@ -4,7 +4,7 @@
       "attribute": "skilltree:triple_loot_chance",
       "modifier": {
         "amount": 0.15,
-        "id": "ae0e078e-86fc-4e70-bb75-c03a958ef569",
+        "id": "db4ba16b-0a78-40c7-9aa4-1c431e9a14d9",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_mastery.png",
   "id": "skilltree:hunter_mastery",
   "isStartingPoint": false,
-  "positionX": 339.18997,
-  "positionY": 190.78607
+  "positionX": 351.18997,
+  "positionY": 202.78607
 }

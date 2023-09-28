@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_arrow_in_quiver",
       "modifier": {
         "amount": 0.01,
-        "id": "026eda9e-c399-4c0d-b1f9-edb73642b685",
+        "id": "381276dc-dcb4-4f59-8632-4edd06d79377",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2_life_1.png",
   "id": "skilltree:hunter_subclass_2_life_3",
   "isStartingPoint": false,
-  "positionX": 398.37357,
-  "positionY": 77.726395
+  "positionX": 406.37357,
+  "positionY": 85.726395
 }

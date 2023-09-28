@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_beneficial_potions_strength",
       "modifier": {
         "amount": 1.0,
-        "id": "02ffc2b7-c8ab-43b4-813e-89b1868db74e",
+        "id": "9e52eb66-bf47-426f-9d97-f22f8491ccdc",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_defensive_crafting_keystone_1.png",
   "id": "skilltree:alchemist_defensive_crafting_keystone_1",
   "isStartingPoint": false,
-  "positionX": 80.97753,
-  "positionY": 323.05035
+  "positionX": 92.97753,
+  "positionY": 335.05035
 }

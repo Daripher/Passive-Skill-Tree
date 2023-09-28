@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_if_not_hungry",
       "modifier": {
         "amount": 2.0,
-        "id": "55daf376-e361-465c-9000-b2ba07590eb0",
+        "id": "46c963d1-17ae-42bb-8ea6-7037bb58e5d4",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_life_1.png",
   "id": "skilltree:cook_life_1",
   "isStartingPoint": false,
-  "positionX": -35.997005,
-  "positionY": -253.53247
+  "positionX": -27.99701,
+  "positionY": -245.53247
 }

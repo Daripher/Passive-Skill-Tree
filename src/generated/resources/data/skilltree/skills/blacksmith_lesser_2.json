@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_equipment_durability",
       "modifier": {
         "amount": 0.05,
-        "id": "a42ae1e3-0f68-455c-b337-c96ecefc90fb",
+        "id": "a9540e8d-3b4f-455f-bde1-9bc25601b2a8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_lesser_1.png",
   "id": "skilltree:blacksmith_lesser_2",
   "isStartingPoint": false,
-  "positionX": -274.1769,
-  "positionY": -194.02936
+  "positionX": -266.17694,
+  "positionY": -186.02936
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block",
       "modifier": {
         "amount": 0.25,
-        "id": "d02f6f79-e351-44d1-b536-ac827c26ec54",
+        "id": "2687519c-359e-4058-9be4-a1d8694bebd5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_healing_1.png",
   "id": "skilltree:cook_healing_2",
   "isStartingPoint": false,
-  "positionX": -116.07291,
-  "positionY": -157.652
+  "positionX": -108.07291,
+  "positionY": -149.652
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:armor_per_gem_in_helmet",
       "modifier": {
         "amount": 2.0,
-        "id": "1f29aabd-9db2-404b-be78-01c2612f1c06",
+        "id": "d1bf020d-5154-4e1c-bd9d-a8982042cbc3",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/miner_defensive_notable_1.png",
   "id": "skilltree:miner_defensive_notable_1",
   "isStartingPoint": false,
-  "positionX": -169.66446,
-  "positionY": 174.52473
+  "positionX": -159.66446,
+  "positionY": 184.52473
 }

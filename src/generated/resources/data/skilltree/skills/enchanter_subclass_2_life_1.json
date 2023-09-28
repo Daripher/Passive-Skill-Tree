@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 2.0,
-        "id": "f3a5916b-cb59-4520-82f3-5bcbb51a919a",
+        "id": "3bbf281d-b8fb-4196-94f8-17168d3c1d6f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:experience_per_hour",
       "modifier": {
         "amount": 0.1,
-        "id": "c8722906-895d-4830-8800-2ffd0c1ab72a",
+        "id": "5f635430-0b71-48f9-9e4e-0777794daa62",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_life_1.png",
   "id": "skilltree:enchanter_subclass_2_life_1",
   "isStartingPoint": false,
-  "positionX": 224.40228,
-  "positionY": -291.073
+  "positionX": 232.40228,
+  "positionY": -283.073
 }

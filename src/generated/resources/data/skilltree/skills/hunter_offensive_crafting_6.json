@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_ranged_weapon_attack_speed",
       "modifier": {
         "amount": 0.04,
-        "id": "227dcd28-2497-451a-9921-9c88698ab576",
+        "id": "84611ec9-52a8-4ee5-93eb-bba65bc160e6",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_offensive_crafting_1.png",
   "id": "skilltree:hunter_offensive_crafting_6",
   "isStartingPoint": false,
-  "positionX": 187.16331,
-  "positionY": 212.05856
+  "positionX": 195.16331,
+  "positionY": 220.05856
 }

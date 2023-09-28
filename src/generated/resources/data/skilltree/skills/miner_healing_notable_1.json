@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_per_gem_in_helmet",
       "modifier": {
         "amount": 0.25,
-        "id": "a0afd9eb-22fd-40d8-bc10-351f0d5698fe",
+        "id": "4e9f002d-ba57-43f5-8556-8d50dd375f19",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/miner_healing_notable_1.png",
   "id": "skilltree:miner_healing_notable_1",
   "isStartingPoint": false,
-  "positionX": -64.29594,
-  "positionY": 84.80734
+  "positionX": -54.295937,
+  "positionY": 94.80734
 }

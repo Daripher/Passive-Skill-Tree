@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 1.0,
-        "id": "4cd87a7a-d13b-4a1b-8490-b34ea37b3949",
+        "id": "a57314db-3749-4687-9013-641c6e36dfc0",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_defensive_1.png",
   "id": "skilltree:miner_defensive_1",
   "isStartingPoint": false,
-  "positionX": -154.63995,
-  "positionY": 93.97559
+  "positionX": -146.63995,
+  "positionY": 101.97559
 }

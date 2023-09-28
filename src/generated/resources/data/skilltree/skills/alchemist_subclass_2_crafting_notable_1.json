@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_beneficial_potions_duration",
       "modifier": {
         "amount": 0.25,
-        "id": "3aae1742-ebc8-4b78-a4bc-d6d9f47e39d9",
+        "id": "3ecfe977-91c3-4181-9576-aa35dbb31703",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_crafting_notable_1.png",
   "id": "skilltree:alchemist_subclass_2_crafting_notable_1",
   "isStartingPoint": false,
-  "positionX": 176.93625,
-  "positionY": 425.8003
+  "positionX": 186.93625,
+  "positionY": 435.8003
 }

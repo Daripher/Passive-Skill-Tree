@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_weapon_enchantment_level",
       "modifier": {
         "amount": 0.05,
-        "id": "97817146-34e2-4dc3-9468-5ec3142586b7",
+        "id": "5471326a-f41b-4bc6-83cf-a8bd9ec1c953",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_offensive_keystone_1.png",
   "id": "skilltree:enchanter_offensive_keystone_1",
   "isStartingPoint": false,
-  "positionX": 343.68784,
-  "positionY": -154.9921
+  "positionX": 355.68784,
+  "positionY": -142.9921
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance_when_wounded",
       "modifier": {
         "amount": 0.1,
-        "id": "661e5c7d-dab3-4940-a8a2-6294975243f7",
+        "id": "289e5577-c7d4-4191-9646-70b3ad2186f1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_defensive_notable_1.png",
   "id": "skilltree:hunter_defensive_notable_1",
   "isStartingPoint": false,
-  "positionX": 229.631,
-  "positionY": 36.008415
+  "positionX": 239.631,
+  "positionY": 46.008415
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_boots_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "db30d811-37ee-41d0-9cd7-2cdcdc057fe3",
+        "id": "810cebf8-d71f-4b6e-924c-499c952f9a10",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_special_1.png",
   "id": "skilltree:miner_subclass_special",
   "isStartingPoint": false,
-  "positionX": -432.38455,
-  "positionY": -10.007257
+  "positionX": -422.38455,
+  "positionY": -0.0072574615
 }

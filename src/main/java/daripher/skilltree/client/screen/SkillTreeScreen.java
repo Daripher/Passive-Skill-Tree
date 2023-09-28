@@ -276,10 +276,8 @@ public class SkillTreeScreen extends Screen {
 
 	protected void addSkillButton(ResourceLocation skillId) {
 		PassiveSkill skill = SkillTreeClientData.getSkill(skillId);
-		float skillX = skill.getPositionX();
-		float skillY = skill.getPositionY();
-		double buttonX = skillX + width / 2F + (skillX + skill.getButtonSize() / 2) * (zoom - 1);
-		double buttonY = skillY + height / 2F + (skillY + skill.getButtonSize() / 2) * (zoom - 1);
+		double buttonX = getSkillButtonX(skill);
+		double buttonY = getSkillButtonY(skill);
 		SkillButton button = new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed);
 		addRenderableWidget(button);
 		skillButtons.put(skillId, button);
@@ -287,10 +285,22 @@ public class SkillTreeScreen extends Screen {
 			startingPoints.add(button);
 		if (isSkillLearned(skill))
 			button.highlighted = true;
-		if (maxScrollX < Mth.abs(skillX))
-			maxScrollX = (int) Mth.abs(skillX);
-		if (maxScrollY < Mth.abs(skillY))
-			maxScrollY = (int) Mth.abs(skillY);
+		if (maxScrollX < Mth.abs(skill.getPositionX()))
+			maxScrollX = (int) Mth.abs(skill.getPositionX());
+		if (maxScrollY < Mth.abs(skill.getPositionY()))
+			maxScrollY = (int) Mth.abs(skill.getPositionY());
+	}
+
+	private float getSkillButtonX(PassiveSkill skill) {
+		float skillX = skill.getPositionX();
+		int skillRadius = skill.getButtonSize() / 2;
+		return skillX - skillRadius + width / 2F + skillX * (zoom - 1);
+	}
+
+	private float getSkillButtonY(PassiveSkill skill) {
+		float skillY = skill.getPositionY();
+		int skillRadius = skill.getButtonSize() / 2;
+		return skillY - skillRadius + height / 2F + skillY * (zoom - 1);
 	}
 
 	protected boolean isSkillLearned(PassiveSkill skill) {

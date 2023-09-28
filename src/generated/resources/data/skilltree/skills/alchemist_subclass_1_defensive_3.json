@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "ed7694a8-8c5a-4c45-ba11-d1765992b453",
+        "id": "f94fcda9-02f0-459b-9897-fc7f236e4447",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "718021b6-6166-4f88-a0ab-e0200747e7d6",
+        "id": "eee2d90f-4062-406e-8dc8-c835d71b912f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_defensive_1.png",
   "id": "skilltree:alchemist_subclass_1_defensive_3",
   "isStartingPoint": false,
-  "positionX": -139.95805,
-  "positionY": 252.56058
+  "positionX": -131.95805,
+  "positionY": 260.56058
 }

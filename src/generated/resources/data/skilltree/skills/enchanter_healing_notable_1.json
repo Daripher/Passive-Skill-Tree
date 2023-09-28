@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block_per_shield_enchantment",
       "modifier": {
         "amount": 0.25,
-        "id": "bbb787c6-fb1b-448d-82c8-46e492aa1d6d",
+        "id": "7449a2a5-dd67-4d0c-9cc6-78de1d0fe0de",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_healing_notable_1.png",
   "id": "skilltree:enchanter_healing_notable_1",
   "isStartingPoint": false,
-  "positionX": 44.295937,
-  "positionY": -104.807335
+  "positionX": 54.295937,
+  "positionY": -94.80734
 }

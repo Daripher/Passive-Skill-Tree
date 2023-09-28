@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_poisoned",
       "modifier": {
         "amount": 0.05,
-        "id": "7e0489cf-b8fb-4a22-b8fe-3b0df039ad06",
+        "id": "2f3012fe-7f32-4efa-aa45-3aeb2f6c87d8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_offensive_1.png",
   "id": "skilltree:alchemist_offensive_2",
   "isStartingPoint": false,
-  "positionX": -35.998447,
-  "positionY": 192.49562
+  "positionX": -27.99845,
+  "positionY": 200.49562
 }

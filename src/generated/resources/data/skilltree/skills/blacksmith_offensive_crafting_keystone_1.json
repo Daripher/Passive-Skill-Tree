@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_attack_speed",
       "modifier": {
         "amount": 0.25,
-        "id": "b75f8950-61d9-4de7-989c-0afa667f9a97",
+        "id": "7e6258b7-232b-43fa-9d68-324376900259",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_offensive_crafting_keystone_1.png",
   "id": "skilltree:blacksmith_offensive_crafting_keystone_1",
   "isStartingPoint": false,
-  "positionX": -255.6575,
-  "positionY": -260.06165
+  "positionX": -243.6575,
+  "positionY": -248.06166
 }

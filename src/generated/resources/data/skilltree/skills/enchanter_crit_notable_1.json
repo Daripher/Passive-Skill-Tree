@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage_per_weapon_enchantment",
       "modifier": {
         "amount": 0.05,
-        "id": "b455415b-5ace-4469-92d6-c6bb9d67f2d5",
+        "id": "c08b5fc6-5e43-4a6f-b75b-2e06fb5339fa",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_crit_notable_1.png",
   "id": "skilltree:enchanter_crit_notable_1",
   "isStartingPoint": false,
-  "positionX": 247.67392,
-  "positionY": -158.76059
+  "positionX": 257.67392,
+  "positionY": -148.76059
 }

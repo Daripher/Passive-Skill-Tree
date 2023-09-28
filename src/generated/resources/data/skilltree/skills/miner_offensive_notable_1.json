@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_with_gem_in_weapon",
       "modifier": {
         "amount": 0.15,
-        "id": "4ec9d0d7-9f9d-4672-8954-2465c8267fae",
+        "id": "7cdb1990-b781-4f9d-a9db-eb3457f29fad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/miner_offensive_notable_1.png",
   "id": "skilltree:miner_offensive_notable_1",
   "isStartingPoint": false,
-  "positionX": -249.63829,
-  "positionY": 35.99579
+  "positionX": -239.63829,
+  "positionY": 45.99579
 }

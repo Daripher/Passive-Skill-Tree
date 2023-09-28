@@ -4,7 +4,7 @@
       "attribute": "skilltree:projectile_crit_chance",
       "modifier": {
         "amount": 0.02,
-        "id": "07b8699a-85f7-4a1c-8039-8b9be5d75119",
+        "id": "8c63b70d-571d-4b1d-9868-0529cd29e936",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_crit_1.png",
   "id": "skilltree:hunter_crit_1",
   "isStartingPoint": false,
-  "positionX": 263.6634,
-  "positionY": 116.52713
+  "positionX": 271.6634,
+  "positionY": 124.52713
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_chance_to_ignite",
       "modifier": {
         "amount": 0.05,
-        "id": "8cdd5475-3994-4bbb-9c75-8a89feaa6e98",
+        "id": "245cecea-172a-4009-a417-f07a10444cc8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
   "id": "skilltree:enchanter_subclass_1_crafting_2",
   "isStartingPoint": false,
-  "positionX": 391.8687,
-  "positionY": -52.994183
+  "positionX": 399.8687,
+  "positionY": -44.994183
 }

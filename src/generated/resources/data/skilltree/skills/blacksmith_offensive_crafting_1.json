@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_damage_bonus",
       "modifier": {
         "amount": 1.0,
-        "id": "08af394f-96a5-4883-995e-65853b8b5333",
+        "id": "4fa7fa20-b6de-495c-8b25-3b42c99479fa",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
   "id": "skilltree:blacksmith_offensive_crafting_1",
   "isStartingPoint": false,
-  "positionX": -113.64976,
-  "positionY": -99.00758
+  "positionX": -105.64976,
+  "positionY": -91.00758
 }

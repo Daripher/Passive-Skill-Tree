@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_with_enchanted_item",
       "modifier": {
         "amount": 2.0,
-        "id": "272e3c23-9c65-4d76-9a4a-68c7a8007f3f",
+        "id": "ccbf7d56-6009-46b7-98b5-64b40badbd76",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_life_1.png",
   "id": "skilltree:enchanter_life_2",
   "isStartingPoint": false,
-  "positionX": 218.639,
-  "positionY": -106.51286
+  "positionX": 226.639,
+  "positionY": -98.51286
 }

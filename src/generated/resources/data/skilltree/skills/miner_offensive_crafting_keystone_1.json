@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_weapon",
       "modifier": {
         "amount": 0.3,
-        "id": "8b104e52-f27d-40c3-b53e-6bf3c6421aa1",
+        "id": "d783e5d1-3fc4-4ffe-b9db-0ba5d6b22d12",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:maximum_weapon_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "ad858b56-139d-4070-befe-59fc9c91dd01",
+        "id": "9f7f41b2-4da0-4c27-bed7-315d3d13b6d5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -27,6 +27,6 @@
   "iconTexture": "skilltree:textures/icons/miner_offensive_crafting_keystone_1.png",
   "id": "skilltree:miner_offensive_crafting_keystone_1",
   "isStartingPoint": false,
-  "positionX": -348.65372,
-  "positionY": 74.993515
+  "positionX": -336.65372,
+  "positionY": 86.993515
 }

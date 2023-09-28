@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_necklaces_maximum_life",
       "modifier": {
         "amount": 5.0,
-        "id": "33144c43-46ed-40d0-a55e-a6b149bda211",
+        "id": "749a69d1-d3d1-40ca-859e-21b0198d4190",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_life_notable_1.png",
   "id": "skilltree:miner_subclass_2_life_notable_1",
   "isStartingPoint": false,
-  "positionX": -335.93335,
-  "positionY": 297.06915
+  "positionX": -325.9333,
+  "positionY": 307.06915
 }

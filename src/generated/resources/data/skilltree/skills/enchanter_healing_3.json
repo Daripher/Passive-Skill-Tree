@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block",
       "modifier": {
         "amount": 0.25,
-        "id": "0c7ff047-f999-4872-8e1d-20e7a1fe6343",
+        "id": "0019115e-5b96-4cb4-88df-44251cf7d373",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_healing_1.png",
   "id": "skilltree:enchanter_healing_3",
   "isStartingPoint": false,
-  "positionX": 74.29904,
-  "positionY": -151.30298
+  "positionX": 82.29904,
+  "positionY": -143.30298
 }

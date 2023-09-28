@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_healing_per_saturation",
       "modifier": {
         "amount": 0.05,
-        "id": "95145cd8-ce90-45cd-a3f9-16f77764fc4e",
+        "id": "160c446d-e63f-49e9-8a66-c47d5deb14fe",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_defensive_crafting_1.png",
   "id": "skilltree:cook_defensive_crafting_6",
   "isStartingPoint": false,
-  "positionX": -100.97753,
-  "positionY": -287.05035
+  "positionX": -92.97753,
+  "positionY": -279.05035
 }

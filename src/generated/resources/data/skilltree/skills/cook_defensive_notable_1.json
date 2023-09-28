@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_if_not_hungry",
       "modifier": {
         "amount": 0.1,
-        "id": "af1a53c6-7074-4170-a500-d8441f07c3f0",
+        "id": "c912d013-500a-45df-90f6-9cc057a31e4d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,6 +22,6 @@
   "iconTexture": "skilltree:textures/icons/cook_defensive_notable_1.png",
   "id": "skilltree:cook_defensive_notable_1",
   "isStartingPoint": false,
-  "positionX": -89.97825,
-  "positionY": -240.5333
+  "positionX": -79.97825,
+  "positionY": -230.5333
 }

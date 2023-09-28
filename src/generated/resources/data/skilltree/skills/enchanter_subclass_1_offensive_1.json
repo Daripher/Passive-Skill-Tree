@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_burning",
       "modifier": {
         "amount": 0.05,
-        "id": "877be5ae-dc77-4def-9641-492e7d5f9a62",
+        "id": "b6b8ffc1-8269-43b9-aa13-cebfad3e6b16",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_1.png",
   "id": "skilltree:enchanter_subclass_1_offensive_1",
   "isStartingPoint": false,
-  "positionX": 353.3534,
-  "positionY": -67.706696
+  "positionX": 361.3534,
+  "positionY": -59.706696
 }

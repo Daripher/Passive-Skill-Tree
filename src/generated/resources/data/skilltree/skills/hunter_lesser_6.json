@@ -4,7 +4,7 @@
       "attribute": "skilltree:double_loot_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "68163d57-0173-42eb-9c97-7ef7b5ff4322",
+        "id": "adea3780-82e7-4405-af4e-b317df4c01bd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_lesser_1.png",
   "id": "skilltree:hunter_lesser_6",
   "isStartingPoint": false,
-  "positionX": 317.21017,
-  "positionY": 179.78441
+  "positionX": 325.21017,
+  "positionY": 187.78441
 }

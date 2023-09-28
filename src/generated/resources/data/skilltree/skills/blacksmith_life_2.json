@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_boots_armor_bonus",
       "modifier": {
         "amount": 0.5,
-        "id": "fb776a5c-7607-4f4e-b837-57901fefbf35",
+        "id": "8ec08c73-6697-4c6a-8a70-f780293cf405",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_life_1.png",
   "id": "skilltree:blacksmith_life_2",
   "isStartingPoint": false,
-  "positionX": -206.62946,
-  "positionY": -155.02505
+  "positionX": -198.62946,
+  "positionY": -147.02505
 }

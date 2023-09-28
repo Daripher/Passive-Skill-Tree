@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.01,
-        "id": "8496929d-489d-47e1-932e-73e03b3c3d3e",
+        "id": "17a9b76b-bc40-4c87-8165-2f241bcda5b5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_offensive_1.png",
   "id": "skilltree:cook_subclass_1_offensive_3",
   "isStartingPoint": false,
-  "positionX": 120.970795,
-  "positionY": -402.78476
+  "positionX": 128.9708,
+  "positionY": -394.78476
 }

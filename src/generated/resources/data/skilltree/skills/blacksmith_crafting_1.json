@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_armor_bonus",
       "modifier": {
         "amount": 2.0,
-        "id": "6660d182-81bf-47da-b152-2f7090c75631",
+        "id": "d1f57294-4596-49e0-801c-eaba5112253e",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_crafting_1.png",
   "id": "skilltree:blacksmith_crafting_1",
   "isStartingPoint": false,
-  "positionX": -112.7852,
-  "positionY": -68.5067
+  "positionX": -104.7852,
+  "positionY": -60.5067
 }

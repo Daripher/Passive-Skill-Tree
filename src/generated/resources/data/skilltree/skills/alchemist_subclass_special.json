@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_rings_critical_damage",
       "modifier": {
         "amount": 0.1,
-        "id": "068e9dae-e959-4c74-ba69-78e3e5b9ff5f",
+        "id": "9b4a9a70-2f9e-4ada-a232-7b80fbda72bf",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_special_1.png",
   "id": "skilltree:alchemist_subclass_special",
   "isStartingPoint": false,
-  "positionX": -221.1856,
-  "positionY": 355.78836
+  "positionX": -211.1856,
+  "positionY": 365.78836
 }

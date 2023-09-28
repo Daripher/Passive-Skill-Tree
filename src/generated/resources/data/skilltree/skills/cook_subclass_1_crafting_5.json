@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_axes_crit_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "049f1baf-f63d-47d3-8587-7e84d2e5dd00",
+        "id": "664bc8d8-f1d5-47c5-ae82-c0fe27810a54",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_crafting_1.png",
   "id": "skilltree:cook_subclass_1_crafting_5",
   "isStartingPoint": false,
-  "positionX": 175.48875,
-  "positionY": -389.7825
+  "positionX": 183.48875,
+  "positionY": -381.7825
 }

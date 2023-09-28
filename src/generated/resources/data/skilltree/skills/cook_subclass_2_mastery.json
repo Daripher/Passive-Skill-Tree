@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_fishing",
       "modifier": {
         "amount": 0.5,
-        "id": "53e5ab3c-1ddc-45c0-a7be-a31def782ea2",
+        "id": "19a88cc8-12cc-4d8f-8f27-368231122a55",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:double_fishing_loot_chance",
       "modifier": {
         "amount": 0.2,
-        "id": "03e346ef-a4d7-4c97-96ed-d7c63c057ce0",
+        "id": "1d26bc86-7297-40fe-ae62-6bfab6da0b5b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_mastery.png",
   "id": "skilltree:cook_subclass_2_mastery",
   "isStartingPoint": false,
-  "positionX": -156.95468,
-  "positionY": -460.51044
+  "positionX": -144.95468,
+  "positionY": -448.51044
 }

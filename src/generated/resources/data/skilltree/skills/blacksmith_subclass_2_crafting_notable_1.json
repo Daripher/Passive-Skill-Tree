@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_block_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "d3a5d84f-d435-4072-8260-a239217de3fb",
+        "id": "73d9df08-bd50-4750-af2d-401ed4e0d618",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_crafting_notable_1.png",
   "id": "skilltree:blacksmith_subclass_2_crafting_notable_1",
   "isStartingPoint": false,
-  "positionX": -480.87152,
-  "positionY": -66.01534
+  "positionX": -470.87152,
+  "positionY": -56.015343
 }

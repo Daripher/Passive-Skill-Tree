@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.1,
-        "id": "553b05e6-4776-4dfe-bb01-9c80e3aae813",
+        "id": "4115f625-f8a5-44af-a65c-bd57438f80c6",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.05,
-        "id": "13c4ead0-9f9a-4a89-be68-4a2f3174840e",
+        "id": "8852e927-1d21-45fd-9b35-10a19fd949ee",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,7 +22,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.05,
-        "id": "fcec2def-726c-41b1-9606-cec4d4c00d8e",
+        "id": "bfaf5294-9fe5-4457-b588-f5e4ad4198df",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -38,6 +38,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_mastery.png",
   "id": "skilltree:blacksmith_subclass_1_mastery",
   "isStartingPoint": false,
-  "positionX": -327.92178,
-  "positionY": -361.80984
+  "positionX": -315.92178,
+  "positionY": -349.80984
 }

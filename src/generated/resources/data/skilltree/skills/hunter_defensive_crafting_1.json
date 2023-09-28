@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_evasion",
       "modifier": {
         "amount": 0.01,
-        "id": "271e5aa2-4f00-4e5a-8ccc-2abd859d53b2",
+        "id": "446b8258-fabc-4495-ae6f-31967fef6da1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_defensive_crafting_1.png",
   "id": "skilltree:hunter_defensive_crafting_1",
   "isStartingPoint": false,
-  "positionX": 123.631,
-  "positionY": 38.008415
+  "positionX": 131.631,
+  "positionY": 46.008415
 }

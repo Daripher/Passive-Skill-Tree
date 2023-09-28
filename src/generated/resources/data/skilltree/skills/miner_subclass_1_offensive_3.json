@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "dfebecd7-7c9c-456a-a274-072888bb3005",
+        "id": "ee2bbb7d-a014-4ee9-b044-638c30f93bda",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_offensive_1.png",
   "id": "skilltree:miner_subclass_1_offensive_3",
   "isStartingPoint": false,
-  "positionX": -414.38757,
-  "positionY": 77.70526
+  "positionX": -406.38757,
+  "positionY": 85.70526
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_find_gemstone",
       "modifier": {
         "amount": 0.02,
-        "id": "8d63500f-0018-439a-b95e-39c399a2d05f",
+        "id": "23a5a352-a829-4fc5-bc3b-e5af7288b1ff",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_crafting_1.png",
   "id": "skilltree:miner_crafting_3",
   "isStartingPoint": false,
-  "positionX": -66.02477,
-  "positionY": 25.498142
+  "positionX": -58.024773,
+  "positionY": 33.498142
 }

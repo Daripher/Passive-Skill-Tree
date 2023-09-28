@@ -4,7 +4,7 @@
       "attribute": "skilltree:mining_speed",
       "modifier": {
         "amount": 0.05,
-        "id": "c0dcaeba-cb7c-46c6-b8b8-db8fb0c95860",
+        "id": "aa031aad-2e7d-44a2-9d9d-8f82eda4d93e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_lesser_1.png",
   "id": "skilltree:miner_lesser_1",
   "isStartingPoint": false,
-  "positionX": -274.19476,
-  "positionY": 178.00385
+  "positionX": -266.19476,
+  "positionY": 186.00385
 }

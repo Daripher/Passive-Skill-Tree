@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_ignite",
       "modifier": {
         "amount": 0.1,
-        "id": "57327b64-b3ff-4ceb-94ba-48b3a89ca7b1",
+        "id": "15056d32-3243-40e9-949b-ddac62901b35",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:damage_against_burning",
       "modifier": {
         "amount": 0.1,
-        "id": "0329d59c-8cb7-4622-b46d-7b7b1dd9d676",
+        "id": "1f5105c8-ae10-4ae8-9e8a-ff36f0ab04ef",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,7 +22,7 @@
       "attribute": "skilltree:crit_chance_against_burning",
       "modifier": {
         "amount": 0.1,
-        "id": "3972cf81-96af-4ff0-8cfe-77c8e6dafffb",
+        "id": "869e93a5-7c6f-4c8c-881a-97e890bd9b9c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -38,6 +38,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
   "id": "skilltree:enchanter_subclass_1_mastery",
   "isStartingPoint": false,
-  "positionX": 448.90466,
-  "positionY": -110.70454
+  "positionX": 460.90466,
+  "positionY": -98.70454
 }

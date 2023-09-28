@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_per_shield_enchantment",
       "modifier": {
         "amount": 0.05,
-        "id": "dcebc7f9-3cd4-4c27-8e18-53b1f0b3b677",
+        "id": "35f6cb2c-33c9-452a-9561-a20e29ced2ad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_defensive_keystone_1.png",
   "id": "skilltree:enchanter_defensive_keystone_1",
   "isStartingPoint": false,
-  "positionX": 289.6938,
-  "positionY": -248.51938
+  "positionX": 301.6938,
+  "positionY": -236.51938
 }

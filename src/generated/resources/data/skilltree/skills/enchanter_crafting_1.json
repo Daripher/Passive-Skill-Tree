@@ -4,7 +4,7 @@
       "attribute": "skilltree:free_enchantment_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "35bdc5bf-b5ac-4223-8fba-33545d23565f",
+        "id": "cbc84179-2f99-4469-ab00-19c86f10f012",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_crafting_1.png",
   "id": "skilltree:enchanter_crafting_1",
   "isStartingPoint": false,
-  "positionX": 96.79101,
-  "positionY": -68.49664
+  "positionX": 104.79101,
+  "positionY": -60.496647
 }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "9347eee7-14e9-449d-aff1-0f88fb9d882d",
+        "id": "9d5292a0-ee43-43b4-96d2-e27665e03e04",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -21,6 +21,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_defensive_1.png",
   "id": "skilltree:alchemist_defensive_7",
   "isStartingPoint": false,
-  "positionX": 45.99701,
-  "positionY": 315.53247
+  "positionX": 53.99701,
+  "positionY": 323.53247
 }

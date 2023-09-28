@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "12838749-9a71-4d4b-b0eb-91fd4ffb8c00",
+        "id": "b00c1027-607e-496f-9052-17536ded8f62",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_offensive_notable_1.png",
   "id": "skilltree:alchemist_subclass_1_offensive_notable_1",
   "isStartingPoint": false,
-  "positionX": -112.97842,
-  "positionY": 425.79138
+  "positionX": -102.97842,
+  "positionY": 435.79138
 }

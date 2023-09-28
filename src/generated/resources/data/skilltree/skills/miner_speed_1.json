@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_gem_in_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "e1450a73-f611-4df4-aa0f-16d654d2551b",
+        "id": "1e16b80b-5242-466c-8ca3-1381e9cd8884",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/miner_speed_1.png",
   "id": "skilltree:miner_speed_1",
   "isStartingPoint": false,
-  "positionX": -229.16061,
-  "positionY": 152.00528
+  "positionX": -221.16061,
+  "positionY": 160.00528
 }

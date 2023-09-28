@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_retrieve_arrows",
       "modifier": {
         "amount": 0.1,
-        "id": "7ac09129-272a-4a09-b753-43df2faa711a",
+        "id": "b3547f5b-6f33-4f24-ad8e-474fa0c8f514",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -18,6 +18,6 @@
   "iconTexture": "skilltree:textures/icons/hunter_crafting_notable_1.png",
   "id": "skilltree:hunter_crafting_notable_1",
   "isStartingPoint": false,
-  "positionX": 22.041756,
-  "positionY": 8.502047
+  "positionX": 32.041756,
+  "positionY": 18.502047
 }

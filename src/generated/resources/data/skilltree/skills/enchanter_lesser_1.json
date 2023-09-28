@@ -4,7 +4,7 @@
       "attribute": "skilltree:enchantment_level_requirement",
       "modifier": {
         "amount": -0.05,
-        "id": "b00be498-de3b-4d66-9931-56028b94d33b",
+        "id": "8d37bc27-5938-427f-ba03-8d55598327b2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -20,6 +20,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_lesser_1.png",
   "id": "skilltree:enchanter_lesser_1",
   "isStartingPoint": false,
-  "positionX": 258.19476,
-  "positionY": -194.00385
+  "positionX": 266.19476,
+  "positionY": -186.00385
 }

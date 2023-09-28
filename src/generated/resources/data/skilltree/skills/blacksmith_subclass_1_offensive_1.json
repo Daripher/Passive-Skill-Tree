@@ -4,7 +4,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.01,
-        "id": "fa3f183e-0b93-4fa4-bf32-21e618e1b56e",
+        "id": "e4eee0cb-0cc9-4c1b-bcf2-b640bf7d96e4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "63a22cbe-b566-4cd3-9a53-ec705ca2ba80",
+        "id": "c65bfb6c-d4b8-4c92-a3fa-d8df2f711b76",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_1.png",
   "id": "skilltree:blacksmith_subclass_1_offensive_1",
   "isStartingPoint": false,
-  "positionX": -240.37517,
-  "positionY": -291.09222
+  "positionX": -232.37517,
+  "positionY": -283.09222
 }

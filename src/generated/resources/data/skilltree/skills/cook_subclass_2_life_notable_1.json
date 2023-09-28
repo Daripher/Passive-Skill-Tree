@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 4.0,
-        "id": "3d450e28-7b4d-4adf-951d-64b2296c1468",
+        "id": "8529f3da-7571-49ad-81fc-488d84a13200",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:luck_while_fishing",
       "modifier": {
         "amount": 1.0,
-        "id": "855043ba-abae-47fc-ae2f-350e7af84bee",
+        "id": "94dce524-ae18-4109-9238-c190c690e625",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -27,6 +27,6 @@
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_life_notable_1.png",
   "id": "skilltree:cook_subclass_2_life_notable_1",
   "isStartingPoint": false,
-  "positionX": -112.97433,
-  "positionY": -445.7963
+  "positionX": -102.97433,
+  "positionY": -435.7963
 }

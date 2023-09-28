@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "31b0d4d3-ae1a-40a3-9318-01c77f7eda6f",
+        "id": "f11f1b9b-d9ed-45e3-aefe-ff3de1a0650f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "bdea7bd7-3d2d-4770-bafc-1aab04baac17",
+        "id": "592125fd-f5fe-45fa-9ce9-e1a808b3b437",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -29,6 +29,6 @@
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_defensive_1.png",
   "id": "skilltree:enchanter_subclass_1_defensive_3",
   "isStartingPoint": false,
-  "positionX": 283.6383,
-  "positionY": -23.995789
+  "positionX": 291.6383,
+  "positionY": -15.995789
 }
