@@ -117,6 +117,11 @@ public class SkillTreeClientData {
 		EDITOR_PASSIVE_SKILLS.put(skillId, skill);
 	}
 
+	public static void deleteEditorSkill(PassiveSkill skill) {
+		getSkillSaveFile(skill.getId()).delete();
+		EDITOR_PASSIVE_SKILLS.remove(skill.getId());
+	}
+
 	private static File getSavesFolder() {
 		return new File(FMLPaths.GAMEDIR.get().toFile(), "skilltree/editor/data");
 	}

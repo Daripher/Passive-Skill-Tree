@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.glfw.GLFW;
 
 import com.google.common.base.Predicates;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -80,8 +81,8 @@ public class SkillTreeEditorScreen extends Screen {
 	public void init() {
 		clearWidgets();
 		addSkillButtons();
-		maxScrollX -= width / 2;
-		maxScrollY -= height / 2;
+		maxScrollX -= width / 2 - 160;
+		maxScrollY -= height / 2 - 160;
 		if (maxScrollX < 0)
 			maxScrollX = 0;
 		if (maxScrollY < 0)
@@ -167,6 +168,16 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (keyCode == GLFW.GLFW_KEY_DELETE && Screen.hasControlDown() && selectedSkills.size() > 0) {
+			getSelectedSkills().forEach(skill -> {
+				skillTree.getSkillIds().remove(skill.getId());
+				SkillTreeClientData.deleteEditorSkill(skill);
+				SkillTreeClientData.saveEditorSkillTree(skillTree);
+			});
+			selectedSkills.clear();
+			rebuildWidgets();
+			return true;
+		}
 		children().stream()
 				.filter(EditBox.class::isInstance)
 				.forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
@@ -237,18 +248,18 @@ public class SkillTreeEditorScreen extends Screen {
 		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
 		if (selectedSkills.size() == 1) {
 			addRenderableOnly(new PSTLabel(toolsX, toolsY,
-					Component.literal("- Attach New Skill -").withStyle(ChatFormatting.GREEN)));
+					Component.literal("Attach New Skill").withStyle(ChatFormatting.GREEN)));
 			toolsY += 19;
 			addRenderableOnly(
 					new PSTLabel(toolsX, toolsY, Component.literal("• Distance").withStyle(ChatFormatting.GOLD)));
 			addRenderableOnly(
-					new PSTLabel(toolsX + 45, toolsY, Component.literal("• Angle").withStyle(ChatFormatting.GOLD)));
+					new PSTLabel(toolsX + 65, toolsY, Component.literal("• Angle").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
-			NumberEditBox distanceEditor = new NumberEditBox(font, toolsX, toolsY, 40, 14, 10);
+			NumberEditBox distanceEditor = new NumberEditBox(font, toolsX, toolsY, 60, 14, 10);
 			addRenderableWidget(distanceEditor);
-			NumberEditBox angleEditor = new NumberEditBox(font, toolsX + 45, toolsY, 40, 14, 0);
+			NumberEditBox angleEditor = new NumberEditBox(font, toolsX + 65, toolsY, 60, 14, 0);
 			addRenderableWidget(angleEditor);
-			Button addButton = new PSTButton(toolsX + 90, toolsY, 50, 14, Component.literal("Add"), b -> {
+			Button addButton = new PSTButton(toolsX + 130, toolsY, 60, 14, Component.literal("Add"), b -> {
 				ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
 						"textures/icons/background/lesser.png");
 				ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
@@ -273,7 +284,7 @@ public class SkillTreeEditorScreen extends Screen {
 			toolsY += 19;
 		}
 		addRenderableOnly(new PSTLabel(toolsX, toolsY,
-				Component.literal("- To remove selected skills press CTRL+DELETE -").withStyle(ChatFormatting.RED)));
+				Component.literal("To remove selected skills press CTRL+DELETE").withStyle(ChatFormatting.RED)));
 		toolsY += 19;
 	}
 
@@ -552,9 +563,14 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	private void addSkillConnections(PassiveSkill skill) {
-		skill.getConnectedSkills().forEach(connectedSkillId -> {
+		for (ResourceLocation connectedSkillId : new ArrayList<>(skill.getConnectedSkills())) {
+			if (SkillTreeClientData.getEditorSkill(connectedSkillId) == null) {
+				skill.getConnectedSkills().remove(connectedSkillId);
+				SkillTreeClientData.saveEditorSkill(skill);
+				continue;
+			}
 			connectSkills(skillConnections, skill.getId(), connectedSkillId);
-		});
+		}
 	}
 
 	private void addGatewayConnections(PassiveSkill skill) {
