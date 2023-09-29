@@ -17,6 +17,7 @@ import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.serializers.AttributeSerializer;
+import daripher.skilltree.data.serializers.AttributeModifierSerializer;
 import daripher.skilltree.data.serializers.PairSerializer;
 import daripher.skilltree.data.serializers.SupplierSerializer;
 import daripher.skilltree.skill.PassiveSkill;
@@ -26,6 +27,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -37,7 +39,7 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
 	public static final Gson GSON = new GsonBuilder()
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(Attribute.class, new AttributeSerializer())
-			.registerTypeAdapter(new TypeToken<Supplier<String>>() {}.getType(), new SupplierSerializer<>(String.class))
+			.registerTypeAdapter(AttributeModifier.class, new AttributeModifierSerializer())
 			.registerTypeAdapter(new TypeToken<Pair<Attribute, AttributeModifier>>() {}.getType(),
 					new PairSerializer<>("attribute", "modifier", Attribute.class, AttributeModifier.class))
 			.setPrettyPrinting()
