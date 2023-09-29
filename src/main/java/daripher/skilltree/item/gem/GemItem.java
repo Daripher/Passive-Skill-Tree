@@ -24,7 +24,7 @@ public abstract class GemItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+	public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
 		if (ModList.get().isLoaded("apotheosis")) {
 			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
 				components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
@@ -33,7 +33,7 @@ public abstract class GemItem extends Item {
 		}
 		MutableComponent gemTooltip = Component.translatable("gem.tooltip").withStyle(ChatFormatting.YELLOW);
 		components.add(gemTooltip);
-		appendBonusesTooltip(components);
+		appendBonusesTooltip(stack, components);
 	}
 
 	public boolean canInsertInto(Player player, ItemStack stack, int socket) {
@@ -50,5 +50,5 @@ public abstract class GemItem extends Item {
 
 	public abstract Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack);
 
-	protected abstract void appendBonusesTooltip(List<Component> components);
+	protected abstract void appendBonusesTooltip(ItemStack stack, List<Component> components);
 }

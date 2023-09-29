@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public abstract class SimpleGemItem extends GemItem {
-	private final Map<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<String, Pair<Attribute, AttributeModifier>>();
+	protected final Map<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<String, Pair<Attribute, AttributeModifier>>();
 
 	public SimpleGemItem(Properties properties) {
 		super(properties);
@@ -62,7 +62,7 @@ public abstract class SimpleGemItem extends GemItem {
 	}
 
 	@Override
-	protected void appendBonusesTooltip(List<Component> components) {
+	protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
 		Map<String, Pair<Attribute, AttributeModifier>> bonuses = new TreeMap<>(this.bonuses);
 		groupBonuses(bonuses);
 		bonuses.forEach((slot, bonus) -> components.add(TooltipHelper.getAttributeBonusTooltip(slot, bonus)));

@@ -60,7 +60,7 @@ public class IrisciteItem extends GemItem {
 	}
 
 	@Override
-	protected void appendBonusesTooltip(List<Component> components) {
+	protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
 		MutableComponent gemClass = formatGemClass("jewelry").withStyle(ChatFormatting.GRAY);
 		MutableComponent bonus = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
 		components.add(gemClass.append(bonus));
