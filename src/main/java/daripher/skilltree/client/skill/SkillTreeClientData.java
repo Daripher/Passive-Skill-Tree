@@ -100,6 +100,10 @@ public class SkillTreeClientData {
 
 	public static void loadEditorSkillTree(ResourceLocation treeId) {
 		PassiveSkillTree skillTree = readFromFile(PassiveSkillTree.class, getSkillTreeSaveFile(treeId));
+		if (skillTree == null) {
+			skillTree = new PassiveSkillTree(treeId);
+			saveEditorSkillTree(skillTree);
+		}
 		EDITOR_TREES.put(treeId, skillTree);
 	}
 
