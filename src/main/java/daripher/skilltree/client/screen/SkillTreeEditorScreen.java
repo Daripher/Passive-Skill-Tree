@@ -169,19 +169,25 @@ public class SkillTreeEditorScreen extends Screen {
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (keyCode == GLFW.GLFW_KEY_DELETE && Screen.hasControlDown() && selectedSkills.size() > 0) {
-			getSelectedSkills().forEach(skill -> {
-				skillTree.getSkillIds().remove(skill.getId());
-				SkillTreeClientData.deleteEditorSkill(skill);
-				SkillTreeClientData.saveEditorSkillTree(skillTree);
-			});
-			selectedSkills.clear();
-			rebuildWidgets();
+			deleteSelectedSkills();
 			return true;
 		}
-		children().stream()
-				.filter(EditBox.class::isInstance)
-				.forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
+		if (keyCode == GLFW.GLFW_KEY_N && Screen.hasControlDown()) {
+			createNewSkill(0, 0);
+			return true;
+		}
+		children().stream().filter(EditBox.class::isInstance).forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
 		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	private void deleteSelectedSkills() {
+		getSelectedSkills().forEach(skill -> {
+			skillTree.getSkillIds().remove(skill.getId());
+			SkillTreeClientData.deleteEditorSkill(skill);
+			SkillTreeClientData.saveEditorSkillTree(skillTree);
+		});
+		selectedSkills.clear();
+		rebuildWidgets();
 	}
 
 	@Override
@@ -260,24 +266,12 @@ public class SkillTreeEditorScreen extends Screen {
 			NumberEditBox angleEditor = new NumberEditBox(font, toolsX + 65, toolsY, 60, 14, 0);
 			addRenderableWidget(angleEditor);
 			Button addButton = new PSTButton(toolsX + 130, toolsY, 60, 14, Component.literal("Add"), b -> {
-				ResourceLocation backgroundTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
-						"textures/icons/background/lesser.png");
-				ResourceLocation iconTexture = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
-				ResourceLocation borderTexture = new ResourceLocation(SkillTreeMod.MOD_ID,
-						"textures/tooltip/lesser.png");
-				PassiveSkill newSkill = new PassiveSkill(createNewSkillId(), 16, backgroundTexture, iconTexture,
-						borderTexture, false);
 				float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
 				float distance = (float) distanceEditor.getNumericValue();
-				distance += skill.getButtonSize() / 2 + newSkill.getButtonSize() / 2;
+				distance += skill.getButtonSize() / 2 + 8;
 				float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
 				float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-				newSkill.setPosition(skillX, skillY);
-				newSkill.connect(skill);
-				SkillTreeClientData.saveEditorSkill(newSkill);
-				SkillTreeClientData.loadEditorSkill(newSkill.getId());
-				skillTree.getSkillIds().add(newSkill.getId());
-				SkillTreeClientData.saveEditorSkillTree(skillTree);
+				createNewSkill(skillX, skillY).connect(skill);
 				rebuildWidgets();
 			});
 			addRenderableWidget(addButton);
@@ -286,6 +280,19 @@ public class SkillTreeEditorScreen extends Screen {
 		addRenderableOnly(new PSTLabel(toolsX, toolsY,
 				Component.literal("To remove selected skills press CTRL+DELETE").withStyle(ChatFormatting.RED)));
 		toolsY += 19;
+	}
+
+	private PassiveSkill createNewSkill(float x, float y) {
+		ResourceLocation background = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
+		ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
+		ResourceLocation border = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
+		PassiveSkill skill = new PassiveSkill(createNewSkillId(), 16, background, icon, border, false);
+		skill.setPosition(x, y);
+		SkillTreeClientData.saveEditorSkill(skill);
+		SkillTreeClientData.loadEditorSkill(skill.getId());
+		skillTree.getSkillIds().add(skill.getId());
+		SkillTreeClientData.saveEditorSkillTree(skillTree);
+		return skill;
 	}
 
 	private ResourceLocation createNewSkillId() {
