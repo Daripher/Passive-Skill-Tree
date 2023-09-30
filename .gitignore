@@ -19,6 +19,7 @@ build
 
 # vs code
 .vscode
+*.code-workspace
 
 # other
 eclipse
