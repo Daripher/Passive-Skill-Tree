@@ -174,6 +174,7 @@ public class SkillTreeEditorScreen extends Screen {
 		}
 		if (keyCode == GLFW.GLFW_KEY_N && Screen.hasControlDown()) {
 			createNewSkill(0, 0);
+			rebuildWidgets();
 			return true;
 		}
 		children().stream().filter(EditBox.class::isInstance).forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
