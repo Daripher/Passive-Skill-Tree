@@ -1,4 +1,4 @@
-package daripher.skilltree.attribute;
+package daripher.skilltree.attribute.event;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
-public class AttributeBonusHandler {
+public class AttributeEvents {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	@SubscribeEvent
@@ -149,135 +149,135 @@ public class AttributeBonusHandler {
 		ServerPlayer player = (ServerPlayer) event.player;
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"d1f7e78b-3368-409c-aa89-90f0f89a5524",
-				AttributeBonusHandler::getMaximumLifePerEvasion);
+				AttributeEvents::getMaximumLifePerEvasion);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"b68181bd-fbc4-4a63-95d4-df386fe3f71f",
-				AttributeBonusHandler::getMaximumLifePerGemInArmor);
+				AttributeEvents::getMaximumLifePerGemInArmor);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "7cb71ee5-8715-40ae-a877-72ec3b49b33e",
-				AttributeBonusHandler::getArmorPerEvasion);
+				AttributeEvents::getArmorPerEvasion);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "66eae15c-53eb-4a4a-b511-2ab94f81324b",
-				AttributeBonusHandler::getArmorPerGemInChestplate);
+				AttributeEvents::getArmorPerGemInChestplate);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "1080308c-bdd4-4693-876c-a36390b66b73",
-				AttributeBonusHandler::getArmorPerGemInHelmet);
+				AttributeEvents::getArmorPerGemInHelmet);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.ADDITION,
 				"d1079882-dd8c-42b7-9a43-3928553193c8",
-				AttributeBonusHandler::getDamagePerArmor);
+				AttributeEvents::getDamagePerArmor);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"9199d7cf-c7e4-4123-b636-6f6591e1137d",
-				AttributeBonusHandler::getMaximumLifePerArmor);
+				AttributeEvents::getMaximumLifePerArmor);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"8810227f-9798-4890-8400-91c0941a3fc0",
-				AttributeBonusHandler::getMaximumLifePerBootsArmor);
+				AttributeEvents::getMaximumLifePerBootsArmor);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"98a17cd0-68c8-4808-8981-1796c33295e7",
-				AttributeBonusHandler::getMaximumLifePerSatisfiedHunger);
+				AttributeEvents::getMaximumLifePerSatisfiedHunger);
 		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
 				"4aa87d74-b729-4e1d-9c76-893495050416",
-				AttributeBonusHandler::getEvasionUnderPotionEffect);
+				AttributeEvents::getEvasionUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL,
 				"a4daf7f8-29e3-404d-8277-9215a16ef4c8",
-				AttributeBonusHandler::getAttackSpeedUnderPotionEffect);
+				AttributeEvents::getAttackSpeedUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"de712f9d-9f47-475c-8b86-188bca70d1df",
-				AttributeBonusHandler::getMaximumLifeUnderPotionEffect);
+				AttributeEvents::getMaximumLifeUnderPotionEffect);
 		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
 				"282c4f81-7b6d-48e0-82c9-c4ebd58265cb",
-				AttributeBonusHandler::getEvasionPerPotionEffect);
+				AttributeEvents::getEvasionPerPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"16c35c5c-56da-4d21-ad56-bd6618fee711",
-				AttributeBonusHandler::getMaximumLifeWithEnchantedItem);
+				AttributeEvents::getMaximumLifeWithEnchantedItem);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "8b836bea-4c28-4430-8184-7330530239f6",
-				AttributeBonusHandler::getArmorWithEnchantedShield);
+				AttributeEvents::getArmorWithEnchantedShield);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"27b4644b-96a0-4443-89e5-1700af61d602",
-				AttributeBonusHandler::getMaximumLifePerEnchantment);
+				AttributeEvents::getMaximumLifePerEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "55c3cb58-c09e-465a-a812-6a18ae587ec0",
-				AttributeBonusHandler::getArmorPerChestplateEnchantment);
+				AttributeEvents::getArmorPerChestplateEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"9b1e9aac-fa58-4343-ba88-7541eca2836f",
-				AttributeBonusHandler::getMaximumLifePerArmorEnchantment);
+				AttributeEvents::getMaximumLifePerArmorEnchantment);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL,
 				"5e2d6a95-bc70-4f3d-a348-307b49f5bc84",
-				AttributeBonusHandler::getAttackSpeedWithGemInWeapon);
+				AttributeEvents::getAttackSpeedWithGemInWeapon);
 		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"bfbc3d6b-7c37-498b-888c-3b05c921f24a",
-				AttributeBonusHandler::getBlockChanceWithEnchantedShield);
+				AttributeEvents::getBlockChanceWithEnchantedShield);
 		applyDynamicAttributeBonus(player, PSTAttributes.EVASION.get(), Operation.MULTIPLY_BASE,
 				"d2865c2c-d5cc-4de9-a793-752349d27da0",
-				AttributeBonusHandler::getEvasionChanceWhenWounded);
+				AttributeEvents::getEvasionChanceWhenWounded);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
 				"f6dbc327-88c0-4704-b230-91fe1642dc7a",
-				AttributeBonusHandler::getAttackSpeedIfNotHungry);
+				AttributeEvents::getAttackSpeedIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
 				"5d449ea8-12dd-4596-a6e1-e4837946acb6",
-				AttributeBonusHandler::getAttackSpeedWithRangedWeapon);
+				AttributeEvents::getAttackSpeedWithRangedWeapon);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
 				"e37a2257-8511-4ffb-a5dd-913b591dd520",
-				AttributeBonusHandler::getAttackSpeedPerGemInWeapon);
+				AttributeEvents::getAttackSpeedPerGemInWeapon);
 		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"44984187-74c8-4927-be18-1e187ca9babe",
-				AttributeBonusHandler::getCritChanceIfNotHungry);
+				AttributeEvents::getCritChanceIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
 				"7bd1d9fb-4a20-41f3-89df-7cb42e849c5f",
-				AttributeBonusHandler::getAttackWithEnchantedWeapon);
+				AttributeEvents::getAttackWithEnchantedWeapon);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION,
 				"9c36d4dc-06e3-4f42-b8e6-abb0fb6b344c",
-				AttributeBonusHandler::getLifePerHitUnderPotionEffect);
+				AttributeEvents::getLifePerHitUnderPotionEffect);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"77353761-61e2-4f3c-b0e4-2abef4b75d76",
-				AttributeBonusHandler::getMaximumLifePerGemInHelmet);
+				AttributeEvents::getMaximumLifePerGemInHelmet);
 		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"636b118d-478b-4c4e-9785-b6e7da876828",
-				AttributeBonusHandler::getCritChancePerGemInWeapon);
+				AttributeEvents::getCritChancePerGemInWeapon);
 		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_DAMAGE.get(), Operation.MULTIPLY_BASE,
 				"3051c828-7281-458c-b6fc-df9d93b31d30",
-				AttributeBonusHandler::getCritDamagePerGemInWeapon);
+				AttributeEvents::getCritDamagePerGemInWeapon);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION,
 				"6732aed2-1948-4e86-a83c-aad617cd4387",
-				AttributeBonusHandler::getLifeRegenerationPerGemInHelmet);
+				AttributeEvents::getLifeRegenerationPerGemInHelmet);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_SPEED, Operation.MULTIPLY_BASE,
 				"b983bec3-a049-49d7-855e-3025b283c7d2",
-				AttributeBonusHandler::getAttackSpeedWithShield);
+				AttributeEvents::getAttackSpeedWithShield);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_REGENERATION.get(), Operation.ADDITION,
 				"d86d8efb-4539-46f3-b157-672b2e1241d6",
-				AttributeBonusHandler::getLifeRegenerationWithShield);
+				AttributeEvents::getLifeRegenerationWithShield);
 		applyDynamicAttributeBonus(player, Attributes.ARMOR, Operation.ADDITION, "f11460ca-56f9-4cff-98ea-791ed27f6639",
-				AttributeBonusHandler::getBonusChestplateArmor);
+				AttributeEvents::getBonusChestplateArmor);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION,
 				"6dccce60-76e9-4ca0-8497-8352ba26620d",
-				AttributeBonusHandler::getLifeOnBlockPerShieldEnchantment);
+				AttributeEvents::getLifeOnBlockPerShieldEnchantment);
 		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"7ea18323-13e4-43ee-bb30-decfdc1b1299",
-				AttributeBonusHandler::getBlockChancePerShieldEnchantment);
+				AttributeEvents::getBlockChancePerShieldEnchantment);
 		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"629ecea2-51b4-415a-80ff-4137a0f0dce1",
-				AttributeBonusHandler::getBlockChanceIfNotHungry);
+				AttributeEvents::getBlockChanceIfNotHungry);
 		applyDynamicAttributeBonus(player, PSTAttributes.BLOCK_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"fb0934db-cdbb-4fa6-bf4f-d3c0c12f50be",
-				AttributeBonusHandler::getBlockChancePerSatisfiedHunger);
+				AttributeEvents::getBlockChancePerSatisfiedHunger);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_ON_BLOCK.get(), Operation.ADDITION,
 				"793d56a0-7d0c-4bec-a328-65d6d681ec44",
-				AttributeBonusHandler::getLifeOnBlockIfNotHungry);
+				AttributeEvents::getLifeOnBlockIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"e529b2e9-2170-430c-b77d-cfe829f66c69",
-				AttributeBonusHandler::getMaximumLifeIfNotHungry);
+				AttributeEvents::getMaximumLifeIfNotHungry);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"c5fae151-36ee-4f93-a917-500b524587ec",
-				AttributeBonusHandler::getMaximumLifePerEquippedJewelry);
+				AttributeEvents::getMaximumLifePerEquippedJewelry);
 		applyDynamicAttributeBonus(player, Attributes.ATTACK_DAMAGE, Operation.MULTIPLY_BASE,
 				"7a6b2991-006d-4858-8369-185169fc72a4",
-				AttributeBonusHandler::getAttackSpeedIfWounded);
+				AttributeEvents::getAttackSpeedIfWounded);
 		applyDynamicAttributeBonus(player, PSTAttributes.CRIT_CHANCE.get(), Operation.MULTIPLY_BASE,
 				"f752700c-d928-40c2-8f53-870e89669fc4",
-				AttributeBonusHandler::getCritChanceIfWounded);
+				AttributeEvents::getCritChanceIfWounded);
 		applyDynamicAttributeBonus(player, PSTAttributes.LIFE_PER_HIT.get(), Operation.ADDITION,
 				"40b4ee8a-0547-47dd-838b-022f9fd67428",
-				AttributeBonusHandler::getLifePerHitIfWounded);
+				AttributeEvents::getLifePerHitIfWounded);
 		applyDynamicAttributeBonus(player, Attributes.MAX_HEALTH, Operation.ADDITION,
 				"b9d32a75-969c-4261-8d3e-91bc87fcffe0",
-				AttributeBonusHandler::getMaximumLifePerArrowInQuiver);
+				AttributeEvents::getMaximumLifePerArrowInQuiver);
 		applyDynamicAttributeBonus(player, Attributes.LUCK, Operation.ADDITION, "f1d6e303-1682-4e13-9548-cde588b4e306",
-				AttributeBonusHandler::getLuckWhileFishing);
+				AttributeEvents::getLuckWhileFishing);
 	}
 
 	private static void applyDynamicAttributeBonus(ServerPlayer player, Attribute attribute, Operation operation,
