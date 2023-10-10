@@ -1051,7 +1051,7 @@ public class AttributeEvents {
 	public static void applyBreakSpeedBonus(PlayerEvent.BreakSpeed event) {
 		if (ItemHelper.isPickaxe(event.getEntity().getMainHandItem())) {
 			float miningSpeedMultiplier = (float) event.getEntity().getAttributeValue(PSTAttributes.MINING_SPEED.get());
-			event.setNewSpeed(event.getOriginalSpeed() * miningSpeedMultiplier);
+			event.setNewSpeed(event.getNewSpeed() * miningSpeedMultiplier);
 		}
 	}
 
