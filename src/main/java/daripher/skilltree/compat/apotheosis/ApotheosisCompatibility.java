@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.ImmutableList;
@@ -53,7 +55,8 @@ public enum ApotheosisCompatibility {
 	ISNTANCE;
 
 	public final LootCategory ring = LootCategory.register(null, "ring", ItemHelper::isRing, new EquipmentSlot[0]);
-	public final LootCategory necklace = LootCategory.register(null, "necklace", ItemHelper::isNecklace, new EquipmentSlot[0]);
+	public final LootCategory necklace = LootCategory.register(null, "necklace", ItemHelper::isNecklace,
+			new EquipmentSlot[0]);
 
 	public void addCompatibility() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -67,7 +70,8 @@ public enum ApotheosisCompatibility {
 	}
 
 	public List<ItemStack> getGems(ItemStack stack, int sockets) {
-		if (sockets == 0 || stack.isEmpty()) return Collections.emptyList();
+		if (sockets == 0 || stack.isEmpty())
+			return Collections.emptyList();
 		List<ItemStack> gems = NonNullList.withSize(sockets, ItemStack.EMPTY);
 		int i = 0;
 		CompoundTag afxData = stack.getTagElement(SocketHelper.AFFIX_DATA);
@@ -79,7 +83,8 @@ public enum ApotheosisCompatibility {
 				if (GemInstance.unsocketed(gemStack).isValidUnsocketed()) {
 					gems.set(i++, gemStack);
 				}
-				if (i >= sockets) break;
+				if (i >= sockets)
+					break;
 			}
 		}
 		return ImmutableList.copyOf(gems);
@@ -89,22 +94,21 @@ public enum ApotheosisCompatibility {
 		ItemStack stack = event.getStack();
 		int socket = 0;
 		while (GemHelper.hasGem(stack, socket)) {
-			// formatter:off
 			GemHelper.getAttributeBonus(stack, socket)
-				.map(Pair::getRight)
-				.map(AttributeModifier::getId)
-				.ifPresent(event::skipUUID);
-			// formatter:on
+					.map(Pair::getRight)
+					.map(AttributeModifier::getId)
+					.ifPresent(event::skipUUID);
 			socket++;
 		}
 	}
 
-	public int getSockets(ItemStack stack, Player player) {
+	public int getSockets(ItemStack stack, @Nullable Player player) {
 		int playerSockets = GemHelper.getPlayerSockets(stack, player);
 		int sockets = SocketHelper.getSockets(stack);
 		int gems = SocketHelper.getActiveGems(stack).size();
 		playerSockets -= gems;
-		if (playerSockets < 0) playerSockets = 0;
+		if (playerSockets < 0)
+			playerSockets = 0;
 		return sockets + playerSockets;
 	}
 
@@ -116,16 +120,20 @@ public enum ApotheosisCompatibility {
 		List<ItemStack> gems = getGems(stack, sockets);
 		for (int socket = 0; socket < sockets; socket++) {
 			Gem gem = GemItem.getGem(gems.get(socket));
-			if (gem == null) return socket;
+			if (gem == null)
+				return socket;
 		}
 		return 0;
 	}
 
 	private void removeDuplicateTooltips(ItemTooltipEvent event) {
-		if (!adventureModuleEnabled()) return;
+		if (!adventureModuleEnabled())
+			return;
 		ItemStack stack = event.getItemStack();
-		if (!ItemHelper.isJewelry(stack)) return;
-		if (!stack.hasTag()) return;
+		if (!ItemHelper.isJewelry(stack))
+			return;
+		if (!stack.hasTag())
+			return;
 		SocketHelper.getGemInstances(stack).forEach(gem -> {
 			gem.gem().getBonus(LootCategory.forItem(stack)).ifPresent(bonus -> {
 				removeTooltip(event, bonus.getSocketBonusTooltip(gem.gemStack(), gem.rarity()));
@@ -136,19 +144,24 @@ public enum ApotheosisCompatibility {
 	private void removeTooltip(ItemTooltipEvent event, Component tooltip) {
 		Iterator<Component> iterator = event.getToolTip().iterator();
 		while (iterator.hasNext()) {
-			if (!iterator.next().getString().equals(tooltip.getString())) continue;
+			if (!iterator.next().getString().equals(tooltip.getString()))
+				continue;
 			iterator.remove();
 			break;
 		}
 	}
 
 	private void applyCurioGemBonuses(CurioAttributeModifierEvent event) {
-		if (!adventureModuleEnabled()) return;
+		if (!adventureModuleEnabled())
+			return;
 		ItemStack stack = event.getItemStack();
-		if (!stack.hasTag()) return;
+		if (!stack.hasTag())
+			return;
 		String slot = event.getSlotContext().identifier();
-		if (ItemHelper.isRing(stack) && !slot.equals("ring")) return;
-		if (ItemHelper.isNecklace(stack) && !slot.equals("necklace")) return;
+		if (ItemHelper.isRing(stack) && !slot.equals("ring"))
+			return;
+		if (ItemHelper.isNecklace(stack) && !slot.equals("necklace"))
+			return;
 		SocketHelper.getGemInstances(stack).forEach(gem -> {
 			gem.gem().getBonus(LootCategory.forItem(stack)).ifPresent(bonus -> {
 				bonus.addModifiers(gem.gemStack(), gem.rarity(), event::addModifier);
@@ -157,10 +170,13 @@ public enum ApotheosisCompatibility {
 	}
 
 	private void addJewelrySocketTooltip(GatherComponents event) {
-		if (!adventureModuleEnabled()) return;
+		if (!adventureModuleEnabled())
+			return;
 		ItemStack stack = event.getItemStack();
-		if (!ItemHelper.isJewelry(stack)) return;
-		event.getTooltipElements().removeIf(component -> component.right().filter(SocketComponent.class::isInstance).isPresent());
+		if (!ItemHelper.isJewelry(stack))
+			return;
+		event.getTooltipElements()
+				.removeIf(component -> component.right().filter(SocketComponent.class::isInstance).isPresent());
 		event.getTooltipElements().add(Either.right(new SocketComponent(stack, SocketHelper.getGems(stack))));
 	}
 
@@ -175,12 +191,14 @@ public enum ApotheosisCompatibility {
 	}
 
 	public int getGemsCount(ItemStack itemStack) {
-		if (!adventureModuleEnabled()) return 0;
+		if (!adventureModuleEnabled())
+			return 0;
 		return SocketHelper.getActiveGems(itemStack).size();
 	}
 
 	public void dropGemFromOre(Player player, ServerLevel level, BlockPos blockPos) {
-		ItemStack gem = GemManager.createRandomGemStack(player.getRandom(), level, player.getLuck(), this::shouldDropFromOre);
+		ItemStack gem = GemManager.createRandomGemStack(player.getRandom(), level, player.getLuck(),
+				this::shouldDropFromOre);
 		Block.popResource(level, blockPos, gem);
 	}
 
@@ -190,7 +208,8 @@ public enum ApotheosisCompatibility {
 
 	private void addItemSockets(GetItemSocketsEvent event) {
 		ItemStack stack = event.getStack();
-		if (!ItemHelper.hasSockets(stack)) return;
+		if (!ItemHelper.hasSockets(stack))
+			return;
 		int sockets = event.getSockets();
 		if (event.getSockets() == 0) {
 			int defaultSockets = ItemHelper.getDefaultSockets(stack);
@@ -206,7 +225,8 @@ public enum ApotheosisCompatibility {
 		CompoundTag affixTag = stack.getTagElement(AffixHelper.AFFIX_DATA);
 		if (affixTag != null && affixTag.contains(SocketHelper.GEMS)) {
 			ListTag gemsTag = affixTag.getList(SocketHelper.GEMS, Tag.TAG_COMPOUND);
-			if (sockets < gemsTag.size()) sockets = gemsTag.size();
+			if (sockets < gemsTag.size())
+				sockets = gemsTag.size();
 		}
 		event.setSockets(sockets);
 	}
