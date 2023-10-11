@@ -59,6 +59,7 @@ public class SkillTreeEditorScreen extends Screen {
 	private final List<SkillConnection> gatewayConnections = new ArrayList<>();
 	private final Set<ResourceLocation> selectedSkills = new HashSet<>();
 	private final PassiveSkillTree skillTree;
+	private boolean closeOnEsc = true;
 	private int prevMouseX;
 	private int prevMouseY;
 	private float zoom = 1F;
@@ -168,6 +169,12 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (keyCode == GLFW.GLFW_KEY_ESCAPE && selectedSkills.size() > 0) {
+			selectedSkills.clear();
+			rebuildWidgets();
+			closeOnEsc = false;
+			return true;
+		}
 		if (keyCode == GLFW.GLFW_KEY_DELETE && Screen.hasControlDown() && selectedSkills.size() > 0) {
 			deleteSelectedSkills();
 			return true;
@@ -179,6 +186,15 @@ public class SkillTreeEditorScreen extends Screen {
 		}
 		children().stream().filter(EditBox.class::isInstance).forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
 		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	@Override
+	public boolean shouldCloseOnEsc() {
+		if (!closeOnEsc) {
+			closeOnEsc ^= true;
+			return false;
+		}
+		return super.shouldCloseOnEsc();
 	}
 
 	private void deleteSelectedSkills() {
