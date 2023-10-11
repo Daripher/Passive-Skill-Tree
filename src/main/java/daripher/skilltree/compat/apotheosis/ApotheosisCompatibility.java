@@ -3,13 +3,16 @@ package daripher.skilltree.compat.apotheosis;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.util.concurrent.AtomicDouble;
 import com.mojang.datafixers.util.Either;
 
 import daripher.skilltree.SkillTreeMod;
@@ -25,7 +28,9 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,12 +39,17 @@ import net.minecraftforge.client.event.RenderTooltipEvent.GatherComponents;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix.DamageType;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
@@ -49,23 +59,28 @@ import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent
 import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 public enum ApotheosisCompatibility {
 	ISNTANCE;
 
-	public final LootCategory ring = LootCategory.register(null, "ring", ItemHelper::isRing, new EquipmentSlot[0]);
+	public final LootCategory ring = LootCategory.register(null, "ring", ItemHelper::isRing,
+			new EquipmentSlot[] { EquipmentSlot.CHEST });
 	public final LootCategory necklace = LootCategory.register(null, "necklace", ItemHelper::isNecklace,
-			new EquipmentSlot[0]);
+			new EquipmentSlot[] { EquipmentSlot.CHEST });
 
 	public void addCompatibility() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::generateGems);
+
 		IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 		forgeEventBus.addListener(this::addItemSockets);
 		forgeEventBus.addListener(this::ignoreGemTooltips);
 		forgeEventBus.addListener(EventPriority.LOW, this::addJewelrySocketTooltip);
-		forgeEventBus.addListener(this::applyCurioGemBonuses);
+		forgeEventBus.addListener(this::applyCurioAttributeAffixes);
+		forgeEventBus.addListener(this::applyCurioDamageAffixes);
+		forgeEventBus.addListener(EventPriority.LOWEST, this::removeFakeCurioAttributes);
 		forgeEventBus.addListener(EventPriority.LOWEST, this::removeDuplicateTooltips);
 	}
 
@@ -151,7 +166,7 @@ public enum ApotheosisCompatibility {
 		}
 	}
 
-	private void applyCurioGemBonuses(CurioAttributeModifierEvent event) {
+	private void applyCurioAttributeAffixes(CurioAttributeModifierEvent event) {
 		if (!adventureModuleEnabled())
 			return;
 		ItemStack stack = event.getItemStack();
@@ -162,11 +177,38 @@ public enum ApotheosisCompatibility {
 			return;
 		if (ItemHelper.isNecklace(stack) && !slot.equals("necklace"))
 			return;
-		SocketHelper.getGemInstances(stack).forEach(gem -> {
+		Stream<GemInstance> gems = SocketHelper.getGemInstances(stack);
+		gems.forEach(gem -> {
 			gem.gem().getBonus(LootCategory.forItem(stack)).ifPresent(bonus -> {
 				bonus.addModifiers(gem.gemStack(), gem.rarity(), event::addModifier);
 			});
 		});
+		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+		affixes.forEach((affix, instance) -> {
+			instance.addModifiers(EquipmentSlot.CHEST, event::addModifier);
+		});
+	}
+
+	private void applyCurioDamageAffixes(LivingHurtEvent event) {
+		DamageSource source = event.getSource();
+		LivingEntity entity = event.getEntity();
+		AtomicDouble amount = new AtomicDouble(event.getAmount());
+		CuriosApi.getCuriosHelper().getEquippedCurios(entity).ifPresent(itemHandler -> {
+			for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+				ItemStack stack = itemHandler.getStackInSlot(slot);
+				AffixHelper.getAffixes(stack).forEach((affix, instance) -> {
+					amount.addAndGet(instance.onHurt(source, entity, (float) amount.get()));
+				});
+			}
+		});
+		event.setAmount((float) amount.get());
+	}
+
+	private void removeFakeCurioAttributes(ItemAttributeModifierEvent event) {
+		if (!ItemHelper.isJewelry(event.getItemStack()))
+			return;
+		if (event.getSlotType() == EquipmentSlot.CHEST)
+			event.clearModifiers();
 	}
 
 	private void addJewelrySocketTooltip(GatherComponents event) {
