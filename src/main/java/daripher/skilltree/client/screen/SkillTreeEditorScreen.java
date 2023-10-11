@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
@@ -84,8 +83,8 @@ public class SkillTreeEditorScreen extends Screen {
 	public void init() {
 		clearWidgets();
 		addSkillButtons();
-		maxScrollX -= width / 2 - 160;
-		maxScrollY -= height / 2 - 160;
+		maxScrollX -= width / 2 - 350;
+		maxScrollY -= height / 2 - 350;
 		if (maxScrollX < 0)
 			maxScrollX = 0;
 		if (maxScrollY < 0)
@@ -151,14 +150,7 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		AtomicBoolean pressedEditBox = new AtomicBoolean();
-		children().stream()
-				.filter(EditBox.class::isInstance)
-				.forEach(b -> {
-					if (b.mouseClicked(mouseX, mouseY, button))
-						pressedEditBox.set(true);
-				});
-		if (pressedEditBox.get())
+		if (clickedOnEditBox(mouseX, mouseY, button))
 			return true;
 		Optional<? extends GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
 		if (widget.isPresent())
@@ -167,6 +159,14 @@ public class SkillTreeEditorScreen extends Screen {
 		if (skill.isPresent())
 			return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
 		return false;
+	}
+
+	private boolean clickedOnEditBox(double mouseX, double mouseY, int button) {
+		return editBoxesStream().filter(b -> b.mouseClicked(mouseX, mouseY, button)).findAny().isPresent();
+	}
+
+	private Stream<EditBox> editBoxesStream() {
+		return children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast);
 	}
 
 	@Override
@@ -186,8 +186,14 @@ public class SkillTreeEditorScreen extends Screen {
 			rebuildWidgets();
 			return true;
 		}
-		children().stream().filter(EditBox.class::isInstance).forEach(b -> b.keyPressed(keyCode, scanCode, modifiers));
+		if (keyPressedOnTextBox(keyCode, scanCode, modifiers)) {
+			return true;
+		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	private boolean keyPressedOnTextBox(int keyCode, int scanCode, int modifiers) {
+		return editBoxesStream().filter(b -> b.keyPressed(keyCode, scanCode, modifiers)).findAny().isPresent();
 	}
 
 	@Override
@@ -211,30 +217,25 @@ public class SkillTreeEditorScreen extends Screen {
 
 	@Override
 	public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-		children().stream()
-				.filter(EditBox.class::isInstance)
-				.forEach(b -> b.keyReleased(keyCode, scanCode, modifiers));
+		editBoxesStream().forEach(b -> b.keyReleased(keyCode, scanCode, modifiers));
 		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override
 	public boolean charTyped(char character, int keyCode) {
-		children().stream()
-				.filter(EditBox.class::isInstance)
-				.map(EditBox.class::cast)
-				.forEach(b -> b.charTyped(character, keyCode));
+		editBoxesStream().forEach(b -> b.charTyped(character, keyCode));
 		return super.charTyped(character, keyCode);
 	}
 
-	public Optional<? extends GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
-		return children()
-				.stream()
-				.filter(Predicates.not(SkillButton.class::isInstance))
-				.filter(e -> e.isMouseOver(mouseX, mouseY))
-				.findFirst();
+	private Optional<? extends GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
+		return widgetsStream().filter(e -> e.isMouseOver(mouseX, mouseY)).findFirst();
 	}
 
-	public Optional<SkillButton> getSkillAt(double mouseX, double mouseY) {
+	private Stream<? extends GuiEventListener> widgetsStream() {
+		return children().stream().filter(Predicates.not(SkillButton.class::isInstance));
+	}
+
+	private Optional<SkillButton> getSkillAt(double mouseX, double mouseY) {
 		mouseX -= scrollX;
 		mouseY -= scrollY;
 		for (SkillButton button : skillButtons.values()) {
@@ -498,6 +499,14 @@ public class SkillTreeEditorScreen extends Screen {
 			if (!ResourceLocation.isValidResourceLocation(s))
 				return false;
 			return ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(s)) != null;
+		});
+		attributeEditor.setSuggestionProvider(() -> {
+			String editorValue = attributeEditor.getValue();
+			Optional<String> fittingAttribute = ForgeRegistries.ATTRIBUTES.getKeys().stream()
+					.map(ResourceLocation::toString).filter(s -> s.startsWith(editorValue)).findFirst();
+			if (fittingAttribute.isPresent())
+				return fittingAttribute.get().replace(editorValue, "");
+			return null;
 		});
 		addRenderableWidget(attributeEditor);
 		AttributeModifier modifier = firstSkill.getAttributeModifiers().get(row).getRight();

@@ -3,6 +3,9 @@ package daripher.skilltree.client.widget;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -18,11 +21,35 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class PSTEditBox extends EditBox {
 	private Predicate<String> softFilter = Objects::nonNull;
+	private Supplier<String> suggestionProvider = () -> null;
 
 	public PSTEditBox(Font font, int x, int y, int width, int height, String defaultText) {
 		super(font, x, y, width, height, Component.empty());
 		setMaxLength(80);
 		setValue(defaultText);
+	}
+
+	@Override
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (keyCode == GLFW.GLFW_KEY_TAB && getSuggestion() != null) {
+			setValue(getValue() + getSuggestion());
+			setSuggestion(null);
+			return true;
+		}
+		boolean result = super.keyPressed(keyCode, scanCode, modifiers);
+		setSuggestion(suggestionProvider.get());
+		return result;
+	}
+
+	@Override
+	public boolean charTyped(char codePoint, int modifiers) {
+		boolean result = super.charTyped(codePoint, modifiers);
+		setSuggestion(suggestionProvider.get());
+		return result;
+	}
+
+	public void setSuggestionProvider(Supplier<String> suggestionProvider) {
+		this.suggestionProvider = suggestionProvider;
 	}
 
 	public void setSoftFilter(Predicate<String> filter) {
