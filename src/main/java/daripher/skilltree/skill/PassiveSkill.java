@@ -158,6 +158,8 @@ public class PassiveSkill {
 
 	private void executeCommands(ServerPlayer player) {
 		MinecraftServer server = player.getServer();
+		if (server == null)
+			return;
 		commands.forEach(command -> {
 			command = command.replaceAll("<p>", player.getGameProfile().getName());
 			server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);

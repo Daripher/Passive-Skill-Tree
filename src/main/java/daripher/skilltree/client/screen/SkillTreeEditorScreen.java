@@ -11,6 +11,8 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.glfw.GLFW;
 
@@ -180,7 +182,7 @@ public class SkillTreeEditorScreen extends Screen {
 			return true;
 		}
 		if (keyCode == GLFW.GLFW_KEY_N && Screen.hasControlDown()) {
-			createNewSkill(0, 0);
+			createNewSkill(0, 0, null);
 			rebuildWidgets();
 			return true;
 		}
@@ -288,10 +290,20 @@ public class SkillTreeEditorScreen extends Screen {
 				distance += skill.getButtonSize() / 2 + 8;
 				float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
 				float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-				createNewSkill(skillX, skillY).connect(skill);
+				createNewSkill(skillX, skillY, skill);
 				rebuildWidgets();
 			});
 			addRenderableWidget(addButton);
+			Button copyButton = new PSTButton(toolsX + 195, toolsY, 60, 14, Component.literal("Copy"), b -> {
+				float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
+				float distance = (float) distanceEditor.getNumericValue();
+				distance += skill.getButtonSize() / 2 + 8;
+				float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+				float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+				createCopiedSkill(skillX, skillY, skill);
+				rebuildWidgets();
+			});
+			addRenderableWidget(copyButton);
 			toolsY += 19;
 		}
 		addRenderableOnly(new PSTLabel(toolsX, toolsY,
@@ -299,12 +311,37 @@ public class SkillTreeEditorScreen extends Screen {
 		toolsY += 19;
 	}
 
-	private PassiveSkill createNewSkill(float x, float y) {
+	private PassiveSkill createCopiedSkill(float x, float y, PassiveSkill other) {
+		PassiveSkill skill = new PassiveSkill(createNewSkillId(),
+				other.getButtonSize(),
+				other.getBackgroundTexture(),
+				other.getIconTexture(),
+				other.getBorderTexture(),
+				other.isStartingPoint());
+		skill.setPosition(x, y);
+		skill.setConnectedTree(other.getConnectedTreeId());
+		skill.setStartingPoint(other.isStartingPoint());
+		other.getAttributeModifiers().forEach((pair) -> {
+			AttributeModifier modifier = new AttributeModifier(UUID.randomUUID(), "SkillTree",
+					pair.getRight().getAmount(), pair.getRight().getOperation());
+			skill.addAttributeBonus(pair.getLeft(), modifier);
+		});
+		skill.connect(other);
+		SkillTreeClientData.saveEditorSkill(skill);
+		SkillTreeClientData.loadEditorSkill(skill.getId());
+		skillTree.getSkillIds().add(skill.getId());
+		SkillTreeClientData.saveEditorSkillTree(skillTree);
+		return skill;
+	}
+
+	private PassiveSkill createNewSkill(float x, float y, @Nullable PassiveSkill other) {
 		ResourceLocation background = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
 		ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
 		ResourceLocation border = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
 		PassiveSkill skill = new PassiveSkill(createNewSkillId(), 16, background, icon, border, false);
 		skill.setPosition(x, y);
+		if (other != null)
+			skill.connect(other);
 		SkillTreeClientData.saveEditorSkill(skill);
 		SkillTreeClientData.loadEditorSkill(skill.getId());
 		skillTree.getSkillIds().add(skill.getId());
