@@ -470,6 +470,21 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add("itemGroup.skilltree", "Passive Skill Tree");
 		// misc
 		add("item.modifiers.both_hands", "When Held:");
+		// affix names
+		add("affix.skilltree:jewelry/dmg_reduction/tempered", "Tempered");
+		add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "of Hardening");
+		add("affix.skilltree:jewelry/attribute/immortal", "Immortal");
+		add("affix.skilltree:jewelry/attribute/immortal.suffix", "of Immortality");
+		add("affix.skilltree:jewelry/attribute/experienced", "Experienced");
+		add("affix.skilltree:jewelry/attribute/experienced.suffix", "of Experience");
+		add("affix.skilltree:jewelry/attribute/lucky", "Lucky");
+		add("affix.skilltree:jewelry/attribute/lucky.suffix", "of Luck");
+		add("affix.skilltree:jewelry/attribute/hasty", "Hasty");
+		add("affix.skilltree:jewelry/attribute/hasty.suffix", "of Haste");
+		add("affix.skilltree:jewelry/attribute/greedy", "Greedy");
+		add("affix.skilltree:jewelry/attribute/greedy.suffix", "of Greed");
+		add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
+		add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
 	}
 
 	private void addTooltip(Item item, String tooltip) {

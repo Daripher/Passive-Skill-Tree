@@ -1,0 +1,41 @@
+{
+    "type": "apotheosis:attribute",
+    "attribute": "minecraft:generic.luck",
+    "operation": "ADDITION",
+    "values": {
+        "common": {
+            "min": 0.1,
+            "steps": 1,
+            "step": 0.1
+        },
+        "uncommon": {
+            "min": 0.2,
+            "steps": 2,
+            "step": 0.1
+        },
+        "rare": {
+            "min": 0.3,
+            "steps": 2,
+            "step": 1
+        },
+        "epic": {
+            "min": 0.4,
+            "steps": 3,
+            "step": 0.1
+        },
+        "mythic": {
+            "min": 0.5,
+            "steps": 4,
+            "step": 0.1
+        },
+        "ancient": {
+            "min": 0.5,
+            "steps": 5,
+            "step": 0.1
+        }
+    },
+    "types": [
+        "ring",
+        "necklace"
+    ]
+}

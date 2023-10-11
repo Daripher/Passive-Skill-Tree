@@ -1,0 +1,41 @@
+{
+    "type": "apotheosis:attribute",
+    "attribute": "skilltree:double_loot_chance",
+    "operation": "MULTIPLY_BASE",
+    "values": {
+        "common": {
+            "min": 0.01,
+            "steps": 1,
+            "step": 0.005
+        },
+        "uncommon": {
+            "min": 0.02,
+            "steps": 2,
+            "step": 0.005
+        },
+        "rare": {
+            "min": 0.03,
+            "steps": 3,
+            "step": 0.005
+        },
+        "epic": {
+            "min": 0.04,
+            "steps": 4,
+            "step": 0.005
+        },
+        "mythic": {
+            "min": 0.05,
+            "steps": 5,
+            "step": 0.01
+        },
+        "ancient": {
+            "min": 0.07,
+            "steps": 6,
+            "step": 0.01
+        }
+    },
+    "types": [
+        "necklace",
+        "ring"
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "type": "apotheosis:attribute",
+    "attribute": "minecraft:generic.max_health",
+    "operation": "MULTIPLY_TOTAL",
+    "values": {
+        "common": {
+            "min": 0.05,
+            "steps": 1,
+            "step": 0.025
+        },
+        "uncommon": {
+            "min": 2,
+            "steps": 2,
+            "step": 0.025
+        },
+        "rare": {
+            "min": 3,
+            "steps": 2,
+            "step": 0.025
+        },
+        "epic": {
+            "min": 4,
+            "steps": 3,
+            "step": 0.05
+        },
+        "mythic": {
+            "min": 5,
+            "steps": 4,
+            "step": 0.05
+        },
+        "ancient": {
+            "min": 5,
+            "steps": 6,
+            "step": 0.05
+        }
+    },
+    "types": [
+        "necklace"
+    ]
+}
