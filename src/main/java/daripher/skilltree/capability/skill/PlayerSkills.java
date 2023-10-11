@@ -9,6 +9,7 @@ import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -40,8 +41,10 @@ public class PlayerSkills implements IPlayerSkills {
 
 	@Override
 	public boolean learnSkill(ServerPlayer player, PassiveSkill passiveSkill) {
-		if (skillPoints == 0) return false;
-		if (skills.contains(passiveSkill)) return false;
+		if (skillPoints == 0)
+			return false;
+		if (skills.contains(passiveSkill))
+			return false;
 		skillPoints--;
 		return skills.add(passiveSkill);
 	}
@@ -74,34 +77,33 @@ public class PlayerSkills implements IPlayerSkills {
 		tag.putUUID("TreeVersion", TREE_VERSION);
 		tag.putInt("Points", skillPoints);
 		tag.putBoolean("TreeReset", treeReset);
-		var skillTagsList = new ListTag();
-
-		skills.forEach(skill -> {
-			skillTagsList.add(StringTag.valueOf(skill.getId().toString()));
-		});
-
-		tag.put("Skills", skillTagsList);
+		var skillsTag = new ListTag();
+		skills.forEach(skill -> skillsTag.add(StringTag.valueOf(skill.getId().toString())));
+		tag.put("Skills", skillsTag);
 		return tag;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag tag) {
 		skills.clear();
-		var treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
+		UUID treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
 		skillPoints = tag.getInt("Points");
-		var skillTagsList = tag.getList("Skills", StringTag.valueOf("").getId());
-		if (!treeVersion.equals(TREE_VERSION)) {
-			skillPoints += skillTagsList.size();
+		ListTag skillsTag = tag.getList("Skills", Tag.TAG_STRING);
+		if (!TREE_VERSION.equals(treeVersion)) {
+			skillPoints += skillsTag.size();
 			treeReset = true;
-		} else {
-			skillTagsList.forEach(skillTag -> {
-				var skillId = new ResourceLocation(skillTag.getAsString());
-				var passiveSkill = SkillsReloader.getSkillById(skillId);
-
-				if (passiveSkill != null) {
-					skills.add(passiveSkill);
-				}
-			});
+			return;
+		}
+		for (Tag skillTag : skillsTag) {
+			var skillId = new ResourceLocation(skillTag.getAsString());
+			PassiveSkill passiveSkill = SkillsReloader.getSkillById(skillId);
+			if (passiveSkill == null) {
+				skills.clear();
+				treeReset = true;
+				skillPoints += skillsTag.size();
+				return;
+			}
+			skills.add(passiveSkill);
 		}
 	}
 }
