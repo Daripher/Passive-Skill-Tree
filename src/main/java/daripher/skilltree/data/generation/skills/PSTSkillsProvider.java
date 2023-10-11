@@ -661,7 +661,7 @@ public class PSTSkillsProvider implements DataProvider {
 	}
 
 	private void save(CachedOutput output, PassiveSkill skill) {
-		Path path = dataGenerator.getOutputFolder().resolve(getSkillPath(skill));
+		Path path = dataGenerator.getOutputFolder().resolve(getPath(skill));
 		JsonElement json = SkillsReloader.GSON.toJsonTree(skill);
 		try {
 			DataProvider.saveStable(output, json, path);
@@ -670,7 +670,7 @@ public class PSTSkillsProvider implements DataProvider {
 		}
 	}
 
-	public String getSkillPath(PassiveSkill skill) {
+	public String getPath(PassiveSkill skill) {
 		ResourceLocation id = skill.getId();
 		return "data/" + id.getNamespace() + "/skills/" + id.getPath() + ".json";
 	}
