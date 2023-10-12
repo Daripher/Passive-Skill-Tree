@@ -260,8 +260,8 @@ public class SkillTreeEditorScreen extends Screen {
 		if (selectedSkills.size() > 0) {
 			toolsY += 5;
 			addAttributeToolsButtons();
-			addTextureToolsButtons();
 			addButtonToolsButtons();
+			addTextureToolsButtons();
 			addNodeToolsButtons();
 		}
 		if (selectedSkills.size() == 2) {
@@ -382,9 +382,9 @@ public class SkillTreeEditorScreen extends Screen {
 		if (selectedSkills.size() == 1) {
 			toolsY -= 38;
 			addRenderableOnly(
-					new PSTLabel(toolsX + 85, toolsY, Component.literal("• Position").withStyle(ChatFormatting.GOLD)));
+					new PSTLabel(toolsX + 65, toolsY, Component.literal("• Position").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
-			NumberEditBox xPosEditor = new NumberEditBox(font, toolsX + 85, toolsY, 60, 14, skill.getPositionX());
+			NumberEditBox xPosEditor = new NumberEditBox(font, toolsX + 65, toolsY, 60, 14, skill.getPositionX());
 			xPosEditor.setResponder(s -> {
 				skill.setPosition((float) xPosEditor.getNumericValue(), skill.getPositionY());
 				getSelectedSkillButtons().forEach(button -> {
@@ -393,7 +393,7 @@ public class SkillTreeEditorScreen extends Screen {
 				saveSelectedSkills();
 			});
 			addRenderableWidget(xPosEditor);
-			NumberEditBox yPosEditor = new NumberEditBox(font, toolsX + 150, toolsY, 60, 14, skill.getPositionY());
+			NumberEditBox yPosEditor = new NumberEditBox(font, toolsX + 130, toolsY, 60, 14, skill.getPositionY());
 			yPosEditor.setResponder(s -> {
 				skill.setPosition(skill.getPositionX(), (float) yPosEditor.getNumericValue());
 				getSelectedSkillButtons().forEach(button -> {
@@ -427,7 +427,10 @@ public class SkillTreeEditorScreen extends Screen {
 		PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
 		if (getSelectedSkills().allMatch(otherSkill -> sameTextures(skill, otherSkill))) {
 			addRenderableOnly(
-					new PSTLabel(toolsX, toolsY, Component.literal("• Textures").withStyle(ChatFormatting.GOLD)));
+					new PSTLabel(toolsX, toolsY, Component.literal("Textures").withStyle(ChatFormatting.GREEN)));
+			toolsY += 19;
+			addRenderableOnly(
+					new PSTLabel(toolsX, toolsY, Component.literal("• Border").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
 			PSTEditBox backgroundEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14,
 					skill.getBackgroundTexture().toString());
@@ -439,6 +442,9 @@ public class SkillTreeEditorScreen extends Screen {
 			});
 			addRenderableWidget(backgroundEditor);
 			toolsY += 19;
+			addRenderableOnly(
+					new PSTLabel(toolsX, toolsY, Component.literal("• Icon").withStyle(ChatFormatting.GOLD)));
+			toolsY += 19;
 			PSTEditBox iconEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14, skill.getIconTexture().toString());
 			iconEditor.setResponder(value -> {
 				getSelectedSkills().forEach(s -> {
@@ -447,6 +453,9 @@ public class SkillTreeEditorScreen extends Screen {
 				saveSelectedSkills();
 			});
 			addRenderableWidget(iconEditor);
+			toolsY += 19;
+			addRenderableOnly(new PSTLabel(toolsX, toolsY,
+					Component.literal("• Tooltip Background").withStyle(ChatFormatting.GOLD)));
 			toolsY += 19;
 			PSTEditBox borderEditor = new PSTEditBox(font, toolsX, toolsY, 355, 14,
 					skill.getBorderTexture().toString());
@@ -470,17 +479,14 @@ public class SkillTreeEditorScreen extends Screen {
 	}
 
 	private void addAddModifierButton() {
-		Button addModifierButton = new PSTButton(toolsX, toolsY, 100, 14,
-				Component.translatable("Add Modifier"),
-				b -> {
-					getSelectedSkills().forEach(skill -> {
-						skill.getAttributeModifiers().add(Pair.of(Attributes.ARMOR,
-								new AttributeModifier(UUID.randomUUID(), "SkillTree",
-										1, Operation.ADDITION)));
-						SkillTreeClientData.saveEditorSkill(skill);
-						rebuildWidgets();
-					});
-				});
+		Button addModifierButton = new PSTButton(toolsX, toolsY, 100, 14, Component.translatable("Add Modifier"), b -> {
+			getSelectedSkills().forEach(skill -> {
+				skill.getAttributeModifiers().add(Pair.of(Attributes.ARMOR,
+						new AttributeModifier(UUID.randomUUID(), "SkillTree", 1, Operation.ADDITION)));
+				SkillTreeClientData.saveEditorSkill(skill);
+				rebuildWidgets();
+			});
+		});
 		addRenderableWidget(addModifierButton);
 	}
 
