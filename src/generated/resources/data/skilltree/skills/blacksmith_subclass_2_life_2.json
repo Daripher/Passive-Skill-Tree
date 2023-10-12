@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_maximum_life",
       "modifier": {
         "amount": 1.0,
-        "id": "eaf55557-dc37-48e9-a1ee-3dd4d619aa25",
+        "id": "80007e12-a087-49db-8a44-a64d1efec8c2",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

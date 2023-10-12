@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_damage_per_armor",
       "modifier": {
         "amount": 0.1,
-        "id": "20a075a0-8836-48ce-abee-a44b0f29e723",
+        "id": "536a7ee6-c6c3-41f8-9839-df50560750b3",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

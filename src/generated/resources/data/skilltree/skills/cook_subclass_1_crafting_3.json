@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_axes_crit_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "8e383f2e-4c1d-4c12-a77e-e7fb9f1e0e1d",
+        "id": "37e9abec-f446-4563-9312-d1187b3f4e0a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

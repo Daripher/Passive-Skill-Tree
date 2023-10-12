@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_ore",
       "modifier": {
         "amount": 0.5,
-        "id": "47f55d48-b7a7-4db2-98f6-56919eb43ba9",
+        "id": "320b2375-34d3-4dbe-90c6-be745468f586",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

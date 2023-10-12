@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_boots_movement_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "e79ca0e0-693f-4958-8f9b-de65baddb2a8",
+        "id": "aea82bda-5283-4ad1-bf9e-8e89961ef9a6",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

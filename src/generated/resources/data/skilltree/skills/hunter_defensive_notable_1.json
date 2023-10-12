@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance_when_wounded",
       "modifier": {
         "amount": 0.1,
-        "id": "e5a5bc6e-ab82-49f3-a2a3-02619b9c0c85",
+        "id": "5ea02508-80bd-4fcf-9655-2133e0b73643",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

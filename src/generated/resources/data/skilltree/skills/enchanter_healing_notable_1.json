@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block_per_shield_enchantment",
       "modifier": {
         "amount": 0.25,
-        "id": "0db48bc4-a3a5-45cc-aa88-fc3b739d6507",
+        "id": "c9584ced-50b3-467e-8e5e-faf5246044e2",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

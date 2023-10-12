@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_with_shield",
       "modifier": {
         "amount": 0.5,
-        "id": "bedb352d-746f-44cf-9a32-a2bd119050d6",
+        "id": "380bad24-0205-4107-a6aa-d6dbfb40d9c3",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

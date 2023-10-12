@@ -4,7 +4,7 @@
       "attribute": "skilltree:can_mix_potions",
       "modifier": {
         "amount": 1.0,
-        "id": "31e1b12e-898d-4cf2-82f8-2cf0f6214a09",
+        "id": "a3dcdc82-adf4-4856-a5ef-53efeeae2ea2",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

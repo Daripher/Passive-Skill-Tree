@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_armor",
       "modifier": {
         "amount": 0.1,
-        "id": "50b4f917-1231-4dc9-8b82-3692993252ac",
+        "id": "02b91bb3-19cc-4de0-a2ce-3b8a2e797815",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

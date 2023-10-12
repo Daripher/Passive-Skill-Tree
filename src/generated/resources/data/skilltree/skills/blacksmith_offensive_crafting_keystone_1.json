@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_attack_speed",
       "modifier": {
         "amount": 0.25,
-        "id": "8f00e96d-bb85-4132-99d1-621b6c6c3e19",
+        "id": "94e939d0-2893-49da-ab03-e50205c06d67",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

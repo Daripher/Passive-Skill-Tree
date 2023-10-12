@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 1.0,
-        "id": "33a6a0c0-f3f9-4d2f-abd5-a3555428c261",
+        "id": "404ffeee-c18c-4762-bff1-dc7020cdc0d6",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

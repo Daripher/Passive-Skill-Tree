@@ -4,7 +4,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.2,
-        "id": "d58a4ad1-e842-4a9d-b9c5-71e7505acaf0",
+        "id": "e7856d05-8692-4958-815a-ca5d3f3394f0",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:melee_crit_damage",
       "modifier": {
         "amount": 0.1,
-        "id": "e1459c07-dae5-4e0f-ad5d-bb66293099b7",
+        "id": "1110ec2b-0e26-4184-a947-c24457202d0c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

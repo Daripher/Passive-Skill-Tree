@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_equipment_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "8e238c24-9d32-43ca-ae16-5b2a5feb093d",
+        "id": "a1ae8e6e-fc71-4294-9a82-0dbc140da99f",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage",
       "modifier": {
         "amount": 0.5,
-        "id": "e265c971-b1b3-4aa5-8a42-25ac816811db",
+        "id": "3c7dac6f-f311-49b6-97ef-0c196bd7f185",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

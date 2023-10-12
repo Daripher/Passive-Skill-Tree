@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_defence",
       "modifier": {
         "amount": 0.3,
-        "id": "67239793-f23f-4e8f-b279-64dc5bafd7e3",
+        "id": "c62c831b-cb19-449b-b55f-3d964ebeac46",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

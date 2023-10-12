@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_against_poisoned",
       "modifier": {
         "amount": 0.02,
-        "id": "6d867453-0398-4765-a414-1083cd50d90b",
+        "id": "622153d8-0c2f-4a65-8333-00ad8c3d2141",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

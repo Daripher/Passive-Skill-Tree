@@ -458,14 +458,14 @@ public class PSTSkillsProvider implements DataProvider {
 		addSkillAttributeModifier("enchanter_subclass_special", CRAFTED_QUIVERS_CHANCE_TO_IGNITE, 0.1, MULTIPLY_BASE);
 		// scholar skills
 		addSkillBranchAttributeModifier("enchanter_subclass_2_defensive", BLOCK_CHANCE, 0.01, MULTIPLY_BASE, 1, 4);
-		addSkillAttributeModifier("enchanter_subclass_2", EXPERIENCE_PER_HOUR, 2, ADDITION);
+		addSkillAttributeModifier("enchanter_subclass_2", EXPERIENCE_PER_MINUTE, 2, ADDITION);
 		addSkillBranchAttributeModifier("enchanter_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
-		addSkillBranchAttributeModifier("enchanter_subclass_2_life", EXPERIENCE_PER_HOUR, 0.1, ADDITION, 1, 4);
-		addSkillBranchAttributeModifier("enchanter_subclass_2_crafting", EXPERIENCE_PER_HOUR, 0.2, ADDITION, 1, 5);
+		addSkillBranchAttributeModifier("enchanter_subclass_2_life", EXPERIENCE_PER_MINUTE, 0.1, ADDITION, 1, 4);
+		addSkillBranchAttributeModifier("enchanter_subclass_2_crafting", EXPERIENCE_PER_MINUTE, 0.2, ADDITION, 1, 5);
 		addSkillAttributeModifier("enchanter_subclass_2_crafting_notable_1", EXPERIENCE_FROM_ORE, 0.5, MULTIPLY_BASE);
 		addSkillAttributeModifier("enchanter_subclass_2_life_notable_1", MAX_HEALTH, 6, ADDITION);
-		addSkillAttributeModifier("enchanter_subclass_2_life_notable_1", EXPERIENCE_PER_HOUR, 0.1, ADDITION);
-		addSkillAttributeModifier("enchanter_subclass_2_mastery", EXPERIENCE_PER_HOUR, 1.5, ADDITION);
+		addSkillAttributeModifier("enchanter_subclass_2_life_notable_1", EXPERIENCE_PER_MINUTE, 0.1, ADDITION);
+		addSkillAttributeModifier("enchanter_subclass_2_mastery", EXPERIENCE_PER_MINUTE, 1.5, ADDITION);
 		// cook skills
 		addSkillAttributeModifier("cook_class", COOKED_FOOD_SATURATION, 0.2, MULTIPLY_BASE);
 		addSkillBranchAttributeModifier("cook_defensive_crafting", COOKED_FOOD_HEALING_PER_SATURATION, 0.05,

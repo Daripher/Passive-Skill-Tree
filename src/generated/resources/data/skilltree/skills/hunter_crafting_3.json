@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_retrieve_arrows",
       "modifier": {
         "amount": 0.05,
-        "id": "ed7e49f8-0956-48a6-b382-88068a362322",
+        "id": "b2e13707-7461-4999-aa99-740f39e0e7e7",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

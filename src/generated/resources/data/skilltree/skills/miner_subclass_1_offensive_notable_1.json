@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.05,
-        "id": "7aeef41d-437c-426b-aedf-61e337629525",
+        "id": "420ed386-7ea0-47d9-994e-82e49bcb0b7d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.movement_speed",
       "modifier": {
         "amount": 0.05,
-        "id": "af448afb-f730-481c-aa13-61d41a86a4f9",
+        "id": "bd6fbf3b-b67d-4127-91fe-2b21e7fc96e4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

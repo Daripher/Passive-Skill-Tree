@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block",
       "modifier": {
         "amount": 0.25,
-        "id": "e61be794-a2d7-42ac-8732-c90b266e851d",
+        "id": "e5b03a50-07b4-4820-bf46-023ce86e6fd0",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

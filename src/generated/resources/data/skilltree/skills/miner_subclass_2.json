@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_ring_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "d831f4b2-5386-4fea-abc7-ac8359a1a0f8",
+        "id": "87e8b371-fdba-4ff3-8c17-655a294dfc2c",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

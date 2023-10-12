@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_with_enchanted_shield",
       "modifier": {
         "amount": 0.1,
-        "id": "b06106e2-d0b6-4dc5-a745-507d0ffba6fc",
+        "id": "be1dcb42-7f55-4100-8ee2-0b35fe4b2755",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

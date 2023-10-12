@@ -4,7 +4,7 @@
       "attribute": "curios:ring",
       "modifier": {
         "amount": 1.0,
-        "id": "ac8d154c-ee80-4833-bff8-e3061a6cfe08",
+        "id": "91254680-0597-4899-8d5f-22c57fd15599",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

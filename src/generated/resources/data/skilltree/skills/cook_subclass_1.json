@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_if_damaged",
       "modifier": {
         "amount": 0.1,
-        "id": "76b4761c-6415-4b30-938a-54852f371510",
+        "id": "dd5eaacc-abf4-49b6-93d1-ddd82dd0b1c8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:damage_if_wounded",
       "modifier": {
         "amount": 0.2,
-        "id": "0b997e6c-2395-44ef-a6d0-973da4e60fd5",
+        "id": "d0c812ee-cce9-4819-859d-a53caf6dd9ad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.01,
-        "id": "a023ae74-9f8e-4c11-a10f-60fbec236aca",
+        "id": "2c1a0771-2423-4b4b-9190-59170c0e6a76",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "f2405472-569c-4000-82c8-cf06ec0e32f2",
+        "id": "34574cc7-a1c6-48e1-9444-e025e97cbae8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

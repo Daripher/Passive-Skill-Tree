@@ -4,7 +4,7 @@
       "attribute": "skilltree:enchantment_level_requirement",
       "modifier": {
         "amount": -0.05,
-        "id": "e2d593af-f122-4642-a58b-1718d4ecd3fc",
+        "id": "78b30813-c48c-49cf-8816-165060cbb7c2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

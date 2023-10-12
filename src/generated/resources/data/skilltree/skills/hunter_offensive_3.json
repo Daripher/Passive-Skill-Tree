@@ -4,7 +4,7 @@
       "attribute": "skilltree:projectile_damage",
       "modifier": {
         "amount": 0.1,
-        "id": "995b8b33-6dd4-4f1a-b65c-d2c3ffdc79a6",
+        "id": "69226472-cb43-4d8d-94fe-d61098ff31ad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

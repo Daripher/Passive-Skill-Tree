@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_poisons_strength",
       "modifier": {
         "amount": 0.1,
-        "id": "1b61a02a-832b-4a00-ba1d-62012d905e3c",
+        "id": "5cab554b-cb33-4a9f-b592-bf6ad7cb9249",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance",
       "modifier": {
         "amount": 0.02,
-        "id": "02bd6ae0-f978-4755-892e-b45591aa1147",
+        "id": "4e424da5-0318-495a-95af-3299f48ebaac",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

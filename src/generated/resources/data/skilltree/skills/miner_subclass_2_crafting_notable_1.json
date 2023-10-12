@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_jewelry",
       "modifier": {
         "amount": 0.25,
-        "id": "5bc62e52-7584-413f-b22e-c0cf05f8af75",
+        "id": "56da5e7e-9648-4c54-9ece-f75d5f225f5b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

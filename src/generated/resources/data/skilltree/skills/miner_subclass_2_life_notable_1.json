@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_necklaces_maximum_life",
       "modifier": {
         "amount": 5.0,
-        "id": "7869c60f-0c6a-49dc-8c21-3873e0e3bfb8",
+        "id": "a2fdd14e-e0fb-4f36-a409-72abd3ff0bdd",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

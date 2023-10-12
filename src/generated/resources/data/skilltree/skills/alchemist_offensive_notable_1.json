@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_poisoned",
       "modifier": {
         "amount": 0.25,
-        "id": "86b76606-dd32-4d24-8b68-c142b381567b",
+        "id": "aa95c498-7eee-4dc7-b1de-8e98623ff0c2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_if_not_hungry",
       "modifier": {
         "amount": 0.02,
-        "id": "3413a9b3-fa68-426e-9d00-f57b99e79f92",
+        "id": "eddca6c9-070b-46cf-a86b-d650209b6d84",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

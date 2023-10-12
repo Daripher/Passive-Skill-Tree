@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_if_not_hungry",
       "modifier": {
         "amount": 0.02,
-        "id": "a28077a6-0e39-422b-a716-08f61c086658",
+        "id": "9e70aaab-decc-4c22-adb1-2e2b17530971",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

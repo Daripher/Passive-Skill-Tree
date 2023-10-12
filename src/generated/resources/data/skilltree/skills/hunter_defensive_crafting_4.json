@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_evasion",
       "modifier": {
         "amount": 0.01,
-        "id": "25116ddb-5cbe-4784-866b-c9d696e3d8a8",
+        "id": "baf08af6-5416-4d21-9e1f-41750bdd893c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

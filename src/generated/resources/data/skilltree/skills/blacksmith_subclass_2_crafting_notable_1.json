@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_block_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "7d48c017-402d-4e2a-9f1e-04d2012ca4fa",
+        "id": "f1d81f42-57c6-4d13-b1dd-c210e8974b80",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

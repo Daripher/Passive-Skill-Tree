@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_burning",
       "modifier": {
         "amount": 0.05,
-        "id": "d23fe85a-8d20-4336-b5a6-1f75f156b913",
+        "id": "d350ebc6-60a8-4017-b495-875ad38fffab",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

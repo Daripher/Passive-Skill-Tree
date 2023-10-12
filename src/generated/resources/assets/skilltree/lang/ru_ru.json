@@ -124,7 +124,7 @@
   "attribute.name.skilltree.experience_from_fishing": "Опыт от рыбалки",
   "attribute.name.skilltree.experience_from_mobs": "Опыт от убитых существ",
   "attribute.name.skilltree.experience_from_ore": "Опыт от добытой руды",
-  "attribute.name.skilltree.experience_per_hour": "Опыт в час",
+  "attribute.name.skilltree.experience_per_minute": "Опыт в минуту",
   "attribute.name.skilltree.free_enchantment_chance": "Шанс бесплатного зачарования",
   "attribute.name.skilltree.gem_power_in_armor": "Сила самоцветов в броне",
   "attribute.name.skilltree.gem_power_in_jewelry": "Сила самоцветов в бижутерии",

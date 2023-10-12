@@ -382,7 +382,7 @@ public class PSTRussianTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.BREWED_BENEFICIAL_POTIONS_DURATION.get(), "Длительность создаваемых благотворных зелий");
 		add(PSTAttributes.INCOMING_HEALING.get(), "Получаемое лечение");
 		add(PSTAttributes.CRIT_DAMAGE.get(), "Критический урон");
-		add(PSTAttributes.EXPERIENCE_PER_HOUR.get(), "Опыт в час");
+		add(PSTAttributes.EXPERIENCE_PER_MINUTE.get(), "Опыт в минуту");
 		add(PSTAttributes.CRAFTED_BOOTS_SOCKETS.get(), "Гнезда в создаваемых ботинках");
 		add(PSTAttributes.MAXIMUM_RING_SOCKETS.get(), "Гнезда в кольцах");
 		add(PSTAttributes.GEM_POWER_IN_JEWELRY.get(), "Сила самоцветов в бижутерии");

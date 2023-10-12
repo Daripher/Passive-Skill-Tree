@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_boots_stealth",
       "modifier": {
         "amount": 0.05,
-        "id": "4c723007-b54d-4bcf-b157-dd31e044296b",
+        "id": "210bec29-7831-4801-bc75-e5a6630a3d07",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

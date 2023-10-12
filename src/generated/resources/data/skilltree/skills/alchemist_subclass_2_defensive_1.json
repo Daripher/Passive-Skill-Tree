@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "c70d4d48-bfdf-4e16-b163-1f87f12c2884",
+        "id": "6bc937da-90a5-413a-9b6d-39e2b3612bd6",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

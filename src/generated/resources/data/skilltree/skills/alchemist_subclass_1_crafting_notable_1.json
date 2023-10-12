@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_harmful_potions_duration",
       "modifier": {
         "amount": 0.25,
-        "id": "20d3951e-31ce-463e-8d8c-1feae08236a7",
+        "id": "033cb844-c335-42b7-9621-27427b072527",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

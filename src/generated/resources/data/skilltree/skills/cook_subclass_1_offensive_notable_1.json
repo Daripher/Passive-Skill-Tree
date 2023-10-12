@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_if_wounded",
       "modifier": {
         "amount": 0.1,
-        "id": "7f6e8210-bd9d-4539-b854-93c394a1467c",
+        "id": "747076a4-b6c0-427d-949d-d6a23bb77f1d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

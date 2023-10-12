@@ -4,7 +4,7 @@
       "attribute": "skilltree:stealth",
       "modifier": {
         "amount": 0.05,
-        "id": "93dbd4bd-7f1e-4949-9b5c-2f1c22e567b3",
+        "id": "5aff39b1-6d3c-4e02-8ae5-7ecbd128e8b6",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "eef4a5ac-c863-4157-bc6c-ca8b94824a6d",
+        "id": "b0da1084-30db-4018-ae9a-89485d348d27",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

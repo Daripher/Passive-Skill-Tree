@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_against_burning",
       "modifier": {
         "amount": 0.1,
-        "id": "4a7d1358-5855-4650-a6a3-c163a5b8801b",
+        "id": "088d2796-d6c0-432c-ad2e-5b18a785a92c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

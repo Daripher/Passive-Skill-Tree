@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_with_enchanted_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "0a422de5-7fad-444a-87c1-96bb2c4a3462",
+        "id": "73c6a039-8f47-4c27-afe4-60c4d0a5c200",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

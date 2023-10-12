@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_with_shield",
       "modifier": {
         "amount": 0.05,
-        "id": "44cf44ce-e8e1-41e6-8abd-25e4daa49f55",
+        "id": "b5fcb935-cdd8-461f-ab17-7c1255267c0a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

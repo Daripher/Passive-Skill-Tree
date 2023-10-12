@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_distance_to_spawn",
       "modifier": {
         "amount": 1.0E-4,
-        "id": "e89b7c04-4bff-484c-8a5a-c5096ecc7c47",
+        "id": "5cfd7d9d-50bb-4051-870e-3bdb4e2ce8cd",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

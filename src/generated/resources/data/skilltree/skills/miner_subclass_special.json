@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_boots_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "e4fe0960-f9b4-4e6c-a583-43fc893b767e",
+        "id": "e8f78b0d-2191-4d17-ae7c-d43db77001f5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

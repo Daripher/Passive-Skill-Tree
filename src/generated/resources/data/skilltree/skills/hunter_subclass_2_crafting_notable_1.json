@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
       "modifier": {
         "amount": 0.1,
-        "id": "24d13169-96a3-4bb4-a8e8-e82eb121ff23",
+        "id": "c05dea3f-b77e-4b6f-9292-e835d09c27b2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

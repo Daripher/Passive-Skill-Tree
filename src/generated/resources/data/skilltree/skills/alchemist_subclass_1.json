@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "f20b49c3-5917-4bd0-9791-998abd6a9faa",
+        "id": "62d36821-67c7-42e6-843e-842ba400d21d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:crit_damage",
       "modifier": {
         "amount": 0.15,
-        "id": "d4e8e116-50c2-48d5-8a62-4c12a863b50f",
+        "id": "6bf10754-7fd3-41ee-9f00-36adf3c7a017",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

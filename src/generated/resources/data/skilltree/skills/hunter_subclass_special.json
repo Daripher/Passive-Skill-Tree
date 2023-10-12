@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_life_per_hit",
       "modifier": {
         "amount": 0.5,
-        "id": "f9adf27e-4b1e-4811-8405-46b9aad9e479",
+        "id": "8aa03bad-3c77-4d94-9f22-e6cc18301526",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "471f4fc4-a46b-4627-97d8-e410176db021",
+        "id": "54adb777-bc9a-4c1a-9756-5aafc075d039",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "0ebb6d20-061e-4aab-86b5-51e056d32e7e",
+        "id": "f2161ee2-846d-4382-86e6-dcace3c6b19d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

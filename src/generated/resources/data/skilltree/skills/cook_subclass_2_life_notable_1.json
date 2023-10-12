@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 4.0,
-        "id": "48cfcf79-023d-4ce4-8791-8f4ed72aca3a",
+        "id": "9fe4518b-f8cc-4604-a30d-bc5d984aeb20",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:luck_while_fishing",
       "modifier": {
         "amount": 1.0,
-        "id": "b804d7a0-46af-4806-80ed-5f029eda48a7",
+        "id": "63d33c16-d37c-4f0c-98da-d16bad511578",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

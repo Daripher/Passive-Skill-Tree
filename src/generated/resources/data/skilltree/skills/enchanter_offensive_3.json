@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_with_enchanted_weapon",
       "modifier": {
         "amount": 0.05,
-        "id": "ba3d080b-6d33-49fe-9c10-4013c877ef96",
+        "id": "2dbc28d5-bbe7-4924-9407-89c2c532779e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

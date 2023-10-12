@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_crit_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "38f47785-07ec-401c-921b-a72ae61c2fc9",
+        "id": "a899f150-3146-4c5d-880c-702a5120c0a4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

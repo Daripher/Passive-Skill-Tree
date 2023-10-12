@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_damage_per_saturation",
       "modifier": {
         "amount": 0.0025,
-        "id": "ffe7b1d1-43a6-4be4-8036-c3cf9c1ebc4f",
+        "id": "29137ff4-0cda-49d8-90f3-f5adeabfaa7b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

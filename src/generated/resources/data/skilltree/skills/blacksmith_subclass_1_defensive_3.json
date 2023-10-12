@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "fb44c246-82ae-406f-923f-163a21ad9f12",
+        "id": "dd22405c-ae65-4dce-b220-9477caaf3693",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "b3954c4e-564d-4dea-aa74-4ca2ec191005",
+        "id": "8138ae91-2c00-4a33-8566-61dc32d5889c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

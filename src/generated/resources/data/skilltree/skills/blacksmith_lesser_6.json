@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_equipment_durability",
       "modifier": {
         "amount": 0.05,
-        "id": "9c530e52-0d9b-40d7-8c3e-7457f1f5315e",
+        "id": "33abcc47-4567-4731-916b-71141a555428",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

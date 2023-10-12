@@ -4,7 +4,7 @@
       "attribute": "skilltree:mining_speed",
       "modifier": {
         "amount": 0.05,
-        "id": "ecf7d678-cc24-4448-bbb7-f0750967f576",
+        "id": "18a8ad62-b3ac-435d-9b38-d4259fc17a6f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

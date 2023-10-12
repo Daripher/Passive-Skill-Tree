@@ -4,7 +4,7 @@
       "attribute": "skilltree:incoming_healing",
       "modifier": {
         "amount": 0.15,
-        "id": "b03a88b8-4634-4453-892a-700f7ad34735",
+        "id": "1c663161-4426-4ac9-bcc4-6e1b9d58475d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

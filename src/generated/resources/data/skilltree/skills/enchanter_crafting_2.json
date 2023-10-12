@@ -4,7 +4,7 @@
       "attribute": "skilltree:free_enchantment_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "f9a61df3-9954-4699-b271-9c769d7bedb2",
+        "id": "548f6126-33b4-41d3-982c-d67c1ffa24ad",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

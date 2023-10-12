@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_weapon_enchantment",
       "modifier": {
         "amount": 0.4,
-        "id": "dc958754-71ef-47fa-b419-2b2d3086398f",
+        "id": "cab666e4-63fc-4b01-89f9-bfbdfa7550be",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

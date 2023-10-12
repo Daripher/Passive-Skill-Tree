@@ -4,16 +4,16 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 2.0,
-        "id": "911e01a0-c059-4305-a9c8-9de72f77abcf",
+        "id": "fad28d4e-ebea-4b56-b33e-c46159bdc901",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
     },
     {
-      "attribute": "skilltree:experience_per_hour",
+      "attribute": "skilltree:experience_per_minute",
       "modifier": {
         "amount": 0.1,
-        "id": "32d84182-df13-4b33-ac8c-de26c3ea5efb",
+        "id": "23dfe257-aeeb-4fdc-b4e9-09011b377d09",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -382,7 +382,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
 		add(PSTAttributes.BREWED_BENEFICIAL_POTIONS_DURATION.get(), "Brewed Beneficial Potions Duration");
 		add(PSTAttributes.INCOMING_HEALING.get(), "Incoming Healing");
 		add(PSTAttributes.CRIT_DAMAGE.get(), "Critical Damage");
-		add(PSTAttributes.EXPERIENCE_PER_HOUR.get(), "Experience Per Hour");
+		add(PSTAttributes.EXPERIENCE_PER_MINUTE.get(), "Experience Per Minute");
 		add(PSTAttributes.CRAFTED_BOOTS_SOCKETS.get(), "Crafted Boots Sockets");
 		add(PSTAttributes.MAXIMUM_RING_SOCKETS.get(), "Ring Sockets");
 		add(PSTAttributes.GEM_POWER_IN_JEWELRY.get(), "Gem Power in Jewelry");

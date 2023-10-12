@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_if_not_hungry",
       "modifier": {
         "amount": 0.05,
-        "id": "fac31289-027f-4f35-a559-f5c6871c8587",
+        "id": "ce50ec54-0fe7-42aa-8184-14ae44274f99",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

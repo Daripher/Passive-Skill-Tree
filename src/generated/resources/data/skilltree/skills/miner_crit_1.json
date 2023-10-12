@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_per_gem_in_weapon",
       "modifier": {
         "amount": 0.01,
-        "id": "dbc8cb73-d2ca-400f-8aaa-d8ee9aac5354",
+        "id": "b59f6ae3-6ed4-424b-91dc-84e1e8633737",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

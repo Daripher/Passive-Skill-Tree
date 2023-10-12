@@ -4,7 +4,7 @@
       "attribute": "skilltree:armor_per_gem_in_helmet",
       "modifier": {
         "amount": 2.0,
-        "id": "30fe1d60-3866-45b7-bff8-1b251bebfbbc",
+        "id": "c7866d1a-2d77-4b6e-85b0-4a67ff7d6d94",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

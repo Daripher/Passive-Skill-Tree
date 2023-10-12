@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_mobs",
       "modifier": {
         "amount": 0.5,
-        "id": "ee20432a-5677-43ee-ae0e-4370a5374cf4",
+        "id": "6e191439-9ea9-4a24-a33b-2982bccd82de",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

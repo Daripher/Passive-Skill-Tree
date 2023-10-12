@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_gem_in_weapon",
       "modifier": {
         "amount": 0.1,
-        "id": "758c777a-d56d-480d-a753-d2755a900e78",
+        "id": "2639cb5f-09f5-47ee-8867-34a3404cb20e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

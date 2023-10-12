@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_beneficial_potions_strength",
       "modifier": {
         "amount": 0.1,
-        "id": "cc1c93ae-1360-4a7f-8f45-03e9a4ab02a6",
+        "id": "6510a589-799d-4ffb-ac90-79a856955a06",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

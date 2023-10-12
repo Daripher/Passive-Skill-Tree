@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_potion_effect",
       "modifier": {
         "amount": 0.15,
-        "id": "3362cecb-5099-471e-adc5-d648480e6183",
+        "id": "b49c306b-5b90-4c06-9932-d14278d19453",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

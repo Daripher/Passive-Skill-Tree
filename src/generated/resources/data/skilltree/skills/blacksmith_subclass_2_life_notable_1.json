@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_maximum_life",
       "modifier": {
         "amount": 5.0,
-        "id": "f2beddd4-ff0a-418c-9839-66f539faca8b",
+        "id": "ece42c16-ac6c-498c-8569-546c81dd3d03",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

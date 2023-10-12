@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage_per_satisfied_hunger",
       "modifier": {
         "amount": 0.02,
-        "id": "9ba538c6-62c2-482e-9812-4b466ec38354",
+        "id": "454f8873-1d93-45b3-add2-d1ebd4c96581",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

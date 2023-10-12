@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_against_burning",
       "modifier": {
         "amount": 0.15,
-        "id": "c0abfa81-0032-45ea-9035-50fe5c475710",
+        "id": "4765bec4-bd6e-478c-bd5c-64bc23a604ce",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:chance_to_ignite",
       "modifier": {
         "amount": 0.15,
-        "id": "7b1b0f57-cc3e-4e27-8801-f38c49a97b57",
+        "id": "219b03aa-e51e-4ff2-8bba-d3da6e204b8c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

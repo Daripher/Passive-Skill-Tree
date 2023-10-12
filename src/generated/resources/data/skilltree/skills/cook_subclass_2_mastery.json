@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_fishing",
       "modifier": {
         "amount": 0.5,
-        "id": "166ec039-d507-4f58-8543-6907f0dd17b7",
+        "id": "fa0750bd-5a6b-4a45-86eb-b241862ed0f2",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:double_fishing_loot_chance",
       "modifier": {
         "amount": 0.2,
-        "id": "f94a752d-64f7-4718-ae9f-a2b52af7764f",
+        "id": "c388d337-7d51-44eb-bbe2-2ca8211f0db4",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

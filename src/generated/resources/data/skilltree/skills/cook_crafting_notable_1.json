@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_life_regeneration",
       "modifier": {
         "amount": 0.2,
-        "id": "aa3c3077-2d10-400f-a256-af20bad534b7",
+        "id": "ffdf472e-f8e2-4485-9c61-644840819dd0",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

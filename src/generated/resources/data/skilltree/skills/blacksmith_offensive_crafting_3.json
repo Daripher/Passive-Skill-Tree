@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_melee_weapon_damage_bonus",
       "modifier": {
         "amount": 1.0,
-        "id": "f3af640a-3206-486a-b791-5320591472e5",
+        "id": "bc5adc51-74b3-44cb-a7ec-d268851a0cfa",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

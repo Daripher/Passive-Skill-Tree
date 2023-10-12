@@ -4,7 +4,7 @@
       "attribute": "skilltree:stealth",
       "modifier": {
         "amount": 0.1,
-        "id": "a86c48b1-a0b4-4940-baed-2c864147ba39",
+        "id": "196b9362-c950-409b-a431-97f989c1d44e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:jump_height",
       "modifier": {
         "amount": 0.1,
-        "id": "acf42294-4fda-40ac-841e-ec75e456bdbd",
+        "id": "e69a02d4-8d4a-4583-b2e3-24e683f5b5bf",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

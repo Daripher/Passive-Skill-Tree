@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_if_not_hungry",
       "modifier": {
         "amount": 0.1,
-        "id": "049d64e6-5d10-4af6-a61d-e0512afc8fb1",
+        "id": "95f8d7e8-72ed-43b8-861e-394558e22b49",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

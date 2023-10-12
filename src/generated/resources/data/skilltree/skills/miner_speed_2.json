@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_gem_in_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "bbeee06a-bb8d-435f-81f8-59262e777f24",
+        "id": "e15d6a98-0060-4218-ba3f-ada6d7eea01d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

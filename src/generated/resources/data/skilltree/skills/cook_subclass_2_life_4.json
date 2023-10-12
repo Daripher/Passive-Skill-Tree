@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 1.0,
-        "id": "8947bc03-f29a-4f4e-88cd-2443ce2dc24b",
+        "id": "1f86bbfa-75a1-41d1-83dd-589a572fb264",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

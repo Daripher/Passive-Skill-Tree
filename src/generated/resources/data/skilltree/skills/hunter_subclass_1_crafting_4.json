@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_armor_stealth",
       "modifier": {
         "amount": 0.01,
-        "id": "f82187ac-bf65-4ba7-9e62-3cfda43722e1",
+        "id": "a79449f4-e042-4e6e-ab30-0dd83db972eb",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

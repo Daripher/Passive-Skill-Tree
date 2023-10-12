@@ -4,7 +4,7 @@
       "attribute": "skilltree:chestplate_armor",
       "modifier": {
         "amount": 1.0,
-        "id": "b6d0bb17-601d-4d19-b8b5-bc64992a1b0f",
+        "id": "b2f62fcc-4340-4c52-ac6a-e8aba1cd24b3",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

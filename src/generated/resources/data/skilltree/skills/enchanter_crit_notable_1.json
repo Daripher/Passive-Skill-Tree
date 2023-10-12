@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_damage_per_weapon_enchantment",
       "modifier": {
         "amount": 0.05,
-        "id": "653c213c-ccdd-4cf6-8803-348c00b709fa",
+        "id": "1b01c265-45ec-45e4-80a3-ad1429e965d1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

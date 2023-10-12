@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_under_potion_effect",
       "modifier": {
         "amount": 6.0,
-        "id": "a6538359-70f2-43fb-b588-bc17cec1bb84",
+        "id": "3e8bf3c9-6caa-44fd-ab71-3109c204e715",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

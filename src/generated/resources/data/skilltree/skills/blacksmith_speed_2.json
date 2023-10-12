@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_shield",
       "modifier": {
         "amount": 0.02,
-        "id": "d60c93e7-f332-4961-b014-3590411b6cdc",
+        "id": "0ed0fd72-4d1e-4804-a71a-be77ac48ead5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

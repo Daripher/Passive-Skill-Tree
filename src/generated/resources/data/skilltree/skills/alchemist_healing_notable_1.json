@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_per_hit_under_potion_effect",
       "modifier": {
         "amount": 0.5,
-        "id": "85361636-0bc8-459b-be06-b9f1d8e9b477",
+        "id": "8cd8d1c8-0512-4e82-8102-ce5ed6c96a0c",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

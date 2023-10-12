@@ -4,7 +4,7 @@
       "attribute": "skilltree:double_loot_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "e45b85e7-dc47-42fe-a8b1-5f04e73d8f12",
+        "id": "ab080249-3cfa-4004-90d3-82b636c0b854",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

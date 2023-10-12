@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_per_potion_effect",
       "modifier": {
         "amount": 0.02,
-        "id": "24856c34-4895-4a7c-8eaf-0867331b6904",
+        "id": "7db4f764-ab9d-4eec-9397-4b5c157e6ce5",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

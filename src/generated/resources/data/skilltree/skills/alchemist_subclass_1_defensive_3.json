@@ -4,7 +4,7 @@
       "attribute": "skilltree:evasion_chance",
       "modifier": {
         "amount": 0.005,
-        "id": "31b86450-a1c1-42c4-9e47-545cf5985900",
+        "id": "89824fac-83c5-4f12-bf7e-d74519b16812",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.5,
-        "id": "beafab25-b28d-4012-9a73-af36862d971d",
+        "id": "d3e2f617-82bb-4d4d-b7ca-449a544e53d4",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

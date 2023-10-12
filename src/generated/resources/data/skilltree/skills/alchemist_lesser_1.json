@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_potions_duration",
       "modifier": {
         "amount": 0.05,
-        "id": "8ed169d9-f1ba-468e-a133-6a91d15c7585",
+        "id": "4968e03e-41c1-4665-9faf-3129ff6fd62f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

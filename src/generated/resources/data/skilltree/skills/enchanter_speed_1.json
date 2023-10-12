@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_enchanted_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "cc3c8473-ccf6-4792-a54f-fc3a474a4168",
+        "id": "a59276b2-1464-414d-8224-27bfa6f97fbb",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

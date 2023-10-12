@@ -1385,11 +1385,11 @@ public class AttributeEvents {
 	}
 
 	@SubscribeEvent
-	public static void applyExperiencePerHourBonus(PlayerTickEvent event) {
+	public static void applyExperiencePerMinuteBonus(PlayerTickEvent event) {
 		if (event.player.level.isClientSide)
 			return;
-		float bonus = (float) (event.player.getAttributeValue(PSTAttributes.EXPERIENCE_PER_HOUR.get()));
-		int frequency = Math.max((int) (1000 / bonus), 1);
+		float bonus = (float) (event.player.getAttributeValue(PSTAttributes.EXPERIENCE_PER_MINUTE.get()));
+		int frequency = Math.max((int) (1200 / bonus), 1);
 		if (event.player.tickCount % frequency == 0) {
 			event.player.giveExperiencePoints(1);
 		}

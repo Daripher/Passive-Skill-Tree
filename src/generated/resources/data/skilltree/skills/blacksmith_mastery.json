@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_craft_tougher_armor",
       "modifier": {
         "amount": 1.0,
-        "id": "0ff26cd3-3d6a-49d8-ba84-7d373c5c325f",
+        "id": "2a229078-cd32-47ed-9b79-5a4ddca8b477",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

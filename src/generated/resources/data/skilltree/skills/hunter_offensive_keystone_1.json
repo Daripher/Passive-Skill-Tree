@@ -4,7 +4,7 @@
       "attribute": "skilltree:damage_per_distance_to_enemy",
       "modifier": {
         "amount": 0.05,
-        "id": "2b35a262-7d7b-4b05-86d0-b9fe72cb9257",
+        "id": "a36f6c8c-587a-44bc-a59b-26b3940ac695",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

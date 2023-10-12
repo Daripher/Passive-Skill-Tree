@@ -4,7 +4,7 @@
       "attribute": "skilltree:gem_power_in_armor",
       "modifier": {
         "amount": 0.3,
-        "id": "22bac2bd-74d4-4f7c-afb8-534187cd0c03",
+        "id": "b0e329b1-d9b3-4b85-a001-e020eac480c0",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:maximum_chestplate_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "f4cab7ab-2388-4b45-b1fd-0775da3fd6e1",
+        "id": "378a29ef-6911-4459-9fb6-03d079e980e6",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

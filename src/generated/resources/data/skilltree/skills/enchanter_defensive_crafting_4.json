@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
       "modifier": {
         "amount": 0.1,
-        "id": "57051e76-08d2-485e-a6d7-363e2f5b0f44",
+        "id": "5869cfd8-6386-4794-b6dc-7e8f057ee85c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

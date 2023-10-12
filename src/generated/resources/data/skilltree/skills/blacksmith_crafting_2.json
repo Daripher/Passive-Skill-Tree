@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_shields_armor_bonus",
       "modifier": {
         "amount": 2.0,
-        "id": "14d75223-ed18-4e8f-95b8-7193d43c5c14",
+        "id": "c63cb50a-25fb-4197-a8f0-976e132489da",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

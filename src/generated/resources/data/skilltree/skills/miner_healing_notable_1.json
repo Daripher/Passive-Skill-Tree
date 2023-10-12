@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_per_gem_in_helmet",
       "modifier": {
         "amount": 0.25,
-        "id": "53c3dcde-5401-4411-a41a-4e877510e11a",
+        "id": "b9c816d5-d465-4006-a9e5-6ae7ba84f361",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

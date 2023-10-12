@@ -69,7 +69,7 @@ public class PSTAttributes {
 	public static final RegistryObject<Attribute> CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING = create("crafted_quivers_damage_against_burning", 1D, 1D);
 	public static final RegistryObject<Attribute> CRAFTED_QUIVERS_CHANCE_TO_IGNITE = create("crafted_quivers_chance_to_ignite", 1D, 1D);
 	// scholar attributes
-	public static final RegistryObject<Attribute> EXPERIENCE_PER_HOUR = create("experience_per_hour", 0D, 0D);
+	public static final RegistryObject<Attribute> EXPERIENCE_PER_MINUTE = create("experience_per_minute", 0D, 0D);
 	public static final RegistryObject<Attribute> EXPERIENCE_FROM_ORE = create("experience_from_ore", 1D, 1D);
 	public static final RegistryObject<Attribute> EXPERIENCE_FROM_MOBS = create("experience_from_mobs", 1D, 1D);
 	// blacksmith attributes

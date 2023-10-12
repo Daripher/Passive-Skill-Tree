@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_arrow_in_quiver",
       "modifier": {
         "amount": 0.01,
-        "id": "2c903427-6097-4194-a5ee-3e7bbc436a05",
+        "id": "2bc269a0-ef9e-419b-ad5c-51148efd911e",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:armor_per_evasion_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "536cfc00-075e-4972-811d-565b9af24924",
+        "id": "745c634e-1f81-4ad9-b723-4d0b380b98bc",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

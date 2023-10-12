@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_with_shield",
       "modifier": {
         "amount": 0.02,
-        "id": "e69f1d5b-ae74-4a0f-8a36-bcbc10ba42d1",
+        "id": "47528e0e-4c8a-46a0-8d64-5b5dc7693433",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

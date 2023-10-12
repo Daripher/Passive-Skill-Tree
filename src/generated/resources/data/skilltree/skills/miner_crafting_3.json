@@ -4,7 +4,7 @@
       "attribute": "skilltree:chance_to_find_gemstone",
       "modifier": {
         "amount": 0.02,
-        "id": "a5a91d14-ed52-40fe-9617-019ffe27f0b3",
+        "id": "a03e8426-7da3-4fe7-9163-245465dc3a21",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

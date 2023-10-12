@@ -4,7 +4,7 @@
       "attribute": "skilltree:cooked_food_healing_per_saturation",
       "modifier": {
         "amount": 0.05,
-        "id": "84c9f68c-f57f-4cdf-bfba-9f7f98042305",
+        "id": "0c367154-7704-43fe-acb0-999a86af793e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

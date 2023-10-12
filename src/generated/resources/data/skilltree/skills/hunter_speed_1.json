@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_with_ranged_weapon",
       "modifier": {
         "amount": 0.02,
-        "id": "6248c908-b99d-4d22-86e2-d6b17ff8530a",
+        "id": "dcdeca9f-0e8f-4131-b881-fb84712f39fe",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

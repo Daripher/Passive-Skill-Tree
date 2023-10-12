@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_gem_in_armor",
       "modifier": {
         "amount": 1.0,
-        "id": "f128bcea-39fd-46c3-802b-8ed96ce7085a",
+        "id": "f166a462-7c55-4970-bf90-e5d1f084247b",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

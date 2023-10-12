@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_per_shield_enchantment",
       "modifier": {
         "amount": 0.05,
-        "id": "861ea694-85fe-48d1-8208-2467c6c4525e",
+        "id": "db10bd1d-5925-4579-a904-0ae96ec29965",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

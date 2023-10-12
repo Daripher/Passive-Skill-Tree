@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_ranged_weapon_attack_speed",
       "modifier": {
         "amount": 0.04,
-        "id": "7fa89a46-19b2-4fc2-bce3-66b5f4c7605b",
+        "id": "f6933acf-da23-4d51-9b12-527812878376",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

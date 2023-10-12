@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.1,
-        "id": "f9f090f8-6435-4e5a-92a5-9401c8225215",
+        "id": "ba17258e-4a57-4112-b960-8bcd482adda9",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "minecraft:generic.armor",
       "modifier": {
         "amount": 0.05,
-        "id": "cfdb81dc-e262-4be8-b1b4-260c3239d36d",
+        "id": "e4125462-e72a-43f6-a1d4-ecb2a9a43d1d",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -22,7 +22,7 @@
       "attribute": "skilltree:melee_damage",
       "modifier": {
         "amount": 0.05,
-        "id": "2c7a648b-a8ed-4477-9738-556d227740fd",
+        "id": "6ea373ba-bff4-4879-950e-1e1664678606",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_damage_against_burning",
       "modifier": {
         "amount": 0.2,
-        "id": "76ff8ba1-9767-4946-b696-63ef3f33725b",
+        "id": "e9e2784f-5521-4069-887b-9b99bdad3c73",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

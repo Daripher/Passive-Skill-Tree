@@ -4,7 +4,7 @@
       "attribute": "skilltree:experience_from_fishing",
       "modifier": {
         "amount": 0.5,
-        "id": "0ae892f9-cdcf-49fc-b3eb-580f310ba4f8",
+        "id": "8a580715-0f00-4744-a114-5b9e9278b23a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

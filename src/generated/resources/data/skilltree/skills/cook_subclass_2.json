@@ -4,7 +4,7 @@
       "attribute": "skilltree:double_fishing_loot_chance",
       "modifier": {
         "amount": 0.15,
-        "id": "f220454d-624b-42ee-aa99-63c2221c3d94",
+        "id": "93fc83fc-1a65-492e-b71a-54b45320adaf",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

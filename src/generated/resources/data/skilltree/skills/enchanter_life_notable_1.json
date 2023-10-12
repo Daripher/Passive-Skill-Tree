@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_armor_enchantment",
       "modifier": {
         "amount": 1.0,
-        "id": "8f0f9185-e412-4762-b881-b0e8c432a55a",
+        "id": "e3b2e916-6515-4b57-8e76-f1422652ca2e",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

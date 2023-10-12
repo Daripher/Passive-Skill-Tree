@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_damage_against_burning",
       "modifier": {
         "amount": 0.1,
-        "id": "98f9033e-8caf-406b-b9d3-52e56cb69ede",
+        "id": "0b00f7ff-d593-41a0-9b02-83d5e1e605a8",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:crafted_quivers_chance_to_ignite",
       "modifier": {
         "amount": 0.1,
-        "id": "0ea44f06-5554-4c11-97f8-30d010f06c81",
+        "id": "af072afd-7cda-47c7-b254-ce7a1b48fa9a",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

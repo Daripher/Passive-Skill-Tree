@@ -124,7 +124,7 @@
   "attribute.name.skilltree.experience_from_fishing": "Experience from Fishing",
   "attribute.name.skilltree.experience_from_mobs": "Experience from Killed Creatures",
   "attribute.name.skilltree.experience_from_ore": "Experience from Mined Ore",
-  "attribute.name.skilltree.experience_per_hour": "Experience Per Hour",
+  "attribute.name.skilltree.experience_per_minute": "Experience Per Minute",
   "attribute.name.skilltree.free_enchantment_chance": "Free Enchantment chance",
   "attribute.name.skilltree.gem_power_in_armor": "Gem Power in Armor",
   "attribute.name.skilltree.gem_power_in_jewelry": "Gem Power in Jewelry",

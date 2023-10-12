@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_per_hit",
       "modifier": {
         "amount": 0.25,
-        "id": "e814d72d-a661-483e-8d65-51bc4c500c25",
+        "id": "53cc9ec6-a068-43dd-8769-be499913ea97",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

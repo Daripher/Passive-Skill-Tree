@@ -4,7 +4,7 @@
       "attribute": "skilltree:brewed_harmful_potions_strength",
       "modifier": {
         "amount": 0.3,
-        "id": "1caf9dc5-6bbc-4cd7-8aff-8138d7e5a362",
+        "id": "46b74f61-c465-4281-90e4-8db7297ad91e",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:can_poison_weapons",
       "modifier": {
         "amount": 1.0,
-        "id": "4a33bf92-76e5-4e27-b894-4a6e97dc56db",
+        "id": "c6741b5d-29b4-4f54-8d27-acce929832da",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_regeneration_bonus",
       "modifier": {
         "amount": 0.25,
-        "id": "bcc54a6e-0221-483a-904e-c4a1939c8f2a",
+        "id": "2118a46f-2c3a-4ed4-96dc-0499bf5fd1e0",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

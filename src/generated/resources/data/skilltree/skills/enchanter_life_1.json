@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_with_enchanted_item",
       "modifier": {
         "amount": 2.0,
-        "id": "7c25a97b-29b5-4e14-a0c3-ee63e4456921",
+        "id": "d7465042-9898-4863-ac19-286f869e7ab0",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

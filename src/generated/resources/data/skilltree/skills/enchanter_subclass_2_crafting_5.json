@@ -1,10 +1,10 @@
 {
   "attributeModifiers": [
     {
-      "attribute": "skilltree:experience_per_hour",
+      "attribute": "skilltree:experience_per_minute",
       "modifier": {
         "amount": 0.2,
-        "id": "9aba7cf3-cede-47e6-ae04-6dcc0739c672",
+        "id": "9d503fec-b3d8-4579-9e0f-ad04acfb48b9",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

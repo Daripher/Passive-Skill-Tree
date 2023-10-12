@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_ranged_weapon_sockets",
       "modifier": {
         "amount": 1.0,
-        "id": "4e550abf-102a-4686-9de3-9fa8d0918161",
+        "id": "cbd0aba0-f868-4168-87a6-73ae35304564",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

@@ -4,7 +4,7 @@
       "attribute": "skilltree:armor_per_gem_in_chestplate",
       "modifier": {
         "amount": 5.0,
-        "id": "9bf83fb2-ee4f-4f06-b2ed-aa9998f4ebba",
+        "id": "3376cb3e-c8ba-49f8-a6a5-9d089b58fa59",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

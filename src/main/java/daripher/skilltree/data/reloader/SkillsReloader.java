@@ -2,7 +2,6 @@ package daripher.skilltree.data.reloader;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
@@ -16,10 +15,9 @@ import com.google.gson.JsonElement;
 import com.mojang.logging.LogUtils;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.data.serializers.AttributeSerializer;
 import daripher.skilltree.data.serializers.AttributeModifierSerializer;
+import daripher.skilltree.data.serializers.AttributeSerializer;
 import daripher.skilltree.data.serializers.PairSerializer;
-import daripher.skilltree.data.serializers.SupplierSerializer;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -27,7 +25,6 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;

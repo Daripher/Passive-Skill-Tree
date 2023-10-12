@@ -4,7 +4,7 @@
       "attribute": "skilltree:life_on_block_if_not_hungry",
       "modifier": {
         "amount": 0.5,
-        "id": "e77e835b-09b6-4c17-9aa3-17ce668dbdb4",
+        "id": "7f7952b5-0d3a-4285-bba2-a8e3b89473c6",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

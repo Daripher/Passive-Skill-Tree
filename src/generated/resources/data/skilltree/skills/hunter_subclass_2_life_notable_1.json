@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_maximum_life",
       "modifier": {
         "amount": 5.0,
-        "id": "736cd756-db36-4fb8-9d16-5965aef2a221",
+        "id": "4efe2b43-cd52-4e31-b7fe-58d27b41ec9d",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

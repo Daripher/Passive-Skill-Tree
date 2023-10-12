@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance",
       "modifier": {
         "amount": 0.01,
-        "id": "90daea24-45b9-4138-9514-259d73e1c84c",
+        "id": "650a4d9e-7c63-4867-8cec-72bda576618b",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

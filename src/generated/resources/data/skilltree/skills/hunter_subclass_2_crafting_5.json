@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_quivers_capacity",
       "modifier": {
         "amount": 0.05,
-        "id": "9540e211-4abc-4ecc-85c6-972334802150",
+        "id": "d5f66fba-5caa-48bf-be33-29438c93ac92",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

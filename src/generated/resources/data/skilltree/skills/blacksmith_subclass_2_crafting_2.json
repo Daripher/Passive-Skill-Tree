@@ -4,7 +4,7 @@
       "attribute": "skilltree:equipment_repair_efficiency",
       "modifier": {
         "amount": 0.05,
-        "id": "36ce787a-219c-4195-9dde-6190d390a466",
+        "id": "f545aefa-8ba0-425f-bc20-2a420cde8337",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

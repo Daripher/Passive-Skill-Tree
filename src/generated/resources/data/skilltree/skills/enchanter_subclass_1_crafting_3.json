@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_chance_to_ignite",
       "modifier": {
         "amount": 0.05,
-        "id": "a88fc4e5-c2f0-43fe-b9ea-caae75eebb5e",
+        "id": "62c4f3d9-778a-44df-8159-65dddf646ce9",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

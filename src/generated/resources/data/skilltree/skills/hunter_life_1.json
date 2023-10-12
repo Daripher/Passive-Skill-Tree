@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_evasion",
       "modifier": {
         "amount": 0.05,
-        "id": "11d9c29a-0918-4e42-be47-1c349dc05bde",
+        "id": "f920239f-d821-4a60-ba41-e1c16064fed5",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

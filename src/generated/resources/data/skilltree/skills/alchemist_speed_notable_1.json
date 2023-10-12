@@ -4,7 +4,7 @@
       "attribute": "skilltree:attack_speed_under_potion_effect",
       "modifier": {
         "amount": 0.1,
-        "id": "a3eefc53-b1fb-476c-ace8-b157273e374e",
+        "id": "8a13aa79-5126-4de0-85cc-87b6131179b7",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

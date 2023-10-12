@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_equipped_jewelry",
       "modifier": {
         "amount": 1.0,
-        "id": "647c8c1d-9f14-4cf0-97d0-411c8e086752",
+        "id": "13a93d96-cbb4-4eac-8575-a0ee4e0cad06",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

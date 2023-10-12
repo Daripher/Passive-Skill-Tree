@@ -4,7 +4,7 @@
       "attribute": "skilltree:crit_chance_if_wounded",
       "modifier": {
         "amount": 0.15,
-        "id": "8fc54403-05c9-4f9b-8a5b-6ef334a59cc7",
+        "id": "19f640bd-cee3-4893-9e78-90657446ae1f",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:life_per_hit_if_wounded",
       "modifier": {
         "amount": 1.0,
-        "id": "8f472611-bf7e-41d5-9953-e1f8bae224e5",
+        "id": "b0682734-57ae-4866-96bd-dc28f7125c59",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

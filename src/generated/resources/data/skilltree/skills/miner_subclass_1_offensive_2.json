@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.attack_speed",
       "modifier": {
         "amount": 0.02,
-        "id": "935f0cf3-2bc6-46f6-84f0-999c81cc0cb2",
+        "id": "428fd121-c3e5-4b77-bdfe-78fdeb4038f1",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

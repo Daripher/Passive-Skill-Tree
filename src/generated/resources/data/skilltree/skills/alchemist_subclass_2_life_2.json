@@ -4,7 +4,7 @@
       "attribute": "minecraft:generic.max_health",
       "modifier": {
         "amount": 2.0,
-        "id": "43e64bd6-c489-40ac-acde-ff966838792c",
+        "id": "20e3a2d5-70ac-458c-9b6b-1e0382911e6a",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }
@@ -13,7 +13,7 @@
       "attribute": "skilltree:incoming_healing",
       "modifier": {
         "amount": 0.05,
-        "id": "179432c2-6290-4848-a2cc-fac7cf4b9dee",
+        "id": "cdf55e87-a9e4-4ec3-af42-efdb4c086daa",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

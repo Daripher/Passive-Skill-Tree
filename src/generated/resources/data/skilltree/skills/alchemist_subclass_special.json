@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_rings_critical_damage",
       "modifier": {
         "amount": 0.1,
-        "id": "9b5c25b5-b304-4a1f-914c-cb0d5ca9ef04",
+        "id": "6c8e2a63-6491-4999-9c16-31879d62eafe",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

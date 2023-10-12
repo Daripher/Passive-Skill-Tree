@@ -4,7 +4,7 @@
       "attribute": "skilltree:block_chance_per_satisfied_hunger",
       "modifier": {
         "amount": 0.01,
-        "id": "b068cf7c-29ca-41d9-aea0-3794b9cb3d26",
+        "id": "e820ae2c-96ff-4891-b62f-ff184e6f4750",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }

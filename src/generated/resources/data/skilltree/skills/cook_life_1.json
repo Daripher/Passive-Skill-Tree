@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_if_not_hungry",
       "modifier": {
         "amount": 2.0,
-        "id": "c6929394-08d5-460b-a8f8-0bfb21d2d9ad",
+        "id": "f335ef54-9d6c-44fa-9247-2a9230a4a0c6",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

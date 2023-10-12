@@ -4,7 +4,7 @@
       "attribute": "skilltree:maximum_life_per_boots_armor_bonus",
       "modifier": {
         "amount": 1.0,
-        "id": "ec1cbd80-7549-4a25-964b-3eae9c47fbeb",
+        "id": "ec0bb90e-ea24-4e32-95fa-23df25b85e1a",
         "nameGetter": "PassiveSkill",
         "operation": "ADDITION"
       }

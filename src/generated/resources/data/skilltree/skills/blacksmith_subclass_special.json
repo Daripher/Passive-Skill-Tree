@@ -4,7 +4,7 @@
       "attribute": "skilltree:crafted_weapon_double_loot_chance",
       "modifier": {
         "amount": 0.05,
-        "id": "7f7dac49-61e5-462a-ae4d-2ee14a3396e7",
+        "id": "eea2dbf4-8dae-423b-8a6a-6ce07728333c",
         "nameGetter": "PassiveSkill",
         "operation": "MULTIPLY_BASE"
       }
