@@ -1,5 +1,6 @@
 package daripher.skilltree.client.widget;
 
+import java.util.Locale;
 import java.util.function.Predicate;
 
 import net.minecraft.client.gui.Font;
@@ -13,18 +14,28 @@ public class NumberEditBox extends PSTEditBox {
 			return false;
 		}
 	};
+	private double defaultValue;
 
 	public NumberEditBox(Font font, int x, int y, int width, int height, double defaultValue) {
 		super(font, x, y, width, height, formatDefaultValue(defaultValue));
-		setFilter(DEFAULT_FILTER);
+		setDefaultValue(defaultValue);
+		setSoftFilter(DEFAULT_FILTER);
 	}
 
 	public void setNumericFilter(Predicate<Double> filter) {
-		setFilter(DEFAULT_FILTER.and(createNumericFilter(filter)));
+		setSoftFilter(DEFAULT_FILTER.and(createNumericFilter(filter)));
+	}
+
+	public void setDefaultValue(double defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 
 	public double getNumericValue() {
-		return Double.parseDouble(getValue());
+		try {
+			return Double.parseDouble(getValue());
+		} catch (NumberFormatException exception) {
+			return defaultValue;
+		}
 	}
 
 	private Predicate<String> createNumericFilter(Predicate<Double> filter) {
