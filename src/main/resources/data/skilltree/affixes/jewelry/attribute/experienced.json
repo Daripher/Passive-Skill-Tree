@@ -1,6 +1,6 @@
 {
     "type": "apotheosis:attribute",
-    "attribute": "skilltree:experience_per_hour",
+    "attribute": "skilltree:experience_per_minute",
     "operation": "ADDITION",
     "values": {
         "common": {
