@@ -53,8 +53,9 @@ public class PSTClientCommands {
 	}
 
 	private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-		tree_to_display = new ResourceLocation(ctx.getArgument("treeId", String.class));
-		timer = 1;
+		String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase();
+		PSTClientCommands.tree_to_display = new ResourceLocation(treeIdArg);
+		PSTClientCommands.timer = 1;
 		return 1;
 	}
 }
