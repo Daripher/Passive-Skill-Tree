@@ -12,6 +12,7 @@ import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.util.PlayerHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -25,40 +26,51 @@ import net.minecraftforge.fml.ModList;
 
 public class GemInsertionRecipe extends UpgradeRecipe {
 	public GemInsertionRecipe() {
-		super(new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"), Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
+		super(new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"), Ingredient.EMPTY, Ingredient.EMPTY,
+				ItemStack.EMPTY);
 	}
 
 	@Override
 	public boolean matches(Container container, Level level) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled())
+				return false;
 		}
 		ItemStack base = container.getItem(0);
-		if (!isBaseIngredient(base)) return false;
+		if (!isBaseIngredient(base))
+			return false;
 		ItemStack ingredient = container.getItem(1);
-		if (!isAdditionIngredient(ingredient)) return false;
+		if (!isAdditionIngredient(ingredient))
+			return false;
 		GemItem gem = (GemItem) ingredient.getItem();
 		Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-		if (!player.isPresent()) return false;
-		return gem.canInsertInto(player.get(), base, getEmptySocket(base, player.get()));
+		if (!player.isPresent())
+			return false;
+		return gem.canInsertInto(player.get(), base, ingredient, getEmptySocket(base, player.get()));
 	}
 
 	@Override
 	public ItemStack assemble(Container container) {
 		if (ModList.get().isLoaded("apotheosis")) {
-			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
+			if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled())
+				return ItemStack.EMPTY;
 		}
 		Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-		if (!player.isPresent()) return ItemStack.EMPTY;
+		if (!player.isPresent())
+			return ItemStack.EMPTY;
 		ItemStack base = container.getItem(0);
 		int socket = getEmptySocket(base, player.get());
-		GemItem gem = (GemItem) container.getItem(1).getItem();
-		if (!gem.canInsertInto(player.get(), base, socket)) return ItemStack.EMPTY;
+		ItemStack ingredient = container.getItem(1);
+		GemItem gem = (GemItem) ingredient.getItem();
+		if (!gem.canInsertInto(player.get(), base, ingredient, socket))
+			return ItemStack.EMPTY;
 		ItemStack result = base.copy();
 		result.setCount(1);
-		if (base.getTag() != null) result.setTag(base.getTag().copy());
+		CompoundTag itemTag = base.getTag();
+		if (itemTag != null)
+			result.setTag(itemTag.copy());
 		float gemPower = PlayerHelper.getGemPower(player.get(), base);
-		gem.insertInto(player.get(), result, socket, gemPower);
+		gem.insertInto(player.get(), result, ingredient, socket, gemPower);
 		return result;
 	}
 
@@ -67,7 +79,8 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 		int socket = 0;
 		for (int i = 0; i < sockets; i++) {
 			socket = i;
-			if (!GemHelper.hasGem(baseItem, socket)) break;
+			if (!GemHelper.hasGem(baseItem, socket))
+				break;
 		}
 		return socket;
 	}

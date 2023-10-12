@@ -31,7 +31,7 @@ public abstract class SimpleGemItem extends GemItem {
 	}
 
 	@Override
-	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack) {
+	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack, ItemStack gemStack) {
 		EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
 		if (ItemHelper.isPickaxe(itemStack) && slot == EquipmentSlot.MAINHAND)
 			return Optional.ofNullable(bonuses.get("pickaxe"));
@@ -57,8 +57,8 @@ public abstract class SimpleGemItem extends GemItem {
 	}
 
 	@Override
-	public boolean canInsertInto(Player player, ItemStack stack, int socket) {
-		return super.canInsertInto(player, stack, socket) && getGemBonus(player, stack).isPresent();
+	public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
+		return super.canInsertInto(player, stack, gemStack, socket) && getGemBonus(player, stack, gemStack).isPresent();
 	}
 
 	@Override

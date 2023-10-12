@@ -28,7 +28,7 @@ public class IrisciteItem extends GemItem {
 	}
 
 	@Override
-	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack) {
+	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack, ItemStack gemStack) {
 		RandomSource random = createRandomSource(player, itemStack);
 		if (SIMPLE_GEM_BONUSES.isEmpty())
 			initSimpleGemBonuses();
@@ -36,10 +36,10 @@ public class IrisciteItem extends GemItem {
 	}
 
 	@Override
-	public boolean canInsertInto(Player player, ItemStack stack, int socket) {
+	public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
 		if (!ItemHelper.isRing(stack) && !ItemHelper.isNecklace(stack))
 			return false;
-		return super.canInsertInto(player, stack, socket);
+		return super.canInsertInto(player, stack, gemStack, socket);
 	}
 
 	protected void initSimpleGemBonuses() {

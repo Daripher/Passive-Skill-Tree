@@ -52,12 +52,16 @@ public class GemHelper {
 		return gems.get(socket) != null;
 	}
 
-	public static void insertGem(Player player, ItemStack stack, GemItem gem, int socket, double power) {
+	public static void insertGem(Player player, ItemStack stack, ItemStack gemStack, int socket, double power) {
+		if (!(gemStack.getItem() instanceof GemItem gem)) {
+			LOGGER.error("Item {} is not a gem, can not insert it into an item!", stack.getItem());
+			return;
+		}
 		CompoundTag gemTag = new CompoundTag();
-		ListTag gemsTagList = getGemsListTag(stack);
-		if (gemsTagList.size() > socket)
-			gemTag = gemsTagList.getCompound(socket);
-		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = gem.getGemBonus(player, stack);
+		ListTag gemsTag = getGemsListTag(stack);
+		if (gemsTag.size() > socket)
+			gemTag = gemsTag.getCompound(socket);
+		Optional<Pair<Attribute, AttributeModifier>> optionalBonus = gem.getGemBonus(player, stack, gemStack);
 		if (!optionalBonus.isPresent()) {
 			LOGGER.error("Cannot insert gem into {}", stack.getItem());
 			LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(stack));
@@ -69,8 +73,8 @@ public class GemHelper {
 		gemTag.putDouble(AMOUNT_TAG, bonus.getRight().getAmount() * (1 + power));
 		gemTag.putString(OPERATION_TAG, bonus.getRight().getOperation().toString());
 		gemTag.putString(UUID_TAG, UUID.randomUUID().toString());
-		gemsTagList.add(socket, gemTag);
-		stack.getTag().put(GEMS_TAG, gemsTagList);
+		gemsTag.add(socket, gemTag);
+		stack.getOrCreateTag().put(GEMS_TAG, gemsTag);
 	}
 
 	public static void removeGems(ItemStack itemStack) {
