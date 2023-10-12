@@ -43,7 +43,7 @@ public class NumberEditBox extends PSTEditBox {
 	}
 
 	private static String formatDefaultValue(double defaultValue) {
-		String formatted = String.format("%.2f", defaultValue);
+		String formatted = String.format(Locale.ENGLISH, "%.2f", defaultValue);
 		while (formatted.endsWith("0")) {
 			formatted = formatted.substring(0, formatted.length() - 1);
 		}
