@@ -192,16 +192,14 @@ public enum ApotheosisCompatibility {
 	private void applyCurioDamageAffixes(LivingHurtEvent event) {
 		DamageSource source = event.getSource();
 		LivingEntity entity = event.getEntity();
-		AtomicDouble amount = new AtomicDouble(event.getAmount());
 		CuriosApi.getCuriosHelper().getEquippedCurios(entity).ifPresent(itemHandler -> {
 			for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
 				ItemStack stack = itemHandler.getStackInSlot(slot);
 				AffixHelper.getAffixes(stack).forEach((affix, instance) -> {
-					amount.addAndGet(instance.onHurt(source, entity, (float) amount.get()));
+					event.setAmount(instance.onHurt(source, entity, event.getAmount()));
 				});
 			}
 		});
-		event.setAmount((float) amount.get());
 	}
 
 	private void removeFakeCurioAttributes(ItemAttributeModifierEvent event) {
