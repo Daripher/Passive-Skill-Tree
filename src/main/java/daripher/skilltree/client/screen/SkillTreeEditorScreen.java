@@ -102,7 +102,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private void renderWidgets(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-    if (selectedSkills.size() > 0) {
+    if (!selectedSkills.isEmpty()) {
       fill(poseStack, toolsX - 5, 0, width, toolsY, 0xDD000000);
     }
     for (Widget widget : renderables) {
@@ -170,13 +170,13 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    if (keyCode == GLFW.GLFW_KEY_ESCAPE && selectedSkills.size() > 0) {
+    if (keyCode == GLFW.GLFW_KEY_ESCAPE && !selectedSkills.isEmpty()) {
       selectedSkills.clear();
       rebuildWidgets();
       closeOnEsc = false;
       return true;
     }
-    if (keyCode == GLFW.GLFW_KEY_DELETE && Screen.hasControlDown() && selectedSkills.size() > 0) {
+    if (keyCode == GLFW.GLFW_KEY_DELETE && Screen.hasControlDown() && !selectedSkills.isEmpty()) {
       deleteSelectedSkills();
       return true;
     }
@@ -264,7 +264,7 @@ public class SkillTreeEditorScreen extends Screen {
   private void addToolButtons() {
     toolsX = width - 379;
     toolsY = 0;
-    if (selectedSkills.size() > 0) {
+    if (!selectedSkills.isEmpty()) {
       toolsY += 5;
       addAttributeToolsButtons();
       addButtonToolsButtons();
