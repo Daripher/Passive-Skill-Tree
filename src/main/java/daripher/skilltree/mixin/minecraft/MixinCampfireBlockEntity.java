@@ -17,10 +17,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import javax.annotation.Nullable;
+
 @Mixin(CampfireBlockEntity.class)
 public class MixinCampfireBlockEntity implements PlayerContainer {
   private @Shadow @Final NonNullList<ItemStack> items;
-  private Optional<Player> player = Optional.empty();
+  private @Nullable Player player;
 
   @Redirect(
       method = "cookTick",
@@ -45,11 +47,11 @@ public class MixinCampfireBlockEntity implements PlayerContainer {
 
   @Override
   public Optional<Player> getViewingPlayer() {
-    return player;
+    return Optional.ofNullable(player);
   }
 
   @Override
-  public void setViewingPlayer(Optional<Player> player) {
+  public void setViewingPlayer(@Nullable Player player) {
     this.player = player;
   }
 }

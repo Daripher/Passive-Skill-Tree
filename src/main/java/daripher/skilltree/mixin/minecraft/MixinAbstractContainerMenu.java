@@ -10,23 +10,25 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
+
 @Mixin(AbstractContainerMenu.class)
 public class MixinAbstractContainerMenu implements PlayerContainer {
-  private Optional<Player> player = Optional.empty();
+  private @Nullable Player player;
 
   @Inject(method = "clicked", at = @At("HEAD"))
   private void setViewingPlayer(
       int x, int y, ClickType click, Player player, CallbackInfo callback) {
-    setViewingPlayer(Optional.of(player));
+    setViewingPlayer(player);
   }
 
   @Override
   public Optional<Player> getViewingPlayer() {
-    return player;
+    return Optional.ofNullable(player);
   }
 
   @Override
-  public void setViewingPlayer(Optional<Player> player) {
+  public void setViewingPlayer(@Nullable Player player) {
     this.player = player;
   }
 }

@@ -478,6 +478,7 @@ public class SkillTreeScreen extends Screen {
   }
 
   protected void skillButtonPressed(SkillButton button) {
+    assert minecraft != null;
     PassiveSkill skill = button.skill;
     if (button.animated) {
       skillPoints--;
@@ -485,9 +486,9 @@ public class SkillTreeScreen extends Screen {
       rebuildWidgets();
       return;
     }
-    Optional<ResourceLocation> connectedTree = skill.getConnectedTreeId();
-    if (connectedTree.isPresent()) {
-      minecraft.setScreen(new SkillTreeScreen(connectedTree.get()));
+    ResourceLocation connectedTree = skill.getConnectedTreeId();
+    if (connectedTree != null) {
+      minecraft.setScreen(new SkillTreeScreen(connectedTree));
     }
   }
 

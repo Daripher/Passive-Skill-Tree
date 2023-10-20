@@ -2,7 +2,6 @@ package daripher.skilltree.util;
 
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.gem.GemItem;
-import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -15,28 +14,19 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class TooltipHelper {
-  private static final MutableComponent ERROR =
-      Component.literal("ERROR").withStyle(ChatFormatting.RED);
-
   public static MutableComponent getAttributeBonusTooltip(
-      Optional<Pair<Attribute, AttributeModifier>> bonus) {
-    return bonus.isPresent() ? getAttributeBonusTooltip(bonus.get()) : ERROR;
-  }
-
-  public static MutableComponent getAttributeBonusTooltip(
-      Pair<Attribute, AttributeModifier> bonus) {
+      @NotNull Pair<Attribute, AttributeModifier> bonus) {
     return getAttributeBonusTooltip(bonus, true);
   }
 
   public static MutableComponent getAttributeBonusTooltip(
       Pair<Attribute, AttributeModifier> bonus, boolean format) {
     AttributeModifier modifier = bonus.getRight();
-    if (modifier == null) return ERROR;
     Attribute attribute = bonus.getLeft();
     Operation operation = modifier.getOperation();
-    if (operation == null || attribute == null) return ERROR;
     double amount = modifier.getAmount();
     double visibleAmount = amount;
     if (operation == AttributeModifier.Operation.ADDITION) {
@@ -70,11 +60,6 @@ public class TooltipHelper {
 
   private static boolean isNegative(Attribute attribute) {
     return attribute == PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get();
-  }
-
-  public static MutableComponent getAttributeBonusTooltip(
-      String slot, Optional<Pair<Attribute, AttributeModifier>> bonus) {
-    return bonus.isPresent() ? getAttributeBonusTooltip(slot, bonus.get()) : ERROR;
   }
 
   public static MutableComponent getAttributeBonusTooltip(

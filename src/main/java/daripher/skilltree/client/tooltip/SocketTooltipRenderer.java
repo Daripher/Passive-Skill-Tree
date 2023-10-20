@@ -40,7 +40,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
     if (!GemHelper.hasGem(stack, socket)) return Component.translatable("gem.socket");
     Optional<Pair<Attribute, AttributeModifier>> gemBonus =
         GemHelper.getAttributeBonus(stack, socket);
-    return TooltipHelper.getAttributeBonusTooltip(gemBonus);
+    return gemBonus.map(TooltipHelper::getAttributeBonusTooltip).orElse(Component.literal("ERROR"));
   }
 
   @Override

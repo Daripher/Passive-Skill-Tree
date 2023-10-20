@@ -81,16 +81,12 @@ public class PassiveSkill {
     this.borderTexture = texture;
   }
 
-  public Optional<ResourceLocation> getConnectedTreeId() {
-    return Optional.ofNullable(connectedTreeId);
+  public @Nullable ResourceLocation getConnectedTreeId() {
+    return connectedTreeId;
   }
 
   public void setConnectedTree(@Nullable ResourceLocation treeId) {
     this.connectedTreeId = treeId;
-  }
-
-  public void setConnectedTree(Optional<ResourceLocation> treeId) {
-    this.connectedTreeId = treeId.orElse(null);
   }
 
   public boolean isStartingPoint() {

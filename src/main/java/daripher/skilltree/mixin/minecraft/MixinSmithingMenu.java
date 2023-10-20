@@ -30,7 +30,7 @@ public abstract class MixinSmithingMenu extends ItemCombinerMenu {
       Inventory inventory,
       ContainerLevelAccess levelAccess,
       CallbackInfo callbackInfo) {
-    ((PlayerContainer) inputSlots).setViewingPlayer(Optional.of(inventory.player));
+    ((PlayerContainer) inputSlots).setViewingPlayer(inventory.player);
   }
 
   @Inject(method = "onTake", at = @At("HEAD"))

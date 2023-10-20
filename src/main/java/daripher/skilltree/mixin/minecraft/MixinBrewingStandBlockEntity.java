@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BrewingStandBlockEntity.class)
 public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEntity
     implements PlayerContainer {
-  private Optional<Player> player = Optional.empty();
+  private @Nullable Player player;
 
   protected MixinBrewingStandBlockEntity() {
     super(null, null, null);
@@ -76,12 +77,12 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
   @Override
   public AbstractContainerMenu createMenu(
       int window, @NotNull Inventory inventory, @NotNull Player player) {
-    this.player = Optional.of(player);
+    this.player = player;
     return super.createMenu(window, inventory, player);
   }
 
   @Override
   public Optional<Player> getViewingPlayer() {
-    return player;
+    return Optional.ofNullable(player);
   }
 }

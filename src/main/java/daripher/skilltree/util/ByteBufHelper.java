@@ -6,8 +6,7 @@ import daripher.skilltree.skill.PassiveSkillTree;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import javax.annotation.Nullable;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -15,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.common.CuriosHelper;
 import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
@@ -22,10 +22,10 @@ import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 public class ByteBufHelper {
   private static final Logger LOGGER = LogUtils.getLogger();
 
-  public static void writeOptionalResourceLocation(
-      FriendlyByteBuf buf, Optional<ResourceLocation> location) {
-    buf.writeBoolean(location.isPresent());
-    if (location.isPresent()) buf.writeUtf(location.get().toString());
+  public static void writeNullableResourceLocation(
+      FriendlyByteBuf buf, @Nullable ResourceLocation location) {
+    buf.writeBoolean(location != null);
+    if (location != null) buf.writeUtf(location.toString());
   }
 
   public static void writeAttributeModifier(
@@ -69,7 +69,7 @@ public class ByteBufHelper {
     buf.writeFloat(skill.getPositionX());
     buf.writeFloat(skill.getPositionY());
     writeResourceLocations(buf, skill.getConnectedSkills());
-    writeOptionalResourceLocation(buf, skill.getConnectedTreeId());
+    writeNullableResourceLocation(buf, skill.getConnectedTreeId());
     writeAttributeModifiers(buf, skill.getAttributeModifiers());
     writeResourceLocations(buf, skill.getConnectedAsGateways());
   }
@@ -86,8 +86,8 @@ public class ByteBufHelper {
     return locations;
   }
 
-  public static Optional<ResourceLocation> readOptionalResourceLocation(FriendlyByteBuf buf) {
-    return buf.readBoolean() ? Optional.of(new ResourceLocation(buf.readUtf())) : Optional.empty();
+  public static @Nullable ResourceLocation readNullableResourceLocation(FriendlyByteBuf buf) {
+    return buf.readBoolean() ? new ResourceLocation(buf.readUtf()) : null;
   }
 
   public static List<Pair<Attribute, AttributeModifier>> readAttributeModifiers(
@@ -129,7 +129,7 @@ public class ByteBufHelper {
     PassiveSkill skill = new PassiveSkill(id, size, background, icon, border, startingPoint);
     skill.setPosition(buf.readFloat(), buf.readFloat());
     readResourceLocations(buf).forEach(skill.getConnectedSkills()::add);
-    skill.setConnectedTree(readOptionalResourceLocation(buf));
+    skill.setConnectedTree(readNullableResourceLocation(buf));
     readAttributeModifiers(buf).forEach(skill::addAttributeBonus);
     readResourceLocations(buf).forEach(skill.getConnectedAsGateways()::add);
     return skill;

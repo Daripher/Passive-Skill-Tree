@@ -14,7 +14,7 @@ public class ContainerEvents {
   public static void setViewingPlayer(PlayerInteractEvent.RightClickBlock event) {
     BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
     if (blockEntity != null) {
-      ((PlayerContainer) blockEntity).setViewingPlayer(Optional.of(event.getEntity()));
+      ((PlayerContainer) blockEntity).setViewingPlayer(event.getEntity());
     }
   }
 }
