@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTButton extends Button {
   protected Button.OnPress pressFunc;
@@ -31,7 +32,8 @@ public class PSTButton extends Button {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderButton(
+      @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     ScreenHelper.prepareTextureRendering(
         new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
     int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;

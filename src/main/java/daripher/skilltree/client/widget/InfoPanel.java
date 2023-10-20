@@ -9,6 +9,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 public class InfoPanel extends AbstractWidget {
   public InfoPanel(int x, int y, int width, int height, Component message) {
@@ -16,7 +17,8 @@ public class InfoPanel extends AbstractWidget {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderButton(
+      @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     ScreenHelper.prepareTextureRendering(
         new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
     blit(poseStack, x, y, 0, 14, width / 2, height);
@@ -34,5 +36,5 @@ public class InfoPanel extends AbstractWidget {
   }
 
   @Override
-  public void updateNarration(NarrationElementOutput output) {}
+  public void updateNarration(@NotNull NarrationElementOutput output) {}
 }

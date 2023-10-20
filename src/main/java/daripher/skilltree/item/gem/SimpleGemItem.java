@@ -18,8 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 
 public abstract class SimpleGemItem extends GemItem {
-  protected final Map<String, Pair<Attribute, AttributeModifier>> bonuses =
-      new HashMap<>();
+  protected final Map<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<>();
 
   public SimpleGemItem(Properties properties) {
     super(properties);

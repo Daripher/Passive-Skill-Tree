@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class ProgressBar extends Button {
   public boolean showProgressInNumbers;
@@ -30,7 +31,8 @@ public class ProgressBar extends Button {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderButton(
+      @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     renderBackground(poseStack);
     renderCurrentLevel(poseStack);
     renderNextLevel(poseStack);

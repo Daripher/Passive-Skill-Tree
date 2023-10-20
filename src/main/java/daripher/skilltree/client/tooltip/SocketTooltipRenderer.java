@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 // Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
 public class SocketTooltipRenderer implements ClientTooltipComponent {
@@ -48,7 +49,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
   }
 
   @Override
-  public int getWidth(Font font) {
+  public int getWidth(@NotNull Font font) {
     int width = 0;
     for (int i = 0; i < component.sockets; i++) {
       width = Math.max(width, font.width(getSocketDesc(component.stack, i)) + 12);
@@ -58,7 +59,12 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
   @Override
   public void renderImage(
-      Font pFont, int x, int y, PoseStack stack, ItemRenderer itemRenderer, int pBlitOffset) {
+      @NotNull Font pFont,
+      int x,
+      int y,
+      @NotNull PoseStack stack,
+      @NotNull ItemRenderer itemRenderer,
+      int pBlitOffset) {
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, SOCKET);
@@ -79,7 +85,8 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
   }
 
   @Override
-  public void renderText(Font font, int x, int y, Matrix4f matrix, BufferSource buffer) {
+  public void renderText(
+      @NotNull Font font, int x, int y, @NotNull Matrix4f matrix, @NotNull BufferSource buffer) {
     for (int i = 0; i < component.sockets; i++) {
       font.drawInBatch(
           getSocketDesc(component.stack, i),

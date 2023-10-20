@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.common.CuriosHelper;
 
 public class PSTSkillsProvider implements DataProvider {
@@ -899,7 +900,7 @@ public class PSTSkillsProvider implements DataProvider {
   }
 
   @Override
-  public void run(CachedOutput output) throws IOException {
+  public void run(@NotNull CachedOutput output) throws IOException {
     addSkills();
     shapeSkillTree();
     setSkillsAttributeModifiers();
@@ -926,7 +927,7 @@ public class PSTSkillsProvider implements DataProvider {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "Skills Provider";
   }
 }

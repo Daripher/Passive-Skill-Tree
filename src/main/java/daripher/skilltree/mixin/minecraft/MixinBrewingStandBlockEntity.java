@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -73,7 +74,8 @@ public abstract class MixinBrewingStandBlockEntity extends BaseContainerBlockEnt
   }
 
   @Override
-  public AbstractContainerMenu createMenu(int window, Inventory inventory, Player player) {
+  public AbstractContainerMenu createMenu(
+      int window, @NotNull Inventory inventory, @NotNull Player player) {
     this.player = Optional.of(player);
     return super.createMenu(window, inventory, player);
   }

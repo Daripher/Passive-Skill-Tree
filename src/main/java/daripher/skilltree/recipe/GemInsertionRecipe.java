@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 
 public class GemInsertionRecipe extends UpgradeRecipe {
   public GemInsertionRecipe() {
@@ -32,7 +33,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
   }
 
   @Override
-  public boolean matches(Container container, Level level) {
+  public boolean matches(@NotNull Container container, @NotNull Level level) {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
     }
@@ -47,7 +48,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
   }
 
   @Override
-  public ItemStack assemble(Container container) {
+  public @NotNull ItemStack assemble(@NotNull Container container) {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
     }
@@ -78,7 +79,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
   }
 
   @Override
-  public ItemStack getResultItem() {
+  public @NotNull ItemStack getResultItem() {
     return ItemStack.EMPTY;
   }
 
@@ -96,7 +97,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.GEM_INSERTION.get();
   }
 
@@ -107,16 +108,18 @@ public class GemInsertionRecipe extends UpgradeRecipe {
 
   public static class Serializer implements RecipeSerializer<GemInsertionRecipe> {
     @Override
-    public GemInsertionRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+    public @NotNull GemInsertionRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
       return new GemInsertionRecipe();
     }
 
     @Override
-    public GemInsertionRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+    public GemInsertionRecipe fromNetwork(
+        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
       return new GemInsertionRecipe();
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf, GemInsertionRecipe recipe) {}
+    public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull GemInsertionRecipe recipe) {}
   }
 }

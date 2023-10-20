@@ -34,8 +34,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
       new ResourceLocation(SkillTreeMod.MOD_ID, "player_skills");
   private static final Capability<IPlayerSkills> CAPABILITY =
       CapabilityManager.get(new CapabilityToken<>() {});
-  private final LazyOptional<IPlayerSkills> optionalCapability =
-      LazyOptional.of(PlayerSkills::new);
+  private final LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(PlayerSkills::new);
 
   @SubscribeEvent
   public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {

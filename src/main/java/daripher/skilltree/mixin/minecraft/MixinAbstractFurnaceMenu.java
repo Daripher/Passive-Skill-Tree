@@ -9,6 +9,7 @@ import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(AbstractFurnaceMenu.class)
@@ -19,7 +20,7 @@ public abstract class MixinAbstractFurnaceMenu extends RecipeBookMenu<Container>
 
   @Override
   protected boolean moveItemStackTo(
-      ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
+      @NotNull ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
     Slot resultSlot = slots.get(AbstractFurnaceMenu.RESULT_SLOT);
     if (itemStack == resultSlot.getItem()) {
       Optional<Player> viewingPlayer = ((PlayerContainer) this).getViewingPlayer();

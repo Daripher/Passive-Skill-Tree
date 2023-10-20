@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 public class AmnesiaScrollItem extends Item {
   public AmnesiaScrollItem() {
@@ -26,7 +27,8 @@ public class AmnesiaScrollItem extends Item {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public @NotNull InteractionResultHolder<ItemStack> use(
+      @NotNull Level level, Player player, @NotNull InteractionHand hand) {
     ItemStack scroll = player.getItemInHand(hand);
     IPlayerSkills skills = PlayerSkillsProvider.get(player);
     if (!player.getAbilities().instabuild) {
@@ -61,7 +63,10 @@ public class AmnesiaScrollItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+      @NotNull ItemStack itemStack,
+      Level level,
+      List<Component> components,
+      @NotNull TooltipFlag tooltipFlag) {
     components.add(
         Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
     double penalty = Config.amnesia_scroll_penalty;

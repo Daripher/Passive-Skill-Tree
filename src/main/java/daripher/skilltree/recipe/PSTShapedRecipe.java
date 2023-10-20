@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecipe {
   private final ResourceLocation requiredSkillId;
@@ -27,19 +28,19 @@ public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecip
   }
 
   @Override
-  public boolean matches(CraftingContainer container, Level level) {
+  public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
     if (!canCraftIn(container)) return false;
     return super.matches(container, level);
   }
 
   @Override
-  public ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
     if (!canCraftIn(container)) return ItemStack.EMPTY;
     return super.assemble(container);
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.SHAPED_CRAFTING.get();
   }
 
@@ -49,19 +50,21 @@ public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecip
   }
 
   public static class Serializer implements RecipeSerializer<PSTShapedRecipe> {
-    public PSTShapedRecipe fromJson(ResourceLocation id, JsonObject json) {
+    public @NotNull PSTShapedRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromJson(id, json);
       var requiredSkillId = new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
       return new PSTShapedRecipe(recipe, requiredSkillId);
     }
 
-    public PSTShapedRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf byteBuf) {
+    public PSTShapedRecipe fromNetwork(
+        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(id, byteBuf);
       var requiredSkillId = new ResourceLocation(byteBuf.readUtf());
       return new PSTShapedRecipe(recipe, requiredSkillId);
     }
 
-    public void toNetwork(FriendlyByteBuf byteBuf, PSTShapedRecipe recipe) {
+    public void toNetwork(@NotNull FriendlyByteBuf byteBuf, @NotNull PSTShapedRecipe recipe) {
       SHAPED_RECIPE.toNetwork(byteBuf, recipe);
       byteBuf.writeUtf(recipe.requiredSkillId.toString());
     }

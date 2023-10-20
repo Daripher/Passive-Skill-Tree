@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class WeaponPoisoningRecipe extends CustomRecipe {
   public WeaponPoisoningRecipe(ResourceLocation id) {
@@ -21,7 +22,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
   }
 
   @Override
-  public boolean matches(CraftingContainer container, Level level) {
+  public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (!player.isPresent()) return false;
     boolean canPoisonWeapons =
@@ -42,7 +43,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
   }
 
   @Override
-  public ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(CraftingContainer container) {
     ItemStack weaponStack = ItemStack.EMPTY;
     ItemStack poisonStack = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -62,22 +63,24 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.WEAPON_POISONING.get();
   }
 
   public static class Serializer implements RecipeSerializer<WeaponPoisoningRecipe> {
     @Override
-    public WeaponPoisoningRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+    public @NotNull WeaponPoisoningRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
       return new WeaponPoisoningRecipe(id);
     }
 
     @Override
-    public WeaponPoisoningRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+    public WeaponPoisoningRecipe fromNetwork(
+        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
       return new WeaponPoisoningRecipe(id);
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf, WeaponPoisoningRecipe recipe) {}
+    public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WeaponPoisoningRecipe recipe) {}
   }
 }

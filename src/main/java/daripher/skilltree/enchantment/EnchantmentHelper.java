@@ -10,7 +10,8 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 public class EnchantmentHelper {
   public static void amplifyEnchantments(
       List<EnchantmentInstance> enchantments, RandomSource random, Player player) {
-    enchantments.replaceAll(enchantmentInstance -> amplifyEnchantment(enchantmentInstance, random, player));
+    enchantments.replaceAll(
+        enchantmentInstance -> amplifyEnchantment(enchantmentInstance, random, player));
   }
 
   private static EnchantmentInstance amplifyEnchantment(

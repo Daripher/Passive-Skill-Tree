@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTLabel extends AbstractWidget {
   public PSTLabel(int x, int y, Component message) {
@@ -14,7 +15,7 @@ public class PSTLabel extends AbstractWidget {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int m, int pMouseY, float partialTick) {
+  public void renderButton(@NotNull PoseStack poseStack, int m, int pMouseY, float partialTick) {
     Minecraft minecraft = Minecraft.getInstance();
     Font font = minecraft.font;
     drawString(poseStack, font, getMessage(), x, y + 3, getFGColor());

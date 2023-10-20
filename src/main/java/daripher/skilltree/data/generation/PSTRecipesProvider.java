@@ -16,6 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTRecipesProvider extends RecipeProvider {
   public PSTRecipesProvider(DataGenerator dataGenerator) {
@@ -23,7 +24,7 @@ public class PSTRecipesProvider extends RecipeProvider {
   }
 
   @Override
-  protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+  protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
     // rings
     ring(PSTItems.GOLDEN_RING, Tags.Items.NUGGETS_GOLD, consumer);
     ring(PSTItems.COPPER_RING, PSTTags.NUGGETS_COPPER, consumer);

@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTLootTablesProvider extends LootTableProvider {
   public PSTLootTablesProvider(DataGenerator dataGenerator) {
@@ -23,7 +24,7 @@ public class PSTLootTablesProvider extends LootTableProvider {
   }
 
   @Override
-  protected List<
+  protected @NotNull List<
           Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>>
       getTables() {
     return ImmutableList.of(Pair.of(PSTBlockLoot::new, LootContextParamSets.BLOCK));
@@ -31,5 +32,6 @@ public class PSTLootTablesProvider extends LootTableProvider {
 
   @Override
   protected void validate(
-      Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {}
+      @NotNull Map<ResourceLocation, LootTable> map,
+      @NotNull ValidationContext validationtracker) {}
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +26,7 @@ public class MixinPotionItem extends Item {
   }
 
   @Override
-  public Component getName(ItemStack itemStack) {
+  public @NotNull Component getName(@NotNull ItemStack itemStack) {
     if (PotionHelper.isMixture(itemStack)) return getMixtureName(itemStack);
     if (PotionHelper.isSuperiorPotion(itemStack)) return getSuperiorPotionName(itemStack);
     return super.getName(itemStack);

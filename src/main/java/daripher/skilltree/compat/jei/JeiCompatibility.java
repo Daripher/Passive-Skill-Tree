@@ -13,17 +13,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 @JeiPlugin
 public class JeiCompatibility implements IModPlugin {
 
   @Override
-  public ResourceLocation getPluginUid() {
+  public @NotNull ResourceLocation getPluginUid() {
     return new ResourceLocation(SkillTreeMod.MOD_ID, "jei_plugin");
   }
 
   @Override
-  public void registerRecipes(IRecipeRegistration registration) {
+  public void registerRecipes(@NotNull IRecipeRegistration registration) {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return;
     }
@@ -34,7 +35,7 @@ public class JeiCompatibility implements IModPlugin {
   }
 
   @Override
-  public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+  public void registerGuiHandlers(@NotNull IGuiHandlerRegistration registration) {
     //		registration.
   }
 

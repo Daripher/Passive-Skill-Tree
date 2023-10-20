@@ -16,6 +16,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class GemItem extends Item {
   public GemItem(Properties properties) {
@@ -29,7 +30,10 @@ public abstract class GemItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+      @NotNull ItemStack stack,
+      @Nullable Level level,
+      @NotNull List<Component> components,
+      @NotNull TooltipFlag tooltipFlag) {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
         components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));

@@ -23,6 +23,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
@@ -61,8 +62,8 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
   @Override
   protected void apply(
       Map<ResourceLocation, JsonElement> map,
-      ResourceManager resourceManager,
-      ProfilerFiller profilerFiller) {
+      @NotNull ResourceManager resourceManager,
+      @NotNull ProfilerFiller profilerFiller) {
     SKILLS.clear();
     map.forEach(this::readSkill);
   }

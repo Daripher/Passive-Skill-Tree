@@ -10,6 +10,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTSkillTreesProvider implements DataProvider {
   private final DataGenerator dataGenerator;
@@ -21,7 +22,7 @@ public class PSTSkillTreesProvider implements DataProvider {
   }
 
   @Override
-  public void run(CachedOutput output) throws IOException {
+  public void run(@NotNull CachedOutput output) throws IOException {
     PassiveSkillTree skillTree =
         new PassiveSkillTree(new ResourceLocation(SkillTreeMod.MOD_ID, "main_tree"));
     skillsProvider.getSkills().keySet().forEach(skillTree.getSkillIds()::add);
@@ -40,7 +41,7 @@ public class PSTSkillTreesProvider implements DataProvider {
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "Skill Trees Provider";
   }
 }

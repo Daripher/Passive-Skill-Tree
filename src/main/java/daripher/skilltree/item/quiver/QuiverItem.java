@@ -23,6 +23,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -150,7 +151,10 @@ public class QuiverItem extends Item implements ICurioItem {
 
   @Override
   public void appendHoverText(
-      ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+      @NotNull ItemStack stack,
+      Level level,
+      List<Component> components,
+      @NotNull TooltipFlag tooltipFlag) {
     Component capacity = Component.literal("" + getCapacity(stack)).withStyle(ChatFormatting.BLUE);
     components.add(
         Component.translatable("quiver.capacity", capacity).withStyle(ChatFormatting.YELLOW));
@@ -176,7 +180,8 @@ public class QuiverItem extends Item implements ICurioItem {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public @NotNull InteractionResultHolder<ItemStack> use(
+      Level level, Player player, @NotNull InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
     if (level.isClientSide) return InteractionResultHolder.success(stack);
     int arrowsLeft = getArrowsCount(stack);

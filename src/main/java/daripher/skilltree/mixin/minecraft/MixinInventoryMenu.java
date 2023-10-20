@@ -7,6 +7,7 @@ import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,7 +24,7 @@ public abstract class MixinInventoryMenu extends RecipeBookMenu<CraftingContaine
 
   @Override
   protected boolean moveItemStackTo(
-      ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
+      @NotNull ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
     if (itemStack == resultSlots.getItem(0)) {
       ForgeEventFactory.firePlayerCraftingEvent(owner, itemStack, craftSlots);
     }

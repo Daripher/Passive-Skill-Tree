@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 public class WisdomScrollItem extends Item {
   public WisdomScrollItem() {
@@ -25,7 +26,8 @@ public class WisdomScrollItem extends Item {
   }
 
   @Override
-  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+  public @NotNull InteractionResultHolder<ItemStack> use(
+      @NotNull Level level, Player player, @NotNull InteractionHand hand) {
     var itemInHand = player.getItemInHand(hand);
     var skillsCapability = PlayerSkillsProvider.get(player);
     var totalSkillPoints =
@@ -66,7 +68,10 @@ public class WisdomScrollItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+      @NotNull ItemStack itemStack,
+      Level level,
+      List<Component> components,
+      @NotNull TooltipFlag tooltipFlag) {
     components.add(
         Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GOLD));
   }

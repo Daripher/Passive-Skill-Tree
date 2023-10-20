@@ -43,6 +43,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 public class SkillTreeScreen extends Screen {
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
@@ -165,7 +166,7 @@ public class SkillTreeScreen extends Screen {
   }
 
   @Override
-  public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     updateScreen(partialTick);
     renderAnimation += partialTick;
     renderBackground(poseStack);

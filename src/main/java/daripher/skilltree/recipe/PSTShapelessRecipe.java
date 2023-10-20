@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequiringRecipe {
   private final ResourceLocation requiredSkillId;
@@ -21,19 +22,19 @@ public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequirin
   }
 
   @Override
-  public boolean matches(CraftingContainer container, Level level) {
+  public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
     if (!canCraftIn(container)) return false;
     return super.matches(container, level);
   }
 
   @Override
-  public ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
     if (!canCraftIn(container)) return ItemStack.EMPTY;
     return super.assemble(container);
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.SHAPELESS_CRAFTING.get();
   }
 
@@ -43,19 +44,21 @@ public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequirin
   }
 
   public static class Serializer implements RecipeSerializer<PSTShapelessRecipe> {
-    public PSTShapelessRecipe fromJson(ResourceLocation id, JsonObject json) {
+    public @NotNull PSTShapelessRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(id, json);
       var requiredSkillId = new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
       return new PSTShapelessRecipe(recipe, requiredSkillId);
     }
 
-    public PSTShapelessRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf byteBuf) {
+    public PSTShapelessRecipe fromNetwork(
+        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(id, byteBuf);
       var requiredSkillId = new ResourceLocation(byteBuf.readUtf());
       return new PSTShapelessRecipe(recipe, requiredSkillId);
     }
 
-    public void toNetwork(FriendlyByteBuf byteBuf, PSTShapelessRecipe recipe) {
+    public void toNetwork(@NotNull FriendlyByteBuf byteBuf, @NotNull PSTShapelessRecipe recipe) {
       SHAPELESS_RECIPE.toNetwork(byteBuf, recipe);
       byteBuf.writeUtf(recipe.requiredSkillId.toString());
     }

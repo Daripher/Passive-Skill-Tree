@@ -46,6 +46,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import top.theillusivec4.curios.common.CuriosHelper;
 import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
@@ -89,7 +90,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   @Override
-  public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     updateScreen(partialTick);
     renderBackground(poseStack);
     renderConnections(poseStack, mouseX, mouseY, partialTick);

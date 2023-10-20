@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class QuiverFillingRecipe extends CustomRecipe {
   public QuiverFillingRecipe(ResourceLocation id) {
@@ -19,7 +20,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
   }
 
   @Override
-  public boolean matches(CraftingContainer container, Level level) {
+  public boolean matches(CraftingContainer container, @NotNull Level level) {
     ItemStack quiver = ItemStack.EMPTY;
     ItemStack arrows = ItemStack.EMPTY;
     int itemsCount = 0;
@@ -38,7 +39,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
   }
 
   @Override
-  public ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(CraftingContainer container) {
     ItemStack quiver = ItemStack.EMPTY;
     ItemStack arrows = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -55,7 +56,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
   }
 
   @Override
-  public NonNullList<ItemStack> getRemainingItems(CraftingContainer container) {
+  public @NotNull NonNullList<ItemStack> getRemainingItems(CraftingContainer container) {
     ItemStack quiver = ItemStack.EMPTY;
     ItemStack arrows = ItemStack.EMPTY;
     int arrowsSlot = 0;
@@ -84,22 +85,24 @@ public class QuiverFillingRecipe extends CustomRecipe {
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.QUIVER_FILLING.get();
   }
 
   public static class Serializer implements RecipeSerializer<QuiverFillingRecipe> {
     @Override
-    public QuiverFillingRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+    public @NotNull QuiverFillingRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
       return new QuiverFillingRecipe(id);
     }
 
     @Override
-    public QuiverFillingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+    public QuiverFillingRecipe fromNetwork(
+        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
       return new QuiverFillingRecipe(id);
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf, QuiverFillingRecipe recipe) {}
+    public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull QuiverFillingRecipe recipe) {}
   }
 }

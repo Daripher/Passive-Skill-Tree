@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class StatsList extends AbstractWidget {
   private final int maxHeight;
@@ -21,7 +22,8 @@ public class StatsList extends AbstractWidget {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderButton(
+      @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     if (stats.isEmpty()) return;
     fill(poseStack, x, y, x + width, y + height, 0xDD000000);
     Font font = Minecraft.getInstance().font;
@@ -75,5 +77,5 @@ public class StatsList extends AbstractWidget {
   }
 
   @Override
-  public void updateNarration(NarrationElementOutput output) {}
+  public void updateNarration(@NotNull NarrationElementOutput output) {}
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class MixtureRecipe extends CustomRecipe {
   public MixtureRecipe(ResourceLocation id) {
@@ -22,7 +23,7 @@ public class MixtureRecipe extends CustomRecipe {
   }
 
   @Override
-  public boolean matches(CraftingContainer container, Level level) {
+  public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (!player.isPresent()) return false;
     boolean canMixPotions =
@@ -51,7 +52,7 @@ public class MixtureRecipe extends CustomRecipe {
   }
 
   @Override
-  public ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(CraftingContainer container) {
     ItemStack potionStack1 = ItemStack.EMPTY;
     ItemStack potionStack2 = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -74,22 +75,23 @@ public class MixtureRecipe extends CustomRecipe {
   }
 
   @Override
-  public RecipeSerializer<?> getSerializer() {
+  public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.POTION_MIXING.get();
   }
 
   public static class Serializer implements RecipeSerializer<MixtureRecipe> {
     @Override
-    public MixtureRecipe fromJson(ResourceLocation id, JsonObject jsonObject) {
+    public @NotNull MixtureRecipe fromJson(
+        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
       return new MixtureRecipe(id);
     }
 
     @Override
-    public MixtureRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+    public MixtureRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
       return new MixtureRecipe(id);
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf, MixtureRecipe recipe) {}
+    public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull MixtureRecipe recipe) {}
   }
 }

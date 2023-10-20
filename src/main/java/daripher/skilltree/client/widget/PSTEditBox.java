@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 public class PSTEditBox extends EditBox {
@@ -54,7 +55,8 @@ public class PSTEditBox extends EditBox {
   }
 
   @Override
-  public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderButton(
+      @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     if (this.isVisible()) {
       ScreenHelper.prepareTextureRendering(
           new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
