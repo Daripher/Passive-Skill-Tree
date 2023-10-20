@@ -1,7 +1,7 @@
 package daripher.skilltree.api;
 
 public interface EnchantmentMenuExtention {
-	int[] getCostsBeforeReduction();
+  int[] getCostsBeforeReduction();
 
-	int getEnchantmentSeed();
+  int getEnchantmentSeed();
 }

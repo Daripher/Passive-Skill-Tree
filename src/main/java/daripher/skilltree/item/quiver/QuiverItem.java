@@ -1,11 +1,10 @@
 package daripher.skilltree.item.quiver;
 
-import java.util.List;
-import java.util.Optional;
-
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.item.ItemHelper;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,150 +29,169 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class QuiverItem extends Item implements ICurioItem {
-	private static final String ARROWS_TAG = "Arrows";
-	private static final String ARROWS_COUNT_TAG = "ArrowsCount";
-	private final int capacity;
+  private static final String ARROWS_TAG = "Arrows";
+  private static final String ARROWS_COUNT_TAG = "ArrowsCount";
+  private final int capacity;
 
-	public QuiverItem(int capacity) {
-		super(new Properties().tab(PSTCreativeTabs.SKILLTREE).stacksTo(1).durability(capacity));
-		this.capacity = capacity;
-	}
+  public QuiverItem(int capacity) {
+    super(new Properties().tab(PSTCreativeTabs.SKILLTREE).stacksTo(1).durability(capacity));
+    this.capacity = capacity;
+  }
 
-	public QuiverItem() {
-		this(250);
-	}
+  public QuiverItem() {
+    this(250);
+  }
 
-	@Override
-	public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-		Component capacity = Component.literal("" + getCapacity(stack)).withStyle(ChatFormatting.BLUE);
-		components.add(Component.translatable("quiver.capacity", capacity).withStyle(ChatFormatting.YELLOW));
-		if (!containsArrows(stack)) return;
-		ItemStack arrows = getArrows(stack);
-		Component arrowName = Component.empty().append(arrows.getHoverName()).withStyle(ChatFormatting.GRAY);
-		Component contents = Component.translatable("quiver.contents", arrowName).withStyle(ChatFormatting.YELLOW);
-		components.add(contents);
-		arrows.getItem().appendHoverText(arrows, level, components, tooltipFlag);
-	}
+  @SubscribeEvent
+  public static void storeArrowsOnPickup(EntityItemPickupEvent event) {
+    ItemStack arrows = event.getItem().getItem();
+    if (!(arrows.getItem() instanceof ArrowItem arrow)) return;
+    Optional<SlotResult> quiverCurio =
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
+    quiverCurio
+        .map(SlotResult::stack)
+        .ifPresent(
+            quiver -> {
+              if (isFull(quiver)) return;
+              if (!containsArrows(quiver)) {
+                setArrows(quiver, arrows.copy(), arrows.getCount());
+                event.getItem().setItem(ItemStack.EMPTY);
+                event.setResult(Result.ALLOW);
+              } else if (ItemStack.isSameItemSameTags(getArrows(quiver), arrows)) {
+                int capacity = getCapacity(quiver);
+                int arrowsTaken = Math.min(capacity - getArrowsCount(quiver), arrows.getCount());
+                addArrows(quiver, arrowsTaken);
+                if (arrows.getCount() == arrowsTaken) event.getItem().setItem(ItemStack.EMPTY);
+                else arrows.shrink(arrowsTaken);
+                event.setResult(Result.ALLOW);
+              }
+            });
+  }
 
-	@Override
-	public int getDamage(ItemStack stack) {
-		if (!containsArrows(stack)) return 0;
-		return getCapacity(stack) - getArrowsCount(stack);
-	}
+  @SubscribeEvent
+  public static void takeArrowFromQuiver(LivingGetProjectileEvent event) {
+    Optional<SlotResult> quiverCurio =
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
+    quiverCurio
+        .map(SlotResult::stack)
+        .ifPresent(
+            quiver -> {
+              if (containsArrows(quiver)) event.setProjectileItemStack(getArrows(quiver).copy());
+            });
+  }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return false;
-	}
+  @SubscribeEvent
+  public static void removeArrowFromQuiver(ArrowLooseEvent event) {
+    if (event.getEntity().isCreative()) return;
+    Optional<SlotResult> quiverCurio =
+        CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
+    quiverCurio
+        .map(SlotResult::stack)
+        .ifPresent(
+            quiver -> {
+              if (containsArrows(quiver)) addArrows(quiver, -1);
+            });
+  }
 
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-		if (level.isClientSide) return InteractionResultHolder.success(stack);
-		int arrowsLeft = getArrowsCount(stack);
-		while (arrowsLeft >= 64) {
-			dropArrows(player, stack, 64);
-			arrowsLeft -= 64;
-		}
-		if (arrowsLeft > 0) dropArrows(player, stack, arrowsLeft);
-		setArrows(stack, ItemStack.EMPTY, 0);
-		return InteractionResultHolder.success(stack);
-	}
+  public static boolean isFull(ItemStack quiver) {
+    return getArrowsCount(quiver) == getCapacity(quiver);
+  }
 
-	@SubscribeEvent
-	public static void storeArrowsOnPickup(EntityItemPickupEvent event) {
-		ItemStack arrows = event.getItem().getItem();
-		if (!(arrows.getItem() instanceof ArrowItem arrow)) return;
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
-		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
-			if (isFull(quiver)) return;
-			if (!containsArrows(quiver)) {
-				setArrows(quiver, arrows.copy(), arrows.getCount());
-				event.getItem().setItem(ItemStack.EMPTY);
-				event.setResult(Result.ALLOW);
-			} else if (ItemStack.isSameItemSameTags(getArrows(quiver), arrows)) {
-				int capacity = getCapacity(quiver);
-				int arrowsTaken = Math.min(capacity - getArrowsCount(quiver), arrows.getCount());
-				addArrows(quiver, arrowsTaken);
-				if (arrows.getCount() == arrowsTaken) event.getItem().setItem(ItemStack.EMPTY);
-				else arrows.shrink(arrowsTaken);
-				event.setResult(Result.ALLOW);
-			}
-		});
-	}
+  public static boolean isEmpty(ItemStack quiver) {
+    return getArrowsCount(quiver) == 0;
+  }
 
-	@SubscribeEvent
-	public static void takeArrowFromQuiver(LivingGetProjectileEvent event) {
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
-		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
-			if (containsArrows(quiver)) event.setProjectileItemStack(getArrows(quiver).copy());
-		});
-	}
+  public static int getCapacity(ItemStack quiver) {
+    int capacity = ((QuiverItem) quiver.getItem()).capacity;
+    if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
+      capacity *= 1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY);
+    }
+    return capacity;
+  }
 
-	@SubscribeEvent
-	public static void removeArrowFromQuiver(ArrowLooseEvent event) {
-		if (event.getEntity().isCreative()) return;
-		Optional<SlotResult> quiverCurio = CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
-		quiverCurio.map(SlotResult::stack).ifPresent(quiver -> {
-			if (containsArrows(quiver)) addArrows(quiver, -1);
-		});
-	}
+  public static boolean containsArrows(ItemStack stack) {
+    return stack.hasTag()
+        && stack.getTag().contains(ARROWS_TAG)
+        && !getArrows(stack).isEmpty()
+        && getArrowsCount(stack) > 0;
+  }
 
-	private void dropArrows(Player player, ItemStack stack, int count) {
-		ItemStack arrowsStack = getArrows(stack).copy();
-		arrowsStack.setCount(count);
-		player.spawnAtLocation(arrowsStack);
-	}
+  public static ItemStack getArrows(ItemStack stack) {
+    return ItemStack.of((CompoundTag) stack.getOrCreateTag().get(ARROWS_TAG));
+  }
 
-	public static boolean isFull(ItemStack quiver) {
-		return getArrowsCount(quiver) == getCapacity(quiver);
-	}
+  public static int getArrowsCount(ItemStack stack) {
+    return stack.getOrCreateTag().getInt(ARROWS_COUNT_TAG);
+  }
 
-	public static boolean isEmpty(ItemStack quiver) {
-		return getArrowsCount(quiver) == 0;
-	}
+  public static void addArrows(ItemStack stack, ItemStack arrows, int count) {
+    if (isEmpty(stack)) setArrows(stack, arrows);
+    addArrows(stack, count);
+  }
 
-	public static int getCapacity(ItemStack quiver) {
-		int capacity = ((QuiverItem) quiver.getItem()).capacity;
-		if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
-			capacity *= 1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY);
-		}
-		return capacity;
-	}
+  public static void setArrows(ItemStack stack, ItemStack arrows, int count) {
+    arrows = arrows.copy();
+    arrows.setCount(1);
+    stack.getOrCreateTag().put(ARROWS_TAG, arrows.save(new CompoundTag()));
+    setArrowsCount(stack, count);
+  }
 
-	public static boolean containsArrows(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains(ARROWS_TAG) && !getArrows(stack).isEmpty() && getArrowsCount(stack) > 0;
-	}
+  public static void setArrows(ItemStack stack, ItemStack arrow) {
+    stack.getOrCreateTag().put(ARROWS_TAG, arrow.save(new CompoundTag()));
+  }
 
-	public static ItemStack getArrows(ItemStack stack) {
-		return ItemStack.of((CompoundTag) stack.getOrCreateTag().get(ARROWS_TAG));
-	}
+  public static void setArrowsCount(ItemStack stack, int count) {
+    stack.getOrCreateTag().putInt(ARROWS_COUNT_TAG, count);
+  }
 
-	public static int getArrowsCount(ItemStack stack) {
-		return stack.getOrCreateTag().getInt(ARROWS_COUNT_TAG);
-	}
+  public static void addArrows(ItemStack stack, int count) {
+    stack.getOrCreateTag().putInt(ARROWS_COUNT_TAG, getArrowsCount(stack) + count);
+  }
 
-	public static void addArrows(ItemStack stack, ItemStack arrows, int count) {
-		if (isEmpty(stack)) setArrows(stack, arrows);
-		addArrows(stack, count);
-	}
+  @Override
+  public void appendHoverText(
+      ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+    Component capacity = Component.literal("" + getCapacity(stack)).withStyle(ChatFormatting.BLUE);
+    components.add(
+        Component.translatable("quiver.capacity", capacity).withStyle(ChatFormatting.YELLOW));
+    if (!containsArrows(stack)) return;
+    ItemStack arrows = getArrows(stack);
+    Component arrowName =
+        Component.empty().append(arrows.getHoverName()).withStyle(ChatFormatting.GRAY);
+    Component contents =
+        Component.translatable("quiver.contents", arrowName).withStyle(ChatFormatting.YELLOW);
+    components.add(contents);
+    arrows.getItem().appendHoverText(arrows, level, components, tooltipFlag);
+  }
 
-	public static void setArrows(ItemStack stack, ItemStack arrows, int count) {
-		arrows = arrows.copy();
-		arrows.setCount(1);
-		stack.getOrCreateTag().put(ARROWS_TAG, arrows.save(new CompoundTag()));
-		setArrowsCount(stack, count);
-	}
+  @Override
+  public int getDamage(ItemStack stack) {
+    if (!containsArrows(stack)) return 0;
+    return getCapacity(stack) - getArrowsCount(stack);
+  }
 
-	public static void setArrows(ItemStack stack, ItemStack arrow) {
-		stack.getOrCreateTag().put(ARROWS_TAG, arrow.save(new CompoundTag()));
-	}
+  @Override
+  public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    return false;
+  }
 
-	public static void setArrowsCount(ItemStack stack, int count) {
-		stack.getOrCreateTag().putInt(ARROWS_COUNT_TAG, count);
-	}
+  @Override
+  public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    ItemStack stack = player.getItemInHand(hand);
+    if (level.isClientSide) return InteractionResultHolder.success(stack);
+    int arrowsLeft = getArrowsCount(stack);
+    while (arrowsLeft >= 64) {
+      dropArrows(player, stack, 64);
+      arrowsLeft -= 64;
+    }
+    if (arrowsLeft > 0) dropArrows(player, stack, arrowsLeft);
+    setArrows(stack, ItemStack.EMPTY, 0);
+    return InteractionResultHolder.success(stack);
+  }
 
-	public static void addArrows(ItemStack stack, int count) {
-		stack.getOrCreateTag().putInt(ARROWS_COUNT_TAG, getArrowsCount(stack) + count);
-	}
+  private void dropArrows(Player player, ItemStack stack, int count) {
+    ItemStack arrowsStack = getArrows(stack).copy();
+    arrowsStack.setCount(count);
+    player.spawnAtLocation(arrowsStack);
+  }
 }

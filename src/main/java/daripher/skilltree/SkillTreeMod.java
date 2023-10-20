@@ -20,28 +20,39 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 
 @Mod(SkillTreeMod.MOD_ID)
 public class SkillTreeMod {
-	public static final String MOD_ID = "skilltree";
+  public static final String MOD_ID = "skilltree";
 
-	public SkillTreeMod() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		PSTItems.REGISTRY.register(modEventBus);
-		PSTAttributes.REGISTRY.register(modEventBus);
-		PSTRecipeSerializers.REGISTRY.register(modEventBus);
-		PSTEffects.REGISTRY.register(modEventBus);
-		modEventBus.addListener(this::registerCurioSlots);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-		addCompatibilities();
-	}
+  public SkillTreeMod() {
+    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    PSTItems.REGISTRY.register(modEventBus);
+    PSTAttributes.REGISTRY.register(modEventBus);
+    PSTRecipeSerializers.REGISTRY.register(modEventBus);
+    PSTEffects.REGISTRY.register(modEventBus);
+    modEventBus.addListener(this::registerCurioSlots);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    addCompatibilities();
+  }
 
-	private void registerCurioSlots(InterModEnqueueEvent event) {
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("ring").size(2).build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("necklace").build());
-		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
-				() -> new SlotTypeMessage.Builder("quiver").icon(new ResourceLocation("curios", "slot/empty_quiver_slot")).build());
-	}
+  private void registerCurioSlots(InterModEnqueueEvent event) {
+    InterModComms.sendTo(
+        "curios",
+        SlotTypeMessage.REGISTER_TYPE,
+        () -> new SlotTypeMessage.Builder("ring").size(2).build());
+    InterModComms.sendTo(
+        "curios",
+        SlotTypeMessage.REGISTER_TYPE,
+        () -> new SlotTypeMessage.Builder("necklace").build());
+    InterModComms.sendTo(
+        "curios",
+        SlotTypeMessage.REGISTER_TYPE,
+        () ->
+            new SlotTypeMessage.Builder("quiver")
+                .icon(new ResourceLocation("curios", "slot/empty_quiver_slot"))
+                .build());
+  }
 
-	protected void addCompatibilities() {
-		if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.ISNTANCE.addCompatibility();
-		if (ModList.get().isLoaded("tetra")) TetraCompatibility.ISNTANCE.addCompatibility();
-	}
+  protected void addCompatibilities() {
+    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.ISNTANCE.addCompatibility();
+    if (ModList.get().isLoaded("tetra")) TetraCompatibility.ISNTANCE.addCompatibility();
+  }
 }

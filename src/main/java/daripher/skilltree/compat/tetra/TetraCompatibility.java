@@ -7,18 +7,20 @@ import net.minecraftforge.registries.RegisterEvent;
 import se.mickelus.tetra.module.ItemUpgradeRegistry;
 
 public enum TetraCompatibility {
-	ISNTANCE;
+  ISNTANCE;
 
-	public void addCompatibility() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(this::registerReplacementHook);
-	}
+  public void addCompatibility() {
+    IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    modEventBus.addListener(this::registerReplacementHook);
+  }
 
-	private void registerReplacementHook(RegisterEvent event) {
-		ItemUpgradeRegistry.instance.registerReplacementHook((original, modular) -> {
-			ItemHelper.getBonuses().stream().filter(s -> ItemHelper.hasBonus(original, s))
-					.forEach(s -> ItemHelper.setBonus(modular, s, ItemHelper.getBonus(original, s)));
-			return modular;
-		});
-	}
+  private void registerReplacementHook(RegisterEvent event) {
+    ItemUpgradeRegistry.instance.registerReplacementHook(
+        (original, modular) -> {
+          ItemHelper.getBonuses().stream()
+              .filter(s -> ItemHelper.hasBonus(original, s))
+              .forEach(s -> ItemHelper.setBonus(modular, s, ItemHelper.getBonus(original, s)));
+          return modular;
+        });
+  }
 }
