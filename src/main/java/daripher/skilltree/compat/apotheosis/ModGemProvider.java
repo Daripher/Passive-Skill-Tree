@@ -46,7 +46,7 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
     getSkillTreeGems()
         .forEach(
             gem -> {
-              List<GemBonus> bonuses = new ArrayList<GemBonus>();
+              List<GemBonus> bonuses = new ArrayList<>();
               gem.getBonuses()
                   .forEach(
                       (type, pair) -> {
@@ -67,7 +67,7 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
   }
 
   private static Map<String, GemClass> createGemsClasses() {
-    Map<String, GemClass> classes = new HashMap<String, GemClass>();
+    Map<String, GemClass> classes = new HashMap<>();
     classes.put("pickaxe", new GemClass("pickaxe", Set.of(LootCategory.PICKAXE)));
     classes.put(
         "melee_weapon",

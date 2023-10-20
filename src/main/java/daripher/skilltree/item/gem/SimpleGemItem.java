@@ -19,7 +19,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public abstract class SimpleGemItem extends GemItem {
   protected final Map<String, Pair<Attribute, AttributeModifier>> bonuses =
-      new HashMap<String, Pair<Attribute, AttributeModifier>>();
+      new HashMap<>();
 
   public SimpleGemItem(Properties properties) {
     super(properties);

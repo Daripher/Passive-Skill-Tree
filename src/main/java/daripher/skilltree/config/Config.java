@@ -160,7 +160,7 @@ public class Config {
   }
 
   static List<Integer> generateDefaultPointsCosts(int maximumPoints) {
-    List<Integer> costs = new ArrayList<Integer>();
+    List<Integer> costs = new ArrayList<>();
     costs.add(15);
     for (int i = 1; i < maximumPoints; i++) {
       int previousCost = costs.get(costs.size() - 1);

@@ -1285,7 +1285,7 @@ public class AttributeEvents {
   }
 
   protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
-    List<ItemEntity> drops = new ArrayList<ItemEntity>();
+    List<ItemEntity> drops = new ArrayList<>();
     event.getDrops().stream().map(ItemEntity::copy).forEach(drops::add);
     if (event.getEntity() instanceof EquipmentContainer entity) drops.removeIf(entity::equipped);
     return drops;
