@@ -35,7 +35,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
   private static final Capability<IPlayerSkills> CAPABILITY =
       CapabilityManager.get(new CapabilityToken<>() {});
   private final LazyOptional<IPlayerSkills> optionalCapability =
-      LazyOptional.of(() -> new PlayerSkills());
+      LazyOptional.of(PlayerSkills::new);
 
   @SubscribeEvent
   public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {

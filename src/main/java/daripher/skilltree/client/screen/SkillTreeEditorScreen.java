@@ -728,7 +728,7 @@ public class SkillTreeEditorScreen extends Screen {
     selectedSkills.stream()
         .map(skillButtons::get)
         .map(button -> button.skill)
-        .forEach(id -> SkillTreeClientData.saveEditorSkill(id));
+        .forEach(SkillTreeClientData::saveEditorSkill);
   }
 
   protected void addSkillButton(PassiveSkill skill) {
