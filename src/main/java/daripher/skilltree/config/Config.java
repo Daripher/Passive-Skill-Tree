@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class Config {
   private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-  public static final ForgeConfigSpec SPEC = BUILDER.build();
+  public static final ForgeConfigSpec SPEC;
   private static final ConfigValue<Integer> MAX_SKILL_POINTS;
   private static final ConfigValue<Integer> DEFAULT_HELMET_SOCKETS;
   private static final ConfigValue<Integer> DEFAULT_CHESTPLATE_SOCKETS;
@@ -157,6 +157,8 @@ public class Config {
     MIXTURE_EFFECTS_DURATION = BUILDER.defineInRange("Effects duration multiplier", 1D, 0D, 2D);
     MIXTURE_EFFECTS_STRENGTH = BUILDER.defineInRange("Effects strength multiplier", 1D, 0D, 2D);
     BUILDER.pop();
+
+    SPEC = BUILDER.build();
   }
 
   static List<Integer> generateDefaultPointsCosts(int maximumPoints) {
