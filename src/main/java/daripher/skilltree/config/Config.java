@@ -184,7 +184,7 @@ public class Config {
 	public static int getSkillPointCost(int level) {
 		if (USE_POINTS_COSTS_ARRAY.get()) {
 			List<? extends Integer> costs = LEVEL_UP_COSTS.get();
-			if (level > costs.size()) {
+			if (level >= costs.size()) {
 				return costs.get(costs.size() - 1);
 			}
 			return costs.get(level);
