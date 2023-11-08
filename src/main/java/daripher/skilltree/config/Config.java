@@ -3,6 +3,8 @@ package daripher.skilltree.config;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import daripher.skilltree.SkillTreeMod;
@@ -11,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.Logging;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -184,7 +187,7 @@ public class Config {
 	public static int getSkillPointCost(int level) {
 		if (USE_POINTS_COSTS_ARRAY.get()) {
 			List<? extends Integer> costs = LEVEL_UP_COSTS.get();
-			if (level > costs.size()) {
+			if (level >= costs.size()) {
 				return costs.get(costs.size() - 1);
 			}
 			return costs.get(level);
