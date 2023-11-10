@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "skilltree:maximum_life_per_equipped_jewelry",
-      "modifier": {
-        "amount": 1.0,
-        "id": "13a93d96-cbb4-4eac-8575-a0ee4e0cad06",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "13c8c241-a976-4888-ab74-6502558c2804",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_subclass_2_life_3"

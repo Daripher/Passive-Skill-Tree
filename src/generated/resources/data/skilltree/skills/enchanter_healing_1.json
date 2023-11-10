@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "modifier": {
-        "amount": 0.25,
-        "id": "6ee78e65-61d2-47c2-b34e-a537cf4d844a",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "7d485bfa-b037-4802-9601-afa92c536312",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_healing_3"

@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:gem_power_in_armor",
-      "modifier": {
-        "amount": 0.1,
-        "id": "07e3f286-70e3-447a-956a-2f036fe00f51",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "be62cf93-6800-4055-a8fb-1aa48469882f",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_defensive_notable_1"

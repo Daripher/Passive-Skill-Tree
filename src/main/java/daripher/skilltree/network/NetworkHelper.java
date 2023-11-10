@@ -1,25 +1,24 @@
-package daripher.skilltree.util;
+package daripher.skilltree.network;
 
 import com.mojang.logging.LogUtils;
+import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.Objects;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.common.CuriosHelper;
 import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
-public class ByteBufHelper {
+public class NetworkHelper {
   private static final Logger LOGGER = LogUtils.getLogger();
 
   public static void writeNullableResourceLocation(
@@ -28,14 +27,12 @@ public class ByteBufHelper {
     if (location != null) buf.writeUtf(location.toString());
   }
 
-  public static void writeAttributeModifier(
-      FriendlyByteBuf buf, Pair<Attribute, AttributeModifier> pair) {
-    writeAttribute(buf, pair.getLeft());
-    AttributeModifier modifier = pair.getRight();
-    double amount = modifier.getAmount();
-    Operation operation = modifier.getOperation();
-    buf.writeDouble(amount);
-    buf.writeInt(operation.ordinal());
+  public static void writeSkillBonus(FriendlyByteBuf buf, SkillBonus<?> bonus) {
+    SkillBonus.Serializer<?> serializer = bonus.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.SKILL_BONUS_SERIALIZERS.get().getKey(serializer);
+    assert serializerId != null;
+    buf.writeUtf(serializerId.toString());
+    serializer.serialize(buf, bonus);
   }
 
   public static void writeAttribute(FriendlyByteBuf buf, Attribute attribute) {
@@ -43,7 +40,7 @@ public class ByteBufHelper {
     if (attribute instanceof SlotAttributeWrapper wrapper) {
       attributeId = "curios:" + wrapper.identifier;
     } else {
-      attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
+      attributeId = Objects.requireNonNull(ForgeRegistries.ATTRIBUTES.getKey(attribute)).toString();
     }
     buf.writeUtf(attributeId);
   }
@@ -53,10 +50,9 @@ public class ByteBufHelper {
     locations.forEach(location -> buf.writeUtf(location.toString()));
   }
 
-  public static void writeAttributeModifiers(
-      FriendlyByteBuf buf, List<Pair<Attribute, AttributeModifier>> modifiers) {
-    buf.writeInt(modifiers.size());
-    modifiers.forEach(modifier -> writeAttributeModifier(buf, modifier));
+  public static void writeSkillBonuses(FriendlyByteBuf buf, List<SkillBonus<?>> bonuses) {
+    buf.writeInt(bonuses.size());
+    bonuses.forEach(bonus -> writeSkillBonus(buf, bonus));
   }
 
   public static void writePassiveSkill(FriendlyByteBuf buf, PassiveSkill skill) {
@@ -70,7 +66,7 @@ public class ByteBufHelper {
     buf.writeFloat(skill.getPositionY());
     writeResourceLocations(buf, skill.getConnectedSkills());
     writeNullableResourceLocation(buf, skill.getConnectedTreeId());
-    writeAttributeModifiers(buf, skill.getAttributeModifiers());
+    writeSkillBonuses(buf, skill.getBonuses());
     writeResourceLocations(buf, skill.getConnectedAsGateways());
   }
 
@@ -90,20 +86,19 @@ public class ByteBufHelper {
     return buf.readBoolean() ? new ResourceLocation(buf.readUtf()) : null;
   }
 
-  public static List<Pair<Attribute, AttributeModifier>> readAttributeModifiers(
-      FriendlyByteBuf buf) {
+  public static List<SkillBonus<?>> readSkillBonuses(FriendlyByteBuf buf) {
     int count = buf.readInt();
-    List<Pair<Attribute, AttributeModifier>> modifiers = new ArrayList<>();
-    for (int i = 0; i < count; i++) modifiers.add(readAttributeModifier(buf));
-    return modifiers;
+    List<SkillBonus<?>> bonuses = new ArrayList<>();
+    for (int i = 0; i < count; i++) bonuses.add(readSkillBonus(buf));
+    return bonuses;
   }
 
-  public static Pair<Attribute, AttributeModifier> readAttributeModifier(FriendlyByteBuf buf) {
-    Attribute attribute = readAttribute(buf);
-    double amount = buf.readDouble();
-    Operation operation = Operation.values()[buf.readInt()];
-    AttributeModifier modifier = new AttributeModifier("Passive Skill Bonus", amount, operation);
-    return Pair.of(attribute, modifier);
+  public static SkillBonus<?> readSkillBonus(FriendlyByteBuf buf) {
+    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
+    SkillBonus.Serializer<?> serializer =
+        PSTRegistries.SKILL_BONUS_SERIALIZERS.get().getValue(serializerId);
+    assert serializer != null;
+    return serializer.deserialize(buf);
   }
 
   public static @Nullable Attribute readAttribute(FriendlyByteBuf buf) {
@@ -130,7 +125,7 @@ public class ByteBufHelper {
     skill.setPosition(buf.readFloat(), buf.readFloat());
     readResourceLocations(buf).forEach(skill.getConnectedSkills()::add);
     skill.setConnectedTree(readNullableResourceLocation(buf));
-    readAttributeModifiers(buf).forEach(skill::addAttributeBonus);
+    readSkillBonuses(buf).forEach(skill::addSkillBonus);
     readResourceLocations(buf).forEach(skill.getConnectedAsGateways()::add);
     return skill;
   }

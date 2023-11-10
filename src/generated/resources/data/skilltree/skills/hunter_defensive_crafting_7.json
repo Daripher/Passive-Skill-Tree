@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.01,
       "attribute": "skilltree:crafted_armor_evasion",
-      "modifier": {
-        "amount": 0.01,
-        "id": "610f2ffb-5072-44e0-98bb-139e5d1ced95",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "9e7dc415-d22a-4bf8-8ee9-a35adc72b33d",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_defensive_crafting_keystone_1"

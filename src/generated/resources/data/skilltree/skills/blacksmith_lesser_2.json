@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:crafted_equipment_durability",
-      "modifier": {
-        "amount": 0.05,
-        "id": "045ba64c-8e2d-4310-ba49-c9723a34dc02",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "f7def40c-f0e6-4c6c-940a-fb83e8e831f6",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_lesser_4"

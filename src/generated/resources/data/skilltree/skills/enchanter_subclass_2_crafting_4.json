@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.2,
       "attribute": "skilltree:experience_per_minute",
-      "modifier": {
-        "amount": 0.2,
-        "id": "459af776-a833-4ab0-9dcd-24ac8e125549",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "8250e105-b50d-4a3c-874f-fb2360c2af4a",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_2_mastery",

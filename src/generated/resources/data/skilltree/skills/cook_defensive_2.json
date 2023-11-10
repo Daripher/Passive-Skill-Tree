@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.01,
       "attribute": "skilltree:block_chance",
-      "modifier": {
-        "amount": 0.01,
-        "id": "226a9a5a-40a7-4829-9dc4-d40c2e37a34e",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "e028930a-5e38-4b62-ad73-1653b7aaed7e",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_defensive_3"

@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.04,
       "attribute": "skilltree:crafted_ranged_weapon_attack_speed",
-      "modifier": {
-        "amount": 0.04,
-        "id": "ee441f1e-7cf5-44c5-bcef-d2b4b0bb4797",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "78cf36e0-7d1d-4e32-af1f-514a7423db9b",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_offensive_crafting_7"

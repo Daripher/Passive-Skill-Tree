@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.01,
       "attribute": "skilltree:melee_damage",
-      "modifier": {
-        "amount": 0.01,
-        "id": "bd1693ab-4540-491c-9f3f-b565c9e4c187",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "60e45331-fafc-4762-861b-9c2a483a3796",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.01,
       "attribute": "skilltree:block_chance",
-      "modifier": {
-        "amount": 0.01,
-        "id": "6d7707d7-c7e8-4610-b8fa-8836acc229bc",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "1b9a1e14-144f-47be-a3d7-455d4b3d65d2",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_3"

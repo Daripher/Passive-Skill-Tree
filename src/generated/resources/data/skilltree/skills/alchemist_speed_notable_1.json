@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:attack_speed_under_potion_effect",
-      "modifier": {
-        "amount": 0.1,
-        "id": "8a13aa79-5126-4de0-85cc-87b6131179b7",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "c9b85d64-6f31-4cd8-938a-3b4115a0a0f5",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_speed_notable_1.png",

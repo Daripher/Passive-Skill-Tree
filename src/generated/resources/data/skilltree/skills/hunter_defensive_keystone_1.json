@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.25,
       "attribute": "skilltree:armor_per_evasion_bonus",
-      "modifier": {
-        "amount": 0.25,
-        "id": "745c634e-1f81-4ad9-b723-4d0b380b98bc",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "72df5157-31e8-4eb0-929b-48438b045870",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_defensive_keystone_1.png",

@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.3,
       "attribute": "skilltree:gem_power_in_armor",
-      "modifier": {
-        "amount": 0.3,
-        "id": "b0e329b1-d9b3-4b85-a001-e020eac480c0",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "90591e10-5eb7-4278-8568-63c9151cdae6",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "skilltree:maximum_chestplate_sockets",
-      "modifier": {
-        "amount": 1.0,
-        "id": "378a29ef-6911-4459-9fb6-03d079e980e6",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "9859dc49-827d-4bcc-885c-dcccba33f5d7",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_keystone_1.png",

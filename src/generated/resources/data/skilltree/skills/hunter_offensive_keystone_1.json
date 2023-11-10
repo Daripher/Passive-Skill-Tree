@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:damage_per_distance_to_enemy",
-      "modifier": {
-        "amount": 0.05,
-        "id": "a36f6c8c-587a-44bc-a59b-26b3940ac695",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "f1b955f7-7e10-41cc-bd01-d502449dcb3a",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_offensive_keystone_1.png",

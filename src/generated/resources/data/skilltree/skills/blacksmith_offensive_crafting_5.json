@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "skilltree:crafted_melee_weapon_damage_bonus",
-      "modifier": {
-        "amount": 1.0,
-        "id": "24077b0b-b540-4dec-91bc-63a8d48b7557",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "bcd62a43-322a-4056-9df6-6b70f813fbb5",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_offensive_crafting_6"

@@ -3,7 +3,7 @@ package daripher.skilltree.client.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.util.TooltipHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +16,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class SkillButton extends Button {
   private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
@@ -118,32 +115,32 @@ public class SkillButton extends Button {
   }
 
   public List<MutableComponent> getTooltip() {
-    var tooltip = new ArrayList<MutableComponent>();
+    ArrayList<MutableComponent> tooltip = new ArrayList<>();
     addTitleTooltip(tooltip);
     addDescriptionTooltip(tooltip);
     addLoreTooltip(tooltip);
-    var minecraft = Minecraft.getInstance();
-    var useAdvancedTooltip = minecraft.options.advancedItemTooltips;
+    Minecraft minecraft = Minecraft.getInstance();
+    boolean useAdvancedTooltip = minecraft.options.advancedItemTooltips;
     if (useAdvancedTooltip) addAdvancedTooltip(tooltip);
     return tooltip;
   }
 
   protected void addAdvancedTooltip(ArrayList<MutableComponent> tooltip) {
     addIdTooltip(tooltip);
-    var descriptionId = getSkillId() + ".description";
-    var description = Component.translatable(descriptionId).getString();
+    String descriptionId = getSkillId() + ".description";
+    String description = Component.translatable(descriptionId).getString();
     if (!description.equals(descriptionId)) {
-      addAttributeModifiersTooltip(tooltip);
+      skill.getBonuses().stream().map(SkillBonus::getAdvancedTooltip).forEach(tooltip::add);
     }
   }
 
   protected void addDescriptionTooltip(ArrayList<MutableComponent> tooltip) {
-    var descriptionId = getSkillId() + ".description";
-    var description = Component.translatable(descriptionId).getString();
+    String descriptionId = getSkillId() + ".description";
+    String description = Component.translatable(descriptionId).getString();
     if (description.equals(descriptionId)) {
-      addAttributeModifiersTooltip(tooltip);
+      skill.getBonuses().stream().map(SkillBonus::getTooltip).forEach(tooltip::add);
     } else {
-      var descriptionStrings = Arrays.asList(description.split("/n"));
+      List<String> descriptionStrings = Arrays.asList(description.split("/n"));
       descriptionStrings.stream()
           .map(Component::translatable)
           .map(this::applyDescriptionStyle)
@@ -161,29 +158,7 @@ public class SkillButton extends Button {
   protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
     var titleId = getSkillId() + ".name";
     var title = Component.translatable(titleId);
-    var attributeModifiers = skill.getAttributeModifiers();
-    var hasAttributeModifiers = !attributeModifiers.isEmpty();
-    if (titleId.equals(title.getString()) && hasAttributeModifiers) {
-      title = generateTitle(attributeModifiers);
-    }
     tooltip.add(title.withStyle(getTitleStyle()));
-  }
-
-  protected MutableComponent generateTitle(List<Pair<Attribute, AttributeModifier>> modifiers) {
-    // formatter:off
-    List<MutableComponent> attributes =
-        modifiers.stream()
-            .map(Pair::getLeft)
-            .map(Attribute::getDescriptionId)
-            .map(Component::translatable)
-            .toList();
-    // formatter:on
-    if (modifiers.size() > 1) {
-      return Component.translatable(
-          "widget.skill_button.multiple_bonuses", attributes.get(0), attributes.get(1));
-    } else {
-      return Component.empty().append(attributes.get(0));
-    }
   }
 
   private Style getTitleStyle() {
@@ -201,13 +176,6 @@ public class SkillButton extends Button {
 
   protected MutableComponent applyDescriptionStyle(MutableComponent component) {
     return component.withStyle(DESCRIPTION_STYLE);
-  }
-
-  protected void addAttributeModifiersTooltip(ArrayList<MutableComponent> tooltip) {
-    skill.getAttributeModifiers().stream()
-        .map(TooltipHelper::getAttributeBonusTooltip)
-        .map(this::applyDescriptionStyle)
-        .forEach(tooltip::add);
   }
 
   public void animate() {

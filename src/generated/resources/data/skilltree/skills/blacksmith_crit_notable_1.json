@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.3,
       "attribute": "skilltree:crit_damage_with_shield",
-      "modifier": {
-        "amount": 0.3,
-        "id": "31fe6d4b-6601-49d3-bd3b-485a85623309",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "67554fde-890e-45cd-a329-7674a35bf271",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_crit_notable_1.png",

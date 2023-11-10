@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.4,
       "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
-      "modifier": {
-        "amount": 0.4,
-        "id": "142ad132-3008-4b29-b312-33c188085499",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "5d6b5fa8-36ba-4228-b6aa-0ba2008eac47",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/enchanter_defensive_crafting_keystone_1.png",

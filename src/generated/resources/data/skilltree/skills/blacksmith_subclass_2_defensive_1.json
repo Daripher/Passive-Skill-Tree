@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "modifier": {
-        "amount": 1.0,
-        "id": "5f7faf26-07ea-4c92-a2a9-2f8bfd692cc3",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "163c766d-96ad-4f2d-8bc7-35f1cb53d13e",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_2_defensive_2",

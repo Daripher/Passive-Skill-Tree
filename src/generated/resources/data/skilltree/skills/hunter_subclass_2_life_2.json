@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.01,
       "attribute": "skilltree:maximum_life_per_arrow_in_quiver",
-      "modifier": {
-        "amount": 0.01,
-        "id": "c9f1f822-a504-48d3-8b78-abb971b845e1",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "a8eb2fd9-0885-4def-94ba-31feb396b94e",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_subclass_2_life_3"

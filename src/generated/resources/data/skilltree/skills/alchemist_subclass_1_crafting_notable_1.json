@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.25,
       "attribute": "skilltree:brewed_harmful_potions_duration",
-      "modifier": {
-        "amount": 0.25,
-        "id": "033cb844-c335-42b7-9621-27427b072527",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "b827fb60-5e47-4941-b68f-19ea356ff462",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_crafting_notable_1.png",

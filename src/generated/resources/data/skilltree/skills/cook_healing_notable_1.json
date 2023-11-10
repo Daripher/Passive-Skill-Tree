@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.5,
       "attribute": "skilltree:life_on_block_if_not_hungry",
-      "modifier": {
-        "amount": 0.5,
-        "id": "7f7952b5-0d3a-4285-bba2-a8e3b89473c6",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "14cfd2fb-17c0-409c-964d-f06732552566",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/cook_healing_notable_1.png",

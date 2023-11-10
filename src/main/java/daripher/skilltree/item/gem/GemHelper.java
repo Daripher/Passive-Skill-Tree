@@ -1,37 +1,29 @@
 package daripher.skilltree.item.gem;
 
-import com.mojang.logging.LogUtils;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 public class GemHelper {
   protected static final String GEMS_TAG = "GEMSTONES";
   protected static final String GEM_TAG = "GEMSTONE";
-  protected static final String ATTRIBUTE_TAG = "ATTRIBUTE";
-  protected static final String AMOUNT_TAG = "AMOUNT";
-  protected static final String OPERATION_TAG = "OPERATION";
+  protected static final String BONUS_TAG = "BONUS";
   protected static final String ADDITIONAL_GEMS_TAG = "ADDITIONAL_GEMSTONES";
-  protected static final String UUID_TAG = "ID";
-  private static final Logger LOGGER = LogUtils.getLogger();
 
   public static boolean hasGem(ItemStack stack, int socket) {
     if (ModList.get().isLoaded("apotheosis")) {
@@ -47,25 +39,23 @@ public class GemHelper {
   public static void insertGem(
       Player player, ItemStack stack, ItemStack gemStack, int socket, double power) {
     if (!(gemStack.getItem() instanceof GemItem gem)) {
-      LOGGER.error("Item {} is not a gem, can not insert it into an item!", stack.getItem());
+      SkillTreeMod.LOGGER.error(
+          "Item {} is not a gem, can not insert it into an item!", stack.getItem());
       return;
     }
     CompoundTag gemTag = new CompoundTag();
     ListTag gemsTag = getGemsListTag(stack);
     if (gemsTag.size() > socket) gemTag = gemsTag.getCompound(socket);
-    Optional<Pair<Attribute, AttributeModifier>> optionalBonus =
-        gem.getGemBonus(player, stack, gemStack);
-    if (!optionalBonus.isPresent()) {
-      LOGGER.error("Cannot insert gem into {}", stack.getItem());
-      LOGGER.error("Slot: {}", Player.getEquipmentSlotForItem(stack));
+    SkillBonus<?> bonus = gem.getGemBonus(player, stack, gemStack);
+    if (bonus == null) {
+      SkillTreeMod.LOGGER.error(
+          "Cannot insert gem into {}, slot: {}",
+          stack.getItem(),
+          Player.getEquipmentSlotForItem(stack));
       return;
     }
-    Pair<Attribute, AttributeModifier> bonus = optionalBonus.get();
     gemTag.putString(GEM_TAG, ForgeRegistries.ITEMS.getKey(gem).toString());
-    gemTag.putString(ATTRIBUTE_TAG, ForgeRegistries.ATTRIBUTES.getKey(bonus.getLeft()).toString());
-    gemTag.putDouble(AMOUNT_TAG, bonus.getRight().getAmount() * (1 + power));
-    gemTag.putString(OPERATION_TAG, bonus.getRight().getOperation().toString());
-    gemTag.putString(UUID_TAG, UUID.randomUUID().toString());
+    gemTag.put(BONUS_TAG, bonus.copy().getSerializer().serialize(bonus));
     gemsTag.add(socket, gemTag);
     stack.getOrCreateTag().put(GEMS_TAG, gemsTag);
   }
@@ -74,23 +64,10 @@ public class GemHelper {
     itemStack.getTag().remove(GEMS_TAG);
   }
 
-  public static Optional<Pair<Attribute, AttributeModifier>> getAttributeBonus(
-      ItemStack itemStack, int socket) {
-    if (!GemHelper.hasGem(itemStack, socket)) return Optional.empty();
+  public static @Nullable SkillBonus<?> getBonus(ItemStack itemStack, int socket) {
+    if (!GemHelper.hasGem(itemStack, socket)) return null;
     CompoundTag gemTag = (CompoundTag) getGemsListTag(itemStack).get(socket);
-    if (gemTag == null) return Optional.empty();
-    String attributeId = gemTag.getString(ATTRIBUTE_TAG);
-    if (attributeId.isEmpty()) return Optional.empty();
-    Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(attributeId));
-    if (attribute == null) return Optional.empty();
-    Operation operation = Operation.valueOf(gemTag.getString(OPERATION_TAG));
-    if (operation == null) return Optional.empty();
-    double amount = gemTag.getDouble(AMOUNT_TAG);
-    if (amount == 0) return Optional.empty();
-    if (!gemTag.contains(UUID_TAG)) gemTag.putString(UUID_TAG, UUID.randomUUID().toString());
-    UUID id = UUID.fromString(gemTag.getString(UUID_TAG));
-    return Optional.of(
-        Pair.of(attribute, new AttributeModifier(id, "Gem Bonus", amount, operation)));
+    return SkillBonus.load(gemTag);
   }
 
   public static Optional<GemItem> getGem(ItemStack itemStack, int socket) {

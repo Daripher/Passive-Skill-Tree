@@ -1,55 +1,49 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:equipment_repair_efficiency",
-      "modifier": {
-        "amount": 0.05,
-        "id": "a37069c7-572c-4db2-9037-52a22932b730",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "3803df34-dc73-45a8-a35a-2457c6b0f3ae",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:crafted_equipment_durability",
-      "modifier": {
-        "amount": 0.05,
-        "id": "4071e9a1-1f18-4ada-95cc-06224caeeb51",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "f2433ca7-447d-4fe2-98d1-8bce8866deff",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:crafted_weapon_attack_speed",
-      "modifier": {
-        "amount": 0.05,
-        "id": "83635d87-de40-4b3b-8180-70713465d625",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "12a9eb73-c1fc-4130-8503-3704c362cabe",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:chance_to_craft_tougher_armor",
-      "modifier": {
-        "amount": 0.05,
-        "id": "0c5e1739-56ad-4149-90ac-c9a2968e77c8",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "28f4f180-6b63-4e26-ba74-c4b5173001fa",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 5.0,
       "attribute": "skilltree:crafted_shields_armor_bonus",
-      "modifier": {
-        "amount": 5.0,
-        "id": "71ebb3fe-7b82-49b6-bcd7-3861a18ed43a",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "bb5211d3-1cd5-4099-a281-6454421a1be1",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_4"

@@ -8,15 +8,16 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.jetbrains.annotations.NotNull;
 
-public class StatsList extends AbstractWidget {
+public class SkillBonusList extends AbstractWidget {
   private final int maxHeight;
-  private List<Component> stats = new ArrayList<>();
+  private List<MutableComponent> stats = new ArrayList<>();
   private int maxLines;
   private int scroll;
 
-  public StatsList(int y, int maxHeight) {
+  public SkillBonusList(int y, int maxHeight) {
     super(0, y, 0, 0, Component.empty());
     this.maxHeight = maxHeight;
   }
@@ -59,7 +60,7 @@ public class StatsList extends AbstractWidget {
     return true;
   }
 
-  public void setStats(List<Component> stats) {
+  public void setStats(List<MutableComponent> stats) {
     maxLines = stats.size();
     this.stats = stats;
     width = 0;

@@ -4,6 +4,7 @@ import com.mojang.serialization.JsonOps;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.item.gem.SimpleGemItem;
+import daripher.skilltree.skill.bonus.AttributeSkillBonus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,25 +43,28 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
   private static Map<ResourceLocation, Gem> generateGems() {
     AttributeBonus.initCodecs();
     Map<String, GemClass> gemClasses = createGemsClasses();
-    var gems = new HashMap<ResourceLocation, Gem>();
+    HashMap<ResourceLocation, Gem> gems = new HashMap<>();
     getSkillTreeGems()
         .forEach(
             gem -> {
               List<GemBonus> bonuses = new ArrayList<>();
               gem.getBonuses()
                   .forEach(
-                      (type, pair) -> {
-                        Map<LootRarity, StepFunction> func =
-                            generateBonuses((float) pair.getRight().getAmount());
+                      (type, bonus) -> {
+                        if (!(bonus instanceof AttributeSkillBonus attributeBonus)) return;
                         GemClass gemClass = gemClasses.get(type);
-                        if (gemClass != null) {
-                          AttributeBonus bonus =
-                              new AttributeBonus(
-                                  gemClass, pair.getLeft(), pair.getRight().getOperation(), func);
-                          bonuses.add(bonus);
-                          ResourceLocation id = ForgeRegistries.ITEMS.getKey(gem);
-                          gems.put(id, createGem(bonuses));
-                        }
+                        if (gemClass == null) return;
+                        Map<LootRarity, StepFunction> func =
+                            generateBonuses((float) attributeBonus.getModifier().getAmount());
+                        AttributeBonus apothBonus =
+                            new AttributeBonus(
+                                gemClass,
+                                attributeBonus.getAttribute(),
+                                attributeBonus.getModifier().getOperation(),
+                                func);
+                        bonuses.add(apothBonus);
+                        ResourceLocation id = ForgeRegistries.ITEMS.getKey(gem);
+                        gems.put(id, createGem(bonuses));
                       });
             });
     return gems;
@@ -105,20 +109,18 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
   }
 
   private static Stream<SimpleGemItem> getSkillTreeGems() {
-    // formatter:off
     return PSTItems.REGISTRY.getEntries().stream()
         .map(RegistryObject::get)
         .filter(SimpleGemItem.class::isInstance)
         .map(SimpleGemItem.class::cast);
-    // formatter:on
   }
 
   private static Map<LootRarity, StepFunction> generateBonuses(float min) {
-    var bonuses = new HashMap<LootRarity, StepFunction>();
-    LootRarity.values().stream()
+    HashMap<LootRarity, StepFunction> bonuses = new HashMap<>();
+    LootRarity.values()
         .forEach(
             rarity -> {
-              var function = new StepFunction(min, 1, 0);
+              StepFunction function = new StepFunction(min, 1, 0);
               bonuses.put(rarity, function);
             });
     return bonuses;

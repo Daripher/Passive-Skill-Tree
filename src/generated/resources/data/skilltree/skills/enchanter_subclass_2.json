@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 2.0,
       "attribute": "skilltree:experience_per_minute",
-      "modifier": {
-        "amount": 2.0,
-        "id": "2772f868-d30f-4fd4-b4ae-0caacea59e86",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "ee997158-a20f-4752-8d9b-81db735d54d7",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_2_crafting_1",

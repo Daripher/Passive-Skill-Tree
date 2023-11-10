@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.15,
       "attribute": "skilltree:double_fishing_loot_chance",
-      "modifier": {
-        "amount": 0.15,
-        "id": "93fc83fc-1a65-492e-b71a-54b45320adaf",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "8ed25fc2-9f3d-4277-9f6b-a3159a34e3cf",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_2_crafting_1",

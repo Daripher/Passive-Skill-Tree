@@ -1,19 +1,17 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:evasion_chance_when_wounded",
-      "modifier": {
-        "amount": 0.1,
-        "id": "5ea02508-80bd-4fcf-9655-2133e0b73643",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "8445b1b6-376d-44ae-b5d4-69bd57f72d20",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:hunter_defensive_4",

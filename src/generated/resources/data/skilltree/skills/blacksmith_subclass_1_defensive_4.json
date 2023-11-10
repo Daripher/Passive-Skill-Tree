@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "modifier": {
-        "amount": 0.5,
-        "id": "264f9fdd-55cb-46ee-971c-dd6d6f729d93",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "77a534fb-a232-4de1-bf72-87ec19b6be90",
+      "name": "SkillBonus",
+      "operation": 0
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.005,
       "attribute": "skilltree:block_chance",
-      "modifier": {
-        "amount": 0.005,
-        "id": "20529dc8-8522-4bd6-8548-a693202da3f9",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "7291cd3f-d327-4093-abbf-b051e19c2247",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_1"

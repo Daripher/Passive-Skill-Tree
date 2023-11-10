@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.005,
       "attribute": "skilltree:evasion_chance",
-      "modifier": {
-        "amount": 0.005,
-        "id": "bbf00b69-be95-4e74-ad72-103ae955375e",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "956286d4-f7d6-4724-af61-972c888ba996",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "modifier": {
-        "amount": 0.5,
-        "id": "1aa852b0-f9a6-44e3-b454-092348471f99",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "5236b430-ef8a-4c28-aacf-6381d7b62151",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:miner_subclass_2_defensive_3"

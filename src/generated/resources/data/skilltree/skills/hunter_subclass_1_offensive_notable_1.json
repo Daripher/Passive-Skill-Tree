@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "modifier": {
-        "amount": 0.05,
-        "id": "ec850d1c-d396-4cc7-9f66-7a9060d07344",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "b906d6a1-2fc6-4b02-a191-49fcf6281dc6",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:stealth",
-      "modifier": {
-        "amount": 0.05,
-        "id": "6f72c470-17e6-400c-9acc-32ee4891b1a6",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "54c5a89f-ac19-4639-95a0-00af3717e848",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_1_offensive_notable_1.png",

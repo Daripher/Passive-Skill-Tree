@@ -1,9 +1,8 @@
 {
-  "attributeModifiers": [],
   "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
+  "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
   "buttonSize": 33,
-  "commands": [],
   "connectedAsGateways": [
     "skilltree:blacksmith_gateway"
   ],

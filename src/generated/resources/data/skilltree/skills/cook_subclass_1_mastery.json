@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.15,
       "attribute": "skilltree:crit_chance_if_wounded",
-      "modifier": {
-        "amount": 0.15,
-        "id": "19f640bd-cee3-4893-9e78-90657446ae1f",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "abf7d050-a3aa-4aab-b0a0-654fa8733953",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "skilltree:life_per_hit_if_wounded",
-      "modifier": {
-        "amount": 1.0,
-        "id": "b0682734-57ae-4866-96bd-dc28f7125c59",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "80719f81-69fc-42ea-bec1-60d370e0e75b",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:cook_subclass_1_offensive_4"

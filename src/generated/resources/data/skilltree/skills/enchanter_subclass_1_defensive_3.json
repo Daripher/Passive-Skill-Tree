@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.005,
       "attribute": "skilltree:evasion_chance",
-      "modifier": {
-        "amount": 0.005,
-        "id": "5d063197-4d8d-4dca-ad36-1af3af19c0f2",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "a6890a07-1db1-4268-bb00-8d667b7a9ddd",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.005,
       "attribute": "skilltree:block_chance",
-      "modifier": {
-        "amount": 0.005,
-        "id": "d822be8d-523d-4f36-a6f6-e18edad42cff",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "e23b04a5-8a4d-47a2-8c15-e8c7d229f2ad",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_1_defensive_4"

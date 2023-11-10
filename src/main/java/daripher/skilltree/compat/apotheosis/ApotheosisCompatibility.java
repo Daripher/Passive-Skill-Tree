@@ -6,6 +6,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
+import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +27,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +40,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.commons.lang3.tuple.Pair;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
@@ -103,10 +103,10 @@ public enum ApotheosisCompatibility {
     ItemStack stack = event.getStack();
     int socket = 0;
     while (GemHelper.hasGem(stack, socket)) {
-      GemHelper.getAttributeBonus(stack, socket)
-          .map(Pair::getRight)
-          .map(AttributeModifier::getId)
-          .ifPresent(event::skipUUID);
+      SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
+      if (bonus instanceof AttributeSkillBonus attributeBonus) {
+        event.skipUUID(attributeBonus.getModifier().getId());
+      }
       socket++;
     }
   }

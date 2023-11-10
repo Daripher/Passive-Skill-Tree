@@ -1,21 +1,18 @@
 package daripher.skilltree.item.gem;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class GemItem extends Item {
@@ -55,7 +52,7 @@ public abstract class GemItem extends Item {
     GemHelper.insertGem(player, itemStack, gemStack, gemSlot, gemPower);
   }
 
-  public abstract Optional<Pair<Attribute, AttributeModifier>> getGemBonus(
+  public abstract @Nullable SkillBonus<?> getGemBonus(
       Player player, ItemStack itemStack, ItemStack gemStack);
 
   protected abstract void appendBonusesTooltip(ItemStack stack, List<Component> components);

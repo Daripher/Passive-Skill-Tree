@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "modifier": {
-        "amount": 2.0,
-        "id": "20e3a2d5-70ac-458c-9b6b-1e0382911e6a",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "f42bf756-05d6-414a-b852-e34dee899de2",
+      "name": "SkillBonus",
+      "operation": 0
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:incoming_healing",
-      "modifier": {
-        "amount": 0.05,
-        "id": "cdf55e87-a9e4-4ec3-af42-efdb4c086daa",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "43dee621-6ef0-4d2f-a259-076383d3badd",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:alchemist_subclass_2_life_3"

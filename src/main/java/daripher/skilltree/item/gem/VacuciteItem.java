@@ -1,16 +1,14 @@
 package daripher.skilltree.item.gem;
 
 import daripher.skilltree.init.PSTCreativeTabs;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.List;
-import java.util.Optional;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class VacuciteItem extends GemItem {
   public VacuciteItem() {
@@ -29,9 +27,8 @@ public class VacuciteItem extends GemItem {
   }
 
   @Override
-  public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(
-      Player player, ItemStack stack, ItemStack gemStack) {
-    return Optional.empty();
+  public @Nullable SkillBonus<?> getGemBonus(Player player, ItemStack stack, ItemStack gemStack) {
+    return null;
   }
 
   @Override

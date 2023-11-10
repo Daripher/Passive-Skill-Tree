@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 4.0,
       "attribute": "minecraft:generic.max_health",
-      "modifier": {
-        "amount": 4.0,
-        "id": "9fe4518b-f8cc-4604-a30d-bc5d984aeb20",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "df518bd4-0d63-4434-ba5c-2bbb2a7ac514",
+      "name": "SkillBonus",
+      "operation": 0
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
       "attribute": "skilltree:luck_while_fishing",
-      "modifier": {
-        "amount": 1.0,
-        "id": "63d33c16-d37c-4f0c-98da-d16bad511578",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "53201cb5-f58b-429c-84a1-f3343d472455",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [],
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_life_notable_1.png",

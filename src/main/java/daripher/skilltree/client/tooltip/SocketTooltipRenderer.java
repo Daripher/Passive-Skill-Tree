@@ -5,10 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.util.TooltipHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -18,11 +18,8 @@ import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 // Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
@@ -38,9 +35,9 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
   public static Component getSocketDesc(ItemStack stack, int socket) {
     if (!GemHelper.hasGem(stack, socket)) return Component.translatable("gem.socket");
-    Optional<Pair<Attribute, AttributeModifier>> gemBonus =
-        GemHelper.getAttributeBonus(stack, socket);
-    return gemBonus.map(TooltipHelper::getAttributeBonusTooltip).orElse(Component.literal("ERROR"));
+    SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
+    if (bonus == null) return Component.literal("Error?").withStyle(ChatFormatting.RED);
+    return bonus.getTooltip();
   }
 
   @Override

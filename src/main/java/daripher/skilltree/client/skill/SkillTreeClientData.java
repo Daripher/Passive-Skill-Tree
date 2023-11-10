@@ -6,7 +6,7 @@ import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import daripher.skilltree.util.ByteBufHelper;
+import daripher.skilltree.network.NetworkHelper;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,9 +28,9 @@ public class SkillTreeClientData {
   public static void loadFromByteBuf(FriendlyByteBuf buf) {
     PASSIVE_SKILLS.clear();
     SKILL_TREES.clear();
-    List<PassiveSkill> skills = ByteBufHelper.readPassiveSkills(buf);
+    List<PassiveSkill> skills = NetworkHelper.readPassiveSkills(buf);
     skills.forEach(SkillTreeClientData::storeSkill);
-    List<PassiveSkillTree> skillTrees = ByteBufHelper.readPassiveSkillTrees(buf);
+    List<PassiveSkillTree> skillTrees = NetworkHelper.readPassiveSkillTrees(buf);
     skillTrees.forEach(SkillTreeClientData::storeSkillTree);
   }
 

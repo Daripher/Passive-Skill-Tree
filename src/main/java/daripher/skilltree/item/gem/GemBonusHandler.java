@@ -8,7 +8,8 @@ import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.util.TooltipHelper;
+import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +19,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +38,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import org.apache.commons.lang3.tuple.Pair;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -111,7 +109,6 @@ public class GemBonusHandler {
             .getServer()
             .getLootTables()
             .get(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
-    // formatter:off
     var lootContext =
         new LootContext.Builder(serverLevel)
             .withParameter(LootContextParams.BLOCK_STATE, event.getState())
@@ -121,7 +118,6 @@ public class GemBonusHandler {
             .withParameter(LootContextParams.TOOL, player.getMainHandItem())
             .withLuck(player.getLuck())
             .create(LootContextParamSets.BLOCK);
-    // formatter:on
     lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
   }
 
@@ -130,29 +126,30 @@ public class GemBonusHandler {
     if (itemStack.getItem() instanceof ICurioItem) return;
     EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
     if (slot != event.getSlotType()) return;
-    Optional<Pair<Attribute, AttributeModifier>> bonus =
-        GemHelper.getAttributeBonus(itemStack, socket);
-    if (!bonus.isPresent()) return;
-    event.addModifier(bonus.get().getLeft(), bonus.get().getRight());
+    SkillBonus<?> bonus = GemHelper.getBonus(itemStack, socket);
+    if (bonus instanceof AttributeSkillBonus attributeBonus) {
+      event.addModifier(attributeBonus.getAttribute(), attributeBonus.getModifier());
+    }
   }
 
   private static void applyGemBonus(CurioAttributeModifierEvent event, int socket) {
     ItemStack itemStack = event.getItemStack();
     if (!(itemStack.getItem() instanceof ICurioItem curio)) return;
     if (!curio.canEquip(event.getSlotContext(), itemStack)) return;
-    Optional<Pair<Attribute, AttributeModifier>> bonus =
-        GemHelper.getAttributeBonus(itemStack, socket);
-    if (!bonus.isPresent()) return;
-    event.addModifier(bonus.get().getLeft(), bonus.get().getRight());
+    SkillBonus<?> bonus = GemHelper.getBonus(itemStack, socket);
+    if (bonus instanceof AttributeSkillBonus attributeBonus) {
+      event.addModifier(attributeBonus.getAttribute(), attributeBonus.getModifier());
+    }
   }
 
   private static void removeGemTooltip(ItemTooltipEvent event, int socket) {
     ItemStack stack = event.getItemStack();
     Optional<GemItem> gem = GemHelper.getGem(stack, socket);
     if (gem.isEmpty()) return;
-    Optional<Pair<Attribute, AttributeModifier>> bonus = GemHelper.getAttributeBonus(stack, socket);
-    if (!bonus.isPresent()) return;
-    removeTooltip(event.getToolTip(), TooltipHelper.getAttributeBonusTooltip(bonus.get(), false));
+    SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
+    if (bonus instanceof AttributeSkillBonus) {
+      removeTooltip(event.getToolTip(), bonus.getTooltip());
+    }
   }
 
   private static void removeTooltip(List<Component> tooltips, MutableComponent tooltip) {

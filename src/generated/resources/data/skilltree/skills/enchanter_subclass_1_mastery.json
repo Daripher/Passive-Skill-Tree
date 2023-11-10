@@ -1,37 +1,33 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:chance_to_ignite",
-      "modifier": {
-        "amount": 0.1,
-        "id": "4cb3a5a3-7220-4af1-bbca-0e5cc7619bc5",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "76041b25-d1d7-48e3-b7f0-8d39fa10c76d",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:damage_against_burning",
-      "modifier": {
-        "amount": 0.1,
-        "id": "df7a6fda-1005-4bf9-920d-39fbabe5f3a3",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "936db85b-1b45-46b3-9001-c028a77a89cf",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:crit_chance_against_burning",
-      "modifier": {
-        "amount": 0.1,
-        "id": "f65c927f-3888-48b6-8f96-f3db11ef9386",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "74692544-f82a-4fa2-9645-271b1452ccdc",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_4"

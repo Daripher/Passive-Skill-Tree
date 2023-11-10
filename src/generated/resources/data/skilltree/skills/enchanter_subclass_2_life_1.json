@@ -1,28 +1,25 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "modifier": {
-        "amount": 2.0,
-        "id": "a12d2b1b-6e57-4e61-87fc-9643fa462c34",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "b63001bf-7b6f-444d-b7a2-1f8bb56ff466",
+      "name": "SkillBonus",
+      "operation": 0
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:experience_per_minute",
-      "modifier": {
-        "amount": 0.1,
-        "id": "af2ba574-5956-4a77-ab24-efe8884a73cc",
-        "nameGetter": "PassiveSkill",
-        "operation": "ADDITION"
-      }
+      "id": "ed5c5468-1606-4cd3-8b22-5498a40a1ca8",
+      "name": "SkillBonus",
+      "operation": 0
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:enchanter_subclass_2_life_2"

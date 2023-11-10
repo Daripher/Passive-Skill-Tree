@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.function.Predicate;
 import net.minecraft.client.gui.Font;
 
-public class NumberEditBox extends PSTEditBox {
+public class PSTNumericEditBox extends PSTEditBox {
   private static final Predicate<String> DEFAULT_FILTER =
       s -> {
         try {
@@ -16,7 +16,7 @@ public class NumberEditBox extends PSTEditBox {
       };
   private double defaultValue;
 
-  public NumberEditBox(Font font, int x, int y, int width, int height, double defaultValue) {
+  public PSTNumericEditBox(Font font, int x, int y, int width, int height, double defaultValue) {
     super(font, x, y, width, height, formatDefaultValue(defaultValue));
     setDefaultValue(defaultValue);
     setSoftFilter(DEFAULT_FILTER);

@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.client.screen.ScreenHelper;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -15,11 +15,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 public class PSTEditBox extends EditBox {
   private Predicate<String> softFilter = Objects::nonNull;
-  private Supplier<String> suggestionProvider = () -> null;
+  private Function<String, @Nullable String> suggestionProvider = s -> null;
 
   public PSTEditBox(Font font, int x, int y, int width, int height, String defaultText) {
     super(font, x, y, width, height, Component.empty());
@@ -35,18 +36,18 @@ public class PSTEditBox extends EditBox {
       return true;
     }
     boolean result = super.keyPressed(keyCode, scanCode, modifiers);
-    setSuggestion(suggestionProvider.get());
+    setSuggestion(suggestionProvider.apply(getValue()));
     return result;
   }
 
   @Override
   public boolean charTyped(char codePoint, int modifiers) {
     boolean result = super.charTyped(codePoint, modifiers);
-    setSuggestion(suggestionProvider.get());
+    setSuggestion(suggestionProvider.apply(getValue()));
     return result;
   }
 
-  public void setSuggestionProvider(Supplier<String> suggestionProvider) {
+  public void setSuggestionProvider(Function<String, @Nullable String> suggestionProvider) {
     this.suggestionProvider = suggestionProvider;
   }
 
@@ -131,6 +132,8 @@ public class PSTEditBox extends EditBox {
       e.printStackTrace();
     }
   }
+
+  // TODO: replace this bs with mixin accessor
 
   public int getMaxLength() {
     try {

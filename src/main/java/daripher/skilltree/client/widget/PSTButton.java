@@ -13,13 +13,9 @@ import org.jetbrains.annotations.NotNull;
 public class PSTButton extends Button {
   protected Button.OnPress pressFunc;
 
-  public PSTButton(int x, int y, int width, int height, Component message, OnPress pressFunc) {
-    super(x, y, width, height, message, pressFunc);
-    this.pressFunc = pressFunc;
-  }
-
   public PSTButton(int x, int y, int width, int height, Component message) {
-    this(x, y, width, height, message, b -> {});
+    super(x, y, width, height, message, b -> {});
+    this.pressFunc = b -> {};
   }
 
   public void setPressFunc(Button.OnPress pressFunc) {

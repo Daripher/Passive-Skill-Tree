@@ -7,17 +7,11 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.skill.SkillTreeClientData;
-import daripher.skilltree.client.widget.EnumCycleButton;
-import daripher.skilltree.client.widget.NumberEditBox;
-import daripher.skilltree.client.widget.PSTButton;
-import daripher.skilltree.client.widget.PSTEditBox;
-import daripher.skilltree.client.widget.PSTLabel;
-import daripher.skilltree.client.widget.RemoveButton;
-import daripher.skilltree.client.widget.SkillButton;
-import daripher.skilltree.client.widget.SkillConnection;
-import daripher.skilltree.client.widget.StatsList;
+import daripher.skilltree.client.widget.*;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,9 +24,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,18 +32,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
-import top.theillusivec4.curios.common.CuriosHelper;
-import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
-public class SkillTreeEditorScreen extends Screen {
+public class SkillTreeEditorScreen extends Screen implements SkillTreeEditor {
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
   private final List<SkillConnection> skillConnections = new ArrayList<>();
   private final List<SkillConnection> gatewayConnections = new ArrayList<>();
@@ -159,10 +146,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private boolean clickedOnEditBox(double mouseX, double mouseY, int button) {
-    return editBoxesStream()
-        .filter(b -> b.mouseClicked(mouseX, mouseY, button))
-        .findAny()
-        .isPresent();
+    return editBoxesStream().anyMatch(b -> b.mouseClicked(mouseX, mouseY, button));
   }
 
   private Stream<EditBox> editBoxesStream() {
@@ -193,16 +177,13 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private boolean keyPressedOnTextBox(int keyCode, int scanCode, int modifiers) {
-    return editBoxesStream()
-        .filter(b -> b.keyPressed(keyCode, scanCode, modifiers))
-        .findAny()
-        .isPresent();
+    return editBoxesStream().anyMatch(b -> b.keyPressed(keyCode, scanCode, modifiers));
   }
 
   @Override
   public boolean shouldCloseOnEsc() {
     if (!closeOnEsc) {
-      closeOnEsc ^= true;
+      closeOnEsc = true;
       return false;
     }
     return super.shouldCloseOnEsc();
@@ -245,8 +226,8 @@ public class SkillTreeEditorScreen extends Screen {
     mouseY -= scrollY;
     for (SkillButton button : skillButtons.values()) {
       double skillSize = button.skill.getButtonSize() * zoom;
-      double skillX = button.x + button.getWidth() / 2 - skillSize / 2;
-      double skillY = button.y + button.getHeight() / 2 - skillSize / 2;
+      double skillX = button.x + button.getWidth() / 2d - skillSize / 2;
+      double skillY = button.y + button.getHeight() / 2d - skillSize / 2;
       if (mouseX >= skillX
           && mouseY >= skillY
           && mouseX < skillX + skillSize
@@ -294,43 +275,33 @@ public class SkillTreeEditorScreen extends Screen {
           new PSTLabel(
               toolsX + 65, toolsY, Component.literal("• Angle").withStyle(ChatFormatting.GOLD)));
       toolsY += 19;
-      NumberEditBox distanceEditor = new NumberEditBox(font, toolsX, toolsY, 60, 14, 10);
+      PSTNumericEditBox distanceEditor = new PSTNumericEditBox(font, toolsX, toolsY, 60, 14, 10);
       addRenderableWidget(distanceEditor);
-      NumberEditBox angleEditor = new NumberEditBox(font, toolsX + 65, toolsY, 60, 14, 0);
+      PSTNumericEditBox angleEditor = new PSTNumericEditBox(font, toolsX + 65, toolsY, 60, 14, 0);
       addRenderableWidget(angleEditor);
-      Button addButton =
-          new PSTButton(
-              toolsX + 130,
-              toolsY,
-              60,
-              14,
-              Component.literal("Add"),
-              b -> {
-                float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
-                float distance = (float) distanceEditor.getNumericValue();
-                distance += skill.getButtonSize() / 2 + 8;
-                float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
-                float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-                createNewSkill(skillX, skillY, skill);
-                rebuildWidgets();
-              });
+      PSTButton addButton = new PSTButton(toolsX + 130, toolsY, 60, 14, Component.literal("Add"));
+      addButton.setPressFunc(
+          b -> {
+            float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
+            float distance = (float) distanceEditor.getNumericValue();
+            distance += skill.getButtonSize() / 2f + 8;
+            float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+            float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+            createNewSkill(skillX, skillY, skill);
+            rebuildWidgets();
+          });
       addRenderableWidget(addButton);
-      Button copyButton =
-          new PSTButton(
-              toolsX + 195,
-              toolsY,
-              60,
-              14,
-              Component.literal("Copy"),
-              b -> {
-                float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
-                float distance = (float) distanceEditor.getNumericValue();
-                distance += skill.getButtonSize() / 2 + 8;
-                float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
-                float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-                createCopiedSkill(skillX, skillY, skill);
-                rebuildWidgets();
-              });
+      PSTButton copyButton = new PSTButton(toolsX + 195, toolsY, 60, 14, Component.literal("Copy"));
+      copyButton.setPressFunc(
+          b -> {
+            float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
+            float distance = (float) distanceEditor.getNumericValue();
+            distance += skill.getButtonSize() / 2 + 8;
+            float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+            float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+            createCopiedSkill(skillX, skillY, skill);
+            rebuildWidgets();
+          });
       addRenderableWidget(copyButton);
       toolsY += 19;
     }
@@ -343,7 +314,7 @@ public class SkillTreeEditorScreen extends Screen {
     toolsY += 19;
   }
 
-  private PassiveSkill createCopiedSkill(float x, float y, PassiveSkill other) {
+  private void createCopiedSkill(float x, float y, PassiveSkill other) {
     PassiveSkill skill =
         new PassiveSkill(
             createNewSkillId(),
@@ -355,27 +326,15 @@ public class SkillTreeEditorScreen extends Screen {
     skill.setPosition(x, y);
     skill.setConnectedTree(other.getConnectedTreeId());
     skill.setStartingPoint(other.isStartingPoint());
-    other
-        .getAttributeModifiers()
-        .forEach(
-            (pair) -> {
-              AttributeModifier modifier =
-                  new AttributeModifier(
-                      UUID.randomUUID(),
-                      "SkillTree",
-                      pair.getRight().getAmount(),
-                      pair.getRight().getOperation());
-              skill.addAttributeBonus(pair.getLeft(), modifier);
-            });
+    other.getBonuses().stream().map(SkillBonus::copy).forEach(skill::addSkillBonus);
     skill.connect(other);
     SkillTreeClientData.saveEditorSkill(skill);
     SkillTreeClientData.loadEditorSkill(skill.getId());
     skillTree.getSkillIds().add(skill.getId());
     SkillTreeClientData.saveEditorSkillTree(skillTree);
-    return skill;
   }
 
-  private PassiveSkill createNewSkill(float x, float y, @Nullable PassiveSkill other) {
+  private void createNewSkill(float x, float y, @Nullable PassiveSkill other) {
     ResourceLocation background =
         new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
     ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
@@ -388,7 +347,6 @@ public class SkillTreeEditorScreen extends Screen {
     SkillTreeClientData.loadEditorSkill(skill.getId());
     skillTree.getSkillIds().add(skill.getId());
     SkillTreeClientData.saveEditorSkillTree(skillTree);
-    return skill;
   }
 
   private ResourceLocation createNewSkillId() {
@@ -407,8 +365,8 @@ public class SkillTreeEditorScreen extends Screen {
       addRenderableOnly(
           new PSTLabel(toolsX, toolsY, Component.literal("• Size").withStyle(ChatFormatting.GOLD)));
       toolsY += 19;
-      NumberEditBox sizeEditor =
-          new NumberEditBox(font, toolsX, toolsY, 40, 14, skill.getButtonSize());
+      PSTNumericEditBox sizeEditor =
+          new PSTNumericEditBox(font, toolsX, toolsY, 40, 14, skill.getButtonSize());
       sizeEditor.setNumericFilter(d -> d >= 2);
       sizeEditor.setResponder(
           s -> {
@@ -433,8 +391,8 @@ public class SkillTreeEditorScreen extends Screen {
           new PSTLabel(
               toolsX + 65, toolsY, Component.literal("• Position").withStyle(ChatFormatting.GOLD)));
       toolsY += 19;
-      NumberEditBox xPosEditor =
-          new NumberEditBox(font, toolsX + 65, toolsY, 60, 14, skill.getPositionX());
+      PSTNumericEditBox xPosEditor =
+          new PSTNumericEditBox(font, toolsX + 65, toolsY, 60, 14, skill.getPositionX());
       xPosEditor.setResponder(
           s -> {
             skill.setPosition((float) xPosEditor.getNumericValue(), skill.getPositionY());
@@ -446,8 +404,8 @@ public class SkillTreeEditorScreen extends Screen {
             saveSelectedSkills();
           });
       addRenderableWidget(xPosEditor);
-      NumberEditBox yPosEditor =
-          new NumberEditBox(font, toolsX + 130, toolsY, 60, 14, skill.getPositionY());
+      PSTNumericEditBox yPosEditor =
+          new PSTNumericEditBox(font, toolsX + 130, toolsY, 60, 14, skill.getPositionY());
       yPosEditor.setResponder(
           s -> {
             skill.setPosition(skill.getPositionX(), (float) yPosEditor.getNumericValue());
@@ -466,15 +424,13 @@ public class SkillTreeEditorScreen extends Screen {
   private void addAttributeToolsButtons() {
     ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
     PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
-    if (getSelectedSkills().allMatch(otherSkill -> sameAttributeModifiers(skill, otherSkill))) {
+    if (getSelectedSkills().allMatch(otherSkill -> sameSkillBonuses(skill, otherSkill))) {
       addRenderableOnly(
           new PSTLabel(
-              toolsX,
-              toolsY,
-              Component.literal("• Attribute Modifiers").withStyle(ChatFormatting.GOLD)));
+              toolsX, toolsY, Component.literal("• Skill Bonuses").withStyle(ChatFormatting.GOLD)));
       toolsY += 19;
-      for (int row = 0; row < skill.getAttributeModifiers().size(); row++) {
-        addAttributeToolsButtonsRow(skill, row);
+      for (int row = 0; row < skill.getBonuses().size(); row++) {
+        addSkillBonusToolWidgets(skill, row);
         toolsY += 19;
       }
       addAddModifierButton();
@@ -533,11 +489,7 @@ public class SkillTreeEditorScreen extends Screen {
           new PSTEditBox(font, toolsX, toolsY, 355, 14, skill.getBorderTexture().toString());
       borderEditor.setResponder(
           value -> {
-            getSelectedSkills()
-                .forEach(
-                    s -> {
-                      s.setBorderTexture(new ResourceLocation(value));
-                    });
+            getSelectedSkills().forEach(s -> s.setBorderTexture(new ResourceLocation(value)));
             saveSelectedSkills();
           });
       addRenderableWidget(borderEditor);
@@ -545,123 +497,34 @@ public class SkillTreeEditorScreen extends Screen {
     }
   }
 
-  private Stream<PassiveSkill> getSelectedSkills() {
-    return selectedSkills.stream().map(SkillTreeClientData::getEditorSkill);
-  }
-
   private Stream<SkillButton> getSelectedSkillButtons() {
     return selectedSkills.stream().map(skillButtons::get);
   }
 
   private void addAddModifierButton() {
-    Button addModifierButton =
-        new PSTButton(
-            toolsX,
-            toolsY,
-            100,
-            14,
-            Component.translatable("Add Modifier"),
-            b -> {
-              getSelectedSkills()
-                  .forEach(
-                      skill -> {
-                        skill
-                            .getAttributeModifiers()
-                            .add(
-                                Pair.of(
-                                    Attributes.ARMOR,
-                                    new AttributeModifier(
-                                        UUID.randomUUID(), "SkillTree", 1, Operation.ADDITION)));
-                        SkillTreeClientData.saveEditorSkill(skill);
-                        rebuildWidgets();
-                      });
-            });
-    addRenderableWidget(addModifierButton);
-  }
-
-  private void addAttributeToolsButtonsRow(PassiveSkill firstSkill, int row) {
-    Attribute attribute = firstSkill.getAttributeModifiers().get(row).getLeft();
-    String attributeId;
-    if (attribute instanceof SlotAttributeWrapper wrapper) {
-      attributeId = "curios:" + wrapper.identifier;
-    } else {
-      attributeId = ForgeRegistries.ATTRIBUTES.getKey(attribute).toString();
-    }
-    PSTEditBox attributeEditor = new PSTEditBox(font, toolsX, toolsY, 220, 14, attributeId);
-    attributeEditor.setSoftFilter(
-        s -> {
-          if (s.startsWith("curios:")) return true;
-          if (!ResourceLocation.isValidResourceLocation(s)) return false;
-          return ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(s)) != null;
-        });
-    attributeEditor.setSuggestionProvider(
-        () -> {
-          String editorValue = attributeEditor.getValue();
-          Optional<String> fittingAttribute =
-              ForgeRegistries.ATTRIBUTES.getKeys().stream()
-                  .map(ResourceLocation::toString)
-                  .filter(s -> s.startsWith(editorValue))
-                  .findFirst();
-          if (fittingAttribute.isPresent()) return fittingAttribute.get().replace(editorValue, "");
-          return null;
-        });
-    addRenderableWidget(attributeEditor);
-    AttributeModifier modifier = firstSkill.getAttributeModifiers().get(row).getRight();
-    NumberEditBox valueEditor =
-        new NumberEditBox(font, toolsX + 225, toolsY, 30, 14, modifier.getAmount());
-    addRenderableWidget(valueEditor);
-    EnumCycleButton<Operation> operationButton =
-        new EnumCycleButton<>(toolsX + 260, toolsY, 95, 14, modifier.getOperation());
-    addRenderableWidget(operationButton);
-    Button removeButton =
-        new RemoveButton(
-            toolsX + 360,
-            toolsY,
-            14,
-            14,
-            b -> {
-              getSelectedSkills()
-                  .forEach(
-                      skill -> {
-                        skill.getAttributeModifiers().remove(row);
-                        SkillTreeClientData.saveEditorSkill(skill);
-                        rebuildWidgets();
-                      });
-            });
-    addRenderableWidget(removeButton);
-    final int modifierIndex = row;
-    Runnable onChange =
-        () -> {
-          if (!attributeEditor.isValueValid()) return;
+    PSTButton addModifierButton =
+        new PSTButton(toolsX, toolsY, 100, 14, Component.translatable("Add Modifier"));
+    addModifierButton.setPressFunc(
+        b -> {
           getSelectedSkills()
               .forEach(
                   skill -> {
-                    String newAttributeId = attributeEditor.getValue();
-                    Attribute newAttribute;
-                    if (newAttributeId.startsWith("curios:")) {
-                      newAttribute =
-                          CuriosHelper.getOrCreateSlotAttribute(
-                              newAttributeId.replace("curios:", ""));
-                    } else {
-                      newAttribute =
-                          ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(newAttributeId));
-                    }
-                    AttributeModifier oldModifier =
-                        skill.getAttributeModifiers().get(modifierIndex).getRight();
-                    double amount = valueEditor.getNumericValue();
-                    Operation operation = operationButton.getValue();
-                    AttributeModifier newModifier =
-                        new AttributeModifier(
-                            oldModifier.getId(), oldModifier.getName(), amount, operation);
                     skill
-                        .getAttributeModifiers()
-                        .set(modifierIndex, Pair.of(newAttribute, newModifier));
+                        .getBonuses()
+                        .add(
+                            new AttributeSkillBonus(
+                                Attributes.ARMOR,
+                                new AttributeModifier(
+                                    UUID.randomUUID(), "SkillTree", 1, Operation.ADDITION)));
                     SkillTreeClientData.saveEditorSkill(skill);
+                    rebuildWidgets();
                   });
-        };
-    attributeEditor.setResponder(s -> onChange.run());
-    valueEditor.setResponder(s -> onChange.run());
-    operationButton.setPressFunc(b -> onChange.run());
+        });
+    addRenderableWidget(addModifierButton);
+  }
+
+  private void addSkillBonusToolWidgets(PassiveSkill skill, int row) {
+    skill.getBonuses().get(row).addEditorWidgets(this, row);
   }
 
   private void addConnectionToolsButton() {
@@ -674,46 +537,37 @@ public class SkillTreeEditorScreen extends Screen {
     PassiveSkill firstSkill = SkillTreeClientData.getEditorSkill(first);
     PassiveSkill secondSkill = SkillTreeClientData.getEditorSkill(second);
     if (areSkillsConnected(firstSkill, secondSkill)) {
-      addRenderableWidget(
-          new PSTButton(
-              toolsX,
-              toolsY,
-              100,
-              14,
-              Component.literal("Disconnect"),
-              b -> {
-                firstSkill.getConnectedSkills().remove(second);
-                firstSkill.getConnectedAsGateways().remove(second);
-                secondSkill.getConnectedSkills().remove(first);
-                secondSkill.getConnectedAsGateways().remove(first);
-                saveSelectedSkills();
-                rebuildWidgets();
-              }));
+      PSTButton disconnectButton =
+          new PSTButton(toolsX, toolsY, 100, 14, Component.literal("Disconnect"));
+      addRenderableWidget(disconnectButton);
+      disconnectButton.setPressFunc(
+          b -> {
+            firstSkill.getConnectedSkills().remove(second);
+            firstSkill.getConnectedAsGateways().remove(second);
+            secondSkill.getConnectedSkills().remove(first);
+            secondSkill.getConnectedAsGateways().remove(first);
+            saveSelectedSkills();
+            rebuildWidgets();
+          });
     } else {
-      addRenderableWidget(
-          new PSTButton(
-              toolsX,
-              toolsY,
-              110,
-              14,
-              Component.literal("Connect"),
-              b -> {
-                skillButtons.get(first).skill.getConnectedSkills().add(second);
-                saveSelectedSkills();
-                rebuildWidgets();
-              }));
-      addRenderableWidget(
-          new PSTButton(
-              toolsX + 115,
-              toolsY,
-              110,
-              14,
-              Component.literal("Connect as Gateway"),
-              b -> {
-                skillButtons.get(first).skill.getConnectedAsGateways().add(second);
-                saveSelectedSkills();
-                rebuildWidgets();
-              }));
+      PSTButton connectButton =
+          new PSTButton(toolsX, toolsY, 110, 14, Component.literal("Connect"));
+      addRenderableWidget(connectButton);
+      connectButton.setPressFunc(
+          b -> {
+            skillButtons.get(first).skill.getConnectedSkills().add(second);
+            saveSelectedSkills();
+            rebuildWidgets();
+          });
+      PSTButton connectAsGatewayButton =
+          new PSTButton(toolsX + 115, toolsY, 110, 14, Component.literal("Connect as Gateway"));
+      connectAsGatewayButton.setPressFunc(
+          b -> {
+            skillButtons.get(first).skill.getConnectedAsGateways().add(second);
+            saveSelectedSkills();
+            rebuildWidgets();
+          });
+      addRenderableWidget(connectAsGatewayButton);
     }
     toolsY += 19;
   }
@@ -901,12 +755,55 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-    if (!getWidgetAt(mouseX, mouseY).filter(StatsList.class::isInstance).isPresent()) {
-      if (amount > 0 && zoom < 2F) zoom += 0.05;
-      if (amount < 0 && zoom > 0.25F) zoom -= 0.05;
+    if (getWidgetAt(mouseX, mouseY).filter(SkillBonusList.class::isInstance).isEmpty()) {
+      if (amount > 0 && zoom < 2F) zoom += 0.05f;
+      if (amount < 0 && zoom > 0.25F) zoom -= 0.05f;
       rebuildWidgets();
     }
     return super.mouseScrolled(mouseX, mouseY, amount);
+  }
+
+  @Override
+  public Stream<PassiveSkill> getSelectedSkills() {
+    return selectedSkills.stream().map(SkillTreeClientData::getEditorSkill);
+  }
+
+  @Override
+  public void rebuildWidgets() {
+    super.rebuildWidgets();
+  }
+
+  @Override
+  public void shiftWidgets(int x, int y) {
+    toolsX += x;
+    toolsY += y;
+  }
+
+  @Override
+  public PSTEditBox addTextField(int x, int y, int width, int height, String defaultValue) {
+    assert minecraft != null;
+    return addRenderableWidget(
+        new PSTEditBox(minecraft.font, toolsX + x, toolsY + y, width, height, defaultValue));
+  }
+
+  @Override
+  public PSTNumericEditBox addNumericTextField(
+      int x, int y, int width, int height, double defaultValue) {
+    assert minecraft != null;
+    return addRenderableWidget(
+        new PSTNumericEditBox(minecraft.font, toolsX + x, toolsY + y, width, height, defaultValue));
+  }
+
+  @Override
+  public PSTButton addRemoveButton(int x, int y, int width, int height) {
+    return addRenderableWidget(new RemoveButton(toolsX + x, toolsY + y, width, height));
+  }
+
+  @Override
+  public <T extends Enum<T>> EnumCycleButton<T> addEnumCycleButton(
+      int x, int y, int width, int height, T defaultValue) {
+    return addRenderableWidget(
+        new EnumCycleButton<>(toolsX + x, toolsY + y, width, height, defaultValue));
   }
 
   protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -976,17 +873,13 @@ public class SkillTreeEditorScreen extends Screen {
     return 2048;
   }
 
-  protected boolean sameAttributeModifiers(PassiveSkill skill, PassiveSkill otherSkill) {
+  protected boolean sameSkillBonuses(PassiveSkill skill, PassiveSkill otherSkill) {
     if (skill == otherSkill) return true;
-    List<Pair<Attribute, AttributeModifier>> modifiers = skill.getAttributeModifiers();
-    List<Pair<Attribute, AttributeModifier>> otherModifiers = otherSkill.getAttributeModifiers();
+    List<SkillBonus<?>> modifiers = skill.getBonuses();
+    List<SkillBonus<?>> otherModifiers = otherSkill.getBonuses();
     if (modifiers.size() != otherModifiers.size()) return false;
     for (int i = 0; i < modifiers.size(); i++) {
-      if (modifiers.get(i).getLeft() != otherModifiers.get(i).getLeft()) return false;
-      AttributeModifier modifier = modifiers.get(i).getRight();
-      AttributeModifier otherModifier = otherModifiers.get(i).getRight();
-      if (modifier.getAmount() != otherModifier.getAmount()) return false;
-      if (modifier.getOperation() != otherModifier.getOperation()) return false;
+      if (!modifiers.get(i).sameBonus(otherModifiers.get(i))) return false;
     }
     return true;
   }

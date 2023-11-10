@@ -13,14 +13,14 @@ import daripher.skilltree.client.widget.PSTButton;
 import daripher.skilltree.client.widget.ProgressBar;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
-import daripher.skilltree.client.widget.StatsList;
+import daripher.skilltree.client.widget.SkillBonusList;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import daripher.skilltree.util.TooltipHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +39,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillTreeScreen extends Screen {
@@ -61,13 +57,13 @@ public class SkillTreeScreen extends Screen {
   protected double scrollY;
   protected int maxScrollX;
   protected int maxScrollY;
-  private AbstractWidget buyButton;
+  private PSTButton buyButton;
   private AbstractWidget pointsInfo;
-  private AbstractWidget confirmButton;
-  private AbstractWidget cancelButton;
-  private AbstractWidget showStatsButton;
+  private PSTButton confirmButton;
+  private PSTButton cancelButton;
+  private PSTButton showStatsButton;
   private ProgressBar progressBar;
-  private StatsList statsInfo;
+  private SkillBonusList statsInfo;
   private boolean firstInitDone;
   private boolean showStats;
   private boolean showProgressInNumbers;
@@ -101,8 +97,8 @@ public class SkillTreeScreen extends Screen {
     }
     if (!firstInitDone) firstInit();
     addSkillButtons();
-    statsInfo = new StatsList(48, height - 60);
-    statsInfo.setStats(calculateStatsList());
+    statsInfo = new SkillBonusList(48, height - 60);
+    statsInfo.setStats(getMergedSkillBonusesTooltips());
     addRenderableWidget(statsInfo);
     maxScrollX -= width / 2 - 80;
     maxScrollY -= height / 2 - 80;
@@ -125,22 +121,12 @@ public class SkillTreeScreen extends Screen {
     buttonWidth += 20;
     int buttonsY = 8;
     showStatsButton =
-        new PSTButton(
-            width - buttonWidth - 8,
-            buttonsY,
-            buttonWidth,
-            14,
-            showStatsButtonText,
-            b -> showStats ^= true);
+        new PSTButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
+    showStatsButton.setPressFunc(b -> showStats ^= true);
     addRenderableWidget(showStatsButton);
     buyButton =
-        new PSTButton(
-            width / 2 - 8 - buttonWidth,
-            buttonsY,
-            buttonWidth,
-            14,
-            buyButtonText,
-            b -> buySkillPoint());
+        new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText);
+    buyButton.setPressFunc(b -> buySkillPoint());
     addRenderableWidget(buyButton);
     pointsInfo = new InfoPanel(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
     if (!Config.enable_exp_exchange) {
@@ -149,17 +135,11 @@ public class SkillTreeScreen extends Screen {
     addRenderableWidget(pointsInfo);
     buttonsY += 20;
     confirmButton =
-        new PSTButton(
-            width / 2 - 8 - buttonWidth,
-            buttonsY,
-            buttonWidth,
-            14,
-            confirmButtonText,
-            b -> confirmLearnSkills());
+        new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText);
+    confirmButton.setPressFunc(b -> confirmLearnSkills());
     addRenderableWidget(confirmButton);
-    cancelButton =
-        new PSTButton(
-            width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText, b -> cancelLearnSkills());
+    cancelButton = new PSTButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText);
+    cancelButton.setPressFunc(b -> cancelLearnSkills());
     addRenderableWidget(cancelButton);
     confirmButton.active = cancelButton.active = !newlyLearnedSkills.isEmpty();
     buttonWidth = font.width(showStatsButtonText) + 20;
@@ -250,42 +230,40 @@ public class SkillTreeScreen extends Screen {
     return Optional.empty();
   }
 
-  private List<Component> calculateStatsList() {
-    Map<Pair<Attribute, Operation>, Double> stats = new HashMap<>();
+  private List<MutableComponent> getMergedSkillBonusesTooltips() {
+    List<SkillBonus<?>> allBonuses = new ArrayList<>();
+
     learnedSkills.stream()
         .map(skillButtons::get)
         .map(button -> button.skill)
-        .map(PassiveSkill::getAttributeModifiers)
-        .forEach(
-            list -> {
-              list.forEach(
-                  pair -> {
-                    Pair<Attribute, Operation> attributeOperation =
-                        Pair.of(pair.getLeft(), pair.getRight().getOperation());
-                    if (!stats.containsKey(attributeOperation)) {
-                      stats.put(attributeOperation, pair.getRight().getAmount());
-                    } else {
-                      stats.put(
-                          attributeOperation,
-                          pair.getRight().getAmount() + stats.get(attributeOperation));
-                    }
-                  });
-            });
-    List<Component> statTooltips = new ArrayList<>();
-    stats.keySet().stream()
-        .forEach(
-            pair -> {
-              AttributeModifier modifier =
-                  new AttributeModifier("FakeModifier", stats.get(pair), pair.getRight());
-              statTooltips.add(
-                  TooltipHelper.getAttributeBonusTooltip(Pair.of(pair.getLeft(), modifier)));
-            });
-    statTooltips.sort(
-        (a, b) -> {
-          String regex = "\\+?\\-?[0-9]+\\.?[0-9]?\\%?";
-          return a.getString().replaceAll(regex, "").compareTo(b.getString().replaceAll(regex, ""));
+        .map(PassiveSkill::getBonuses)
+        .forEach(skillBonuses -> mergeSkillBonuses(allBonuses, skillBonuses));
+
+    return allBonuses.stream()
+        .map(SkillBonus::getTooltip)
+        .sorted(SkillTreeScreen::sortSkillBonusTooltips)
+        .toList();
+  }
+
+  private static int sortSkillBonusTooltips(Component a, Component b) {
+    String regex = "\\+?\\-?[0-9]+\\.?[0-9]?\\%?";
+    String as = a.getString().replaceAll(regex, "");
+    String bs = b.getString().replaceAll(regex, "");
+    return as.compareTo(bs);
+  }
+
+  private static void mergeSkillBonuses(
+      List<SkillBonus<?>> allBonuses, List<SkillBonus<?>> skillBonuses) {
+    skillBonuses.forEach(
+        bonus -> {
+          Optional<SkillBonus<?>> sameBonus = allBonuses.stream().filter(bonus::canMerge).findAny();
+          if (sameBonus.isPresent()) {
+            allBonuses.remove(sameBonus.get());
+            allBonuses.add(sameBonus.get().merge(bonus));
+          } else {
+            allBonuses.add(bonus);
+          }
         });
-    return statTooltips;
   }
 
   protected void firstInit() {
@@ -544,7 +522,7 @@ public class SkillTreeScreen extends Screen {
 
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-    if (!getWidgetAt(mouseX, mouseY).filter(StatsList.class::isInstance).isPresent()) {
+    if (!getWidgetAt(mouseX, mouseY).filter(SkillBonusList.class::isInstance).isPresent()) {
       if (amount > 0 && zoom < 2F) zoom += 0.05;
       if (amount < 0 && zoom > 0.25F) zoom -= 0.05;
       rebuildWidgets();

@@ -1,31 +1,21 @@
 package daripher.skilltree.skill;
 
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.Nullable;
-import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
-import org.apache.commons.lang3.tuple.Pair;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.common.CuriosHelper.SlotAttributeWrapper;
 
 public class PassiveSkill {
   private final ResourceLocation id;
-  private final List<Pair<Attribute, AttributeModifier>> attributeModifiers = new ArrayList<>();
+  private final List<SkillBonus<?>> bonuses = new ArrayList<>();
   private final List<ResourceLocation> connectedSkills = new ArrayList<>();
   private final List<ResourceLocation> connectedAsGateways = new ArrayList<>();
   private ResourceLocation backgroundTexture;
   private ResourceLocation iconTexture;
   private ResourceLocation borderTexture;
   private @Nullable ResourceLocation connectedTreeId;
-  private List<String> commands = new ArrayList<>();
   private float positionX, positionY;
   private int buttonSize;
   private boolean isStartingPoint;
@@ -97,16 +87,12 @@ public class PassiveSkill {
     this.isStartingPoint = isStartingPoint;
   }
 
-  public List<Pair<Attribute, AttributeModifier>> getAttributeModifiers() {
-    return attributeModifiers;
+  public List<SkillBonus<?>> getBonuses() {
+    return bonuses;
   }
 
-  public void addAttributeBonus(Attribute attribute, AttributeModifier modifier) {
-    attributeModifiers.add(Pair.of(attribute, modifier));
-  }
-
-  public void addAttributeBonus(Pair<Attribute, AttributeModifier> bonus) {
-    attributeModifiers.add(bonus);
+  public void addSkillBonus(SkillBonus<?> bonus) {
+    bonuses.add(bonus);
   }
 
   public void connect(PassiveSkill otherSkill) {
@@ -138,59 +124,11 @@ public class PassiveSkill {
     return !connectedAsGateways.isEmpty();
   }
 
-  public List<String> getCommands() {
-    return commands;
-  }
-
-  public void setCommands(NonNullList<String> commands) {
-    this.commands = commands;
-  }
-
-  public void learn(ServerPlayer player, boolean restoring) {
-    getAttributeModifiers()
-        .forEach(pair -> addAttributeModifier(player, pair.getLeft(), pair.getRight(), restoring));
-    if (!restoring) executeCommands(player);
-  }
-
-  private void executeCommands(ServerPlayer player) {
-    MinecraftServer server = player.getServer();
-    if (server == null) return;
-    commands.forEach(
-        command -> {
-          command = command.replaceAll("<p>", player.getGameProfile().getName());
-          server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
-        });
-  }
-
-  @SuppressWarnings("deprecation")
-  public void addAttributeModifier(
-      ServerPlayer player, Attribute attribute, AttributeModifier modifier, boolean restoring) {
-    if (attribute instanceof SlotAttributeWrapper wrapper) {
-      if (!restoring)
-        CuriosApi.getSlotHelper()
-            .growSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
-      return;
-    }
-    AttributeInstance instance = player.getAttribute(attribute);
-    if (instance == null) return;
-    if (!instance.hasModifier(modifier)) instance.addTransientModifier(modifier);
+  public void learn(ServerPlayer player, boolean firstTime) {
+    getBonuses().forEach(b -> b.onSkillLearned(player, firstTime));
   }
 
   public void remove(ServerPlayer player) {
-    getAttributeModifiers()
-        .forEach(pair -> removeAttributeModifier(player, pair.getLeft(), pair.getRight()));
-  }
-
-  @SuppressWarnings("deprecation")
-  public void removeAttributeModifier(
-      Player player, Attribute attribute, AttributeModifier modifier) {
-    if (attribute instanceof SlotAttributeWrapper wrapper) {
-      CuriosApi.getSlotHelper()
-          .shrinkSlotType(wrapper.identifier, (int) modifier.getAmount(), player);
-      return;
-    }
-    AttributeInstance instance = player.getAttribute(attribute);
-    if (instance == null) return;
-    if (instance.hasModifier(modifier)) instance.removeModifier(modifier);
+    getBonuses().forEach(b -> b.onSkillRemoved(player));
   }
 }

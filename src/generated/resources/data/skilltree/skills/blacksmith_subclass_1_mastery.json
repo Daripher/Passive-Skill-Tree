@@ -1,37 +1,33 @@
 {
-  "attributeModifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
       "attribute": "skilltree:block_chance",
-      "modifier": {
-        "amount": 0.1,
-        "id": "ba17258e-4a57-4112-b960-8bcd482adda9",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "e5c17cd4-00d9-4151-8113-632d42dc0f85",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "modifier": {
-        "amount": 0.05,
-        "id": "e4125462-e72a-43f6-a1d4-ecb2a9a43d1d",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "364e323d-1e81-4acb-8959-5a05156291c2",
+      "name": "SkillBonus",
+      "operation": 1
     },
     {
+      "type": "skilltree:attribute",
+      "amount": 0.05,
       "attribute": "skilltree:melee_damage",
-      "modifier": {
-        "amount": 0.05,
-        "id": "6ea373ba-bff4-4879-950e-1e1664678606",
-        "nameGetter": "PassiveSkill",
-        "operation": "MULTIPLY_BASE"
-      }
+      "id": "53c80bbc-8a91-4c52-a1b6-d5810bedec2f",
+      "name": "SkillBonus",
+      "operation": 1
     }
   ],
-  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "commands": [],
   "connectedAsGateways": [],
   "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_4"
