@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 @JeiPlugin
 public class JeiCompatibility implements IModPlugin {
-
   @Override
   public @NotNull ResourceLocation getPluginUid() {
     return new ResourceLocation(SkillTreeMod.MOD_ID, "jei_plugin");
@@ -26,7 +25,7 @@ public class JeiCompatibility implements IModPlugin {
   @Override
   public void registerRecipes(@NotNull IRecipeRegistration registration) {
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return;
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return;
     }
     ForgeRegistries.ITEMS.getValues().stream()
         .filter(GemItem.class::isInstance)

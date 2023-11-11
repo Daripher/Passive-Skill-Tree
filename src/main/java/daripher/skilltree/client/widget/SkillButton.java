@@ -2,6 +2,7 @@ package daripher.skilltree.client.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
@@ -10,12 +11,11 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -62,14 +62,14 @@ public class SkillButton extends Button {
 
   @Override
   public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-    prepareTextureRendering(skill.getBackgroundTexture());
+    ScreenHelper.prepareTextureRendering(skill.getBackgroundTexture());
     poseStack.pushPose();
     poseStack.translate(x, y, 0);
     blit(poseStack, 0, 0, width, height, 0, 0, width, height, width * 3, height);
     poseStack.pushPose();
-    poseStack.translate(width / 2, height / 2, 0);
+    poseStack.translate(width / 2d, height / 2d, 0);
     poseStack.scale(0.5F, 0.5F, 1);
-    poseStack.translate(-width / 2, -height / 2, 0);
+    poseStack.translate(-width / 2d, -height / 2d, 0);
     RenderSystem.setShaderTexture(0, skill.getIconTexture());
     blit(poseStack, 0, 0, width, height, 0, 0, width, height, width, height);
     poseStack.popPose();
@@ -103,15 +103,6 @@ public class SkillButton extends Button {
     super.x = (int) x;
     this.y = y;
     super.y = (int) y;
-  }
-
-  private void prepareTextureRendering(ResourceLocation textureLocation) {
-    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-    RenderSystem.setShaderTexture(0, textureLocation);
-    RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-    RenderSystem.enableBlend();
-    RenderSystem.defaultBlendFunc();
-    RenderSystem.enableDepthTest();
   }
 
   public List<MutableComponent> getTooltip() {
@@ -156,8 +147,8 @@ public class SkillButton extends Button {
   }
 
   protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
-    var titleId = getSkillId() + ".name";
-    var title = Component.translatable(titleId);
+    String titleId = getSkillId() + ".name";
+    MutableComponent title = Component.translatable(titleId);
     tooltip.add(title.withStyle(getTitleStyle()));
   }
 
@@ -187,7 +178,7 @@ public class SkillButton extends Button {
   }
 
   public ItemStack getTooltipBorderStyleStack() {
-    var styleItem =
+    Item styleItem =
         width == 24 ? Items.EXPERIENCE_BOTTLE : width == 20 ? Items.SHULKER_SHELL : Items.BUCKET;
     return new ItemStack(styleItem);
   }

@@ -26,7 +26,7 @@ public class PSTDataGenerator {
     dataGenerator.addProvider(
         event.includeClient(), new PSTItemModelsProvider(dataGenerator, fileHelper));
 
-    var blockTagsProvider = new PSTBlockTagsProvider(dataGenerator, fileHelper);
+    PSTBlockTagsProvider blockTagsProvider = new PSTBlockTagsProvider(dataGenerator, fileHelper);
     dataGenerator.addProvider(event.includeServer(), blockTagsProvider);
     dataGenerator.addProvider(
         event.includeServer(),

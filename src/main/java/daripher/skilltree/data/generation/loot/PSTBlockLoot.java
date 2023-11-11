@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 public class PSTBlockLoot extends BlockLoot {
   private final Map<ResourceLocation, LootTable.Builder> lootTables = Maps.newHashMap();
@@ -46,8 +47,8 @@ public class PSTBlockLoot extends BlockLoot {
   }
 
   @Override
-  public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+  public void accept(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
     addTables();
-    lootTables.forEach(consumer::accept);
+    lootTables.forEach(consumer);
   }
 }

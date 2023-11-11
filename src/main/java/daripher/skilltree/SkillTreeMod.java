@@ -53,7 +53,7 @@ public class SkillTreeMod {
   }
 
   protected void addCompatibilities() {
-    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.ISNTANCE.addCompatibility();
+    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.INSTANCE.addCompatibility();
     if (ModList.get().isLoaded("tetra")) TetraCompatibility.ISNTANCE.addCompatibility();
   }
 }

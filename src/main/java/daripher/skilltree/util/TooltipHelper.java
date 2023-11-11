@@ -1,13 +1,10 @@
 package daripher.skilltree.util;
 
-import daripher.skilltree.init.PSTAttributes;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class TooltipHelper {
   public static MutableComponent getEffectTooltip(MobEffectInstance effectInstance) {

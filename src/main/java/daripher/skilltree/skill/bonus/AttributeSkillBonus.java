@@ -29,13 +29,54 @@ import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.common.CuriosHelper;
 
-public class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
+public final class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
   private final Attribute attribute;
-  private final AttributeModifier modifier;
+  private AttributeModifier modifier;
 
   public AttributeSkillBonus(Attribute attribute, AttributeModifier modifier) {
     this.attribute = attribute;
     this.modifier = modifier;
+  }
+
+  private static void setNewSkillBonus(
+      TextField attributeEditor,
+      NumericTextField valueEditor,
+      EnumCycleButton<AttributeModifier.Operation> operationButton,
+      int row,
+      PassiveSkill skill) {
+
+    String newAttributeId = attributeEditor.getValue();
+    Attribute newAttribute = createAttribute(newAttributeId);
+    AttributeSkillBonus oldBonus = (AttributeSkillBonus) skill.getBonuses().get(row);
+    AttributeModifier oldModifier = oldBonus.modifier;
+    double amount = valueEditor.getNumericValue();
+    AttributeModifier.Operation operation = operationButton.getValue();
+    AttributeModifier newModifier =
+        new AttributeModifier(oldModifier.getId(), oldModifier.getName(), amount, operation);
+    skill.getBonuses().set(row, new AttributeSkillBonus(newAttribute, newModifier));
+    SkillTreeClientData.saveEditorSkill(skill);
+  }
+
+  @Nullable
+  private static Attribute createAttribute(String id) {
+    Attribute newAttribute;
+    if (id.startsWith("curios:")) {
+      newAttribute = CuriosHelper.getOrCreateSlotAttribute(id.replace("curios:", ""));
+    } else {
+      newAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(id));
+    }
+    return newAttribute;
+  }
+
+  private static void removeButtonPressed(SkillTreeEditor editor, int row) {
+    editor
+        .getSelectedSkills()
+        .forEach(
+            skill -> {
+              skill.getBonuses().remove(row);
+              SkillTreeClientData.saveEditorSkill(skill);
+              editor.rebuildWidgets();
+            });
   }
 
   @SuppressWarnings("deprecation")
@@ -89,6 +130,17 @@ public class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
   }
 
   @Override
+  public AttributeSkillBonus multiply(double multiplier) {
+    modifier =
+        new AttributeModifier(
+            modifier.getId(),
+            modifier.getName(),
+            modifier.getAmount() * multiplier,
+            modifier.getOperation());
+    return this;
+  }
+
+  @Override
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof AttributeSkillBonus otherBonus)) return false;
     if (otherBonus.attribute != this.attribute) return false;
@@ -132,11 +184,10 @@ public class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
 
   @Override
   public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    PSTEditBox attributeEditor = editor.addTextField(0, 0, 220, 14, getAttributeId());
+    TextField attributeEditor = editor.addTextField(0, 0, 220, 14, getAttributeId());
     attributeEditor.setSoftFilter(this::isAttributeId);
     attributeEditor.setSuggestionProvider(this::suggestAttribute);
-    PSTNumericEditBox valueEditor =
-        editor.addNumericTextField(225, 0, 30, 14, modifier.getAmount());
+    NumericTextField valueEditor = editor.addNumericTextField(225, 0, 30, 14, modifier.getAmount());
     EnumCycleButton<AttributeModifier.Operation> operationEditor =
         editor.addEnumCycleButton(260, 0, 95, 14, modifier.getOperation());
     attributeEditor.setResponder(
@@ -145,15 +196,15 @@ public class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
         s -> editorWidgetChanged(editor, attributeEditor, valueEditor, operationEditor, row));
     operationEditor.setPressFunc(
         b -> editorWidgetChanged(editor, attributeEditor, valueEditor, operationEditor, row));
-    PSTButton removeButton = editor.addRemoveButton(360, 0, 14, 14);
+    Button removeButton = editor.addRemoveButton(360, 0, 14, 14);
     removeButton.setPressFunc(b -> removeButtonPressed(editor, row));
     editor.shiftWidgets(0, 19);
   }
 
   private void editorWidgetChanged(
       SkillTreeEditor editor,
-      PSTEditBox attributeEditor,
-      PSTNumericEditBox valueEditor,
+      TextField attributeEditor,
+      NumericTextField valueEditor,
       EnumCycleButton<AttributeModifier.Operation> operationEditor,
       final int row) {
 
@@ -162,47 +213,6 @@ public class AttributeSkillBonus implements SkillBonus<AttributeSkillBonus> {
         .getSelectedSkills()
         .forEach(
             skill -> setNewSkillBonus(attributeEditor, valueEditor, operationEditor, row, skill));
-  }
-
-  private static void setNewSkillBonus(
-      PSTEditBox attributeEditor,
-      PSTNumericEditBox valueEditor,
-      EnumCycleButton<AttributeModifier.Operation> operationButton,
-      int row,
-      PassiveSkill skill) {
-
-    String newAttributeId = attributeEditor.getValue();
-    Attribute newAttribute = createAttribute(newAttributeId);
-    AttributeSkillBonus oldBonus = (AttributeSkillBonus) skill.getBonuses().get(row);
-    AttributeModifier oldModifier = oldBonus.modifier;
-    double amount = valueEditor.getNumericValue();
-    AttributeModifier.Operation operation = operationButton.getValue();
-    AttributeModifier newModifier =
-        new AttributeModifier(oldModifier.getId(), oldModifier.getName(), amount, operation);
-    skill.getBonuses().set(row, new AttributeSkillBonus(newAttribute, newModifier));
-    SkillTreeClientData.saveEditorSkill(skill);
-  }
-
-  @Nullable
-  private static Attribute createAttribute(String id) {
-    Attribute newAttribute;
-    if (id.startsWith("curios:")) {
-      newAttribute = CuriosHelper.getOrCreateSlotAttribute(id.replace("curios:", ""));
-    } else {
-      newAttribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(id));
-    }
-    return newAttribute;
-  }
-
-  private static void removeButtonPressed(SkillTreeEditor editor, int row) {
-    editor
-        .getSelectedSkills()
-        .forEach(
-            skill -> {
-              skill.getBonuses().remove(row);
-              SkillTreeClientData.saveEditorSkill(skill);
-              editor.rebuildWidgets();
-            });
   }
 
   @NotNull

@@ -138,8 +138,6 @@ public class PSTAttributes {
       create("crit_chance_with_shield", 1D, 1D);
   public static final RegistryObject<Attribute> CRIT_DAMAGE_WITH_SHIELD =
       create("crit_damage_with_shield", 1D, 1D);
-  public static final RegistryObject<Attribute> ARMOR_WITH_SHIELD =
-      create("armor_with_shield", 1D, 1D);
   public static final RegistryObject<Attribute> ATTACK_DAMAGE_PER_ARMOR =
       create("attack_damage_per_armor", 0D, 0D);
   public static final RegistryObject<Attribute> MAXIMUM_LIFE_PER_ARMOR =

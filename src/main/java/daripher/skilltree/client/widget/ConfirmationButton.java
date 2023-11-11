@@ -2,7 +2,7 @@ package daripher.skilltree.client.widget;
 
 import net.minecraft.network.chat.Component;
 
-public class ConfirmationButton extends PSTButton {
+public class ConfirmationButton extends Button {
   protected boolean confirming;
 
   public ConfirmationButton(int x, int y, int width, int height, Component message) {

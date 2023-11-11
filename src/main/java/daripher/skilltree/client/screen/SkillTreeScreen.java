@@ -1,6 +1,5 @@
 package daripher.skilltree.client.screen;
 
-import com.google.common.base.Predicates;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -8,12 +7,7 @@ import com.mojang.math.Vector3f;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.skill.SkillTreeClientData;
-import daripher.skilltree.client.widget.InfoPanel;
-import daripher.skilltree.client.widget.PSTButton;
-import daripher.skilltree.client.widget.ProgressBar;
-import daripher.skilltree.client.widget.SkillButton;
-import daripher.skilltree.client.widget.SkillConnection;
-import daripher.skilltree.client.widget.SkillBonusList;
+import daripher.skilltree.client.widget.*;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
@@ -21,18 +15,15 @@ import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
+import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -42,6 +33,7 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillTreeScreen extends Screen {
+  public static final int BACKGROUND_SIZE = 2048;
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
   private final List<SkillConnection> skillConnections = new ArrayList<>();
   private final List<SkillConnection> gatewayConnections = new ArrayList<>();
@@ -57,11 +49,8 @@ public class SkillTreeScreen extends Screen {
   protected double scrollY;
   protected int maxScrollX;
   protected int maxScrollY;
-  private PSTButton buyButton;
-  private AbstractWidget pointsInfo;
-  private PSTButton confirmButton;
-  private PSTButton cancelButton;
-  private PSTButton showStatsButton;
+  private Button buyButton;
+  private Label pointsInfo;
   private ProgressBar progressBar;
   private SkillBonusList statsInfo;
   private boolean firstInitDone;
@@ -75,6 +64,27 @@ public class SkillTreeScreen extends Screen {
     super(Component.empty());
     this.skillTree = SkillTreeClientData.getSkillTree(skillTreeId);
     this.minecraft = Minecraft.getInstance();
+  }
+
+  private static int sortSkillBonusTooltips(Component a, Component b) {
+    String regex = "\\+?-?[0-9]+\\.?[0-9]?%?";
+    String as = a.getString().replaceAll(regex, "");
+    String bs = b.getString().replaceAll(regex, "");
+    return as.compareTo(bs);
+  }
+
+  private static void mergeSkillBonuses(
+      List<SkillBonus<?>> allBonuses, List<SkillBonus<?>> skillBonuses) {
+    skillBonuses.forEach(
+        bonus -> {
+          Optional<SkillBonus<?>> sameBonus = allBonuses.stream().filter(bonus::canMerge).findAny();
+          if (sameBonus.isPresent()) {
+            allBonuses.remove(sameBonus.get());
+            allBonuses.add(sameBonus.get().merge(bonus));
+          } else {
+            allBonuses.add(bonus);
+          }
+        });
   }
 
   @Override
@@ -120,29 +130,27 @@ public class SkillTreeScreen extends Screen {
     buttonWidth = Math.max(buttonWidth, font.width(cancelButtonText));
     buttonWidth += 20;
     int buttonsY = 8;
-    showStatsButton =
-        new PSTButton(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
+    Button showStatsButton =
+        new Button(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
     showStatsButton.setPressFunc(b -> showStats ^= true);
     addRenderableWidget(showStatsButton);
-    buyButton =
-        new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText);
+    buyButton = new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText);
     buyButton.setPressFunc(b -> buySkillPoint());
     addRenderableWidget(buyButton);
-    pointsInfo = new InfoPanel(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
+    pointsInfo = new Label(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
     if (!Config.enable_exp_exchange) {
       pointsInfo.x = width / 2 - buttonWidth / 2;
     }
     addRenderableWidget(pointsInfo);
     buttonsY += 20;
-    confirmButton =
-        new PSTButton(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText);
+    Button confirmButton =
+        new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText);
     confirmButton.setPressFunc(b -> confirmLearnSkills());
     addRenderableWidget(confirmButton);
-    cancelButton = new PSTButton(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText);
+    Button cancelButton = new Button(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText);
     cancelButton.setPressFunc(b -> cancelLearnSkills());
     addRenderableWidget(cancelButton);
     confirmButton.active = cancelButton.active = !newlyLearnedSkills.isEmpty();
-    buttonWidth = font.width(showStatsButtonText) + 20;
   }
 
   @Override
@@ -150,9 +158,9 @@ public class SkillTreeScreen extends Screen {
     updateScreen(partialTick);
     renderAnimation += partialTick;
     renderBackground(poseStack);
-    renderConnections(poseStack, mouseX, mouseY, partialTick);
+    renderConnections(poseStack, mouseX, mouseY);
     renderSkills(poseStack, mouseX, mouseY, partialTick);
-    renderOverlay(poseStack, mouseX, mouseY, partialTick);
+    renderOverlay(poseStack);
     renderWidgets(poseStack, mouseX, mouseY, partialTick);
     renderSkillTooltip(poseStack, mouseX, mouseY, partialTick);
     prevMouseX = mouseX;
@@ -175,13 +183,12 @@ public class SkillTreeScreen extends Screen {
     if (getWidgetAt(mouseX, mouseY).isPresent()) return;
     getSkillAt(mouseX, mouseY)
         .ifPresent(
-            button -> {
-              renderSkillTooltip(
-                  button,
-                  poseStack,
-                  mouseX + (prevMouseX - mouseX) * partialTick,
-                  mouseY + (prevMouseY - mouseY) * partialTick);
-            });
+            button ->
+                renderSkillTooltip(
+                    button,
+                    poseStack,
+                    mouseX + (prevMouseX - mouseX) * partialTick,
+                    mouseY + (prevMouseY - mouseY) * partialTick));
   }
 
   private void renderSkills(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -189,10 +196,11 @@ public class SkillTreeScreen extends Screen {
     poseStack.translate(scrollX, scrollY, 0);
     for (SkillButton widget : skillButtons.values()) {
       poseStack.pushPose();
-      poseStack.translate(widget.x + widget.getWidth() / 2, widget.y + widget.getHeight() / 2, 0F);
+      poseStack.translate(
+          widget.x + widget.getWidth() / 2d, widget.y + widget.getHeight() / 2d, 0F);
       poseStack.scale(zoom, zoom, 1F);
       poseStack.translate(
-          -widget.x - widget.getWidth() / 2, -widget.y - widget.getHeight() / 2, 0F);
+          -widget.x - widget.getWidth() / 2d, -widget.y - widget.getHeight() / 2d, 0F);
       widget.render(poseStack, mouseX, mouseY, partialTick);
       poseStack.popPose();
     }
@@ -204,13 +212,14 @@ public class SkillTreeScreen extends Screen {
     Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
     if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
     Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-    if (skill.isPresent())
-      return skill.get().mouseClicked(skill.get().x + 1, skill.get().y + 1, button);
-    return false;
+    return skill
+        .map(skillButton -> skillButton.mouseClicked(skillButton.x + 1, skillButton.y + 1, button))
+        .orElse(false);
   }
 
   public Optional<GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
-    return super.getChildAt(mouseX, mouseY).filter(Predicates.not(SkillButton.class::isInstance));
+    Predicate<GuiEventListener> isSkillButton = SkillButton.class::isInstance;
+    return super.getChildAt(mouseX, mouseY).filter(isSkillButton.negate());
   }
 
   public Optional<SkillButton> getSkillAt(double mouseX, double mouseY) {
@@ -218,8 +227,8 @@ public class SkillTreeScreen extends Screen {
     mouseY -= scrollY;
     for (SkillButton button : skillButtons.values()) {
       double skillSize = button.skill.getButtonSize() * zoom;
-      double skillX = button.x + button.getWidth() / 2 - skillSize / 2;
-      double skillY = button.y + button.getHeight() / 2 - skillSize / 2;
+      double skillX = button.x + button.getWidth() / 2d - skillSize / 2;
+      double skillY = button.y + button.getHeight() / 2d - skillSize / 2;
       if (mouseX >= skillX
           && mouseY >= skillY
           && mouseX < skillX + skillSize
@@ -232,42 +241,19 @@ public class SkillTreeScreen extends Screen {
 
   private List<MutableComponent> getMergedSkillBonusesTooltips() {
     List<SkillBonus<?>> allBonuses = new ArrayList<>();
-
     learnedSkills.stream()
         .map(skillButtons::get)
         .map(button -> button.skill)
         .map(PassiveSkill::getBonuses)
         .forEach(skillBonuses -> mergeSkillBonuses(allBonuses, skillBonuses));
-
     return allBonuses.stream()
         .map(SkillBonus::getTooltip)
         .sorted(SkillTreeScreen::sortSkillBonusTooltips)
         .toList();
   }
 
-  private static int sortSkillBonusTooltips(Component a, Component b) {
-    String regex = "\\+?\\-?[0-9]+\\.?[0-9]?\\%?";
-    String as = a.getString().replaceAll(regex, "");
-    String bs = b.getString().replaceAll(regex, "");
-    return as.compareTo(bs);
-  }
-
-  private static void mergeSkillBonuses(
-      List<SkillBonus<?>> allBonuses, List<SkillBonus<?>> skillBonuses) {
-    skillBonuses.forEach(
-        bonus -> {
-          Optional<SkillBonus<?>> sameBonus = allBonuses.stream().filter(bonus::canMerge).findAny();
-          if (sameBonus.isPresent()) {
-            allBonuses.remove(sameBonus.get());
-            allBonuses.add(sameBonus.get().merge(bonus));
-          } else {
-            allBonuses.add(bonus);
-          }
-        });
-  }
-
   protected void firstInit() {
-    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+    IPlayerSkills capability = PlayerSkillsProvider.get(getPlayer());
     List<PassiveSkill> skills = capability.getPlayerSkills();
     skills.stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
     skillPoints = capability.getSkillPoints();
@@ -328,18 +314,14 @@ public class SkillTreeScreen extends Screen {
     skill
         .getConnectedSkills()
         .forEach(
-            connectedSkillId -> {
-              connectSkills(skillConnections, skill.getId(), connectedSkillId);
-            });
+            connectedSkillId -> connectSkills(skillConnections, skill.getId(), connectedSkillId));
   }
 
   private void addGatewayConnections(PassiveSkill skill) {
     skill
         .getConnectedAsGateways()
         .forEach(
-            connectedSkillId -> {
-              connectSkills(gatewayConnections, skill.getId(), connectedSkillId);
-            });
+            connectedSkillId -> connectSkills(gatewayConnections, skill.getId(), connectedSkillId));
   }
 
   protected void connectSkills(
@@ -414,7 +396,7 @@ public class SkillTreeScreen extends Screen {
     itemRenderer.blitOffset = zOffset;
   }
 
-  public void buttonPressed(Button button) {
+  public void buttonPressed(net.minecraft.client.gui.components.Button button) {
     if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
   }
 
@@ -434,14 +416,14 @@ public class SkillTreeScreen extends Screen {
     if (!canBuySkillPoint(currentLevel)) return;
     int cost = Config.getSkillPointCost(currentLevel);
     NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
-    minecraft.player.giveExperiencePoints(-cost);
+    getPlayer().giveExperiencePoints(-cost);
   }
 
   private boolean canBuySkillPoint(int currentLevel) {
     if (!Config.enable_exp_exchange) return false;
     if (isMaxLevel(currentLevel)) return false;
     int cost = Config.getSkillPointCost(currentLevel);
-    return minecraft.player.totalExperience >= cost;
+    return getPlayer().totalExperience >= cost;
   }
 
   private boolean isMaxLevel(int currentLevel) {
@@ -449,7 +431,7 @@ public class SkillTreeScreen extends Screen {
   }
 
   private int getCurrentLevel() {
-    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+    IPlayerSkills capability = PlayerSkillsProvider.get(getPlayer());
     int learnedSkills = capability.getPlayerSkills().size();
     int skillPoints = capability.getSkillPoints();
     return learnedSkills + skillPoints;
@@ -491,10 +473,10 @@ public class SkillTreeScreen extends Screen {
     buyButton.active = false;
     if (isMaxLevel(currentLevel)) return;
     int pointCost = Config.getSkillPointCost(currentLevel);
-    buyButton.active = minecraft.player.totalExperience >= pointCost;
+    buyButton.active = getPlayer().totalExperience >= pointCost;
   }
 
-  private void renderOverlay(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  private void renderOverlay(PoseStack poseStack) {
     ScreenHelper.prepareTextureRendering(
         new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png"));
     blit(poseStack, 0, 0, 0, 0F, 0F, width, height, width, height);
@@ -506,7 +488,7 @@ public class SkillTreeScreen extends Screen {
         new ResourceLocation("skilltree:textures/screen/skill_tree_background.png"));
     poseStack.pushPose();
     poseStack.translate(scrollX / 3F, scrollY / 3F, 0);
-    int size = getBackgroundSize();
+    int size = BACKGROUND_SIZE;
     blit(poseStack, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
     poseStack.popPose();
   }
@@ -522,15 +504,15 @@ public class SkillTreeScreen extends Screen {
 
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-    if (!getWidgetAt(mouseX, mouseY).filter(SkillBonusList.class::isInstance).isPresent()) {
-      if (amount > 0 && zoom < 2F) zoom += 0.05;
-      if (amount < 0 && zoom > 0.25F) zoom -= 0.05;
+    if (getWidgetAt(mouseX, mouseY).filter(SkillBonusList.class::isInstance).isEmpty()) {
+      if (amount > 0 && zoom < 2F) zoom += 0.05f;
+      if (amount < 0 && zoom > 0.25F) zoom -= 0.05f;
       rebuildWidgets();
     }
     return super.mouseScrolled(mouseX, mouseY, amount);
   }
 
-  protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY) {
     ScreenHelper.prepareTextureRendering(
         new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
     skillConnections.forEach(connection -> renderConnection(poseStack, connection));
@@ -556,7 +538,8 @@ public class SkillTreeScreen extends Screen {
       return;
     }
     boolean hovered =
-        !hoveredSkill.isEmpty() && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
+        hoveredSkill.isPresent()
+            && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
     if (hovered) {
       if (hoveredSkill.get() == button2) renderGatewayConnection(poseStack, button2, button1);
       else renderGatewayConnection(poseStack, button1, button2);
@@ -605,7 +588,7 @@ public class SkillTreeScreen extends Screen {
     return renderAnimation;
   }
 
-  protected int getBackgroundSize() {
-    return 2048;
+  private @Nonnull LocalPlayer getPlayer() {
+    return Objects.requireNonNull(getMinecraft().player);
   }
 }

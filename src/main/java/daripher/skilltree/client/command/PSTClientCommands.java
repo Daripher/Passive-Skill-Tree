@@ -3,7 +3,6 @@ package daripher.skilltree.client.command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
@@ -22,10 +21,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {
   public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER =
-      (ctx, builder) -> {
-        return SharedSuggestionProvider.suggest(
-            SkillTreeClientData.getAllTreesIds().stream().map(ResourceLocation::toString), builder);
-      };
+      (ctx, builder) ->
+          SharedSuggestionProvider.suggest(
+              SkillTreeClientData.getAllTreesIds().stream().map(ResourceLocation::toString),
+              builder);
   private static ResourceLocation tree_to_display;
   private static int timer;
 
@@ -54,8 +53,7 @@ public class PSTClientCommands {
     }
   }
 
-  private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx)
-      throws CommandSyntaxException {
+  private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) {
     String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase();
     PSTClientCommands.tree_to_display = new ResourceLocation(treeIdArg);
     PSTClientCommands.timer = 1;

@@ -120,10 +120,6 @@ public class PassiveSkill {
     return connectedAsGateways;
   }
 
-  public boolean isGateway() {
-    return !connectedAsGateways.isEmpty();
-  }
-
   public void learn(ServerPlayer player, boolean firstTime) {
     getBonuses().forEach(b -> b.onSkillLearned(player, firstTime));
   }

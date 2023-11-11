@@ -13,6 +13,8 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecipe {
   private final ResourceLocation requiredSkillId;
 
@@ -53,15 +55,16 @@ public class PSTShapedRecipe extends ShapedRecipe implements SkillRequiringRecip
     public @NotNull PSTShapedRecipe fromJson(
         @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromJson(id, json);
-      var requiredSkillId = new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
+      ResourceLocation requiredSkillId =
+          new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
       return new PSTShapedRecipe(recipe, requiredSkillId);
     }
 
     public PSTShapedRecipe fromNetwork(
         @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(id, byteBuf);
-      var requiredSkillId = new ResourceLocation(byteBuf.readUtf());
-      return new PSTShapedRecipe(recipe, requiredSkillId);
+      ResourceLocation requiredSkillId = new ResourceLocation(byteBuf.readUtf());
+      return new PSTShapedRecipe(Objects.requireNonNull(recipe), requiredSkillId);
     }
 
     public void toNetwork(@NotNull FriendlyByteBuf byteBuf, @NotNull PSTShapedRecipe recipe) {

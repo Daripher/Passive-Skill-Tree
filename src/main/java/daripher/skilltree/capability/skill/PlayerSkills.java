@@ -70,11 +70,11 @@ public class PlayerSkills implements IPlayerSkills {
 
   @Override
   public CompoundTag serializeNBT() {
-    var tag = new CompoundTag();
+    CompoundTag tag = new CompoundTag();
     tag.putUUID("TreeVersion", TREE_VERSION);
     tag.putInt("Points", skillPoints);
     tag.putBoolean("TreeReset", treeReset);
-    var skillsTag = new ListTag();
+    ListTag skillsTag = new ListTag();
     skills.forEach(skill -> skillsTag.add(StringTag.valueOf(skill.getId().toString())));
     tag.put("Skills", skillsTag);
     return tag;
@@ -92,7 +92,7 @@ public class PlayerSkills implements IPlayerSkills {
       return;
     }
     for (Tag skillTag : skillsTag) {
-      var skillId = new ResourceLocation(skillTag.getAsString());
+      ResourceLocation skillId = new ResourceLocation(skillTag.getAsString());
       PassiveSkill passiveSkill = SkillsReloader.getSkillById(skillId);
       if (passiveSkill == null) {
         skills.clear();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -65,7 +66,7 @@ public class ItemHelper {
 
   public static boolean canInsertGem(ItemStack stack) {
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return false;
     }
     return hasSockets(stack);
   }
@@ -82,18 +83,14 @@ public class ItemHelper {
   }
 
   public static boolean isPoison(ItemStack stack) {
-    return stack.getItem() instanceof PotionItem potion && PotionHelper.isHarmfulPotion(stack);
-  }
-
-  public static boolean isPotion(ItemStack stack) {
-    return stack.getItem() instanceof PotionItem;
+    return stack.getItem() instanceof PotionItem && PotionHelper.isHarmfulPotion(stack);
   }
 
   public static void setPoisons(ItemStack result, ItemStack poisonStack) {
-    var effects = PotionUtils.getMobEffects(poisonStack);
-    var poisonsTag = new ListTag();
-    for (var effect : effects) {
-      var effectTag = effect.save(new CompoundTag());
+    List<MobEffectInstance> effects = PotionUtils.getMobEffects(poisonStack);
+    ListTag poisonsTag = new ListTag();
+    for (MobEffectInstance effect : effects) {
+      CompoundTag effectTag = effect.save(new CompoundTag());
       poisonsTag.add(effectTag);
     }
     result.getOrCreateTag().put(POISONS, poisonsTag);
@@ -104,17 +101,17 @@ public class ItemHelper {
   }
 
   public static List<MobEffectInstance> getPoisons(ItemStack stack) {
-    var poisonsTag = stack.getTag().getList(POISONS, 10);
-    var effects = new ArrayList<MobEffectInstance>();
-    for (var tag : poisonsTag) {
-      var effect = MobEffectInstance.load((CompoundTag) tag);
+    ListTag poisonsTag = stack.getTag().getList(POISONS, 10);
+    ArrayList<MobEffectInstance> effects = new ArrayList<>();
+    for (Tag tag : poisonsTag) {
+      MobEffectInstance effect = MobEffectInstance.load((CompoundTag) tag);
       effects.add(effect);
     }
     return effects;
   }
 
   public static EquipmentSlot getSlotForItem(ItemStack stack) {
-    var slot = Player.getEquipmentSlotForItem(stack);
+    EquipmentSlot slot = Player.getEquipmentSlotForItem(stack);
     if (ItemHelper.isMeleeWeapon(stack) && slot == EquipmentSlot.OFFHAND) {
       slot = EquipmentSlot.MAINHAND;
     }

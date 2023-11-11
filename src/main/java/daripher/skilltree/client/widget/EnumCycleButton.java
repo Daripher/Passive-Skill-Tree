@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import net.minecraft.network.chat.Component;
 
-public class EnumCycleButton<E extends Enum<E>> extends PSTButton {
+public class EnumCycleButton<E extends Enum<E>> extends Button {
   private final Class<E> type;
   private int index;
   private E value;

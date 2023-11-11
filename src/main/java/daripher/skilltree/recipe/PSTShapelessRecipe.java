@@ -3,6 +3,7 @@ package daripher.skilltree.recipe;
 import com.google.gson.JsonObject;
 import daripher.skilltree.api.SkillRequiringRecipe;
 import daripher.skilltree.init.PSTRecipeSerializers;
+import java.util.Objects;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -47,15 +48,16 @@ public class PSTShapelessRecipe extends ShapelessRecipe implements SkillRequirin
     public @NotNull PSTShapelessRecipe fromJson(
         @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(id, json);
-      var requiredSkillId = new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
+      ResourceLocation requiredSkillId =
+          new ResourceLocation(GsonHelper.getAsString(json, "required_skill"));
       return new PSTShapelessRecipe(recipe, requiredSkillId);
     }
 
     public PSTShapelessRecipe fromNetwork(
         @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(id, byteBuf);
-      var requiredSkillId = new ResourceLocation(byteBuf.readUtf());
-      return new PSTShapelessRecipe(recipe, requiredSkillId);
+      ResourceLocation requiredSkillId = new ResourceLocation(byteBuf.readUtf());
+      return new PSTShapelessRecipe(Objects.requireNonNull(recipe), requiredSkillId);
     }
 
     public void toNetwork(@NotNull FriendlyByteBuf byteBuf, @NotNull PSTShapelessRecipe recipe) {

@@ -34,6 +34,11 @@ public class CommandSkillBonus implements SkillBonus<CommandSkillBonus> {
   }
 
   @Override
+  public CommandSkillBonus multiply(double multiplier) {
+    return this;
+  }
+
+  @Override
   public boolean canMerge(SkillBonus<?> other) {
     return false;
   }
@@ -68,8 +73,7 @@ public class CommandSkillBonus implements SkillBonus<CommandSkillBonus> {
 
   public static class Serializer implements SkillBonus.Serializer<CommandSkillBonus> {
     @Override
-    public CommandSkillBonus deserialize(JsonObject json)
-        throws JsonParseException {
+    public CommandSkillBonus deserialize(JsonObject json) throws JsonParseException {
       String command = json.get("command").getAsString();
       return new CommandSkillBonus(command);
     }

@@ -551,7 +551,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
   }
 
   private void addSkill(String skillName, String name, @Nullable String description) {
-    var skillId = "skill." + SkillTreeMod.MOD_ID + "." + skillName;
+    String skillId = "skill." + SkillTreeMod.MOD_ID + "." + skillName;
     add(skillId + ".name", name);
     if (description != null) add(skillId + ".description", description);
   }
@@ -568,11 +568,11 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
   }
 
   protected void addMixture(String name, String potionType, MobEffect... effects) {
-    var potionName = new StringBuilder("item.minecraft." + potionType + ".mixture");
-    Arrays.asList(effects).stream()
+    StringBuilder potionName = new StringBuilder("item.minecraft." + potionType + ".mixture");
+    Arrays.stream(effects)
         .map(MobEffect::getDescriptionId)
         .map(id -> id.replaceAll("effect.", ""))
-        .forEach(id -> potionName.append("." + id));
+        .forEach(id -> potionName.append(".").append(id));
     add(potionName.toString(), name);
   }
 }

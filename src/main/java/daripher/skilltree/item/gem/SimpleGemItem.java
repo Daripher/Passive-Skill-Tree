@@ -113,10 +113,8 @@ public abstract class SimpleGemItem extends GemItem {
 
   protected void setAttributeBonuses(
       Attribute attribute, double amount, AttributeModifier.Operation operation, String... slots) {
-    for (String slot : slots) {
-      AttributeSkillBonus bonus =
-          new AttributeSkillBonus(attribute, new AttributeModifier("Gem Bonus", amount, operation));
-      bonuses.put(slot, bonus);
-    }
+    AttributeSkillBonus bonus =
+        new AttributeSkillBonus(attribute, new AttributeModifier("Gem Bonus", amount, operation));
+    setBonuses(bonus, slots);
   }
 }

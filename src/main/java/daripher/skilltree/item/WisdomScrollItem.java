@@ -1,5 +1,6 @@
 package daripher.skilltree.item;
 
+import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTCreativeTabs;
@@ -28,9 +29,9 @@ public class WisdomScrollItem extends Item {
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(
       @NotNull Level level, Player player, @NotNull InteractionHand hand) {
-    var itemInHand = player.getItemInHand(hand);
-    var skillsCapability = PlayerSkillsProvider.get(player);
-    var totalSkillPoints =
+    ItemStack itemInHand = player.getItemInHand(hand);
+    IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
+    int totalSkillPoints =
         skillsCapability.getPlayerSkills().size() + skillsCapability.getSkillPoints();
     if (totalSkillPoints >= Config.max_skill_points) {
       return InteractionResultHolder.fail(itemInHand);

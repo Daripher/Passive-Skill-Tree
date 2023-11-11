@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PSTRegistries {
-  public static Supplier<IForgeRegistry<SkillBonus.Serializer<?>>> SKILL_BONUS_SERIALIZERS =
+  public static final Supplier<IForgeRegistry<SkillBonus.Serializer<?>>> SKILL_BONUS_SERIALIZERS =
       PSTSkillBonusSerializers.REGISTRY.makeRegistry(RegistryBuilder::new);
 
   @SubscribeEvent

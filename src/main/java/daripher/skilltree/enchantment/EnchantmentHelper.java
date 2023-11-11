@@ -16,13 +16,13 @@ public class EnchantmentHelper {
 
   private static EnchantmentInstance amplifyEnchantment(
       EnchantmentInstance enchantment, RandomSource random, Player player) {
-    var amplificationChance = getEnchantmentAmplificationChance(enchantment, player);
+    double amplificationChance = getEnchantmentAmplificationChance(enchantment, player);
     if (amplificationChance == 0) {
       return enchantment;
     }
-    var levelBonus = (int) amplificationChance;
+    int levelBonus = (int) amplificationChance;
     amplificationChance -= levelBonus;
-    var enchantmentLevel = enchantment.level + levelBonus;
+    int enchantmentLevel = enchantment.level + levelBonus;
     if (random.nextFloat() < amplificationChance) {
       enchantmentLevel++;
     }
@@ -31,8 +31,8 @@ public class EnchantmentHelper {
 
   private static double getEnchantmentAmplificationChance(
       EnchantmentInstance enchantment, Player player) {
-    var amplificationChance = getBaseEnchantmentAmplificationChance(player);
-    var category = enchantment.enchantment.category;
+    double amplificationChance = getBaseEnchantmentAmplificationChance(player);
+    EnchantmentCategory category = enchantment.enchantment.category;
     if (isArmorEnchantment(category)) {
       amplificationChance += getArmorEnchantmentAmplificationChance(player);
     }
@@ -42,16 +42,15 @@ public class EnchantmentHelper {
     return amplificationChance;
   }
 
-  public static int adjustLevelRequirement(int requirement, Player player) {
-    requirement *= getLevelRequirement(player);
-    if (requirement < 1) requirement = 1;
-    return requirement;
+  public static int adjustEnchantmentCost(int cost, Player player) {
+    cost = (int) (cost * getEnchantmentCostMultiplier(player));
+    if (cost < 1) cost = 1;
+    return cost;
   }
 
-  private static double getLevelRequirement(Player player) {
-    double requirement =
-        player.getAttributeValue(PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get());
-    return Math.round(requirement * 100D) / 100D;
+  private static double getEnchantmentCostMultiplier(Player player) {
+    double multiplier = player.getAttributeValue(PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get());
+    return Math.round(multiplier * 100D) / 100D;
   }
 
   private static double getWeaponEnchantmentAmplificationChance(Player player) {

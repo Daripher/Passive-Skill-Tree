@@ -1,9 +1,6 @@
 package daripher.skilltree.attribute.event;
 
-import com.google.common.collect.Multimap;
-import com.google.common.collect.TreeMultimap;
 import com.google.common.util.concurrent.AtomicDouble;
-import com.mojang.logging.LogUtils;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.EquipmentContainer;
 import daripher.skilltree.api.HasAdditionalSockets;
@@ -17,8 +14,8 @@ import daripher.skilltree.util.FoodHelper;
 import daripher.skilltree.util.PlayerHelper;
 import daripher.skilltree.util.TooltipHelper;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,10 +25,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -79,17 +76,13 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class AttributeEvents {
-  private static final Logger LOGGER = LogUtils.getLogger();
-
   @SubscribeEvent
   public static void applyDamageBonus(LivingHurtEvent event) {
     if (!(event.getSource().getDirectEntity() instanceof ServerPlayer player)) return;
@@ -432,66 +425,68 @@ public class AttributeEvents {
   }
 
   private static double getMaximumLifePerEvasion(ServerPlayer player) {
-    var lifePerEvasion = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_EVASION.get());
-    var evasion = player.getAttributeValue(PSTAttributes.EVASION.get()) - 1;
+    double lifePerEvasion = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_EVASION.get());
+    double evasion = player.getAttributeValue(PSTAttributes.EVASION.get()) - 1;
     return evasion * lifePerEvasion * 100;
   }
 
   private static double getMaximumLifePerGemInArmor(ServerPlayer player) {
-    var lifePerGemInArmor =
+    double lifePerGemInArmor =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_GEM_IN_ARMOR.get());
-    var gemstonesInArmor = 0;
-    for (var slot = 0; slot < 4; slot++) {
-      var itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
+    int gemstonesInArmor = 0;
+    for (int slot = 0; slot < 4; slot++) {
+      ItemStack itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
       gemstonesInArmor += GemHelper.getGemsCount(itemInSlot);
     }
     return lifePerGemInArmor * gemstonesInArmor;
   }
 
   private static double getMaximumLifePerGemInHelmet(ServerPlayer player) {
-    var lifePerGemInHelmet =
+    double lifePerGemInHelmet =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_GEM_IN_HELMET.get());
-    var helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-    var gemstonesInHelmet = GemHelper.getGemsCount(helmet);
+    ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+    int gemstonesInHelmet = GemHelper.getGemsCount(helmet);
     return lifePerGemInHelmet * gemstonesInHelmet;
   }
 
   private static double getArmorPerEvasion(ServerPlayer player) {
-    var armorPerEvasion = player.getAttributeValue(PSTAttributes.ARMOR_PER_EVASION.get());
-    var evasion = player.getAttributeValue(PSTAttributes.EVASION.get()) - 1;
+    double armorPerEvasion = player.getAttributeValue(PSTAttributes.ARMOR_PER_EVASION.get());
+    double evasion = player.getAttributeValue(PSTAttributes.EVASION.get()) - 1;
     return evasion * armorPerEvasion * 100;
   }
 
   private static double getArmorPerGemInChestplate(ServerPlayer player) {
-    var armorPerGemInChestplate =
+    double armorPerGemInChestplate =
         player.getAttributeValue(PSTAttributes.ARMOR_PER_GEM_IN_CHESTPLATE.get());
-    var getmstonesInChestplate = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.CHEST));
+    int getmstonesInChestplate = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.CHEST));
     return armorPerGemInChestplate * getmstonesInChestplate;
   }
 
   private static double getArmorPerGemInHelmet(ServerPlayer player) {
-    var armorPerGemInHelmet = player.getAttributeValue(PSTAttributes.ARMOR_PER_GEM_IN_HELMET.get());
-    var getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
+    double armorPerGemInHelmet =
+        player.getAttributeValue(PSTAttributes.ARMOR_PER_GEM_IN_HELMET.get());
+    int getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
     return armorPerGemInHelmet * getmstonesInHelmet;
   }
 
   private static double getDamagePerArmor(ServerPlayer player) {
-    var damagePerArmor = player.getAttributeValue(PSTAttributes.ATTACK_DAMAGE_PER_ARMOR.get());
-    var armor = player.getAttributeValue(Attributes.ARMOR);
+    double damagePerArmor = player.getAttributeValue(PSTAttributes.ATTACK_DAMAGE_PER_ARMOR.get());
+    double armor = player.getAttributeValue(Attributes.ARMOR);
     return damagePerArmor * armor;
   }
 
   private static double getMaximumLifePerArmor(ServerPlayer player) {
-    var maximumLifePerArmor = player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARMOR.get());
-    var armor = player.getAttributeValue(Attributes.ARMOR);
+    double maximumLifePerArmor =
+        player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARMOR.get());
+    double armor = player.getAttributeValue(Attributes.ARMOR);
     return maximumLifePerArmor * armor;
   }
 
   private static double getMaximumLifePerBootsArmor(ServerPlayer player) {
-    var maximumLifePerBootsArmor =
+    double maximumLifePerBootsArmor =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_BOOTS_ARMOR.get());
-    var boots = player.getItemBySlot(EquipmentSlot.FEET);
-    var bootsArmor = new AtomicDouble();
+    ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
+    AtomicDouble bootsArmor = new AtomicDouble();
     boots
         .getAttributeModifiers(EquipmentSlot.FEET)
         .forEach(
@@ -505,64 +500,62 @@ public class AttributeEvents {
   }
 
   private static double getMaximumLifePerSatisfiedHunger(ServerPlayer player) {
-    var maximumLifePerSatisfiedHunger =
+    double maximumLifePerSatisfiedHunger =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get());
-    var satisfiedHunger = player.getFoodData().getFoodLevel();
+    int satisfiedHunger = player.getFoodData().getFoodLevel();
     return satisfiedHunger * maximumLifePerSatisfiedHunger;
   }
 
   private static double getEvasionUnderPotionEffect(ServerPlayer player) {
-    var evasionUnderPotionEffect =
+    double evasionUnderPotionEffect =
         player.getAttributeValue(PSTAttributes.EVASION_UNDER_POTION_EFFECT.get()) - 1;
-    var hasPotionEffect = !player.getActiveEffects().isEmpty();
+    boolean hasPotionEffect = !player.getActiveEffects().isEmpty();
     return hasPotionEffect ? evasionUnderPotionEffect : 0;
   }
 
   private static double getAttackSpeedUnderPotionEffect(ServerPlayer player) {
-    var attackSpeedUnderPotionEffect =
+    double attackSpeedUnderPotionEffect =
         player.getAttributeValue(PSTAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get()) - 1;
-    var hasPotionEffect = !player.getActiveEffects().isEmpty();
+    boolean hasPotionEffect = !player.getActiveEffects().isEmpty();
     return hasPotionEffect ? attackSpeedUnderPotionEffect : 0;
   }
 
   private static double getMaximumLifeUnderPotionEffect(ServerPlayer player) {
-    var maximumLifeUnderPotionEffect =
+    double maximumLifeUnderPotionEffect =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get());
-    var hasPotionEffect = !player.getActiveEffects().isEmpty();
+    boolean hasPotionEffect = !player.getActiveEffects().isEmpty();
     return hasPotionEffect ? maximumLifeUnderPotionEffect : 0;
   }
 
   private static double getEvasionPerPotionEffect(ServerPlayer player) {
-    var evasionPerPotionEffect =
+    double evasionPerPotionEffect =
         player.getAttributeValue(PSTAttributes.EVASION_PER_POTION_EFFECT.get()) - 1;
-    var potionEffectCount = player.getActiveEffects().size();
+    int potionEffectCount = player.getActiveEffects().size();
     return potionEffectCount * evasionPerPotionEffect;
   }
 
   private static double getMaximumLifeWithEnchantedItem(ServerPlayer player) {
-    var maximumLifeWithEnchantedItem =
+    double maximumLifeWithEnchantedItem =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get());
-    for (var slot : EquipmentSlot.values()) {
-      var isItemEnchanted = player.getItemBySlot(slot).isEnchanted();
+    for (EquipmentSlot slot : EquipmentSlot.values()) {
+      boolean isItemEnchanted = player.getItemBySlot(slot).isEnchanted();
       if (isItemEnchanted) return maximumLifeWithEnchantedItem;
     }
     return 0D;
   }
 
   private static double getArmorWithEnchantedShield(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) return 0D;
-    var armorWithEnchantedShield =
-        player.getAttributeValue(PSTAttributes.ARMOR_WITH_ENCHANTED_SHIELD.get());
-    return armorWithEnchantedShield;
+    return player.getAttributeValue(PSTAttributes.ARMOR_WITH_ENCHANTED_SHIELD.get());
   }
 
   private static double getMaximumLifePerEnchantment(ServerPlayer player) {
-    var maximumLifePerEnchantment =
+    double maximumLifePerEnchantment =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ENCHANTMENT.get());
-    var enchantmentCount = 0;
-    for (var slot : EquipmentSlot.values()) {
-      var itemInSlot = player.getItemBySlot(slot);
+    int enchantmentCount = 0;
+    for (EquipmentSlot slot : EquipmentSlot.values()) {
+      ItemStack itemInSlot = player.getItemBySlot(slot);
       if (!itemInSlot.isEnchanted()) continue;
       enchantmentCount += itemInSlot.getAllEnchantments().size();
     }
@@ -570,19 +563,19 @@ public class AttributeEvents {
   }
 
   private static double getArmorPerChestplateEnchantment(ServerPlayer player) {
-    var armorPerChestplateEnchantment =
+    double armorPerChestplateEnchantment =
         player.getAttributeValue(PSTAttributes.ARMOR_PER_CHESTPLATE_ENCHANTMENT.get());
-    var chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
-    var enchantmentCount = chestplate.getAllEnchantments().size();
+    ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+    int enchantmentCount = chestplate.getAllEnchantments().size();
     return armorPerChestplateEnchantment * enchantmentCount;
   }
 
   private static double getMaximumLifePerArmorEnchantment(ServerPlayer player) {
-    var maximumLifePerArmorEnchantment =
+    double maximumLifePerArmorEnchantment =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get());
-    var enchantmentCount = 0;
-    for (var slot = 0; slot < 4; slot++) {
-      var itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
+    int enchantmentCount = 0;
+    for (int slot = 0; slot < 4; slot++) {
+      ItemStack itemInSlot = player.getItemBySlot(EquipmentSlot.byTypeAndIndex(Type.ARMOR, slot));
       if (!itemInSlot.isEnchanted()) continue;
       enchantmentCount += itemInSlot.getAllEnchantments().size();
     }
@@ -595,137 +588,123 @@ public class AttributeEvents {
   }
 
   private static double getBlockChanceWithEnchantedShield(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem) || !offhandItem.isEnchanted()) return 0D;
     return player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get()) - 1;
   }
 
   private static double getEvasionChanceWhenWounded(ServerPlayer player) {
-    var isWounded = player.getHealth() < player.getMaxHealth() / 2;
+    boolean isWounded = player.getHealth() < player.getMaxHealth() / 2;
     if (!isWounded) {
       return 0D;
     }
-    var evasionChanceWhenWounded =
-        player.getAttributeValue(PSTAttributes.EVASION_CHANCE_WHEN_WOUNDED.get()) - 1;
-    return evasionChanceWhenWounded;
+    return player.getAttributeValue(PSTAttributes.EVASION_CHANCE_WHEN_WOUNDED.get()) - 1;
   }
 
   private static double getAttackSpeedIfNotHungry(ServerPlayer player) {
-    var isHungry = player.getFoodData().getFoodLevel() < 10;
+    boolean isHungry = player.getFoodData().getFoodLevel() < 10;
     if (isHungry) {
       return 0D;
     }
-    var attackSpeedIfNotHungry =
-        player.getAttributeValue(PSTAttributes.ATTACK_SPEED_IF_NOT_HUNGRY.get()) - 1;
-    return attackSpeedIfNotHungry;
+    return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_IF_NOT_HUNGRY.get()) - 1;
   }
 
   private static double getAttackSpeedWithRangedWeapon(ServerPlayer player) {
-    var hasRangedWeapon = ItemHelper.isRangedWeapon(player.getMainHandItem());
+    boolean hasRangedWeapon = ItemHelper.isRangedWeapon(player.getMainHandItem());
     if (!hasRangedWeapon) return 0D;
-    var attackSpeedWithBow =
-        player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get()) - 1;
-    return attackSpeedWithBow;
+    return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get()) - 1;
   }
 
   private static double getAttackSpeedPerGemInWeapon(ServerPlayer player) {
-    var mainHandItem = player.getMainHandItem();
+    ItemStack mainHandItem = player.getMainHandItem();
     if (!ItemHelper.isWeapon(mainHandItem)) return 0D;
-    var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
+    int gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
     if (gemstonesInWeapon == 0) return 0D;
-    var attackSpeedPerGemInWeapon =
+    double attackSpeedPerGemInWeapon =
         player.getAttributeValue(PSTAttributes.ATTACK_SPEED_PER_GEM_IN_WEAPON.get()) - 1;
     return attackSpeedPerGemInWeapon * gemstonesInWeapon;
   }
 
   private static double getCritChancePerGemInWeapon(ServerPlayer player) {
-    var mainHandItem = player.getMainHandItem();
+    ItemStack mainHandItem = player.getMainHandItem();
     if (!ItemHelper.isWeapon(mainHandItem)) {
       return 0D;
     }
-    var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
+    int gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
     if (gemstonesInWeapon == 0) {
       return 0D;
     }
-    var critChancePerGemInWeapon =
+    double critChancePerGemInWeapon =
         player.getAttributeValue(PSTAttributes.CRIT_CHANCE_PER_GEM_IN_WEAPON.get()) - 1;
     return critChancePerGemInWeapon * gemstonesInWeapon;
   }
 
   private static double getCritChanceIfNotHungry(ServerPlayer player) {
-    var isHungry = player.getFoodData().getFoodLevel() < 10;
+    boolean isHungry = player.getFoodData().getFoodLevel() < 10;
     if (isHungry) {
       return 0D;
     }
-    var critChanceIfNotHungry =
-        player.getAttributeValue(PSTAttributes.CRIT_CHANCE_IF_NOT_HUNGRY.get()) - 1;
-    return critChanceIfNotHungry;
+    return player.getAttributeValue(PSTAttributes.CRIT_CHANCE_IF_NOT_HUNGRY.get()) - 1;
   }
 
   private static double getAttackWithEnchantedWeapon(ServerPlayer player) {
-    var mainHandItem = player.getMainHandItem();
+    ItemStack mainHandItem = player.getMainHandItem();
     if (!ItemHelper.isWeapon(mainHandItem) || !mainHandItem.isEnchanted()) {
       return 0D;
     }
-    var attackWithEnchantedWeapon =
-        player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get()) - 1;
-    return attackWithEnchantedWeapon;
+    return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get()) - 1;
   }
 
   private static double getLifePerHitUnderPotionEffect(ServerPlayer player) {
-    var lifePerHitUnderPotionEffect =
+    double lifePerHitUnderPotionEffect =
         player.getAttributeValue(PSTAttributes.LIFE_PER_HIT_UNDER_POTION_EFFECT.get());
-    var hasPotionEffect = !player.getActiveEffects().isEmpty();
+    boolean hasPotionEffect = !player.getActiveEffects().isEmpty();
     return hasPotionEffect ? lifePerHitUnderPotionEffect : 0;
   }
 
   private static double getCritDamagePerGemInWeapon(ServerPlayer player) {
-    var mainHandItem = player.getMainHandItem();
+    ItemStack mainHandItem = player.getMainHandItem();
     if (!ItemHelper.isWeapon(mainHandItem)) {
       return 0D;
     }
-    var gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
+    int gemstonesInWeapon = GemHelper.getGemsCount(mainHandItem);
     if (gemstonesInWeapon == 0) {
       return 0D;
     }
-    var critDamagePerGemInWeapon =
+    double critDamagePerGemInWeapon =
         player.getAttributeValue(PSTAttributes.CRIT_DAMAGE_PER_GEM_IN_WEAPON.get()) - 1;
     return critDamagePerGemInWeapon * gemstonesInWeapon;
   }
 
   private static double getLifeRegenerationPerGemInHelmet(ServerPlayer player) {
-    var lifeRegenerationPerGemInHelmet =
+    double lifeRegenerationPerGemInHelmet =
         player.getAttributeValue(PSTAttributes.LIFE_REGENERATION_PER_GEM_IN_HELMET.get());
-    var getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
+    int getmstonesInHelmet = GemHelper.getGemsCount(player.getItemBySlot(EquipmentSlot.HEAD));
     return lifeRegenerationPerGemInHelmet * getmstonesInHelmet;
   }
 
   private static double getAttackSpeedWithShield(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem)) {
       return 0D;
     }
-    var attackSpeedWithShield =
-        player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_SHIELD.get()) - 1;
-    return attackSpeedWithShield;
+    return player.getAttributeValue(PSTAttributes.ATTACK_SPEED_WITH_SHIELD.get()) - 1;
   }
 
   private static double getLifeRegenerationWithShield(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem)) {
       return 0D;
     }
-    var lifeRegenerationWithShield =
-        player.getAttributeValue(PSTAttributes.LIFE_REGENERATION_WITH_SHIELD.get());
-    return lifeRegenerationWithShield;
+    return player.getAttributeValue(PSTAttributes.LIFE_REGENERATION_WITH_SHIELD.get());
   }
 
   private static double getBonusChestplateArmor(ServerPlayer player) {
-    var chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+    ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
     if (chestplate.isEmpty()) {
       return 0D;
     }
-    var chestplateArmor = new AtomicDouble();
+    AtomicDouble chestplateArmor = new AtomicDouble();
     chestplate
         .getAttributeModifiers(EquipmentSlot.CHEST)
         .forEach(
@@ -737,62 +716,57 @@ public class AttributeEvents {
     if (chestplateArmor.get() == 0) {
       return 0;
     }
-    var bonusChestplateArmor = player.getAttributeValue(PSTAttributes.CHESTPLATE_ARMOR.get()) - 1;
+    double bonusChestplateArmor =
+        player.getAttributeValue(PSTAttributes.CHESTPLATE_ARMOR.get()) - 1;
     return bonusChestplateArmor * chestplateArmor.get();
   }
 
   private static double getLifeOnBlockPerShieldEnchantment(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem)) {
       return 0D;
     }
-    var enchantmentsCount = offhandItem.getAllEnchantments().size();
+    int enchantmentsCount = offhandItem.getAllEnchantments().size();
     if (enchantmentsCount == 0) {
       return 0D;
     }
-    var lifeOnBlockPerShieldEnchantment =
+    double lifeOnBlockPerShieldEnchantment =
         player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT.get());
     return lifeOnBlockPerShieldEnchantment * enchantmentsCount;
   }
 
   private static double getBlockChancePerShieldEnchantment(ServerPlayer player) {
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem)) return 0D;
     int enchantments = offhandItem.getAllEnchantments().size();
     if (enchantments == 0) return 0D;
-    var blockChancePerShieldEnchantment =
+    double blockChancePerShieldEnchantment =
         player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get()) - 1;
     return blockChancePerShieldEnchantment * enchantments;
   }
 
   private static double getBlockChanceIfNotHungry(ServerPlayer player) {
-    var isHungry = player.getFoodData().getFoodLevel() < 10;
+    boolean isHungry = player.getFoodData().getFoodLevel() < 10;
     if (isHungry) return 0D;
-    var blockChanceIfNotHungry =
-        player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_IF_NOT_HUNGRY.get()) - 1;
-    return blockChanceIfNotHungry;
+    return player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_IF_NOT_HUNGRY.get()) - 1;
   }
 
   private static double getLifeOnBlockIfNotHungry(ServerPlayer player) {
-    var isHungry = player.getFoodData().getFoodLevel() < 10;
+    boolean isHungry = player.getFoodData().getFoodLevel() < 10;
     if (isHungry) return 0D;
-    var lifeOnBlockIfNotHungry =
-        player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get());
-    return lifeOnBlockIfNotHungry;
+    return player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get());
   }
 
   private static double getMaximumLifeIfNotHungry(ServerPlayer player) {
-    var isHungry = player.getFoodData().getFoodLevel() < 10;
+    boolean isHungry = player.getFoodData().getFoodLevel() < 10;
     if (isHungry) return 0D;
-    var maximumLifeIfNotHungry =
-        player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get());
-    return maximumLifeIfNotHungry;
+    return player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get());
   }
 
   private static double getBlockChancePerSatisfiedHunger(ServerPlayer player) {
-    var satisfiedHunger = player.getFoodData().getFoodLevel();
+    int satisfiedHunger = player.getFoodData().getFoodLevel();
     if (satisfiedHunger == 0) return 0D;
-    var blockChancePerSatisfiedHunger =
+    double blockChancePerSatisfiedHunger =
         player.getAttributeValue(PSTAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get()) - 1;
     return satisfiedHunger * blockChancePerSatisfiedHunger;
   }
@@ -822,7 +796,7 @@ public class AttributeEvents {
   private static double getMaximumLifePerArrowInQuiver(@Nonnull ServerPlayer player) {
     Optional<SlotResult> quiverCurio =
         CuriosApi.getCuriosHelper().findFirstCurio(player, ItemHelper::isQuiver);
-    if (!quiverCurio.isPresent()) return 0;
+    if (quiverCurio.isEmpty()) return 0;
     double lifeBonus =
         player.getAttributeValue(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get());
     if (lifeBonus == 0) return 0;
@@ -1183,7 +1157,7 @@ public class AttributeEvents {
       float modifierAmount = -3F;
       if (ItemHelper.hasBonus(stack, ItemHelper.ATTACK_SPEED)) {
         double attackSpeedBonus = ItemHelper.getBonus(stack, ItemHelper.ATTACK_SPEED);
-        modifierAmount += attackSpeedBonus;
+        modifierAmount += (float) attackSpeedBonus;
       }
       AttributeModifier modifier =
           new AttributeModifier(modifierId, "BaseAttackSpeed", modifierAmount, Operation.ADDITION);
@@ -1299,29 +1273,29 @@ public class AttributeEvents {
   public static void applyCraftedFoodBonuses(LivingEntityUseItemEvent.Finish event) {
     if (!ItemHelper.isFood(event.getItem())) return;
     if (!(event.getEntity() instanceof Player player)) return;
-    var restoration = event.getItem().getFoodProperties(player).getNutrition();
+    int restoration = event.getItem().getFoodProperties(player).getNutrition();
     if (FoodHelper.hasHealingBonus(event.getItem())) {
-      var healingBonus = FoodHelper.getHealingBonus(event.getItem());
+      float healingBonus = FoodHelper.getHealingBonus(event.getItem());
       player.heal(healingBonus * restoration);
     }
     if (FoodHelper.hasDamageBonus(event.getItem())) {
-      var damageBonus = FoodHelper.getDamageBonus(event.getItem());
-      var effectAmplifier = (int) (damageBonus * restoration * 100);
-      var damageEffect =
+      float damageBonus = FoodHelper.getDamageBonus(event.getItem());
+      int effectAmplifier = (int) (damageBonus * restoration * 100);
+      MobEffectInstance damageEffect =
           new MobEffectInstance(PSTEffects.DAMAGE_BONUS.get(), 20 * 60, effectAmplifier);
       player.addEffect(damageEffect);
     }
     if (FoodHelper.hasLifeRegenerationBonus(event.getItem())) {
-      var lifeRegenerationBonus = FoodHelper.getLifeRegenerationBonus(event.getItem());
-      var effectAmplifier = (int) (lifeRegenerationBonus * 100);
-      var lifeRegenerationEffect =
+      float lifeRegenerationBonus = FoodHelper.getLifeRegenerationBonus(event.getItem());
+      int effectAmplifier = (int) (lifeRegenerationBonus * 100);
+      MobEffectInstance lifeRegenerationEffect =
           new MobEffectInstance(PSTEffects.LIFE_REGENERATION_BONUS.get(), 20 * 60, effectAmplifier);
       player.addEffect(lifeRegenerationEffect);
     }
     if (FoodHelper.hasCritDamageBonus(event.getItem())) {
-      var critDamageBonus = FoodHelper.getCritDamageBonus(event.getItem());
-      var effectAmplifier = (int) (critDamageBonus * restoration * 100);
-      var critDamageEffect =
+      float critDamageBonus = FoodHelper.getCritDamageBonus(event.getItem());
+      int effectAmplifier = (int) (critDamageBonus * restoration * 100);
+      MobEffectInstance critDamageEffect =
           new MobEffectInstance(PSTEffects.CRIT_DAMAGE_BONUS.get(), 20 * 60, effectAmplifier);
       player.addEffect(critDamageEffect);
     }
@@ -1386,20 +1360,21 @@ public class AttributeEvents {
     if (event.getSource().isBypassArmor()) return;
     if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow
         && arrow.getPierceLevel() > 0) return;
-    var offhandItem = player.getOffhandItem();
+    ItemStack offhandItem = player.getOffhandItem();
     if (!ItemHelper.isShield(offhandItem)) return;
-    var blockChance = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE.get()) - 1;
+    double blockChance = player.getAttributeValue(PSTAttributes.BLOCK_CHANCE.get()) - 1;
     if (player.getRandom().nextFloat() >= blockChance) return;
-    var shieldBlockEvent = ForgeHooks.onShieldBlock(player, event.getSource(), event.getAmount());
+    ShieldBlockEvent shieldBlockEvent =
+        ForgeHooks.onShieldBlock(player, event.getSource(), event.getAmount());
     if (shieldBlockEvent.isCanceled()) return;
     event.setCanceled(true);
     player.level.broadcastEntityEvent(player, (byte) 29);
     if (shieldBlockEvent.shieldTakesDamage())
       PlayerHelper.hurtShield(player, offhandItem, event.getAmount());
     if (event.getSource().isProjectile()) return;
-    var attacker = event.getSource().getDirectEntity();
+    Entity attacker = event.getSource().getDirectEntity();
     if (attacker instanceof LivingEntity livingAttacker) {
-      var blockUsingShieldMethod =
+      Method blockUsingShieldMethod =
           ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_6728_", LivingEntity.class);
       try {
         blockUsingShieldMethod.invoke(player, livingAttacker);
@@ -1422,27 +1397,27 @@ public class AttributeEvents {
   @SubscribeEvent
   public static void applyPoisonedWeaponEffects(LivingHurtEvent event) {
     if (!(event.getSource().getDirectEntity() instanceof Player player)) return;
-    var weapon = player.getMainHandItem();
+    ItemStack weapon = player.getMainHandItem();
     if (!ItemHelper.hasPoisons(weapon)) return;
-    var poisons = ItemHelper.getPoisons(weapon);
-    poisons.stream().forEach(event.getEntity()::addEffect);
+    List<MobEffectInstance> poisons = ItemHelper.getPoisons(weapon);
+    poisons.forEach(event.getEntity()::addEffect);
   }
 
   @SubscribeEvent
   public static void applyPoisonedThrownTridentEffects(LivingHurtEvent event) {
-    var damageSource = event.getSource();
+    DamageSource damageSource = event.getSource();
     if (!(damageSource.getDirectEntity() instanceof ThrownTrident trident)) return;
-    var getPickupItemMethod =
+    Method getPickupItemMethod =
         ObfuscationReflectionHelper.findMethod(AbstractArrow.class, "m_7941_");
-    var weapon = (ItemStack) null;
+    ItemStack weapon = null;
     try {
       weapon = (ItemStack) getPickupItemMethod.invoke(trident);
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
       e.printStackTrace();
     }
     if (!ItemHelper.hasPoisons(weapon)) return;
-    var poisons = ItemHelper.getPoisons(weapon);
-    var target = event.getEntity();
+    List<MobEffectInstance> poisons = ItemHelper.getPoisons(weapon);
+    LivingEntity target = event.getEntity();
     poisons.stream().map(MobEffectInstance::new).forEach(target::addEffect);
   }
 
@@ -1533,7 +1508,7 @@ public class AttributeEvents {
       sockets += item.getAdditionalSockets();
     }
     if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
-      sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
+      sockets += (int) ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
     }
     if (sockets > 0) {
       Component additionalSocketTooltip =
@@ -1662,11 +1637,5 @@ public class AttributeEvents {
     event.setMaterialCost(materialsUsed);
     event.setCost(cost);
     event.setOutput(result);
-  }
-
-  private static Comparator<AttributeModifier> modifierComparator() {
-    return Comparator.comparing(AttributeModifier::getOperation)
-        .thenComparing(AttributeModifier::getAmount)
-        .thenComparing(AttributeModifier::getId);
   }
 }

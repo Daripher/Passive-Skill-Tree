@@ -17,8 +17,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class Config {
-  private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   public static final ForgeConfigSpec SPEC;
+  private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   private static final ConfigValue<Integer> MAX_SKILL_POINTS;
   private static final ConfigValue<Integer> DEFAULT_HELMET_SOCKETS;
   private static final ConfigValue<Integer> DEFAULT_CHESTPLATE_SOCKETS;

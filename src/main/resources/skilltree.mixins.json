@@ -1,44 +1,44 @@
 {
-  "required" : true,
-  "minVersion" : "0.8",
-  "compatibilityLevel" : "JAVA_17",
-  "package" : "daripher.skilltree.mixin",
-  "mixins" : [
-  	"minecraft/MixinBrewingStandBlockEntity",
-  	"minecraft/MixinEnchantmentMenu",
-  	"minecraft/MixinPlayer",
-  	"minecraft/MixinPotionItem",
-  	"minecraft/MixinSmithingMenu",
-  	"minecraft/MixinSimpleContainer",
-  	"minecraft/MixinCraftingMenu",
-  	"minecraft/MixinInventoryMenu",
-  	"minecraft/MixinAbstractFurnaceMenu",
-  	"minecraft/MixinCampfireBlockEntity",
-  	"minecraft/MixinItemStack",
-  	"minecraft/MixinItem",
-  	"minecraft/MixinLivingEntity",
-  	"minecraft/MixinAbstractArrow",
-  	"minecraft/MixinFishingHook",
-  	"minecraft/MixinPotionUtils",
-  	"minecraft/MixinAnvilMenu",
-  	"minecraft/MixinAbstractContainerMenu",
-  	"minecraft/MixinBlockEntity",
-  	"minecraft/MixinCraftingContainer",
-  	"easymagic/MixinModEnchantmentMenu",
-  	"farmersdelight/MixinCookingPotBlockEntity",
-  	"farmersdelight/MixinStoveBlockEntity",
-  	"apotheosis/MixinApothEnchantContainer",
-  	"apotheosis/MixinSocketingRecipe",
-  	"apotheosis/MixinAttributeBonus",
-  	"apotheosis/MixinEnchantmentBonus"
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "package": "daripher.skilltree.mixin",
+  "mixins": [
+    "minecraft/BrewingStandBlockEntityMixin",
+    "minecraft/EnchantmentMenuMixin",
+    "minecraft/PlayerMixin",
+    "minecraft/PotionItemMixin",
+    "minecraft/SmithingMenuMixin",
+    "minecraft/SimpleContainerMixin",
+    "minecraft/CraftingMenuMixin",
+    "minecraft/InventoryMenuMixin",
+    "minecraft/AbstractFurnaceMenuMixin",
+    "minecraft/CampfireBlockEntityMixin",
+    "minecraft/ItemStackMixin",
+    "minecraft/ItemMixin",
+    "minecraft/LivingEntityMixin",
+    "minecraft/AbstractArrowMixin",
+    "minecraft/FishingHookMixin",
+    "minecraft/PotionUtilsMixin",
+    "minecraft/AnvilMenuMixin",
+    "minecraft/AbstractContainerMenuMixin",
+    "minecraft/BlockEntityMixin",
+    "minecraft/CraftingContainerMixin",
+    "easymagic/ModEnchantmentMenuMixin",
+    "farmersdelight/CookingPotBlockEntityMixin",
+    "farmersdelight/StoveBlockEntityMixin",
+    "apotheosis/ApothEnchantContainerMixin",
+    "apotheosis/SocketingRecipeMixin",
+    "apotheosis/AttributeBonusMixin",
+    "apotheosis/EnchantmentBonusMixin"
   ],
-  "client" : [
-  	"minecraft/MixinRecipeBookComponent",
-  	"minecraft/MixinCraftingScreen",
-  	"apotheosis/MixinAdventureModuleClient"
+  "client": [
+    "minecraft/RecipeBookComponentMixin",
+    "minecraft/CraftingScreenMixin",
+    "apotheosis/AdventureModuleClientMixin"
   ],
-  "injectors" : {
-    "defaultRequire" : 1
+  "injectors": {
+    "defaultRequire": 1
   },
-  "refmap" : "skilltree.refmap.json"
+  "refmap": "skilltree.refmap.json"
 }

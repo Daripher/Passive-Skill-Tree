@@ -4,9 +4,9 @@ import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
+import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import daripher.skilltree.network.NetworkHelper;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -93,7 +93,6 @@ public class SkillTreeClientData {
   public static void saveEditorSkillTree(PassiveSkillTree skillTree) {
     try (FileWriter writer = new FileWriter(getSkillTreeSaveFile(skillTree.getId()))) {
       SkillTreesReloader.GSON.toJson(skillTree, writer);
-      writer.close();
     } catch (JsonIOException | IOException e) {
       e.printStackTrace();
     }
@@ -111,7 +110,6 @@ public class SkillTreeClientData {
   public static void saveEditorSkill(PassiveSkill skill) {
     try (FileWriter writer = new FileWriter(getSkillSaveFile(skill.getId()))) {
       SkillsReloader.GSON.toJson(skill, writer);
-      writer.close();
     } catch (JsonIOException | IOException e) {
       e.printStackTrace();
     }
@@ -151,7 +149,6 @@ public class SkillTreeClientData {
     T object = null;
     try (JsonReader reader = new JsonReader(new FileReader(file))) {
       object = SkillsReloader.GSON.fromJson(reader, objectType);
-      reader.close();
     } catch (Exception e) {
       e.printStackTrace();
     }

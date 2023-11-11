@@ -73,7 +73,7 @@ public class PotionHelper {
       amplificationChance -= strength;
     }
     if (amplificationChance != 0) {
-      var random = new Random();
+      Random random = new Random();
       if (random.nextFloat() < amplificationChance) strength++;
     }
     stack.getOrCreateTag().putInt(EFFECT_STRENGTH_TAG, strength);
@@ -101,14 +101,14 @@ public class PotionHelper {
     potions.stream()
         .map(PotionUtils::getMobEffects)
         .forEach(
-            originalEffects -> {
-              originalEffects.forEach(
-                  effect -> {
-                    int duration = (int) (effect.getDuration() * Config.mixture_effects_duration);
-                    int amplifier = (int) (effect.getAmplifier() * Config.mixture_effects_strength);
-                    effects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
-                  });
-            });
+            originalEffects ->
+                originalEffects.forEach(
+                    effect -> {
+                      int duration = (int) (effect.getDuration() * Config.mixture_effects_duration);
+                      int amplifier =
+                          (int) (effect.getAmplifier() * Config.mixture_effects_strength);
+                      effects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
+                    }));
     PotionUtils.setCustomEffects(result, effects);
     setPotionColor(result, PotionUtils.getColor(potions.get(0)));
     result.getOrCreateTag().putBoolean(MIXED_POTION_TAG, true);

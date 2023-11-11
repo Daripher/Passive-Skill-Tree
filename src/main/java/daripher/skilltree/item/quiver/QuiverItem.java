@@ -4,6 +4,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.item.ItemHelper;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -46,7 +47,7 @@ public class QuiverItem extends Item implements ICurioItem {
   @SubscribeEvent
   public static void storeArrowsOnPickup(EntityItemPickupEvent event) {
     ItemStack arrows = event.getItem().getItem();
-    if (!(arrows.getItem() instanceof ArrowItem arrow)) return;
+    if (!(arrows.getItem() instanceof ArrowItem)) return;
     Optional<SlotResult> quiverCurio =
         CuriosApi.getCuriosHelper().findFirstCurio(event.getEntity(), ItemHelper::isQuiver);
     quiverCurio
@@ -105,20 +106,21 @@ public class QuiverItem extends Item implements ICurioItem {
   public static int getCapacity(ItemStack quiver) {
     int capacity = ((QuiverItem) quiver.getItem()).capacity;
     if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
-      capacity *= 1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY);
+      capacity *= (int) (1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY));
     }
     return capacity;
   }
 
   public static boolean containsArrows(ItemStack stack) {
     return stack.hasTag()
-        && stack.getTag().contains(ARROWS_TAG)
+        && Objects.requireNonNull(stack.getTag()).contains(ARROWS_TAG)
         && !getArrows(stack).isEmpty()
         && getArrowsCount(stack) > 0;
   }
 
   public static ItemStack getArrows(ItemStack stack) {
-    return ItemStack.of((CompoundTag) stack.getOrCreateTag().get(ARROWS_TAG));
+    return ItemStack.of(
+        (CompoundTag) Objects.requireNonNull(stack.getOrCreateTag().get(ARROWS_TAG)));
   }
 
   public static int getArrowsCount(ItemStack stack) {

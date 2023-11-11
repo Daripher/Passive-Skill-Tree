@@ -86,15 +86,15 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
     classes.put(
         "ranged_weapon",
         new GemClass("ranged_weapon", Set.of(LootCategory.BOW, LootCategory.CROSSBOW)));
-    classes.put("ring", new GemClass("ring", Set.of(ApotheosisCompatibility.ISNTANCE.ring)));
+    classes.put("ring", new GemClass("ring", Set.of(ApotheosisCompatibility.INSTANCE.ring)));
     classes.put(
-        "necklace", new GemClass("necklace", Set.of(ApotheosisCompatibility.ISNTANCE.necklace)));
+        "necklace", new GemClass("necklace", Set.of(ApotheosisCompatibility.INSTANCE.necklace)));
     classes.put(
         "jewelry",
         new GemClass(
             "jewelry",
             Set.of(
-                ApotheosisCompatibility.ISNTANCE.necklace, ApotheosisCompatibility.ISNTANCE.ring)));
+                ApotheosisCompatibility.INSTANCE.necklace, ApotheosisCompatibility.INSTANCE.ring)));
     classes.put(
         "weapon",
         new GemClass(

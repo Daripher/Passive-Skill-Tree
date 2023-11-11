@@ -151,7 +151,7 @@ public class PlayerHelper {
         player.getAttributeValue(PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get()) - 1;
     if (damagePerDistance == 0) return 0D;
     BlockPos spawnPos = player.getRespawnPosition();
-    double distance = 0;
+    double distance;
     if (spawnPos != null) {
       distance = player.distanceToSqr(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
     } else {
@@ -171,15 +171,15 @@ public class PlayerHelper {
   }
 
   public static float getGemPower(Player player, ItemStack itemStack) {
-    float power = (float) player.getAttributeValue(PSTAttributes.GEM_POWER.get()) - 1;
+    float power = (float) player.getAttributeValue(PSTAttributes.GEM_POWER.get());
     if (ItemHelper.isArmor(itemStack) || ItemHelper.isShield(itemStack)) {
-      power += player.getAttributeValue(PSTAttributes.GEM_POWER_IN_ARMOR.get()) - 1;
+      power += (float) (player.getAttributeValue(PSTAttributes.GEM_POWER_IN_ARMOR.get()) - 1);
     }
     if (ItemHelper.isWeapon(itemStack)) {
-      power += player.getAttributeValue(PSTAttributes.GEM_POWER_IN_WEAPON.get()) - 1;
+      power += (float) (player.getAttributeValue(PSTAttributes.GEM_POWER_IN_WEAPON.get()) - 1);
     }
     if (ItemHelper.isJewelry(itemStack)) {
-      power += player.getAttributeValue(PSTAttributes.GEM_POWER_IN_JEWELRY.get()) - 1;
+      power += (float) (player.getAttributeValue(PSTAttributes.GEM_POWER_IN_JEWELRY.get()) - 1);
     }
     return power;
   }

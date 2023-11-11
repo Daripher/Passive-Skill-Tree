@@ -1,18 +1,18 @@
 package daripher.skilltree.client.screen;
 
-import daripher.skilltree.client.widget.EnumCycleButton;
-import daripher.skilltree.client.widget.PSTNumericEditBox;
-import daripher.skilltree.client.widget.PSTButton;
-import daripher.skilltree.client.widget.PSTEditBox;
+import daripher.skilltree.client.widget.*;
 import daripher.skilltree.skill.PassiveSkill;
 import java.util.stream.Stream;
+import net.minecraft.ChatFormatting;
 
 public interface SkillTreeEditor {
-  PSTEditBox addTextField(int x, int y, int width, int height, String defaultValue);
+  TextField addTextField(int x, int y, int width, int height, String defaultValue);
 
-  PSTNumericEditBox addNumericTextField(int x, int y, int width, int height, double defaultValue);
+  NumericTextField addNumericTextField(int x, int y, int width, int height, double defaultValue);
 
-  PSTButton addRemoveButton(int x, int y, int width, int height);
+  Button addRemoveButton(int x, int y, int width, int height);
+
+  Label addLabel(int x, int y, String text, ChatFormatting... styles);
 
   <T extends Enum<T>> EnumCycleButton<T> addEnumCycleButton(
       int x, int y, int width, int height, T defaultValue);

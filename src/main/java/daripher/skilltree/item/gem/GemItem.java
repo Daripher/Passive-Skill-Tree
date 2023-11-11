@@ -32,7 +32,7 @@ public abstract class GemItem extends Item {
       @NotNull List<Component> components,
       @NotNull TooltipFlag tooltipFlag) {
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) {
         components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
         return;
       }

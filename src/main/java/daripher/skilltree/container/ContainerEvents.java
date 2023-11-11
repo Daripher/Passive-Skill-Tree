@@ -2,7 +2,6 @@ package daripher.skilltree.container;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.PlayerContainer;
-import java.util.Optional;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

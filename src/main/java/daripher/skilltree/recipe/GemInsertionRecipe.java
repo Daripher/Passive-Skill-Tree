@@ -35,7 +35,7 @@ public class GemInsertionRecipe extends UpgradeRecipe {
   @Override
   public boolean matches(@NotNull Container container, @NotNull Level level) {
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return false;
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return false;
     }
     ItemStack base = container.getItem(0);
     if (!isBaseIngredient(base)) return false;
@@ -43,17 +43,18 @@ public class GemInsertionRecipe extends UpgradeRecipe {
     if (!isAdditionIngredient(ingredient)) return false;
     GemItem gem = (GemItem) ingredient.getItem();
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (!player.isPresent()) return false;
-    return gem.canInsertInto(player.get(), base, ingredient, getEmptySocket(base, player.get()));
+    return player
+        .filter(value -> gem.canInsertInto(value, base, ingredient, getEmptySocket(base, value)))
+        .isPresent();
   }
 
   @Override
   public @NotNull ItemStack assemble(@NotNull Container container) {
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
     }
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (!player.isPresent()) return ItemStack.EMPTY;
+    if (player.isEmpty()) return ItemStack.EMPTY;
     ItemStack base = container.getItem(0);
     int socket = getEmptySocket(base, player.get());
     ItemStack ingredient = container.getItem(1);

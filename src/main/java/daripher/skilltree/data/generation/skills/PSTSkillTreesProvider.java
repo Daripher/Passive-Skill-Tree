@@ -22,7 +22,7 @@ public class PSTSkillTreesProvider implements DataProvider {
   }
 
   @Override
-  public void run(@NotNull CachedOutput output) throws IOException {
+  public void run(@NotNull CachedOutput output) {
     PassiveSkillTree skillTree =
         new PassiveSkillTree(new ResourceLocation(SkillTreeMod.MOD_ID, "main_tree"));
     skillsProvider.getSkills().keySet().forEach(skillTree.getSkillIds()::add);

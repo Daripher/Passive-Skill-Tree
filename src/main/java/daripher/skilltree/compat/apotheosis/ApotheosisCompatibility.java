@@ -57,7 +57,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 public enum ApotheosisCompatibility {
-  ISNTANCE;
+  INSTANCE;
 
   public final LootCategory ring =
       LootCategory.register(
@@ -142,15 +142,13 @@ public enum ApotheosisCompatibility {
     if (!stack.hasTag()) return;
     SocketHelper.getGemInstances(stack)
         .forEach(
-            gem -> {
-              gem.gem()
-                  .getBonus(LootCategory.forItem(stack))
-                  .ifPresent(
-                      bonus -> {
-                        removeTooltip(
-                            event, bonus.getSocketBonusTooltip(gem.gemStack(), gem.rarity()));
-                      });
-            });
+            gem ->
+                gem.gem()
+                    .getBonus(LootCategory.forItem(stack))
+                    .ifPresent(
+                        bonus ->
+                            removeTooltip(
+                                event, bonus.getSocketBonusTooltip(gem.gemStack(), gem.rarity()))));
   }
 
   private void removeTooltip(ItemTooltipEvent event, Component tooltip) {
@@ -171,19 +169,14 @@ public enum ApotheosisCompatibility {
     if (ItemHelper.isNecklace(stack) && !slot.equals("necklace")) return;
     Stream<GemInstance> gems = SocketHelper.getGemInstances(stack);
     gems.forEach(
-        gem -> {
-          gem.gem()
-              .getBonus(LootCategory.forItem(stack))
-              .ifPresent(
-                  bonus -> {
-                    bonus.addModifiers(gem.gemStack(), gem.rarity(), event::addModifier);
-                  });
-        });
+        gem ->
+            gem.gem()
+                .getBonus(LootCategory.forItem(stack))
+                .ifPresent(
+                    bonus -> bonus.addModifiers(gem.gemStack(), gem.rarity(), event::addModifier)));
     Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
     affixes.forEach(
-        (affix, instance) -> {
-          instance.addModifiers(EquipmentSlot.CHEST, event::addModifier);
-        });
+        (affix, instance) -> instance.addModifiers(EquipmentSlot.CHEST, event::addModifier));
   }
 
   private void applyCurioDamageAffixes(LivingHurtEvent event) {
@@ -197,9 +190,8 @@ public enum ApotheosisCompatibility {
                 ItemStack stack = itemHandler.getStackInSlot(slot);
                 AffixHelper.getAffixes(stack)
                     .forEach(
-                        (affix, instance) -> {
-                          event.setAmount(instance.onHurt(source, entity, event.getAmount()));
-                        });
+                        (affix, instance) ->
+                            event.setAmount(instance.onHurt(source, entity, event.getAmount())));
               }
             });
   }
@@ -245,7 +237,7 @@ public enum ApotheosisCompatibility {
   }
 
   private boolean shouldDropFromOre(Gem gem) {
-    return gem.getDimensions()
+    return Objects.requireNonNull(gem.getDimensions())
         .contains(new ResourceLocation(SkillTreeMod.MOD_ID, "fake_dimension"));
   }
 
@@ -262,7 +254,7 @@ public enum ApotheosisCompatibility {
       sockets += item.getAdditionalSockets();
     }
     if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
-      sockets += ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
+      sockets += (int) ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
     }
     CompoundTag affixTag = stack.getTagElement(AffixHelper.AFFIX_DATA);
     if (affixTag != null && affixTag.contains(SocketHelper.GEMS)) {

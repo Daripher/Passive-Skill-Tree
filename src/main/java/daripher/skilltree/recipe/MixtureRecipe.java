@@ -25,7 +25,7 @@ public class MixtureRecipe extends CustomRecipe {
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (!player.isPresent()) return false;
+    if (player.isEmpty()) return false;
     boolean canMixPotions =
         player.get().getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
     if (!canMixPotions) return false;

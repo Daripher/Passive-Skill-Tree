@@ -8,7 +8,6 @@ import java.util.Objects;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -30,9 +29,9 @@ public class PSTItemModelsProvider extends ItemModelProvider {
         .forEach(this::apotheosisGem);
   }
 
-  public ItemModelBuilder apotheosisGem(Item item) {
+  public void apotheosisGem(Item item) {
     ResourceLocation itemId = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item));
-    return getBuilder("apotheosis:item/gems/" + itemId.getPath())
+    getBuilder("apotheosis:item/gems/" + itemId.getPath())
         .parent(new ModelFile.UncheckedModelFile("item/generated"))
         .texture("layer0", new ResourceLocation("skilltree", "item/" + itemId.getPath()));
   }

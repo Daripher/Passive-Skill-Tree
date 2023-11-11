@@ -13,16 +13,19 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -38,7 +41,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
@@ -82,34 +84,35 @@ public class GemBonusHandler {
 
   @SubscribeEvent
   public static void dropGemFromOre(BlockEvent.BreakEvent event) {
-    var player = event.getPlayer();
+    Player player = event.getPlayer();
     if (player.isCreative()) return;
-    var level = player.getLevel();
+    Level level = player.getLevel();
     if (level.isClientSide) return;
-    var dropChance = Config.gem_drop_chance;
+    double dropChance = Config.gem_drop_chance;
     dropChance += player.getAttributeValue(PSTAttributes.GEM_DROP_CHANCE.get()) - 1;
     if (dropChance == 0) return;
-    var blockPos = event.getPos();
-    var isOre = level.getBlockState(blockPos).is(Tags.Blocks.ORES);
+    BlockPos blockPos = event.getPos();
+    boolean isOre = level.getBlockState(blockPos).is(Tags.Blocks.ORES);
     if (!isOre) return;
     if (player.getRandom().nextFloat() >= dropChance) return;
-    var usingCorrectTool = ForgeHooks.isCorrectToolForDrops(event.getState(), player);
+    boolean usingCorrectTool = ForgeHooks.isCorrectToolForDrops(event.getState(), player);
     if (!usingCorrectTool) return;
-    var hasSilkTouch = player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0;
+    boolean hasSilkTouch =
+        player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0;
     if (hasSilkTouch) return;
     if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.ISNTANCE.adventureModuleEnabled()) {
-        ApotheosisCompatibility.ISNTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) {
+        ApotheosisCompatibility.INSTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
         return;
       }
     }
-    var serverLevel = (ServerLevel) level;
-    var lootTable =
+    ServerLevel serverLevel = (ServerLevel) level;
+    LootTable lootTable =
         serverLevel
             .getServer()
             .getLootTables()
             .get(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
-    var lootContext =
+    LootContext lootContext =
         new LootContext.Builder(serverLevel)
             .withParameter(LootContextParams.BLOCK_STATE, event.getState())
             .withParameter(
@@ -159,12 +162,6 @@ public class GemBonusHandler {
       iterator.remove();
       break;
     }
-  }
-
-  protected static String getSlotId(Either<EquipmentSlot, SlotContext> slot) {
-    AtomicReference<String> slotId = new AtomicReference<>();
-    slot.ifLeft(s -> slotId.set(s.getName())).ifRight(s -> slotId.set(s.identifier()));
-    return slotId.get();
   }
 
   @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)

@@ -888,7 +888,7 @@ public class PSTSkillsProvider implements DataProvider {
   }
 
   @Override
-  public void run(@NotNull CachedOutput output) throws IOException {
+  public void run(@NotNull CachedOutput output) {
     addSkills();
     shapeSkillTree();
     setSkillsAttributeModifiers();
