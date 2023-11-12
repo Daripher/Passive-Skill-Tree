@@ -65,33 +65,48 @@ public class SkillButton extends Button {
     ScreenHelper.prepareTextureRendering(skill.getBackgroundTexture());
     poseStack.pushPose();
     poseStack.translate(x, y, 0);
-    blit(poseStack, 0, 0, width, height, 0, 0, width, height, width * 3, height);
+    renderBackground(poseStack);
     poseStack.pushPose();
     poseStack.translate(width / 2d, height / 2d, 0);
     poseStack.scale(0.5F, 0.5F, 1);
     poseStack.translate(-width / 2d, -height / 2d, 0);
     RenderSystem.setShaderTexture(0, skill.getIconTexture());
-    blit(poseStack, 0, 0, width, height, 0, 0, width, height, width, height);
+    renderIcon(poseStack);
     poseStack.popPose();
     RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
-    blit(
-        poseStack,
-        0,
-        0,
-        width,
-        height,
-        width + (highlighted ? width : 0),
-        0,
-        width,
-        height,
-        width * 3,
-        height);
+    float animation = (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
     if (animated) {
-      RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animationFunction.get() / 3F) + 1) / 2);
-      blit(poseStack, 0, 0, width, height, width * 2, 0, width, height, width * 3, height);
+      RenderSystem.setShaderColor(1F, 1F, 1F, 1 - animation);
+    }
+    if (!highlighted) {
+      renderDarkening(poseStack);
+    }
+    if (animated) {
+      RenderSystem.setShaderColor(1F, 1F, 1F, animation);
+    }
+    if (highlighted || animated) {
+      renderFrame(poseStack);
+    }
+    if (animated) {
       RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
     }
     poseStack.popPose();
+  }
+
+  private void renderFrame(PoseStack poseStack) {
+    blit(poseStack, 0, 0, width, height, width * 2, 0, width, height, width * 3, height);
+  }
+
+  private void renderDarkening(PoseStack poseStack) {
+    blit(poseStack, 0, 0, width, height, width, 0, width, height, width * 3, height);
+  }
+
+  private void renderIcon(PoseStack poseStack) {
+    blit(poseStack, 0, 0, width, height, 0, 0, width, height, width, height);
+  }
+
+  private void renderBackground(PoseStack poseStack) {
+    blit(poseStack, 0, 0, width, height, 0, 0, width, height, width * 3, height);
   }
 
   public void setButtonSize(int size) {
