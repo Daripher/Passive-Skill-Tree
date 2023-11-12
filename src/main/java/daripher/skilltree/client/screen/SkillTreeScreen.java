@@ -211,10 +211,18 @@ public class SkillTreeScreen extends Screen {
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
     Optional<GuiEventListener> widget = getWidgetAt(mouseX, mouseY);
     if (widget.isPresent()) return widget.get().mouseClicked(mouseX, mouseY, button);
-    Optional<SkillButton> skill = getSkillAt(mouseX, mouseY);
-    return skill
-        .map(skillButton -> skillButton.mouseClicked(skillButton.x + 1, skillButton.y + 1, button))
-        .orElse(false);
+    SkillButton skill = getSkillAt(mouseX, mouseY);
+    if (skill == null) return false;
+    if (button == 0) {
+      return skill.mouseClicked(skill.x + 1, skill.y + 1, button);
+    } else if (button == 1) {
+      ClientConfig.toggleFavoriteSkill(skill.skill);
+      getMinecraft()
+          .getSoundManager()
+          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1f));
+      return true;
+    }
+    return false;
   }
 
   public Optional<GuiEventListener> getWidgetAt(double mouseX, double mouseY) {

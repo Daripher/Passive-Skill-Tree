@@ -179,6 +179,7 @@ public class Config {
 
   @SubscribeEvent
   static void load(ModConfigEvent event) {
+    if (event.getConfig().getSpec() != SPEC) return;
     max_skill_points = MAX_SKILL_POINTS.get();
     default_helmet_sockets = DEFAULT_HELMET_SOCKETS.get();
     default_chestplate_sockets = DEFAULT_CHESTPLATE_SOCKETS.get();

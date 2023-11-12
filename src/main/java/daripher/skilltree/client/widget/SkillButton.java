@@ -2,9 +2,12 @@ package daripher.skilltree.client.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import daripher.skilltree.client.screen.ScreenHelper;
+import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +17,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,9 +66,10 @@ public class SkillButton extends Button {
 
   @Override
   public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-    ScreenHelper.prepareTextureRendering(skill.getBackgroundTexture());
     poseStack.pushPose();
     poseStack.translate(x, y, 0);
+    renderFavoriteSkillHighlight(poseStack);
+    RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
     renderBackground(poseStack);
     poseStack.pushPose();
     poseStack.translate(width / 2d, height / 2d, 0);
@@ -91,6 +96,32 @@ public class SkillButton extends Button {
       RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
     }
     poseStack.popPose();
+  }
+
+  private void renderFavoriteSkillHighlight(PoseStack poseStack) {
+    if (!ClientConfig.favorite_skills.contains(skill.getId())) return;
+    ScreenHelper.prepareTextureRendering(
+        new ResourceLocation("skilltree:textures/icons/background/favorite.png"));
+    int color;
+    if (ClientConfig.favorite_color_is_rainbow) {
+      color = Color.getHSBColor(animationFunction.get() / 240f, 1f, 1f).getRGB();
+    } else {
+      color = ClientConfig.favorite_color;
+    }
+    float r = ((color >> 16) & 0xFF) / 255f;
+    float g = ((color >> 8) & 0xFF) / 255f;
+    float b = ((color) & 0xFF) / 255f;
+    RenderSystem.setShaderColor(r, g, b, 1f);
+    int size = (int) (width * 1.4);
+    poseStack.pushPose();
+    poseStack.translate(width / 2f, height / 2f, 0f);
+    float animation = 1 + 0.3f * (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
+    poseStack.scale(animation, animation, 1);
+    poseStack.mulPose(Vector3f.ZP.rotationDegrees(animationFunction.get()));
+    poseStack.translate(-size / 2f, -size / 2f, 0f);
+    blit(poseStack, 0, 0, size, size, 0, 0, 80, 80, 80, 80);
+    poseStack.popPose();
+    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
   }
 
   private void renderFrame(PoseStack poseStack) {

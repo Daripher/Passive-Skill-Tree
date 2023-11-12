@@ -2,6 +2,7 @@ package daripher.skilltree;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.compat.tetra.TetraCompatibility;
+import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.*;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +32,7 @@ public class SkillTreeMod {
     PSTSkillBonusSerializers.REGISTRY.register(modEventBus);
     modEventBus.addListener(this::registerCurioSlots);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     addCompatibilities();
   }
 
