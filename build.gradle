@@ -112,25 +112,39 @@ repositories {
 
 dependencies {
 	minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
+    // mixin
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-	runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.4.1")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.4.1")
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.1"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.2.1")) {
+        jarJar.ranged(it, "[0.2.1,)")
+    }
+    // curios
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.4.1")
+    // appleskin
 	implementation fg.deobf("curse.maven:appleskin-248787:3872808")
+    // attirubutefix
 	implementation fg.deobf("curse.maven:attributefix-280510:4436598")
+    // dummy target
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
-	implementation fg.deobf("curse.maven:selene-499980:4491267")
+    implementation fg.deobf("curse.maven:selene-499980:4491267")
+    // easy magic
 	implementation fg.deobf("curse.maven:easy-magic-456239:4411042")
-	implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
+    implementation fg.deobf("curse.maven:puzzles-lib-495476:4499052")
+    // easy villager
 	implementation fg.deobf("curse.maven:easy-villagers-400514:4502586")
+    // farmer's delight
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
+    // apotheosis
 	implementation fg.deobf("curse.maven:apotheosis-313970:4730358")
 	implementation fg.deobf("curse.maven:placebo-283644:4677899")
+    // max health fix
 	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
+    // enchantment descriptions
 	implementation fg.deobf("curse.maven:enchantment-descriptions-250419:4277356")
 	implementation fg.deobf("curse.maven:bookshelf-228525:4556697")
+    // jei
 	implementation fg.deobf("curse.maven:jei-238222:4494410")
-	implementation fg.deobf("curse.maven:simply-swords-659887:4553225")
-	implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
+    // tetra
 	implementation fg.deobf("curse.maven:tetra-289712:4487237")
 	implementation fg.deobf("curse.maven:mutil-351914:3941314")
 }
