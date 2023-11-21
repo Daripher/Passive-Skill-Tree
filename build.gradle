@@ -147,6 +147,8 @@ dependencies {
     // tetra
 	implementation fg.deobf("curse.maven:tetra-289712:4487237")
 	implementation fg.deobf("curse.maven:mutil-351914:3941314")
+    // food descriptions
+    implementation fg.deobf("curse.maven:food-descriptions-924467:4807716")
 }
 
 jar {
