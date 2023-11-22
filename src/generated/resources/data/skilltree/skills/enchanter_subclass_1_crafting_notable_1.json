@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.2,
-      "attribute": "skilltree:crafted_weapon_damage_against_burning",
-      "id": "a15dd762-945b-4933-9042-57f2fbc1116f",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:damage",
+          "chance": 0.2,
+          "operation": 1,
+          "target_condition": {
+            "type": "skilltree:is_burning"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

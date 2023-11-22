@@ -4,10 +4,17 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_with_shield",
-      "id": "e281dd83-9447-4c1e-bdee-da296c693d3a",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "f4bacff9-3351-4448-8fb5-8b11091b9de2",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

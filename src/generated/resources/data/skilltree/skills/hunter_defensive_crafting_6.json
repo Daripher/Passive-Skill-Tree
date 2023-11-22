@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:crafted_armor_evasion",
-      "id": "1b9cf021-4260-4439-ae14-b293ed0f2f63",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "skilltree:evasion",
+          "id": "edd4bdd0-b50d-4477-ab69-7905f5a2d849",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

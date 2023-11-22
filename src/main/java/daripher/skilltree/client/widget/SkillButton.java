@@ -27,7 +27,7 @@ public class SkillButton extends Button {
   private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
   private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8);
   private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F);
-  private static final Style GATEWAY_TITLE_STYLE = Style.EMPTY.withColor(0xA9A6B1);
+  private static final Style GATEWAY_TITLE_STYLE = Style.EMPTY.withColor(0x849696);
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454);
   private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
@@ -199,7 +199,7 @@ public class SkillButton extends Button {
   }
 
   private Style getTitleStyle() {
-    return width == 33
+    return width == 30
         ? GATEWAY_TITLE_STYLE
         : width == 24
             ? KEYSTONE_TITLE_STYLE

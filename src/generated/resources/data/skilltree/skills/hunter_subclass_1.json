@@ -5,17 +5,13 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "skilltree:stealth",
-      "id": "5a94c80e-32e3-4690-a6ef-496827dbad26",
+      "id": "afa891ed-7268-4eba-b07d-7b8d440a9368",
       "name": "SkillBonus",
       "operation": 1
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:jump_height",
-      "id": "d4fc4c22-cbfb-45c6-8a56-ea87d0460db9",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:jump_height",
+      "multiplier": 0.1
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

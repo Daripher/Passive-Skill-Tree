@@ -2,11 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:damage_per_gem_in_weapon",
-      "id": "989249de-12a0-4e38-aaba-8d5394550db7",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      },
       "operation": 1
     }
   ],

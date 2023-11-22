@@ -42,7 +42,7 @@ public class PSTCommands {
                             .then(
                                 Commands.argument("player", EntityArgument.player())
                                     .then(
-                                        Commands.argument("amount", IntegerArgumentType.integer())
+                                        Commands.argument("chance", IntegerArgumentType.integer())
                                             .executes(PSTCommands::executeAddPointsCommand)))))
             .requires(PSTCommands::hasPermission);
     event.getDispatcher().register(addPointsCommand);
@@ -55,7 +55,7 @@ public class PSTCommands {
                             .then(
                                 Commands.argument("player", EntityArgument.player())
                                     .then(
-                                        Commands.argument("amount", IntegerArgumentType.integer())
+                                        Commands.argument("chance", IntegerArgumentType.integer())
                                             .executes(PSTCommands::executeSetPointsCommand)))))
             .requires(PSTCommands::hasPermission);
     event.getDispatcher().register(setPointsCommand);
@@ -76,7 +76,7 @@ public class PSTCommands {
   private static int executeAddPointsCommand(CommandContext<CommandSourceStack> ctx)
       throws CommandSyntaxException {
     ServerPlayer player = EntityArgument.getPlayer(ctx, "player");
-    int amount = IntegerArgumentType.getInteger(ctx, "amount");
+    int amount = IntegerArgumentType.getInteger(ctx, "chance");
     IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
     skillsCapability.setSkillPoints(amount + skillsCapability.getSkillPoints());
     player.sendSystemMessage(
@@ -89,7 +89,7 @@ public class PSTCommands {
   private static int executeSetPointsCommand(CommandContext<CommandSourceStack> ctx)
       throws CommandSyntaxException {
     ServerPlayer player = EntityArgument.getPlayer(ctx, "player");
-    int amount = IntegerArgumentType.getInteger(ctx, "amount");
+    int amount = IntegerArgumentType.getInteger(ctx, "chance");
     IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
     skillsCapability.setSkillPoints(amount);
     NetworkDispatcher.network_channel.send(

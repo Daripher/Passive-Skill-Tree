@@ -2,12 +2,13 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_against_poisoned",
-      "id": "998b5e97-b9ad-4cdc-8e18-5d2abdfae243",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "operation": 1,
+      "target_condition": {
+        "type": "skilltree:has_effect",
+        "effect": "minecraft:poison"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

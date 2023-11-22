@@ -2,12 +2,18 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crafted_rings_critical_damage",
-      "id": "23e52abe-2f78-4e9e-b0e2-d065b8de02f1",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:crit_damage",
+          "chance": 0.1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "ring"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

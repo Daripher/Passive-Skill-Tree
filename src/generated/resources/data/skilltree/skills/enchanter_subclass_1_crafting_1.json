@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_weapon_chance_to_ignite",
-      "id": "1c220493-e34d-4664-87bf-f7aa4e129786",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05,
+          "attribute": "skilltree:chance_to_ignite",
+          "id": "5b3d54c4-7adb-4569-8425-32fff2f56608",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

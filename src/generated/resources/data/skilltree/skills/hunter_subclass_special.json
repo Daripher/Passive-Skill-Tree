@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.5,
-      "attribute": "skilltree:crafted_weapon_life_per_hit",
-      "id": "8cf98a82-9eec-48bb-b80f-7d5562641bd2",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.5,
+          "attribute": "skilltree:life_per_hit",
+          "id": "38eab09f-bac5-40ba-86e6-7f4684928094",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

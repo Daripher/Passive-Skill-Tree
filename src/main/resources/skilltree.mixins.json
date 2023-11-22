@@ -34,7 +34,6 @@
   ],
   "client": [
     "minecraft/RecipeBookComponentMixin",
-    "minecraft/CraftingScreenMixin",
     "apotheosis/AdventureModuleClientMixin"
   ],
   "injectors": {

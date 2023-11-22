@@ -2,7 +2,7 @@
   "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
-  "buttonSize": 21,
+  "buttonSize": 30,
   "connectedAsGateways": [
     "skilltree:blacksmith_gateway"
   ],
@@ -12,6 +12,6 @@
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:hunter_gateway",
   "isStartingPoint": false,
-  "positionX": 216.68217,
-  "positionY": 2.7569475
+  "positionX": 212.7852,
+  "positionY": 0.5066986
 }

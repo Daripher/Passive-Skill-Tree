@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:crit_chance_per_gem_in_weapon",
-      "id": "0a540b1e-c603-46b3-9265-35e477523b44",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.01,
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

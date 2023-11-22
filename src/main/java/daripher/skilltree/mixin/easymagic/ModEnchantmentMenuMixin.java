@@ -36,8 +36,8 @@ public class ModEnchantmentMenuMixin {
               target =
                   "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getEnchantmentCost(Lnet/minecraft/util/RandomSource;IILnet/minecraft/world/item/ItemStack;)I"))
   private int reduceLevelRequirements(
-      RandomSource random, int slot, int power, ItemStack itemStack) {
-    int levelRequirement = EnchantmentHelper.getEnchantmentCost(random, slot, power, itemStack);
+      RandomSource random, int slot, int power, ItemStack stack) {
+    int levelRequirement = EnchantmentHelper.getEnchantmentCost(random, slot, power, stack);
     int[] costsBeforeReduction = ((EnchantmentMenuExtention) this).getCostsBeforeReduction();
     costsBeforeReduction[slot] = levelRequirement;
     @SuppressWarnings("DataFlowIssue")

@@ -4,7 +4,8 @@ import daripher.skilltree.api.IrisciteSeedContainer;
 import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -17,14 +18,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.RegistryObject;
 
 public class IrisciteItem extends GemItem {
-  private static final List<SkillBonus<?>> SIMPLE_GEM_BONUSES = new ArrayList<>();
+  private static final List<ItemBonus<?>> SIMPLE_GEM_BONUSES = new ArrayList<>();
 
   public IrisciteItem() {
     super(new Properties().tab(PSTCreativeTabs.SKILLTREE));
   }
 
   @Override
-  public @Nullable SkillBonus<?> getGemBonus(
+  public @Nullable ItemBonus<?> getGemBonus(
       Player player, ItemStack itemStack, ItemStack gemStack) {
     RandomSource random = createRandomSource(player, itemStack);
     if (SIMPLE_GEM_BONUSES.isEmpty()) initSimpleGemBonuses();

@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_with_gem_in_weapon",
-      "id": "08238c14-b61c-4598-a261-c6fcc1825b41",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        },
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

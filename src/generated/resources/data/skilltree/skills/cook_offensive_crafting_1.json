@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.0025,
-      "attribute": "skilltree:cooked_food_damage_per_saturation",
-      "id": "ba8bd8d8-d68b-462c-ac1d-1840afa8a646",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:food_effect",
+        "amplifier": 1,
+        "duration": 1200,
+        "effect": "skilltree:damage_bonus"
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

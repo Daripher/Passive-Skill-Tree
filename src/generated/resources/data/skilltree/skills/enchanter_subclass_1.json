@@ -2,18 +2,18 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.15,
-      "attribute": "skilltree:damage_against_burning",
-      "id": "dccea0ee-cbea-43cc-871c-4b1244358023",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.15,
+      "operation": 1,
+      "target_condition": {
+        "type": "skilltree:is_burning"
+      }
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.15,
       "attribute": "skilltree:chance_to_ignite",
-      "id": "a3a52901-4281-46b8-9c4a-80c9bccabec6",
+      "id": "15d5c1a5-793d-4b8c-bdc1-9abe5af05478",
       "name": "SkillBonus",
       "operation": 1
     }

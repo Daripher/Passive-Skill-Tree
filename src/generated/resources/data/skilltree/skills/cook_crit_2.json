@@ -2,12 +2,12 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.02,
-      "attribute": "skilltree:crit_chance_if_not_hungry",
-      "id": "61f75f6f-9126-4cda-88c9-39ed0d7bed92",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.02,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

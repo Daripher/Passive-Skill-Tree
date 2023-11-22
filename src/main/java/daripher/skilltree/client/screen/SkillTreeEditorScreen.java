@@ -1,8 +1,6 @@
 package daripher.skilltree.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.skill.SkillTreeClientData;
@@ -10,7 +8,7 @@ import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.Button;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +26,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -106,7 +103,8 @@ public class SkillTreeEditorScreen extends Screen implements SkillTreeEditor {
     float tooltipX = ((prevMouseX - mouseX) * partialTick);
     float tooltipY = ((prevMouseY - mouseY) * partialTick);
     if (skillAtMouse == null) return;
-    renderSkillTooltip(skillAtMouse, poseStack, tooltipX, tooltipY);
+    ScreenHelper.renderSkillTooltip(
+        skillAtMouse, poseStack, tooltipX, tooltipY, width, height, itemRenderer);
   }
 
   private void renderSkills(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -472,7 +470,7 @@ public class SkillTreeEditorScreen extends Screen implements SkillTreeEditor {
                       skill
                           .getBonuses()
                           .add(
-                              new AttributeSkillBonus(
+                              new AttributeBonus(
                                   Attributes.ARMOR,
                                   new AttributeModifier(
                                       UUID.randomUUID(), "SkillTree", 1, Operation.ADDITION)));
@@ -602,60 +600,6 @@ public class SkillTreeEditorScreen extends Screen implements SkillTreeEditor {
     SkillButton button1 = skillButtons.get(skillId1);
     SkillButton button2 = skillButtons.get(skillId2);
     connections.add(new SkillConnection(button1, button2));
-  }
-
-  public void renderSkillTooltip(
-      SkillButton button, PoseStack poseStack, float mouseX, float mouseY) {
-    List<MutableComponent> tooltip = button.getTooltip();
-    if (tooltip.isEmpty()) return;
-    int tooltipWidth = 0;
-    int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
-    for (MutableComponent component : tooltip) {
-      int k = font.width(component);
-      if (k > tooltipWidth) tooltipWidth = k;
-      tooltipHeight += font.lineHeight;
-    }
-    tooltipWidth += 42;
-    float tooltipX = mouseX + 12;
-    float tooltipY = mouseY - 12;
-    if (tooltipX + tooltipWidth > width) {
-      tooltipX -= 28 + tooltipWidth;
-    }
-    if (tooltipY + tooltipHeight + 6 > height) {
-      tooltipY = height - tooltipHeight - 6;
-    }
-    poseStack.pushPose();
-    poseStack.translate(tooltipX, tooltipY, 0);
-    float zOffset = itemRenderer.blitOffset;
-    itemRenderer.blitOffset = 400.0F;
-    fill(poseStack, 1, 4, tooltipWidth - 1, tooltipHeight + 4, 0xDD000000);
-    RenderSystem.enableTexture();
-    MultiBufferSource.BufferSource buffer =
-        MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-    poseStack.translate(0.0D, 0.0D, 400.0D);
-    int textX = 5;
-    int textY = 2;
-    ScreenHelper.prepareTextureRendering(button.skill.getBorderTexture());
-    blit(poseStack, -4, -4, 0, 0, 21, 20, 110, 20);
-    blit(poseStack, tooltipWidth + 4 - 21, -4, -21, 0, 21, 20, 110, 20);
-    int centerWidth = tooltipWidth + 8 - 42;
-    int centerX = -4 + 21;
-    while (centerWidth > 0) {
-      int partWidth = Math.min(centerWidth, 68);
-      blit(poseStack, centerX, -4, 21, 0, partWidth, 20, 110, 20);
-      centerX += partWidth;
-      centerWidth -= partWidth;
-    }
-    MutableComponent title = tooltip.remove(0);
-    drawCenteredString(poseStack, font, title, tooltipWidth / 2, textY, 0xFFFFFF);
-    textY += 17;
-    for (MutableComponent component : tooltip) {
-      font.draw(poseStack, component, textX, textY, 0xFFFFFF);
-      textY += font.lineHeight;
-    }
-    buffer.endBatch();
-    poseStack.popPose();
-    itemRenderer.blitOffset = zOffset;
   }
 
   public void buttonPressed(net.minecraft.client.gui.components.Button button) {

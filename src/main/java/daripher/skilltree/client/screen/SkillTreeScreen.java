@@ -2,12 +2,12 @@ package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Vector3f;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.*;
+import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
@@ -19,16 +19,18 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -181,14 +183,12 @@ public class SkillTreeScreen extends Screen {
 
   private void renderSkillTooltip(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     if (getWidgetAt(mouseX, mouseY).isPresent()) return;
-    getSkillAt(mouseX, mouseY)
-        .ifPresent(
-            button ->
-                renderSkillTooltip(
-                    button,
-                    poseStack,
-                    mouseX + (prevMouseX - mouseX) * partialTick,
-                    mouseY + (prevMouseY - mouseY) * partialTick));
+    SkillButton skill = getSkillAt(mouseX, mouseY);
+    if (skill == null) return;
+    float tooltipX = mouseX + (prevMouseX - mouseX) * partialTick;
+    float tooltipY = mouseY + (prevMouseY - mouseY) * partialTick;
+    ScreenHelper.renderSkillTooltip(
+        skill, poseStack, tooltipX, tooltipY, width, height, itemRenderer);
   }
 
   private void renderSkills(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -230,7 +230,7 @@ public class SkillTreeScreen extends Screen {
     return super.getChildAt(mouseX, mouseY).filter(isSkillButton.negate());
   }
 
-  public Optional<SkillButton> getSkillAt(double mouseX, double mouseY) {
+  public @Nullable SkillButton getSkillAt(double mouseX, double mouseY) {
     mouseX -= scrollX;
     mouseY -= scrollY;
     for (SkillButton button : skillButtons.values()) {
@@ -241,10 +241,10 @@ public class SkillTreeScreen extends Screen {
           && mouseY >= skillY
           && mouseX < skillX + skillSize
           && mouseY < skillY + skillSize) {
-        return Optional.of(button);
+        return button;
       }
     }
-    return Optional.empty();
+    return null;
   }
 
   private List<MutableComponent> getMergedSkillBonusesTooltips() {
@@ -348,60 +348,6 @@ public class SkillTreeScreen extends Screen {
     if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points) return;
     skillConnections.forEach(SkillConnection::updateAnimation);
     gatewayConnections.forEach(SkillConnection::updateAnimation);
-  }
-
-  public void renderSkillTooltip(
-      SkillButton button, PoseStack poseStack, float mouseX, float mouseY) {
-    List<MutableComponent> tooltip = button.getTooltip();
-    if (tooltip.isEmpty()) return;
-    int tooltipWidth = 0;
-    int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
-    for (MutableComponent component : tooltip) {
-      int k = font.width(component);
-      if (k > tooltipWidth) tooltipWidth = k;
-      tooltipHeight += font.lineHeight;
-    }
-    tooltipWidth += 42;
-    float tooltipX = mouseX + 12;
-    float tooltipY = mouseY - 12;
-    if (tooltipX + tooltipWidth > width) {
-      tooltipX -= 28 + tooltipWidth;
-    }
-    if (tooltipY + tooltipHeight + 6 > height) {
-      tooltipY = height - tooltipHeight - 6;
-    }
-    poseStack.pushPose();
-    poseStack.translate(tooltipX, tooltipY, 0);
-    float zOffset = itemRenderer.blitOffset;
-    itemRenderer.blitOffset = 400.0F;
-    fill(poseStack, 1, 4, tooltipWidth - 1, tooltipHeight + 4, 0xDD000000);
-    RenderSystem.enableTexture();
-    MultiBufferSource.BufferSource buffer =
-        MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-    poseStack.translate(0.0D, 0.0D, 400.0D);
-    int textX = 5;
-    int textY = 2;
-    ScreenHelper.prepareTextureRendering(button.skill.getBorderTexture());
-    blit(poseStack, -4, -4, 0, 0, 21, 20, 110, 20);
-    blit(poseStack, tooltipWidth + 4 - 21, -4, -21, 0, 21, 20, 110, 20);
-    int centerWidth = tooltipWidth + 8 - 42;
-    int centerX = -4 + 21;
-    while (centerWidth > 0) {
-      int partWidth = Math.min(centerWidth, 68);
-      blit(poseStack, centerX, -4, 21, 0, partWidth, 20, 110, 20);
-      centerX += partWidth;
-      centerWidth -= partWidth;
-    }
-    MutableComponent title = tooltip.remove(0);
-    drawCenteredString(poseStack, font, title, tooltipWidth / 2, textY, 0xFFFFFF);
-    textY += 17;
-    for (MutableComponent component : tooltip) {
-      font.draw(poseStack, component, textX, textY, 0xFFFFFF);
-      textY += font.lineHeight;
-    }
-    buffer.endBatch();
-    poseStack.popPose();
-    itemRenderer.blitOffset = zOffset;
   }
 
   public void buttonPressed(net.minecraft.client.gui.components.Button button) {
@@ -534,8 +480,8 @@ public class SkillTreeScreen extends Screen {
       PoseStack poseStack, SkillConnection connection, int mouseX, int mouseY) {
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();
-    Optional<SkillButton> hoveredSkill = getSkillAt(mouseX, mouseY);
-    boolean learned = isSkillLearned(button1.skill);
+    SkillButton hoveredSkill = getSkillAt(mouseX, mouseY);
+    boolean learned = isSkillLearned(button1.skill) || isSkillLearned(button2.skill);
     if (learned) {
       if (learnedSkills.contains(button2.skill.getId())
           || newlyLearnedSkills.contains(button2.skill.getId())) {
@@ -545,12 +491,13 @@ public class SkillTreeScreen extends Screen {
       }
       return;
     }
-    boolean hovered =
-        hoveredSkill.isPresent()
-            && (hoveredSkill.get() == button1 || hoveredSkill.get() == button2);
+    boolean hovered = hoveredSkill == button1 || hoveredSkill == button2;
     if (hovered) {
-      if (hoveredSkill.get() == button2) renderGatewayConnection(poseStack, button2, button1);
-      else renderGatewayConnection(poseStack, button1, button2);
+      if (hoveredSkill == button2) {
+        renderGatewayConnection(poseStack, button2, button1);
+      } else {
+        renderGatewayConnection(poseStack, button1, button2);
+      }
     }
   }
 

@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:mining_speed",
-      "id": "774bf64b-38f5-4353-8f3e-30674a8351ce",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:block_break_speed",
+      "multiplier": 0.05,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:pickaxe"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
-      "id": "f08c6da4-75c1-4cf8-9ea8-b6433af4320e",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05,
+          "attribute": "skilltree:chance_to_retrieve_arrows",
+          "id": "880c2313-a2a7-4660-86c7-e63bd37a2ad3",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

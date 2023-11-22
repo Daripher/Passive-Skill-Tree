@@ -2,7 +2,7 @@
   "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
-  "buttonSize": 21,
+  "buttonSize": 30,
   "connectedAsGateways": [
     "skilltree:cook_gateway"
   ],
@@ -13,5 +13,5 @@
   "id": "skilltree:alchemist_gateway",
   "isStartingPoint": false,
   "positionX": 105.95949,
-  "positionY": 189.03412
+  "positionY": 184.53412
 }

@@ -3,19 +3,19 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.005,
-      "attribute": "skilltree:evasion_chance",
-      "id": "ee8875e4-4358-4033-8ea7-553207824506",
+      "amount": 0.5,
+      "attribute": "skilltree:evasion",
+      "id": "d616baf7-bd8a-49aa-8753-d802457310c9",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     },
     {
       "type": "skilltree:attribute",
-      "amount": 0.005,
-      "attribute": "skilltree:block_chance",
-      "id": "b10e267d-6b1b-48d0-9588-03a17625aff1",
+      "amount": 0.5,
+      "attribute": "skilltree:blocking",
+      "id": "f49393db-e0d0-47ea-bd06-98b038577a76",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

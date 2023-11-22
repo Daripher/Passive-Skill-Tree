@@ -4,10 +4,17 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_with_ranged_weapon",
-      "id": "8f76ec4d-075e-4cb5-98fd-b2f2198f37fb",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "5474ae8b-062d-490a-9a98-9aef3ea1c5c1",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "ranged"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

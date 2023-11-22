@@ -1,14 +1,15 @@
 package daripher.skilltree.potion;
 
 import daripher.skilltree.config.Config;
-import java.util.ArrayList;
+import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.item.PotionAmplificationBonus;
+import daripher.skilltree.skill.bonus.item.PotionDurationBonus;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -16,76 +17,28 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 public class PotionHelper {
   private static final String CUSTOM_COLOR_TAG = "CustomPotionColor";
   private static final String MIXED_POTION_TAG = "MixedPotion";
-  private static final String EFFECT_STRENGTH_TAG = "EffectStrength";
-  private static final String EFFECT_DURATION_TAG = "EffectDuration";
-
-  public static boolean isHarmfulPotion(ItemStack stack) {
-    for (MobEffectInstance effect : PotionUtils.getMobEffects(stack)) {
-      if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) return true;
-    }
-    return false;
-  }
-
-  public static boolean isBeneficialPotion(ItemStack stack) {
-    for (MobEffectInstance effect : PotionUtils.getMobEffects(stack)) {
-      if (effect.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) return true;
-    }
-    return false;
-  }
-
-  public static boolean isPoison(ItemStack stack) {
-    for (MobEffectInstance effect : PotionUtils.getMobEffects(stack)) {
-      if (effect.getEffect() == MobEffects.POISON || effect.getEffect() == MobEffects.HARM)
-        return true;
-    }
-    return false;
-  }
-
-  public static boolean isHealingPotion(ItemStack stack) {
-    for (MobEffectInstance effect : PotionUtils.getMobEffects(stack)) {
-      if (effect.getEffect() == MobEffects.REGENERATION
-          || effect.getEffect() == MobEffects.HEAL
-          || effect.getEffect() == MobEffects.HEALTH_BOOST) return true;
-    }
-    return false;
-  }
-
-  public static boolean isSuperiorPotion(ItemStack stack) {
-    return stack.hasTag()
-        && (stack.getTag().contains(EFFECT_STRENGTH_TAG)
-            || stack.getTag().contains(EFFECT_DURATION_TAG));
-  }
 
   public static boolean isMixture(ItemStack stack) {
-    return stack.hasTag() && stack.getTag().contains(MIXED_POTION_TAG);
+    return stack.hasTag() && Objects.requireNonNull(stack.getTag()).contains(MIXED_POTION_TAG);
   }
 
   public static boolean isPotion(ItemStack stack) {
     return stack.getItem() instanceof PotionItem;
   }
 
-  public static void enhancePotion(
-      ItemStack stack, float amplificationChance, float durationBonus) {
-    if (PotionUtils.getMobEffects(stack).isEmpty()) return;
-    int strength = 0;
-    if (amplificationChance > 1) {
-      strength += (int) amplificationChance;
-      amplificationChance -= strength;
-    }
-    if (amplificationChance != 0) {
-      Random random = new Random();
-      if (random.nextFloat() < amplificationChance) strength++;
-    }
-    stack.getOrCreateTag().putInt(EFFECT_STRENGTH_TAG, strength);
-    stack.getOrCreateTag().putFloat(EFFECT_DURATION_TAG, durationBonus);
+  public static int getAmplifierBonus(ItemStack stack) {
+    return ItemHelper.getItemBonuses(stack, PotionAmplificationBonus.class).stream()
+        .map(PotionAmplificationBonus::chance)
+        .reduce(Float::sum)
+        .map(int.class::cast)
+        .orElse(0);
   }
 
-  public static float getDurationBonus(ItemStack stack) {
-    return stack.hasTag() ? stack.getTag().getFloat(EFFECT_DURATION_TAG) : 0F;
-  }
-
-  public static int getStrengthBonus(ItemStack stack) {
-    return stack.hasTag() ? stack.getTag().getInt(EFFECT_STRENGTH_TAG) : 0;
+  public static float getDurationMultiplier(ItemStack stack) {
+    return ItemHelper.getItemBonuses(stack, PotionDurationBonus.class).stream()
+        .map(PotionDurationBonus::multiplier)
+        .reduce(Float::sum)
+        .orElse(1f);
   }
 
   public static void setPotionColor(ItemStack itemStack, int color) {
@@ -95,24 +48,28 @@ public class PotionHelper {
 
   public static ItemStack mixPotions(ItemStack potion1, ItemStack potion2) {
     List<ItemStack> potions = Arrays.asList(potion1, potion2);
-    potions = potions.stream().sorted(PotionHelper::comparePotions).toList();
     ItemStack result = new ItemStack(potion1.getItem(), 2);
-    List<MobEffectInstance> effects = new ArrayList<>();
-    potions.stream()
-        .map(PotionUtils::getMobEffects)
-        .forEach(
-            originalEffects ->
-                originalEffects.forEach(
-                    effect -> {
-                      int duration = (int) (effect.getDuration() * Config.mixture_effects_duration);
-                      int amplifier =
-                          (int) (effect.getAmplifier() * Config.mixture_effects_strength);
-                      effects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
-                    }));
+    List<MobEffectInstance> effects =
+        potions.stream()
+            .sorted(PotionHelper::comparePotions)
+            .map(PotionUtils::getMobEffects)
+            .map(PotionHelper::applyMixtureMultipliers)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     PotionUtils.setCustomEffects(result, effects);
     setPotionColor(result, PotionUtils.getColor(potions.get(0)));
     result.getOrCreateTag().putBoolean(MIXED_POTION_TAG, true);
     return result;
+  }
+
+  private static List<MobEffectInstance> applyMixtureMultipliers(List<MobEffectInstance> effects) {
+    effects.replaceAll(
+        effect -> {
+          int duration = (int) (effect.getDuration() * Config.mixture_effects_duration);
+          int amplifier = (int) (effect.getAmplifier() * Config.mixture_effects_strength);
+          return new MobEffectInstance(effect.getEffect(), duration, amplifier);
+        });
+    return effects;
   }
 
   private static int comparePotions(ItemStack potionStack1, ItemStack potionStack2) {

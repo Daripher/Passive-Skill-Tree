@@ -4,10 +4,17 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_with_gem_in_weapon",
-      "id": "2b5845c6-59a6-4982-bfbf-5591816eed7a",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "58eaa438-54ca-4236-95fc-ab73d64a0770",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        },
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

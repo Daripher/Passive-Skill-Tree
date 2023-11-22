@@ -1,7 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.potion.PotionHelper;
-import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -13,24 +12,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PotionUtils.class)
 public class PotionUtilsMixin {
-  @Inject(method = "getMobEffects", at = @At("RETURN"), cancellable = true)
+  @Inject(method = "getMobEffects", at = @At("RETURN"))
   private static void applySuperiorPotionBonuses(
       ItemStack stack, CallbackInfoReturnable<List<MobEffectInstance>> callback) {
-    if (!PotionHelper.isSuperiorPotion(stack)) return;
-    callback.setReturnValue(enhanceEffects(stack, callback.getReturnValue()));
+    float durationMultiplier = PotionHelper.getDurationMultiplier(stack);
+    int amplifierBonus = PotionHelper.getAmplifierBonus(stack);
+    if (durationMultiplier == 1f && amplifierBonus == 0) return;
+    enhanceEffects(callback.getReturnValue(), durationMultiplier, amplifierBonus);
   }
 
-  private static List<MobEffectInstance> enhanceEffects(
-      ItemStack stack, List<MobEffectInstance> effects) {
-    ArrayList<MobEffectInstance> enhancedEffects = new ArrayList<>();
-    float durationBonus = PotionHelper.getDurationBonus(stack);
-    int strengthBonus = PotionHelper.getStrengthBonus(stack);
-    effects.forEach(
+  private static void enhanceEffects(
+      List<MobEffectInstance> effects, float durationMultiplier, int amplifierBonus) {
+    effects.replaceAll(
         effect -> {
-          int duration = (int) (effect.getDuration() * (1 + durationBonus));
-          int amplifier = effect.getAmplifier() + strengthBonus;
-          enhancedEffects.add(new MobEffectInstance(effect.getEffect(), duration, amplifier));
+          int duration = (int) (effect.getDuration() * durationMultiplier);
+          int amplifier = effect.getAmplifier() + amplifierBonus;
+          return new MobEffectInstance(effect.getEffect(), duration, amplifier);
         });
-    return enhancedEffects;
   }
 }

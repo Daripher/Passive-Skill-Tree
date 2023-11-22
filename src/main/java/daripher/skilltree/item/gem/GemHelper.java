@@ -1,11 +1,13 @@
 package daripher.skilltree.item.gem;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.player.GemPowerBonus;
+import daripher.skilltree.skill.bonus.player.PlayerSocketsBonus;
 import java.util.Optional;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
@@ -43,10 +45,10 @@ public class GemHelper {
     CompoundTag gemTag = new CompoundTag();
     ListTag gemsTag = getGemsListTag(stack);
     if (gemsTag.size() > socket) gemTag = gemsTag.getCompound(socket);
-    SkillBonus<?> bonus = gem.getGemBonus(player, stack, gemStack);
+    ItemBonus<?> bonus = gem.getGemBonus(player, stack, gemStack);
     if (bonus == null) {
       SkillTreeMod.LOGGER.error(
-          "Cannot insert gem into {}, slot: {}",
+          "Cannot insert gem into {}, category: {}",
           stack.getItem(),
           Player.getEquipmentSlotForItem(stack));
       return;
@@ -99,35 +101,29 @@ public class GemHelper {
       if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return 0;
     }
     int sockets = ItemHelper.getDefaultSockets(stack);
-    if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
-      sockets += (int) ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
-    }
-    if (stack.getItem() instanceof HasAdditionalSockets) {
-      sockets += ((HasAdditionalSockets) stack.getItem()).getAdditionalSockets();
-    }
-    if (player != null) sockets += getPlayerSockets(stack, player);
-    return sockets;
-  }
-
-  public static int getPlayerSockets(ItemStack stack, @Nullable Player player) {
-    if (player == null) return 0;
-    int sockets = 0;
-    if (ItemHelper.isEquipment(stack)) {
-      sockets += (int) player.getAttributeValue(PSTAttributes.MAXIMUM_EQUIPMENT_SOCKETS.get());
-    }
-    if (ItemHelper.isChestplate(stack)) {
-      sockets += (int) player.getAttributeValue(PSTAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get());
-    }
-    if (ItemHelper.isWeapon(stack)) {
-      sockets += (int) player.getAttributeValue(PSTAttributes.MAXIMUM_WEAPON_SOCKETS.get());
-    }
-    if (ItemHelper.isRing(stack)) {
-      sockets += (int) player.getAttributeValue(PSTAttributes.MAXIMUM_RING_SOCKETS.get());
+    if (player != null) {
+      sockets += getPlayerSockets(stack, player);
     }
     return sockets;
   }
 
   protected static ListTag getGemsListTag(ItemStack itemStack) {
     return itemStack.getOrCreateTag().getList(GEMS_TAG, new CompoundTag().getId());
+  }
+
+  public static int getPlayerSockets(ItemStack stack, Player player) {
+    return SkillBonusHandler.getSkillBonuses(player, PlayerSocketsBonus.class).stream()
+        .filter(bonus -> bonus.itemCondition().met(stack))
+        .map(PlayerSocketsBonus::sockets)
+        .reduce(Integer::sum)
+        .orElse(0);
+  }
+
+  public static float getGemPower(Player player, ItemStack stack) {
+    return SkillBonusHandler.getSkillBonuses(player, GemPowerBonus.class).stream()
+        .filter(bonus -> bonus.itemCondition().met(stack))
+        .map(GemPowerBonus::multiplier)
+        .reduce(Float::sum)
+        .orElse(0f);
   }
 }

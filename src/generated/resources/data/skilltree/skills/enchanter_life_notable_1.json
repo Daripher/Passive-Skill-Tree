@@ -4,8 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_armor_enchantment",
-      "id": "12996df2-9957-4df3-a802-b6032be26e67",
+      "attribute": "minecraft:generic.max_health",
+      "id": "2e649cfd-4f20-4e5f-b4f0-c4daa62c7b32",
+      "multiplier": {
+        "type": "skilltree:enchants_amount",
+        "item_condition": {
+          "type": "skilltree:armor"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

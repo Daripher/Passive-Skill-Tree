@@ -1,8 +1,8 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.init.PSTAttributes;
-import daripher.skilltree.potion.PotionHelper;
+import daripher.skilltree.skill.bonus.player.CraftedItemBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -43,44 +43,9 @@ public abstract class BrewingStandBlockEntityMixin extends BaseContainerBlockEnt
     if (player.isEmpty()) return;
     for (int slot = 0; slot < 3; slot++) {
       ItemStack potionStack = itemStacks.get(slot);
-      enhancePotion(potionStack, player.get());
+      SkillBonusHandler.getSkillBonuses(player.get(), CraftedItemBonus.class)
+          .forEach(bonus -> bonus.itemCrafted(potionStack));
     }
-  }
-
-  private static void enhancePotion(ItemStack potionStack, Player player) {
-    float strengthBonus =
-        (float) player.getAttributeValue(PSTAttributes.BREWED_POTIONS_STRENGTH.get()) - 1;
-    float durationBonus =
-        (float) player.getAttributeValue(PSTAttributes.BREWED_POTIONS_DURATION.get()) - 1;
-    if (PotionHelper.isHarmfulPotion(potionStack)) {
-      strengthBonus +=
-          (float)
-              (player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_STRENGTH.get()) - 1);
-      durationBonus +=
-          (float)
-              (player.getAttributeValue(PSTAttributes.BREWED_HARMFUL_POTIONS_DURATION.get()) - 1);
-    }
-    if (PotionHelper.isBeneficialPotion(potionStack)) {
-      strengthBonus +=
-          (float)
-              (player.getAttributeValue(PSTAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH.get())
-                  - 1);
-      durationBonus +=
-          (float)
-              (player.getAttributeValue(PSTAttributes.BREWED_BENEFICIAL_POTIONS_DURATION.get())
-                  - 1);
-    }
-    if (PotionHelper.isPoison(potionStack)) {
-      strengthBonus +=
-          (float) (player.getAttributeValue(PSTAttributes.BREWED_POISONS_STRENGTH.get()) - 1);
-    }
-    if (PotionHelper.isHealingPotion(potionStack)) {
-      strengthBonus +=
-          (float)
-              (player.getAttributeValue(PSTAttributes.BREWED_HEALING_POTIONS_STRENGTH.get()) - 1);
-    }
-    if (durationBonus == 0 && strengthBonus == 0) return;
-    PotionHelper.enhancePotion(potionStack, strengthBonus, durationBonus);
   }
 
   @Override

@@ -3,11 +3,29 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:chestplate_armor",
-      "id": "a2380b9b-6b7b-433b-965f-fe440b67c06b",
+      "amount": 0.1,
+      "attribute": "minecraft:generic.armor",
+      "id": "f3f0dd88-5675-43b8-b340-57ddaca9787b",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:attribute_value",
+        "attribute": "minecraft:generic.armor",
+        "min": 50.0
+      }
+    },
+    {
+      "type": "skilltree:attribute",
+      "amount": 0.1,
+      "attribute": "minecraft:generic.armor",
+      "id": "221fce9d-d570-4dbf-9b35-112c0782450f",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:attribute_value",
+        "attribute": "minecraft:generic.armor",
+        "min": 100.0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

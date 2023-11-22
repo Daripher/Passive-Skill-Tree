@@ -4,8 +4,12 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.05,
-      "attribute": "skilltree:maximum_life_per_evasion",
-      "id": "97d14e03-6e52-40cb-8554-664fa57cb845",
+      "attribute": "minecraft:generic.max_health",
+      "id": "597c4742-c29a-477c-b08d-2d6e4174b114",
+      "multiplier": {
+        "type": "skilltree:attribute_value",
+        "attribute": "skilltree:evasion"
+      },
       "name": "SkillBonus",
       "operation": 0
     }

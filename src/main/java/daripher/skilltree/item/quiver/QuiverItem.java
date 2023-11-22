@@ -105,9 +105,10 @@ public class QuiverItem extends Item implements ICurioItem {
 
   public static int getCapacity(ItemStack quiver) {
     int capacity = ((QuiverItem) quiver.getItem()).capacity;
-    if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
-      capacity *= (int) (1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY));
-    }
+    //TODO:replace with item bonuses
+//    if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
+//      capacity *= (int) (1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY));
+//    }
     return capacity;
   }
 

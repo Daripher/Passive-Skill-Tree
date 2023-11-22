@@ -4,10 +4,16 @@
     {
       "type": "skilltree:attribute",
       "amount": 2.0,
-      "attribute": "skilltree:maximum_life_with_enchanted_item",
-      "id": "cb8caa1b-63bf-4292-b0b5-a76a75230c07",
+      "attribute": "minecraft:generic.max_health",
+      "id": "4e6b8a9d-c732-487e-8ab9-cf1e3199f6bf",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_enchanted_item",
+        "item_condition": {
+          "type": "skilltree:equipment"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

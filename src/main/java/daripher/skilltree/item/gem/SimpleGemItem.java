@@ -2,8 +2,9 @@ package daripher.skilltree.item.gem;
 
 import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.skill.bonus.AttributeSkillBonus;
-import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public abstract class SimpleGemItem extends GemItem {
-  protected final Map<String, SkillBonus<?>> bonuses = new HashMap<>();
+  protected final Map<String, ItemBonus<?>> bonuses = new HashMap<>();
 
   public SimpleGemItem(Properties properties) {
     super(properties);
@@ -28,7 +29,7 @@ public abstract class SimpleGemItem extends GemItem {
   }
 
   @Override
-  public @Nullable SkillBonus<?> getGemBonus(
+  public @Nullable ItemBonus<?> getGemBonus(
       Player player, ItemStack itemStack, ItemStack gemStack) {
     EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
     if (ItemHelper.isPickaxe(itemStack) && slot == EquipmentSlot.MAINHAND) {
@@ -72,20 +73,20 @@ public abstract class SimpleGemItem extends GemItem {
 
   @Override
   protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
-    Map<String, SkillBonus<?>> bonuses = new TreeMap<>(this.bonuses);
+    Map<String, ItemBonus<?>> bonuses = new TreeMap<>(this.bonuses);
     groupBonuses(bonuses);
     bonuses.forEach((slot, bonus) -> components.add(bonus.getTooltip()));
   }
 
-  protected void groupBonuses(Map<String, SkillBonus<?>> bonuses) {
+  protected void groupBonuses(Map<String, ItemBonus<?>> bonuses) {
     groupBonuses(bonuses, "melee_weapon", "ranged_weapon", "weapon");
     groupBonuses(bonuses, "necklace", "ring", "jewelry");
   }
 
   protected void groupBonuses(
-      Map<String, SkillBonus<?>> bonuses, String type1, String type2, String group) {
+      Map<String, ItemBonus<?>> bonuses, String type1, String type2, String group) {
     if (sameBonuses(type1, type2)) {
-      SkillBonus<?> bonus = bonuses.get(type1);
+      ItemBonus<?> bonus = bonuses.get(type1);
       bonuses.remove(type1);
       bonuses.remove(type2);
       bonuses.put(group, bonus);
@@ -97,24 +98,25 @@ public abstract class SimpleGemItem extends GemItem {
     return bonuses.get(type1).sameBonus(bonuses.get(type2));
   }
 
-  public List<SkillBonus<?>> getBonusesList() {
+  public List<ItemBonus<?>> getBonusesList() {
     return bonuses.values().stream().toList();
   }
 
-  public Map<String, SkillBonus<?>> getBonuses() {
-    HashMap<String, SkillBonus<?>> bonuses = new HashMap<>(this.bonuses);
+  public Map<String, ItemBonus<?>> getBonuses() {
+    HashMap<String, ItemBonus<?>> bonuses = new HashMap<>(this.bonuses);
     groupBonuses(bonuses);
     return bonuses;
   }
 
-  protected void setBonuses(SkillBonus<?> bonus, String... slots) {
+  protected void setBonuses(ItemBonus<?> bonus, String... slots) {
     for (String slot : slots) bonuses.put(slot, bonus);
   }
 
   protected void setAttributeBonuses(
       Attribute attribute, double amount, AttributeModifier.Operation operation, String... slots) {
-    AttributeSkillBonus bonus =
-        new AttributeSkillBonus(attribute, new AttributeModifier("Gem Bonus", amount, operation));
+    ItemBonus<?> bonus =
+        new ItemSkillBonus(
+            new AttributeBonus(attribute, new AttributeModifier("GemBonus", amount, operation)));
     setBonuses(bonus, slots);
   }
 }

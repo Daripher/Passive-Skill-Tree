@@ -2,12 +2,13 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:damage_against_poisoned",
-      "id": "649964b4-9e66-4b3b-9ea0-0baa46827c78",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.25,
+      "operation": 1,
+      "target_condition": {
+        "type": "skilltree:has_effect",
+        "effect": "minecraft:poison"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

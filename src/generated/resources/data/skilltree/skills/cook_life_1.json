@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 2.0,
-      "attribute": "skilltree:maximum_life_if_not_hungry",
-      "id": "3322acf0-0979-40d7-9f3d-b40c60155d07",
+      "attribute": "minecraft:generic.max_health",
+      "id": "aec0b377-0d37-487f-96be-a0417d51d407",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

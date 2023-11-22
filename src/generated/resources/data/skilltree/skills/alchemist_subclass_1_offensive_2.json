@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.02,
-      "attribute": "skilltree:crit_chance",
-      "id": "86601e1b-161d-4011-937d-91ee2dfe0631",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.02
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

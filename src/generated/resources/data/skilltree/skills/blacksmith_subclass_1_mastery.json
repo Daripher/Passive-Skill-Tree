@@ -3,26 +3,26 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:block_chance",
-      "id": "e5c17cd4-00d9-4151-8113-632d42dc0f85",
+      "amount": 10.0,
+      "attribute": "skilltree:blocking",
+      "id": "ba8311cc-aee2-4d8d-a367-e5f73b917e17",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "id": "364e323d-1e81-4acb-8959-5a05156291c2",
+      "id": "36d125e0-f2b0-4849-8a0c-ebcd76469105",
       "name": "SkillBonus",
       "operation": 1
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:melee_damage",
-      "id": "53c80bbc-8a91-4c52-a1b6-d5810bedec2f",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:is_melee"
+      },
       "operation": 1
     }
   ],

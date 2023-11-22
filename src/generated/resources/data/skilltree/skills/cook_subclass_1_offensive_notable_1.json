@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.1,
-      "attribute": "skilltree:attack_speed_if_wounded",
-      "id": "d472e68b-31cd-48da-9001-711e4a4b38e5",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "579ff6f8-3d7c-477d-9c7e-66d18f1ac3a2",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.5
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

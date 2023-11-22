@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:projectile_crit_damage",
-      "id": "42228a09-3cc9-428b-bcbe-36077186868c",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.25,
+      "damage_condition": {
+        "type": "skilltree:is_projectile"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

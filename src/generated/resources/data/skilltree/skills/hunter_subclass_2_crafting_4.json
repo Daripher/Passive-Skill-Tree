@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_quivers_capacity",
-      "id": "3a18699a-31cb-48b5-88ae-48f4e3024cc2",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:quiver_capacity",
+        "chance": 10.0,
+        "operation": 0
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

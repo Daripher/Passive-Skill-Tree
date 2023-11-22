@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crit_damage_per_weapon_enchantment",
-      "id": "2dd839c6-49dc-489a-89f1-2b73e5ebe39a",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.05,
+      "multiplier": {
+        "type": "skilltree:enchants_amount",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

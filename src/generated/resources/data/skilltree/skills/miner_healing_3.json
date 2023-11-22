@@ -4,8 +4,8 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration_bonus",
-      "id": "67284cdb-2f7b-4f78-a5a9-f7d8f224a151",
+      "attribute": "skilltree:life_regeneration",
+      "id": "ed89ed69-04ee-4350-a764-980a73051127",
       "name": "SkillBonus",
       "operation": 0
     }

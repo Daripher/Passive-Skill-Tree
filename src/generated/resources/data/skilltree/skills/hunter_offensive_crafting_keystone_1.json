@@ -2,12 +2,15 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:crafted_ranged_weapon_sockets",
-      "id": "53da46c0-00cd-4d0a-86d8-1724f01a89e5",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:sockets",
+        "sockets": 1
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "ranged"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

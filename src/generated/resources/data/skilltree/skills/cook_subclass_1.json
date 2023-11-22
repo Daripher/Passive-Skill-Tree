@@ -2,20 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:damage_if_damaged",
-      "id": "ba3cdb8f-0f6b-4fbb-8896-ba15cdc2fcc4",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.75
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.2,
-      "attribute": "skilltree:damage_if_wounded",
-      "id": "fa21dacc-152e-4e5b-a88c-c94c71fd6852",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.2,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.5
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:damage_with_shield",
-      "id": "83579115-48f3-4f22-a444-61757252e5cf",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.25,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

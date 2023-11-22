@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.02,
-      "attribute": "skilltree:crit_damage_per_satisfied_hunger",
-      "id": "d045d692-c185-4435-81fb-27e9d1a861fa",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.01,
+      "multiplier": {
+        "type": "skilltree:food_level"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

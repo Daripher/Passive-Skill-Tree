@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:experience_from_fishing",
-      "id": "27cd5169-c8e3-4b80-8b7c-b5a042f766df",
+      "id": "ce77fc1d-b0a2-41ee-880e-c8a4dfe8f4e1",
       "name": "SkillBonus",
       "operation": 1
     },
@@ -13,7 +13,7 @@
       "type": "skilltree:attribute",
       "amount": 0.2,
       "attribute": "skilltree:double_fishing_loot_chance",
-      "id": "56dfa81e-b590-44c9-897a-f808f394493e",
+      "id": "fae8be27-fc79-447a-b968-06273b834323",
       "name": "SkillBonus",
       "operation": 1
     }

@@ -2,20 +2,40 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crafted_quivers_damage_against_burning",
-      "id": "75e3b9d2-a0dd-4bec-9c8a-d354dfa8250f",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:damage",
+          "chance": 0.1,
+          "operation": 1,
+          "target_condition": {
+            "type": "skilltree:is_burning"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crafted_quivers_chance_to_ignite",
-      "id": "a81ccb6d-1f05-4918-bd5f-d9075a4344f3",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.10000000149011612,
+          "attribute": "skilltree:chance_to_ignite",
+          "id": "c25626ce-4bc8-4a93-a088-d25bc60fd38e",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

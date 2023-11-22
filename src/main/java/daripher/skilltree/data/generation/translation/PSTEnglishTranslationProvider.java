@@ -1,20 +1,13 @@
 package daripher.skilltree.data.generation.translation;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.PSTAttributes;
-import daripher.skilltree.init.PSTEffects;
-import daripher.skilltree.init.PSTItems;
-import java.util.Arrays;
-import javax.annotation.Nullable;
+import daripher.skilltree.init.*;
+import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.common.data.LanguageProvider;
 import top.theillusivec4.curios.common.CuriosHelper;
 
-public class PSTEnglishTranslationProvider extends LanguageProvider {
+public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
   public PSTEnglishTranslationProvider(DataGenerator gen) {
     super(gen, SkillTreeMod.MOD_ID, "en_us");
   }
@@ -177,6 +170,122 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
     addSkill("miner_subclass_2_mastery", "Aristocrat");
     addSkill("miner_subclass_2_crafting_notable_1", "Star Shards");
     addSkill("miner_subclass_2_life_notable_1", "Talisman");
+    // skill bonuses
+    add(PSTSkillBonuses.DAMAGE.get(), "Damage");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Critical Hit Damage");
+    add(PSTSkillBonuses.CRIT_CHANCE.get(), "Critical Hit Chance");
+    add(PSTSkillBonuses.CRAFTED_ITEM_BONUS.get(), "Crafted %s: %s");
+    add(PSTSkillBonuses.GEM_POWER.get(), "Gems inserted into %s: %s");
+    add(PSTSkillBonuses.GEM_POWER.get(), "bonus", "Effect Power");
+    add(PSTSkillBonuses.PLAYER_SOCKETS.get(), "Gem Sockets in %s");
+    add(PSTSkillBonuses.BLOCK_BREAK_SPEED.get(), "Block Break Speed");
+    add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Repaired %s: %s");
+    add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Durability Restored");
+    add(PSTSkillBonuses.ENCHANTMENT_AMPLIFICATION.get(), "%s: %s");
+    add(PSTSkillBonuses.ENCHANTMENT_AMPLIFICATION.get(), "bonus", "Amplification Chance");
+    add(PSTSkillBonuses.ENCHANTMENT_REQUIREMENT.get(), "Enchantments: %s");
+    add(PSTSkillBonuses.ENCHANTMENT_REQUIREMENT.get(), "bonus", "Level Requirement");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Enchantments: %s");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "bonus", "Free Enchantment chance");
+    add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
+    // item bonuses
+    add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
+    add(PSTItemBonuses.DURABILITY.get(), "Durability");
+    add(PSTItemBonuses.QUIVER_CAPACITY.get(), "Capacity");
+    add(PSTItemBonuses.POTION_AMPLIFICATION.get(), "Amplification Chance");
+    add(PSTItemBonuses.POTION_DURATION.get(), "Duration");
+    add(PSTItemBonuses.FOOD_EFFECT.get(), "%s for %s");
+    add(PSTItemBonuses.FOOD_SATURATION.get(), "Saturation");
+    add(PSTItemBonuses.FOOD_HEALING.get(), "Restores %s Health");
+    // living conditions
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.you", "You have");
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.target", "Target has");
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "min.1", "%s if %s effects");
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "min", "%s if %s at least %d effects");
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "max", "%s if %s at most %d effects");
+    add(PSTLivingConditions.EFFECT_AMOUNT.get(), "range", "%s if %s %d to %d effects");
+    add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "target.you", "You have");
+    add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "target.target", "Target has");
+    add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "min", "%s if %s at least %s%% health");
+    add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "max", "%s if %s at most %s%% health");
+    add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "range", "%s if %s %s%% to %s%% health");
+    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "target.you", "You have");
+    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "target.target", "Target has");
+    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "%s if %s enchanted %s equipped");
+    add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.you", "You have");
+    add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.target", "Target has");
+    add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "%s if %s %s equipped");
+    add(PSTLivingConditions.HAS_GEMS.get(), "target.you", "You have");
+    add(PSTLivingConditions.HAS_GEMS.get(), "target.target", "Target has");
+    add(PSTLivingConditions.HAS_GEMS.get(), "min.1", "%s if %s gems in %s");
+    add(PSTLivingConditions.HAS_GEMS.get(), "min", "%s %s at least %d gems in %s");
+    add(PSTLivingConditions.HAS_GEMS.get(), "max", "%s %s at most %d gems in %s");
+    add(PSTLivingConditions.HAS_GEMS.get(), "range", "%s %s %d to %d gems in %s");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "You are");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Target is");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s effect");
+    add(PSTLivingConditions.IS_BURNING.get(), "target.you", "You are");
+    add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Target is");
+    add(PSTLivingConditions.IS_BURNING.get(), "%s if %s burning");
+    add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.you", "You have");
+    add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.target", "Target has");
+    add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "min", "%s if %s at least %s %s");
+    add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "max", "%s if %s at most %s %s");
+    add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "range", "%s if %s %s%% to %s %s");
+    add(PSTLivingConditions.FOOD_LEVEL.get(), "target.you", "You have");
+    add(PSTLivingConditions.FOOD_LEVEL.get(), "target.target", "Target has");
+    add(PSTLivingConditions.FOOD_LEVEL.get(), "min", "%s if %s at least %s Hunger points");
+    add(PSTLivingConditions.FOOD_LEVEL.get(), "max", "%s if %s at most %s Hunger points");
+    add(PSTLivingConditions.FOOD_LEVEL.get(), "range", "%s if %s %s%% to %s Hunger points");
+    // damage conditions
+    add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile %s");
+    add(PSTDamageConditions.IS_MELEE.get(), "Melee %s");
+    // enchantment conditions
+    add(PSTEnchantmentConditions.WEAPON.get(), "Weapon Enchantments");
+    add(PSTEnchantmentConditions.ARMOR.get(), "Armor Enchantments");
+    add(PSTEnchantmentConditions.ANY.get(), "Enchantments");
+    // item conditions
+    add(PSTItemConditions.WEAPON.get(), "any", "Weapon");
+    add(PSTItemConditions.WEAPON.get(), "ranged", "Ranged Weapon");
+    add(PSTItemConditions.WEAPON.get(), "melee", "Melee Weapon");
+    add(PSTItemConditions.CURIO.get(), "ring", "Ring");
+    add(PSTItemConditions.CURIO.get(), "necklace", "Necklace");
+    add(PSTItemConditions.CURIO.get(), "quiver", "Quiver");
+    add(PSTItemConditions.ARMOR.get(), "any", "Armor");
+    add(PSTItemConditions.ARMOR.get(), "head", "Helmet");
+    add(PSTItemConditions.ARMOR.get(), "chest", "Chestplate");
+    add(PSTItemConditions.ARMOR.get(), "legs", "Leggings");
+    add(PSTItemConditions.ARMOR.get(), "feet", "Boots");
+    add(PSTItemConditions.ARMOR.get(), "offhand", "Shield");
+    add(PSTItemConditions.EQUIPMENT.get(), "Equipment");
+    add(PSTItemConditions.AXE.get(), "Axe");
+    add(PSTItemConditions.WEAPON.get(), "any.crafted", "Weapons");
+    add(PSTItemConditions.WEAPON.get(), "ranged.crafted", "Ranged Weapons");
+    add(PSTItemConditions.WEAPON.get(), "melee.crafted", "Melee Weapons");
+    add(PSTItemConditions.CURIO.get(), "ring.crafted", "Rings");
+    add(PSTItemConditions.CURIO.get(), "necklace.crafted", "Necklaces");
+    add(PSTItemConditions.CURIO.get(), "quiver.crafted", "Quivers");
+    add(PSTItemConditions.ARMOR.get(), "head.crafted", "Helmets");
+    add(PSTItemConditions.ARMOR.get(), "chest.crafted", "Chestplates");
+    add(PSTItemConditions.ARMOR.get(), "offhand.crafted", "Shields");
+    add(PSTItemConditions.AXE.get(), "crafted", "Axes");
+    add(PSTItemConditions.POTION.get(), "any", "Potions");
+    add(PSTItemConditions.POTION.get(), "beneficial", "Beneficial Potions");
+    add(PSTItemConditions.POTION.get(), "harmful", "Harmful Potions");
+    add(PSTItemConditions.POTION.get(), "neutral", "Neutral Potions");
+    add(PSTItemConditions.FOOD.get(), "Food");
+    add(PSTItemConditions.JEWELRY.get(), "Jewelry");
+    add(PSTItemConditions.PICKAXE.get(), "Pickaxe");
+    // skill multipliers
+    add(PSTSkillBonusMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
+    add(PSTSkillBonusMultipliers.ATTRIBUTE_VALUE.get(), "%s for each %s point");
+    add(PSTSkillBonusMultipliers.ENCHANTS_AMOUNT.get(), "%s for each enchantment on your %s");
+    add(PSTSkillBonusMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
+    add(PSTSkillBonusMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
+    add(PSTSkillBonusMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
+    // recipes
+    addRecipe("skilltree:weapon_poisoning", "Weapon Poisoning");
+    addRecipe("skilltree:potion_mixing", "Potion Mixing");
     // potions info
     add("potion.superior", "Superior %s");
     add("item.minecraft.potion.mixture", "Mixture");
@@ -222,14 +331,9 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
     add("gem_class.necklace", "Necklaces");
     add("gem_class.jewelry", "Jewelry");
     add("gem_class.ranged_weapon", "Ranged Weapon");
-    add("gem.tooltip", "• Can be inserted into items with sockets");
+    add("gem.tooltip", "• Can be inserted into items with chance");
     addTooltip(PSTItems.VACUCITE.get(), "Destroys gems in the item");
     addTooltip(PSTItems.IRISCITE.get(), "Outcome unpredictable");
-    // food info
-    add("food.bonus.healing", "• Heals for %s Life");
-    add("food.bonus.damage", "• %s Damage");
-    add("food.bonus.crit_damage", "• %s Critical Damage");
-    add("food.bonus.life_regeneration", "• %s Life Regeneration");
     // weapon info
     add("weapon.poisoned", "Poisoned:");
     // quiver info
@@ -276,209 +380,27 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
     // attributes
     add(PSTAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
     add(PSTAttributes.LIFE_PER_HIT.get(), "Life per Hit");
-    add(PSTAttributes.PROJECTILE_CRIT_DAMAGE.get(), "Projectile Critical Damage");
-    add(PSTAttributes.PROJECTILE_DAMAGE.get(), "Projectile Damage");
     add(PSTAttributes.EVASION.get(), "Evasion");
-    add(PSTAttributes.BLOCK_CHANCE.get(), "Block chance");
+    add(PSTAttributes.BLOCKING.get(), "Blocking");
     add(PSTAttributes.LIFE_ON_BLOCK.get(), "Life on Block");
-    add(PSTAttributes.CRIT_CHANCE.get(), "Critical Hit chance");
     add(PSTAttributes.DOUBLE_LOOT_CHANCE.get(), "Double Loot chance");
     add(PSTAttributes.TRIPLE_LOOT_CHANCE.get(), "Triple Loot chance");
-    add(PSTAttributes.CRAFTED_ARMOR_EVASION.get(), "Crafted Armor Evasion chance");
-    add(PSTAttributes.CRAFTED_RANGED_WEAPON_SOCKETS.get(), "Crafted Ranged Weapon Sockets");
-    add(PSTAttributes.CRAFTED_HELMETS_SOCKETS.get(), "Crafted Helmets Sockets");
-    add(
-        PSTAttributes.CRAFTED_RANGED_WEAPON_ATTACK_SPEED.get(),
-        "Crafted Ranged Weapon Attack Speed");
-    add(PSTAttributes.EVASION_CHANCE_WHEN_WOUNDED.get(), "Evasion chance if you are Wounded");
-    add(PSTAttributes.ARMOR_PER_EVASION.get(), "Armor per Evasion chance");
     add(PSTAttributes.DAMAGE_PER_DISTANCE_TO_ENEMY.get(), "Damage per Distance to Enemy");
-    add(PSTAttributes.LIFE_PER_PROJECTILE_HIT.get(), "Life per Projectile Hit");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_EVASION.get(), "Maximum Life per Evasion chance");
-    add(PSTAttributes.ATTACK_SPEED_WITH_RANGED_WEAPON.get(), "Attack Speed with Ranged Weapon");
     add(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Chance to retrieve Arrows");
-    add(PSTAttributes.PROJECTILE_CRIT_CHANCE.get(), "Projectile Critical Hit chance");
-    add(PSTAttributes.MAXIMUM_LIFE_UNDER_POTION_EFFECT.get(), "Maximum Life under Potion Effect");
-    add(PSTAttributes.ATTACK_SPEED_UNDER_POTION_EFFECT.get(), "Attack Speed under Potion Effect");
-    add(PSTAttributes.BREWED_POTIONS_DURATION.get(), "Brewed Potions Duration");
-    add(PSTAttributes.BREWED_POTIONS_STRENGTH.get(), "Brewed Potions Strength");
-    add(
-        PSTAttributes.BREWED_BENEFICIAL_POTIONS_STRENGTH.get(),
-        "Brewed Beneficial Potions Strength");
-    add(PSTAttributes.BREWED_HARMFUL_POTIONS_STRENGTH.get(), "Brewed Harmful Potions Strength");
-    add(PSTAttributes.DAMAGE_AGAINST_POISONED.get(), "Damage against Poisoned enemies");
-    add(
-        PSTAttributes.CRIT_CHANCE_AGAINST_POISONED.get(),
-        "Critical Hit chance against Poisoned enemies");
-    add(PSTAttributes.EVASION_UNDER_POTION_EFFECT.get(), "Evasion chance under Potion Effect");
-    add(PSTAttributes.CAN_POISON_WEAPONS.get(), "You can apply Poisons on Melee Weapons");
-    add(PSTAttributes.CAN_MIX_POTIONS.get(), "You can mix Potions together");
-    add(PSTAttributes.EVASION_PER_POTION_EFFECT.get(), "Evasion chance per Potion Effect");
-    add(PSTAttributes.DAMAGE_PER_POTION_EFFECT.get(), "Damage per Potion Effect");
-    add(PSTAttributes.LIFE_PER_HIT_UNDER_POTION_EFFECT.get(), "Life per Hit under Potion Effect");
-    add(
-        PSTAttributes.CRIT_DAMAGE_AGAINST_POISONED.get(),
-        "Critical Damage against Poisoned enemies");
-    add(PSTAttributes.GEM_POWER_IN_ARMOR.get(), "Gem Power in Armor");
-    add(PSTAttributes.GEM_POWER_IN_WEAPON.get(), "Gem Power in Weapon");
-    add(PSTAttributes.MAXIMUM_WEAPON_SOCKETS.get(), "Weapon Sockets");
-    add(PSTAttributes.MAXIMUM_CHESTPLATE_SOCKETS.get(), "Chestplate Sockets");
-    add(PSTAttributes.MAXIMUM_EQUIPMENT_SOCKETS.get(), "Equipment Sockets");
-    add(PSTAttributes.ARMOR_PER_GEM_IN_HELMET.get(), "Armor per Gem in Helmet");
-    add(PSTAttributes.ARMOR_PER_GEM_IN_CHESTPLATE.get(), "Armor per Gem in Chestplate");
-    add(PSTAttributes.CRIT_CHANCE_PER_GEM_IN_WEAPON.get(), "Critical Hit chance per Gem in Weapon");
-    add(PSTAttributes.MINING_SPEED.get(), "Mining Speed");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_GEM_IN_HELMET.get(), "Maximum Life per Gem in Helmet");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_GEM_IN_ARMOR.get(), "Maximum Life per Gem in Armor");
-    add(PSTAttributes.CRIT_DAMAGE_PER_GEM_IN_WEAPON.get(), "Critical Damage per Gem in Weapon");
     add(PSTAttributes.GEM_DROP_CHANCE.get(), "Chance to find Gem in Ore");
-    add(
-        PSTAttributes.LIFE_REGENERATION_PER_GEM_IN_HELMET.get(),
-        "Life Regeneration per Gem in Helmet");
-    add(PSTAttributes.CRAFTED_ARMOR_DEFENCE.get(), "Crafted Armor Defence");
-    add(PSTAttributes.CRAFTED_SHIELDS_ARMOR.get(), "Crafted Shields Armor");
-    add(PSTAttributes.LIFE_REGENERATION_WITH_SHIELD.get(), "Life Regeneration with Shield");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_BOOTS_ARMOR.get(), "Maximum Life per Armor from Boots");
-    add(PSTAttributes.ATTACK_SPEED_WITH_SHIELD.get(), "Attack Speed with Shield");
-    add(PSTAttributes.CRAFTED_MELEE_WEAPON_DAMAGE_BONUS.get(), "Crafted Melee Weapon Damage");
-    add(PSTAttributes.CRAFTED_MELEE_WEAPON_ATTACK_SPEED.get(), "Crafted Melee Weapon Attack Speed");
-    add(PSTAttributes.CRIT_DAMAGE_WITH_SHIELD.get(), "Critical Damage with Shield");
-    add(PSTAttributes.CRIT_CHANCE_WITH_SHIELD.get(), "Critical Hit chance with Shield");
-    add(PSTAttributes.DAMAGE_WITH_SHIELD.get(), "Damage with Shield");
-    add(PSTAttributes.CHANCE_TO_CRAFT_TOUGHER_ARMOR.get(), "Chance to Craft Tougher Armor");
-    add(PSTAttributes.ATTACK_DAMAGE_PER_ARMOR.get(), "Attack Damage per Armor");
-    add(PSTAttributes.CHESTPLATE_ARMOR.get(), "Chestplate Armor");
-    add(PSTAttributes.ENCHANTMENT_LEVEL_REQUIREMENT.get(), "Enchantment Level Requirement");
-    add(PSTAttributes.ARMOR_ENCHANTMENT_POWER.get(), "Applied Armor Enchantments Strength");
-    add(PSTAttributes.WEAPON_ENCHANTMENT_POWER.get(), "Applied Weapon Enchantments Strength");
-    add(PSTAttributes.DAMAGE_WITH_ENCHANTED_WEAPON.get(), "Damage with Enchanted Weapon");
-    add(PSTAttributes.MAXIMUM_LIFE_WITH_ENCHANTED_ITEM.get(), "Maximum Life with Enchanted Item");
-    add(
-        PSTAttributes.MAXIMUM_LIFE_PER_ARMOR_ENCHANTMENT.get(),
-        "Maximum Life per Armor Enchantment");
-    add(
-        PSTAttributes.ATTACK_SPEED_WITH_ENCHANTED_WEAPON.get(),
-        "Attack Speed with Enchanted Weapon");
-    add(PSTAttributes.ENCHANTMENT_POWER.get(), "Chance to apply better Enchantment");
-    add(
-        PSTAttributes.CRIT_CHANCE_WITH_ENCHANTED_WEAPON.get(),
-        "Critical Hit chance with Enchanted Weapon");
-    add(
-        PSTAttributes.CRIT_DAMAGE_PER_WEAPON_ENCHANTMENT.get(),
-        "Critical Damage per Weapon Enchantment");
-    add(
-        PSTAttributes.LIFE_ON_BLOCK_PER_SHIELD_ENCHANTMENT.get(),
-        "Life on Block per Shield Enchantment");
-    add(
-        PSTAttributes.BLOCK_CHANCE_PER_SHIELD_ENCHANTMENT.get(),
-        "Block chance per Shield Enchantment");
-    add(
-        PSTAttributes.DAMAGE_PER_WEAPON_ENCHANTMENT_LEVEL.get(),
-        "Damage per Weapon Enchantment Level");
-    add(
-        PSTAttributes.BLOCK_CHANCE_WITH_ENCHANTED_SHIELD.get(),
-        "Block chance with Enchanted Shield");
-    add(PSTAttributes.FREE_ENCHANTMENT_CHANCE.get(), "Free Enchantment chance");
-    add(PSTAttributes.COOKED_FOOD_SATURATION.get(), "Cooked Food Saturation");
-    add(PSTAttributes.COOKED_FOOD_LIFE_REGENERATION.get(), "Cooked Food Life Regeneration");
-    add(
-        PSTAttributes.COOKED_FOOD_HEALING_PER_SATURATION.get(),
-        "Cooked Food Healing per Saturation Point");
-    add(
-        PSTAttributes.COOKED_FOOD_DAMAGE_PER_SATURATION.get(),
-        "Cooked Food Damage per Saturation Point");
-    add(PSTAttributes.DAMAGE_IF_NOT_HUNGRY.get(), "Damage if you are not Hungry");
-    add(PSTAttributes.BLOCK_CHANCE_IF_NOT_HUNGRY.get(), "Block chance if you are not Hungry");
-    add(PSTAttributes.LIFE_ON_BLOCK_IF_NOT_HUNGRY.get(), "Life on Block if you are not Hungry");
-    add(PSTAttributes.CRIT_CHANCE_IF_NOT_HUNGRY.get(), "Critical Hit chance if you are not Hungry");
-    add(PSTAttributes.MAXIMUM_LIFE_IF_NOT_HUNGRY.get(), "Maximum Life if you are not Hungry");
-    add(
-        PSTAttributes.MAXIMUM_LIFE_PER_SATISFIED_HUNGER.get(),
-        "Maximum Life per Satisfield Hunger Point");
-    add(PSTAttributes.ATTACK_SPEED_IF_NOT_HUNGRY.get(), "Attack Speed if you are not Hungry");
-    add(
-        PSTAttributes.BLOCK_CHANCE_PER_SATISFIED_HUNGER.get(),
-        "Block chance per Satisfied Hunger Point");
-    add(PSTAttributes.DAMAGE_PER_SATISFIED_HUNGER.get(), "Damage per Satisfied Hunger Point");
-    add(
-        PSTAttributes.COOKED_FOOD_CRIT_DAMAGE_PER_SATURATION.get(),
-        "Cooked Food Critical Damage per Saturation Point");
-    add(
-        PSTAttributes.CRIT_DAMAGE_PER_SATISFIED_HUNGER.get(),
-        "Critical Damage per Satisfied Hunger Point");
-    add(PSTAttributes.CRAFTED_EQUIPMENT_DURABILITY.get(), "Crafted Equipment Durability");
-    add(PSTAttributes.DAMAGE_WITH_GEM_IN_WEAPON.get(), "Damage with Gem in Weapon");
-    add(PSTAttributes.DAMAGE_PER_GEM_IN_WEAPON.get(), "Damage per Gem in Weapon");
-    add(PSTAttributes.ATTACK_SPEED_WITH_GEM_IN_WEAPON.get(), "Attack Speed with Gem in Weapon");
-    add(PSTAttributes.ATTACK_SPEED_PER_GEM_IN_WEAPON.get(), "Attack Speed per Gem in Weapon");
-    add(PSTAttributes.DAMAGE_UNDER_POTION_EFFECT.get(), "Damage under Potion Effect");
-    add(PSTAttributes.BREWED_POISONS_STRENGTH.get(), "Brewed Poisons Strength");
-    add(PSTAttributes.BREWED_HEALING_POTIONS_STRENGTH.get(), "Brewed Healing Potions Strength");
-    add(PSTAttributes.BREWED_HARMFUL_POTIONS_DURATION.get(), "Brewed Harmful Potions Duration");
-    add(
-        PSTAttributes.BREWED_BENEFICIAL_POTIONS_DURATION.get(),
-        "Brewed Beneficial Potions Duration");
     add(PSTAttributes.INCOMING_HEALING.get(), "Incoming Healing");
-    add(PSTAttributes.CRIT_DAMAGE.get(), "Critical Damage");
     add(PSTAttributes.EXPERIENCE_PER_MINUTE.get(), "Experience Per Minute");
-    add(PSTAttributes.CRAFTED_BOOTS_SOCKETS.get(), "Crafted Boots Sockets");
-    add(PSTAttributes.MAXIMUM_RING_SOCKETS.get(), "Ring Sockets");
-    add(PSTAttributes.GEM_POWER_IN_JEWELRY.get(), "Gem Power in Jewelry");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_EQUIPPED_JEWELRY.get(), "Maximum Life per Jewelry Equipped");
-    add(PSTAttributes.CRAFTED_RINGS_CRITICAL_DAMAGE.get(), "Crafted Rings Critical Damage");
-    add(PSTAttributes.CRAFTED_NECKLACES_MAXIMUM_LIFE.get(), "Crafted Necklaces Maximum Life");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Ring Slots");
     add(PSTAttributes.EXPERIENCE_FROM_MOBS.get(), "Experience from Killed Creatures");
     add(PSTAttributes.EXPERIENCE_FROM_ORE.get(), "Experience from Mined Ore");
-    add(PSTAttributes.DAMAGE_IF_DAMAGED.get(), "Damage if you are Damaged");
-    add(PSTAttributes.DAMAGE_IF_WOUNDED.get(), "Damage if you are Wounded");
-    add(PSTAttributes.CRAFTED_AXES_CRIT_CHANCE.get(), "Crafted Axes Critical Hit chance");
-    add(PSTAttributes.CRIT_CHANCE_IF_WOUNDED.get(), "Critical Hit chance if you are Wounded");
-    add(PSTAttributes.ATTACK_SPEED_IF_WOUNDED.get(), "Attack Speed if you are Wounded");
-    add(PSTAttributes.LIFE_PER_HIT_IF_WOUNDED.get(), "Life per Hit if you are Wounded");
-    add(PSTAttributes.CRAFTED_BOOTS_MOVEMENT_SPEED.get(), "Crafted Boots Movement Speed");
     add(
         PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get(),
         "Damage per Distance to Spawn (up to 50%)");
-    add(PSTAttributes.CRAFTED_ARMOR_MAXIMUM_LIFE.get(), "Crafted Armored Maximum Life");
-    add(PSTAttributes.CRAFTED_SHIELDS_MAXIMUM_LIFE.get(), "Crafted Shields Maximum Life");
-    add(PSTAttributes.CRAFTED_WEAPON_ATTACK_SPEED.get(), "Crafted Weapon Attack Speed");
-    add(PSTAttributes.CRAFTED_SHIELDS_BLOCK_CHANCE.get(), "Crafted Shields Block chance");
-    add(PSTAttributes.DAMAGE_AGAINST_BURNING.get(), "Damage against Burning enemies");
     add(PSTAttributes.CHANCE_TO_IGNITE.get(), "Chance to Ignite");
-    add(PSTAttributes.CRAFTED_WEAPON_CHANCE_TO_IGNITE.get(), "Crafted Weapon chance to Ignite");
-    add(
-        PSTAttributes.CRIT_CHANCE_AGAINST_BURNING.get(),
-        "Critical Hit chance against Burning enemies");
-    add(PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_IGNITE.get(), "Crafted Quivers chance to Ignite");
-    add(
-        PSTAttributes.CRAFTED_QUIVERS_DAMAGE_AGAINST_BURNING.get(),
-        "Crafted Quivers Damage against Burning enemies");
-    add(PSTAttributes.MAXIMUM_LIFE_PER_ARROW_IN_QUIVER.get(), "Maximum Life per Arrow in Quiver");
-    add(PSTAttributes.CRAFTED_QUIVERS_CAPACITY.get(), "Crafted Quivers Capacity");
-    add(PSTAttributes.CRAFTED_QUIVERS_MAXIMUM_LIFE.get(), "Crafted Quivers Maximum Life");
     add(PSTAttributes.STEALTH.get(), "Stealth");
-    add(PSTAttributes.CRAFTED_ARMOR_STEALTH.get(), "Crafted Armor Stealth");
-    add(PSTAttributes.JUMP_HEIGHT.get(), "Jump Height");
-    add(PSTAttributes.CRAFTED_BOOTS_STEALTH.get(), "Crafted Boots Stealth");
-    add(PSTAttributes.MELEE_DAMAGE.get(), "Melee Damage");
-    add(PSTAttributes.MELEE_CRIT_DAMAGE.get(), "Melee Critical Damage");
-    add(
-        PSTAttributes.CRAFTED_MELEE_WEAPON_CRIT_CHANCE.get(),
-        "Crafted Melee Weapon Critical Hit chance");
-    add(PSTAttributes.CRAFTED_WEAPON_DOUBLE_LOOT_CHANCE.get(), "Crafted Weapon Double Loot chance");
     add(PSTAttributes.DOUBLE_FISHING_LOOT_CHANCE.get(), "Double Fishing Loot chance");
     add(PSTAttributes.EXPERIENCE_FROM_FISHING.get(), "Experience from Fishing");
-    add(PSTAttributes.LUCK_WHILE_FISHING.get(), "Luck while Fishing");
-    add(PSTAttributes.CRAFTED_WEAPON_LIFE_PER_HIT.get(), "Crafted Weapon Life per Hit");
-    add(
-        PSTAttributes.CRAFTED_WEAPON_DAMAGE_AGAINST_BURNING.get(),
-        "Crafted Weapon Damage against Burning enemies");
     add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Chance to Explode enemy");
-    add(
-        PSTAttributes.CRAFTED_QUIVERS_CHANCE_TO_RETRIEVE_ARROWS.get(),
-        "Crafted Quivers chance to retrieve Arrows");
-    add(PSTAttributes.EQUIPMENT_REPAIR_EFFICIENCY.get(), "Equipment repair efficiency");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Critical Damage");
     add(PSTEffects.DAMAGE_BONUS.get(), "Damage");
@@ -513,7 +435,7 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
     // jei info
     add(
         "skilltree.jei.gem_info",
-        "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).");
+        "Gems can be inserted into items with chance on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).");
     // curios info
     add("curios.identifier.quiver", "Quiver");
     add("curios.modifiers.quiver", "When worn:");
@@ -536,43 +458,5 @@ public class PSTEnglishTranslationProvider extends LanguageProvider {
     add("affix.skilltree:jewelry/attribute/greedy.suffix", "of Greed");
     add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
-  }
-
-  private void addTooltip(Item item, String tooltip) {
-    add(item.getDescriptionId() + ".tooltip", tooltip);
-  }
-
-  private void addWarning(Item item, String tooltip) {
-    add(item.getDescriptionId() + ".warning", tooltip);
-  }
-
-  private void add(Attribute attribute, String name) {
-    add(attribute.getDescriptionId(), name);
-  }
-
-  private void addSkill(String skillName, String name, @Nullable String description) {
-    String skillId = "skill." + SkillTreeMod.MOD_ID + "." + skillName;
-    add(skillId + ".name", name);
-    if (description != null) add(skillId + ".description", description);
-  }
-
-  private void addSkill(String skillName, String name) {
-    addSkill(skillName, name, null);
-  }
-
-  private void addMixture(String name, MobEffect... effects) {
-    name = "Mixture of " + name;
-    addMixture(name, "potion", effects);
-    addMixture("Splash " + name, "splash_potion", effects);
-    addMixture("Lingering " + name, "lingering_potion", effects);
-  }
-
-  protected void addMixture(String name, String potionType, MobEffect... effects) {
-    StringBuilder potionName = new StringBuilder("item.minecraft." + potionType + ".mixture");
-    Arrays.stream(effects)
-        .map(MobEffect::getDescriptionId)
-        .map(id -> id.replaceAll("effect.", ""))
-        .forEach(id -> potionName.append(".").append(id));
-    add(potionName.toString(), name);
   }
 }

@@ -2,11 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:projectile_damage",
-      "id": "8369cd5f-80a9-4025-b1c8-0cbf57ff936a",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:is_projectile"
+      },
       "operation": 1
     }
   ],

@@ -2,11 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_per_weapon_enchantment_level",
-      "id": "607ee36d-535f-464c-9e4a-dcc12d10277a",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "multiplier": {
+        "type": "skilltree:enchants_levels",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      },
       "operation": 1
     }
   ],

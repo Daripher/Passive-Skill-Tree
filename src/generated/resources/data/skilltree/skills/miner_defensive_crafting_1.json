@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:gem_power_in_armor",
-      "id": "95e1dab1-66d5-4ce2-bd1f-3269bf2d08c9",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:gem_power",
+      "item_condition": {
+        "type": "skilltree:armor"
+      },
+      "multiplier": 0.1
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

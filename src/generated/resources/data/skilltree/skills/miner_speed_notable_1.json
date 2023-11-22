@@ -4,8 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.04,
-      "attribute": "skilltree:attack_speed_per_gem_in_weapon",
-      "id": "15edd675-35f2-4229-aa51-c0511e7a9042",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "fecffc93-62eb-478d-8757-fc09f206d0a2",
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      },
       "name": "SkillBonus",
       "operation": 1
     }

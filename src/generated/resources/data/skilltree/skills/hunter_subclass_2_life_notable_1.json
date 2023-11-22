@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 5.0,
-      "attribute": "skilltree:crafted_quivers_maximum_life",
-      "id": "218d1eb0-4b68-4ed0-b5e2-fbd799d34fcd",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 5.0,
+          "attribute": "minecraft:generic.max_health",
+          "id": "4c8ddf68-b73b-4bb8-b12d-050c87e1cc69",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

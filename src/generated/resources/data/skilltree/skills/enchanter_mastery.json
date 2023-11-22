@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:chance_to_apply_better_enchantment",
-      "id": "cb0c8280-8772-436f-8c52-c5212e33ed17",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:enchantment_amplification",
+      "chance": 1.0,
+      "enchantment_condition": {
+        "type": "skilltree:any"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

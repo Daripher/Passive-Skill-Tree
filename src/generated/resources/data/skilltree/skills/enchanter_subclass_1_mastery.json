@@ -5,25 +5,24 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "skilltree:chance_to_ignite",
-      "id": "76041b25-d1d7-48e3-b7f0-8d39fa10c76d",
+      "id": "dfd3adbb-7df4-4ba1-902d-b5caf3df5a6d",
       "name": "SkillBonus",
       "operation": 1
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:damage_against_burning",
-      "id": "936db85b-1b45-46b3-9001-c028a77a89cf",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "operation": 1,
+      "target_condition": {
+        "type": "skilltree:is_burning"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crit_chance_against_burning",
-      "id": "74692544-f82a-4fa2-9645-271b1452ccdc",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.1,
+      "target_condition": {
+        "type": "skilltree:is_burning"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

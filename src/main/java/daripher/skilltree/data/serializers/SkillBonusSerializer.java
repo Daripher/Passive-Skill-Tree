@@ -13,9 +13,9 @@ public class SkillBonusSerializer
       JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
     JsonObject jsonObj = (JsonObject) json;
-    ResourceLocation serializerId = new ResourceLocation(jsonObj.get("type").getAsString());
-    SkillBonus.Serializer<?> serializer =
-        PSTRegistries.SKILL_BONUS_SERIALIZERS.get().getValue(serializerId);
+    String type = jsonObj.get("type").getAsString();
+    ResourceLocation serializerId = new ResourceLocation(type);
+    SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
     assert serializer != null;
     return serializer.deserialize(jsonObj);
   }
@@ -24,8 +24,7 @@ public class SkillBonusSerializer
   public JsonElement serialize(
       SkillBonus<?> src, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject json = new JsonObject();
-    ResourceLocation serializerId =
-        PSTRegistries.SKILL_BONUS_SERIALIZERS.get().getKey(src.getSerializer());
+    ResourceLocation serializerId = PSTRegistries.SKILL_BONUSES.get().getKey(src.getSerializer());
     assert serializerId != null;
     json.addProperty("type", serializerId.toString());
     src.getSerializer().serialize(json, src);

@@ -2,20 +2,19 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.3,
-      "attribute": "skilltree:brewed_harmful_potions_strength",
-      "id": "1ef825a5-7be1-46d2-a443-45e30dfceb74",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 0.5
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "category": "harmful"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:can_poison_weapons",
-      "id": "4e9492a6-a13b-4d1e-9b63-842d010d050f",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:recipe_unlock",
+      "recipe_id": "skilltree:weapon_poisoning"
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

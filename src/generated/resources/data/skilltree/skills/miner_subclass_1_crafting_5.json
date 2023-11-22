@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.02,
-      "attribute": "skilltree:crafted_boots_movement_speed",
-      "id": "1f0eb1fe-6a86-4468-9c55-008c24d724c3",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.02,
+          "attribute": "minecraft:generic.movement_speed",
+          "id": "8e2a67a8-dae4-40d0-9c25-946bc293c502",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "slot": "feet"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

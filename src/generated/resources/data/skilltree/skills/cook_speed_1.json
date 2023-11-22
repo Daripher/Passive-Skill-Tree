@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_if_not_hungry",
-      "id": "5c6b8445-7e2f-4eb1-9977-2e752fabf9b0",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "99f594f6-47c1-4602-b3ba-995144014ba5",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

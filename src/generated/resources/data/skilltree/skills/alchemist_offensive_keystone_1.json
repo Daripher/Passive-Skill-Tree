@@ -2,11 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.15,
-      "attribute": "skilltree:damage_per_potion_effect",
-      "id": "b83bd0aa-ed23-4de6-8adc-401ba8734605",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.15,
+      "multiplier": {
+        "type": "skilltree:effect_amount"
+      },
       "operation": 1
     }
   ],

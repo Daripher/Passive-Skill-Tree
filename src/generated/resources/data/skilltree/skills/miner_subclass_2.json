@@ -2,12 +2,12 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_ring_sockets",
-      "id": "1b13b520-bf22-4c36-b10c-d398d1f10d2c",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:player_sockets",
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "ring"
+      },
+      "sockets": 1
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

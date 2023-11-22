@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:crafted_melee_weapon_attack_speed",
-      "id": "494ebf98-ba12-4f92-8bbb-4df0fd305397",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.25,
+          "attribute": "minecraft:generic.attack_speed",
+          "id": "dce9f11f-8028-48e0-b6d3-7ed37fa122de",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "melee"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

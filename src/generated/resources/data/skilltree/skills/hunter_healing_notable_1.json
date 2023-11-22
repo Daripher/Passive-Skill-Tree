@@ -4,10 +4,17 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.5,
-      "attribute": "skilltree:life_per_arrow_hit",
-      "id": "b54fa685-c616-42c2-affc-c41248490217",
+      "attribute": "skilltree:life_per_hit",
+      "id": "f4b490e6-ba25-4ca7-8830-ffc861e47491",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "ranged"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

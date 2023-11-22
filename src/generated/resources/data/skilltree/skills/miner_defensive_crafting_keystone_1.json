@@ -2,20 +2,19 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.3,
-      "attribute": "skilltree:gem_power_in_armor",
-      "id": "90591e10-5eb7-4278-8568-63c9151cdae6",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:gem_power",
+      "item_condition": {
+        "type": "skilltree:armor"
+      },
+      "multiplier": 0.3
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_chestplate_sockets",
-      "id": "9859dc49-827d-4bcc-885c-dcccba33f5d7",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:player_sockets",
+      "item_condition": {
+        "type": "skilltree:armor",
+        "slot": "chest"
+      },
+      "sockets": 1
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

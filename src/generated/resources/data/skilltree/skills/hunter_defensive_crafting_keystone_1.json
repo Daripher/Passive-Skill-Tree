@@ -2,12 +2,15 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:crafted_helmets_sockets",
-      "id": "a5d04ffe-e075-4f4a-8d4f-d461fd1e855b",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:sockets",
+        "sockets": 1
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "slot": "head"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

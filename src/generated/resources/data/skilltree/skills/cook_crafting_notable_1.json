@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.2,
-      "attribute": "skilltree:cooked_food_life_regeneration",
-      "id": "a8af2479-9c26-4f3e-b514-bc59584bbded",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:food_effect",
+        "amplifier": 19,
+        "duration": 1200,
+        "effect": "skilltree:life_regeneration_bonus"
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

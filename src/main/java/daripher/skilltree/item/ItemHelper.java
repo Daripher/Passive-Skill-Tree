@@ -1,29 +1,29 @@
 package daripher.skilltree.item;
 
+import com.google.common.collect.ImmutableList;
+import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
+import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;
-import daripher.skilltree.potion.PotionHelper;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
@@ -31,38 +31,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
-  public static final String IGNITE_CHANCE = "IgniteChanceBonus";
-  public static final String DAMAGE_AGAINST_BURNING = "DamageVsBurningBonus";
-  public static final String LIFE_PER_HIT = "LifePerHitBonus";
-  public static final String ATTACK_SPEED = "AttackSpeedBonus";
-  public static final String DAMAGE = "DamageBonus";
-  public static final String CRIT_CHANCE = "CritChanceBonus";
-  public static final String DURABILITY = "DurabilityBonus";
-  public static final String MAXIMUM_LIFE = "MaximumLifeBonus";
-  public static final String CAPACITY = "CapacityBonus";
-  public static final String TOUGHNESS = "ToghnessBonus";
-  public static final String DEFENCE = "DefenceBonus";
-  public static final String MOVEMENT_SPEED = "MovementSpeedBonus";
-  public static final String STEALTH = "StealthBonus";
-  public static final String EVASION = "EvasionBonus";
-  public static final String CRIT_DAMAGE = "CritDamageBonus";
-  public static final String BLOCK_CHANCE = "BlockChanceBonus";
-  public static final String DOUBLE_LOOT = "DoubleLootBonus";
-  public static final String ADDITIONAL_SOCKETS = "AdditionalSocksetsBonus";
-  public static final String CHANCE_TO_RETRIEVE_ARROWS = "ChanceToRetrieveArrowsBonus";
   private static final String POISONS = "Poisons";
-
-  public static void setBonus(ItemStack stack, String type, double bonus) {
-    stack.getOrCreateTag().putDouble(type, bonus);
-  }
-
-  public static boolean hasBonus(ItemStack stack, String type) {
-    return stack.hasTag() && stack.getTag().contains(type);
-  }
-
-  public static double getBonus(ItemStack stack, String type) {
-    return stack.getTag().getDouble(type);
-  }
 
   public static boolean canInsertGem(ItemStack stack) {
     if (ModList.get().isLoaded("apotheosis")) {
@@ -80,10 +49,6 @@ public class ItemHelper {
     String namespace = itemId.getNamespace();
     if (blacklist.contains(namespace + ":*")) return false;
     return isEquipment(stack) || isJewelry(stack);
-  }
-
-  public static boolean isPoison(ItemStack stack) {
-    return stack.getItem() instanceof PotionItem && PotionHelper.isHarmfulPotion(stack);
   }
 
   public static void setPoisons(ItemStack result, ItemStack poisonStack) {
@@ -128,6 +93,18 @@ public class ItemHelper {
     if (isRing(stack)) return Config.default_ring_sockets;
     if (isNecklace(stack)) return Config.default_necklace_sockets;
     return 0;
+  }
+
+  public static int getAdditionalSockets(ItemStack stack) {
+    int sockets =
+        getItemBonuses(stack, ItemSocketsBonus.class).stream()
+            .map(ItemSocketsBonus::sockets)
+            .reduce(Integer::sum)
+            .orElse(0);
+    if (stack.getItem() instanceof HasAdditionalSockets bonus) {
+      sockets += bonus.getAdditionalSockets();
+    }
+    return sockets;
   }
 
   public static boolean isArmor(ItemStack stack) {
@@ -227,7 +204,11 @@ public class ItemHelper {
   }
 
   public static boolean isEquipment(ItemStack stack) {
-    return isWeapon(stack) || isArmor(stack) || isShield(stack) || isPickaxe(stack);
+    return isWeapon(stack) || isArmor(stack) || isShield(stack) || isTool(stack);
+  }
+
+  private static boolean isTool(ItemStack stack) {
+    return stack.getItem() instanceof DiggerItem;
   }
 
   public static boolean isJewelry(ItemStack stack) {
@@ -251,26 +232,68 @@ public class ItemHelper {
   }
 
   public static List<String> getBonuses() {
-    return List.of(
-        POISONS,
-        IGNITE_CHANCE,
-        DAMAGE_AGAINST_BURNING,
-        LIFE_PER_HIT,
-        ATTACK_SPEED,
-        DAMAGE,
-        CRIT_CHANCE,
-        DURABILITY,
-        MAXIMUM_LIFE,
-        CAPACITY,
-        TOUGHNESS,
-        DEFENCE,
-        MOVEMENT_SPEED,
-        STEALTH,
-        EVASION,
-        CRIT_DAMAGE,
-        BLOCK_CHANCE,
-        DOUBLE_LOOT,
-        ADDITIONAL_SOCKETS,
-        CHANCE_TO_RETRIEVE_ARROWS);
+    return List.of(POISONS);
+  }
+
+  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
+    CompoundTag tag = stack.getTag();
+    if (tag == null) return ImmutableList.of();
+    ListTag bonusesTag = tag.getList("SkillBonuses", Tag.TAG_COMPOUND);
+    return bonusesTag.stream()
+        .map(CompoundTag.class::cast)
+        .map(ItemHelper::deserializeBonus)
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+  }
+
+  public static <T extends ItemBonus<?>> List<T> getItemBonuses(ItemStack stack, Class<T> aClass) {
+    return getItemBonuses(stack).stream()
+        .filter(aClass::isInstance)
+        .map(aClass::cast)
+        .collect(Collectors.toList());
+  }
+
+  public static void addItemBonus(ItemStack stack, ItemBonus<?> bonus) {
+    ListTag bonusesTag = new ListTag();
+    bonusesTag.add(serializeBonus(bonus));
+    ItemHelper.getItemBonuses(stack).stream()
+        .map(bonus2 -> mergeIfPossible(bonus, bonus2, bonusesTag))
+        .map(ItemHelper::serializeBonus)
+        .forEach(bonusesTag::add);
+    stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
+  }
+
+  public static void removeItemBonus(ItemStack stack, ItemBonus<?> bonus) {
+    ListTag bonusesTag = new ListTag();
+    ItemHelper.getItemBonuses(stack).stream()
+        .filter(Predicate.not(bonus::equals))
+        .map(ItemHelper::serializeBonus)
+        .forEach(bonusesTag::add);
+    stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
+  }
+
+  private static ItemBonus<? extends ItemBonus<?>> mergeIfPossible(
+      ItemBonus<?> bonus1, ItemBonus<?> bonus2, ListTag bonusesTag) {
+    if (bonus1.canMerge(bonus2)) {
+      bonusesTag.remove(0);
+      return bonus1.merge(bonus2);
+    }
+    return bonus2;
+  }
+
+  private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
+    ItemBonus.Serializer serializer = bonus.getSerializer();
+    CompoundTag bonusTag = serializer.serialize(bonus.copy());
+    ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
+    bonusTag.putString("type", Objects.requireNonNull(id).toString());
+    return bonusTag;
+  }
+
+  private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
+    if (!tag.contains("type")) return null;
+    ResourceLocation id = new ResourceLocation(tag.getString("type"));
+    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
+    if (serializer == null) return null;
+    return serializer.deserialize(tag);
   }
 }

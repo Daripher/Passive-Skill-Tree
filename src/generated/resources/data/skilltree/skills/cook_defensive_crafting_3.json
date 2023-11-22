@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:cooked_food_healing_per_saturation",
-      "id": "0aa2f691-54a9-45c5-96e8-bd8871630a47",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:food_healing",
+        "amount": 0.25
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

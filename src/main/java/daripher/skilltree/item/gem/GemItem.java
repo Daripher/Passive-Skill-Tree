@@ -1,7 +1,8 @@
 package daripher.skilltree.item.gem;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
@@ -52,7 +53,7 @@ public abstract class GemItem extends Item {
     GemHelper.insertGem(player, itemStack, gemStack, gemSlot, gemPower);
   }
 
-  public abstract @Nullable SkillBonus<?> getGemBonus(
+  public abstract @Nullable ItemBonus<?> getGemBonus(
       Player player, ItemStack itemStack, ItemStack gemStack);
 
   protected abstract void appendBonusesTooltip(ItemStack stack, List<Component> components);

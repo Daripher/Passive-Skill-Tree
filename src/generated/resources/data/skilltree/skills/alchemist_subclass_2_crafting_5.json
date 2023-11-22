@@ -2,12 +2,15 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:brewed_healing_potions_strength",
-      "id": "bf3a2d3e-5597-462f-b93c-aa31ce46e65f",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 0.1
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "category": "beneficial"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

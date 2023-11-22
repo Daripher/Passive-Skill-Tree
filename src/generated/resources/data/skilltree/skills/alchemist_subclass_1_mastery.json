@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.5,
-      "attribute": "skilltree:crit_damage",
-      "id": "e8a2ae89-e2e1-419a-af54-b46230e12f29",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.5
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

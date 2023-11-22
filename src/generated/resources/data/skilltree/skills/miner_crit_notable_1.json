@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crit_damage_per_gem_in_weapon",
-      "id": "40e66fbb-8bc8-40e9-9db0-c9b027302d1f",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.1,
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

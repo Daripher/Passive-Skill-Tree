@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:brewed_potions_duration",
-      "id": "5f5481c5-afb5-40b4-9f08-0eef4bea6688",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_duration",
+        "multiplier": 0.05
+      },
+      "item_condition": {
+        "type": "skilltree:potion"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

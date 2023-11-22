@@ -2,12 +2,15 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:brewed_harmful_potions_strength",
-      "id": "d8a9afd6-c8c3-4f65-aeb0-8ef24ef43c63",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 0.1
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "category": "harmful"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

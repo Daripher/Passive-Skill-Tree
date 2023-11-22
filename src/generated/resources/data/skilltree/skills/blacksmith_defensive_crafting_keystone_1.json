@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.3,
-      "attribute": "skilltree:crafted_armor_defence",
-      "id": "f1607665-df94-491d-a075-45aa07c203d1",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.armor",
+          "id": "137c21b3-b1ed-4993-9011-65d75bf7d124",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

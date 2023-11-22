@@ -2,12 +2,12 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_against_burning",
-      "id": "98b3fe09-69b2-497f-9f82-dfe280de2ade",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "operation": 1,
+      "target_condition": {
+        "type": "skilltree:is_burning"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

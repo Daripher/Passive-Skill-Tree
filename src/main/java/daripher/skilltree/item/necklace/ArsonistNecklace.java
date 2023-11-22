@@ -15,9 +15,10 @@ public class ArsonistNecklace extends NecklaceItem {
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        PSTAttributes.DAMAGE_AGAINST_BURNING.get(),
-        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
+    // TODO: replace with skill chance
+//    modifiers.put(
+//        PSTAttributes.DAMAGE_AGAINST_BURNING.get(),
+//        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 }

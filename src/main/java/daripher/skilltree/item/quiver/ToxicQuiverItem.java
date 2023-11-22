@@ -15,9 +15,10 @@ public class ToxicQuiverItem extends QuiverItem {
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        PSTAttributes.DAMAGE_AGAINST_POISONED.get(),
-        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
+    // TODO: replace with skill chance
+//    modifiers.put(
+//        PSTAttributes.DAMAGE_AGAINST_POISONED.get(),
+//        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 }

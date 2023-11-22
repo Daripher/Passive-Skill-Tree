@@ -2,12 +2,17 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:crafted_axes_crit_chance",
-      "id": "9df752e8-d2b6-4971-8960-03eac9cdc2be",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:crit_chance",
+          "chance": 0.01
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:axe"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

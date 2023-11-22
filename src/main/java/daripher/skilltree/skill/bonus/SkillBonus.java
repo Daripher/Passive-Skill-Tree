@@ -1,13 +1,11 @@
 package daripher.skilltree.skill.bonus;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
+import java.util.Objects;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +15,7 @@ public interface SkillBonus<T extends SkillBonus<T>> {
   static @Nullable SkillBonus<?> load(CompoundTag tag) {
     if (!tag.contains("Type")) return null;
     ResourceLocation serializerId = new ResourceLocation(tag.getString("Type"));
-    Serializer<?> serializer = PSTRegistries.SKILL_BONUS_SERIALIZERS.get().getValue(serializerId);
+    Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
     if (serializer == null) {
       SkillTreeMod.LOGGER.error("Unknown skill bonus type {}", serializerId);
       return null;
@@ -41,7 +39,13 @@ public interface SkillBonus<T extends SkillBonus<T>> {
 
   T multiply(double multiplier);
 
-  Serializer<T> getSerializer();
+  Serializer getSerializer();
+
+  default String getDescriptionId() {
+    ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(getSerializer());
+    Objects.requireNonNull(id);
+    return "skill_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
+  }
 
   MutableComponent getTooltip();
 
@@ -51,17 +55,9 @@ public interface SkillBonus<T extends SkillBonus<T>> {
 
   void addEditorWidgets(SkillTreeEditor editor, int row);
 
-  interface Serializer<T extends SkillBonus<T>> {
-    T deserialize(JsonObject json) throws JsonParseException;
-
-    void serialize(JsonObject json, SkillBonus<?> bonus);
-
-    T deserialize(CompoundTag tag);
-
-    CompoundTag serialize(SkillBonus<?> bonus);
-
-    T deserialize(FriendlyByteBuf buf);
-
-    void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus);
+  interface Ticking {
+    void tick(ServerPlayer player);
   }
+
+  interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {}
 }

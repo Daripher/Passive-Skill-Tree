@@ -4,8 +4,12 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.1,
-      "attribute": "skilltree:attack_damage_per_armor",
-      "id": "1da7f5c8-8be2-4bc5-adf2-70654b784ef2",
+      "attribute": "minecraft:generic.attack_damage",
+      "id": "621b3acc-57c6-4557-8214-2f26a794e589",
+      "multiplier": {
+        "type": "skilltree:attribute_value",
+        "attribute": "minecraft:generic.armor"
+      },
       "name": "SkillBonus",
       "operation": 0
     }

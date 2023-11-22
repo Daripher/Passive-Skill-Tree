@@ -3,11 +3,11 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:evasion_chance",
-      "id": "60dc37e9-2628-40ce-a846-60ea93483df1",
+      "amount": 1.0,
+      "attribute": "skilltree:evasion",
+      "id": "4b864c5d-b8eb-4398-a4b7-79a200dc96cf",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

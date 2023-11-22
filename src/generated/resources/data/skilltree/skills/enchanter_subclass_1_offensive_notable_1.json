@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:crit_chance_against_burning",
-      "id": "8ddfccfd-236a-46b4-a2ff-54fc21322a79",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.1,
+      "target_condition": {
+        "type": "skilltree:is_burning"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

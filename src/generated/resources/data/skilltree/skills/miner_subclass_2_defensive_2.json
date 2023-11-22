@@ -3,17 +3,17 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.005,
-      "attribute": "skilltree:evasion_chance",
-      "id": "956286d4-f7d6-4724-af61-972c888ba996",
+      "amount": 0.5,
+      "attribute": "skilltree:evasion",
+      "id": "4e521907-47b1-4132-88a8-81a7e4fab435",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "5236b430-ef8a-4c28-aacf-6381d7b62151",
+      "id": "8fcee216-be8c-453b-99ba-325223f4c9f4",
       "name": "SkillBonus",
       "operation": 0
     }

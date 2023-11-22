@@ -29,7 +29,13 @@ public class SkillTreeMod {
     PSTAttributes.REGISTRY.register(modEventBus);
     PSTRecipeSerializers.REGISTRY.register(modEventBus);
     PSTEffects.REGISTRY.register(modEventBus);
-    PSTSkillBonusSerializers.REGISTRY.register(modEventBus);
+    PSTSkillBonuses.REGISTRY.register(modEventBus);
+    PSTLivingConditions.REGISTRY.register(modEventBus);
+    PSTSkillBonusMultipliers.REGISTRY.register(modEventBus);
+    PSTDamageConditions.REGISTRY.register(modEventBus);
+    PSTItemBonuses.REGISTRY.register(modEventBus);
+    PSTItemConditions.REGISTRY.register(modEventBus);
+    PSTEnchantmentConditions.REGISTRY.register(modEventBus);
     modEventBus.addListener(this::registerCurioSlots);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
@@ -50,7 +56,7 @@ public class SkillTreeMod {
         SlotTypeMessage.REGISTER_TYPE,
         () ->
             new SlotTypeMessage.Builder("quiver")
-                .icon(new ResourceLocation("curios", "slot/empty_quiver_slot"))
+                .icon(new ResourceLocation("curios", "category/empty_quiver_slot"))
                 .build());
   }
 

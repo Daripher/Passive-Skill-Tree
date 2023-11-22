@@ -2,44 +2,74 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:equipment_repair_efficiency",
-      "id": "3803df34-dc73-45a8-a35a-2457c6b0f3ae",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:repair_efficiency",
+      "item_condition": {
+        "type": "skilltree:equipment"
+      },
+      "multiplier": 0.05
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_equipment_durability",
-      "id": "f2433ca7-447d-4fe2-98d1-8bce8866deff",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:durability",
+        "chance": 0.05,
+        "operation": 1
+      },
+      "item_condition": {
+        "type": "skilltree:equipment"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_weapon_attack_speed",
-      "id": "12a9eb73-c1fc-4130-8503-3704c362cabe",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05,
+          "attribute": "minecraft:generic.attack_speed",
+          "id": "abc664ae-e0e1-43a4-a26a-e284c2882f4c",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:chance_to_craft_tougher_armor",
-      "id": "28f4f180-6b63-4e26-ba74-c4b5173001fa",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05000000074505806,
+          "attribute": "minecraft:generic.armor_toughness",
+          "id": "b10fef6f-249d-4e80-b292-36ddbbe9be3a",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 5.0,
-      "attribute": "skilltree:crafted_shields_armor_bonus",
-      "id": "bb5211d3-1cd5-4099-a281-6454421a1be1",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 5.0,
+          "attribute": "minecraft:generic.armor",
+          "id": "3a417193-bb9e-48b8-a51b-e65288be9c8d",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "slot": "offhand"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

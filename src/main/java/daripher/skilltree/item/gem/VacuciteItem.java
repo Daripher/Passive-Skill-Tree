@@ -1,7 +1,8 @@
 package daripher.skilltree.item.gem;
 
 import daripher.skilltree.init.PSTCreativeTabs;
-import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
@@ -27,7 +28,7 @@ public class VacuciteItem extends GemItem {
   }
 
   @Override
-  public @Nullable SkillBonus<?> getGemBonus(Player player, ItemStack stack, ItemStack gemStack) {
+  public @Nullable ItemBonus<?> getGemBonus(Player player, ItemStack stack, ItemStack gemStack) {
     return null;
   }
 

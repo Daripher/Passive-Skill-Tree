@@ -4,8 +4,15 @@
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_gem_in_helmet",
-      "id": "df3d8e46-06d7-4f0c-8d8f-cc756a060919",
+      "attribute": "minecraft:generic.max_health",
+      "id": "81550238-fca3-4826-92c9-d40669f3984a",
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "head"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

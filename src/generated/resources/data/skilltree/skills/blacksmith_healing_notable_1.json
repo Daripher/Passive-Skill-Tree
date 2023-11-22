@@ -4,10 +4,17 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.5,
-      "attribute": "skilltree:life_regeneration_with_shield",
-      "id": "045881a9-1e63-4d1b-95bb-89b5fe7c3ff5",
+      "attribute": "skilltree:life_regeneration",
+      "id": "0617f8b9-a8cf-4b85-aae3-80c5360b474b",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.05,
-      "attribute": "skilltree:attack_speed_under_potion_effect",
-      "id": "c782adc9-fc45-445f-b753-ec3a77e07aed",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "5a207e5b-7d9d-42b9-bc21-e75ba53f2542",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

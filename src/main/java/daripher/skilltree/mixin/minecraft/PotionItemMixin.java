@@ -27,14 +27,17 @@ public class PotionItemMixin extends Item {
   }
 
   @Override
-  public @NotNull Component getName(@NotNull ItemStack itemStack) {
-    if (PotionHelper.isMixture(itemStack)) return getMixtureName(itemStack);
-    if (PotionHelper.isSuperiorPotion(itemStack)) return getSuperiorPotionName(itemStack);
-    return super.getName(itemStack);
+  public @NotNull Component getName(@NotNull ItemStack stack) {
+    if (PotionHelper.isMixture(stack)) return getMixtureName(stack);
+    if (PotionHelper.getDurationMultiplier(stack) != 1f
+        || PotionHelper.getAmplifierBonus(stack) != 0) {
+      return getSuperiorPotionName(stack);
+    }
+    return super.getName(stack);
   }
 
-  protected Component getMixtureName(ItemStack itemStack) {
-    String mixtureId = getMixtureId(itemStack);
+  protected Component getMixtureName(ItemStack stack) {
+    String mixtureId = getMixtureId(stack);
     MutableComponent translatedName = Component.translatable(mixtureId);
     // no special name
     if (translatedName.getString().equals(mixtureId)) {

@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:chance_to_apply_better_armor_enchantment",
-      "id": "1080b0db-c698-462e-a9c6-a85cfbd340de",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:enchantment_amplification",
+      "chance": 0.1,
+      "enchantment_condition": {
+        "type": "skilltree:armor"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

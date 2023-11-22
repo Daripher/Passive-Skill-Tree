@@ -2,7 +2,7 @@ package daripher.skilltree.mixin.minecraft;
 
 import com.google.common.collect.Lists;
 import daripher.skilltree.api.PlayerContainer;
-import daripher.skilltree.api.SkillRequiringRecipe;
+import daripher.skilltree.recipe.SkillRequiringRecipe;
 import java.util.ArrayList;
 import java.util.Set;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -39,12 +39,12 @@ public class RecipeBookComponentMixin {
             RecipeCollection.class, recipeCollection, "f_100493_");
     assert craftableRecipes != null;
     if (craftableRecipes.isEmpty()) return;
-    craftableRecipes.removeIf(this::cantCraft);
+    craftableRecipes.removeIf(this::isUncraftable);
   }
 
-  private boolean cantCraft(Recipe<?> recipe) {
-    if (!(recipe instanceof SkillRequiringRecipe)) return false;
-    if (!(menu instanceof PlayerContainer)) return true;
-    return !((SkillRequiringRecipe) recipe).canCraftIn((PlayerContainer) menu);
+  private boolean isUncraftable(Recipe<?> recipe) {
+    if (!(recipe instanceof SkillRequiringRecipe aRecipe)) return false;
+    if (!(menu instanceof PlayerContainer container)) return true;
+    return aRecipe.isUncraftable(container);
   }
 }

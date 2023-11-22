@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 6.0,
-      "attribute": "skilltree:maximum_life_under_potion_effect",
-      "id": "f49909c3-2ead-4919-bb9f-44c4b0b98d27",
+      "attribute": "minecraft:generic.max_health",
+      "id": "73c06045-bd42-42da-ba2f-2f76e3ef04fc",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

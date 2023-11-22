@@ -8,7 +8,7 @@ import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +130,7 @@ public class GemBonusHandler {
     EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
     if (slot != event.getSlotType()) return;
     SkillBonus<?> bonus = GemHelper.getBonus(itemStack, socket);
-    if (bonus instanceof AttributeSkillBonus attributeBonus) {
+    if (bonus instanceof AttributeBonus attributeBonus) {
       event.addModifier(attributeBonus.getAttribute(), attributeBonus.getModifier());
     }
   }
@@ -140,7 +140,7 @@ public class GemBonusHandler {
     if (!(itemStack.getItem() instanceof ICurioItem curio)) return;
     if (!curio.canEquip(event.getSlotContext(), itemStack)) return;
     SkillBonus<?> bonus = GemHelper.getBonus(itemStack, socket);
-    if (bonus instanceof AttributeSkillBonus attributeBonus) {
+    if (bonus instanceof AttributeBonus attributeBonus) {
       event.addModifier(attributeBonus.getAttribute(), attributeBonus.getModifier());
     }
   }
@@ -150,7 +150,7 @@ public class GemBonusHandler {
     Optional<GemItem> gem = GemHelper.getGem(stack, socket);
     if (gem.isEmpty()) return;
     SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
-    if (bonus instanceof AttributeSkillBonus) {
+    if (bonus instanceof AttributeBonus) {
       removeTooltip(event.getToolTip(), bonus.getTooltip());
     }
   }

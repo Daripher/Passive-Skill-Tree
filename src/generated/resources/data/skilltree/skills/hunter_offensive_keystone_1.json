@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "skilltree:damage_per_distance_to_enemy",
-      "id": "f1b955f7-7e10-41cc-bd01-d502449dcb3a",
+      "id": "3808b915-017d-41ce-8bee-10f589d5e158",
       "name": "SkillBonus",
       "operation": 1
     }

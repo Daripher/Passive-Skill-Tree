@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:brewed_potions_strength",
-      "id": "f8caf666-673a-4602-86cc-dc1a9dade10a",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 1.0
+      },
+      "item_condition": {
+        "type": "skilltree:potion"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

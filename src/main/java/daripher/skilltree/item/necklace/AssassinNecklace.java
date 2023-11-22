@@ -14,13 +14,14 @@ public class AssassinNecklace extends NecklaceItem {
   @Override
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
+//    TODO:Remake with bonuses
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        PSTAttributes.CRIT_CHANCE.get(),
-        new AttributeModifier(uuid, "Necklace Bonus", 0.02, Operation.MULTIPLY_BASE));
-    modifiers.put(
-        PSTAttributes.CRIT_DAMAGE.get(),
-        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
+//    modifiers.put(
+//        PSTAttributes.CRIT_CHANCE.get(),
+//        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
+//    modifiers.put(
+//        PSTAttributes.CRIT_DAMAGE.get(),
+//        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 }

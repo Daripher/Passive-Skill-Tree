@@ -2,12 +2,15 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_equipment_durability",
-      "id": "def4aa3f-9aaf-48cd-9e20-8a5f355f4b99",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:durability",
+        "chance": 0.05,
+        "operation": 1
+      },
+      "item_condition": {
+        "type": "skilltree:equipment"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

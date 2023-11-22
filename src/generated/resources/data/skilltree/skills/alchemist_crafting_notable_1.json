@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:can_mix_potions",
-      "id": "68a8b3b6-ec66-4ab5-847f-0b34e579acf0",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:recipe_unlock",
+      "recipe_id": "skilltree:potion_mixing"
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

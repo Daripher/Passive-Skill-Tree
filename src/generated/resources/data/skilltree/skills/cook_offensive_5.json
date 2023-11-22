@@ -2,12 +2,13 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_if_not_hungry",
-      "id": "8ff20da9-5d77-46f8-a65f-86817452cfce",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

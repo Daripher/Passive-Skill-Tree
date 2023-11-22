@@ -2,20 +2,12 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:crit_chance",
-      "id": "8f69a439-101e-44f3-b864-575d221ced01",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_chance",
+      "chance": 0.05
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.15,
-      "attribute": "skilltree:crit_damage",
-      "id": "9f8fdb0e-99f9-4acd-b3f6-2963c4342aeb",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.15
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

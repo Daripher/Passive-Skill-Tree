@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "skilltree:double_loot_chance",
-      "id": "8d45796a-fa2b-4c27-bf9a-cb44e7e396d7",
+      "id": "b840b11f-f589-4586-b5f5-fe42f52a7123",
       "name": "SkillBonus",
       "operation": 1
     }

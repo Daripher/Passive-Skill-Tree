@@ -55,11 +55,10 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
   @SubscribeEvent
   public static void syncSkills(PlayerLoggedInEvent event) {
-    if (!event.getEntity().level.isClientSide) {
-      NetworkDispatcher.network_channel.send(
-          PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()),
-          new SyncSkillsMessage());
-    }
+    if (event.getEntity().level.isClientSide) return;
+    NetworkDispatcher.network_channel.send(
+        PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()),
+        new SyncSkillsMessage());
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)

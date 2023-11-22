@@ -4,8 +4,15 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_on_block_per_shield_enchantment",
-      "id": "8da4949b-5f45-4f0e-9a20-93970cd0a033",
+      "attribute": "skilltree:life_on_block",
+      "id": "ae15ecb1-b6bd-4221-a875-e7b1c5deaf73",
+      "multiplier": {
+        "type": "skilltree:enchants_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

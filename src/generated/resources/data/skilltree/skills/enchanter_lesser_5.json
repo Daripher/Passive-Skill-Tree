@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": -0.05,
-      "attribute": "skilltree:enchantment_level_requirement",
-      "id": "9a65db88-b400-4197-b8e9-53ee890f5048",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:enchantment_requirement",
+      "multiplier": -0.05
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

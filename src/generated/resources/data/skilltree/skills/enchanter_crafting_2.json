@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:free_enchantment_chance",
-      "id": "a06fbc7b-92ec-4b08-8394-f1800338669a",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:free_enchantment",
+      "chance": 0.05
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

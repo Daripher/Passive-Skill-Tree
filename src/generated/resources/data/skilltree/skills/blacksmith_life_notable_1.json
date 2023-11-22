@@ -3,11 +3,18 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_boots_armor_bonus",
-      "id": "2707dee7-a295-41fc-b9e0-1225436ad42a",
+      "amount": 4.0,
+      "attribute": "minecraft:generic.max_health",
+      "id": "ed7eb56c-6231-43cc-b0e0-5511c16ccf03",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

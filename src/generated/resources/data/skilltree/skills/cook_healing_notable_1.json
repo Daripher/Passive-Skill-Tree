@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.5,
-      "attribute": "skilltree:life_on_block_if_not_hungry",
-      "id": "14cfd2fb-17c0-409c-964d-f06732552566",
+      "attribute": "skilltree:life_on_block",
+      "id": "e2e91337-d40f-4550-b474-ee1b24be6413",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

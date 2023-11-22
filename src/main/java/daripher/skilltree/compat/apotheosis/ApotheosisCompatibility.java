@@ -3,10 +3,9 @@ package daripher.skilltree.compat.apotheosis;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.skill.bonus.AttributeSkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Collections;
 import java.util.Iterator;
@@ -104,7 +103,7 @@ public enum ApotheosisCompatibility {
     int socket = 0;
     while (GemHelper.hasGem(stack, socket)) {
       SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
-      if (bonus instanceof AttributeSkillBonus attributeBonus) {
+      if (bonus instanceof AttributeBonus attributeBonus) {
         event.skipUUID(attributeBonus.getModifier().getId());
       }
       socket++;
@@ -250,12 +249,7 @@ public enum ApotheosisCompatibility {
       SocketHelper.setSockets(stack, defaultSockets);
       sockets += defaultSockets;
     }
-    if (stack.getItem() instanceof HasAdditionalSockets item) {
-      sockets += item.getAdditionalSockets();
-    }
-    if (ItemHelper.hasBonus(stack, ItemHelper.ADDITIONAL_SOCKETS)) {
-      sockets += (int) ItemHelper.getBonus(stack, ItemHelper.ADDITIONAL_SOCKETS);
-    }
+    sockets += ItemHelper.getAdditionalSockets(stack);
     CompoundTag affixTag = stack.getTagElement(AffixHelper.AFFIX_DATA);
     if (affixTag != null && affixTag.contains(SocketHelper.GEMS)) {
       ListTag gemsTag = affixTag.getList(SocketHelper.GEMS, Tag.TAG_COMPOUND);

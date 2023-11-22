@@ -2,12 +2,11 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:equipment_repair_efficiency",
-      "id": "5d697f19-3bce-4d42-9ec4-f8d305b9b854",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:repair_efficiency",
+      "item_condition": {
+        "type": "skilltree:equipment"
+      },
+      "multiplier": 1.0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

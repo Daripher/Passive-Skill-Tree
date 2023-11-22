@@ -3,11 +3,15 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:evasion_under_potion_effect",
-      "id": "5f92fbd6-5f68-4dd4-89d4-09e94445d18a",
+      "amount": 10.0,
+      "attribute": "skilltree:evasion",
+      "id": "a4b72125-6787-4a95-83b9-c5b237282417",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

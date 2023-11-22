@@ -1,33 +1,27 @@
 package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
-import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
-import java.util.Optional;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class WeaponPoisoningRecipe extends CustomRecipe {
+public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequiringRecipe {
   public WeaponPoisoningRecipe(ResourceLocation id) {
     super(id);
   }
 
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return false;
-    boolean canPoisonWeapons =
-        player.get().getAttributeValue(PSTAttributes.CAN_POISON_WEAPONS.get()) >= 1;
-    if (!canPoisonWeapons) return false;
+    if (isUncraftable(container)) return false;
     int weaponsCount = 0;
     int poisonsCount = 0;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -37,20 +31,21 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
         weaponsCount++;
         continue;
       }
-      if (ItemHelper.isPoison(stackInSlot)) poisonsCount++;
+      if (isPoison(stackInSlot)) poisonsCount++;
     }
     return weaponsCount == 1 && poisonsCount == 1;
   }
 
   @Override
-  public @NotNull ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
+    if (isUncraftable(container)) return ItemStack.EMPTY;
     ItemStack weaponStack = ItemStack.EMPTY;
     ItemStack poisonStack = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
       ItemStack stackInSlot = container.getItem(slot);
       if (stackInSlot.isEmpty()) continue;
       if (ItemHelper.isMeleeWeapon(stackInSlot)) weaponStack = stackInSlot;
-      if (ItemHelper.isPoison(stackInSlot)) poisonStack = stackInSlot;
+      if (isPoison(stackInSlot)) poisonStack = stackInSlot;
     }
     ItemStack result = weaponStack.copy();
     ItemHelper.setPoisons(result, poisonStack);
@@ -65,6 +60,11 @@ public class WeaponPoisoningRecipe extends CustomRecipe {
   @Override
   public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.WEAPON_POISONING.get();
+  }
+
+  private boolean isPoison(ItemStack stack) {
+    return PotionUtils.getAllEffects(stack.getTag()).stream()
+        .anyMatch(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL);
   }
 
   public static class Serializer implements RecipeSerializer<WeaponPoisoningRecipe> {

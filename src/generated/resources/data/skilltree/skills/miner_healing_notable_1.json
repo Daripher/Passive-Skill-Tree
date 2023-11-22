@@ -4,8 +4,15 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration_per_gem_in_helmet",
-      "id": "b9c4afa8-d47e-43b9-82b7-12d5026bb0e5",
+      "attribute": "skilltree:life_regeneration",
+      "id": "9a7edee6-d99b-4636-afe2-63fc2c237a7f",
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "head"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

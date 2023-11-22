@@ -3,11 +3,18 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:block_chance_per_shield_enchantment",
-      "id": "c0ac4db8-6c77-425b-afb8-1c5061f6576c",
+      "amount": 5.0,
+      "attribute": "skilltree:blocking",
+      "id": "9a080622-1599-4ef4-ac31-2cc674644002",
+      "multiplier": {
+        "type": "skilltree:enchants_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "offhand"
+        }
+      },
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

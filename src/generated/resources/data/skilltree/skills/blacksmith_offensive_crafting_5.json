@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:crafted_melee_weapon_damage_bonus",
-      "id": "bcd62a43-322a-4056-9df6-6b70f813fbb5",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.attack_damage",
+          "id": "8aab3694-b5d4-4342-aac0-bbc516ecf86f",
+          "name": "SkillBonus",
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "melee"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

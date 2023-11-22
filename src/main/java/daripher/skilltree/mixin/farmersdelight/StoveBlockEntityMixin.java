@@ -1,9 +1,7 @@
 package daripher.skilltree.mixin.farmersdelight;
 
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.util.FoodHelper;
-import java.util.Optional;
-import net.minecraft.world.entity.player.Player;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,9 +25,8 @@ public class StoveBlockEntityMixin {
     ItemStack result = recipe.getResultItem();
     @SuppressWarnings("DataFlowIssue")
     StoveBlockEntity stove = (StoveBlockEntity) (Object) this;
-    Optional<Player> player = ContainerHelper.getViewingPlayer(stove);
-    if (player.isEmpty()) return result;
-    FoodHelper.setCraftedFoodBonuses(result, player.get());
+    ContainerHelper.getViewingPlayer(stove)
+        .ifPresent(player -> SkillBonusHandler.itemCrafted(player, result));
     return result;
   }
 }

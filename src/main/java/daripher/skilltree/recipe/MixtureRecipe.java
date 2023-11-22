@@ -1,14 +1,10 @@
 package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
-import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.potion.PotionHelper;
-import java.util.Optional;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -17,18 +13,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class MixtureRecipe extends CustomRecipe {
+public class MixtureRecipe extends CustomRecipe implements SkillRequiringRecipe {
   public MixtureRecipe(ResourceLocation id) {
     super(id);
   }
 
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return false;
-    boolean canMixPotions =
-        player.get().getAttributeValue(PSTAttributes.CAN_MIX_POTIONS.get()) >= 1;
-    if (!canMixPotions) return false;
+    if (isUncraftable(container)) return false;
     ItemStack potionStack1 = ItemStack.EMPTY;
     ItemStack potionStack2 = ItemStack.EMPTY;
     int potionsCount = 0;
@@ -52,7 +44,8 @@ public class MixtureRecipe extends CustomRecipe {
   }
 
   @Override
-  public @NotNull ItemStack assemble(CraftingContainer container) {
+  public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
+    if (isUncraftable(container)) return ItemStack.EMPTY;
     ItemStack potionStack1 = ItemStack.EMPTY;
     ItemStack potionStack2 = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {

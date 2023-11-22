@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": -0.3,
-      "attribute": "skilltree:enchantment_level_requirement",
-      "id": "7aedb2cc-6f95-4289-b55f-248260417bbd",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:enchantment_requirement",
+      "multiplier": -0.3
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

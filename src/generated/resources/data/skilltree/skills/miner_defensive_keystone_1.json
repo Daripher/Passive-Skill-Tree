@@ -4,8 +4,15 @@
     {
       "type": "skilltree:attribute",
       "amount": 5.0,
-      "attribute": "skilltree:armor_per_gem_in_chestplate",
-      "id": "e789751b-b9c2-430b-8af7-e866a432e879",
+      "attribute": "minecraft:generic.armor",
+      "id": "c3adf4ea-bafd-4169-84d0-c66f03066a06",
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "slot": "chest"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

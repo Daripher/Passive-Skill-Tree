@@ -2,12 +2,22 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.04,
-      "attribute": "skilltree:crafted_ranged_weapon_attack_speed",
-      "id": "78cf36e0-7d1d-4e32-af1f-514a7423db9b",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.04,
+          "attribute": "minecraft:generic.attack_speed",
+          "id": "bbd4c0ad-42b7-4b22-aad8-47ab098cd47e",
+          "name": "SkillBonus",
+          "operation": 1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "ranged"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

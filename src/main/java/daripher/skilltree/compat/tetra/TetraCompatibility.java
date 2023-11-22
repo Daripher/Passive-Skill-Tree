@@ -15,12 +15,13 @@ public enum TetraCompatibility {
   }
 
   private void registerReplacementHook(RegisterEvent event) {
-    ItemUpgradeRegistry.instance.registerReplacementHook(
-        (original, modular) -> {
-          ItemHelper.getBonuses().stream()
-              .filter(s -> ItemHelper.hasBonus(original, s))
-              .forEach(s -> ItemHelper.setBonus(modular, s, ItemHelper.getBonus(original, s)));
-          return modular;
-        });
+    //    TODO: apply item bonuses?
+//    ItemUpgradeRegistry.instance.registerReplacementHook(
+//        (original, modular) -> {
+//          ItemHelper.getBonuses().stream()
+//              .filter(s -> ItemHelper.hasBonus(original, s))
+//              .forEach(s -> ItemHelper.setBonus(modular, s, ItemHelper.getBonus(original, s)));
+//          return modular;
+//        });
   }
 }

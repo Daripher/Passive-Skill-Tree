@@ -2,20 +2,19 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.2,
-      "attribute": "skilltree:melee_damage",
-      "id": "1bd3b7b4-fd52-4d1b-bf91-4b78425b3516",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.2,
+      "damage_condition": {
+        "type": "skilltree:is_melee"
+      },
       "operation": 1
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:melee_crit_damage",
-      "id": "4c4ee84e-b9eb-4976-8238-b67b0c10a358",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:crit_damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:is_melee"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

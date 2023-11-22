@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "2fbdd180-48e0-4826-8813-062b4bab4b56",
+      "id": "b1785436-abc7-4ae8-9afe-e2ff8af0ceb1",
       "name": "SkillBonus",
       "operation": 0
     },
@@ -13,7 +13,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "skilltree:incoming_healing",
-      "id": "7d6937a9-f3f5-4604-9ca0-4368b80a6c70",
+      "id": "12478222-18eb-43c5-8d05-474c1d6b6ebf",
       "name": "SkillBonus",
       "operation": 1
     }

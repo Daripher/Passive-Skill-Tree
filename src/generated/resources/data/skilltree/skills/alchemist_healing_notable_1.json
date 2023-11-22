@@ -4,10 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.5,
-      "attribute": "skilltree:life_per_hit_under_potion_effect",
-      "id": "ff73ac16-7909-47e1-ba7a-701923534681",
+      "attribute": "skilltree:life_per_hit",
+      "id": "ff3fa20b-1182-44e3-8125-9499d285c8e5",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

@@ -3,11 +3,11 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:block_chance",
-      "id": "5335326d-4631-459b-aa5d-8263a20fef5e",
+      "amount": 1.0,
+      "attribute": "skilltree:blocking",
+      "id": "ee35d325-c804-4fa5-b5a4-549ef3605254",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

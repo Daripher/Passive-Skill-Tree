@@ -2,20 +2,18 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.3,
-      "attribute": "skilltree:gem_power_in_weapon",
-      "id": "04e38a82-3de9-4a57-aceb-64a142f3622c",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:gem_power",
+      "item_condition": {
+        "type": "skilltree:weapon"
+      },
+      "multiplier": 0.3
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_weapon_sockets",
-      "id": "657c0b7f-4861-413e-b9fc-a38a24d4f380",
-      "name": "SkillBonus",
-      "operation": 0
+      "type": "skilltree:player_sockets",
+      "item_condition": {
+        "type": "skilltree:weapon"
+      },
+      "sockets": 1
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

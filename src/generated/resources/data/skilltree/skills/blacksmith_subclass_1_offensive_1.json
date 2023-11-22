@@ -2,20 +2,20 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:melee_damage",
-      "id": "593897e3-51ec-4be0-be9e-e3d2a64e830d",
-      "name": "SkillBonus",
+      "type": "skilltree:damage",
+      "chance": 0.01,
+      "damage_condition": {
+        "type": "skilltree:is_melee"
+      },
       "operation": 1
     },
     {
       "type": "skilltree:attribute",
-      "amount": 0.01,
-      "attribute": "skilltree:block_chance",
-      "id": "cb2a9816-7fb2-4d72-b8d0-73e6abd67db5",
+      "amount": 1.0,
+      "attribute": "skilltree:blocking",
+      "id": "b73c4fba-7c40-42ab-8f41-85d95d78f6ff",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

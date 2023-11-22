@@ -2,12 +2,16 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.15,
-      "attribute": "skilltree:damage_with_gem_in_weapon",
-      "id": "85b2dcfc-1ee5-449d-bbc3-ae90c0657912",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.15,
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon"
+        },
+        "min": 1
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

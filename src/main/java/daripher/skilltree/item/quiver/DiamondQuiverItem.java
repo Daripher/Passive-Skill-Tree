@@ -19,9 +19,10 @@ public class DiamondQuiverItem extends QuiverItem {
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        PSTAttributes.CRIT_CHANCE.get(),
-        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
+//    TODO:remake with bonuses
+//    modifiers.put(
+//        PSTAttributes.CRIT_CHANCE.get(),
+//        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 }

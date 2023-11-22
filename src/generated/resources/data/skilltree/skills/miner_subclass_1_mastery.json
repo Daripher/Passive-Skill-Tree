@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0E-4,
       "attribute": "skilltree:damage_per_distance_to_spawn",
-      "id": "8cdd4d45-3299-49e0-9e18-ef18095e6ea9",
+      "id": "b6d0f5c5-333d-4848-a584-e3929c0fa2de",
       "name": "SkillBonus",
       "operation": 1
     }

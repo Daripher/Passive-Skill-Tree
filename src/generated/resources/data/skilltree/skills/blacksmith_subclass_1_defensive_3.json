@@ -5,17 +5,17 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "a1958130-a52e-4a2e-8a00-129598dca605",
+      "id": "405ebb41-7647-4df8-b5bc-66f7b5172d96",
       "name": "SkillBonus",
       "operation": 0
     },
     {
       "type": "skilltree:attribute",
-      "amount": 0.005,
-      "attribute": "skilltree:block_chance",
-      "id": "8256fd96-6a5c-4085-a1a0-78c543980f81",
+      "amount": 0.5,
+      "attribute": "skilltree:blocking",
+      "id": "b26444d0-d0cc-4697-a1ca-8beb4ebbb72c",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

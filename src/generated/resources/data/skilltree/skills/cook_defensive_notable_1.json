@@ -3,11 +3,15 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.1,
-      "attribute": "skilltree:block_chance_if_not_hungry",
-      "id": "0af90acb-b841-46d9-9fbc-568ffaa8f1b3",
+      "amount": 10.0,
+      "attribute": "skilltree:blocking",
+      "id": "2eb898b1-2ce9-4a3d-8b3e-fd1e4255536c",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

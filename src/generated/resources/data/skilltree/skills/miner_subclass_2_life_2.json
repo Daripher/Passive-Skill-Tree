@@ -4,8 +4,14 @@
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_equipped_jewelry",
-      "id": "13c8c241-a976-4888-ab74-6502558c2804",
+      "attribute": "minecraft:generic.max_health",
+      "id": "9c8183cf-f6d9-4e79-a53a-4efdc1d9c1a6",
+      "multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:jewelry"
+        }
+      },
       "name": "SkillBonus",
       "operation": 0
     }

@@ -2,7 +2,7 @@
   "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
-  "buttonSize": 21,
+  "buttonSize": 30,
   "connectedAsGateways": [
     "skilltree:miner_gateway"
   ],
@@ -12,6 +12,6 @@
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:enchanter_gateway",
   "isStartingPoint": false,
-  "positionX": 110.734566,
-  "positionY": -186.27713
+  "positionX": 106.83738,
+  "positionY": -184.02725
 }
