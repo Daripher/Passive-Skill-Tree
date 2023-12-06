@@ -36,15 +36,7 @@ public class GemSocketingRecipe extends UpgradeRecipe {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return false;
     }
-    ItemStack base = container.getItem(0);
-    if (!isBaseIngredient(base)) return false;
-    ItemStack ingredient = container.getItem(1);
-    if (!isAdditionIngredient(ingredient)) return false;
-    GemItem gem = (GemItem) ingredient.getItem();
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    return player
-        .filter(value -> gem.canInsertInto(value, base, ingredient, getEmptySocket(base, value)))
-        .isPresent();
+    return canCraftIn(container);
   }
 
   @Override
@@ -52,22 +44,31 @@ public class GemSocketingRecipe extends UpgradeRecipe {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return ItemStack.EMPTY;
     }
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return ItemStack.EMPTY;
+    if (!canCraftIn(container)) return ItemStack.EMPTY;
     ItemStack base = container.getItem(0);
-    int socket = getEmptySocket(base, player.get());
-    ItemStack gemStack = container.getItem(1);
-    GemItem gem = (GemItem) gemStack.getItem();
-    if (!gem.canInsertInto(player.get(), base, gemStack, socket)) return ItemStack.EMPTY;
+    ItemStack ingredient = container.getItem(1);
     ItemStack result = base.copy();
+    GemItem gem = (GemItem) ingredient.getItem();
     result.setCount(1);
     CompoundTag itemTag = base.getTag();
-    if (itemTag != null) {
-      result.setTag(itemTag.copy());
-    }
+    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
+    if (itemTag != null) result.setTag(itemTag.copy());
+    assert player.isPresent();
     float gemPower = GemHelper.getGemPower(player.get(), result);
-    gem.insertInto(player.get(), result, gemStack, socket, gemPower);
+    int socket = getEmptySocket(base, player.get());
+    gem.insertInto(player.get(), result, ingredient, socket, gemPower);
     return result;
+  }
+
+  private boolean canCraftIn(@NotNull Container container) {
+    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
+    if (player.isEmpty()) return false;
+    ItemStack base = container.getItem(0);
+    ItemStack ingredient = container.getItem(1);
+    if (!ItemHelper.canInsertGem(base)) return false;
+    if (!(ingredient.getItem() instanceof GemItem gem)) return false;
+    int socket = getEmptySocket(base, player.get());
+    return gem.canInsertInto(player.get(), base, ingredient, socket);
   }
 
   public int getEmptySocket(ItemStack baseItem, Player player) {
@@ -88,14 +89,6 @@ public class GemSocketingRecipe extends UpgradeRecipe {
   @Override
   public boolean isSpecial() {
     return true;
-  }
-
-  public boolean isBaseIngredient(ItemStack itemStack) {
-    return ItemHelper.canInsertGem(itemStack);
-  }
-
-  public boolean isAdditionIngredient(ItemStack itemStack) {
-    return itemStack.getItem() instanceof GemItem;
   }
 
   @Override
