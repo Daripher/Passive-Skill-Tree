@@ -16,7 +16,7 @@ public class CraftingContainerMixin implements PlayerContainer {
 
   @Override
   public Optional<Player> getViewingPlayer() {
-    return ((PlayerContainer) menu).getViewingPlayer();
+    return Optional.ofNullable(menu).flatMap(menu -> ((PlayerContainer) menu).getViewingPlayer());
   }
 
   @Override
