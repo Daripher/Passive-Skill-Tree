@@ -2,7 +2,6 @@ package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.api.IrisciteSeedContainer;
 import daripher.skilltree.enchantment.EnchantmentHelper;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
