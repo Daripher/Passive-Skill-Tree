@@ -1,8 +1,8 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.api.IrisciteSeedContainer;
-import daripher.skilltree.enchantment.EnchantmentHelper;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -50,7 +50,7 @@ public abstract class PlayerMixin extends LivingEntity implements IrisciteSeedCo
   private void restoreEnchantmentExperience(
       ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
     Player player = (Player) (Object) this;
-    float freeEnchantmentChance = EnchantmentHelper.getFreeEnchantmentChance(player);
+    float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player);
     if (player.getRandom().nextFloat() < freeEnchantmentChance) {
       player.giveExperienceLevels(enchantmentCost);
     }

@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -32,6 +33,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -436,6 +438,49 @@ public class SkillBonusHandler {
             .reduce(Float::sum)
             .orElse(0f);
     return multiplier;
+  }
+
+  public static void amplifyEnchantments(
+      List<EnchantmentInstance> enchantments, RandomSource random, Player player) {
+    enchantments.replaceAll(
+        enchantmentInstance -> amplifyEnchantment(enchantmentInstance, random, player));
+  }
+
+  private static EnchantmentInstance amplifyEnchantment(
+      EnchantmentInstance enchantment, RandomSource random, Player player) {
+    float amplificationChance = getAmplificationChance(enchantment, player);
+    if (amplificationChance == 0) return enchantment;
+    int levelBonus = (int) amplificationChance;
+    amplificationChance -= levelBonus;
+    int enchantmentLevel = enchantment.level + levelBonus;
+    if (random.nextFloat() < amplificationChance) enchantmentLevel++;
+    return new EnchantmentInstance(enchantment.enchantment, enchantmentLevel);
+  }
+
+  public static int adjustEnchantmentCost(int cost, Player player) {
+    return (int) Math.max(1, cost * getEnchantmentCostMultiplier(player));
+  }
+
+  public static float getFreeEnchantmentChance(Player player) {
+    return SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class).stream()
+        .map(FreeEnchantmentBonus::getChance)
+        .reduce(Float::sum)
+        .orElse(1f);
+  }
+
+  private static double getEnchantmentCostMultiplier(Player player) {
+    return SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class).stream()
+        .map(EnchantmentRequirementBonus::getMultiplier)
+        .reduce(Float::sum)
+        .orElse(1f);
+  }
+
+  private static float getAmplificationChance(EnchantmentInstance enchantment, Player player) {
+    return SkillBonusHandler.getSkillBonuses(player, EnchantmentAmplificationBonus.class).stream()
+        .filter(bonus -> bonus.getCondition().met(enchantment.enchantment.category))
+        .map(EnchantmentAmplificationBonus::getChance)
+        .reduce(Float::sum)
+        .orElse(0f);
   }
 
   public static <T> List<T> getSkillBonuses(Player player, Class<T> type) {

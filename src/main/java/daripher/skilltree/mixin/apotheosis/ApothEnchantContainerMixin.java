@@ -2,9 +2,11 @@ package daripher.skilltree.mixin.apotheosis;
 
 import daripher.skilltree.api.EnchantmentMenuExtention;
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.enchantment.EnchantmentHelper;
+
 import java.util.List;
 import java.util.Optional;
+
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +40,7 @@ public class ApothEnchantContainerMixin {
     int[] costsBeforeReduction = ((EnchantmentMenuExtention) this).getCostsBeforeReduction();
     costsBeforeReduction[slot] = cost;
     return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> EnchantmentHelper.adjustEnchantmentCost(cost, player))
+        .map(player -> SkillBonusHandler.adjustEnchantmentCost(cost, player))
         .orElse(cost);
   }
 
@@ -80,7 +82,7 @@ public class ApothEnchantContainerMixin {
     Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
     if (player.isEmpty()) return enchantments;
     assert enchantments != null;
-    EnchantmentHelper.amplifyEnchantments(enchantments, random, player.get());
+    SkillBonusHandler.amplifyEnchantments(enchantments, random, player.get());
     return enchantments;
   }
 

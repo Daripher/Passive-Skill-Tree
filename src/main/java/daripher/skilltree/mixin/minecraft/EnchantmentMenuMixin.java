@@ -2,7 +2,7 @@ package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.api.EnchantmentMenuExtention;
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.enchantment.EnchantmentHelper;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
@@ -42,7 +42,7 @@ public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtention {
     @SuppressWarnings("DataFlowIssue")
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
     return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> EnchantmentHelper.adjustEnchantmentCost(levelRequirement, player))
+        .map(player -> SkillBonusHandler.adjustEnchantmentCost(levelRequirement, player))
         .orElse(levelRequirement);
   }
 
@@ -78,7 +78,7 @@ public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtention {
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
     Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
     if (player.isEmpty()) return enchantments;
-    EnchantmentHelper.amplifyEnchantments(enchantments, random, player.get());
+    SkillBonusHandler.amplifyEnchantments(enchantments, random, player.get());
     return enchantments;
   }
 

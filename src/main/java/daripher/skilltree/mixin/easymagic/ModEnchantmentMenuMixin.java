@@ -2,6 +2,7 @@ package daripher.skilltree.mixin.easymagic;
 
 import daripher.skilltree.api.EnchantmentMenuExtention;
 import daripher.skilltree.container.ContainerHelper;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import fuzs.easymagic.mixin.accessor.EnchantmentMenuAccessor;
 import fuzs.easymagic.world.inventory.ModEnchantmentMenu;
 import java.util.List;
@@ -24,10 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ModEnchantmentMenuMixin {
   private @Shadow @Final DataSlot enchantmentSeed;
 
-  private static int getReducedEnchantmentCost(Player value, int cost) {
-    return daripher.skilltree.enchantment.EnchantmentHelper.adjustEnchantmentCost(cost, value);
-  }
-
   @Redirect(
       method = "updateLevels",
       at =
@@ -35,15 +32,14 @@ public class ModEnchantmentMenuMixin {
               value = "INVOKE",
               target =
                   "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getEnchantmentCost(Lnet/minecraft/util/RandomSource;IILnet/minecraft/world/item/ItemStack;)I"))
-  private int reduceLevelRequirements(
-      RandomSource random, int slot, int power, ItemStack stack) {
+  private int reduceLevelRequirements(RandomSource random, int slot, int power, ItemStack stack) {
     int levelRequirement = EnchantmentHelper.getEnchantmentCost(random, slot, power, stack);
     int[] costsBeforeReduction = ((EnchantmentMenuExtention) this).getCostsBeforeReduction();
     costsBeforeReduction[slot] = levelRequirement;
     @SuppressWarnings("DataFlowIssue")
     ModEnchantmentMenu menu = (ModEnchantmentMenu) (Object) this;
     return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> getReducedEnchantmentCost(player, levelRequirement))
+        .map(player -> SkillBonusHandler.adjustEnchantmentCost(levelRequirement, player))
         .orElse(levelRequirement);
   }
 
@@ -65,8 +61,7 @@ public class ModEnchantmentMenuMixin {
     ModEnchantmentMenu menu = (ModEnchantmentMenu) (Object) this;
     Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
     if (player.isEmpty()) return;
-    daripher.skilltree.enchantment.EnchantmentHelper.amplifyEnchantments(
-        enchantments, random, player.get());
+    SkillBonusHandler.amplifyEnchantments(enchantments, random, player.get());
     callbackInfo.setReturnValue(enchantments);
   }
 }
