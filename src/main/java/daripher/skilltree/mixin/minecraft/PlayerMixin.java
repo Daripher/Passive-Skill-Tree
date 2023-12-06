@@ -1,11 +1,9 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.api.IrisciteSeedContainer;
-import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,19 +18,6 @@ public abstract class PlayerMixin extends LivingEntity implements IrisciteSeedCo
   @SuppressWarnings("DataFlowIssue")
   protected PlayerMixin() {
     super(null, null);
-  }
-
-  @Override
-  public int getUseItemRemainingTicks() {
-    if (!ItemHelper.isRangedWeapon(getUseItem())) {
-      return super.getUseItemRemainingTicks();
-    }
-    double attackSpeedBonus = getAttributeValue(Attributes.ATTACK_SPEED) - 1;
-    if (attackSpeedBonus <= 0) {
-      return super.getUseItemRemainingTicks();
-    }
-    int useDuration = getUseItem().getUseDuration() - useItemRemaining;
-    return (int) (useItemRemaining - useDuration * attackSpeedBonus);
   }
 
   @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))

@@ -19,6 +19,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -28,10 +29,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.GrindstoneEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -180,5 +178,23 @@ public class AttributeEvents {
   @SubscribeEvent
   public static void applyGrindstoneExpPenalty(GrindstoneEvent.OnTakeItem event) {
     event.setXp((int) (event.getXp() * Config.grindstone_exp_multiplier));
+  }
+
+  @SubscribeEvent
+  public static void applyRangedWeaponAttackSpeedBonus(LivingEntityUseItemEvent.Tick event) {
+    if (!ItemHelper.isRangedWeapon(event.getItem())) return;
+    AttributeInstance attribute = event.getEntity().getAttribute(Attributes.ATTACK_SPEED);
+    if (attribute == null) return;
+    double attackSpeedBonus = attribute.getValue() / attribute.getBaseValue() - 1;
+    if (attackSpeedBonus == 0) return;
+    int tickBonus = attackSpeedBonus < 0 ? 1 : -1;
+    while (attackSpeedBonus > 1) {
+      event.setDuration(event.getDuration() + tickBonus);
+      attackSpeedBonus--;
+    }
+    int bonusTickFrequency = (int) (1f / attackSpeedBonus);
+    if (event.getEntity().tickCount % bonusTickFrequency == 0) {
+      event.setDuration(event.getDuration() + tickBonus);
+    }
   }
 }

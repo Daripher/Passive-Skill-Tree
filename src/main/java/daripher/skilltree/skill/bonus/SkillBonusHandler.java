@@ -142,7 +142,7 @@ public class SkillBonusHandler {
             event.getSource(),
             event.getEntity(),
             AttributeModifier.Operation.MULTIPLY_BASE);
-    event.setAmount(event.getAmount() * bonus);
+    event.setAmount(event.getAmount() * (1 + bonus));
   }
 
   @SubscribeEvent(priority = EventPriority.LOW)
@@ -154,7 +154,7 @@ public class SkillBonusHandler {
             event.getSource(),
             event.getEntity(),
             AttributeModifier.Operation.MULTIPLY_TOTAL);
-    event.setAmount(event.getAmount() * bonus);
+    event.setAmount(event.getAmount() * (1 + bonus));
   }
 
   private static float getDamageBonus(
