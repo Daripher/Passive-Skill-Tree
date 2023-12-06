@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "099963fb-ae92-4b16-b291-e9d5bb4dbda9",
+      "id": "a8800080-de7e-472d-8ea6-a81c9ea4dc06",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,6 +14,9 @@
           "type": "skilltree:weapon",
           "weapon_type": "ranged"
         }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

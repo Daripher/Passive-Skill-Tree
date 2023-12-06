@@ -2,12 +2,10 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:double_loot_chance",
-      "id": "b840b11f-f589-4586-b5f5-fe42f52a7123",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:loot_duplication",
+      "chance": 0.05,
+      "loot_type": "mobs",
+      "multiplier": 1.0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

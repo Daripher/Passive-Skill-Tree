@@ -17,5 +17,7 @@ public interface EnchantmentCondition {
   EnchantmentCondition.Serializer getSerializer();
 
   interface Serializer
-      extends daripher.skilltree.data.serializers.Serializer<EnchantmentCondition> {}
+      extends daripher.skilltree.data.serializers.Serializer<EnchantmentCondition> {
+    EnchantmentCondition createDefaultInstance();
+  }
 }

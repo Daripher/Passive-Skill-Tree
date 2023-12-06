@@ -2,15 +2,24 @@ package daripher.skilltree.skill.bonus.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTItemBonuses;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 
-public record PotionDurationBonus(float multiplier) implements ItemBonus<PotionDurationBonus> {
+public final class PotionDurationBonus implements ItemBonus<PotionDurationBonus> {
+  private float multiplier;
+
+  public PotionDurationBonus(float multiplier) {
+    this.multiplier = multiplier;
+  }
+
   @Override
   public boolean canMerge(ItemBonus<?> other) {
     if (!(other instanceof PotionDurationBonus otherBonus)) return false;
@@ -52,8 +61,39 @@ public record PotionDurationBonus(float multiplier) implements ItemBonus<PotionD
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
+    editor.addLabel(0, 0, "Multiplier", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, getMultiplier())
+        .setNumericResponder(
+            v -> {
+              setMultiplier(v.floatValue());
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setMultiplier(float multiplier) {
+    this.multiplier = multiplier;
+  }
+
+  public float getMultiplier() {
+    return multiplier;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    PotionDurationBonus that = (PotionDurationBonus) obj;
+    return Float.floatToIntBits(this.multiplier) == Float.floatToIntBits(that.multiplier);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(multiplier);
   }
 
   public static class Serializer implements ItemBonus.Serializer {
@@ -98,6 +138,11 @@ public record PotionDurationBonus(float multiplier) implements ItemBonus<PotionD
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.multiplier);
+    }
+
+    @Override
+    public ItemBonus<?> createDefaultInstance() {
+      return new PotionDurationBonus(0.1f);
     }
   }
 }

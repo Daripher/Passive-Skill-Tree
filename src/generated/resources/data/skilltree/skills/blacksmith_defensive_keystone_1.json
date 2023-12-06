@@ -5,26 +5,32 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.armor",
-      "id": "f3f0dd88-5675-43b8-b340-57ddaca9787b",
+      "id": "836d6fb9-1262-4040-bc2b-c70a7eeeee25",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:attribute_value",
         "attribute": "minecraft:generic.armor",
         "min": 50.0
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.armor",
-      "id": "221fce9d-d570-4dbf-9b35-112c0782450f",
+      "id": "b31547cb-be3d-4ad1-8890-5f5b8b07e419",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:attribute_value",
         "attribute": "minecraft:generic.armor",
         "min": 100.0
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

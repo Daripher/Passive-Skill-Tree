@@ -77,5 +77,10 @@ public record BurningCondition() implements LivingCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public LivingCondition createDefaultInstance() {
+      return new BurningCondition();
+    }
   }
 }

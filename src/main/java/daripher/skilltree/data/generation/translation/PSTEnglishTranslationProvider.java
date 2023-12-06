@@ -2,7 +2,8 @@ package daripher.skilltree.data.generation.translation;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.*;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
+import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.effect.MobEffects;
 import top.theillusivec4.curios.common.CuriosHelper;
@@ -188,6 +189,12 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Enchantments: %s");
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "bonus", "Free Enchantment chance");
     add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
+    add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Jump Height");
+    add(PSTSkillBonuses.INCOMING_HEALING.get(), "Incoming Healing");
+    add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Chance to get +%s%% %s");
+    add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Experience from %s");
+    add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Chance to inflict Ignite for %s");
+    add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Arrow retrieval chance");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");
@@ -197,6 +204,14 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemBonuses.FOOD_EFFECT.get(), "%s for %s");
     add(PSTItemBonuses.FOOD_SATURATION.get(), "Saturation");
     add(PSTItemBonuses.FOOD_HEALING.get(), "Restores %s Health");
+    // experience sources
+    add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
+    add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
+    add(GainedExperienceBonus.ExperienceSource.FISHING.getDescriptionId(), "Fishing");
+    // loot conditions
+    add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "Mobs Loot");
+    add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "Fishing Loot");
+    add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "Gems from Ore");
     // living conditions
     add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.you", "You have");
     add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.target", "Target has");
@@ -223,7 +238,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_GEMS.get(), "range", "%s %s %d to %d gems in %s");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "You are");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Target is");
-    add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s effect");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s");
     add(PSTLivingConditions.IS_BURNING.get(), "target.you", "You are");
     add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Target is");
     add(PSTLivingConditions.IS_BURNING.get(), "%s if %s burning");
@@ -237,52 +252,49 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.FOOD_LEVEL.get(), "min", "%s if %s at least %s Hunger points");
     add(PSTLivingConditions.FOOD_LEVEL.get(), "max", "%s if %s at most %s Hunger points");
     add(PSTLivingConditions.FOOD_LEVEL.get(), "range", "%s if %s %s%% to %s Hunger points");
+    add(PSTLivingConditions.FISHING.get(), "target.you", "You are");
+    add(PSTLivingConditions.FISHING.get(), "target.target", "Target is");
+    add(PSTLivingConditions.FISHING.get(), "%s if %s fishing");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile %s");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee %s");
     // enchantment conditions
     add(PSTEnchantmentConditions.WEAPON.get(), "Weapon Enchantments");
     add(PSTEnchantmentConditions.ARMOR.get(), "Armor Enchantments");
-    add(PSTEnchantmentConditions.ANY.get(), "Enchantments");
+    add(PSTEnchantmentConditions.NONE.get(), "Enchantments");
     // item conditions
     add(PSTItemConditions.WEAPON.get(), "any", "Weapon");
     add(PSTItemConditions.WEAPON.get(), "ranged", "Ranged Weapon");
+    add(PSTItemConditions.WEAPON.get(), "bow", "Bow");
+    add(PSTItemConditions.WEAPON.get(), "crossbow", "Crossbow");
     add(PSTItemConditions.WEAPON.get(), "melee", "Melee Weapon");
+    add(PSTItemConditions.WEAPON.get(), "axe", "Axe");
+    add(PSTItemConditions.WEAPON.get(), "sword", "Sword");
+    add(PSTItemConditions.WEAPON.get(), "trident", "Trident");
     add(PSTItemConditions.CURIO.get(), "ring", "Ring");
     add(PSTItemConditions.CURIO.get(), "necklace", "Necklace");
     add(PSTItemConditions.CURIO.get(), "quiver", "Quiver");
     add(PSTItemConditions.ARMOR.get(), "any", "Armor");
-    add(PSTItemConditions.ARMOR.get(), "head", "Helmet");
-    add(PSTItemConditions.ARMOR.get(), "chest", "Chestplate");
-    add(PSTItemConditions.ARMOR.get(), "legs", "Leggings");
-    add(PSTItemConditions.ARMOR.get(), "feet", "Boots");
-    add(PSTItemConditions.ARMOR.get(), "offhand", "Shield");
+    add(PSTItemConditions.ARMOR.get(), "helmet", "Helmet");
+    add(PSTItemConditions.ARMOR.get(), "chestplate", "Chestplate");
+    add(PSTItemConditions.ARMOR.get(), "leggings", "Leggings");
+    add(PSTItemConditions.ARMOR.get(), "boots", "Boots");
+    add(PSTItemConditions.ARMOR.get(), "shield", "Shield");
     add(PSTItemConditions.EQUIPMENT.get(), "Equipment");
-    add(PSTItemConditions.AXE.get(), "Axe");
-    add(PSTItemConditions.WEAPON.get(), "any.crafted", "Weapons");
-    add(PSTItemConditions.WEAPON.get(), "ranged.crafted", "Ranged Weapons");
-    add(PSTItemConditions.WEAPON.get(), "melee.crafted", "Melee Weapons");
-    add(PSTItemConditions.CURIO.get(), "ring.crafted", "Rings");
-    add(PSTItemConditions.CURIO.get(), "necklace.crafted", "Necklaces");
-    add(PSTItemConditions.CURIO.get(), "quiver.crafted", "Quivers");
-    add(PSTItemConditions.ARMOR.get(), "head.crafted", "Helmets");
-    add(PSTItemConditions.ARMOR.get(), "chest.crafted", "Chestplates");
-    add(PSTItemConditions.ARMOR.get(), "offhand.crafted", "Shields");
-    add(PSTItemConditions.AXE.get(), "crafted", "Axes");
-    add(PSTItemConditions.POTION.get(), "any", "Potions");
-    add(PSTItemConditions.POTION.get(), "beneficial", "Beneficial Potions");
-    add(PSTItemConditions.POTION.get(), "harmful", "Harmful Potions");
-    add(PSTItemConditions.POTION.get(), "neutral", "Neutral Potions");
+    add(PSTItemConditions.POTIONS.get(), "any", "Potions");
+    add(PSTItemConditions.POTIONS.get(), "beneficial", "Beneficial Potions");
+    add(PSTItemConditions.POTIONS.get(), "harmful", "Harmful Potions");
+    add(PSTItemConditions.POTIONS.get(), "neutral", "Neutral Potions");
     add(PSTItemConditions.FOOD.get(), "Food");
     add(PSTItemConditions.JEWELRY.get(), "Jewelry");
     add(PSTItemConditions.PICKAXE.get(), "Pickaxe");
     // skill multipliers
-    add(PSTSkillBonusMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
-    add(PSTSkillBonusMultipliers.ATTRIBUTE_VALUE.get(), "%s for each %s point");
-    add(PSTSkillBonusMultipliers.ENCHANTS_AMOUNT.get(), "%s for each enchantment on your %s");
-    add(PSTSkillBonusMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
-    add(PSTSkillBonusMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
-    add(PSTSkillBonusMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s for each %s point");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s for each enchantment on your %s");
+    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Weapon Poisoning");
     addRecipe("skilltree:potion_mixing", "Potion Mixing");
@@ -367,7 +379,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItems.QUIVER.get(), "Quiver");
     add(PSTItems.ARMORED_QUIVER.get(), "Armored Quiver");
     add(PSTItems.DIAMOND_QUIVER.get(), "Diamond Quiver");
-    add(PSTItems.EXPLOSIVE_QUIVER.get(), "Explosive Quiver");
     add(PSTItems.FIERY_QUIVER.get(), "Fiery Quiver");
     add(PSTItems.GILDED_QUIVER.get(), "Gilded Quiver");
     add(PSTItems.HEALING_QUIVER.get(), "Healing Quiver");
@@ -378,29 +389,14 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
     // attributes
-    add(PSTAttributes.LIFE_REGENERATION.get(), "Life Regeneration");
+    add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
     add(PSTAttributes.LIFE_PER_HIT.get(), "Life per Hit");
     add(PSTAttributes.EVASION.get(), "Evasion");
     add(PSTAttributes.BLOCKING.get(), "Blocking");
     add(PSTAttributes.LIFE_ON_BLOCK.get(), "Life on Block");
-    add(PSTAttributes.DOUBLE_LOOT_CHANCE.get(), "Double Loot chance");
-    add(PSTAttributes.TRIPLE_LOOT_CHANCE.get(), "Triple Loot chance");
-    add(PSTAttributes.DAMAGE_PER_DISTANCE_TO_ENEMY.get(), "Damage per Distance to Enemy");
-    add(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Chance to retrieve Arrows");
-    add(PSTAttributes.GEM_DROP_CHANCE.get(), "Chance to find Gem in Ore");
-    add(PSTAttributes.INCOMING_HEALING.get(), "Incoming Healing");
-    add(PSTAttributes.EXPERIENCE_PER_MINUTE.get(), "Experience Per Minute");
+    add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Ring Slots");
-    add(PSTAttributes.EXPERIENCE_FROM_MOBS.get(), "Experience from Killed Creatures");
-    add(PSTAttributes.EXPERIENCE_FROM_ORE.get(), "Experience from Mined Ore");
-    add(
-        PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get(),
-        "Damage per Distance to Spawn (up to 50%)");
-    add(PSTAttributes.CHANCE_TO_IGNITE.get(), "Chance to Ignite");
     add(PSTAttributes.STEALTH.get(), "Stealth");
-    add(PSTAttributes.DOUBLE_FISHING_LOOT_CHANCE.get(), "Double Fishing Loot chance");
-    add(PSTAttributes.EXPERIENCE_FROM_FISHING.get(), "Experience from Fishing");
-    add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Chance to Explode enemy");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Critical Damage");
     add(PSTEffects.DAMAGE_BONUS.get(), "Damage");

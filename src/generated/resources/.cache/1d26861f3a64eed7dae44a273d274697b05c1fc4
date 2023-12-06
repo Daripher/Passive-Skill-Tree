@@ -1,4 +1,4 @@
-// 1.19.2	2023-08-03T14:42:40.8980978	Item Models: skilltree
+// 1.19.2	2023-12-06T02:02:27.0277154	Item Models: skilltree
 2f722ac13ab686d1a3513a163980ae1ffd8f6c2d assets/apotheosis/models/item/gems/adamite.json
 bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/apotheosis/models/item/gems/citrine.json
 411d876c04e01afdfe78c3e5139a8487b7affd86 assets/apotheosis/models/item/gems/jade.json
@@ -18,7 +18,6 @@ bfaca2cbf9dbfffc95a8882f739eac905f5b5eb6 assets/skilltree/models/item/citrine.js
 4edc69c003ad38c47b6b629c466a870d7b578304 assets/skilltree/models/item/copper_nugget.json
 50c767e9f51012abb9e221a888e725a1a47b6f10 assets/skilltree/models/item/copper_ring.json
 286f13e230d4f566b65edb905b44b7e9ed9b70d7 assets/skilltree/models/item/diamond_quiver.json
-9279cbbb760a89d5b78ba4c769951a78591a9247 assets/skilltree/models/item/explosive_quiver.json
 73f76d224b3b05d6ce116d82c7f5ac62b46eeaf8 assets/skilltree/models/item/fiery_quiver.json
 895c081bcacbdb18e8d02cf90e72e6f71f9e0b58 assets/skilltree/models/item/fisherman_necklace.json
 4cfda358b0302a839ef1d7595da9fc853abafb54 assets/skilltree/models/item/gilded_quiver.json

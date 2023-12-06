@@ -35,12 +35,12 @@ public abstract class ItemMixin implements IForgeItem {
     float restorationMultiplier = 1f;
     restorationMultiplier +=
         ItemHelper.getItemBonuses(stack, FoodSaturationBonus.class).stream()
-            .map(FoodSaturationBonus::multiplier)
+            .map(FoodSaturationBonus::getMultiplier)
             .reduce(Float::sum)
             .orElse(0f);
     List<MobEffectInstance> bonusEffects =
         ItemHelper.getItemBonuses(stack, FoodEffectBonus.class).stream()
-            .map(FoodEffectBonus::effect)
+            .map(FoodEffectBonus::getEffectInstance)
             .map(MobEffectInstance::new)
             .toList();
     if (restorationMultiplier == 1f && bonusEffects.isEmpty()) return properties;

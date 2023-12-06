@@ -112,11 +112,11 @@ public class PassiveSkill {
     return positionY;
   }
 
-  public List<ResourceLocation> getConnectedSkills() {
+  public List<ResourceLocation> getConnections() {
     return connectedSkills;
   }
 
-  public List<ResourceLocation> getConnectedAsGateways() {
+  public List<ResourceLocation> getGatewayConnections() {
     return connectedAsGateways;
   }
 

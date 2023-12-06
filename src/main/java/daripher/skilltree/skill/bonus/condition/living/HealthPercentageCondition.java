@@ -2,8 +2,12 @@ package daripher.skilltree.skill.bonus.condition.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTLivingConditions;
 import java.util.Objects;
+import java.util.function.Consumer;
+
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,7 +15,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-public record HealthPercentageCondition(float min, float max) implements LivingCondition {
+public final class HealthPercentageCondition implements LivingCondition {
+  private float min;
+  private float max;
+
+  public HealthPercentageCondition(float min, float max) {
+    this.min = min;
+    this.max = max;
+  }
+
   @Override
   public boolean met(LivingEntity living) {
     float percentage = living.getHealth() / living.getMaxHealth();
@@ -46,6 +58,28 @@ public record HealthPercentageCondition(float min, float max) implements LivingC
   }
 
   @Override
+  public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<LivingCondition> consumer) {
+    editor.addLabel(0, 0, "Min", ChatFormatting.GREEN);
+    editor.addLabel(55, 0, "Max", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, min)
+        .setNumericResponder(
+            a -> {
+              setMin(a.intValue());
+              consumer.accept(this);
+            });
+    editor
+        .addNumericTextField(55, 0, 50, 14, max)
+        .setNumericResponder(
+            a -> {
+              setMax(a.intValue());
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -56,6 +90,22 @@ public record HealthPercentageCondition(float min, float max) implements LivingC
   @Override
   public int hashCode() {
     return Objects.hash(min, max);
+  }
+
+  public void setMin(float min) {
+    this.min = min;
+  }
+
+  public void setMax(float max) {
+    this.max = max;
+  }
+
+  public float getMin() {
+    return min;
+  }
+
+  public float getMax() {
+    return max;
   }
 
   public static class Serializer implements LivingCondition.Serializer {
@@ -113,6 +163,11 @@ public record HealthPercentageCondition(float min, float max) implements LivingC
       }
       buf.writeFloat(aCondition.min);
       buf.writeFloat(aCondition.max);
+    }
+
+    @Override
+    public LivingCondition createDefaultInstance() {
+      return new HealthPercentageCondition(-1, 0.5f);
     }
   }
 }

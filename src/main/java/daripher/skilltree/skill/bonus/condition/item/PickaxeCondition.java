@@ -66,5 +66,10 @@ public record PickaxeCondition() implements ItemCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public ItemCondition createDefaultInstance() {
+      return new PickaxeCondition();
+    }
   }
 }

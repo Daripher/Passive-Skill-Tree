@@ -9,13 +9,20 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.max_health",
-          "id": "35215644-2e34-42e3-aa83-b924073aad78",
+          "id": "35adad5c-c5ff-48cf-bcde-dd6ca6b13b16",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:armor"
+        "type": "skilltree:armor",
+        "armor_type": "any"
       }
     }
   ],

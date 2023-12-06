@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Label extends AbstractWidget {
   public static final ResourceLocation WIDGETS_TEXTURE =
-      new ResourceLocation("skilltree:textures/screen/widgets/buttons.png");
+      new ResourceLocation("skilltree:textures/screen/widgets.png");
   private boolean hasBackground;
 
   public Label(int x, int y, Component message) {

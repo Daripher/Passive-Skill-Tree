@@ -70,5 +70,10 @@ public class WeaponEnchantmentCondition implements EnchantmentCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public EnchantmentCondition createDefaultInstance() {
+      return new WeaponEnchantmentCondition();
+    }
   }
 }

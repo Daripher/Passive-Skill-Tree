@@ -8,7 +8,8 @@
         "multiplier": 0.05
       },
       "item_condition": {
-        "type": "skilltree:potion"
+        "type": "skilltree:potion",
+        "potion_type": "any"
       }
     }
   ],

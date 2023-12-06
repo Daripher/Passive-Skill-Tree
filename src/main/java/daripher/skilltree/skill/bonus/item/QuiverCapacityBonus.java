@@ -2,10 +2,14 @@ package daripher.skilltree.skill.bonus.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -13,8 +17,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 
-public record QuiverCapacityBonus(float amount, AttributeModifier.Operation operation)
-    implements ItemBonus<QuiverCapacityBonus> {
+public final class QuiverCapacityBonus implements ItemBonus<QuiverCapacityBonus> {
+  private float amount;
+  private AttributeModifier.Operation operation;
+
+  public QuiverCapacityBonus(float amount, AttributeModifier.Operation operation) {
+    this.amount = amount;
+    this.operation = operation;
+  }
+
   @Override
   public boolean canMerge(ItemBonus<?> other) {
     if (!(other instanceof QuiverCapacityBonus otherBonus)) return false;
@@ -59,8 +70,57 @@ public record QuiverCapacityBonus(float amount, AttributeModifier.Operation oper
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
+    editor.addLabel(0, 0, "Amount", ChatFormatting.GREEN);
+    editor.addLabel(55, 0, "Operation", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, getAmount())
+        .setNumericResponder(
+            v -> {
+              setAmount(v.floatValue());
+              consumer.accept(this);
+            });
+    editor
+        .addDropDownList(55, 0, 145, 14, 3, getOperation())
+        .setToNameFunc(TooltipHelper::getOperationName)
+        .setResponder(
+            o -> {
+              setOperation(o);
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setAmount(float amount) {
+    this.amount = amount;
+  }
+
+  public void setOperation(AttributeModifier.Operation operation) {
+    this.operation = operation;
+  }
+
+  public float getAmount() {
+    return amount;
+  }
+
+  public AttributeModifier.Operation getOperation() {
+    return operation;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    QuiverCapacityBonus that = (QuiverCapacityBonus) obj;
+    if (!Objects.equals(this.operation, that.operation)) return false;
+    return this.amount == that.amount;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(amount, operation);
   }
 
   public static class Serializer implements ItemBonus.Serializer {
@@ -110,6 +170,11 @@ public record QuiverCapacityBonus(float amount, AttributeModifier.Operation oper
       }
       buf.writeFloat(aBonus.amount);
       NetworkHelper.writeOperation(buf, aBonus.operation);
+    }
+
+    @Override
+    public ItemBonus<?> createDefaultInstance() {
+      return new QuiverCapacityBonus(100f, AttributeModifier.Operation.ADDITION);
     }
   }
 }

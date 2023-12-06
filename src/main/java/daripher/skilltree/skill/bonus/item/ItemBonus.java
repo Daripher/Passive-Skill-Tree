@@ -1,7 +1,8 @@
 package daripher.skilltree.skill.bonus.item;
 
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
+import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +37,9 @@ public interface ItemBonus<T extends ItemBonus<T>> {
     return Component.empty();
   }
 
-  void addEditorWidgets(SkillTreeEditor editor, int row);
+  void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer);
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {}
+  interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {
+    ItemBonus<?> createDefaultInstance();
+  }
 }

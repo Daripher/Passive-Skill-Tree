@@ -1,9 +1,12 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,15 +14,20 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
-public record RecipeUnlockBonus(ResourceLocation recipeId)
-    implements SkillBonus<RecipeUnlockBonus> {
+public final class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
+  private ResourceLocation recipeId;
+
+  public RecipeUnlockBonus(ResourceLocation recipeId) {
+    this.recipeId = recipeId;
+  }
+
   @Override
   public SkillBonus.Serializer getSerializer() {
     return PSTSkillBonuses.RECIPE_UNLOCK.get();
   }
 
   @Override
-  public SkillBonus<RecipeUnlockBonus> copy() {
+  public RecipeUnlockBonus copy() {
     return new RecipeUnlockBonus(recipeId);
   }
 
@@ -55,8 +63,39 @@ public record RecipeUnlockBonus(ResourceLocation recipeId)
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int row, Consumer<RecipeUnlockBonus> consumer) {
+    editor.addLabel(0, 0, "Recipe ID", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addTextField(0, 0, 200, 14, recipeId.toString())
+        .setSoftFilter(ResourceLocation::isValidResourceLocation)
+        .setResponder(
+            s -> {
+              setRecipeId(new ResourceLocation(s));
+              consumer.accept(this.copy());
+            });
+  }
+
+  public void setRecipeId(ResourceLocation recipeId) {
+    this.recipeId = recipeId;
+  }
+
+  public ResourceLocation getRecipeId() {
+    return recipeId;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    RecipeUnlockBonus that = (RecipeUnlockBonus) obj;
+    return Objects.equals(this.recipeId, that.recipeId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(recipeId);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -101,6 +140,11 @@ public record RecipeUnlockBonus(ResourceLocation recipeId)
         throw new IllegalArgumentException();
       }
       buf.writeUtf(commandBonus.recipeId.toString());
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new RecipeUnlockBonus(new ResourceLocation("skilltree:weapon_poisoning"));
     }
   }
 }

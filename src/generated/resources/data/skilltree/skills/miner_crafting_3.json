@@ -2,12 +2,10 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.02,
-      "attribute": "skilltree:chance_to_find_gemstone",
-      "id": "86a50249-4ba4-4dde-ba03-97cc9a171354",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:loot_duplication",
+      "chance": 0.05,
+      "loot_type": "gems",
+      "multiplier": 1.0
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

@@ -9,13 +9,20 @@
           "type": "skilltree:attribute",
           "amount": 0.1,
           "attribute": "minecraft:generic.armor",
-          "id": "10db2c97-e451-4a61-84fa-69f753bf44dd",
+          "id": "3258d74e-438c-45df-9720-0ac43dd73ed9",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:armor"
+        "type": "skilltree:armor",
+        "armor_type": "any"
       }
     }
   ],

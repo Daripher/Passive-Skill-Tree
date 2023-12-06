@@ -5,9 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:evasion",
-      "id": "ae77bbb1-c181-4e4a-9656-1c4515478e08",
+      "id": "3115e507-7350-4365-b3ca-391d898b4565",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

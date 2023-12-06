@@ -100,7 +100,7 @@ public class GemHelper {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return 0;
     }
-    int sockets = ItemHelper.getDefaultSockets(stack);
+    int sockets = ItemHelper.getDefaultSockets(stack) + ItemHelper.getAdditionalSockets(stack);
     if (player != null) {
       sockets += getPlayerSockets(stack, player);
     }
@@ -113,16 +113,16 @@ public class GemHelper {
 
   public static int getPlayerSockets(ItemStack stack, Player player) {
     return SkillBonusHandler.getSkillBonuses(player, PlayerSocketsBonus.class).stream()
-        .filter(bonus -> bonus.itemCondition().met(stack))
-        .map(PlayerSocketsBonus::sockets)
+        .filter(bonus -> bonus.getItemCondition().met(stack))
+        .map(PlayerSocketsBonus::getSockets)
         .reduce(Integer::sum)
         .orElse(0);
   }
 
   public static float getGemPower(Player player, ItemStack stack) {
     return SkillBonusHandler.getSkillBonuses(player, GemPowerBonus.class).stream()
-        .filter(bonus -> bonus.itemCondition().met(stack))
-        .map(GemPowerBonus::multiplier)
+        .filter(bonus -> bonus.getItemCondition().met(stack))
+        .map(GemPowerBonus::getMultiplier)
         .reduce(Float::sum)
         .orElse(0f);
   }

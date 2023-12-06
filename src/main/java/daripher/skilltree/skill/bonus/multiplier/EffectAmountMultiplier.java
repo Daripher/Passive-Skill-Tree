@@ -2,17 +2,17 @@ package daripher.skilltree.skill.bonus.multiplier;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTSkillBonusMultipliers;
+import daripher.skilltree.init.PSTLivingMultipliers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 
-public class EffectAmountMultiplier implements SkillBonusMultiplier {
+public class EffectAmountMultiplier implements LivingMultiplier {
   @Override
-  public float getValue(Player player) {
-    return player.getActiveEffects().size();
+  public float getValue(LivingEntity entity) {
+    return entity.getActiveEffects().size();
   }
 
   @Override
@@ -21,8 +21,8 @@ public class EffectAmountMultiplier implements SkillBonusMultiplier {
   }
 
   @Override
-  public SkillBonusMultiplier.Serializer getSerializer() {
-    return PSTSkillBonusMultipliers.EFFECT_AMOUNT.get();
+  public LivingMultiplier.Serializer getSerializer() {
+    return PSTLivingMultipliers.EFFECT_AMOUNT.get();
   }
 
   @Override
@@ -31,31 +31,36 @@ public class EffectAmountMultiplier implements SkillBonusMultiplier {
     return o != null && getClass() == o.getClass();
   }
 
-  public static class Serializer implements SkillBonusMultiplier.Serializer {
+  public static class Serializer implements LivingMultiplier.Serializer {
     @Override
-    public SkillBonusMultiplier deserialize(JsonObject json) throws JsonParseException {
+    public LivingMultiplier deserialize(JsonObject json) throws JsonParseException {
       return new EffectAmountMultiplier();
     }
 
     @Override
-    public void serialize(JsonObject json, SkillBonusMultiplier object) {}
+    public void serialize(JsonObject json, LivingMultiplier object) {}
 
     @Override
-    public SkillBonusMultiplier deserialize(CompoundTag tag) {
+    public LivingMultiplier deserialize(CompoundTag tag) {
       return new EffectAmountMultiplier();
     }
 
     @Override
-    public CompoundTag serialize(SkillBonusMultiplier object) {
+    public CompoundTag serialize(LivingMultiplier object) {
       return new CompoundTag();
     }
 
     @Override
-    public SkillBonusMultiplier deserialize(FriendlyByteBuf buf) {
+    public LivingMultiplier deserialize(FriendlyByteBuf buf) {
       return new EffectAmountMultiplier();
     }
 
     @Override
-    public void serialize(FriendlyByteBuf buf, SkillBonusMultiplier object) {}
+    public void serialize(FriendlyByteBuf buf, LivingMultiplier object) {}
+
+    @Override
+    public LivingMultiplier createDefaultInstance() {
+      return new EffectAmountMultiplier();
+    }
   }
 }

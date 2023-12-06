@@ -5,7 +5,7 @@
       "type": "skilltree:enchantment_amplification",
       "chance": 1.0,
       "enchantment_condition": {
-        "type": "skilltree:any"
+        "type": "skilltree:none"
       }
     }
   ],

@@ -30,7 +30,7 @@ public class Button extends net.minecraft.client.gui.components.Button {
   public void renderButton(
       @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
     ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/widgets/buttons.png"));
+        new ResourceLocation("skilltree:textures/screen/widgets.png"));
     int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;
     blit(poseStack, x, y, 0, v, width / 2, height);
     blit(poseStack, x + width / 2, y, -width / 2, v, width / 2, height);

@@ -65,5 +65,10 @@ public record FoodCondition() implements ItemCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public ItemCondition createDefaultInstance() {
+      return new FoodCondition();
+    }
   }
 }

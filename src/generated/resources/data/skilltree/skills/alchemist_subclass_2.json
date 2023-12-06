@@ -2,12 +2,14 @@
   "backgroundTexture": "skilltree:textures/icons/background/class.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.15,
-      "attribute": "skilltree:incoming_healing",
-      "id": "2af1e23f-f9f8-4d23-98f9-d70c57802092",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.15,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

@@ -5,12 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "579ff6f8-3d7c-477d-9c7e-66d18f1ac3a2",
+      "id": "24bf7020-de45-463c-b317-316225502591",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:health_percentage",
         "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

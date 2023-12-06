@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:life_per_hit",
-      "id": "f4b490e6-ba25-4ca7-8830-ffc861e47491",
+      "id": "58766903-4ce8-4510-af17-fb90950f9aa6",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,6 +14,9 @@
           "type": "skilltree:weapon",
           "weapon_type": "ranged"
         }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

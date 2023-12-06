@@ -4,9 +4,18 @@
     {
       "type": "skilltree:damage",
       "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
       "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
       "target_condition": {
-        "type": "skilltree:is_burning"
+        "type": "skilltree:burning"
       }
     }
   ],

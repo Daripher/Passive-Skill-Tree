@@ -6,10 +6,11 @@ import daripher.skilltree.client.tooltip.SocketTooltipRenderer;
 import daripher.skilltree.client.tooltip.SocketTooltipRenderer.SocketComponent;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
+import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +90,6 @@ public class GemBonusHandler {
     Level level = player.getLevel();
     if (level.isClientSide) return;
     double dropChance = Config.gem_drop_chance;
-    dropChance += player.getAttributeValue(PSTAttributes.GEM_DROP_CHANCE.get()) - 1;
     if (dropChance == 0) return;
     BlockPos blockPos = event.getPos();
     boolean isOre = level.getBlockState(blockPos).is(Tags.Blocks.ORES);
@@ -100,12 +100,6 @@ public class GemBonusHandler {
     boolean hasSilkTouch =
         player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0;
     if (hasSilkTouch) return;
-    if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) {
-        ApotheosisCompatibility.INSTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
-        return;
-      }
-    }
     ServerLevel serverLevel = (ServerLevel) level;
     LootTable lootTable =
         serverLevel
@@ -121,7 +115,26 @@ public class GemBonusHandler {
             .withParameter(LootContextParams.TOOL, player.getMainHandItem())
             .withLuck(player.getLuck())
             .create(LootContextParamSets.BLOCK);
-    lootTable.getRandomItems(lootContext).forEach(item -> Block.popResource(level, blockPos, item));
+    float multiplier =
+        1f + SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.GEMS);
+    while (multiplier > 1) {
+      dropGems(player, level, blockPos, lootTable, lootContext);
+      multiplier--;
+    }
+    if (player.getRandom().nextFloat() < multiplier) {
+      dropGems(player, level, blockPos, lootTable, lootContext);
+    }
+  }
+
+  private static void dropGems(
+      Player player, Level level, BlockPos blockPos, LootTable lootTable, LootContext lootContext) {
+    if (ModList.get().isLoaded("apotheosis")) {
+      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) {
+        ApotheosisCompatibility.INSTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
+        return;
+      }
+    }
+    lootTable.getRandomItems(lootContext).forEach(s -> Block.popResource(level, blockPos, s));
   }
 
   private static void applyGemBonus(ItemAttributeModifierEvent event, int socket) {

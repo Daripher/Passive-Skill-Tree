@@ -4,21 +4,33 @@
     {
       "type": "skilltree:crit_chance",
       "chance": 0.15,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
       "player_condition": {
         "type": "skilltree:health_percentage",
         "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
       }
     },
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:life_per_hit",
-      "id": "02c26500-3f56-431c-8797-f9bed31e615e",
+      "id": "532a3dd1-8e11-4316-bc5a-05add7a85c87",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:health_percentage",
         "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

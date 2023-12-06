@@ -15,8 +15,7 @@ public class IronRingItem extends RingItem {
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        Attributes.ARMOR, new AttributeModifier(uuid, "Ring Bonus", 1, Operation.ADDITION));
+    modifiers.put(Attributes.ARMOR, new AttributeModifier(uuid, "Ring", 1, Operation.ADDITION));
     return modifiers;
   }
 }

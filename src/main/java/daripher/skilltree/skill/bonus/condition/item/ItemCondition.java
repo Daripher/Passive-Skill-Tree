@@ -1,6 +1,8 @@
 package daripher.skilltree.skill.bonus.condition.item;
 
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
+import java.util.function.Consumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -15,5 +17,9 @@ public interface ItemCondition {
 
   ItemCondition.Serializer getSerializer();
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemCondition> {}
+  default void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<ItemCondition> consumer) {}
+
+  interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemCondition> {
+    ItemCondition createDefaultInstance();
+  }
 }

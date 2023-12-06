@@ -9,14 +9,20 @@
           "type": "skilltree:attribute",
           "amount": 2.0,
           "attribute": "minecraft:generic.armor",
-          "id": "fc8ac71c-e8e2-40af-bffc-e39c2fa452ec",
+          "id": "d866658a-278c-4c7d-97ab-1f9429aa8b4d",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
         "type": "skilltree:armor",
-        "slot": "offhand"
+        "armor_type": "shield"
       }
     }
   ],

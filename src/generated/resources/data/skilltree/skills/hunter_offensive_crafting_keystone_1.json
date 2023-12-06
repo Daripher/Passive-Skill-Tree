@@ -5,7 +5,7 @@
       "type": "skilltree:crafted_item_bonus",
       "item_bonus": {
         "type": "skilltree:sockets",
-        "sockets": 1
+        "amount": 1
       },
       "item_condition": {
         "type": "skilltree:weapon",

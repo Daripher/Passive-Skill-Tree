@@ -1,9 +1,10 @@
 package daripher.skilltree.skill.bonus;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
 import java.util.Objects;
+import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -53,11 +54,13 @@ public interface SkillBonus<T extends SkillBonus<T>> {
     return Component.empty();
   }
 
-  void addEditorWidgets(SkillTreeEditor editor, int row);
+  void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<T> consumer);
 
   interface Ticking {
     void tick(ServerPlayer player);
   }
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {}
+  interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {
+    SkillBonus<?> createDefaultInstance();
+  }
 }

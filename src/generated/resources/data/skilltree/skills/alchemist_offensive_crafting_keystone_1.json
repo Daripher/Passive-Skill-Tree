@@ -9,7 +9,7 @@
       },
       "item_condition": {
         "type": "skilltree:potion",
-        "category": "harmful"
+        "potion_type": "harmful"
       }
     },
     {

@@ -1,6 +1,6 @@
 package daripher.skilltree.item.gem;
 
-import daripher.skilltree.skill.bonus.condition.enchantment.AnyEnchantmentCondition;
+import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
 import daripher.skilltree.skill.bonus.player.EnchantmentAmplificationBonus;
 import daripher.skilltree.skill.bonus.player.EnchantmentRequirementBonus;
@@ -10,7 +10,7 @@ public class TurquoiseItem extends SimpleGemItem {
     super();
     setBonuses(new ItemSkillBonus(new EnchantmentRequirementBonus(-0.02f)), "necklace");
     setBonuses(
-        new ItemSkillBonus(new EnchantmentAmplificationBonus(new AnyEnchantmentCondition(), 0.02f)),
+        new ItemSkillBonus(new EnchantmentAmplificationBonus(new NoneEnchantmentCondition(), 0.02f)),
         "ring");
   }
 }

@@ -2,20 +2,32 @@ package daripher.skilltree.skill.bonus.condition.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
 import daripher.skilltree.util.PlayerHelper;
 import java.util.Objects;
+import java.util.function.Consumer;
+import javax.annotation.Nonnull;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
-public record HasEnchantedItemCondition(ItemCondition itemCondition) implements LivingCondition {
+public final class HasEnchantedItemCondition implements LivingCondition {
+  private @Nonnull ItemCondition itemCondition;
+
+  public HasEnchantedItemCondition(@Nonnull ItemCondition itemCondition) {
+    this.itemCondition = itemCondition;
+  }
+
   @Override
   public boolean met(LivingEntity living) {
     return PlayerHelper.getAllEquipment(living).anyMatch(itemCondition::met);
@@ -37,6 +49,25 @@ public record HasEnchantedItemCondition(ItemCondition itemCondition) implements 
   }
 
   @Override
+  public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<LivingCondition> consumer) {
+    editor.addLabel(0, 0, "Item Condition", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, itemCondition, PSTItemConditions.conditionsList())
+        .setToNameFunc(a -> Component.literal(PSTItemConditions.getName(a)))
+        .setResponder(
+            c -> {
+              setItemCondition(c);
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+    itemCondition.addEditorWidgets(editor, c -> {
+      setItemCondition(c);
+      editor.rebuildWidgets();
+    });
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -47,6 +78,14 @@ public record HasEnchantedItemCondition(ItemCondition itemCondition) implements 
   @Override
   public int hashCode() {
     return Objects.hash(itemCondition);
+  }
+
+  public void setItemCondition(@Nonnull ItemCondition itemCondition) {
+    this.itemCondition = itemCondition;
+  }
+
+  public @Nonnull ItemCondition getItemCondition() {
+    return itemCondition;
   }
 
   public static class Serializer implements LivingCondition.Serializer {
@@ -89,6 +128,11 @@ public record HasEnchantedItemCondition(ItemCondition itemCondition) implements 
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeItemCondition(buf, aCondition.itemCondition);
+    }
+
+    @Override
+    public LivingCondition createDefaultInstance() {
+      return new HasEnchantedItemCondition(new NoneItemCondition());
     }
   }
 }

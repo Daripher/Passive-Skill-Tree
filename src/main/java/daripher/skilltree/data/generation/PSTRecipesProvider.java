@@ -3,6 +3,7 @@ package daripher.skilltree.data.generation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTTags;
+import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -48,14 +49,12 @@ public class PSTRecipesProvider extends RecipeProvider {
     quiver(PSTItems.GILDED_QUIVER, Tags.Items.INGOTS_GOLD, consumer);
     quiver(PSTItems.HEALING_QUIVER, Items.GHAST_TEAR, consumer);
     quiver(PSTItems.TOXIC_QUIVER, Items.FERMENTED_SPIDER_EYE, consumer);
-    quiver(PSTItems.EXPLOSIVE_QUIVER, Items.GUNPOWDER, consumer);
     quiver(PSTItems.SILENT_QUIVER, Items.FEATHER, consumer);
     quiver(PSTItems.BONE_QUIVER, Items.BONE, consumer);
   }
 
   protected void quiver(
       RegistryObject<Item> result, Item material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('#', material)
         .define('l', Items.LEATHER)
@@ -66,12 +65,10 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void quiver(
       RegistryObject<Item> result, TagKey<Item> material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('#', material)
         .define('l', Items.LEATHER)
@@ -82,11 +79,9 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void quiver(RegistryObject<Item> result, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('l', Items.LEATHER)
         .define('s', Items.STRING)
@@ -96,12 +91,10 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void necklace(
       RegistryObject<Item> result, Item material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('#', material)
         .define('n', Tags.Items.NUGGETS_GOLD)
@@ -111,11 +104,9 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void necklace(RegistryObject<Item> result, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('n', Tags.Items.NUGGETS_GOLD)
         .pattern("nnn")
@@ -124,12 +115,10 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(Tags.Items.NUGGETS_GOLD), has(Tags.Items.NUGGETS_GOLD))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void ring(
       RegistryObject<Item> result, TagKey<Item> material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result.get())
         .define('#', material)
         .pattern(" # ")
@@ -138,11 +127,9 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected void packing(Item result, TagKey<Item> material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapedRecipeBuilder.shaped(result)
         .define('#', material)
         .pattern("###")
@@ -151,18 +138,15 @@ public class PSTRecipesProvider extends RecipeProvider {
         .group(getItemName(result))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result));
-    // formatter:on
   }
 
   protected void unpacking(
       RegistryObject<Item> result, TagKey<Item> material, Consumer<FinishedRecipe> consumer) {
-    // formatter:off
     ShapelessRecipeBuilder.shapeless(result.get(), 9)
         .requires(material)
         .group(getItemName(result.get()))
         .unlockedBy(getHasName(material), has(material))
         .save(consumer, getRecipeId(result.get()));
-    // formatter:on
   }
 
   protected String getHasName(TagKey<Item> material) {
@@ -170,6 +154,7 @@ public class PSTRecipesProvider extends RecipeProvider {
   }
 
   private ResourceLocation getRecipeId(Item item) {
-    return new ResourceLocation(SkillTreeMod.MOD_ID, ForgeRegistries.ITEMS.getKey(item).getPath());
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
+    return new ResourceLocation(SkillTreeMod.MOD_ID, Objects.requireNonNull(id).getPath());
   }
 }

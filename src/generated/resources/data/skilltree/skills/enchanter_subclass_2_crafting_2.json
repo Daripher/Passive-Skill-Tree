@@ -4,10 +4,16 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.2,
-      "attribute": "skilltree:experience_per_minute",
-      "id": "ab29c226-af95-411f-be05-f0b70d525ffc",
+      "attribute": "skilltree:exp_per_minute",
+      "id": "4be0e5f9-0e54-4446-b228-f9672fcdcd3d",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

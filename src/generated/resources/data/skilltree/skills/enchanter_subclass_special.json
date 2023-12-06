@@ -8,9 +8,18 @@
         "skill_bonus": {
           "type": "skilltree:damage",
           "chance": 0.1,
+          "damage_condition": {
+            "type": "skilltree:none"
+          },
           "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          },
           "target_condition": {
-            "type": "skilltree:is_burning"
+            "type": "skilltree:burning"
           }
         }
       },
@@ -24,12 +33,18 @@
       "item_bonus": {
         "type": "skilltree:skill_bonus",
         "skill_bonus": {
-          "type": "skilltree:attribute",
-          "amount": 0.10000000149011612,
-          "attribute": "skilltree:chance_to_ignite",
-          "id": "c25626ce-4bc8-4a93-a088-d25bc60fd38e",
-          "name": "SkillBonus",
-          "operation": 1
+          "type": "skilltree:ignite_chance",
+          "chance": 0.1,
+          "duration": 5,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          },
+          "target_condition": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {

@@ -13,7 +13,7 @@ public class LifeRegenerationBonusEffect extends SkillBonusEffect {
         MobEffectCategory.BENEFICIAL,
         0,
         new AttributeBonus(
-            PSTAttributes.LIFE_REGENERATION.get(),
+            PSTAttributes.REGENERATION.get(),
             new AttributeModifier(
                 UUID.fromString("f03830ab-d917-4e66-9f18-42f6804725ff"),
                 "Effect",

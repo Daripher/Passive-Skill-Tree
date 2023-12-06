@@ -2,14 +2,24 @@ package daripher.skilltree.skill.bonus.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTItemBonuses;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
-public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonus> {
+public final class ItemSocketsBonus implements ItemBonus<ItemSocketsBonus> {
+  private int amount;
+
+  public ItemSocketsBonus(int amount) {
+    this.amount = amount;
+  }
+
   @Override
   public boolean canMerge(ItemBonus<?> other) {
     return other instanceof ItemSocketsBonus;
@@ -20,17 +30,17 @@ public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonu
     if (!(other instanceof ItemSocketsBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
-    return new ItemSocketsBonus(this.sockets + otherBonus.sockets);
+    return new ItemSocketsBonus(this.amount + otherBonus.amount);
   }
 
   @Override
   public ItemSocketsBonus copy() {
-    return new ItemSocketsBonus(sockets);
+    return new ItemSocketsBonus(amount);
   }
 
   @Override
   public ItemSocketsBonus multiply(double multiplier) {
-    return new ItemSocketsBonus((int) (sockets * multiplier));
+    return new ItemSocketsBonus((int) (amount * multiplier));
   }
 
   @Override
@@ -40,18 +50,49 @@ public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonu
 
   @Override
   public MutableComponent getTooltip() {
-    return Component.translatable(getDescriptionId(), sockets);
+    return Component.translatable(getDescriptionId(), amount);
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
+    editor.addLabel(0, 0, "Amount", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, getAmount())
+        .setNumericResponder(
+            v -> {
+              setAmount(v.intValue());
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setAmount(int amount) {
+    this.amount = amount;
+  }
+
+  public int getAmount() {
+    return amount;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    ItemSocketsBonus that = (ItemSocketsBonus) obj;
+    return this.amount == that.amount;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(amount);
   }
 
   public static class Serializer implements ItemBonus.Serializer {
     @Override
     public ItemBonus<?> deserialize(JsonObject json) throws JsonParseException {
-      return new ItemSocketsBonus(json.get("sockets").getAsInt());
+      return new ItemSocketsBonus(json.get("amount").getAsInt());
     }
 
     @Override
@@ -59,12 +100,12 @@ public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonu
       if (!(bonus instanceof ItemSocketsBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      json.addProperty("sockets", aBonus.sockets);
+      json.addProperty("amount", aBonus.amount);
     }
 
     @Override
     public ItemBonus<?> deserialize(CompoundTag tag) {
-      return new ItemSocketsBonus(tag.getInt("sockets"));
+      return new ItemSocketsBonus(tag.getInt("amount"));
     }
 
     @Override
@@ -73,7 +114,7 @@ public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonu
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      tag.putInt("sockets", aBonus.sockets);
+      tag.putInt("amount", aBonus.amount);
       return tag;
     }
 
@@ -87,7 +128,12 @@ public record ItemSocketsBonus(int sockets) implements ItemBonus<ItemSocketsBonu
       if (!(bonus instanceof ItemSocketsBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      buf.writeInt(aBonus.sockets);
+      buf.writeInt(aBonus.amount);
+    }
+
+    @Override
+    public ItemBonus<?> createDefaultInstance() {
+      return new ItemSocketsBonus(1);
     }
   }
 }

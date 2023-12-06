@@ -31,7 +31,7 @@ public class SkillTreeMod {
     PSTEffects.REGISTRY.register(modEventBus);
     PSTSkillBonuses.REGISTRY.register(modEventBus);
     PSTLivingConditions.REGISTRY.register(modEventBus);
-    PSTSkillBonusMultipliers.REGISTRY.register(modEventBus);
+    PSTLivingMultipliers.REGISTRY.register(modEventBus);
     PSTDamageConditions.REGISTRY.register(modEventBus);
     PSTItemBonuses.REGISTRY.register(modEventBus);
     PSTItemConditions.REGISTRY.register(modEventBus);
@@ -62,6 +62,6 @@ public class SkillTreeMod {
 
   protected void addCompatibilities() {
     if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.INSTANCE.addCompatibility();
-    if (ModList.get().isLoaded("tetra")) TetraCompatibility.ISNTANCE.addCompatibility();
+    if (ModList.get().isLoaded("tetra")) TetraCompatibility.INSTANCE.addCompatibility();
   }
 }

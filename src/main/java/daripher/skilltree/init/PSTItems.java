@@ -25,7 +25,6 @@ import daripher.skilltree.item.necklace.TravelerNecklace;
 import daripher.skilltree.item.quiver.ArmoredQuiverItem;
 import daripher.skilltree.item.quiver.BoneQuiverItem;
 import daripher.skilltree.item.quiver.DiamondQuiverItem;
-import daripher.skilltree.item.quiver.ExplosiveQuiverItem;
 import daripher.skilltree.item.quiver.FieryQuiverItem;
 import daripher.skilltree.item.quiver.GildedQuiverItem;
 import daripher.skilltree.item.quiver.HealingQuiverItem;
@@ -103,8 +102,6 @@ public class PSTItems {
       REGISTRY.register("diamond_quiver", DiamondQuiverItem::new);
   public static final RegistryObject<Item> HEALING_QUIVER =
       REGISTRY.register("healing_quiver", HealingQuiverItem::new);
-  public static final RegistryObject<Item> EXPLOSIVE_QUIVER =
-      REGISTRY.register("explosive_quiver", ExplosiveQuiverItem::new);
   public static final RegistryObject<Item> SILENT_QUIVER =
       REGISTRY.register("silent_quiver", SilentQuiverItem::new);
   public static final RegistryObject<Item> BONE_QUIVER =

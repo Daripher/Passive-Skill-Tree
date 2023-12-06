@@ -1,27 +1,49 @@
 package daripher.skilltree.client.tooltip;
 
+import daripher.skilltree.effect.SkillBonusEffect;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class TooltipHelper {
-  public static MutableComponent getEffectTooltip(MobEffectInstance effectInstance) {
-    MutableComponent tooltip = Component.translatable(effectInstance.getDescriptionId());
-    MobEffect effect = effectInstance.getEffect();
-    if (effectInstance.getAmplifier() > 0) {
+  public static Component getEffectInstanceTooltip(MobEffectInstance effect) {
+    Component effectDescription;
+    if (effect.getEffect() instanceof SkillBonusEffect skillEffect) {
+      effectDescription =
+          skillEffect
+              .getBonus()
+              .copy()
+              .multiply(effect.getAmplifier() + 1)
+              .getTooltip()
+              .setStyle(Style.EMPTY);
+    } else {
+      effectDescription = effect.getEffect().getDisplayName();
+      if (effect.getAmplifier() == 0) return effectDescription;
       MutableComponent amplifier =
-          Component.translatable("potion.potency." + effectInstance.getAmplifier());
-      tooltip = Component.translatable("potion.withAmplifier", tooltip, amplifier);
+          Component.translatable("potion.potency." + effect.getAmplifier());
+      effectDescription =
+          Component.translatable("potion.withAmplifier", effectDescription, amplifier);
     }
-    if (effectInstance.getDuration() > 20) {
-      String duration = MobEffectUtil.formatDuration(effectInstance, 1F);
-      tooltip = Component.translatable("potion.withDuration", tooltip, duration);
+    return effectDescription;
+  }
+
+  public static Component getEffectTooltip(MobEffect effect) {
+    if (effect instanceof SkillBonusEffect skillEffect) {
+      return skillEffect.getBonus().getTooltip().setStyle(Style.EMPTY);
     }
-    tooltip = tooltip.withStyle(effect.getCategory().getTooltipFormatting());
-    return Component.literal(" ").append(tooltip);
+    return effect.getDisplayName();
+  }
+
+  public static Component getOperationName(AttributeModifier.Operation operation) {
+    return Component.literal(
+        switch (operation) {
+          case ADDITION -> "Addition";
+          case MULTIPLY_BASE -> "Multiply Base";
+          case MULTIPLY_TOTAL -> "Multiply Total";
+        });
   }
 
   public static MutableComponent getOptionalTooltip(String descriptionId, String subtype) {

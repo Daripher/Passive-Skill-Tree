@@ -2,12 +2,25 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 1.0E-4,
-      "attribute": "skilltree:damage_per_distance_to_spawn",
-      "id": "b6d0f5c5-333d-4848-a584-e3929c0fa2de",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "boots"
+        }
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

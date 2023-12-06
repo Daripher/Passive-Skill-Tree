@@ -2,12 +2,8 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:chance_to_retrieve_arrows",
-      "id": "acdf8017-d20f-48f2-a156-517dbb11425d",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:arrow_retrieval",
+      "chance": 0.05
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

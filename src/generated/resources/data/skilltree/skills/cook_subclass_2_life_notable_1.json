@@ -5,19 +5,28 @@
       "type": "skilltree:attribute",
       "amount": 4.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "2655bcfb-0cea-41d2-847c-7886af1811a0",
+      "id": "1239ccc5-f8fd-4bc0-bd21-6e73e588428f",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.luck",
-      "id": "e683f366-6455-4652-8ef2-199a29d7c35e",
+      "id": "c527c602-e08b-41ba-a80e-aabcce0a1a97",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:fishing"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

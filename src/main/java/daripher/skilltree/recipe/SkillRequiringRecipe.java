@@ -17,7 +17,7 @@ public interface SkillRequiringRecipe {
     Player player = container.getViewingPlayer().orElse(null);
     if (player == null) return true;
     return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream()
-        .noneMatch(bonus -> bonus.recipeId().equals(getId()));
+        .noneMatch(bonus -> bonus.getRecipeId().equals(getId()));
   }
 
   ResourceLocation getId();

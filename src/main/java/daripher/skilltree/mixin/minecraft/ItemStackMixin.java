@@ -19,20 +19,20 @@ public abstract class ItemStackMixin implements IForgeItemStack {
     List<ItemDurabilityBonus> bonuses = ItemHelper.getItemBonuses(stack, ItemDurabilityBonus.class);
     durability +=
         bonuses.stream()
-            .filter(bonus -> bonus.operation() == AttributeModifier.Operation.ADDITION)
-            .map(ItemDurabilityBonus::amount)
+            .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.ADDITION)
+            .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(0f);
     durability *=
         bonuses.stream()
-            .filter(bonus -> bonus.operation() == AttributeModifier.Operation.MULTIPLY_BASE)
-            .map(ItemDurabilityBonus::amount)
+            .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE)
+            .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(1f);
     durability *=
         bonuses.stream()
-            .filter(bonus -> bonus.operation() == AttributeModifier.Operation.MULTIPLY_TOTAL)
-            .map(ItemDurabilityBonus::amount)
+            .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.MULTIPLY_TOTAL)
+            .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(1f);
     return durability;

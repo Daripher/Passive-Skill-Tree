@@ -1,9 +1,11 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,7 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
 public class CommandBonus implements SkillBonus<CommandBonus> {
-  private final String command;
+  private String command;
 
   public CommandBonus(String command) {
     this.command = command;
@@ -21,7 +23,13 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (firstTime) executeCommand(player);
+    if (!firstTime) return;
+    MinecraftServer server = player.getServer();
+    if (server == null) return;
+    CommandSourceStack commandSourceStack = server.createCommandSourceStack();
+    String playerName = player.getGameProfile().getName();
+    String command = this.command.replaceAll("<p>", playerName);
+    server.getCommands().performPrefixedCommand(commandSourceStack, command);
   }
 
   @Override
@@ -30,7 +38,7 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
   }
 
   @Override
-  public SkillBonus<CommandBonus> copy() {
+  public CommandBonus copy() {
     return new CommandBonus(command);
   }
 
@@ -61,15 +69,22 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {}
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<CommandBonus> consumer) {
+    editor.addLabel(0, 0, "Command", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addTextField(0, 0, 200, 14, command)
+        .setResponder(
+            c -> {
+              setCommand(c);
+              consumer.accept(this.copy());
+            });
+    editor.shiftWidgets(0, 19);
+  }
 
-  private void executeCommand(ServerPlayer player) {
-    MinecraftServer server = player.getServer();
-    if (server == null) return;
-    CommandSourceStack commandSourceStack = server.createCommandSourceStack();
-    String playerName = player.getGameProfile().getName();
-    String command = this.command.replaceAll("<p>", playerName);
-    server.getCommands().performPrefixedCommand(commandSourceStack, command);
+  public void setCommand(String command) {
+    this.command = command;
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -115,6 +130,11 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
         throw new IllegalArgumentException();
       }
       buf.writeUtf(commandBonus.command);
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new CommandBonus("give <p> minecraft:apple");
     }
   }
 }

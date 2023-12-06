@@ -4,12 +4,22 @@
     {
       "type": "skilltree:damage",
       "chance": 0.2,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
       "operation": 1,
       "player_condition": {
         "type": "skilltree:has_enchanted_item",
         "item_condition": {
-          "type": "skilltree:weapon"
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
         }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
       }
     }
   ],

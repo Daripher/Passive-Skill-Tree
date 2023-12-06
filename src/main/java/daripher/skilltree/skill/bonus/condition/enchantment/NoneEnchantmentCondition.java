@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class AnyEnchantmentCondition implements EnchantmentCondition {
+public class NoneEnchantmentCondition implements EnchantmentCondition {
   @Override
   public boolean met(EnchantmentCategory category) {
     return true;
@@ -27,30 +27,30 @@ public class AnyEnchantmentCondition implements EnchantmentCondition {
 
   @Override
   public EnchantmentCondition.Serializer getSerializer() {
-    return PSTEnchantmentConditions.ANY.get();
+    return PSTEnchantmentConditions.NONE.get();
   }
 
   public static class Serializer implements EnchantmentCondition.Serializer {
     @Override
     public EnchantmentCondition deserialize(JsonObject json) throws JsonParseException {
-      return new AnyEnchantmentCondition();
+      return new NoneEnchantmentCondition();
     }
 
     @Override
     public void serialize(JsonObject json, EnchantmentCondition condition) {
-      if (!(condition instanceof AnyEnchantmentCondition)) {
+      if (!(condition instanceof NoneEnchantmentCondition)) {
         throw new IllegalArgumentException();
       }
     }
 
     @Override
     public EnchantmentCondition deserialize(CompoundTag tag) {
-      return new AnyEnchantmentCondition();
+      return new NoneEnchantmentCondition();
     }
 
     @Override
     public CompoundTag serialize(EnchantmentCondition condition) {
-      if (!(condition instanceof AnyEnchantmentCondition)) {
+      if (!(condition instanceof NoneEnchantmentCondition)) {
         throw new IllegalArgumentException();
       }
       return new CompoundTag();
@@ -58,14 +58,19 @@ public class AnyEnchantmentCondition implements EnchantmentCondition {
 
     @Override
     public EnchantmentCondition deserialize(FriendlyByteBuf buf) {
-      return new AnyEnchantmentCondition();
+      return new NoneEnchantmentCondition();
     }
 
     @Override
     public void serialize(FriendlyByteBuf buf, EnchantmentCondition condition) {
-      if (!(condition instanceof AnyEnchantmentCondition)) {
+      if (!(condition instanceof NoneEnchantmentCondition)) {
         throw new IllegalArgumentException();
       }
+    }
+
+    @Override
+    public EnchantmentCondition createDefaultInstance() {
+      return new NoneEnchantmentCondition();
     }
   }
 }

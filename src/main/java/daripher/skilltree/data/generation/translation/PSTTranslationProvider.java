@@ -8,7 +8,7 @@ import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.multiplier.SkillBonusMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.Arrays;
 import javax.annotation.Nullable;
 import net.minecraft.data.DataGenerator;
@@ -89,15 +89,15 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add(key, value);
   }
 
-  protected void add(SkillBonusMultiplier.Serializer multiplier, String value) {
-    ResourceLocation id = PSTRegistries.BONUS_MULTIPLIERS.get().getKey(multiplier);
+  protected void add(LivingMultiplier.Serializer multiplier, String value) {
+    ResourceLocation id = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(multiplier);
     assert id != null;
     String key = "skill_bonus_multiplier.%s.%s".formatted(id.getNamespace(), id.getPath());
     add(key, value);
   }
 
-  protected void add(SkillBonusMultiplier.Serializer multiplier, String type, String value) {
-    ResourceLocation id = PSTRegistries.BONUS_MULTIPLIERS.get().getKey(multiplier);
+  protected void add(LivingMultiplier.Serializer multiplier, String type, String value) {
+    ResourceLocation id = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(multiplier);
     assert id != null;
     String key = "skill_bonus_multiplier.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
     add(key, value);

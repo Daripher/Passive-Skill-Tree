@@ -4,8 +4,17 @@
     {
       "type": "skilltree:crit_chance",
       "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
       "target_condition": {
-        "type": "skilltree:is_burning"
+        "type": "skilltree:burning"
       }
     }
   ],

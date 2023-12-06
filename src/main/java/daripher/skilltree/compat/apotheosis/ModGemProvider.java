@@ -60,7 +60,7 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
       Map<String, GemClass> gemClasses,
       HashMap<ResourceLocation, Gem> gems) {
     if (!(bonus instanceof ItemSkillBonus skillBonus)) return;
-    if (!(skillBonus.bonus() instanceof AttributeBonus attributeBonus)) return;
+    if (!(skillBonus.getBonus() instanceof AttributeBonus attributeBonus)) return;
     List<GemBonus> bonuses = new ArrayList<>();
     GemClass gemClass = gemClasses.get(type);
     if (gemClass == null) return;

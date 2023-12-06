@@ -4,8 +4,17 @@
     {
       "type": "skilltree:crit_damage",
       "chance": 0.01,
-      "multiplier": {
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:food_level"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
       }
     }
   ],

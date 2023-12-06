@@ -5,25 +5,46 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:blocking",
-      "id": "ba8311cc-aee2-4d8d-a367-e5f73b917e17",
+      "id": "c6368aa2-442b-478c-bbe1-367293c2c218",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "id": "36d125e0-f2b0-4849-8a0c-ebcd76469105",
+      "id": "66cda56e-3a64-4b9f-afa0-239ddf06500f",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:damage",
       "chance": 0.05,
       "damage_condition": {
-        "type": "skilltree:is_melee"
+        "type": "skilltree:melee"
       },
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

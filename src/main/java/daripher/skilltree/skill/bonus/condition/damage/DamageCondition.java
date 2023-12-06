@@ -18,5 +18,7 @@ public interface DamageCondition {
 
   Serializer getSerializer();
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<DamageCondition> {}
+  interface Serializer extends daripher.skilltree.data.serializers.Serializer<DamageCondition> {
+    DamageCondition createDefaultInstance();
+  }
 }

@@ -4,11 +4,21 @@
     {
       "type": "skilltree:crit_damage",
       "chance": 0.1,
-      "multiplier": {
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:weapon"
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
         }
+      },
+      "target_condition": {
+        "type": "skilltree:none"
       }
     }
   ],

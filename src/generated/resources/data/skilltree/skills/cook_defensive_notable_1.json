@@ -5,12 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:blocking",
-      "id": "2eb898b1-2ce9-4a3d-8b3e-fd1e4255536c",
+      "id": "ad0d4499-b066-4d9a-abc7-6b25399a9a30",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:food_level",
         "min": 15
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

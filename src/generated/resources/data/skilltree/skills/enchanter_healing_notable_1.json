@@ -5,16 +5,19 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "ae15ecb1-b6bd-4221-a875-e7b1c5deaf73",
-      "multiplier": {
+      "id": "bec04233-feb5-4985-9736-5918d78026a9",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:enchants_amount",
         "item_condition": {
           "type": "skilltree:armor",
-          "slot": "offhand"
+          "armor_type": "shield"
         }
-      },
-      "name": "SkillBonus",
-      "operation": 0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

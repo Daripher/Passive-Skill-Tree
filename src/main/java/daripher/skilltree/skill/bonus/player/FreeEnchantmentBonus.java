@@ -1,9 +1,12 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,20 +14,26 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 
-public record FreeEnchantmentBonus(float chance) implements SkillBonus<FreeEnchantmentBonus> {
+public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBonus> {
+  private float chance;
+
+  public FreeEnchantmentBonus(float chance) {
+    this.chance = chance;
+  }
+
   @Override
   public SkillBonus.Serializer getSerializer() {
     return PSTSkillBonuses.FREE_ENCHANTMENT.get();
   }
 
   @Override
-  public SkillBonus<FreeEnchantmentBonus> copy() {
+  public FreeEnchantmentBonus copy() {
     return new FreeEnchantmentBonus(chance);
   }
 
   @Override
   public FreeEnchantmentBonus multiply(double multiplier) {
-    return new FreeEnchantmentBonus((float) (chance() * multiplier));
+    return new FreeEnchantmentBonus((float) (getChance() * multiplier));
   }
 
   @Override
@@ -56,8 +65,39 @@ public record FreeEnchantmentBonus(float chance) implements SkillBonus<FreeEncha
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO: add widgets
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int row, Consumer<FreeEnchantmentBonus> consumer) {
+    editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, chance)
+        .setNumericResponder(
+            v -> {
+              setChance(v.floatValue());
+              consumer.accept(this.copy());
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setChance(float chance) {
+    this.chance = chance;
+  }
+
+  public float getChance() {
+    return chance;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    FreeEnchantmentBonus that = (FreeEnchantmentBonus) obj;
+    return Float.floatToIntBits(this.chance) == Float.floatToIntBits(that.chance);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(chance);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -102,6 +142,11 @@ public record FreeEnchantmentBonus(float chance) implements SkillBonus<FreeEncha
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.chance);
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new FreeEnchantmentBonus(0.05f);
     }
   }
 }

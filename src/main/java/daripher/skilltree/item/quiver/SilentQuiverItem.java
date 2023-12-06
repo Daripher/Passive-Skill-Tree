@@ -21,7 +21,7 @@ public class SilentQuiverItem extends QuiverItem {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
     modifiers.put(
         PSTAttributes.STEALTH.get(),
-        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
+        new AttributeModifier(uuid, "Quiver", 5, Operation.ADDITION));
     return modifiers;
   }
 }

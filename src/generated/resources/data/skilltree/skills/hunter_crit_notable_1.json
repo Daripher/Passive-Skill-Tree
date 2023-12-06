@@ -5,7 +5,16 @@
       "type": "skilltree:crit_damage",
       "chance": 0.25,
       "damage_condition": {
-        "type": "skilltree:is_projectile"
+        "type": "skilltree:projectile"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
       }
     }
   ],

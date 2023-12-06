@@ -5,15 +5,19 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "2e649cfd-4f20-4e5f-b4f0-c4daa62c7b32",
-      "multiplier": {
+      "id": "c5673626-92e1-4f00-9c0d-e1a2d308cdc4",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:enchants_amount",
         "item_condition": {
-          "type": "skilltree:armor"
+          "type": "skilltree:armor",
+          "armor_type": "any"
         }
-      },
-      "name": "SkillBonus",
-      "operation": 0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

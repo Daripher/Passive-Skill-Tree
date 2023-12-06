@@ -5,12 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:evasion",
-      "id": "68a6770b-e421-4ffe-a8c1-d1eadbed4dab",
+      "id": "6ff1e627-f4cf-4b61-a72d-9c7b7b6cb621",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:health_percentage",
         "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

@@ -4,10 +4,16 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration",
-      "id": "b6f7b4ff-bc78-47ce-b783-18ac763b5412",
+      "attribute": "skilltree:regeneration",
+      "id": "a15819bc-a834-42cd-91b2-1995fee84451",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

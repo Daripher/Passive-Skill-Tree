@@ -16,8 +16,8 @@ public class ScholarNecklace extends NecklaceItem {
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
     modifiers.put(
-        PSTAttributes.EXPERIENCE_PER_MINUTE.get(),
-        new AttributeModifier(uuid, "Necklace Bonus", 1, Operation.ADDITION));
+        PSTAttributes.EXP_PER_MINUTE.get(),
+        new AttributeModifier(uuid, "Necklace", 1, Operation.ADDITION));
     return modifiers;
   }
 }

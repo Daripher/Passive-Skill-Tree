@@ -18,8 +18,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -98,7 +96,7 @@ public class ItemHelper {
   public static int getAdditionalSockets(ItemStack stack) {
     int sockets =
         getItemBonuses(stack, ItemSocketsBonus.class).stream()
-            .map(ItemSocketsBonus::sockets)
+            .map(ItemSocketsBonus::getAmount)
             .reduce(Integer::sum)
             .orElse(0);
     if (stack.getItem() instanceof HasAdditionalSockets bonus) {

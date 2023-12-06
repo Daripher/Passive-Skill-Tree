@@ -5,17 +5,32 @@
       "type": "skilltree:damage",
       "chance": 0.01,
       "damage_condition": {
-        "type": "skilltree:is_melee"
+        "type": "skilltree:melee"
       },
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "5f5bc6a7-22a0-4244-a8c6-8301d5eaebf5",
+      "id": "9dfbf19a-d9ad-42ef-9191-53f6960efb1a",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

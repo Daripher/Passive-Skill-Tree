@@ -5,9 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "15c16ae7-6b1d-40c8-9d4f-45e3f13d4225",
+      "id": "0b09a9a0-70cc-4edc-abb7-fa5bad96f27a",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

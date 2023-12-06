@@ -7,15 +7,22 @@
         "type": "skilltree:skill_bonus",
         "skill_bonus": {
           "type": "skilltree:attribute",
-          "amount": 0.01,
+          "amount": 1.0,
           "attribute": "skilltree:stealth",
-          "id": "f3994f30-187b-479a-ba65-981b9d51aec6",
+          "id": "6f954bb0-1290-497c-a66a-24f4b66bc2f5",
           "name": "SkillBonus",
-          "operation": 1
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:armor"
+        "type": "skilltree:armor",
+        "armor_type": "any"
       }
     }
   ],

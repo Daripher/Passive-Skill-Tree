@@ -7,7 +7,19 @@
         "type": "skilltree:skill_bonus",
         "skill_bonus": {
           "type": "skilltree:crit_chance",
-          "chance": 0.01
+          "chance": 0.01,
+          "damage_condition": {
+            "type": "skilltree:none"
+          },
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          },
+          "target_condition": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {

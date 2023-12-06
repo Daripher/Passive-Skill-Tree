@@ -5,16 +5,19 @@
       "type": "skilltree:attribute",
       "amount": 2.0,
       "attribute": "minecraft:generic.armor",
-      "id": "25065152-ca6a-4a54-b7ba-fe42677c2829",
-      "multiplier": {
+      "id": "db0e1a10-66f8-466d-880f-ff392d56f500",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
           "type": "skilltree:armor",
-          "slot": "head"
+          "armor_type": "helmet"
         }
-      },
-      "name": "SkillBonus",
-      "operation": 0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

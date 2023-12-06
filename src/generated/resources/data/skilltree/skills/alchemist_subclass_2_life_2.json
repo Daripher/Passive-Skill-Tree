@@ -5,17 +5,25 @@
       "type": "skilltree:attribute",
       "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "cb465d90-cc5a-42c5-b8b2-251a258e43c0",
+      "id": "e94091bd-e916-48b8-b724-c4aba09f2c28",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:incoming_healing",
-      "id": "00b3d135-a753-42c1-bf17-a53d00f5eca1",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.05,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

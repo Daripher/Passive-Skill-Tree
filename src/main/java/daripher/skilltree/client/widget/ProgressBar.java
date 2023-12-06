@@ -43,7 +43,7 @@ public class ProgressBar extends Button {
     float experienceProgress = getExperienceProgress();
     int filledBarWidth = (int) (experienceProgress * 183);
     ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/widgets/progress_bars.png"));
+        new ResourceLocation("skilltree:textures/screen/progress_bars.png"));
     blit(poseStack, x + 26, y + 7, 0, 0, 182, 5);
     if (filledBarWidth == 0) return;
     blit(poseStack, x + 26, y + 7, 0, 5, filledBarWidth, 5);

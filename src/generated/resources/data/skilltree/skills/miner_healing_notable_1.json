@@ -4,17 +4,20 @@
     {
       "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration",
-      "id": "9a7edee6-d99b-4636-afe2-63fc2c237a7f",
-      "multiplier": {
+      "attribute": "skilltree:regeneration",
+      "id": "1f693e9d-b734-4383-a209-09e0aaf31447",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
           "type": "skilltree:armor",
-          "slot": "head"
+          "armor_type": "helmet"
         }
-      },
-      "name": "SkillBonus",
-      "operation": 0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

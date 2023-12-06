@@ -320,14 +320,14 @@ public class SkillTreeScreen extends Screen {
 
   private void addSkillConnections(PassiveSkill skill) {
     skill
-        .getConnectedSkills()
+        .getConnections()
         .forEach(
             connectedSkillId -> connectSkills(skillConnections, skill.getId(), connectedSkillId));
   }
 
   private void addGatewayConnections(PassiveSkill skill) {
     skill
-        .getConnectedAsGateways()
+        .getGatewayConnections()
         .forEach(
             connectedSkillId -> connectSkills(gatewayConnections, skill.getId(), connectedSkillId));
   }

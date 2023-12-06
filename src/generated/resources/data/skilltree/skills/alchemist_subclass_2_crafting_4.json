@@ -9,7 +9,7 @@
       },
       "item_condition": {
         "type": "skilltree:potion",
-        "category": "beneficial"
+        "potion_type": "beneficial"
       }
     }
   ],

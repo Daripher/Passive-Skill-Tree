@@ -5,9 +5,18 @@
       "type": "skilltree:damage",
       "chance": 0.25,
       "damage_condition": {
-        "type": "skilltree:is_projectile"
+        "type": "skilltree:projectile"
       },
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

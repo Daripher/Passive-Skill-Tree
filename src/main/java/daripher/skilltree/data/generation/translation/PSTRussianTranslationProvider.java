@@ -2,6 +2,8 @@ package daripher.skilltree.data.generation.translation;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.*;
+import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
+import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.effect.MobEffects;
 import top.theillusivec4.curios.common.CuriosHelper;
@@ -189,6 +191,12 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Зачарование: %s");
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "bonus", "Шанс бесплатного зачарование");
     add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Открывает рецепт: %s");
+    add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Высота прыжка");
+    add(PSTSkillBonuses.INCOMING_HEALING.get(), "Получаемое лечение");
+    add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Шанс получить +%s%% %s");
+    add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Опыт %s");
+    add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Шанс наложить Поджог на %s");
+    add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Шанс вернуть стрелы");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
     add(PSTItemBonuses.DURABILITY.get(), "Прочность");
@@ -198,6 +206,14 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItemBonuses.FOOD_EFFECT.get(), "%s на %s");
     add(PSTItemBonuses.FOOD_SATURATION.get(), "Насыщение");
     add(PSTItemBonuses.FOOD_HEALING.get(), "Восстанавливает %s Здоровья");
+    // experience sources
+    add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
+    add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
+    add(GainedExperienceBonus.ExperienceSource.FISHING.getDescriptionId(), "за Рыбалку");
+    // loot conditions
+    add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "Награды с существ");
+    add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "Награды с рыбалки");
+    add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "Самоцветы из руды");
     // living conditions
     add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.you", "Вас есть");
     add(PSTLivingConditions.EFFECT_AMOUNT.get(), "target.target", "Цели");
@@ -224,7 +240,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_GEMS.get(), "range", "%s %s от %d до %d самоцветов в %s");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "Вас");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Цель");
-    add(PSTLivingConditions.HAS_EFFECT.get(), "%s если на %s действует эффект %s");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "%s если на %s действует %s");
     add(PSTLivingConditions.IS_BURNING.get(), "target.you", "Вы горите");
     add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Цель горит");
     add(PSTLivingConditions.IS_BURNING.get(), "%s если %s");
@@ -238,42 +254,49 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.FOOD_LEVEL.get(), "min", "%s если %s минимум %s очков Голода");
     add(PSTLivingConditions.FOOD_LEVEL.get(), "max", "%s если %s максимум %s очков Голода");
     add(PSTLivingConditions.FOOD_LEVEL.get(), "range", "%s если %s от %s%% до %s очков Голода");
+    add(PSTLivingConditions.FISHING.get(), "target.you", "Вы рыбачите");
+    add(PSTLivingConditions.FISHING.get(), "target.target", "Цель рыбачит");
+    add(PSTLivingConditions.FISHING.get(), "%s если %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "%s снарядов");
     add(PSTDamageConditions.IS_MELEE.get(), "%s в ближнем бою");
     // enchantment conditions
     add(PSTEnchantmentConditions.WEAPON.get(), "Зачарование оружия");
     add(PSTEnchantmentConditions.ARMOR.get(), "Зачарование брони");
-    add(PSTEnchantmentConditions.ANY.get(), "Зачарование");
+    add(PSTEnchantmentConditions.NONE.get(), "Зачарование");
     // item conditions
     add(PSTItemConditions.WEAPON.get(), "any", "Оружие");
     add(PSTItemConditions.WEAPON.get(), "ranged", "Оружие дальнего боя");
+    add(PSTItemConditions.WEAPON.get(), "bow", "Лук");
+    add(PSTItemConditions.WEAPON.get(), "crossbow", "Арбалет");
     add(PSTItemConditions.WEAPON.get(), "melee", "Оружие ближнего боя");
-    add(PSTItemConditions.CURIO.get(), "ring", "Кольца");
-    add(PSTItemConditions.CURIO.get(), "necklace", "Ожерелья");
-    add(PSTItemConditions.CURIO.get(), "quiver", "Колчаны");
+    add(PSTItemConditions.WEAPON.get(), "axe", "Топор");
+    add(PSTItemConditions.WEAPON.get(), "sword", "Меч");
+    add(PSTItemConditions.WEAPON.get(), "trident", "Трезубец");
+    add(PSTItemConditions.CURIO.get(), "ring", "Кольцо");
+    add(PSTItemConditions.CURIO.get(), "necklace", "Ожерелье");
+    add(PSTItemConditions.CURIO.get(), "quiver", "Колчан");
     add(PSTItemConditions.ARMOR.get(), "any", "Броня");
-    add(PSTItemConditions.ARMOR.get(), "head", "Шлемы");
-    add(PSTItemConditions.ARMOR.get(), "chest", "Нагрудники");
-    add(PSTItemConditions.ARMOR.get(), "legs", "Штаны");
-    add(PSTItemConditions.ARMOR.get(), "feet", "Ботинки");
-    add(PSTItemConditions.ARMOR.get(), "offhand", "Щиты");
+    add(PSTItemConditions.ARMOR.get(), "helmet", "Шлем");
+    add(PSTItemConditions.ARMOR.get(), "chestplate", "Нагрудник");
+    add(PSTItemConditions.ARMOR.get(), "leggings", "Штаны");
+    add(PSTItemConditions.ARMOR.get(), "boots", "Ботинки");
+    add(PSTItemConditions.ARMOR.get(), "shield", "Щит");
     add(PSTItemConditions.EQUIPMENT.get(), "Экипировка");
-    add(PSTItemConditions.AXE.get(), "Топоры");
-    add(PSTItemConditions.POTION.get(), "any", "Зелья");
-    add(PSTItemConditions.POTION.get(), "beneficial", "Благотворные Зелья");
-    add(PSTItemConditions.POTION.get(), "harmful", "Вредящие Зелья");
-    add(PSTItemConditions.POTION.get(), "neutral", "Нейтральные Зелья");
+    add(PSTItemConditions.POTIONS.get(), "any", "Зелья");
+    add(PSTItemConditions.POTIONS.get(), "beneficial", "Благотворные Зелья");
+    add(PSTItemConditions.POTIONS.get(), "harmful", "Вредящие Зелья");
+    add(PSTItemConditions.POTIONS.get(), "neutral", "Нейтральные Зелья");
     add(PSTItemConditions.FOOD.get(), "Еда");
     add(PSTItemConditions.JEWELRY.get(), "Бижутерия");
     add(PSTItemConditions.PICKAXE.get(), "Кирка");
     // skill multipliers
-    add(PSTSkillBonusMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
-    add(PSTSkillBonusMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
-    add(PSTSkillBonusMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на вашем %s");
-    add(PSTSkillBonusMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
-    add(PSTSkillBonusMultipliers.GEMS_AMOUNT.get(), "%s за каждый самоцвет в вашем %s");
-    add(PSTSkillBonusMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на вашем %s");
+    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый самоцвет в вашем %s");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Отравление Оружия");
     addRecipe("skilltree:potion_mixing", "Смешивание Зелий");
@@ -357,7 +380,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItems.QUIVER.get(), "Колчан");
     add(PSTItems.ARMORED_QUIVER.get(), "Бронированный колчан");
     add(PSTItems.DIAMOND_QUIVER.get(), "Алмазный колчан");
-    add(PSTItems.EXPLOSIVE_QUIVER.get(), "Взрывной колчан");
     add(PSTItems.FIERY_QUIVER.get(), "Огненный колчан");
     add(PSTItems.GILDED_QUIVER.get(), "Позолоченный колчан");
     add(PSTItems.HEALING_QUIVER.get(), "Исцеляющий колчан");
@@ -368,29 +390,14 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
     // attributes
-    add(PSTAttributes.LIFE_REGENERATION.get(), "Регенерация здоровья");
+    add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
     add(PSTAttributes.LIFE_PER_HIT.get(), "Здоровье за удар");
     add(PSTAttributes.EVASION.get(), "Уклонение");
     add(PSTAttributes.BLOCKING.get(), "Блокирование");
     add(PSTAttributes.LIFE_ON_BLOCK.get(), "Здоровье при блоке");
-    add(PSTAttributes.DOUBLE_LOOT_CHANCE.get(), "Шанс удвоенной добычи");
-    add(PSTAttributes.TRIPLE_LOOT_CHANCE.get(), "Шанс утроенной добычи");
-    add(PSTAttributes.DAMAGE_PER_DISTANCE_TO_ENEMY.get(), "Урон за расстояние до цели");
-    add(PSTAttributes.CHANCE_TO_RETRIEVE_ARROWS.get(), "Шанс вернуть стрелы");
-    add(PSTAttributes.GEM_DROP_CHANCE.get(), "Шанс найти самоцвет в руде");
-    add(PSTAttributes.INCOMING_HEALING.get(), "Получаемое лечение");
-    add(PSTAttributes.EXPERIENCE_PER_MINUTE.get(), "Опыт в минуту");
+    add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Слоты колец");
-    add(PSTAttributes.EXPERIENCE_FROM_MOBS.get(), "Опыт от убитых существ");
-    add(PSTAttributes.EXPERIENCE_FROM_ORE.get(), "Опыт от добытой руды");
-    add(
-        PSTAttributes.DAMAGE_PER_DISTANCE_TO_SPAWN.get(),
-        "Урон за расстояние до точки возрождения (максимум 50%)");
-    add(PSTAttributes.CHANCE_TO_IGNITE.get(), "Шанс поджога");
     add(PSTAttributes.STEALTH.get(), "Скрытность");
-    add(PSTAttributes.DOUBLE_FISHING_LOOT_CHANCE.get(), "Шанс удвоенной добычи от рыбалки");
-    add(PSTAttributes.EXPERIENCE_FROM_FISHING.get(), "Опыт от рыбалки");
-    add(PSTAttributes.CHANCE_TO_EXPLODE_ENEMY.get(), "Шанс взорвать врага");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
     add(PSTEffects.DAMAGE_BONUS.get(), "Урон");

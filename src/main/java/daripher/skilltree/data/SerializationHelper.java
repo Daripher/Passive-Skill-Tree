@@ -6,18 +6,20 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.condition.item.ArmorCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.condition.item.PotionCondition;
 import daripher.skilltree.skill.bonus.condition.item.WeaponCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.multiplier.SkillBonusMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.Objects;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -110,42 +112,35 @@ public class SerializationHelper {
     json.addProperty("operation", operation.toValue());
   }
 
-  @Nullable
-  public static SkillBonusMultiplier deserializeBonusMultiplier(JsonObject json) {
-    if (!json.has("multiplier")) return null;
-    JsonObject multiplierJson = json.getAsJsonObject("multiplier");
+  public static @Nonnull LivingMultiplier deserializePlayerMultiplier(JsonObject json) {
+    JsonObject multiplierJson = json.getAsJsonObject("player_multiplier");
     ResourceLocation serializerId = new ResourceLocation(multiplierJson.get("type").getAsString());
-    SkillBonusMultiplier.Serializer serializer =
-        PSTRegistries.BONUS_MULTIPLIERS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(multiplierJson);
+    LivingMultiplier.Serializer serializer =
+        PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(multiplierJson);
   }
 
-  public static void serializeBonusMultiplier(JsonObject json, SkillBonusMultiplier multiplier) {
-    if (multiplier == null) return;
+  public static void serializePlayerMultiplier(
+      JsonObject json, @Nonnull LivingMultiplier multiplier) {
     JsonObject multiplierJson = new JsonObject();
-    SkillBonusMultiplier.Serializer serializer = multiplier.getSerializer();
+    LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     serializer.serialize(multiplierJson, multiplier);
-    ResourceLocation serializerId = PSTRegistries.BONUS_MULTIPLIERS.get().getKey(serializer);
+    ResourceLocation serializerId = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(serializer);
     assert serializerId != null;
     multiplierJson.addProperty("type", serializerId.toString());
-    json.add("multiplier", multiplierJson);
+    json.add("player_multiplier", multiplierJson);
   }
 
-  @Nullable
-  public static LivingCondition deserializeLivingCondition(JsonObject json, String name) {
-    if (!json.has(name)) return null;
+  public static @Nonnull LivingCondition deserializeLivingCondition(JsonObject json, String name) {
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
     LivingCondition.Serializer serializer =
         PSTRegistries.LIVING_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionJson);
+    return Objects.requireNonNull(serializer).deserialize(conditionJson);
   }
 
   public static void serializeLivingCondition(
-      JsonObject json, LivingCondition condition, String name) {
-    if (condition == null) return;
+      JsonObject json, @Nonnull LivingCondition condition, String name) {
     JsonObject conditionJson = new JsonObject();
     LivingCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
@@ -155,47 +150,38 @@ public class SerializationHelper {
     json.add(name, conditionJson);
   }
 
-  @Nullable
+  @Nonnull
   public static DamageCondition deserializeDamageCondition(JsonObject json) {
-    if (!json.has("damage_condition")) return null;
     JsonObject conditionJson = json.getAsJsonObject("damage_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
     DamageCondition.Serializer serializer =
         PSTRegistries.DAMAGE_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionJson);
+    return Objects.requireNonNull(serializer).deserialize(conditionJson);
   }
 
-  public static void serializeDamageCondition(JsonObject json, DamageCondition condition) {
-    if (condition == null) return;
+  public static void serializeDamageCondition(JsonObject json, @Nonnull DamageCondition condition) {
     JsonObject conditionJson = new JsonObject();
     DamageCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.DAMAGE_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionJson.addProperty("type", serializerId.toString());
+    conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
     json.add("damage_condition", conditionJson);
   }
 
-  @Nullable
-  public static ItemCondition deserializeItemCondition(JsonObject json) {
-    if (!json.has("item_condition")) return null;
+  public static @Nonnull ItemCondition deserializeItemCondition(JsonObject json) {
     JsonObject conditionJson = json.getAsJsonObject("item_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
     ItemCondition.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionJson);
+    return Objects.requireNonNull(serializer).deserialize(conditionJson);
   }
 
-  public static void serializeItemCondition(JsonObject json, ItemCondition condition) {
-    if (condition == null) return;
+  public static void serializeItemCondition(JsonObject json, @Nonnull ItemCondition condition) {
     JsonObject conditionJson = new JsonObject();
     ItemCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionJson.addProperty("type", serializerId.toString());
+    conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
     json.add("item_condition", conditionJson);
   }
 
@@ -224,30 +210,29 @@ public class SerializationHelper {
     if (slot != null) json.addProperty("slot", slot.getName());
   }
 
-  @Nullable
   public static WeaponCondition.Type deserializeWeaponType(JsonObject json) {
-    if (json.has("weapon_type")) {
-      return WeaponCondition.Type.byName(json.get("weapon_type").getAsString());
-    }
-    return null;
+    return WeaponCondition.Type.byName(json.get("weapon_type").getAsString());
   }
 
-  public static void serializeWeaponType(JsonObject json, @Nullable WeaponCondition.Type type) {
-    if (type != null) json.addProperty("weapon_type", type.getName());
+  public static void serializeWeaponType(JsonObject json, WeaponCondition.Type type) {
+    json.addProperty("weapon_type", type.getName());
+  }
+
+  public static ArmorCondition.Type deserializeArmorType(JsonObject json) {
+    return ArmorCondition.Type.byName(json.get("armor_type").getAsString());
+  }
+
+  public static void serializeArmorType(JsonObject json, ArmorCondition.Type type) {
+    json.addProperty("armor_type", type.getName());
   }
 
   @Nullable
-  public static MobEffectCategory deserializePotionCategory(JsonObject json) {
-    MobEffectCategory category = null;
-    if (json.has("category")) {
-      category = fromName(json.get("category").getAsString());
-    }
-    return category;
+  public static PotionCondition.Type deserializePotionType(JsonObject json) {
+    return PotionCondition.Type.byName(json.get("potion_type").getAsString());
   }
 
-  public static void serializePotionCategory(
-      JsonObject json, @Nullable MobEffectCategory category) {
-    if (category != null) json.addProperty("category", getName(category));
+  public static void serializePotionType(JsonObject json, PotionCondition.Type type) {
+    json.addProperty("potion_type", type.getName());
   }
 
   public static MobEffectInstance deserializeEffectInstance(JsonObject json) {
@@ -263,26 +248,22 @@ public class SerializationHelper {
     json.addProperty("amplifier", effect.getAmplifier());
   }
 
-  @Nullable
+  @Nonnull
   public static EnchantmentCondition deserializeEnchantmentCondition(JsonObject json) {
-    if (!json.has("enchantment_condition")) return null;
     JsonObject conditionJson = json.getAsJsonObject("enchantment_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
     EnchantmentCondition.Serializer serializer =
         PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionJson);
+    return Objects.requireNonNull(serializer).deserialize(conditionJson);
   }
 
   public static void serializeEnchantmentCondition(
-      JsonObject json, EnchantmentCondition condition) {
-    if (condition == null) return;
+      JsonObject json, @Nonnull EnchantmentCondition condition) {
     JsonObject conditionJson = new JsonObject();
     EnchantmentCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionJson.addProperty("type", serializerId.toString());
+    conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
     json.add("enchantment_condition", conditionJson);
   }
 
@@ -337,39 +318,33 @@ public class SerializationHelper {
     tag.putInt("operation", operation.toValue());
   }
 
-  public static SkillBonusMultiplier deserializeBonusMultiplier(CompoundTag tag) {
-    if (!tag.contains("multiplier")) return null;
-    CompoundTag multiplierTag = tag.getCompound("multiplier");
+  public static @Nonnull LivingMultiplier deserializePlayerMultiplier(CompoundTag tag) {
+    CompoundTag multiplierTag = tag.getCompound("player_multiplier");
     ResourceLocation serializerId = new ResourceLocation(multiplierTag.getString("Type"));
-    SkillBonusMultiplier.Serializer serializer =
-        PSTRegistries.BONUS_MULTIPLIERS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(multiplierTag);
+    LivingMultiplier.Serializer serializer =
+        PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(multiplierTag);
   }
 
-  public static void serializeBonusMultiplier(CompoundTag tag, SkillBonusMultiplier multiplier) {
-    if (multiplier == null) return;
-    SkillBonusMultiplier.Serializer serializer = multiplier.getSerializer();
+  public static void serializePlayerMultiplier(
+      CompoundTag tag, @Nonnull LivingMultiplier multiplier) {
+    LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     CompoundTag multiplierTag = serializer.serialize(multiplier);
-    ResourceLocation serializerId = PSTRegistries.BONUS_MULTIPLIERS.get().getKey(serializer);
-    assert serializerId != null;
-    multiplierTag.putString("type", serializerId.toString());
-    tag.put("multiplier", multiplierTag);
+    ResourceLocation serializerId = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(serializer);
+    multiplierTag.putString("type", Objects.requireNonNull(serializerId).toString());
+    tag.put("player_multiplier", multiplierTag);
   }
 
-  public static LivingCondition deserializeLivingCondition(CompoundTag tag, String name) {
-    if (!tag.contains(name)) return null;
+  public static @Nonnull LivingCondition deserializeLivingCondition(CompoundTag tag, String name) {
     CompoundTag conditionTag = tag.getCompound(name);
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
     LivingCondition.Serializer serializer =
         PSTRegistries.LIVING_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionTag);
+    return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
   public static void serializeLivingCondition(
-      CompoundTag tag, LivingCondition condition, String name) {
-    if (condition == null) return;
+      CompoundTag tag, @Nonnull LivingCondition condition, String name) {
     LivingCondition.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.LIVING_CONDITIONS.get().getKey(serializer);
@@ -378,43 +353,35 @@ public class SerializationHelper {
     tag.put(name, conditionTag);
   }
 
-  public static DamageCondition deserializeDamageCondition(CompoundTag tag) {
-    if (!tag.contains("damage_condition")) return null;
+  public static @Nonnull DamageCondition deserializeDamageCondition(CompoundTag tag) {
     CompoundTag conditionTag = tag.getCompound("damage_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
     DamageCondition.Serializer serializer =
         PSTRegistries.DAMAGE_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionTag);
+    return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
-  public static void serializeDamageCondition(CompoundTag tag, DamageCondition condition) {
-    if (condition == null) return;
+  public static void serializeDamageCondition(CompoundTag tag, @Nonnull DamageCondition condition) {
     DamageCondition.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.DAMAGE_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionTag.putString("type", serializerId.toString());
+    conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("damage_condition", conditionTag);
   }
 
-  public static ItemCondition deserializeItemCondition(CompoundTag tag) {
-    if (!tag.contains("item_condition")) return null;
+  public static @Nonnull ItemCondition deserializeItemCondition(CompoundTag tag) {
     CompoundTag conditionTag = tag.getCompound("item_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
     ItemCondition.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionTag);
+    return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
-  public static void serializeItemCondition(CompoundTag tag, ItemCondition condition) {
-    if (condition == null) return;
+  public static void serializeItemCondition(CompoundTag tag, @Nonnull ItemCondition condition) {
     ItemCondition.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionTag.putString("type", serializerId.toString());
+    conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("item_condition", conditionTag);
   }
 
@@ -473,30 +440,28 @@ public class SerializationHelper {
     if (slot != null) tag.putString("category", slot.getName());
   }
 
-  @Nullable
   public static WeaponCondition.Type deserializeWeaponType(CompoundTag tag) {
-    WeaponCondition.Type type = null;
-    if (tag.contains("weapon_type")) {
-      type = WeaponCondition.Type.byName(tag.getString("weapon_type"));
-    }
-    return type;
+    return WeaponCondition.Type.byName(tag.getString("weapon_type"));
   }
 
-  public static void serializeWeaponType(CompoundTag tag, @Nullable WeaponCondition.Type type) {
-    if (type != null) tag.putString("weapon_type", type.getName());
+  public static void serializeWeaponType(CompoundTag tag, WeaponCondition.Type type) {
+    tag.putString("weapon_type", type.getName());
   }
 
-  public static @Nullable MobEffectCategory deserializePotionCategory(CompoundTag tag) {
-    MobEffectCategory category = null;
-    if (tag.contains("category")) {
-      category = fromName(tag.getString("category"));
-    }
-    return category;
+  public static ArmorCondition.Type deserializeArmorType(CompoundTag tag) {
+    return ArmorCondition.Type.byName(tag.getString("armor_type"));
   }
 
-  public static void serializePotionCategory(
-      CompoundTag tag, @Nullable MobEffectCategory category) {
-    if (category != null) tag.putString("category", getName(category));
+  public static void serializeArmorType(CompoundTag tag, ArmorCondition.Type type) {
+    tag.putString("armor_type", type.getName());
+  }
+
+  public static PotionCondition.Type deserializePotionType(CompoundTag tag) {
+    return PotionCondition.Type.byName(tag.getString("potion_type"));
+  }
+
+  public static void serializePotionType(CompoundTag tag, PotionCondition.Type type) {
+    tag.putString("category", type.getName());
   }
 
   public static MobEffectInstance deserializeEffectInstance(CompoundTag tag) {
@@ -512,42 +477,20 @@ public class SerializationHelper {
     tag.putInt("amplifier", effect.getAmplifier());
   }
 
-  public static EnchantmentCondition deserializeEnchantmentCondition(CompoundTag tag) {
-    if (!tag.contains("enchantment_condition")) return null;
+  public static @Nonnull EnchantmentCondition deserializeEnchantmentCondition(CompoundTag tag) {
     CompoundTag conditionTag = tag.getCompound("enchantment_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
     EnchantmentCondition.Serializer serializer =
         PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValue(serializerId);
-    assert serializer != null;
-    return serializer.deserialize(conditionTag);
+    return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
   public static void serializeEnchantmentCondition(
-      CompoundTag tag, EnchantmentCondition condition) {
-    if (condition == null) return;
+      CompoundTag tag, @Nonnull EnchantmentCondition condition) {
     EnchantmentCondition.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
-    assert serializerId != null;
-    conditionTag.putString("type", serializerId.toString());
+    conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("enchantment_condition", conditionTag);
-  }
-
-  public static String getName(@Nullable MobEffectCategory category) {
-    if (category == null) return "any";
-    return switch (category) {
-      case BENEFICIAL -> "beneficial";
-      case HARMFUL -> "harmful";
-      case NEUTRAL -> "neutral";
-    };
-  }
-
-  public static @Nullable MobEffectCategory fromName(String string) {
-    return switch (string) {
-      case "beneficial" -> MobEffectCategory.BENEFICIAL;
-      case "harmful" -> MobEffectCategory.HARMFUL;
-      case "neutral" -> MobEffectCategory.NEUTRAL;
-      default -> null;
-    };
   }
 }

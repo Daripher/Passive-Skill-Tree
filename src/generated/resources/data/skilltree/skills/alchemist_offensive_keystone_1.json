@@ -4,10 +4,19 @@
     {
       "type": "skilltree:damage",
       "chance": 0.15,
-      "multiplier": {
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:effect_amount"
       },
-      "operation": 1
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

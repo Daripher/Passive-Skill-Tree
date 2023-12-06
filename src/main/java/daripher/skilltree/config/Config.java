@@ -105,14 +105,14 @@ public class Config {
     DEFAULT_SHIELD_SOCKETS = BUILDER.defineInRange("Default Shields Sockets", 1, 0, 4);
     DEFAULT_RING_SOCKETS = BUILDER.defineInRange("Default Rings Sockets", 1, 0, 4);
     DEFAULT_NECKLACE_SOCKETS = BUILDER.defineInRange("Default Necklaces Sockets", 1, 0, 4);
-    BUILDER.comment("You can remove chance from items here");
+    BUILDER.comment("You can remove sockets from items here");
     BUILDER.comment(
         "Example: Blacklisting specific items: [\"minecraft:diamond_hoe\", \"minecraft:golden_hoe\"]");
     BUILDER.comment("Example: Blacklisting whole mod: [\"<mod_id>:*\"]");
     BUILDER.comment("Example: Blacklisting all items: [\"*:*\"]");
     SOCKET_BLACKLIST =
         BUILDER.defineListAllowEmpty(
-            List.of("IDs of items that shouldn't have chance"),
+            List.of("IDs of items that shouldn't have sockets"),
             ArrayList::new,
             Config::validateItemName);
     BUILDER.comment("You can force items from other mods into equipmentType categories here");
@@ -150,12 +150,12 @@ public class Config {
 
     BUILDER.push("Experience");
     GRINDSTONE_EXP_MULTIPLIER =
-        BUILDER.defineInRange("Grindstone experience chance", 0.1D, 0D, 1D);
+        BUILDER.defineInRange("Grindstone experience multiplier", 0.1D, 0D, 1D);
     BUILDER.pop();
 
     BUILDER.push("Mixtures");
-    MIXTURE_EFFECTS_DURATION = BUILDER.defineInRange("Effects chance chance", 1D, 0D, 2D);
-    MIXTURE_EFFECTS_STRENGTH = BUILDER.defineInRange("Effects strength chance", 1D, 0D, 2D);
+    MIXTURE_EFFECTS_DURATION = BUILDER.defineInRange("Effects duration multiplier", 1D, 0D, 2D);
+    MIXTURE_EFFECTS_STRENGTH = BUILDER.defineInRange("Effects strength multiplier", 1D, 0D, 2D);
     BUILDER.pop();
 
     SPEC = BUILDER.build();

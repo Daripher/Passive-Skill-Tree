@@ -21,7 +21,7 @@ public class GildedQuiverItem extends QuiverItem {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
     modifiers.put(
         Attributes.MOVEMENT_SPEED,
-        new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
+        new AttributeModifier(uuid, "Quiver", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 

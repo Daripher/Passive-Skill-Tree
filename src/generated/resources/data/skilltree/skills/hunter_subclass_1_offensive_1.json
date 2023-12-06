@@ -3,19 +3,31 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.05,
+      "amount": 5.0,
       "attribute": "skilltree:stealth",
-      "id": "7a09a1ed-8861-4999-8931-f55e1b6fc87f",
+      "id": "c8f59da2-6bc2-4dfd-8511-69b4937ad699",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "e2e42503-7b1b-449e-bced-0c9b85d3e84e",
+      "id": "68456bcd-0b16-4d18-9753-5b418440920d",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

@@ -2,15 +2,25 @@ package daripher.skilltree.skill.bonus.condition.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTItemConditions;
 import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
-public record CurioCondition(String slot) implements ItemCondition {
+public final class CurioCondition implements ItemCondition {
+  private String slot;
+
+  public CurioCondition(String slot) {
+    this.slot = slot;
+  }
+
   @Override
   public boolean met(ItemStack stack) {
     SlotContext ctx = new SlotContext(slot, null, 0, false, false);
@@ -38,6 +48,29 @@ public record CurioCondition(String slot) implements ItemCondition {
   @Override
   public ItemCondition.Serializer getSerializer() {
     return PSTItemConditions.CURIO.get();
+  }
+
+  @Override
+  public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<ItemCondition> consumer) {
+    editor.addLabel(0, 0, "Type", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, slot, CuriosApi.getSlotHelper().getSlotTypeIds())
+        .setToNameFunc(s -> Component.literal(s.substring(0, 1).toUpperCase() + s.substring(1)))
+        .setResponder(
+            t -> {
+              setSlot(t);
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setSlot(String slot) {
+    this.slot = slot;
+  }
+
+  public String getSlot() {
+    return slot;
   }
 
   public static class Serializer implements ItemCondition.Serializer {
@@ -80,6 +113,11 @@ public record CurioCondition(String slot) implements ItemCondition {
         throw new IllegalArgumentException();
       }
       buf.writeUtf(aCondition.slot);
+    }
+
+    @Override
+    public ItemCondition createDefaultInstance() {
+      return new CurioCondition("ring");
     }
   }
 }

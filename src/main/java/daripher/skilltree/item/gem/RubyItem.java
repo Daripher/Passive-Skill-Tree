@@ -18,6 +18,6 @@ public class RubyItem extends SimpleGemItem {
         "ranged_weapon");
     setAttributeBonuses(PSTAttributes.LIFE_ON_BLOCK.get(), 0.1F, Operation.ADDITION, "shield");
     setAttributeBonuses(
-        PSTAttributes.LIFE_REGENERATION.get(), 0.1F, Operation.ADDITION, "ring", "necklace");
+        PSTAttributes.REGENERATION.get(), 0.1F, Operation.ADDITION, "ring", "necklace");
   }
 }

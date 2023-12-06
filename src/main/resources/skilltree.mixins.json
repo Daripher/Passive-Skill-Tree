@@ -30,11 +30,14 @@
     "apotheosis/ApothEnchantContainerMixin",
     "apotheosis/SocketingRecipeMixin",
     "apotheosis/AttributeBonusMixin",
-    "apotheosis/EnchantmentBonusMixin"
+    "apotheosis/EnchantmentBonusMixin",
+    "AbstractArrowAccessor",
+    "LivingEntityAccessor"
   ],
   "client": [
     "minecraft/RecipeBookComponentMixin",
-    "apotheosis/AdventureModuleClientMixin"
+    "apotheosis/AdventureModuleClientMixin",
+    "EditBoxAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

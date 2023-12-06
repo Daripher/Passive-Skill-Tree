@@ -27,13 +27,20 @@
           "type": "skilltree:attribute",
           "amount": 0.05,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "abc664ae-e0e1-43a4-a26a-e284c2882f4c",
+          "id": "774b726f-49dc-4e5b-b3c7-4c04d9a0f58e",
           "name": "SkillBonus",
-          "operation": 1
+          "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon"
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
       }
     },
     {
@@ -44,13 +51,20 @@
           "type": "skilltree:attribute",
           "amount": 0.05000000074505806,
           "attribute": "minecraft:generic.armor_toughness",
-          "id": "b10fef6f-249d-4e80-b292-36ddbbe9be3a",
+          "id": "eb9f3eba-cdb7-4062-9746-6b34db58644a",
           "name": "SkillBonus",
-          "operation": 1
+          "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:armor"
+        "type": "skilltree:armor",
+        "armor_type": "any"
       }
     },
     {
@@ -61,14 +75,20 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.armor",
-          "id": "3a417193-bb9e-48b8-a51b-e65288be9c8d",
+          "id": "1b6b5dd7-4da9-4f19-87ad-7496984fdce5",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
         "type": "skilltree:armor",
-        "slot": "offhand"
+        "armor_type": "shield"
       }
     }
   ],

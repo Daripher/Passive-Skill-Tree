@@ -78,5 +78,10 @@ public record FishingCondition() implements LivingCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public LivingCondition createDefaultInstance() {
+      return new FishingCondition();
+    }
   }
 }

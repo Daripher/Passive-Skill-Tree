@@ -1,14 +1,16 @@
 package daripher.skilltree.item.gem;
 
-import daripher.skilltree.init.PSTAttributes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 
 public class JadeItem extends SimpleGemItem {
   public JadeItem() {
     super();
-    setAttributeBonuses(
-        PSTAttributes.TRIPLE_LOOT_CHANCE.get(), 0.02F, Operation.MULTIPLY_BASE, "necklace");
-    setAttributeBonuses(
-        PSTAttributes.DOUBLE_LOOT_CHANCE.get(), 0.02F, Operation.MULTIPLY_BASE, "ring");
+    setBonuses(
+        new ItemSkillBonus(new LootDuplicationBonus(0.025f, 2f, LootDuplicationBonus.LootType.MOBS)),
+        "necklace");
+    setBonuses(
+        new ItemSkillBonus(new LootDuplicationBonus(0.025f, 1f, LootDuplicationBonus.LootType.MOBS)),
+        "ring");
   }
 }

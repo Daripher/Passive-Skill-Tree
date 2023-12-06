@@ -39,22 +39,22 @@ public class EnchantmentHelper {
 
   public static float getFreeEnchantmentChance(Player player) {
     return SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class).stream()
-        .map(FreeEnchantmentBonus::chance)
+        .map(FreeEnchantmentBonus::getChance)
         .reduce(Float::sum)
         .orElse(1f);
   }
 
   private static double getEnchantmentCostMultiplier(Player player) {
     return SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class).stream()
-        .map(EnchantmentRequirementBonus::multiplier)
+        .map(EnchantmentRequirementBonus::getMultiplier)
         .reduce(Float::sum)
         .orElse(1f);
   }
 
   private static float getAmplificationChance(EnchantmentInstance enchantment, Player player) {
     return SkillBonusHandler.getSkillBonuses(player, EnchantmentAmplificationBonus.class).stream()
-        .filter(bonus -> bonus.condition().met(enchantment.enchantment.category))
-        .map(EnchantmentAmplificationBonus::chance)
+        .filter(bonus -> bonus.getCondition().met(enchantment.enchantment.category))
+        .map(EnchantmentAmplificationBonus::getChance)
         .reduce(Float::sum)
         .orElse(0f);
   }

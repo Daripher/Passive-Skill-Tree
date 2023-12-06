@@ -9,13 +9,20 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "skilltree:evasion",
-          "id": "edd4bdd0-b50d-4477-ab69-7905f5a2d849",
+          "id": "3827689e-42b9-47f6-a627-bbd7848716da",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:armor"
+        "type": "skilltree:armor",
+        "armor_type": "any"
       }
     }
   ],

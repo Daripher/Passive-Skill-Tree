@@ -5,15 +5,18 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "8fb6c1c3-b125-412c-8ded-3e3afc1718ea",
+      "id": "97c3ff4c-7ede-4f33-90c6-b7ce04bdeac0",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:has_item_equipped",
         "item_condition": {
           "type": "skilltree:armor",
-          "slot": "offhand"
+          "armor_type": "shield"
         }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

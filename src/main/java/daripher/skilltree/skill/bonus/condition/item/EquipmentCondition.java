@@ -66,5 +66,10 @@ public record EquipmentCondition() implements ItemCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public ItemCondition createDefaultInstance() {
+      return new EquipmentCondition();
+    }
   }
 }

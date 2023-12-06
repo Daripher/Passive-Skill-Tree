@@ -5,16 +5,19 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "minecraft:generic.armor",
-      "id": "c3adf4ea-bafd-4169-84d0-c66f03066a06",
-      "multiplier": {
+      "id": "62064e98-1309-46b2-b585-b2d16cfddc57",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
           "type": "skilltree:armor",
-          "slot": "chest"
+          "armor_type": "chestplate"
         }
-      },
-      "name": "SkillBonus",
-      "operation": 0
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

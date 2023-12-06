@@ -2,12 +2,9 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.2,
-      "attribute": "skilltree:experience_from_fishing",
-      "id": "947cd874-f542-4937-baf1-e5214fadc8b1",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:gained_experience",
+      "experience_source": "fishing",
+      "multiplier": 0.2
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",

@@ -2,20 +2,31 @@ package daripher.skilltree.skill.bonus.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
-import daripher.skilltree.effect.SkillBonusEffect;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public record FoodEffectBonus(MobEffectInstance effect) implements ItemBonus<FoodEffectBonus> {
+public final class FoodEffectBonus implements ItemBonus<FoodEffectBonus> {
+  private MobEffectInstance effect;
+
+  public FoodEffectBonus(MobEffectInstance effect) {
+    this.effect = effect;
+  }
+
   @Override
   public boolean canMerge(ItemBonus<?> other) {
     if (!(other instanceof FoodEffectBonus otherBonus)) return false;
@@ -51,31 +62,79 @@ public record FoodEffectBonus(MobEffectInstance effect) implements ItemBonus<Foo
 
   @Override
   public MutableComponent getTooltip() {
-    Component effectDescription = null;
-    if (effect.getEffect() instanceof SkillBonusEffect skillEffect) {
-      effectDescription =
-          skillEffect
-              .getBonus()
-              .copy()
-              .multiply(effect.getAmplifier() + 1)
-              .getTooltip()
-              .setStyle(Style.EMPTY);
-    } else {
-      effectDescription = effect.getEffect().getDisplayName();
-      if (effect.getAmplifier() > 0) {
-        MutableComponent amplifier =
-            Component.translatable("potion.potency." + effect.getAmplifier());
-        effectDescription =
-            Component.translatable("potion.withAmplifier", effectDescription, amplifier);
-      }
-    }
-    String timeDescription = MobEffectUtil.formatDuration(effect, 1f);
-    return Component.translatable(getDescriptionId(), effectDescription, timeDescription);
+    Component effectDescription = TooltipHelper.getEffectInstanceTooltip(effect);
+    String durationDescription = MobEffectUtil.formatDuration(effect, 1f);
+    return Component.translatable(getDescriptionId(), effectDescription, durationDescription);
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
+    editor.addLabel(0, 0, "Effect", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(
+            0, 0, 200, 14, 10, effect.getEffect(), ForgeRegistries.MOB_EFFECTS.getValues())
+        .setToNameFunc(TooltipHelper::getEffectTooltip)
+        .setResponder(
+            e -> {
+              setEffect(e);
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+    editor.addLabel(0, 0, "Duration", ChatFormatting.GREEN);
+    editor.addLabel(110, 0, "Amplifier", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 90, 14, getEffectInstance().getDuration())
+        .setNumericResponder(
+            v -> {
+              setDuration(v.intValue());
+              consumer.accept(this);
+            });
+    editor
+        .addNumericTextField(110, 0, 90, 14, getEffectInstance().getAmplifier())
+        .setNumericResponder(
+            v -> {
+              setAmplifier(v.intValue());
+              consumer.accept(this);
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setDuration(int duration) {
+    this.effect =
+        new MobEffectInstance(
+            getEffectInstance().getEffect(), duration, getEffectInstance().getAmplifier());
+  }
+
+  public void setAmplifier(int amplifier) {
+    this.effect =
+        new MobEffectInstance(
+            getEffectInstance().getEffect(), getEffectInstance().getDuration(), amplifier);
+  }
+
+  public void setEffect(MobEffect effect) {
+    this.effect =
+        new MobEffectInstance(
+            effect, getEffectInstance().getDuration(), getEffectInstance().getAmplifier());
+  }
+
+  public MobEffectInstance getEffectInstance() {
+    return effect;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    FoodEffectBonus that = (FoodEffectBonus) obj;
+    return Objects.equals(this.effect, that.effect);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(effect);
   }
 
   public static class Serializer implements ItemBonus.Serializer {
@@ -118,6 +177,11 @@ public record FoodEffectBonus(MobEffectInstance effect) implements ItemBonus<Foo
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeEffectInstance(buf, aBonus.effect);
+    }
+
+    @Override
+    public ItemBonus<?> createDefaultInstance() {
+      return new FoodEffectBonus(new MobEffectInstance(MobEffects.REGENERATION, 600));
     }
   }
 }

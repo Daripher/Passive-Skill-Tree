@@ -2,15 +2,20 @@ package daripher.skilltree.item.quiver;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTCreativeTabs;
+import daripher.skilltree.item.ItemBonusProvider;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.QuiverCapacityBonus;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
@@ -30,7 +35,7 @@ import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
-public class QuiverItem extends Item implements ICurioItem {
+public class QuiverItem extends Item implements ICurioItem, ItemBonusProvider {
   private static final String ARROWS_TAG = "Arrows";
   private static final String ARROWS_COUNT_TAG = "ArrowsCount";
   private final int capacity;
@@ -105,11 +110,20 @@ public class QuiverItem extends Item implements ICurioItem {
 
   public static int getCapacity(ItemStack quiver) {
     int capacity = ((QuiverItem) quiver.getItem()).capacity;
-    //TODO:replace with item bonuses
-//    if (ItemHelper.hasBonus(quiver, ItemHelper.CAPACITY)) {
-//      capacity *= (int) (1 + ItemHelper.getBonus(quiver, ItemHelper.CAPACITY));
-//    }
+    capacity += (int) getCapacityBonus(quiver, AttributeModifier.Operation.ADDITION);
+    float multiplier = 1f + getCapacityBonus(quiver, AttributeModifier.Operation.MULTIPLY_BASE);
+    capacity = (int) (capacity * multiplier);
+    multiplier = 1f + getCapacityBonus(quiver, AttributeModifier.Operation.MULTIPLY_TOTAL);
+    capacity = (int) (capacity * multiplier);
     return capacity;
+  }
+
+  private static float getCapacityBonus(ItemStack quiver, AttributeModifier.Operation operation) {
+    return ItemHelper.getItemBonuses(quiver, QuiverCapacityBonus.class).stream()
+        .filter(b -> b.getOperation() == operation)
+        .map(QuiverCapacityBonus::getAmount)
+        .reduce(Float::sum)
+        .orElse(0f);
   }
 
   public static boolean containsArrows(ItemStack stack) {
@@ -196,6 +210,15 @@ public class QuiverItem extends Item implements ICurioItem {
     setArrows(stack, ItemStack.EMPTY, 0);
     return InteractionResultHolder.success(stack);
   }
+
+  @Override
+  public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
+    getItemBonuses(b -> tooltips.add(b.getTooltip()));
+    return tooltips;
+  }
+
+  @Override
+  public void getItemBonuses(Consumer<ItemBonus<?>> consumer) {}
 
   private void dropArrows(Player player, ItemStack stack, int count) {
     ItemStack arrowsStack = getArrows(stack).copy();

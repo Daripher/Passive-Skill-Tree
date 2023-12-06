@@ -74,5 +74,10 @@ public record MeleeDamageCondition() implements DamageCondition {
         throw new IllegalArgumentException();
       }
     }
+
+    @Override
+    public DamageCondition createDefaultInstance() {
+      return new MeleeDamageCondition();
+    }
   }
 }

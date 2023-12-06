@@ -1,14 +1,19 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
 import java.util.Objects;
+import java.util.function.Consumer;
+import javax.annotation.Nonnull;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -16,21 +21,28 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 
-public record GemPowerBonus(ItemCondition itemCondition, float multiplier)
-    implements SkillBonus<GemPowerBonus> {
+public final class GemPowerBonus implements SkillBonus<GemPowerBonus> {
+  private @Nonnull ItemCondition itemCondition;
+  private float multiplier;
+
+  public GemPowerBonus(@Nonnull ItemCondition itemCondition, float multiplier) {
+    this.itemCondition = itemCondition;
+    this.multiplier = multiplier;
+  }
+
   @Override
   public SkillBonus.Serializer getSerializer() {
     return PSTSkillBonuses.GEM_POWER.get();
   }
 
   @Override
-  public SkillBonus<GemPowerBonus> copy() {
+  public GemPowerBonus copy() {
     return new GemPowerBonus(itemCondition, multiplier);
   }
 
   @Override
   public GemPowerBonus multiply(double multiplier) {
-    return new GemPowerBonus(itemCondition, (float) (multiplier() * multiplier));
+    return new GemPowerBonus(itemCondition, (float) (getMultiplier() * multiplier));
   }
 
   @Override
@@ -65,8 +77,67 @@ public record GemPowerBonus(ItemCondition itemCondition, float multiplier)
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO: add widgets
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int row, Consumer<GemPowerBonus> consumer) {
+    editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, multiplier)
+        .setNumericResponder(
+            v -> {
+              setMultiplier(v.floatValue());
+              consumer.accept(this.copy());
+            });
+    editor.shiftWidgets(0, 19);
+    editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, itemCondition, PSTItemConditions.conditionsList())
+        .setToNameFunc(a -> Component.literal(PSTItemConditions.getName(a)))
+        .setResponder(
+            c -> {
+              setItemCondition(c);
+              consumer.accept(this.copy());
+              editor.rebuildWidgets();
+            });
+    editor.shiftWidgets(0, 19);
+    itemCondition.addEditorWidgets(
+        editor,
+        c -> {
+          setItemCondition(c);
+          consumer.accept(this.copy());
+        });
+  }
+
+  public void setItemCondition(@Nonnull ItemCondition itemCondition) {
+    this.itemCondition = itemCondition;
+  }
+
+  public void setMultiplier(float multiplier) {
+    this.multiplier = multiplier;
+  }
+
+  @Nonnull
+  public ItemCondition getItemCondition() {
+    return itemCondition;
+  }
+
+  public float getMultiplier() {
+    return multiplier;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    GemPowerBonus that = (GemPowerBonus) obj;
+    if (!Objects.equals(this.itemCondition, that.itemCondition)) return false;
+    return this.multiplier == that.multiplier;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(itemCondition, multiplier);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -116,6 +187,11 @@ public record GemPowerBonus(ItemCondition itemCondition, float multiplier)
       }
       NetworkHelper.writeItemCondition(buf, aBonus.itemCondition);
       buf.writeFloat(aBonus.multiplier);
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new GemPowerBonus(new NoneItemCondition(), 0.1f);
     }
   }
 }

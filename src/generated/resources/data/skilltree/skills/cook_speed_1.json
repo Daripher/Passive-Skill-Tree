@@ -5,12 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "99f594f6-47c1-4602-b3ba-995144014ba5",
+      "id": "27763af0-c4e2-41e2-993d-8afd35051a38",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:food_level",
         "min": 15
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
       }
     }
   ],

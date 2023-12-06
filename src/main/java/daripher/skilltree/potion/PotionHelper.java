@@ -28,7 +28,7 @@ public class PotionHelper {
 
   public static int getAmplifierBonus(ItemStack stack) {
     return ItemHelper.getItemBonuses(stack, PotionAmplificationBonus.class).stream()
-        .map(PotionAmplificationBonus::chance)
+        .map(PotionAmplificationBonus::getChance)
         .reduce(Float::sum)
         .map(int.class::cast)
         .orElse(0);
@@ -36,7 +36,7 @@ public class PotionHelper {
 
   public static float getDurationMultiplier(ItemStack stack) {
     return ItemHelper.getItemBonuses(stack, PotionDurationBonus.class).stream()
-        .map(PotionDurationBonus::multiplier)
+        .map(PotionDurationBonus::getMultiplier)
         .reduce(Float::sum)
         .orElse(1f);
   }

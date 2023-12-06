@@ -1,6 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.init.PSTAttributes;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,10 +21,18 @@ public abstract class FishingHookMixin {
               value = "INVOKE",
               target =
                   "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"))
-  private boolean doubleFishingLoot(Level level, Entity entity) {
+  private boolean multiplyFishingLoot(Level level, Entity entity) {
+    if (!(entity instanceof ItemEntity item)) return level.addFreshEntity(entity);
     Player player = getPlayerOwner();
-    double chance = player.getAttributeValue(PSTAttributes.DOUBLE_FISHING_LOOT_CHANCE.get()) - 1;
-    if (entity instanceof ItemEntity item && player.getRandom().nextFloat() < chance) {
+    float multiplier =
+        SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.FISHING);
+    while (multiplier > 1) {
+      ItemEntity copy = item.copy();
+      copy.setDeltaMovement(item.getDeltaMovement());
+      level.addFreshEntity(copy);
+      multiplier--;
+    }
+    if (player.getRandom().nextFloat() < multiplier) {
       ItemEntity copy = item.copy();
       copy.setDeltaMovement(item.getDeltaMovement());
       level.addFreshEntity(copy);

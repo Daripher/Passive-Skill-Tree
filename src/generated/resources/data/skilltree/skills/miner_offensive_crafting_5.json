@@ -4,7 +4,8 @@
     {
       "type": "skilltree:gem_power",
       "item_condition": {
-        "type": "skilltree:weapon"
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
       },
       "multiplier": 0.1
     }

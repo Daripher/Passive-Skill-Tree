@@ -2,12 +2,21 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.05,
-      "attribute": "skilltree:damage_per_distance_to_enemy",
-      "id": "3808b915-017d-41ce-8bee-10f589d5e158",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:distance_to_target"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

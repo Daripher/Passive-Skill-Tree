@@ -12,12 +12,12 @@ public class AdamiteItem extends SimpleGemItem {
     setBonuses(
         new ItemSkillBonus(
             new CraftedItemBonus(
-                new PotionCondition(null), new PotionAmplificationBonus(0.02f))),
+                new PotionCondition(PotionCondition.Type.ANY), new PotionAmplificationBonus(0.02f))),
         "necklace");
     setBonuses(
         new ItemSkillBonus(
             new CraftedItemBonus(
-                new PotionCondition(null), new PotionDurationBonus(0.02f))),
+                new PotionCondition(PotionCondition.Type.ANY), new PotionDurationBonus(0.02f))),
         "ring");
   }
 }

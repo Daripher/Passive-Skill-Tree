@@ -1,25 +1,41 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.init.PSTItemBonuses;
+import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import java.util.Objects;
+import java.util.function.Consumer;
+import javax.annotation.Nonnull;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-public record CraftedItemBonus(ItemCondition itemCondition, ItemBonus<?> bonus)
-    implements SkillBonus<CraftedItemBonus> {
+public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
+  private @Nonnull ItemBonus<?> bonus;
+  private @Nonnull ItemCondition itemCondition;
+
+  public CraftedItemBonus(@NotNull ItemCondition itemCondition, @NotNull ItemBonus<?> bonus) {
+    this.itemCondition = itemCondition;
+    this.bonus = bonus;
+  }
+
   public void itemCrafted(ItemStack stack) {
     if (!itemCondition.met(stack)) return;
     ItemHelper.addItemBonus(stack, bonus);
@@ -31,7 +47,7 @@ public record CraftedItemBonus(ItemCondition itemCondition, ItemBonus<?> bonus)
   }
 
   @Override
-  public SkillBonus<CraftedItemBonus> copy() {
+  public CraftedItemBonus copy() {
     return new CraftedItemBonus(itemCondition, this.bonus.copy());
   }
 
@@ -67,8 +83,75 @@ public record CraftedItemBonus(ItemCondition itemCondition, ItemBonus<?> bonus)
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO: add widgets
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int index, Consumer<CraftedItemBonus> consumer) {
+    editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, itemCondition, PSTItemConditions.conditionsList())
+        .setToNameFunc(a -> Component.literal(PSTItemConditions.getName(a)))
+        .setResponder(
+            c -> {
+              setItemCondition(c);
+              consumer.accept(this.copy());
+              editor.rebuildWidgets();
+            });
+    editor.shiftWidgets(0, 19);
+    itemCondition.addEditorWidgets(
+        editor,
+        c -> {
+          setItemCondition(c);
+          consumer.accept(this.copy());
+        });
+    editor.addLabel(0, 0, "Item Bonus", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, bonus, PSTItemBonuses.bonusList())
+        .setToNameFunc(b -> Component.literal(PSTItemBonuses.getName(b)))
+        .setResponder(
+            b -> {
+              setBonus(b);
+              consumer.accept(this.copy());
+              editor.rebuildWidgets();
+            });
+    editor.shiftWidgets(0, 19);
+    bonus.addEditorWidgets(
+        editor,
+        index,
+        b -> {
+          setBonus(b);
+          consumer.accept(this.copy());
+        });
+  }
+
+  public void setItemCondition(@Nonnull ItemCondition itemCondition) {
+    this.itemCondition = itemCondition;
+  }
+
+  public void setBonus(@Nonnull ItemBonus<?> bonus) {
+    this.bonus = bonus;
+  }
+
+  public @NotNull ItemCondition getItemCondition() {
+    return itemCondition;
+  }
+
+  public ItemBonus<?> getItemBonus() {
+    return bonus;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    CraftedItemBonus that = (CraftedItemBonus) obj;
+    if (!Objects.equals(this.itemCondition, that.itemCondition)) return false;
+    return Objects.equals(this.bonus, that.bonus);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(itemCondition, bonus);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -120,6 +203,13 @@ public record CraftedItemBonus(ItemCondition itemCondition, ItemBonus<?> bonus)
       }
       NetworkHelper.writeItemCondition(buf, aBonus.itemCondition);
       NetworkHelper.writeItemBonus(buf, aBonus.bonus);
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new CraftedItemBonus(
+          new EquipmentCondition(),
+          new ItemDurabilityBonus(100f, AttributeModifier.Operation.ADDITION));
     }
   }
 }

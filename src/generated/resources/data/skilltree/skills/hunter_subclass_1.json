@@ -3,15 +3,24 @@
   "bonuses": [
     {
       "type": "skilltree:attribute",
-      "amount": 0.1,
+      "amount": 10.0,
       "attribute": "skilltree:stealth",
-      "id": "afa891ed-7268-4eba-b07d-7b8d440a9368",
+      "id": "933fb3b7-78ff-45d9-9980-bc08ef10bb7e",
       "name": "SkillBonus",
-      "operation": 1
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
       "type": "skilltree:jump_height",
-      "multiplier": 0.1
+      "multiplier": 0.1,
+      "player_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

@@ -3,6 +3,9 @@ package daripher.skilltree.init;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.*;
 
@@ -42,4 +45,36 @@ public class PSTSkillBonuses {
       REGISTRY.register("free_enchantment", FreeEnchantmentBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> JUMP_HEIGHT =
       REGISTRY.register("jump_height", JumpHeightBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> INCOMING_HEALING =
+      REGISTRY.register("incoming_healing", IncomingHealingBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> LOOT_DUPLICATION =
+      REGISTRY.register("loot_duplication", LootDuplicationBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> GAINED_EXPERIENCE =
+      REGISTRY.register("gained_experience", GainedExperienceBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> IGNITE_CHANCE =
+      REGISTRY.register("ignite_chance", IgniteChanceBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> ARROW_RETRIEVAL =
+      REGISTRY.register("arrow_retrieval", ArrowRetrievalBonus.Serializer::new);
+
+  @SuppressWarnings("rawtypes")
+  public static List<SkillBonus> bonusList() {
+    return PSTRegistries.SKILL_BONUSES.get().getValues().stream()
+        .map(SkillBonus.Serializer::createDefaultInstance)
+        .map(SkillBonus.class::cast)
+        .toList();
+  }
+
+  public static String getName(SkillBonus<?> bonus) {
+    ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(bonus.getSerializer());
+    String[] words = Objects.requireNonNull(id).getPath().split("_");
+    StringBuilder name = new StringBuilder();
+    Arrays.stream(words)
+        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
+        .forEach(
+            w -> {
+              name.append(" ");
+              name.append(w);
+            });
+    return name.toString();
+  }
 }

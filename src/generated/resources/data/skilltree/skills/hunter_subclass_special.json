@@ -9,13 +9,20 @@
           "type": "skilltree:attribute",
           "amount": 0.5,
           "attribute": "skilltree:life_per_hit",
-          "id": "38eab09f-bac5-40ba-86e6-7f4684928094",
+          "id": "87e9b241-7c21-459f-ab1b-05a57146c50e",
           "name": "SkillBonus",
-          "operation": 0
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon"
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
       }
     }
   ],

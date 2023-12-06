@@ -1,7 +1,6 @@
 package daripher.skilltree.util;
 
 import com.google.common.collect.Streams;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -9,8 +8,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -32,8 +29,8 @@ public class PlayerHelper {
     shield.hurtAndBreak(
         (int) amount,
         player,
-        (player_) -> {
-          player_.broadcastBreakEvent(InteractionHand.OFF_HAND);
+        p -> {
+          p.broadcastBreakEvent(InteractionHand.OFF_HAND);
           ForgeEventFactory.onPlayerDestroyItem(player, shield, InteractionHand.OFF_HAND);
         });
     if (shield.isEmpty()) {

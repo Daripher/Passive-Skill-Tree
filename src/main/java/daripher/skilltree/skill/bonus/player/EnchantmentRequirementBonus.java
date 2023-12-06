@@ -1,9 +1,12 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
-import daripher.skilltree.client.screen.SkillTreeEditor;
+import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.util.Objects;
+import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -11,21 +14,26 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 
-public record EnchantmentRequirementBonus(float multiplier)
-    implements SkillBonus<EnchantmentRequirementBonus> {
+public final class EnchantmentRequirementBonus implements SkillBonus<EnchantmentRequirementBonus> {
+  private float multiplier;
+
+  public EnchantmentRequirementBonus(float multiplier) {
+    this.multiplier = multiplier;
+  }
+
   @Override
   public SkillBonus.Serializer getSerializer() {
     return PSTSkillBonuses.ENCHANTMENT_REQUIREMENT.get();
   }
 
   @Override
-  public SkillBonus<EnchantmentRequirementBonus> copy() {
+  public EnchantmentRequirementBonus copy() {
     return new EnchantmentRequirementBonus(multiplier);
   }
 
   @Override
   public EnchantmentRequirementBonus multiply(double multiplier) {
-    return new EnchantmentRequirementBonus((float) (multiplier() * multiplier));
+    return new EnchantmentRequirementBonus((float) (getMultiplier() * multiplier));
   }
 
   @Override
@@ -57,8 +65,39 @@ public record EnchantmentRequirementBonus(float multiplier)
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int row) {
-    // TODO: add widgets
+  public void addEditorWidgets(
+      SkillTreeEditorScreen editor, int row, Consumer<EnchantmentRequirementBonus> consumer) {
+    editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addNumericTextField(0, 0, 50, 14, multiplier)
+        .setNumericResponder(
+            v -> {
+              setMultiplier(v.floatValue());
+              consumer.accept(this.copy());
+            });
+    editor.shiftWidgets(0, 19);
+  }
+
+  public void setMultiplier(float multiplier) {
+    this.multiplier = multiplier;
+  }
+
+  public float getMultiplier() {
+    return multiplier;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    EnchantmentRequirementBonus that = (EnchantmentRequirementBonus) obj;
+    return Float.floatToIntBits(this.multiplier) == Float.floatToIntBits(that.multiplier);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(multiplier);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
@@ -103,6 +142,11 @@ public record EnchantmentRequirementBonus(float multiplier)
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.multiplier);
+    }
+
+    @Override
+    public SkillBonus<?> createDefaultInstance() {
+      return new EnchantmentRequirementBonus(-0.05f);
     }
   }
 }

@@ -19,8 +19,7 @@ public class ArmoredQuiverItem extends QuiverItem {
   public Multimap<Attribute, AttributeModifier> getAttributeModifiers(
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-    modifiers.put(
-        Attributes.ARMOR, new AttributeModifier(uuid, "QuiverBonus", 5, Operation.ADDITION));
+    modifiers.put(Attributes.ARMOR, new AttributeModifier(uuid, "Quiver", 2, Operation.ADDITION));
     return modifiers;
   }
 }

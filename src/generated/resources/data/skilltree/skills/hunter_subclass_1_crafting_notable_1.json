@@ -7,16 +7,22 @@
         "type": "skilltree:skill_bonus",
         "skill_bonus": {
           "type": "skilltree:attribute",
-          "amount": 0.05,
+          "amount": 5.0,
           "attribute": "skilltree:stealth",
-          "id": "31ccaaf8-73b5-4048-975d-b7d84f4c9a9f",
+          "id": "f6ad35a1-2e7c-4e47-982f-2fe21fff5189",
           "name": "SkillBonus",
-          "operation": 1
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
         }
       },
       "item_condition": {
         "type": "skilltree:armor",
-        "slot": "feet"
+        "armor_type": "boots"
       }
     }
   ],

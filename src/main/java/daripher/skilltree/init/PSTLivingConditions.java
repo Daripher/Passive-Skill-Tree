@@ -2,6 +2,9 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.bonus.condition.living.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -12,6 +15,8 @@ public class PSTLivingConditions {
   public static final DeferredRegister<LivingCondition.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
+  public static final RegistryObject<LivingCondition.Serializer> NONE =
+      REGISTRY.register("none", NoneLivingCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> EFFECT_AMOUNT =
       REGISTRY.register("effect_amount", EffectAmountCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HEALTH_PERCENTAGE =
@@ -25,11 +30,31 @@ public class PSTLivingConditions {
   public static final RegistryObject<LivingCondition.Serializer> HAS_EFFECT =
       REGISTRY.register("has_effect", HasEffectCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> IS_BURNING =
-      REGISTRY.register("is_burning", BurningCondition.Serializer::new);
+      REGISTRY.register("burning", BurningCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> ATTRIBUTE_VALUE =
       REGISTRY.register("attribute_value", AttributeValueCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> FOOD_LEVEL =
       REGISTRY.register("food_level", FoodLevelCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> FISHING =
       REGISTRY.register("fishing", FishingCondition.Serializer::new);
+
+  public static List<LivingCondition> conditionsList() {
+    return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()
+        .map(LivingCondition.Serializer::createDefaultInstance)
+        .toList();
+  }
+
+  public static String getName(LivingCondition condition) {
+    ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition.getSerializer());
+    String[] words = Objects.requireNonNull(id).getPath().split("_");
+    StringBuilder name = new StringBuilder();
+    Arrays.stream(words)
+        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
+        .forEach(
+            w -> {
+              name.append(" ");
+              name.append(w);
+            });
+    return name.toString();
+  }
 }

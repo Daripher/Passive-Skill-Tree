@@ -8,7 +8,8 @@
         "chance": 1.0
       },
       "item_condition": {
-        "type": "skilltree:potion"
+        "type": "skilltree:potion",
+        "potion_type": "any"
       }
     }
   ],

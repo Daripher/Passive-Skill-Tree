@@ -2,12 +2,9 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.5,
-      "attribute": "skilltree:experience_from_mobs",
-      "id": "36336ba8-4dec-4bb3-934a-0bcf100223ff",
-      "name": "SkillBonus",
-      "operation": 1
+      "type": "skilltree:gained_experience",
+      "experience_source": "mobs",
+      "multiplier": 0.5
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",

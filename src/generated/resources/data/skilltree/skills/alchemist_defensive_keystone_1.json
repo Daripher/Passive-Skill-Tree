@@ -5,12 +5,15 @@
       "type": "skilltree:attribute",
       "amount": 2.0,
       "attribute": "skilltree:evasion",
-      "id": "b11f9a5d-ec46-4ace-a3f1-6ca50e0f244c",
-      "multiplier": {
-        "type": "skilltree:effect_amount"
-      },
+      "id": "5cd6643c-9f44-44d7-b74d-1b179cca029c",
       "name": "SkillBonus",
-      "operation": 0
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:effect_amount"
+      }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",

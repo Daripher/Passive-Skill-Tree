@@ -17,7 +17,7 @@ public class TravelerNecklace extends NecklaceItem {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
     modifiers.put(
         Attributes.MOVEMENT_SPEED,
-        new AttributeModifier(uuid, "Necklace Bonus", 0.05, Operation.MULTIPLY_BASE));
+        new AttributeModifier(uuid, "Necklace", 0.05, Operation.MULTIPLY_BASE));
     return modifiers;
   }
 }

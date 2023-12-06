@@ -16,8 +16,7 @@ public class CopperRingItem extends RingItem {
       SlotContext slotContext, UUID uuid, ItemStack stack) {
     Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
     modifiers.put(
-        PSTAttributes.BLOCKING.get(),
-        new AttributeModifier(uuid, "Ring Bonus", 0.01, Operation.MULTIPLY_BASE));
+        PSTAttributes.BLOCKING.get(), new AttributeModifier(uuid, "Ring", 1, Operation.ADDITION));
     return modifiers;
   }
 }
