@@ -448,6 +448,9 @@ public class SkillBonusHandler {
 
   private static EnchantmentInstance amplifyEnchantment(
       EnchantmentInstance enchantment, RandomSource random, Player player) {
+    if (enchantment.enchantment.getMaxLevel() == 1) {
+      return enchantment;
+    }
     float amplificationChance = getAmplificationChance(enchantment, player);
     if (amplificationChance == 0) return enchantment;
     int levelBonus = (int) amplificationChance;
