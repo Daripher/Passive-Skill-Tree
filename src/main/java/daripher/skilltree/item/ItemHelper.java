@@ -6,9 +6,9 @@ import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;
+import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -29,8 +29,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
-  private static final String POISONS = "Poisons";
-
   public static boolean canInsertGem(ItemStack stack) {
     if (ModList.get().isLoaded("apotheosis")) {
       if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return false;
@@ -56,21 +54,19 @@ public class ItemHelper {
       CompoundTag effectTag = effect.save(new CompoundTag());
       poisonsTag.add(effectTag);
     }
-    result.getOrCreateTag().put(POISONS, poisonsTag);
+    result.getOrCreateTag().put("Poisons", poisonsTag);
   }
 
   public static boolean hasPoisons(ItemStack stack) {
-    return stack.hasTag() && stack.getTag().contains(POISONS);
+    CompoundTag tag = stack.getTag();
+    return tag != null && tag.contains("Poisons");
   }
 
   public static List<MobEffectInstance> getPoisons(ItemStack stack) {
-    ListTag poisonsTag = stack.getTag().getList(POISONS, 10);
-    ArrayList<MobEffectInstance> effects = new ArrayList<>();
-    for (Tag tag : poisonsTag) {
-      MobEffectInstance effect = MobEffectInstance.load((CompoundTag) tag);
-      effects.add(effect);
-    }
-    return effects;
+    CompoundTag tag = stack.getTag();
+    if (tag == null) return ImmutableList.of();
+    ListTag poisonsTags = tag.getList("Poisons", 10);
+    return poisonsTags.stream().map(CompoundTag.class::cast).map(MobEffectInstance::load).toList();
   }
 
   public static EquipmentSlot getSlotForItem(ItemStack stack) {
@@ -130,20 +126,20 @@ public class ItemHelper {
   }
 
   public static boolean isCrossbow(ItemStack stack) {
-    if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_crossbow"))
-      return true;
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_crossbow")) return true;
     return stack.getItem() instanceof CrossbowItem || stack.is(Tags.Items.TOOLS_CROSSBOWS);
   }
 
   public static boolean isBow(ItemStack stack) {
-    if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_bow"))
-      return true;
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_bow")) return true;
     return stack.getItem() instanceof BowItem || stack.is(Tags.Items.TOOLS_BOWS);
   }
 
   public static boolean isTrident(ItemStack stack) {
-    if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_single"))
-      return true;
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_single")) return true;
     return stack.getItem() instanceof TridentItem || stack.is(Tags.Items.TOOLS_TRIDENTS);
   }
 
@@ -153,8 +149,8 @@ public class ItemHelper {
   }
 
   public static boolean isSword(ItemStack stack) {
-    if (ForgeRegistries.ITEMS.getKey(stack.getItem()).toString().equals("tetra:modular_sword"))
-      return true;
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_sword")) return true;
     if (stack.canPerformAction(ToolActions.SWORD_DIG)) return true;
     if (stack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
     return stack.getItem() instanceof SwordItem || stack.is(Tags.Items.TOOLS_SWORDS);
@@ -197,10 +193,6 @@ public class ItemHelper {
     return stack.getItem() instanceof PickaxeItem || stack.is(Tags.Items.TOOLS_PICKAXES);
   }
 
-  public static boolean isFood(ItemStack stack) {
-    return stack.getFoodProperties(null) != null;
-  }
-
   public static boolean isEquipment(ItemStack stack) {
     return isWeapon(stack) || isArmor(stack) || isShield(stack) || isTool(stack);
   }
@@ -222,15 +214,11 @@ public class ItemHelper {
   }
 
   public static boolean isQuiver(ItemStack stack) {
-    return !stack.isEmpty() && stack.is(PSTTags.QUIVERS);
+    return !stack.isEmpty() && stack.getItem() instanceof QuiverItem;
   }
 
   public static boolean isArrow(ItemStack stack) {
     return stack.is(ItemTags.ARROWS);
-  }
-
-  public static List<String> getBonuses() {
-    return List.of(POISONS);
   }
 
   public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
