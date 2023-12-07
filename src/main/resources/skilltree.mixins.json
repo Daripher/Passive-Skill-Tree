@@ -37,7 +37,8 @@
   "client": [
     "minecraft/RecipeBookComponentMixin",
     "apotheosis/AdventureModuleClientMixin",
-    "EditBoxAccessor"
+    "EditBoxAccessor",
+    "RecipeCollectionAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

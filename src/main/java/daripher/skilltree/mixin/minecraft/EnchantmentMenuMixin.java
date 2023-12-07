@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.EnchantmentMenuExtention;
+import daripher.skilltree.api.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EnchantmentMenu.class)
-public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtention {
+public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtension {
   private final int[] costsBeforeReduction = new int[3];
   public @Shadow @Final int[] costs;
   private @Shadow @Final DataSlot enchantmentSeed;
@@ -34,16 +34,15 @@ public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtention {
               value = "INVOKE",
               target =
                   "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
-  private int reduceLevelRequirements(
+  private int reduceEnchantmentCost(
       Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
-    int levelRequirement =
+    int cost =
         ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
-    costsBeforeReduction[slot] = levelRequirement;
+    costsBeforeReduction[slot] = cost;
     @SuppressWarnings("DataFlowIssue")
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
-    return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> SkillBonusHandler.adjustEnchantmentCost(levelRequirement, player))
-        .orElse(levelRequirement);
+    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
+    return player.map(p -> SkillBonusHandler.adjustEnchantmentCost(cost, p)).orElse(cost);
   }
 
   @Redirect(

@@ -32,8 +32,7 @@ public class EnchantmentBonusMixin {
   private int getGemPower(Map<?, ?> values, Object rarity, ItemStack gem) {
     int level = (int) values.get(rarity);
     if (!gem.hasTag()) return level;
-    if (!gem.getTag().contains("gem_power")) return level;
-    float power = gem.getTag().getFloat("gem_power") + 1;
+    float power = gem.getOrCreateTag().getFloat("gem_power") + 1;
     return (int) (level * power);
   }
 }
