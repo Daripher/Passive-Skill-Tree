@@ -31,17 +31,33 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("hunter_offensive_keystone_1", "Снайпер");
     addSkill("hunter_mastery", "Охотник за сокровищами");
     addSkill("hunter_gateway", "Пространственные врата", "Соединяются с пространственными вратами");
+    addSkillBranch("hunter_crafting", "Возврат Стрел", 1, 3);
+    addSkillBranch("hunter_offensive_crafting", "Скорость атаки создаваемого оружия", 1, 7);
+    addSkillBranch("hunter_defensive_crafting", "Уклонение создаваемой брони", 1, 7);
+    addSkillBranch("hunter_offensive", "Урон снарядов", 1, 8);
+    addSkillBranch("hunter_defensive", "Уклонение", 1, 8);
+    addSkillBranch("hunter_lesser", "Преумножение добычи", 1, 6);
+    addSkillBranch("hunter_life", "Здоровье", 1, 2);
+    addSkillBranch("hunter_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("hunter_crit", "Шанс крита", 1, 2);
+    addSkillBranch("hunter_healing", "Здоровье за удар", 1, 4);
     // ranger skills
     addSkill("hunter_subclass_1", "Рейнджер");
     addSkill("hunter_subclass_1_mastery", "Неуловимость");
     addSkill("hunter_subclass_1_crafting_notable_1", "Мягкие подошвы");
     addSkill("hunter_subclass_1_offensive_notable_1", "Без следа");
     addSkill("hunter_subclass_special", "Кровожадный клинок");
+    addSkillBranch("hunter_subclass_1_defensive", "Уклонение", 1, 4);
+    addSkillBranch("hunter_subclass_1_offensive", "Скрытность и Скорость атаки", 1, 4);
+    addSkillBranch("hunter_subclass_1_crafting", "Скрытность создаваемой брони", 1, 5);
     // fletcher skills
     addSkill("hunter_subclass_2", "Стрельник");
     addSkill("hunter_subclass_2_mastery", "Бездонный колчан");
     addSkill("hunter_subclass_2_crafting_notable_1", "Облегчённые стрелы");
     addSkill("hunter_subclass_2_life_notable_1", "Уверенность");
+    addSkillBranch("hunter_subclass_2_defensive", "Блокирование и Уклонение", 1, 4);
+    addSkillBranch("hunter_subclass_2_life", "Здоровье", 1, 4);
+    addSkillBranch("hunter_subclass_2_crafting", "Вместимость создаваемых колчанов", 1, 5);
     // cook skills
     addSkill("cook_class", "Повар");
     addSkill("cook_crafting_notable_1", "Фрукт амброзии");
@@ -51,23 +67,39 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("cook_speed_notable_1", "Запас энергии");
     addSkill("cook_healing_notable_1", "Перекус");
     addSkill("cook_crit_notable_1", "Острое блюдо");
-    addSkill("cook_defensive_crafting_keystone_1", "Вегетерианство");
+    addSkill("cook_defensive_crafting_keystone_1", "Вегетарианство");
     addSkill("cook_offensive_crafting_keystone_1", "Горячая еда");
     addSkill("cook_defensive_keystone_1", "Лишний вес");
     addSkill("cook_offensive_keystone_1", "Жирное тело");
     addSkill("cook_mastery", "Большие порции");
     addSkill("cook_gateway", "Духовные врата", "Соединяются с духовными вратами");
+    addSkillBranch("cook_crafting", "Регенерация от создаваемой еды", 1, 3);
+    addSkillBranch("cook_offensive_crafting", "Бонус у урону от создаваемой еды", 1, 7);
+    addSkillBranch("cook_defensive_crafting", "Исцеление от создаваемой еды", 1, 7);
+    addSkillBranch("cook_offensive", "Урон если не голоден", 1, 8);
+    addSkillBranch("cook_defensive", "Блокирование", 1, 8);
+    addSkillBranch("cook_lesser", "Насыщение от создаваемой еды", 1, 6);
+    addSkillBranch("cook_life", "Здоровье", 1, 2);
+    addSkillBranch("cook_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("cook_crit", "Шанс крита", 1, 2);
+    addSkillBranch("cook_healing", "Здоровье при блоке", 1, 4);
     // berserker skills
     addSkill("cook_subclass_1", "Берсерк");
     addSkill("cook_subclass_1_mastery", "Кровавая пелена");
     addSkill("cook_subclass_1_crafting_notable_1", "Топор палача");
     addSkill("cook_subclass_1_offensive_notable_1", "Грань смерти");
     addSkill("cook_subclass_special", "Изучение останков");
+    addSkillBranch("cook_subclass_1_defensive", "Блокирование", 1, 4);
+    addSkillBranch("cook_subclass_1_offensive", "Скорость атаки", 1, 4);
+    addSkillBranch("cook_subclass_1_crafting", "Шанс крита создаваемых топоров", 1, 5);
     // fisherman skills
     addSkill("cook_subclass_2", "Рыбак");
     addSkill("cook_subclass_2_mastery", "Дар моря");
     addSkill("cook_subclass_2_crafting_notable_1", "Опытный рыбак");
     addSkill("cook_subclass_2_life_notable_1", "Везучий рыбак");
+    addSkillBranch("cook_subclass_2_defensive", "Броня и Блокирование", 1, 4);
+    addSkillBranch("cook_subclass_2_life", "Здоровье", 1, 4);
+    addSkillBranch("cook_subclass_2_crafting", "Опыт за рыбалку", 1, 5);
     // alchemist skills
     addSkill("alchemist_class", "Алхимик");
     addSkill("alchemist_crafting_notable_1", "Эксперимент");
@@ -83,17 +115,34 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("alchemist_offensive_keystone_1", "Передозировка");
     addSkill("alchemist_mastery", "Секретный ингредиент");
     addSkill("alchemist_gateway", "Духовные врата", "Соединяются с духовными вратами");
+    addSkillBranch("alchemist_crafting", "Усиление создаваемых зелий", 1, 3);
+    addSkillBranch("alchemist_offensive_crafting", "Усиление создаваемых вредящих зелий", 1, 7);
+    addSkillBranch("alchemist_defensive_crafting", "Усиление создаваемых благотворных зелий", 1, 7);
+    addSkillBranch("alchemist_offensive", "Урон по отравленным", 1, 8);
+    addSkillBranch("alchemist_defensive", "Уклонение", 1, 8);
+    addSkillBranch("alchemist_lesser", "Длительность создаваемых зелий", 1, 6);
+    addSkillBranch("alchemist_life", "Здоровье", 1, 2);
+    addSkillBranch("alchemist_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("alchemist_crit", "Шанс крита", 1, 2);
+    addSkillBranch("alchemist_healing", "Здоровье за удар", 1, 4);
     // assassin skills
     addSkill("alchemist_subclass_1", "Ассасин");
     addSkill("alchemist_subclass_1_mastery", "Потрошение");
     addSkill("alchemist_subclass_1_crafting_notable_1", "Отравитель");
     addSkill("alchemist_subclass_1_offensive_notable_1", "Удар в спину");
     addSkill("alchemist_subclass_special", "Шипастые кольца");
+    addSkillBranch("alchemist_subclass_1_defensive", "Броня и Уклонение", 1, 4);
+    addSkillBranch("alchemist_subclass_1_offensive", "Шанс крита", 1, 4);
+    addSkillBranch("alchemist_subclass_1_crafting", "Усиление создаваемых вредящих зелий", 1, 5);
     // healer skills
     addSkill("alchemist_subclass_2", "Лекарь");
     addSkill("alchemist_subclass_2_mastery", "Самолечение");
     addSkill("alchemist_subclass_2_crafting_notable_1", "Панацея");
     addSkill("alchemist_subclass_2_life_notable_1", "Крепкое здоровье");
+    addSkillBranch("alchemist_subclass_2_defensive", "Уклонение", 1, 4);
+    addSkillBranch("alchemist_subclass_2_life", "Здоровье и Получаемое лечение", 1, 4);
+    addSkillBranch(
+        "alchemist_subclass_2_crafting", "Усиление создаваемых благотворных зелий", 1, 5);
     // enchanter skills
     addSkill("enchanter_class", "Зачарователь");
     addSkill("enchanter_crafting_notable_1", "Магический поток");
@@ -109,17 +158,33 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("enchanter_offensive_keystone_1", "Экскалибур");
     addSkill("enchanter_mastery", "Сокрытое знание");
     addSkill("enchanter_gateway", "Астральные врата", "Соединяются с астральными вратами");
+    addSkillBranch("enchanter_crafting", "Шанс бесплатного зачарования", 1, 3);
+    addSkillBranch("enchanter_offensive_crafting", "Усиление зачарований оружия", 1, 7);
+    addSkillBranch("enchanter_defensive_crafting", "Усиление зачарований брони", 1, 7);
+    addSkillBranch("enchanter_offensive", "Урон с зачарованным оружием", 1, 8);
+    addSkillBranch("enchanter_defensive", "Блокирование", 1, 8);
+    addSkillBranch("enchanter_lesser", "Требование к уровню для зачарований", 1, 6);
+    addSkillBranch("enchanter_life", "Здоровье", 1, 2);
+    addSkillBranch("enchanter_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("enchanter_crit", "Шанс крита", 1, 2);
+    addSkillBranch("enchanter_healing", "Здоровье при блоке", 1, 4);
     // arsonist skills
     addSkill("enchanter_subclass_1", "Поджигатель");
     addSkill("enchanter_subclass_1_mastery", "Испепеление");
     addSkill("enchanter_subclass_1_crafting_notable_1", "Пламенный клинок");
     addSkill("enchanter_subclass_1_offensive_notable_1", "Опалённая плоть");
     addSkill("enchanter_subclass_special", "Адские колчаны");
+    addSkillBranch("enchanter_subclass_1_defensive", "Блокирование и Уклонение", 1, 4);
+    addSkillBranch("enchanter_subclass_1_offensive", "Урон по горящим", 1, 4);
+    addSkillBranch("enchanter_subclass_1_crafting", "Шанс поджога создаваемого оружия", 1, 5);
     // scholar skills
     addSkill("enchanter_subclass_2", "Учёный");
     addSkill("enchanter_subclass_2_mastery", "Изучение звёзд");
     addSkill("enchanter_subclass_2_crafting_notable_1", "Изучение минералов");
     addSkill("enchanter_subclass_2_life_notable_1", "Медитация");
+    addSkillBranch("enchanter_subclass_2_defensive", "Блокирование", 1, 4);
+    addSkillBranch("enchanter_subclass_2_life", "Здоровье и Прирост опыта", 1, 4);
+    addSkillBranch("enchanter_subclass_2_crafting", "Прирост опыта", 1, 5);
     // blacksmith skills
     addSkill("blacksmith_class", "Кузнец");
     addSkill("blacksmith_crafting_notable_1", "Создатель щитов");
@@ -136,17 +201,33 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("blacksmith_mastery", "Чёрная сталь");
     addSkill(
         "blacksmith_gateway", "Пространственные врата", "Соединяются с пространственными вратами");
+    addSkillBranch("blacksmith_crafting", "Защита создаваемых щитов", 1, 3);
+    addSkillBranch("blacksmith_offensive_crafting", "Урон создаваемого оружия ближнего боя", 1, 7);
+    addSkillBranch("blacksmith_defensive_crafting", "Защита создаваемой брони", 1, 7);
+    addSkillBranch("blacksmith_offensive", "Урон с экипированным щитом", 1, 8);
+    addSkillBranch("blacksmith_defensive", "Броня", 1, 8);
+    addSkillBranch("blacksmith_lesser", "Прочность создаваемой экипировки", 1, 6);
+    addSkillBranch("blacksmith_life", "Здоровье", 1, 2);
+    addSkillBranch("blacksmith_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("blacksmith_crit", "Шанс крита", 1, 2);
+    addSkillBranch("blacksmith_healing", "Регенерация здоровья", 1, 4);
     // soldier skills
     addSkill("blacksmith_subclass_1", "Солдат");
     addSkill("blacksmith_subclass_1_mastery", "Военная подготовки");
     addSkill("blacksmith_subclass_1_crafting_notable_1", "Заточка");
     addSkill("blacksmith_subclass_1_offensive_notable_1", "Опытный боец");
     addSkill("blacksmith_subclass_special", "Жадные клинки");
+    addSkillBranch("blacksmith_subclass_1_defensive", "Броня и Блокирование", 1, 4);
+    addSkillBranch("blacksmith_subclass_1_offensive", "Урон в ближнем бою и Блокирование", 1, 4);
+    addSkillBranch("blacksmith_subclass_1_crafting", "Шанс крита создаваемого оружия ближнего боя", 1, 5);
     // artisan skills
     addSkill("blacksmith_subclass_2", "Ремесленник");
     addSkill("blacksmith_subclass_2_mastery", "Мастер на все руки");
     addSkill("blacksmith_subclass_2_crafting_notable_1", "Облегчённые щиты");
     addSkill("blacksmith_subclass_2_life_notable_1", "Закалено в крови");
+    addSkillBranch("blacksmith_subclass_2_defensive", "Броня", 1, 4);
+    addSkillBranch("blacksmith_subclass_2_life", "Здоровье от создаваемой брони", 1, 4);
+    addSkillBranch("blacksmith_subclass_2_crafting", "Эффективность починки", 1, 5);
     // miner skills
     addSkill("miner_class", "Шахтёр");
     addSkill("miner_crafting_notable_1", "Раскопки");
@@ -162,17 +243,33 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("miner_offensive_keystone_1", "Драгоценное оружие");
     addSkill("miner_mastery", "Алчность");
     addSkill("miner_gateway", "Астральные врата", "Соединяются с астральными вратами");
+    addSkillBranch("miner_crafting", "Преумножение самоцветов", 1, 3);
+    addSkillBranch("miner_offensive_crafting", "Сила самоцветов в оружии", 1, 7);
+    addSkillBranch("miner_defensive_crafting", "Сила самоцветов в броне", 1, 7);
+    addSkillBranch("miner_offensive", "Урон с самоцветами в оружии", 1, 8);
+    addSkillBranch("miner_defensive", "Броня", 1, 8);
+    addSkillBranch("miner_lesser", "Скорость добычи с киркой", 1, 6);
+    addSkillBranch("miner_life", "Здоровье", 1, 2);
+    addSkillBranch("miner_speed", "Скорость атаки", 1, 2);
+    addSkillBranch("miner_crit", "Шанс крита", 1, 2);
+    addSkillBranch("miner_healing", "Регенерация здоровья", 1, 4);
     // explorer skills
     addSkill("miner_subclass_1", "Исследователь");
     addSkill("miner_subclass_1_mastery", "Первооткрыватель");
     addSkill("miner_subclass_1_crafting_notable_1", "Сапоги скороходы");
     addSkill("miner_subclass_1_offensive_notable_1", "Спешка");
     addSkill("miner_subclass_special", "Декоративные ботинки");
+    addSkillBranch("miner_subclass_1_defensive", "Броня", 1, 4);
+    addSkillBranch("miner_subclass_1_offensive", "Скорость атаки", 1, 4);
+    addSkillBranch("miner_subclass_1_crafting", "Скорость от создаваемых ботинок", 1, 5);
     // jeweler skills
     addSkill("miner_subclass_2", "Ювелир");
     addSkill("miner_subclass_2_mastery", "Аристократ");
     addSkill("miner_subclass_2_crafting_notable_1", "Осколки звёзд");
     addSkill("miner_subclass_2_life_notable_1", "Оберег");
+    addSkillBranch("miner_subclass_2_defensive", "Броня и Уклонение", 1, 4);
+    addSkillBranch("miner_subclass_2_life", "Здоровье", 1, 4);
+    addSkillBranch("miner_subclass_2_crafting", "Сила самоцветов в бижутерии", 1, 5);
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Урон");
     add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Множитель критического урона");

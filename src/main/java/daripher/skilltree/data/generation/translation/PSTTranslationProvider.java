@@ -45,6 +45,12 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     addSkill(skillName, name, null);
   }
 
+  protected void addSkillBranch(String skillName, String name, int from, int to) {
+    for (int i = from; i <= to; i++) {
+      addSkill("%s_%d".formatted(skillName, i), name, null);
+    }
+  }
+
   protected void addMixture(String name, MobEffect... effects) {
     name = "Mixture of " + name;
     addMixture(name, "potion", effects);

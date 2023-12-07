@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 4.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "1239ccc5-f8fd-4bc0-bd21-6e73e588428f",
+      "id": "6caf05a4-b0f4-48ff-b106-d66814fbacb7",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.luck",
-      "id": "c527c602-e08b-41ba-a80e-aabcce0a1a97",
+      "id": "3b45e2f5-37c0-4465-9cd5-a62a932a56ce",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

@@ -30,17 +30,33 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("hunter_offensive_keystone_1", "Sniper");
     addSkill("hunter_mastery", "Treasure Hunter");
     addSkill("hunter_gateway", "Dimensional Gateway", "Connects to Dimensional Gateway");
+    addSkillBranch("hunter_crafting", "Arrow Retrieval", 1, 3);
+    addSkillBranch("hunter_offensive_crafting", "Crafted Weapon Attack Speed", 1, 7);
+    addSkillBranch("hunter_defensive_crafting", "Crafted Armor Evasion", 1, 7);
+    addSkillBranch("hunter_offensive", "Projectile Damage", 1, 8);
+    addSkillBranch("hunter_defensive", "Evasion", 1, 8);
+    addSkillBranch("hunter_lesser", "Loot Multiplication", 1, 6);
+    addSkillBranch("hunter_life", "Max Health", 1, 2);
+    addSkillBranch("hunter_speed", "Attack Speed", 1, 2);
+    addSkillBranch("hunter_crit", "Crit Chance", 1, 2);
+    addSkillBranch("hunter_healing", "Life per Hit", 1, 4);
     // ranger skills
     addSkill("hunter_subclass_1", "Ranger");
     addSkill("hunter_subclass_1_mastery", "Elusiveness");
     addSkill("hunter_subclass_1_crafting_notable_1", "Soft Soles");
     addSkill("hunter_subclass_1_offensive_notable_1", "Without a Trace");
     addSkill("hunter_subclass_special", "Bloodthirsty Blade");
+    addSkillBranch("hunter_subclass_1_defensive", "Evasion", 1, 4);
+    addSkillBranch("hunter_subclass_1_offensive", "Stealth and Attack Speed", 1, 4);
+    addSkillBranch("hunter_subclass_1_crafting", "Crafted Armor Stealth", 1, 5);
     // fletcher skills
     addSkill("hunter_subclass_2", "Fletcher");
     addSkill("hunter_subclass_2_mastery", "Bottomless Quiver");
     addSkill("hunter_subclass_2_crafting_notable_1", "Lightweight Arrows");
     addSkill("hunter_subclass_2_life_notable_1", "Confidence");
+    addSkillBranch("hunter_subclass_2_defensive", "Blocking and Evasion", 1, 4);
+    addSkillBranch("hunter_subclass_2_life", "Max Health", 1, 4);
+    addSkillBranch("hunter_subclass_2_crafting", "Crafted Quivers Capacity", 1, 5);
     // cook skills
     addSkill("cook_class", "Cook");
     addSkill("cook_crafting_notable_1", "Ambrosia Fruit");
@@ -56,17 +72,33 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("cook_offensive_keystone_1", "Fat Body");
     addSkill("cook_mastery", "Large Servings");
     addSkill("cook_gateway", "Spiritual Gateway", "Connects to Spiritual Gateway");
+    addSkillBranch("cook_crafting", "Crafted Food Regeneration", 1, 3);
+    addSkillBranch("cook_offensive_crafting", "Crafted Food Damage Bonus", 1, 7);
+    addSkillBranch("cook_defensive_crafting", "Crafted Food Healing", 1, 7);
+    addSkillBranch("cook_offensive", "Damage if not Hungry", 1, 8);
+    addSkillBranch("cook_defensive", "Blocking", 1, 8);
+    addSkillBranch("cook_lesser", "Crafted Food Saturation", 1, 6);
+    addSkillBranch("cook_life", "Max Health", 1, 2);
+    addSkillBranch("cook_speed", "Attack Speed", 1, 2);
+    addSkillBranch("cook_crit", "Crit Chance", 1, 2);
+    addSkillBranch("cook_healing", "Life on Block", 1, 4);
     // berserker skills
     addSkill("cook_subclass_1", "Berserker");
     addSkill("cook_subclass_1_mastery", "Blood Veil");
     addSkill("cook_subclass_1_crafting_notable_1", "Headsman's Axe");
     addSkill("cook_subclass_1_offensive_notable_1", "Verge of Death");
     addSkill("cook_subclass_special", "Studying Remains");
+    addSkillBranch("cook_subclass_1_defensive", "Blocking", 1, 4);
+    addSkillBranch("cook_subclass_1_offensive", "Attack Speed", 1, 4);
+    addSkillBranch("cook_subclass_1_crafting", "Crafted Axes Crit Chance", 1, 5);
     // fisherman skills
     addSkill("cook_subclass_2", "Fisherman");
     addSkill("cook_subclass_2_mastery", "Sea Gift");
     addSkill("cook_subclass_2_crafting_notable_1", "Experienced Fisherman");
     addSkill("cook_subclass_2_life_notable_1", "Lucky Fisherman");
+    addSkillBranch("cook_subclass_2_defensive", "Armor and Blocking", 1, 4);
+    addSkillBranch("cook_subclass_2_life", "Max Health", 1, 4);
+    addSkillBranch("cook_subclass_2_crafting", "Experience from Fishing", 1, 5);
     // alchemist skills
     addSkill("alchemist_class", "Alchemist");
     addSkill("alchemist_crafting_notable_1", "Experiment");
@@ -82,17 +114,35 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("alchemist_offensive_keystone_1", "Overdose");
     addSkill("alchemist_mastery", "Secret Ingredient");
     addSkill("alchemist_gateway", "Spiritual Gateway", "Connects to Spiritual Gateway");
+    addSkillBranch("alchemist_crafting", "Crafted Potions Amplification", 1, 3);
+    addSkillBranch("alchemist_offensive_crafting", "Crafted Harmful Potions Amplification", 1, 7);
+    addSkillBranch(
+        "alchemist_defensive_crafting", "Crafted Beneficial Potions Amplification", 1, 7);
+    addSkillBranch("alchemist_offensive", "Damage against Poisoned", 1, 8);
+    addSkillBranch("alchemist_defensive", "Evasion", 1, 8);
+    addSkillBranch("alchemist_lesser", "Crafted Potions Duration", 1, 6);
+    addSkillBranch("alchemist_life", "Max Health", 1, 2);
+    addSkillBranch("alchemist_speed", "Attack Speed", 1, 2);
+    addSkillBranch("alchemist_crit", "Crit Chance", 1, 2);
+    addSkillBranch("alchemist_healing", "Life per Hit", 1, 4);
     // assassin skills
     addSkill("alchemist_subclass_1", "Assassin");
     addSkill("alchemist_subclass_1_mastery", "Gutting");
     addSkill("alchemist_subclass_1_crafting_notable_1", "Poisoner");
     addSkill("alchemist_subclass_1_offensive_notable_1", "Backstab");
     addSkill("alchemist_subclass_special", "Spiked Rings");
+    addSkillBranch("alchemist_subclass_1_defensive", "Armor and Evasion", 1, 4);
+    addSkillBranch("alchemist_subclass_1_offensive", "Crit Chance", 1, 4);
+    addSkillBranch("alchemist_subclass_1_crafting", "Crafted Harmful Potions Amplification", 1, 5);
     // healer skills
     addSkill("alchemist_subclass_2", "Healer");
     addSkill("alchemist_subclass_2_mastery", "Self-Treatment");
     addSkill("alchemist_subclass_2_crafting_notable_1", "Panacea");
     addSkill("alchemist_subclass_2_life_notable_1", "Strong Health");
+    addSkillBranch("alchemist_subclass_2_defensive", "Evasion", 1, 4);
+    addSkillBranch("alchemist_subclass_2_life", "Max Health and Incoming Healing", 1, 4);
+    addSkillBranch(
+        "alchemist_subclass_2_crafting", "Crafted Beneficial Potions Amplification", 1, 5);
     // enchanter skills
     addSkill("enchanter_class", "Enchanter");
     addSkill("enchanter_crafting_notable_1", "Magic Flow");
@@ -108,17 +158,33 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("enchanter_offensive_keystone_1", "Excalibur");
     addSkill("enchanter_mastery", "Hidden Knowledge");
     addSkill("enchanter_gateway", "Astral Gateway", "Connects to Astral Gateway");
+    addSkillBranch("enchanter_crafting", "Free Enchantment Chance", 1, 3);
+    addSkillBranch("enchanter_offensive_crafting", "Weapon Enchantments Amplification", 1, 7);
+    addSkillBranch("enchanter_defensive_crafting", "Armor Enchantments Amplification", 1, 7);
+    addSkillBranch("enchanter_offensive", "Damage with Enchanted Weapon", 1, 8);
+    addSkillBranch("enchanter_defensive", "Blocking", 1, 8);
+    addSkillBranch("enchanter_lesser", "Enchantments Level Requirement", 1, 6);
+    addSkillBranch("enchanter_life", "Max Health", 1, 2);
+    addSkillBranch("enchanter_speed", "Attack Speed", 1, 2);
+    addSkillBranch("enchanter_crit", "Crit Chance", 1, 2);
+    addSkillBranch("enchanter_healing", "Life on Block", 1, 4);
     // arsonist skills
     addSkill("enchanter_subclass_1", "Arsonist");
     addSkill("enchanter_subclass_1_mastery", "Incineration");
     addSkill("enchanter_subclass_1_crafting_notable_1", "Flaming Blade");
     addSkill("enchanter_subclass_1_offensive_notable_1", "Scorched Flesh");
     addSkill("enchanter_subclass_special", "Infernal Quivers");
+    addSkillBranch("enchanter_subclass_1_defensive", "Blocking and Evasion", 1, 4);
+    addSkillBranch("enchanter_subclass_1_offensive", "Damage against Burning", 1, 4);
+    addSkillBranch("enchanter_subclass_1_crafting", "Crafted Weapons Ignite Chance", 1, 5);
     // scholar skills
     addSkill("enchanter_subclass_2", "Scholar");
     addSkill("enchanter_subclass_2_mastery", "Studying Stars");
     addSkill("enchanter_subclass_2_crafting_notable_1", "Studying Minerals");
     addSkill("enchanter_subclass_2_life_notable_1", "Meditation");
+    addSkillBranch("enchanter_subclass_2_defensive", "Blocking", 1, 4);
+    addSkillBranch("enchanter_subclass_2_life", "Max Health and Experience Gain", 1, 4);
+    addSkillBranch("enchanter_subclass_2_crafting", "Experience Gain", 1, 5);
     // blacksmith skills
     addSkill("blacksmith_class", "Blacksmith");
     addSkill("blacksmith_crafting_notable_1", "Shield Maker");
@@ -134,17 +200,33 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("blacksmith_offensive_keystone_1", "Colossus");
     addSkill("blacksmith_mastery", "Black Steel");
     addSkill("blacksmith_gateway", "Dimensional Gateway", "Connects to Dimensional Gateway");
+    addSkillBranch("blacksmith_crafting", "Crafted Shields Defence", 1, 3);
+    addSkillBranch("blacksmith_offensive_crafting", "Crafted Melee Weapons Damage", 1, 7);
+    addSkillBranch("blacksmith_defensive_crafting", "Crafted Armor Defence", 1, 7);
+    addSkillBranch("blacksmith_offensive", "Damage with Shield Equipped", 1, 8);
+    addSkillBranch("blacksmith_defensive", "Armor", 1, 8);
+    addSkillBranch("blacksmith_lesser", "Crafted Equipment Durability", 1, 6);
+    addSkillBranch("blacksmith_life", "Max Health", 1, 2);
+    addSkillBranch("blacksmith_speed", "Attack Speed", 1, 2);
+    addSkillBranch("blacksmith_crit", "Crit Chance", 1, 2);
+    addSkillBranch("blacksmith_healing", "Life Regeneration", 1, 4);
     // soldier skills
     addSkill("blacksmith_subclass_1", "Soldier");
     addSkill("blacksmith_subclass_1_mastery", "Military Training");
     addSkill("blacksmith_subclass_1_crafting_notable_1", "Sharpening");
     addSkill("blacksmith_subclass_1_offensive_notable_1", "Experienced Fighter");
     addSkill("blacksmith_subclass_special", "Greedy Blades");
+    addSkillBranch("blacksmith_subclass_1_defensive", "Armor and Blocking", 1, 4);
+    addSkillBranch("blacksmith_subclass_1_offensive", "Melee Damage and Blocking", 1, 4);
+    addSkillBranch("blacksmith_subclass_1_crafting", "Crafted Melee Weapons Crit Chance", 1, 5);
     // artisan skills
     addSkill("blacksmith_subclass_2", "Artisan");
     addSkill("blacksmith_subclass_2_mastery", "Handyman");
     addSkill("blacksmith_subclass_2_crafting_notable_1", "Lightweight Shields");
     addSkill("blacksmith_subclass_2_life_notable_1", "Tempered in Blood");
+    addSkillBranch("blacksmith_subclass_2_defensive", "Armor", 1, 4);
+    addSkillBranch("blacksmith_subclass_2_life", "Crafted Armor Max Health", 1, 4);
+    addSkillBranch("blacksmith_subclass_2_crafting", "Repair Efficiency", 1, 5);
     // miner skills
     addSkill("miner_class", "Miner");
     addSkill("miner_crafting_notable_1", "Excavation");
@@ -160,17 +242,33 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill("miner_offensive_keystone_1", "Precious Weapon");
     addSkill("miner_mastery", "Greed");
     addSkill("miner_gateway", "Astral Gateway", "Connects to Astral Gateway");
+    addSkillBranch("miner_crafting", "Gems Multiplication", 1, 3);
+    addSkillBranch("miner_offensive_crafting", "Gems Power in Weapons", 1, 7);
+    addSkillBranch("miner_defensive_crafting", "Gems Power in Armor", 1, 7);
+    addSkillBranch("miner_offensive", "Damage with Gems in Weapon", 1, 8);
+    addSkillBranch("miner_defensive", "Armor", 1, 8);
+    addSkillBranch("miner_lesser", "Mining Speed", 1, 6);
+    addSkillBranch("miner_life", "Max Health", 1, 2);
+    addSkillBranch("miner_speed", "Attack Speed", 1, 2);
+    addSkillBranch("miner_crit", "Crit Chance", 1, 2);
+    addSkillBranch("miner_healing", "Life Regeneration", 1, 4);
     // explorer skills
     addSkill("miner_subclass_1", "Explorer");
     addSkill("miner_subclass_1_mastery", "Discoverer");
     addSkill("miner_subclass_1_crafting_notable_1", "Seven-League Boots");
     addSkill("miner_subclass_1_offensive_notable_1", "Haste");
     addSkill("miner_subclass_special", "Decorative Boots");
+    addSkillBranch("miner_subclass_1_defensive", "Armor", 1, 4);
+    addSkillBranch("miner_subclass_1_offensive", "Attack Speed", 1, 4);
+    addSkillBranch("miner_subclass_1_crafting", "Crafted Boots Speed", 1, 5);
     // jeweler skills
     addSkill("miner_subclass_2", "Jeweler");
     addSkill("miner_subclass_2_mastery", "Aristocrat");
     addSkill("miner_subclass_2_crafting_notable_1", "Star Shards");
     addSkill("miner_subclass_2_life_notable_1", "Talisman");
+    addSkillBranch("miner_subclass_2_defensive", "Armor and Evasion", 1, 4);
+    addSkillBranch("miner_subclass_2_life", "Max Health", 1, 4);
+    addSkillBranch("miner_subclass_2_crafting", "Gems Power in Jewelry", 1, 5);
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Damage");
     add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Critical Hit Damage");
