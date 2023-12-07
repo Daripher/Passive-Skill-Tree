@@ -11,6 +11,7 @@ import net.minecraftforge.network.NetworkEvent;
 public class SyncSkillsMessage {
   public static SyncSkillsMessage decode(FriendlyByteBuf buf) {
     SkillTreeClientData.loadFromByteBuf(buf);
+    NetworkHelper.loadSkillTreeConfig(buf);
     return new SyncSkillsMessage();
   }
 
@@ -20,6 +21,7 @@ public class SyncSkillsMessage {
   }
 
   public void encode(FriendlyByteBuf buf) {
+    NetworkHelper.writeSkillTreeConfig(buf);
     NetworkHelper.writePassiveSkills(buf, SkillsReloader.getSkills().values());
     NetworkHelper.writePassiveSkillTrees(buf, SkillTreesReloader.getSkillTrees());
   }

@@ -24,14 +24,28 @@ public class SkillTreeClientData {
   private static final Map<ResourceLocation, PassiveSkillTree> SKILL_TREES = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkillTree> EDITOR_TREES = new HashMap<>();
+  public static int[] skill_points_costs;
+  public static int first_skill_cost;
+  public static int last_skill_cost;
+  public static int max_skill_points;
+  public static boolean enable_exp_exchange;
+  public static boolean use_skill_cost_array;
+
+  public static int getSkillPointCost(int level) {
+    if (use_skill_cost_array) {
+      if (level > skill_points_costs.length) {
+        return skill_points_costs[skill_points_costs.length - 1];
+      }
+      return skill_points_costs[level];
+    }
+    return first_skill_cost + (last_skill_cost - first_skill_cost) * level / max_skill_points;
+  }
 
   public static void loadFromByteBuf(FriendlyByteBuf buf) {
     PASSIVE_SKILLS.clear();
     SKILL_TREES.clear();
-    List<PassiveSkill> skills = NetworkHelper.readPassiveSkills(buf);
-    skills.forEach(SkillTreeClientData::storeSkill);
-    List<PassiveSkillTree> skillTrees = NetworkHelper.readPassiveSkillTrees(buf);
-    skillTrees.forEach(SkillTreeClientData::storeSkillTree);
+    NetworkHelper.readPassiveSkills(buf).forEach(SkillTreeClientData::storeSkill);
+    NetworkHelper.readPassiveSkillTrees(buf).forEach(SkillTreeClientData::storeSkillTree);
   }
 
   private static void storeSkill(PassiveSkill skill) {

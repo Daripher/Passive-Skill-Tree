@@ -28,8 +28,8 @@ public class Config {
   private static final ConfigValue<Integer> DEFAULT_SHIELD_SOCKETS;
   private static final ConfigValue<Integer> DEFAULT_NECKLACE_SOCKETS;
   private static final ConfigValue<Integer> DEFAULT_RING_SOCKETS;
-  private static final ConfigValue<Integer> FIRST_POINT_COST;
-  private static final ConfigValue<Integer> LAST_POINT_COST;
+  private static final ConfigValue<Integer> FIRST_SKILL_COST;
+  private static final ConfigValue<Integer> LAST_SKILL_COST;
   private static final ConfigValue<Double> GEM_DROP_CHANCE;
   private static final ConfigValue<Double> AMNESIA_SCROLL_PENALTY;
   private static final ConfigValue<Double> GRINDSTONE_EXP_MULTIPLIER;
@@ -39,7 +39,7 @@ public class Config {
   private static final ConfigValue<Boolean> ENABLE_EXP_EXCHANGE;
   private static final ConfigValue<Boolean> DRAGON_DROPS_AMNESIA_SCROLL;
   private static final ConfigValue<Boolean> USE_POINTS_COSTS_ARRAY;
-  private static final ConfigValue<List<? extends Integer>> LEVEL_UP_COSTS;
+  private static final ConfigValue<List<? extends Integer>> SKILL_POINTS_COSTS;
   private static final ConfigValue<List<? extends String>> SOCKET_BLACKLIST;
   private static final ConfigValue<List<? extends String>> FORCED_HELMETS;
   private static final ConfigValue<List<? extends String>> FORCED_CHESTPLATES;
@@ -48,7 +48,10 @@ public class Config {
   private static final ConfigValue<List<? extends String>> FORCED_SHIELDS;
   private static final ConfigValue<List<? extends String>> FORCED_MELEE_WEAPON;
   private static final ConfigValue<List<? extends String>> FORCED_RANGED_WEAPON;
+  public static final int DEFAULT_MAX_SKILLS = 85;
   public static int max_skill_points;
+  public static int first_skill_cost;
+  public static int last_skill_cost;
   public static int default_helmet_sockets;
   public static int default_chestplate_sockets;
   public static int default_leggings_sockets;
@@ -63,8 +66,10 @@ public class Config {
   public static double mixture_effects_duration;
   public static double mixture_effects_strength;
   public static boolean show_chat_messages;
+  public static boolean use_skill_points_array;
   public static boolean enable_exp_exchange;
   public static boolean dragon_drops_amnesia_scroll;
+  public static List<? extends Integer> skill_points_costs;
   public static List<? extends String> socket_blacklist;
   public static Set<Item> forced_helmets;
   public static Set<Item> forced_chestplates;
@@ -76,15 +81,15 @@ public class Config {
 
   static {
     BUILDER.push("Skill Points");
-    MAX_SKILL_POINTS = BUILDER.defineInRange("Maximum skill points", 85, 1, 1000);
-    FIRST_POINT_COST = BUILDER.defineInRange("First skill point cost", 15, 0, Integer.MAX_VALUE);
-    LAST_POINT_COST = BUILDER.defineInRange("Last skill point cost", 1400, 0, Integer.MAX_VALUE);
+    MAX_SKILL_POINTS = BUILDER.defineInRange("Maximum skill points", DEFAULT_MAX_SKILLS, 1, 1000);
+    FIRST_SKILL_COST = BUILDER.defineInRange("First skill point cost", 15, 0, Integer.MAX_VALUE);
+    LAST_SKILL_COST = BUILDER.defineInRange("Last skill point cost", 1400, 0, Integer.MAX_VALUE);
     BUILDER.comment("You can set cost for each skill point instead");
     USE_POINTS_COSTS_ARRAY = BUILDER.define("Use skill points costs array", false);
     BUILDER.comment("This list's size must be equal to maximum skill points.");
-    LEVEL_UP_COSTS =
+    SKILL_POINTS_COSTS =
         BUILDER.defineList(
-            "Levelup costs", generateDefaultPointsCosts(85), o -> o instanceof Integer i && i > 0);
+            "Levelup costs", generateDefaultPointsCosts(), o -> o instanceof Integer i && i > 0);
     BUILDER.comment("Disabling this will remove chat messages when you gain a skill point.");
     SHOW_CHAT_MESSAGES = BUILDER.define("Show chat messages", true);
     BUILDER.comment(
@@ -161,10 +166,10 @@ public class Config {
     SPEC = BUILDER.build();
   }
 
-  static List<Integer> generateDefaultPointsCosts(int maximumPoints) {
+  static List<Integer> generateDefaultPointsCosts() {
     List<Integer> costs = new ArrayList<>();
     costs.add(15);
-    for (int i = 1; i < maximumPoints; i++) {
+    for (int i = 1; i < DEFAULT_MAX_SKILLS; i++) {
       int previousCost = costs.get(costs.size() - 1);
       int cost = previousCost + 3 + i;
       costs.add(cost);
@@ -180,7 +185,11 @@ public class Config {
   @SubscribeEvent
   static void load(ModConfigEvent event) {
     if (event.getConfig().getSpec() != SPEC) return;
+    skill_points_costs = SKILL_POINTS_COSTS.get();
+    use_skill_points_array = USE_POINTS_COSTS_ARRAY.get();
     max_skill_points = MAX_SKILL_POINTS.get();
+    first_skill_cost = FIRST_SKILL_COST.get();
+    last_skill_cost = LAST_SKILL_COST.get();
     default_helmet_sockets = DEFAULT_HELMET_SOCKETS.get();
     default_chestplate_sockets = DEFAULT_CHESTPLATE_SOCKETS.get();
     default_leggings_sockets = DEFAULT_LEGGINGS_SOCKETS.get();
@@ -209,14 +218,14 @@ public class Config {
 
   public static int getSkillPointCost(int level) {
     if (USE_POINTS_COSTS_ARRAY.get()) {
-      List<? extends Integer> costs = LEVEL_UP_COSTS.get();
+      List<? extends Integer> costs = SKILL_POINTS_COSTS.get();
       if (level > costs.size()) {
         return costs.get(costs.size() - 1);
       }
       return costs.get(level);
     }
-    return FIRST_POINT_COST.get()
-        + (LAST_POINT_COST.get() - FIRST_POINT_COST.get()) * level / max_skill_points;
+    return FIRST_SKILL_COST.get()
+        + (LAST_SKILL_COST.get() - FIRST_SKILL_COST.get()) * level / max_skill_points;
   }
 
   static Set<Item> getItems(List<? extends String> names) {

@@ -8,7 +8,6 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.skill.SkillTreeClientData;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.config.ClientConfig;
-import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
@@ -103,7 +102,7 @@ public class SkillTreeScreen extends Screen {
     progressBar.showProgressInNumbers = showProgressInNumbers;
     addRenderableWidget(progressBar);
     addTopButtons();
-    if (!Config.enable_exp_exchange) {
+    if (!SkillTreeClientData.enable_exp_exchange) {
       progressBar.visible = false;
       buyButton.visible = false;
     }
@@ -140,7 +139,7 @@ public class SkillTreeScreen extends Screen {
     buyButton.setPressFunc(b -> buySkillPoint());
     addRenderableWidget(buyButton);
     pointsInfo = new Label(width / 2 + 8, buttonsY, buttonWidth, 14, Component.empty());
-    if (!Config.enable_exp_exchange) {
+    if (!SkillTreeClientData.enable_exp_exchange) {
       pointsInfo.x = width / 2 - buttonWidth / 2;
     }
     addRenderableWidget(pointsInfo);
@@ -345,7 +344,8 @@ public class SkillTreeScreen extends Screen {
       startingPoints.forEach(SkillButton::animate);
       return;
     }
-    if (learnedSkills.size() + newlyLearnedSkills.size() >= Config.max_skill_points) return;
+    if (learnedSkills.size() + newlyLearnedSkills.size() >= SkillTreeClientData.max_skill_points)
+      return;
     skillConnections.forEach(SkillConnection::updateAnimation);
     gatewayConnections.forEach(SkillConnection::updateAnimation);
   }
@@ -368,20 +368,20 @@ public class SkillTreeScreen extends Screen {
   private void buySkillPoint() {
     int currentLevel = getCurrentLevel();
     if (!canBuySkillPoint(currentLevel)) return;
-    int cost = Config.getSkillPointCost(currentLevel);
+    int cost = SkillTreeClientData.getSkillPointCost(currentLevel);
     NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
     getPlayer().giveExperiencePoints(-cost);
   }
 
   private boolean canBuySkillPoint(int currentLevel) {
-    if (!Config.enable_exp_exchange) return false;
+    if (!SkillTreeClientData.enable_exp_exchange) return false;
     if (isMaxLevel(currentLevel)) return false;
-    int cost = Config.getSkillPointCost(currentLevel);
+    int cost = SkillTreeClientData.getSkillPointCost(currentLevel);
     return getPlayer().totalExperience >= cost;
   }
 
   private boolean isMaxLevel(int currentLevel) {
-    return currentLevel >= Config.max_skill_points;
+    return currentLevel >= SkillTreeClientData.max_skill_points;
   }
 
   private int getCurrentLevel() {
@@ -426,7 +426,7 @@ public class SkillTreeScreen extends Screen {
     int currentLevel = getCurrentLevel();
     buyButton.active = false;
     if (isMaxLevel(currentLevel)) return;
-    int pointCost = Config.getSkillPointCost(currentLevel);
+    int pointCost = SkillTreeClientData.getSkillPointCost(currentLevel);
     buyButton.active = getPlayer().totalExperience >= pointCost;
   }
 
