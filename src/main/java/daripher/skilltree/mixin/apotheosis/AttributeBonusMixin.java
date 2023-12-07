@@ -1,6 +1,5 @@
 package daripher.skilltree.mixin.apotheosis;
 
-import java.util.Objects;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,8 +17,7 @@ public class AttributeBonusMixin {
       StepFunction function, float level, ItemStack gem, LootRarity rarity) {
     float bonus = function.get(level);
     if (!gem.hasTag()) return bonus;
-    if (!Objects.requireNonNull(gem.getTag()).contains("gem_power")) return bonus;
-    float power = gem.getTag().getFloat("gem_power") + 1;
+    float power = gem.getOrCreateTag().getFloat("gem_power") + 1;
     return bonus * power;
   }
 }

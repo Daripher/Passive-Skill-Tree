@@ -14,27 +14,27 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ItemStackMixin implements IForgeItemStack {
   @SuppressWarnings("DataFlowIssue")
   @ModifyReturnValue(method = "getMaxDamage", at = @At("RETURN"))
-  private int applyDurabilityBonuses(int durability) {
+  private int applyDurabilityModifiers(int original) {
     ItemStack stack = (ItemStack) (Object) this;
     List<ItemDurabilityBonus> bonuses = ItemHelper.getItemBonuses(stack, ItemDurabilityBonus.class);
-    durability +=
+    original +=
         bonuses.stream()
             .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.ADDITION)
             .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(0f);
-    durability *=
+    original *=
         bonuses.stream()
             .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE)
             .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(1f);
-    durability *=
+    original *=
         bonuses.stream()
             .filter(bonus -> bonus.getOperation() == AttributeModifier.Operation.MULTIPLY_TOTAL)
             .map(ItemDurabilityBonus::getAmount)
             .reduce(Float::sum)
             .orElse(1f);
-    return durability;
+    return original;
   }
 }

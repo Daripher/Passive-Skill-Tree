@@ -1,5 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.world.entity.Entity;
@@ -10,18 +11,17 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FishingHook.class)
 public abstract class FishingHookMixin {
-  @Redirect(
+  @ModifyExpressionValue(
       method = "retrieve",
       at =
           @At(
               value = "INVOKE",
               target =
                   "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"))
-  private boolean multiplyFishingLoot(Level level, Entity entity) {
+  private boolean multiplyFishingLoot(boolean original, Level level, Entity entity) {
     if (!(entity instanceof ItemEntity item)) return level.addFreshEntity(entity);
     Player player = getPlayerOwner();
     float multiplier =
@@ -37,7 +37,7 @@ public abstract class FishingHookMixin {
       copy.setDeltaMovement(item.getDeltaMovement());
       level.addFreshEntity(copy);
     }
-    return level.addFreshEntity(entity);
+    return original;
   }
 
   public abstract @Shadow Player getPlayerOwner();

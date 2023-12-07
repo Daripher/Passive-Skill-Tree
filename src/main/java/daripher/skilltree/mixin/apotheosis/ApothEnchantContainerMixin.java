@@ -1,12 +1,10 @@
 package daripher.skilltree.mixin.apotheosis;
 
-import daripher.skilltree.api.EnchantmentMenuExtention;
+import daripher.skilltree.api.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
-
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
 import java.util.Optional;
-
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -37,11 +35,10 @@ public class ApothEnchantContainerMixin {
     int[] costs = menu.costs;
     int cost =
         ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
-    int[] costsBeforeReduction = ((EnchantmentMenuExtention) this).getCostsBeforeReduction();
-    costsBeforeReduction[slot] = cost;
-    return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> SkillBonusHandler.adjustEnchantmentCost(cost, player))
-        .orElse(cost);
+    EnchantmentMenuExtension extension = (EnchantmentMenuExtension) this;
+    extension.getCostsBeforeReduction()[slot] = cost;
+    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
+    return player.map(value -> SkillBonusHandler.adjustEnchantmentCost(cost, value)).orElse(cost);
   }
 
   @Redirect(
@@ -71,7 +68,7 @@ public class ApothEnchantContainerMixin {
   }
 
   protected List<EnchantmentInstance> amplifyEnchantments(ItemStack itemStack, int slot) {
-    EnchantmentMenuExtention enchantmentMenu = (EnchantmentMenuExtention) this;
+    EnchantmentMenuExtension enchantmentMenu = (EnchantmentMenuExtension) this;
     int[] costsBeforeReduction = enchantmentMenu.getCostsBeforeReduction();
     List<EnchantmentInstance> enchantments =
         getEnchantmentList(itemStack, slot, costsBeforeReduction[slot]);

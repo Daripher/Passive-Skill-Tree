@@ -1,25 +1,23 @@
 package daripher.skilltree.mixin.minecraft;
 
-import com.google.common.collect.Lists;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.mixin.RecipeCollectionAccessor;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
 import java.util.ArrayList;
-import java.util.Set;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(RecipeBookComponent.class)
 public class RecipeBookComponentMixin {
   protected @Shadow RecipeBookMenu<?> menu;
 
-  @Redirect(
+  @ModifyExpressionValue(
       method = "updateCollections",
       at =
           @At(
@@ -27,19 +25,14 @@ public class RecipeBookComponentMixin {
               target =
                   "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;"))
   private ArrayList<RecipeCollection> removeUncraftableRecipes(
-      Iterable<RecipeCollection> elements) {
-    ArrayList<RecipeCollection> collections = Lists.newArrayList(elements);
-    collections.forEach(this::removeUncraftableRecipes);
-    return collections;
+      ArrayList<RecipeCollection> original) {
+    original.forEach(this::removeUncraftableRecipes);
+    return original;
   }
 
   protected void removeUncraftableRecipes(RecipeCollection recipeCollection) {
-    Set<Recipe<?>> craftableRecipes =
-        ObfuscationReflectionHelper.getPrivateValue(
-            RecipeCollection.class, recipeCollection, "f_100493_");
-    assert craftableRecipes != null;
-    if (craftableRecipes.isEmpty()) return;
-    craftableRecipes.removeIf(this::isUncraftable);
+    RecipeCollectionAccessor accessor = (RecipeCollectionAccessor) recipeCollection;
+    accessor.getCraftable().removeIf(this::isUncraftable);
   }
 
   private boolean isUncraftable(Recipe<?> recipe) {

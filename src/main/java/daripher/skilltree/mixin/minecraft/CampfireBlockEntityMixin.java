@@ -33,13 +33,13 @@ public class CampfireBlockEntityMixin implements PlayerContainer, CampfireBlockE
       CallbackInfo callback) {
     if (!(entity instanceof CampfireBlockEntityExtension extension)) return;
     if (!(entity instanceof PlayerContainer container)) return;
-    for (int i = 0; i < entity.getItems().size(); ++i) {
+    Optional<Player> player = container.getViewingPlayer();
+    if (player.isEmpty()) return;
+    for (int i = 0; i < entity.getItems().size(); i++) {
       ItemStack stack = entity.getItems().get(i);
       if (stack.isEmpty()) continue;
       if (extension.getCookingProgress()[i] + 1 < extension.getCookingTime()[i]) continue;
-      container
-          .getViewingPlayer()
-          .ifPresent(player -> SkillBonusHandler.itemCrafted(player, stack));
+      SkillBonusHandler.itemCrafted(player.get(), stack);
     }
   }
 

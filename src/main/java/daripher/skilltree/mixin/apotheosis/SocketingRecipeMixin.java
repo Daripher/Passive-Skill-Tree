@@ -25,9 +25,8 @@ public class SocketingRecipeMixin {
               target =
                   "Lshadows/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
   private boolean checkPlayerSockets(ItemStack stack, Container container, Level level) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    return player
-        .map(value -> ApotheosisCompatibility.INSTANCE.hasEmptySockets(stack, value))
+    return ContainerHelper.getViewingPlayer(container)
+        .map(player -> ApotheosisCompatibility.INSTANCE.hasEmptySockets(stack, player))
         .orElseGet(() -> SocketHelper.hasEmptySockets(stack));
   }
 

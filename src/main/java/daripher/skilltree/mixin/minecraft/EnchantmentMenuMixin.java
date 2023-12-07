@@ -1,6 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.EnchantmentMenuExtention;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import daripher.skilltree.api.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
@@ -14,7 +15,6 @@ import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.ForgeEventFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,28 +22,30 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(EnchantmentMenu.class)
-public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtention {
+public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtension {
   private final int[] costsBeforeReduction = new int[3];
-  public @Shadow @Final int[] costs;
   private @Shadow @Final DataSlot enchantmentSeed;
 
-  @Redirect(
+  @ModifyExpressionValue(
       method = {"lambda$slotsChanged$0", "m_39483_"},
       at =
           @At(
               value = "INVOKE",
               target =
                   "Lnet/minecraftforge/event/ForgeEventFactory;onEnchantmentLevelSet(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;IILnet/minecraft/world/item/ItemStack;I)I"))
-  private int reduceLevelRequirements(
-      Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
-    int levelRequirement =
-        ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
-    costsBeforeReduction[slot] = levelRequirement;
+  private int reduceEnchantmentCost(
+      int original,
+      Level level,
+      BlockPos pos,
+      int slot,
+      int power,
+      ItemStack itemStack,
+      int enchantmentLevel) {
+    costsBeforeReduction[slot] = original;
     @SuppressWarnings("DataFlowIssue")
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
-    return ContainerHelper.getViewingPlayer(menu)
-        .map(player -> SkillBonusHandler.adjustEnchantmentCost(levelRequirement, player))
-        .orElse(levelRequirement);
+    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
+    return player.map(p -> SkillBonusHandler.adjustEnchantmentCost(original, p)).orElse(original);
   }
 
   @Redirect(
