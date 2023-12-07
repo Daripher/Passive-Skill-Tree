@@ -49,12 +49,16 @@ public class SkillTreeEditorScreen extends Screen {
 
   public SkillTreeEditorScreen(ResourceLocation skillTreeId) {
     super(Component.empty());
-    this.skillTree = SkillTreeClientData.getOrCreateEditorTree(skillTreeId);
     this.minecraft = Minecraft.getInstance();
+    this.skillTree = SkillTreeClientData.getOrCreateEditorTree(skillTreeId);
   }
 
   @Override
   public void init() {
+    if (skillTree == null) {
+      getMinecraft().setScreen(null);
+      return;
+    }
     clearWidgets();
     addSkillButtons();
     maxScrollX -= width / 2 - 350;

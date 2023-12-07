@@ -11,11 +11,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -74,46 +77,63 @@ public class SkillTreeClientData {
     return SKILL_TREES.get(id);
   }
 
-  public static PassiveSkillTree getOrCreateEditorTree(ResourceLocation treeId) {
-    File skillTreeSavesFolder = getSkillTreeSavesFolder(treeId);
-    if (!skillTreeSavesFolder.exists()) {
-      skillTreeSavesFolder.mkdirs();
+  public static @Nullable PassiveSkillTree getOrCreateEditorTree(ResourceLocation treeId) {
+    try {
+      File skillTreeSavesFolder = getSkillTreeSavesFolder(treeId);
+      if (!skillTreeSavesFolder.exists()) {
+        skillTreeSavesFolder.mkdirs();
+      }
+      if (!getSkillTreeSaveFile(treeId).exists() && SKILL_TREES.containsKey(treeId)) {
+        saveEditorSkillTree(SKILL_TREES.get(treeId));
+      }
+      if (!EDITOR_TREES.containsKey(treeId)) {
+        loadEditorSkillTree(treeId);
+      }
+      PassiveSkillTree skillTree = EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
+      skillTree.getSkillIds().forEach(SkillTreeClientData::loadOrCreateEditorSkill);
+      return skillTree;
+    } catch (RuntimeException e) {
+      EDITOR_TREES.clear();
+      EDITOR_PASSIVE_SKILLS.clear();
+      sendSystemMessage("Error while reading editor files", ChatFormatting.DARK_RED);
+      sendSystemMessage("");
+      sendSystemMessage(e.getMessage(), ChatFormatting.RED);
+      sendSystemMessage("");
+      sendSystemMessage("Try removing files from folder", ChatFormatting.DARK_RED);
+      sendSystemMessage("");
+      sendSystemMessage(getSavesFolder().getPath(), ChatFormatting.RED);
+      return null;
     }
-    if (!getSkillTreeSaveFile(treeId).exists() && SKILL_TREES.containsKey(treeId)) {
-      saveEditorSkillTree(SKILL_TREES.get(treeId));
+  }
+
+  private static void loadOrCreateEditorSkill(ResourceLocation skillId) {
+    File skillSavesFolder = getSkillSavesFolder(skillId);
+    if (!skillSavesFolder.exists()) {
+      skillSavesFolder.mkdirs();
     }
-    if (!EDITOR_TREES.containsKey(treeId)) {
-      loadEditorSkillTree(treeId);
+    if (!getSkillSaveFile(skillId).exists() && PASSIVE_SKILLS.containsKey(skillId)) {
+      saveEditorSkill(PASSIVE_SKILLS.get(skillId));
     }
-    PassiveSkillTree skillTree = EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
-    skillTree
-        .getSkillIds()
-        .forEach(
-            skillId -> {
-              File skillSavesFolder = getSkillSavesFolder(skillId);
-              if (!skillSavesFolder.exists()) {
-                skillSavesFolder.mkdirs();
-              }
-              if (!getSkillSaveFile(skillId).exists() && PASSIVE_SKILLS.containsKey(skillId)) {
-                saveEditorSkill(PASSIVE_SKILLS.get(skillId));
-              }
-              if (!EDITOR_PASSIVE_SKILLS.containsKey(skillId)) {
-                loadEditorSkill(skillId);
-              }
-            });
-    return skillTree;
+    if (!EDITOR_PASSIVE_SKILLS.containsKey(skillId)) {
+      loadEditorSkill(skillId);
+    }
   }
 
   public static void saveEditorSkillTree(PassiveSkillTree skillTree) {
     try (FileWriter writer = new FileWriter(getSkillTreeSaveFile(skillTree.getId()))) {
       SkillTreesReloader.GSON.toJson(skillTree, writer);
     } catch (JsonIOException | IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException("Can't save editor skill tree " + skillTree.getId());
     }
   }
 
   public static void loadEditorSkillTree(ResourceLocation treeId) {
-    PassiveSkillTree skillTree = readFromFile(PassiveSkillTree.class, getSkillTreeSaveFile(treeId));
+    PassiveSkillTree skillTree;
+    try {
+      skillTree = readFromFile(PassiveSkillTree.class, getSkillTreeSaveFile(treeId));
+    } catch (IOException e) {
+      throw new RuntimeException("Can't load editor tree " + treeId);
+    }
     if (skillTree == null) {
       skillTree = new PassiveSkillTree(treeId);
       saveEditorSkillTree(skillTree);
@@ -125,12 +145,17 @@ public class SkillTreeClientData {
     try (FileWriter writer = new FileWriter(getSkillSaveFile(skill.getId()))) {
       SkillsReloader.GSON.toJson(skill, writer);
     } catch (JsonIOException | IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException("Can't save editor skill " + skill.getId());
     }
   }
 
   public static void loadEditorSkill(ResourceLocation skillId) {
-    PassiveSkill skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
+    PassiveSkill skill;
+    try {
+      skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
+    } catch (IOException e) {
+      throw new RuntimeException("Can't load editor skill " + skillId);
+    }
     EDITOR_PASSIVE_SKILLS.put(skillId, skill);
   }
 
@@ -159,13 +184,20 @@ public class SkillTreeClientData {
     return new File(getSkillTreeSavesFolder(skillTreeId), skillTreeId.getPath() + ".json");
   }
 
-  private static <T> T readFromFile(Class<T> objectType, File file) {
-    T object = null;
+  private static <T> T readFromFile(Class<T> objectType, File file) throws IOException {
     try (JsonReader reader = new JsonReader(new FileReader(file))) {
-      object = SkillsReloader.GSON.fromJson(reader, objectType);
-    } catch (Exception e) {
-      e.printStackTrace();
+      return SkillsReloader.GSON.fromJson(reader, objectType);
     }
-    return object;
+  }
+
+  private static void sendSystemMessage(String text, ChatFormatting... styles) {
+    LocalPlayer player = Minecraft.getInstance().player;
+    if (player != null) {
+      MutableComponent component = Component.literal(text);
+      for (ChatFormatting style : styles) {
+        component.withStyle(style);
+      }
+      player.sendSystemMessage(component);
+    }
   }
 }
