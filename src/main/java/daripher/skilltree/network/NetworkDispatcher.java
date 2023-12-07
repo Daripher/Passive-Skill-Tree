@@ -4,7 +4,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
-import daripher.skilltree.network.message.SyncSkillsMessage;
+import daripher.skilltree.network.message.SyncSkillTreeDataMessage;
 import java.util.Optional;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,10 +29,10 @@ public class NetworkDispatcher {
             s -> true);
     network_channel.registerMessage(
         1,
-        SyncSkillsMessage.class,
-        SyncSkillsMessage::encode,
-        SyncSkillsMessage::decode,
-        SyncSkillsMessage::receive,
+        SyncSkillTreeDataMessage.class,
+        SyncSkillTreeDataMessage::encode,
+        SyncSkillTreeDataMessage::decode,
+        SyncSkillTreeDataMessage::receive,
         Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     network_channel.registerMessage(
         2,

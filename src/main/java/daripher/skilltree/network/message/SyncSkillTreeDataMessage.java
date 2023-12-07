@@ -8,15 +8,15 @@ import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
-public class SyncSkillsMessage {
-  public static SyncSkillsMessage decode(FriendlyByteBuf buf) {
-    SkillTreeClientData.loadFromByteBuf(buf);
+public class SyncSkillTreeDataMessage {
+  public static SyncSkillTreeDataMessage decode(FriendlyByteBuf buf) {
     NetworkHelper.loadSkillTreeConfig(buf);
-    return new SyncSkillsMessage();
+    SkillTreeClientData.loadFromByteBuf(buf);
+    return new SyncSkillTreeDataMessage();
   }
 
   public static void receive(
-      SyncSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
+      SyncSkillTreeDataMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
     ctxSupplier.get().setPacketHandled(true);
   }
 
