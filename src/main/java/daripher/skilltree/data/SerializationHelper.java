@@ -21,7 +21,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -197,19 +196,6 @@ public class SerializationHelper {
     json.addProperty("effect", Objects.requireNonNull(effectId).toString());
   }
 
-  @Nullable
-  public static EquipmentSlot deserializeSlot(JsonObject json) {
-    EquipmentSlot slot = null;
-    if (json.has("slot")) {
-      slot = EquipmentSlot.byName(json.get("slot").getAsString());
-    }
-    return slot;
-  }
-
-  public static void serializeSlot(JsonObject json, @Nullable EquipmentSlot slot) {
-    if (slot != null) json.addProperty("slot", slot.getName());
-  }
-
   public static WeaponCondition.Type deserializeWeaponType(JsonObject json) {
     return WeaponCondition.Type.byName(json.get("weapon_type").getAsString());
   }
@@ -320,7 +306,7 @@ public class SerializationHelper {
 
   public static @Nonnull LivingMultiplier deserializePlayerMultiplier(CompoundTag tag) {
     CompoundTag multiplierTag = tag.getCompound("player_multiplier");
-    ResourceLocation serializerId = new ResourceLocation(multiplierTag.getString("Type"));
+    ResourceLocation serializerId = new ResourceLocation(multiplierTag.getString("type"));
     LivingMultiplier.Serializer serializer =
         PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(multiplierTag);
@@ -427,19 +413,6 @@ public class SerializationHelper {
     tag.put("item_bonus", bonusTag);
   }
 
-  @Nullable
-  public static EquipmentSlot deserializeSlot(CompoundTag tag) {
-    EquipmentSlot slot = null;
-    if (tag.contains("category")) {
-      slot = EquipmentSlot.byName(tag.getString("category"));
-    }
-    return slot;
-  }
-
-  public static void serializeSlot(CompoundTag tag, @Nullable EquipmentSlot slot) {
-    if (slot != null) tag.putString("category", slot.getName());
-  }
-
   public static WeaponCondition.Type deserializeWeaponType(CompoundTag tag) {
     return WeaponCondition.Type.byName(tag.getString("weapon_type"));
   }
@@ -465,7 +438,7 @@ public class SerializationHelper {
   }
 
   public static MobEffectInstance deserializeEffectInstance(CompoundTag tag) {
-    MobEffect effect = deserializeEffect(tag);
+    MobEffect effect = Objects.requireNonNull(deserializeEffect(tag));
     int duration = tag.getInt("duration");
     int amplifier = tag.getInt("amplifier");
     return new MobEffectInstance(effect, duration, amplifier);
