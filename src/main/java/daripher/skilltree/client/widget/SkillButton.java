@@ -19,9 +19,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class SkillButton extends Button {
   private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
@@ -193,8 +190,12 @@ public class SkillButton extends Button {
   }
 
   protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
-    String titleId = getSkillId() + ".name";
-    MutableComponent title = Component.translatable(titleId);
+    MutableComponent title;
+    if (skill.getTitle().isEmpty()) {
+      title = Component.translatable(getSkillId() + ".name");
+    } else {
+      title = Component.literal(skill.getTitle());
+    }
     tooltip.add(title.withStyle(getTitleStyle()));
   }
 
@@ -221,11 +222,5 @@ public class SkillButton extends Button {
 
   private String getSkillId() {
     return "skill." + skill.getId().getNamespace() + "." + skill.getId().getPath();
-  }
-
-  public ItemStack getTooltipBorderStyleStack() {
-    Item styleItem =
-        width == 24 ? Items.EXPERIENCE_BOTTLE : width == 20 ? Items.SHULKER_SHELL : Items.BUCKET;
-    return new ItemStack(styleItem);
   }
 }

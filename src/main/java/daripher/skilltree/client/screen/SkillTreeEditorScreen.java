@@ -136,15 +136,20 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
-    if (textFields().toList().stream().anyMatch(w -> w.mouseClicked(mouseX, mouseY, button))) {
-      return true;
-    }
-    if (widgets().toList().stream().anyMatch(w -> w.mouseClicked(mouseX, mouseY, button))) {
+    if (clickedWidget(mouseX, mouseY, button)) {
       return true;
     }
     SkillButton skillAtMouse = getSkillAt(mouseX, mouseY);
     if (skillAtMouse == null) return false;
     return skillAtMouse.mouseClicked(skillAtMouse.x + 1, skillAtMouse.y + 1, button);
+  }
+
+  private boolean clickedWidget(double mouseX, double mouseY, int button) {
+    boolean clicked = false;
+    for (GuiEventListener child : widgets().toList()) {
+      if (child.mouseClicked(mouseX, mouseY, button)) clicked = true;
+    }
+    return clicked;
   }
 
   private Stream<EditBox> textFields() {
@@ -215,8 +220,12 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean charTyped(char character, int keyCode) {
-    textFields().toList().forEach(b -> b.charTyped(character, keyCode));
-    return super.charTyped(character, keyCode);
+    for (EditBox textField : textFields().toList()) {
+      if (textField.charTyped(character, keyCode)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private Optional<? extends GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
@@ -464,8 +473,7 @@ public class SkillTreeEditorScreen extends Screen {
     if (selectedSkills().allMatch(otherSkill -> sameSize(skill, otherSkill))) {
       addLabel(0, 0, "Size", ChatFormatting.GOLD);
       toolsY += 19;
-      NumericTextField sizeEditor =
-          new NumericTextField(font, toolsX, toolsY, 40, 14, skill.getButtonSize());
+      NumericTextField sizeEditor = addNumericTextField(0, 0, 40, 14, skill.getButtonSize());
       sizeEditor.setNumericFilter(d -> d >= 2);
       sizeEditor.setResponder(s -> setSelectedSkillsSize((int) sizeEditor.getNumericValue()));
       addRenderableWidget(sizeEditor);
@@ -475,14 +483,20 @@ public class SkillTreeEditorScreen extends Screen {
       toolsY -= 38;
       addLabel(65, 0, "Position", ChatFormatting.GOLD);
       toolsY += 19;
-      NumericTextField xPosEditor =
-          new NumericTextField(font, toolsX + 65, toolsY, 60, 14, skill.getPositionX());
+      NumericTextField xPosEditor = addNumericTextField(65, 0, 60, 14, skill.getPositionX());
       xPosEditor.setResponder(s -> skillXPosEditorChanged(skill, xPosEditor));
       addRenderableWidget(xPosEditor);
-      NumericTextField yPosEditor =
-          new NumericTextField(font, toolsX + 130, toolsY, 60, 14, skill.getPositionY());
+      NumericTextField yPosEditor = addNumericTextField(130, 0, 60, 14, skill.getPositionY());
       yPosEditor.setResponder(s -> skillYPosEditorChanged(skill, yPosEditor));
       addRenderableWidget(yPosEditor);
+      toolsY += 19;
+    }
+    if (selectedSkills().allMatch(otherSkill -> sameTitle(skill, otherSkill))) {
+      addLabel(0, 0, "Title", ChatFormatting.GOLD);
+      toolsY += 19;
+      TextField titleEditor = addTextField(0, 0, 200, 14, skill.getTitle());
+      titleEditor.setResponder(this::setSelectedSkillsTitle);
+      addRenderableWidget(titleEditor);
       toolsY += 19;
     }
   }
@@ -505,7 +519,11 @@ public class SkillTreeEditorScreen extends Screen {
     selectedSkills().forEach(skill -> skill.setButtonSize(size));
     getSelectedSkillButtons().forEach(button -> button.setButtonSize(size));
     saveSelectedSkills();
-    rebuildWidgets();
+  }
+
+  private void setSelectedSkillsTitle(String title) {
+    selectedSkills().forEach(skill -> skill.setTitle(title));
+    saveSelectedSkills();
   }
 
   private void addTexturesTools() {
@@ -894,6 +912,11 @@ public class SkillTreeEditorScreen extends Screen {
   protected boolean sameSize(PassiveSkill skill, PassiveSkill otherSkill) {
     if (skill == otherSkill) return true;
     return skill.getButtonSize() == otherSkill.getButtonSize();
+  }
+
+  protected boolean sameTitle(PassiveSkill skill, PassiveSkill otherSkill) {
+    if (skill == otherSkill) return true;
+    return skill.getTitle().equals(otherSkill.getTitle());
   }
 
   private enum Tools {

@@ -3,6 +3,7 @@ package daripher.skilltree.skill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,7 @@ public class PassiveSkill {
   private ResourceLocation iconTexture;
   private ResourceLocation borderTexture;
   private @Nullable ResourceLocation connectedTreeId;
+  private @Nullable String title;
   private float positionX, positionY;
   private int buttonSize;
   private boolean isStartingPoint;
@@ -118,6 +120,14 @@ public class PassiveSkill {
 
   public List<ResourceLocation> getGatewayConnections() {
     return connectedAsGateways;
+  }
+
+  public @Nonnull String getTitle() {
+    return title == null ? "" : title;
+  }
+
+  public void setTitle(@Nonnull String title) {
+    this.title = title.isEmpty() ? null : title;
   }
 
   public void learn(ServerPlayer player, boolean firstTime) {
