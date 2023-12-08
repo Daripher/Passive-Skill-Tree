@@ -868,6 +868,7 @@
   "skill_bonus.skilltree.repair_efficiency": "Repaired %s: %s",
   "skill_bonus.skilltree.repair_efficiency.bonus": "Durability Restored",
   "skill_bonus_multiplier.skilltree.attribute_value": "%s for each %s point",
+  "skill_bonus_multiplier.skilltree.distance_to_target": "%s for each Block between You and Target",
   "skill_bonus_multiplier.skilltree.effect_amount": "%s for each effect on you",
   "skill_bonus_multiplier.skilltree.enchants_amount": "%s for each enchantment on your %s",
   "skill_bonus_multiplier.skilltree.enchants_levels": "%s for each enchantment level on your %s",

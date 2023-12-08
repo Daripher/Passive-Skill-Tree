@@ -390,10 +390,11 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
     add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
-    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на вашем %s");
-    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на %s");
+    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s за каждый уровень зачарований на %s");
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый самоцвет в вашем %s");
     add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
+    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s за каждый Блок между Вами и Целью");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Отравление Оружия");
     addRecipe("skilltree:potion_mixing", "Смешивание Зелий");

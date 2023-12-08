@@ -393,6 +393,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
     add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
+    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s for each Block between You and Target");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Weapon Poisoning");
     addRecipe("skilltree:potion_mixing", "Potion Mixing");
