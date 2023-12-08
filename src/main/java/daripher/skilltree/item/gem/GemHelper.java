@@ -9,6 +9,7 @@ import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.player.GemPowerBonus;
 import daripher.skilltree.skill.bonus.player.PlayerSocketsBonus;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -111,7 +112,7 @@ public class GemHelper {
     return itemStack.getOrCreateTag().getList(GEMS_TAG, new CompoundTag().getId());
   }
 
-  public static int getPlayerSockets(ItemStack stack, Player player) {
+  public static int getPlayerSockets(ItemStack stack, @Nonnull Player player) {
     return SkillBonusHandler.getSkillBonuses(player, PlayerSocketsBonus.class).stream()
         .filter(bonus -> bonus.getItemCondition().met(stack))
         .map(PlayerSocketsBonus::getSockets)

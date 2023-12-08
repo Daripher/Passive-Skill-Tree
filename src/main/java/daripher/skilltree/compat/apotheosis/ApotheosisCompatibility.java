@@ -5,8 +5,8 @@ import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -111,7 +111,7 @@ public enum ApotheosisCompatibility {
   }
 
   public int getSockets(ItemStack stack, @Nullable Player player) {
-    int playerSockets = GemHelper.getPlayerSockets(stack, player);
+    int playerSockets = player == null ? 0 : GemHelper.getPlayerSockets(stack, player);
     int sockets = SocketHelper.getSockets(stack);
     int gems = SocketHelper.getActiveGems(stack).size();
     playerSockets -= gems;
