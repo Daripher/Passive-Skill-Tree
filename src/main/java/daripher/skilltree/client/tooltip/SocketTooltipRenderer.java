@@ -4,11 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.ArrayList;
+import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.item.gem.GemBonusHandler;
 import java.util.List;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -34,10 +32,10 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
   }
 
   public static Component getSocketDesc(ItemStack stack, int socket) {
-    if (!GemHelper.hasGem(stack, socket)) return Component.translatable("gem.socket");
-    SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
-    if (bonus == null) return Component.literal("Error?").withStyle(ChatFormatting.RED);
-    return bonus.getTooltip();
+    if (!GemBonusHandler.hasGem(stack, socket)) {
+      return Component.translatable("gem.socket");
+    }
+    return GemBonusHandler.getBonuses(stack).get(socket).getTooltip();
   }
 
   @Override
@@ -106,14 +104,8 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     public SocketComponent(ItemStack stack) {
       this.stack = stack;
-      this.gems = new ArrayList<>();
-      this.sockets = GemHelper.getMaximumSockets(stack, Minecraft.getInstance().player);
-      int socket = 0;
-      while (GemHelper.hasGem(stack, socket)) {
-        ItemStack gem = new ItemStack(GemHelper.getGem(stack, socket).get());
-        gems.add(gem);
-        socket++;
-      }
+      this.gems = GemBonusHandler.getGems(stack);
+      this.sockets = ItemHelper.getMaximumSockets(stack, Minecraft.getInstance().player);
       if (sockets < gems.size()) sockets = gems.size();
     }
   }

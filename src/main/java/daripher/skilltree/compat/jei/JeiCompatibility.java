@@ -1,7 +1,6 @@
 package daripher.skilltree.compat.jei;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.item.gem.GemItem;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -11,7 +10,6 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,9 +22,7 @@ public class JeiCompatibility implements IModPlugin {
 
   @Override
   public void registerRecipes(@NotNull IRecipeRegistration registration) {
-    if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return;
-    }
+    if (SkillTreeMod.apotheosisEnabled()) return;
     ForgeRegistries.ITEMS.getValues().stream()
         .filter(GemItem.class::isInstance)
         .map(ItemStack::new)

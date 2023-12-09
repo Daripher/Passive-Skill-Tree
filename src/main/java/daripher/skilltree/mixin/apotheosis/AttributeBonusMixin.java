@@ -17,7 +17,7 @@ public class AttributeBonusMixin {
       StepFunction function, float level, ItemStack gem, LootRarity rarity) {
     float bonus = function.get(level);
     if (!gem.hasTag()) return bonus;
-    float power = gem.getOrCreateTag().getFloat("gem_power") + 1;
+    float power = gem.getOrCreateTag().getFloat("gem_power");
     return bonus * power;
   }
 }

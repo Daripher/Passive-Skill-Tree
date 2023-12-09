@@ -7,11 +7,12 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
-import daripher.skilltree.item.gem.GemHelper;
+import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.util.PlayerHelper;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -38,7 +39,7 @@ public final class GemsAmountMultiplier implements LivingMultiplier {
   }
 
   private int getGems(Stream<ItemStack> items) {
-    return items.map(GemHelper::getGemsCount).reduce(Integer::sum).orElse(0);
+    return items.map(GemBonusHandler::getGems).map(List::size).reduce(Integer::sum).orElse(0);
   }
 
   @Override

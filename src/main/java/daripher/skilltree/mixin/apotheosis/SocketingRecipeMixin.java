@@ -2,7 +2,7 @@ package daripher.skilltree.mixin.apotheosis;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.item.gem.GemHelper;
+import daripher.skilltree.item.gem.GemBonusHandler;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.world.Container;
@@ -40,7 +40,7 @@ public class SocketingRecipeMixin {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isPresent()) {
       ItemStack result = container.getItem(0);
-      float power = GemHelper.getGemPower(player.get(), result);
+      float power = GemBonusHandler.getGemPower(player.get(), result);
       ((ItemStack) gem).getOrCreateTag().putFloat("gem_power", power);
     }
     return gems.set(index, gem);

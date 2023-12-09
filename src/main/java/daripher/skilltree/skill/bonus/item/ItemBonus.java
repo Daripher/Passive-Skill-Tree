@@ -2,8 +2,9 @@ package daripher.skilltree.skill.bonus.item;
 
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
+
+import java.util.Objects;
 import java.util.function.Consumer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -27,15 +28,11 @@ public interface ItemBonus<T extends ItemBonus<T>> {
 
   default String getDescriptionId() {
     ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(getSerializer());
-    assert id != null;
+    Objects.requireNonNull(id);
     return "item_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
   }
 
   MutableComponent getTooltip();
-
-  default MutableComponent getAdvancedTooltip() {
-    return Component.empty();
-  }
 
   void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer);
 

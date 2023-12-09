@@ -1,8 +1,7 @@
 package daripher.skilltree.item.gem;
 
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
-
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
@@ -13,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class GemItem extends Item {
@@ -32,11 +30,9 @@ public abstract class GemItem extends Item {
       @Nullable Level level,
       @NotNull List<Component> components,
       @NotNull TooltipFlag tooltipFlag) {
-    if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) {
-        components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
-        return;
-      }
+    if (SkillTreeMod.apotheosisEnabled()) {
+      components.add(Component.translatable("gem.disabled").withStyle(ChatFormatting.RED));
+      return;
     }
     MutableComponent gemTooltip =
         Component.translatable("gem.tooltip").withStyle(ChatFormatting.YELLOW);
@@ -45,12 +41,13 @@ public abstract class GemItem extends Item {
   }
 
   public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
-    return !GemHelper.hasGem(stack, socket);
+    return !GemBonusHandler.hasGem(stack, socket);
   }
 
   public void insertInto(
-      Player player, ItemStack itemStack, ItemStack gemStack, int gemSlot, double gemPower) {
-    GemHelper.insertGem(player, itemStack, gemStack, gemSlot, gemPower);
+      Player player, ItemStack itemStack, ItemStack gemStack, int gemSlot) {
+    float gemPower = GemBonusHandler.getGemPower(player, itemStack);
+    GemBonusHandler.insertGem(player, itemStack, gemStack, gemSlot, gemPower);
   }
 
   public abstract @Nullable ItemBonus<?> getGemBonus(

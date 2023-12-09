@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.item.gem.GemBonusHandler;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import java.util.Collections;
 import java.util.Iterator;
@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -99,19 +100,19 @@ public enum ApotheosisCompatibility {
   }
 
   public void ignoreGemTooltips(GatherSkippedAttributeTooltipsEvent event) {
-    ItemStack stack = event.getStack();
-    int socket = 0;
-    while (GemHelper.hasGem(stack, socket)) {
-      SkillBonus<?> bonus = GemHelper.getBonus(stack, socket);
-      if (bonus instanceof AttributeBonus attributeBonus) {
-        event.skipUUID(attributeBonus.getModifier().getId());
-      }
-      socket++;
-    }
+    GemBonusHandler.getBonuses(event.getStack()).stream()
+        .filter(ItemSkillBonus.class::isInstance)
+        .map(ItemSkillBonus.class::cast)
+        .map(ItemSkillBonus::getBonus)
+        .filter(AttributeBonus.class::isInstance)
+        .map(AttributeBonus.class::cast)
+        .map(AttributeBonus::getModifier)
+        .map(AttributeModifier::getId)
+        .forEach(event::skipUUID);
   }
 
   public int getSockets(ItemStack stack, @Nullable Player player) {
-    int playerSockets = player == null ? 0 : GemHelper.getPlayerSockets(stack, player);
+    int playerSockets = player == null ? 0 : GemBonusHandler.getPlayerSockets(stack, player);
     int sockets = SocketHelper.getSockets(stack);
     int gems = SocketHelper.getActiveGems(stack).size();
     playerSockets -= gems;
@@ -221,11 +222,6 @@ public enum ApotheosisCompatibility {
 
   public boolean adventureModuleEnabled() {
     return Apotheosis.enableAdventure;
-  }
-
-  public int getGemsCount(ItemStack itemStack) {
-    if (!adventureModuleEnabled()) return 0;
-    return SocketHelper.getActiveGems(itemStack).size();
   }
 
   public void dropGemFromOre(Player player, ServerLevel level, BlockPos blockPos) {

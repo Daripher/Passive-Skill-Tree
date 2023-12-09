@@ -1,11 +1,13 @@
 package daripher.skilltree.item;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Streams;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.api.HasAdditionalSockets;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;
+import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -25,15 +29,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
   public static boolean canInsertGem(ItemStack stack) {
-    if (ModList.get().isLoaded("apotheosis")) {
-      if (ApotheosisCompatibility.INSTANCE.adventureModuleEnabled()) return false;
-    }
-    return hasSockets(stack);
+    return !SkillTreeMod.apotheosisEnabled() && hasSockets(stack);
   }
 
   public static boolean hasSockets(ItemStack stack) {
@@ -221,15 +221,24 @@ public class ItemHelper {
     return stack.is(ItemTags.ARROWS);
   }
 
+  public static int getMaximumSockets(ItemStack stack, @Nullable Player player) {
+    if (SkillTreeMod.apotheosisEnabled()) return 0;
+    int sockets = ItemHelper.getDefaultSockets(stack) + ItemHelper.getAdditionalSockets(stack);
+    if (player != null) {
+      sockets += GemBonusHandler.getPlayerSockets(stack, player);
+    }
+    return sockets;
+  }
+
   public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
-    CompoundTag tag = stack.getTag();
-    if (tag == null) return ImmutableList.of();
-    ListTag bonusesTag = tag.getList("SkillBonuses", Tag.TAG_COMPOUND);
-    return bonusesTag.stream()
-        .map(CompoundTag.class::cast)
-        .map(ItemHelper::deserializeBonus)
-        .filter(Objects::nonNull)
-        .collect(Collectors.toList());
+    if (!stack.hasTag()) return ImmutableList.of();
+    Stream<? extends ItemBonus<?>> itemBonuses =
+        stack.getOrCreateTag().getList("SkillBonuses", Tag.TAG_COMPOUND).stream()
+            .map(CompoundTag.class::cast)
+            .map(ItemHelper::deserializeBonus)
+            .filter(Objects::nonNull);
+    Stream<? extends ItemBonus<?>> gemBonuses = GemBonusHandler.getBonuses(stack).stream();
+    return Streams.concat(gemBonuses, itemBonuses).toList();
   }
 
   public static <T extends ItemBonus<?>> List<T> getItemBonuses(ItemStack stack, Class<T> aClass) {

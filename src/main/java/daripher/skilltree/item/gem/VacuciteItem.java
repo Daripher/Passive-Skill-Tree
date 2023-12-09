@@ -18,13 +18,13 @@ public class VacuciteItem extends GemItem {
 
   @Override
   public void insertInto(
-      Player player, ItemStack itemStack, ItemStack gemStack, int socket, double gemPower) {
-    GemHelper.removeGems(itemStack);
+      Player player, ItemStack itemStack, ItemStack gemStack, int socket) {
+    GemBonusHandler.removeGems(itemStack);
   }
 
   @Override
   public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
-    return GemHelper.hasGem(stack, 0);
+    return GemBonusHandler.hasGem(stack, 0);
   }
 
   @Override

@@ -42,6 +42,11 @@ public class SkillTreeMod {
     addCompatibilities();
   }
 
+  public static boolean apotheosisEnabled() {
+    return ModList.get().isLoaded("apotheosis")
+        && ApotheosisCompatibility.INSTANCE.adventureModuleEnabled();
+  }
+
   private void registerCurioSlots(InterModEnqueueEvent event) {
     InterModComms.sendTo(
         "curios",
