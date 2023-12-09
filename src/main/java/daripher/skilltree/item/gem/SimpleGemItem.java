@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -75,7 +76,14 @@ public abstract class SimpleGemItem extends GemItem {
   protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
     Map<String, ItemBonus<?>> bonuses = new TreeMap<>(this.bonuses);
     groupBonuses(bonuses);
-    bonuses.forEach((slot, bonus) -> components.add(bonus.getTooltip()));
+    bonuses.forEach(
+        (slot, bonus) -> {
+          Component slotDescription = Component.translatable("gem_class." + slot);
+          Component tooltip =
+              Component.translatable("gem_class_format", slotDescription, bonus.getTooltip())
+                  .withStyle(ChatFormatting.GRAY);
+          components.add(tooltip);
+        });
   }
 
   protected void groupBonuses(Map<String, ItemBonus<?>> bonuses) {

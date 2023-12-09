@@ -425,7 +425,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("gem.socket", "Empty Socket");
     add("gem.additional_socket_1", "• Has an additional socket");
     add("gem.disabled", "Disabled with Apotheosis adventure module enabled");
-    add("gem_class_format", "• %s: ");
+    add("gem_class_format", "• %s: %s");
     add("gem_class.helmet", "Helmets");
     add("gem_class.chestplate", "Chestplates");
     add("gem_class.boots", "Boots");

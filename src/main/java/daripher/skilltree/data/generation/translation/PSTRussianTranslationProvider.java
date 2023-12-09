@@ -426,7 +426,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("gem.socket", "Пустое гнездо");
     add("gem.additional_socket_1", "• Имеет дополнительное гнездо");
     add("gem.disabled", "Отключено с модулем приключений Apotheosis");
-    add("gem_class_format", "• %s: ");
+    add("gem_class_format", "• %s: %s");
     add("gem_class.helmet", "Шлемы");
     add("gem_class.chestplate", "Нагрудники");
     add("gem_class.boots", "Ботинки");

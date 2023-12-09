@@ -54,7 +54,7 @@
   "gem_class.ring": "Rings",
   "gem_class.shield": "Shields",
   "gem_class.weapon": "Weapons",
-  "gem_class_format": "• %s: ",
+  "gem_class_format": "• %s: %s",
   "item.apotheosis.gem.skilltree:adamite": "Adamite",
   "item.apotheosis.gem.skilltree:citrine": "Citrine",
   "item.apotheosis.gem.skilltree:jade": "Jade",

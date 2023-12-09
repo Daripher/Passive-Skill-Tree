@@ -53,7 +53,7 @@
   "gem_class.ring": "Кольца",
   "gem_class.shield": "Щиты",
   "gem_class.weapon": "Оружие",
-  "gem_class_format": "• %s: ",
+  "gem_class_format": "• %s: %s",
   "item.apotheosis.gem.skilltree:adamite": "Адамит",
   "item.apotheosis.gem.skilltree:citrine": "Цитрин",
   "item.apotheosis.gem.skilltree:jade": "Нефрит",
