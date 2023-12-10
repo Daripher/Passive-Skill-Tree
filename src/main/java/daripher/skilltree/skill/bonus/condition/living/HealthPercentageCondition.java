@@ -66,14 +66,14 @@ public final class HealthPercentageCondition implements LivingCondition {
         .addNumericTextField(0, 0, 50, 14, min)
         .setNumericResponder(
             a -> {
-              setMin(a.intValue());
+              setMin(a.floatValue());
               consumer.accept(this);
             });
     editor
         .addNumericTextField(55, 0, 50, 14, max)
         .setNumericResponder(
             a -> {
-              setMax(a.intValue());
+              setMax(a.floatValue());
               consumer.accept(this);
             });
     editor.shiftWidgets(0, 19);
