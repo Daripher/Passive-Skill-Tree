@@ -357,6 +357,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.UNDERWATER.get(), "target.you", "You are");
     add(PSTLivingConditions.UNDERWATER.get(), "target.target", "Target is");
     add(PSTLivingConditions.UNDERWATER.get(), "%s if %s under water");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "target.you", "You have");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "target.target", "Target has");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "%s if %s %s in both hands");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile %s");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee %s");

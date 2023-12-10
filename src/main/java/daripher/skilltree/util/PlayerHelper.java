@@ -44,6 +44,10 @@ public class PlayerHelper {
     return Streams.concat(getEquipment(living), getCurios(living));
   }
 
+  public static Stream<ItemStack> getItemsInHands(LivingEntity living) {
+    return Stream.of(living.getMainHandItem(), living.getOffhandItem());
+  }
+
   public static Stream<ItemStack> getEquipment(LivingEntity living) {
     return Arrays.stream(EquipmentSlot.values()).map(slot -> getEquipment(living, slot));
   }

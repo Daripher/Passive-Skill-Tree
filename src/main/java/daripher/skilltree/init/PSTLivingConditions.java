@@ -39,6 +39,8 @@ public class PSTLivingConditions {
       REGISTRY.register("fishing", FishingCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> UNDERWATER =
       REGISTRY.register("underwater", UnderwaterCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> DUAL_WIELDING =
+      REGISTRY.register("dual_wielding", DualWieldingCondition.Serializer::new);
 
   public static List<LivingCondition> conditionsList() {
     return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()
