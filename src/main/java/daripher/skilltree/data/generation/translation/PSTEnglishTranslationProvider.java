@@ -338,9 +338,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "You are");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Target is");
     add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.you", "You are");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Target is");
-    add(PSTLivingConditions.IS_BURNING.get(), "%s if %s burning");
+    add(PSTLivingConditions.BURNING.get(), "target.you", "You are");
+    add(PSTLivingConditions.BURNING.get(), "target.target", "Target is");
+    add(PSTLivingConditions.BURNING.get(), "%s if %s burning");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.you", "You have");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.target", "Target has");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "min", "%s if %s at least %s %s");
@@ -354,6 +354,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.FISHING.get(), "target.you", "You are");
     add(PSTLivingConditions.FISHING.get(), "target.target", "Target is");
     add(PSTLivingConditions.FISHING.get(), "%s if %s fishing");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.you", "You are");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.target", "Target is");
+    add(PSTLivingConditions.UNDERWATER.get(), "%s if %s under water");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile %s");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee %s");

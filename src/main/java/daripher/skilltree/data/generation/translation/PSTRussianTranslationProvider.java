@@ -339,9 +339,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "Вас");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Цель");
     add(PSTLivingConditions.HAS_EFFECT.get(), "%s если на %s действует %s");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.you", "Вы горите");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Цель горит");
-    add(PSTLivingConditions.IS_BURNING.get(), "%s если %s");
+    add(PSTLivingConditions.BURNING.get(), "target.you", "Вы горите");
+    add(PSTLivingConditions.BURNING.get(), "target.target", "Цель горит");
+    add(PSTLivingConditions.BURNING.get(), "%s если %s");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.you", "у Вас");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.target", "у Цели");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "min", "%s если %s минимум %s %s");
@@ -355,6 +355,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.FISHING.get(), "target.you", "Вы рыбачите");
     add(PSTLivingConditions.FISHING.get(), "target.target", "Цель рыбачит");
     add(PSTLivingConditions.FISHING.get(), "%s если %s");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.you", "Вы");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.target", "Цель");
+    add(PSTLivingConditions.UNDERWATER.get(), "%s если %s под водой");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "%s снарядов");
     add(PSTDamageConditions.IS_MELEE.get(), "%s в ближнем бою");

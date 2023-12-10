@@ -29,7 +29,7 @@ public class PSTLivingConditions {
       REGISTRY.register("has_gems", HasGemsCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HAS_EFFECT =
       REGISTRY.register("has_effect", HasEffectCondition.Serializer::new);
-  public static final RegistryObject<LivingCondition.Serializer> IS_BURNING =
+  public static final RegistryObject<LivingCondition.Serializer> BURNING =
       REGISTRY.register("burning", BurningCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> ATTRIBUTE_VALUE =
       REGISTRY.register("attribute_value", AttributeValueCondition.Serializer::new);
@@ -37,6 +37,8 @@ public class PSTLivingConditions {
       REGISTRY.register("food_level", FoodLevelCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> FISHING =
       REGISTRY.register("fishing", FishingCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> UNDERWATER =
+      REGISTRY.register("underwater", UnderwaterCondition.Serializer::new);
 
   public static List<LivingCondition> conditionsList() {
     return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()
