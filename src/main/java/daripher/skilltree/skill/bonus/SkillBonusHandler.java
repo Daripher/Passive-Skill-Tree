@@ -500,6 +500,7 @@ public class SkillBonusHandler {
   }
 
   public static <T> List<T> getSkillBonuses(Player player, Class<T> type) {
+    if (!PlayerSkillsProvider.hasSkills(player)) return List.of();
     List<T> bonuses = new ArrayList<>();
     PlayerSkillsProvider.get(player).getPlayerSkills().stream()
         .map(PassiveSkill::getBonuses)

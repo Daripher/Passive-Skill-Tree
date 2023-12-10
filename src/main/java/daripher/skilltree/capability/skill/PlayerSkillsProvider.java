@@ -90,6 +90,10 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
     return player.getCapability(CAPABILITY).orElseThrow(NullPointerException::new);
   }
 
+  public static boolean hasSkills(Player player) {
+    return player.getCapability(CAPABILITY).isPresent();
+  }
+
   @Override
   public <T> @NotNull LazyOptional<T> getCapability(
       @NotNull Capability<T> cap, @Nullable Direction side) {
