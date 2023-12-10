@@ -1,6 +1,8 @@
 package daripher.skilltree.mixin.apotheosis;
 
 import java.util.Map;
+
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,8 +33,8 @@ public class EnchantmentBonusMixin {
 
   private int getGemPower(Map<?, ?> values, Object rarity, ItemStack gem) {
     int level = (int) values.get(rarity);
-    if (!gem.hasTag()) return level;
-    float power = gem.getOrCreateTag().getFloat("gem_power");
-    return (int) (level * power);
+    CompoundTag tag = gem.getOrCreateTag();
+    if (!tag.contains("gem_power")) return level;
+    return (int) (level * tag.getFloat("gem_power"));
   }
 }

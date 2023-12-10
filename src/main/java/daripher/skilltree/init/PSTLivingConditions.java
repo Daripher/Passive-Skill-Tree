@@ -1,8 +1,8 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.bonus.condition.living.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +29,7 @@ public class PSTLivingConditions {
       REGISTRY.register("has_gems", HasGemsCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HAS_EFFECT =
       REGISTRY.register("has_effect", HasEffectCondition.Serializer::new);
-  public static final RegistryObject<LivingCondition.Serializer> IS_BURNING =
+  public static final RegistryObject<LivingCondition.Serializer> BURNING =
       REGISTRY.register("burning", BurningCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> ATTRIBUTE_VALUE =
       REGISTRY.register("attribute_value", AttributeValueCondition.Serializer::new);
@@ -37,6 +37,10 @@ public class PSTLivingConditions {
       REGISTRY.register("food_level", FoodLevelCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> FISHING =
       REGISTRY.register("fishing", FishingCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> UNDERWATER =
+      REGISTRY.register("underwater", UnderwaterCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> DUAL_WIELDING =
+      REGISTRY.register("dual_wielding", DualWieldingCondition.Serializer::new);
 
   public static List<LivingCondition> conditionsList() {
     return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()
@@ -46,15 +50,6 @@ public class PSTLivingConditions {
 
   public static String getName(LivingCondition condition) {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition.getSerializer());
-    String[] words = Objects.requireNonNull(id).getPath().split("_");
-    StringBuilder name = new StringBuilder();
-    Arrays.stream(words)
-        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
-        .forEach(
-            w -> {
-              name.append(" ");
-              name.append(w);
-            });
-    return name.toString();
+    return TooltipHelper.idToName(Objects.requireNonNull(id).getPath());
   }
 }

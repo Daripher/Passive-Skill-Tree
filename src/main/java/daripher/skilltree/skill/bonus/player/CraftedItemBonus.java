@@ -22,7 +22,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -77,9 +76,14 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
     MutableComponent itemDescription =
         TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "crafted");
     MutableComponent bonusDescription =
-        bonus.getTooltip().withStyle(Style.EMPTY.withColor(0x7AB3E2));
+        bonus.getTooltip().withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), itemDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return bonus.isPositive();
   }
 
   @Override
@@ -134,10 +138,6 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
 
   public @NotNull ItemCondition getItemCondition() {
     return itemCondition;
-  }
-
-  public ItemBonus<?> getItemBonus() {
-    return bonus;
   }
 
   @Override

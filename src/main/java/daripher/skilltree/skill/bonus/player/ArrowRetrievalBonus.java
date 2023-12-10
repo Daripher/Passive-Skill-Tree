@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Objects;
@@ -9,10 +10,8 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus> {
   private float chance;
@@ -51,14 +50,14 @@ public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleChance = chance * 100;
-    if (chance < 0) visibleChance *= -1;
-    String operationDescription = chance > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleChance);
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    return Component.translatable(operationDescription, multiplierDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+    return TooltipHelper.getSkillBonusTooltip(
+            getDescriptionId(), chance, AttributeModifier.Operation.MULTIPLY_BASE)
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return chance > 0;
   }
 
   @Override

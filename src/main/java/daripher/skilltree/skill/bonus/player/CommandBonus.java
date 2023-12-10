@@ -69,6 +69,11 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
   }
 
   @Override
+  public boolean isPositive() {
+    return true;
+  }
+
+  @Override
   public void addEditorWidgets(
       SkillTreeEditorScreen editor, int index, Consumer<CommandBonus> consumer) {
     editor.addLabel(0, 0, "Command", ChatFormatting.GOLD);

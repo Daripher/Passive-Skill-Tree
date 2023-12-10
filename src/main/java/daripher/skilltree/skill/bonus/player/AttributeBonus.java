@@ -23,13 +23,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.common.CuriosHelper;
@@ -178,25 +176,22 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
 
   @Override
   public MutableComponent getTooltip() {
-    AttributeModifier.Operation operation = modifier.getOperation();
-    double amount = modifier.getAmount();
-    double visibleAmount = amount;
-    if (operation == AttributeModifier.Operation.ADDITION) {
-      if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) visibleAmount *= 10;
-    } else {
-      visibleAmount *= 100;
+    float visibleAmount = (float) modifier.getAmount();
+    if (modifier.getOperation() == AttributeModifier.Operation.ADDITION
+        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
+      visibleAmount *= 10;
     }
-    if (amount < 0) visibleAmount *= -1;
-    String operationDescription = amount > 0 ? "plus" : "take";
-    Style style = Style.EMPTY.withColor(0x7B7BE5);
-    MutableComponent attributeDescription = Component.translatable(attribute.getDescriptionId());
-    String amountDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
-    operationDescription = "attribute.modifier." + operationDescription + "." + operation.toValue();
     MutableComponent tooltip =
-        Component.translatable(operationDescription, amountDescription, attributeDescription);
+        TooltipHelper.getSkillBonusTooltip(
+            attribute.getDescriptionId(), visibleAmount, modifier.getOperation());
     tooltip = playerMultiplier.getTooltip(tooltip);
     tooltip = playerCondition.getTooltip(tooltip, "you");
-    return tooltip.withStyle(style);
+    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return modifier.getAmount() > 0;
   }
 
   @Override
@@ -276,16 +271,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
 
   public AttributeModifier getModifier() {
     return modifier;
-  }
-
-  @Nonnull
-  public LivingCondition getPlayerCondition() {
-    return playerCondition;
-  }
-
-  @Nonnull
-  public LivingMultiplier getPlayerMultiplier() {
-    return playerMultiplier;
   }
 
   public void setAttribute(Attribute attribute) {

@@ -1,9 +1,9 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +55,8 @@ public class PSTSkillBonuses {
       REGISTRY.register("ignite_chance", IgniteChanceBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> ARROW_RETRIEVAL =
       REGISTRY.register("arrow_retrieval", ArrowRetrievalBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> HEALTH_RESERVATION =
+      REGISTRY.register("health_reservation", HealthReservationBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {
@@ -66,15 +68,6 @@ public class PSTSkillBonuses {
 
   public static String getName(SkillBonus<?> bonus) {
     ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(bonus.getSerializer());
-    String[] words = Objects.requireNonNull(id).getPath().split("_");
-    StringBuilder name = new StringBuilder();
-    Arrays.stream(words)
-        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
-        .forEach(
-            w -> {
-              name.append(" ");
-              name.append(w);
-            });
-    return name.toString();
+    return TooltipHelper.idToName(Objects.requireNonNull(id).getPath());
   }
 }

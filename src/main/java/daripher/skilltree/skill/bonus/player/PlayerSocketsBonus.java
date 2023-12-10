@@ -18,8 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class PlayerSocketsBonus implements SkillBonus<PlayerSocketsBonus> {
   private @Nonnull ItemCondition itemCondition;
@@ -63,14 +62,15 @@ public final class PlayerSocketsBonus implements SkillBonus<PlayerSocketsBonus> 
   public MutableComponent getTooltip() {
     MutableComponent itemDescription =
         TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "plural");
-    double visibleSockets = sockets;
-    if (sockets < 0) visibleSockets *= -1;
-    String operationDescription = sockets > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".0";
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleSockets);
     MutableComponent bonusDescription = Component.translatable(getDescriptionId(), itemDescription);
-    return Component.translatable(operationDescription, multiplierDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+    return TooltipHelper.getSkillBonusTooltip(
+            bonusDescription, sockets, AttributeModifier.Operation.ADDITION)
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return sockets > 0;
   }
 
   @Override

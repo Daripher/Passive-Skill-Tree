@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
@@ -20,9 +21,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBonus> {
   private float multiplier;
@@ -79,18 +79,17 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleMultiplier = multiplier * 100;
-    if (multiplier < 0) visibleMultiplier *= -1;
-    String operationDescription = multiplier > 0 ? "plus" : "take";
-    Style style = Style.EMPTY.withColor(0x7B7BE5);
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    String amountDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleMultiplier);
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
     MutableComponent tooltip =
-        Component.translatable(operationDescription, amountDescription, bonusDescription);
+        TooltipHelper.getSkillBonusTooltip(
+            getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
     tooltip = playerMultiplier.getTooltip(tooltip);
     tooltip = playerCondition.getTooltip(tooltip, "you");
-    return tooltip.withStyle(style);
+    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return multiplier > 0;
   }
 
   @Override
@@ -141,16 +140,6 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
           setMultiplier(m);
           consumer.accept(this.copy());
         });
-  }
-
-  @Nonnull
-  public LivingCondition getPlayerCondition() {
-    return playerCondition;
-  }
-
-  @Nonnull
-  public LivingMultiplier getPlayerMultiplier() {
-    return playerMultiplier;
   }
 
   public void setMultiplier(float multiplier) {

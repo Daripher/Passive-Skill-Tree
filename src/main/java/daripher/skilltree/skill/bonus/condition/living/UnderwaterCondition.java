@@ -9,11 +9,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.Fluids;
 
-public record BurningCondition() implements LivingCondition {
+public record UnderwaterCondition() implements LivingCondition {
   @Override
   public boolean met(LivingEntity living) {
-    return living.getRemainingFireTicks() > 0;
+    return living.getEyeInFluidType() == Fluids.WATER.getFluidType();
   }
 
   @Override
@@ -43,24 +44,24 @@ public record BurningCondition() implements LivingCondition {
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
-      return new BurningCondition();
+      return new UnderwaterCondition();
     }
 
     @Override
     public void serialize(JsonObject json, LivingCondition condition) {
-      if (!(condition instanceof BurningCondition)) {
+      if (!(condition instanceof UnderwaterCondition)) {
         throw new IllegalArgumentException();
       }
     }
 
     @Override
     public LivingCondition deserialize(CompoundTag tag) {
-      return new BurningCondition();
+      return new UnderwaterCondition();
     }
 
     @Override
     public CompoundTag serialize(LivingCondition condition) {
-      if (!(condition instanceof BurningCondition)) {
+      if (!(condition instanceof UnderwaterCondition)) {
         throw new IllegalArgumentException();
       }
       return new CompoundTag();
@@ -68,19 +69,19 @@ public record BurningCondition() implements LivingCondition {
 
     @Override
     public LivingCondition deserialize(FriendlyByteBuf buf) {
-      return new BurningCondition();
+      return new UnderwaterCondition();
     }
 
     @Override
     public void serialize(FriendlyByteBuf buf, LivingCondition condition) {
-      if (!(condition instanceof BurningCondition)) {
+      if (!(condition instanceof UnderwaterCondition)) {
         throw new IllegalArgumentException();
       }
     }
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new BurningCondition();
+      return new UnderwaterCondition();
     }
   }
 }

@@ -3,7 +3,9 @@ package daripher.skilltree.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTexturesData;
+import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.Button;
 import daripher.skilltree.init.PSTSkillBonuses;
@@ -11,6 +13,7 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -539,38 +542,44 @@ public class SkillTreeEditorScreen extends Screen {
     ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
     PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
     if (selectedSkills().anyMatch(otherSkill -> !sameTextures(skill, otherSkill))) return;
+    Function<ResourceLocation, Component> textureNameFunc =
+        l -> {
+          String texture = l.getPath();
+          texture = texture.substring(texture.lastIndexOf("/") + 1);
+          texture = texture.replace(".png", "");
+          texture = TooltipHelper.idToName(texture);
+          return Component.literal(texture);
+        };
     addLabel(0, 0, "Border", ChatFormatting.GOLD);
     toolsY += 19;
-    TextField backgroundEditor =
-        new TextField(font, toolsX, toolsY, 355, 14, skill.getBackgroundTexture().toString());
-    backgroundEditor.setResponder(
-        value -> {
-          selectedSkills().forEach(s -> s.setBackgroundTexture(new ResourceLocation(value)));
-          saveSelectedSkills();
-        });
-    addRenderableWidget(backgroundEditor);
+    addDropDownList(0, 0, 200, 14, 10, skill.getBackgroundTexture(), SkillTexturesData.BORDERS)
+        .setToNameFunc(textureNameFunc)
+        .setResponder(
+            value -> {
+              selectedSkills().forEach(s -> s.setBackgroundTexture(value));
+              saveSelectedSkills();
+            });
+    toolsY += 19;
+    addLabel(0, 0, "Tooltip", ChatFormatting.GOLD);
+    toolsY += 19;
+    addDropDownList(
+            0, 0, 200, 14, 10, skill.getBorderTexture(), SkillTexturesData.TOOLTIP_BACKGROUNDS)
+        .setToNameFunc(textureNameFunc)
+        .setResponder(
+            value -> {
+              selectedSkills().forEach(s -> s.setBorderTexture(value));
+              saveSelectedSkills();
+            });
     toolsY += 19;
     addLabel(0, 0, "Icon", ChatFormatting.GOLD);
     toolsY += 19;
-    TextField iconEditor =
-        new TextField(font, toolsX, toolsY, 355, 14, skill.getIconTexture().toString());
-    iconEditor.setResponder(
-        value -> {
-          selectedSkills().forEach(s -> s.setIconTexture(new ResourceLocation(value)));
-          saveSelectedSkills();
-        });
-    addRenderableWidget(iconEditor);
-    toolsY += 19;
-    addLabel(0, 0, "Tooltip Background", ChatFormatting.GOLD);
-    toolsY += 19;
-    TextField borderEditor =
-        new TextField(font, toolsX, toolsY, 355, 14, skill.getBorderTexture().toString());
-    borderEditor.setResponder(
-        value -> {
-          selectedSkills().forEach(s -> s.setBorderTexture(new ResourceLocation(value)));
-          saveSelectedSkills();
-        });
-    addRenderableWidget(borderEditor);
+    addDropDownList(0, 0, 200, 14, 10, skill.getIconTexture(), SkillTexturesData.ICONS)
+        .setToNameFunc(textureNameFunc)
+        .setResponder(
+            value -> {
+              selectedSkills().forEach(s -> s.setIconTexture(value));
+              saveSelectedSkills();
+            });
     toolsY += 19;
   }
 
@@ -600,14 +609,14 @@ public class SkillTreeEditorScreen extends Screen {
             rebuildWidgets();
           });
     } else {
-      addButton(0, 0, 90, 14, "Connect")
+      addButton(0, 0, 100, 14, "Connect")
           .setPressFunc(
               b -> {
                 skillButtons.get(first).skill.getConnections().add(second);
                 saveSelectedSkills();
                 rebuildWidgets();
               });
-      addButton(toolsX + 110, toolsY, 90, 14, "Connect Gateways")
+      addButton(105, 0, 100, 14, "Connect Gateways")
           .setPressFunc(
               b -> {
                 skillButtons.get(first).skill.getGatewayConnections().add(second);

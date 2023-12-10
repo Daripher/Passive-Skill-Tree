@@ -3,7 +3,7 @@ package daripher.skilltree.network.message;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.SkillTreeScreen;
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.skill.PassiveSkill;
 import java.util.ArrayList;
 import java.util.List;

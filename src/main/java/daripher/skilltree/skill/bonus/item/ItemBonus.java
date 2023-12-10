@@ -34,6 +34,8 @@ public interface ItemBonus<T extends ItemBonus<T>> {
 
   MutableComponent getTooltip();
 
+  boolean isPositive();
+
   void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer);
 
   interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {

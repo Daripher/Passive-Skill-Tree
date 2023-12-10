@@ -18,8 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class GemPowerBonus implements SkillBonus<GemPowerBonus> {
   private @Nonnull ItemCondition itemCondition;
@@ -63,17 +62,19 @@ public final class GemPowerBonus implements SkillBonus<GemPowerBonus> {
   public MutableComponent getTooltip() {
     MutableComponent itemDescription =
         TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "crafted");
-    double visibleMultiplier = multiplier * 100;
-    if (multiplier < 0) visibleMultiplier *= -1;
-    String operationDescription = multiplier > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleMultiplier);
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
-    bonusDescription =
-        Component.translatable(operationDescription, multiplierDescription, bonusDescription)
-            .withStyle(Style.EMPTY.withColor(0x7AB3E2));
+    MutableComponent bonusDescription =
+        TooltipHelper.getSkillBonusTooltip(
+                getDescriptionId() + ".bonus",
+                multiplier,
+                AttributeModifier.Operation.MULTIPLY_BASE)
+            .withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), itemDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return multiplier > 0;
   }
 
   @Override

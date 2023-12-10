@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Objects;
@@ -11,7 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
 public final class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
@@ -57,9 +57,15 @@ public final class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
     String recipeDescriptionId =
         "recipe.%s.%s".formatted(recipeId.getNamespace(), recipeId.getPath());
     Component recipeDescription =
-        Component.translatable(recipeDescriptionId).withStyle(Style.EMPTY.withColor(0x7AB3E2));
+        Component.translatable(recipeDescriptionId)
+            .withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), recipeDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return true;
   }
 
   @Override

@@ -293,6 +293,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Experience from %s");
     add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Chance to inflict Ignite for %s");
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Arrow retrieval chance");
+    add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Health Reservation");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");
@@ -337,9 +338,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "You are");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Target is");
     add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.you", "You are");
-    add(PSTLivingConditions.IS_BURNING.get(), "target.target", "Target is");
-    add(PSTLivingConditions.IS_BURNING.get(), "%s if %s burning");
+    add(PSTLivingConditions.BURNING.get(), "target.you", "You are");
+    add(PSTLivingConditions.BURNING.get(), "target.target", "Target is");
+    add(PSTLivingConditions.BURNING.get(), "%s if %s burning");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.you", "You have");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "target.target", "Target has");
     add(PSTLivingConditions.ATTRIBUTE_VALUE.get(), "min", "%s if %s at least %s %s");
@@ -353,6 +354,12 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.FISHING.get(), "target.you", "You are");
     add(PSTLivingConditions.FISHING.get(), "target.target", "Target is");
     add(PSTLivingConditions.FISHING.get(), "%s if %s fishing");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.you", "You are");
+    add(PSTLivingConditions.UNDERWATER.get(), "target.target", "Target is");
+    add(PSTLivingConditions.UNDERWATER.get(), "%s if %s under water");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "target.you", "You have");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "target.target", "Target has");
+    add(PSTLivingConditions.DUAL_WIELDING.get(), "%s if %s %s in both hands");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile %s");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee %s");

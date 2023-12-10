@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.network.NetworkDispatcher;
