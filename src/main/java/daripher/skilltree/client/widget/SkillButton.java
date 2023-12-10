@@ -28,6 +28,7 @@ public class SkillButton extends Button {
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454);
   private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
+
   public final PassiveSkill skill;
   private final Supplier<Float> animationFunction;
   public double x;
@@ -200,11 +201,24 @@ public class SkillButton extends Button {
   }
 
   private Style getTitleStyle() {
-    return width == 30
-        ? GATEWAY_TITLE_STYLE
-        : width == 24
-            ? KEYSTONE_TITLE_STYLE
-            : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+
+    if(skill.isCustomStryle()) {
+      if (skill.getTittleColor() == null)
+        return width == 30
+                ? GATEWAY_TITLE_STYLE
+                : width == 24
+                ? KEYSTONE_TITLE_STYLE
+                : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+      else {
+        return Style.EMPTY.withColor(skill.getTittleColor());
+      }
+    }
+    else return width == 30
+          ? GATEWAY_TITLE_STYLE
+          : width == 24
+          ? KEYSTONE_TITLE_STYLE
+          : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+
   }
 
   protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {

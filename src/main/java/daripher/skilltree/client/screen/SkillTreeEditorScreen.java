@@ -8,6 +8,7 @@ import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.Button;
+import daripher.skilltree.init.PSTColors;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
@@ -24,6 +25,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -501,16 +503,18 @@ public class SkillTreeEditorScreen extends Screen {
       titleEditor.setResponder(this::setSelectedSkillsTitle);
       addRenderableWidget(titleEditor);
       toolsY += 19;
-      addLabel(0, 0, "TestTitle", ChatFormatting.GOLD);
+      addLabel(0, 0, "Tittle Color", ChatFormatting.GOLD);
       toolsY += 19;
-      ChatFormatting colorType = ChatFormatting.WHITE;
-      DropDownList<ChatFormatting> colorList = addDropDownList(0,0,200,14,10, colorType, Arrays.stream(ChatFormatting.values()).toList())
-              .setToNameFunc(b -> Component.literal(b.getName()));
 
+      CheckBox checkBox = addCheckBox(60,-19,14,14, skill.isCustomStryle());
+      checkBox.setPressOnFunc(s -> skill.setIsCustomStyle(true));
+      checkBox.setPressOffFunc(s -> skill.setIsCustomStyle(false));
       toolsY += 19;
+      DropDownList<ChatFormatting> colorList = addDropDownList(0,-19,200,14,10, skill.getTittleColor() != null ? skill.getTittleColor() : ChatFormatting.WHITE, Arrays.stream(ChatFormatting.values()).toList())
+              .setToNameFunc(b -> Component.literal(b.getName()));
+      colorList.setResponder(s -> setSelectedSkillsTittleColor(colorList));
     }
   }
-
   private void skillXPosEditorChanged(PassiveSkill skill, NumericTextField xPosEditor) {
     skill.setPosition((float) xPosEditor.getNumericValue(), skill.getPositionY());
     getSelectedSkillButtons()
@@ -533,6 +537,15 @@ public class SkillTreeEditorScreen extends Screen {
 
   private void setSelectedSkillsTitle(String title) {
     selectedSkills().forEach(skill -> skill.setTitle(title));
+    saveSelectedSkills();
+  }
+
+
+  private void setSelectedSkillsTittleColor(DropDownList<ChatFormatting> color){
+    setSelectedSkillsTittleColor(color.getValue());
+  }
+  private void setSelectedSkillsTittleColor(ChatFormatting color){
+    selectedSkills().forEach(skill -> skill.setTittleColor(color));
     saveSelectedSkills();
   }
 
@@ -804,6 +817,14 @@ public class SkillTreeEditorScreen extends Screen {
       message.withStyle(style);
     }
     return addRenderableOnly(new Label(toolsX + x, toolsY + y, message));
+  }
+
+
+  public CheckBox addCheckBox(int x, int y, int width, int height, boolean isOn){
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y,width,height, isOn));
+  }
+  public CheckBox addCheckBox(int x, int y, int width, int height){
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y,width,height));
   }
 
   public <T> DropDownList<T> addDropDownList(
