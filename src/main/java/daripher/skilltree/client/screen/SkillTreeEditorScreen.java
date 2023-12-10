@@ -498,6 +498,13 @@ public class SkillTreeEditorScreen extends Screen {
       titleEditor.setResponder(this::setSelectedSkillsTitle);
       addRenderableWidget(titleEditor);
       toolsY += 19;
+      addLabel(0, 0, "TestTitle", ChatFormatting.GOLD);
+      toolsY += 19;
+      ChatFormatting colorType = ChatFormatting.WHITE;
+      DropDownList<ChatFormatting> colorList = addDropDownList(0,0,200,14,10, colorType, Arrays.stream(ChatFormatting.values()).toList())
+              .setToNameFunc(b -> Component.literal(b.getName()));
+
+      toolsY += 19;
     }
   }
 
