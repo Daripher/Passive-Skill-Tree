@@ -859,6 +859,7 @@
   "skill_bonus.skilltree.gained_experience": "Experience from %s",
   "skill_bonus.skilltree.gem_power": "Gems inserted into %s: %s",
   "skill_bonus.skilltree.gem_power.bonus": "Effect Power",
+  "skill_bonus.skilltree.health_reservation": "Health Reservation",
   "skill_bonus.skilltree.ignite_chance": "Chance to inflict Ignite for %s",
   "skill_bonus.skilltree.incoming_healing": "Incoming Healing",
   "skill_bonus.skilltree.jump_height": "Jump Height",

@@ -293,6 +293,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Experience from %s");
     add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Chance to inflict Ignite for %s");
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Arrow retrieval chance");
+    add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Health Reservation");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");

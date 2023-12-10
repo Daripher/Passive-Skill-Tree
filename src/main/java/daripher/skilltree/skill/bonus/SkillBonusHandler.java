@@ -387,6 +387,19 @@ public class SkillBonusHandler {
         .forEach(entity::spawnAtLocation);
   }
 
+  @SubscribeEvent
+  public static void applyHealthReservationEffect(TickEvent.PlayerTickEvent event) {
+    float reservation =
+        getSkillBonuses(event.player, HealthReservationBonus.class).stream()
+            .map(b -> b.getAmount(event.player))
+            .reduce(Float::sum)
+            .orElse(0f);
+    if (reservation == 0) return;
+    if (event.player.getHealth() / event.player.getMaxHealth() > 1 - reservation) {
+      event.player.setHealth(event.player.getMaxHealth() * (1 - reservation));
+    }
+  }
+
   public static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
     Map<Float, Float> multipliers = new HashMap<>();
     getSkillBonuses(player, LootDuplicationBonus.class).stream()

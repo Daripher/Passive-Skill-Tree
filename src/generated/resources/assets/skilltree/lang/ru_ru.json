@@ -860,6 +860,7 @@
   "skill_bonus.skilltree.gained_experience": "Опыт %s",
   "skill_bonus.skilltree.gem_power": "Самоцветов вставляемые в %s: %s",
   "skill_bonus.skilltree.gem_power.bonus": "Сила Эффектов",
+  "skill_bonus.skilltree.health_reservation": "Удержание здоровья",
   "skill_bonus.skilltree.ignite_chance": "Шанс наложить Поджог на %s",
   "skill_bonus.skilltree.incoming_healing": "Получаемое лечение",
   "skill_bonus.skilltree.jump_height": "Высота прыжка",
