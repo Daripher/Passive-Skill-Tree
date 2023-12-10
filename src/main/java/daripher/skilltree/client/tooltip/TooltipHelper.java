@@ -7,6 +7,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 public class TooltipHelper {
   public static Component getEffectInstanceTooltip(MobEffectInstance effect) {
@@ -53,5 +56,19 @@ public class TooltipHelper {
       return tooltip;
     }
     return Component.translatable(descriptionId);
+  }
+
+  @NotNull
+  public static String idToName(String path) {
+    String[] words = path.split("_");
+    StringBuilder name = new StringBuilder();
+    Arrays.stream(words)
+        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
+        .forEach(
+            w -> {
+              name.append(" ");
+              name.append(w);
+            });
+    return name.toString();
   }
 }

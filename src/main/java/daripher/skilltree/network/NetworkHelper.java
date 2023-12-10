@@ -1,7 +1,7 @@
 package daripher.skilltree.network;
 
 import com.mojang.logging.LogUtils;
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.PassiveSkill;

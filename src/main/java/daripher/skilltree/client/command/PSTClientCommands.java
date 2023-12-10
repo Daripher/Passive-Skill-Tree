@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

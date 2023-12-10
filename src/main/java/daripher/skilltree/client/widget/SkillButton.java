@@ -98,7 +98,7 @@ public class SkillButton extends Button {
   private void renderFavoriteSkillHighlight(PoseStack poseStack) {
     if (!ClientConfig.favorite_skills.contains(skill.getId())) return;
     ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/icons/background/favorite.png"));
+        new ResourceLocation("skilltree:textures/screen/favorite_skill.png"));
     int color;
     if (ClientConfig.favorite_color_is_rainbow) {
       color = Color.getHSBColor(animationFunction.get() / 240f, 1f, 1f).getRGB();

@@ -1,4 +1,4 @@
-package daripher.skilltree.client.skill;
+package daripher.skilltree.client.data;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;

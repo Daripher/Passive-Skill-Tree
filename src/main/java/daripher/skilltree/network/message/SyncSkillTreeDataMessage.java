@@ -1,6 +1,6 @@
 package daripher.skilltree.network.message;
 
-import daripher.skilltree.client.skill.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkHelper;

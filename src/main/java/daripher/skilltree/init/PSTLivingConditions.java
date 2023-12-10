@@ -1,8 +1,8 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.bonus.condition.living.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
@@ -46,15 +46,6 @@ public class PSTLivingConditions {
 
   public static String getName(LivingCondition condition) {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition.getSerializer());
-    String[] words = Objects.requireNonNull(id).getPath().split("_");
-    StringBuilder name = new StringBuilder();
-    Arrays.stream(words)
-        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
-        .forEach(
-            w -> {
-              name.append(" ");
-              name.append(w);
-            });
-    return name.toString();
+    return TooltipHelper.idToName(Objects.requireNonNull(id).getPath());
   }
 }
