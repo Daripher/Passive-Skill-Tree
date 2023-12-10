@@ -3,6 +3,7 @@ package daripher.skilltree.skill.bonus.item;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.item.ItemHelper;
 import java.util.Objects;
@@ -11,8 +12,8 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 
 public final class PotionAmplificationBonus implements ItemBonus<PotionAmplificationBonus> {
@@ -66,13 +67,13 @@ public final class PotionAmplificationBonus implements ItemBonus<PotionAmplifica
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleAmount = chance * 100;
-    if (chance < 0D) visibleAmount *= -1D;
-    String operationDescription = chance > 0 ? "plus" : "take";
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    String amountDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    return Component.translatable(operationDescription, amountDescription, bonusDescription);
+    return TooltipHelper.getSkillBonusTooltip(
+        getDescriptionId(), chance, AttributeModifier.Operation.MULTIPLY_BASE);
+  }
+
+  @Override
+  public boolean isPositive() {
+    return chance > 0;
   }
 
   @Override

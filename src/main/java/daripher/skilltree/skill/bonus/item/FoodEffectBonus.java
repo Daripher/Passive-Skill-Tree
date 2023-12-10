@@ -14,10 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectUtil;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.*;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public final class FoodEffectBonus implements ItemBonus<FoodEffectBonus> {
@@ -65,6 +62,11 @@ public final class FoodEffectBonus implements ItemBonus<FoodEffectBonus> {
     Component effectDescription = TooltipHelper.getEffectInstanceTooltip(effect);
     String durationDescription = MobEffectUtil.formatDuration(effect, 1f);
     return Component.translatable(getDescriptionId(), effectDescription, durationDescription);
+  }
+
+  @Override
+  public boolean isPositive() {
+    return effect.getEffect().getCategory() != MobEffectCategory.HARMFUL;
   }
 
   @Override

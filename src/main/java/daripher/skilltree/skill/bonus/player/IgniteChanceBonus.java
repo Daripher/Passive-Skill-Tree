@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
@@ -20,11 +21,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 public final class IgniteChanceBonus implements SkillBonus<IgniteChanceBonus> {
   private float chance;
@@ -88,21 +88,21 @@ public final class IgniteChanceBonus implements SkillBonus<IgniteChanceBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleChance = chance * 100;
-    if (chance < 0D) visibleChance *= -1D;
-    String operationDescription = chance > 0 ? "plus" : "take";
-    Style style = Style.EMPTY.withColor(0x7B7BE5);
-    String chanceDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleChance);
     String durationDescription = StringUtil.formatTickDuration(duration * 20);
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
     MutableComponent bonusDescription =
         Component.translatable(getDescriptionId(), durationDescription);
     MutableComponent tooltip =
-        Component.translatable(operationDescription, chanceDescription, bonusDescription);
+        TooltipHelper.getSkillBonusTooltip(
+            bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE);
     tooltip = playerMultiplier.getTooltip(tooltip);
     tooltip = playerCondition.getTooltip(tooltip, "you");
     tooltip = targetCondition.getTooltip(tooltip, "target");
-    return tooltip.withStyle(style);
+    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return chance > 0;
   }
 
   @Override

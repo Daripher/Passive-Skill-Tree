@@ -2,24 +2,23 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTEnchantmentConditions;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
-
-import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class EnchantmentAmplificationBonus
     implements SkillBonus<EnchantmentAmplificationBonus> {
@@ -63,17 +62,17 @@ public final class EnchantmentAmplificationBonus
   @Override
   public MutableComponent getTooltip() {
     MutableComponent enchantmentDescription = Component.translatable(condition.getDescriptionId());
-    double visibleChance = chance * 100;
-    if (chance < 0) visibleChance *= -1;
-    String operationDescription = chance > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleChance);
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
-    bonusDescription =
-        Component.translatable(operationDescription, multiplierDescription, bonusDescription)
-            .withStyle(Style.EMPTY.withColor(0x7AB3E2));
+    MutableComponent bonusDescription =
+        TooltipHelper.getSkillBonusTooltip(
+                getDescriptionId() + ".bonus", chance, AttributeModifier.Operation.MULTIPLY_BASE)
+            .withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), enchantmentDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return chance > 0;
   }
 
   @Override

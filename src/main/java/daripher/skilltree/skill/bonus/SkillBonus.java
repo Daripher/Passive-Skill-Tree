@@ -40,6 +40,8 @@ public interface SkillBonus<T extends SkillBonus<T>> {
     return Component.empty();
   }
 
+  boolean isPositive();
+
   void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<T> consumer);
 
   interface Ticking {

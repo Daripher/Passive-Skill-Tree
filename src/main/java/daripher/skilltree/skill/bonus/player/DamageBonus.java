@@ -25,12 +25,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 public final class DamageBonus implements SkillBonus<DamageBonus> {
   private float amount;
@@ -104,20 +102,17 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleAmount = amount * 100;
-    if (amount < 0D) visibleAmount *= -1D;
-    String operationDescription = amount > 0 ? "plus" : "take";
-    Style style = Style.EMPTY.withColor(0x7B7BE5);
-    String amountDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
-    operationDescription = "attribute.modifier." + operationDescription + "." + operation.toValue();
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    bonusDescription = damageCondition.getTooltip(bonusDescription);
     MutableComponent tooltip =
-        Component.translatable(operationDescription, amountDescription, bonusDescription);
+        TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, operation);
     tooltip = playerMultiplier.getTooltip(tooltip);
     tooltip = playerCondition.getTooltip(tooltip, "you");
     tooltip = targetCondition.getTooltip(tooltip, "target");
-    return tooltip.withStyle(style);
+    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return amount > 0;
   }
 
   @Override

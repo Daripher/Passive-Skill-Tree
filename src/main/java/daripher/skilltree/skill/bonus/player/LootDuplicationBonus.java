@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 
 public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBonus> {
@@ -58,16 +59,17 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
   @Override
   public MutableComponent getTooltip() {
     MutableComponent lootDescription = Component.translatable(lootType.getDescriptionId());
-    double visibleChance = chance * 100;
-    if (chance < 0) visibleChance *= -1;
-    String operationDescription = chance > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    String chanceDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleChance);
     String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(multiplier * 100);
     MutableComponent bonusDescription =
         Component.translatable(getDescriptionId(), multiplierDescription, lootDescription);
-    return Component.translatable(operationDescription, chanceDescription, bonusDescription)
-        .withStyle(Style.EMPTY.withColor(0x7B7BE5));
+    return TooltipHelper.getSkillBonusTooltip(
+            bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE)
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return chance > 0;
   }
 
   @Override

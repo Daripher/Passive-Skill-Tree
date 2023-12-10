@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTSkillBonuses;
@@ -17,8 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBonus> {
   private @Nonnull LivingCondition playerCondition;
@@ -60,16 +60,14 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleMultiplier = multiplier * 100;
-    if (multiplier < 0) visibleMultiplier *= -1;
-    String operationDescription = multiplier > 0 ? "plus" : "take";
-    operationDescription = "attribute.modifier." + operationDescription + ".1";
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleMultiplier);
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    bonusDescription =
-        Component.translatable(operationDescription, multiplierDescription, bonusDescription);
-    bonusDescription = playerCondition.getTooltip(bonusDescription, "you");
-    return bonusDescription.withStyle(Style.EMPTY.withColor(0x7B7BE5));
+    return TooltipHelper.getSkillBonusTooltip(
+            getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE)
+        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  @Override
+  public boolean isPositive() {
+    return multiplier > 0;
   }
 
   @Override

@@ -54,6 +54,11 @@ public final class ItemSocketsBonus implements ItemBonus<ItemSocketsBonus> {
   }
 
   @Override
+  public boolean isPositive() {
+    return amount > 0;
+  }
+
+  @Override
   public void addEditorWidgets(
       SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
     editor.addLabel(0, 0, "Amount", ChatFormatting.GREEN);

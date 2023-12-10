@@ -12,10 +12,8 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.ItemStack;
 
 public final class ItemDurabilityBonus implements ItemBonus<ItemDurabilityBonus> {
   private float amount;
@@ -57,16 +55,12 @@ public final class ItemDurabilityBonus implements ItemBonus<ItemDurabilityBonus>
 
   @Override
   public MutableComponent getTooltip() {
-    double visibleAmount = amount;
-    if (operation != AttributeModifier.Operation.ADDITION) {
-      visibleAmount *= 100D;
-    }
-    if (amount < 0D) visibleAmount *= -1D;
-    String operationDescription = amount > 0 ? "plus" : "take";
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId());
-    String amountDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
-    operationDescription = "attribute.modifier." + operationDescription + "." + operation.toValue();
-    return Component.translatable(operationDescription, amountDescription, bonusDescription);
+    return TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, operation);
+  }
+
+  @Override
+  public boolean isPositive() {
+    return amount > 0;
   }
 
   @Override

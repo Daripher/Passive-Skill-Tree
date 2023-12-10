@@ -61,6 +61,11 @@ public final class ItemSkillBonus implements ItemBonus<ItemSkillBonus> {
   }
 
   @Override
+  public boolean isPositive() {
+    return bonus.isPositive();
+  }
+
+  @Override
   public void addEditorWidgets(
       SkillTreeEditorScreen editor, int index, Consumer<ItemBonus<?>> consumer) {
     editor.addLabel(0, 0, "Bonus Type", ChatFormatting.GREEN);
