@@ -593,14 +593,14 @@ public class SkillTreeEditorScreen extends Screen {
             rebuildWidgets();
           });
     } else {
-      addButton(0, 0, 90, 14, "Connect")
+      addButton(0, 0, 100, 14, "Connect")
           .setPressFunc(
               b -> {
                 skillButtons.get(first).skill.getConnections().add(second);
                 saveSelectedSkills();
                 rebuildWidgets();
               });
-      addButton(toolsX + 110, toolsY, 90, 14, "Connect Gateways")
+      addButton(105, 0, 100, 14, "Connect Gateways")
           .setPressFunc(
               b -> {
                 skillButtons.get(first).skill.getGatewayConnections().add(second);
