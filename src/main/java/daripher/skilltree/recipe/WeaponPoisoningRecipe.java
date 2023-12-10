@@ -58,6 +58,11 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
   }
 
   @Override
+  public @NotNull ResourceLocation getId() {
+    return super.getId();
+  }
+
+  @Override
   public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.WEAPON_POISONING.get();
   }

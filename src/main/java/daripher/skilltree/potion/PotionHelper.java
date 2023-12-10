@@ -30,7 +30,7 @@ public class PotionHelper {
     return ItemHelper.getItemBonuses(stack, PotionAmplificationBonus.class).stream()
         .map(PotionAmplificationBonus::getChance)
         .reduce(Float::sum)
-        .map(int.class::cast)
+        .map(Float::intValue)
         .orElse(0);
   }
 
