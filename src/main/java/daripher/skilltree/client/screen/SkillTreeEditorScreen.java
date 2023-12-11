@@ -13,7 +13,6 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -97,7 +96,7 @@ public class SkillTreeEditorScreen extends Screen {
     widgets()
         .filter(DropDownList.class::isInstance)
         .map(DropDownList.class::cast)
-        .forEach(w -> w.renderList(poseStack, mouseX, mouseY, partialTick));
+        .forEach(w -> w.renderList(poseStack));
   }
 
   private void renderSkillTooltip(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -157,6 +156,11 @@ public class SkillTreeEditorScreen extends Screen {
 
   private Stream<EditBox> textFields() {
     return children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast);
+  }
+
+  @SuppressWarnings("rawtypes")
+  private Stream<DropDownList> dropDownLists() {
+    return children().stream().filter(DropDownList.class::isInstance).map(DropDownList.class::cast);
   }
 
   @Override
@@ -225,6 +229,11 @@ public class SkillTreeEditorScreen extends Screen {
   public boolean charTyped(char character, int keyCode) {
     for (EditBox textField : textFields().toList()) {
       if (textField.charTyped(character, keyCode)) {
+        return true;
+      }
+    }
+    for (DropDownList<?> dropDownList : dropDownLists().toList()) {
+      if (dropDownList.charTyped(character, keyCode)) {
         return true;
       }
     }
@@ -535,29 +544,19 @@ public class SkillTreeEditorScreen extends Screen {
     ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
     PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
     if (selectedSkills().anyMatch(otherSkill -> !sameTextures(skill, otherSkill))) return;
-    Function<ResourceLocation, Component> textureNameFunc =
-        l -> {
-          String texture = l.getPath();
-          texture = texture.substring(texture.lastIndexOf("/") + 1);
-          texture = texture.replace(".png", "");
-          texture = TooltipHelper.idToName(texture);
-          return Component.literal(texture);
-        };
     addLabel(0, 0, "Border", ChatFormatting.GOLD);
+    addLabel(105, 0, "Tooltip", ChatFormatting.GOLD);
     toolsY += 19;
-    addDropDownList(0, 0, 200, 14, 10, skill.getBackgroundTexture(), SkillTexturesData.BORDERS)
-        .setToNameFunc(textureNameFunc)
+    addDropDownList(0, 0, 95, 14, 10, skill.getBackgroundTexture(), SkillTexturesData.BORDERS)
+        .setToNameFunc(TooltipHelper::getTextureName)
         .setResponder(
             value -> {
               selectedSkills().forEach(s -> s.setBackgroundTexture(value));
               saveSelectedSkills();
             });
-    toolsY += 19;
-    addLabel(0, 0, "Tooltip", ChatFormatting.GOLD);
-    toolsY += 19;
     addDropDownList(
-            0, 0, 200, 14, 10, skill.getBorderTexture(), SkillTexturesData.TOOLTIP_BACKGROUNDS)
-        .setToNameFunc(textureNameFunc)
+            105, 0, 95, 14, 10, skill.getBorderTexture(), SkillTexturesData.TOOLTIP_BACKGROUNDS)
+        .setToNameFunc(TooltipHelper::getTextureName)
         .setResponder(
             value -> {
               selectedSkills().forEach(s -> s.setBorderTexture(value));
@@ -567,7 +566,7 @@ public class SkillTreeEditorScreen extends Screen {
     addLabel(0, 0, "Icon", ChatFormatting.GOLD);
     toolsY += 19;
     addDropDownList(0, 0, 200, 14, 10, skill.getIconTexture(), SkillTexturesData.ICONS)
-        .setToNameFunc(textureNameFunc)
+        .setToNameFunc(TooltipHelper::getTextureName)
         .setResponder(
             value -> {
               selectedSkills().forEach(s -> s.setIconTexture(value));
@@ -714,6 +713,7 @@ public class SkillTreeEditorScreen extends Screen {
   @Override
   public void tick() {
     textFields().forEach(EditBox::tick);
+    dropDownLists().forEach(DropDownList::tick);
   }
 
   private void updateScroll(float partialTick) {

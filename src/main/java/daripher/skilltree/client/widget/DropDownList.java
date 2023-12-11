@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -24,9 +25,11 @@ public class DropDownList<T> extends AbstractButton {
   private Consumer<T> responder = t -> {};
   private final List<T> possibleValues;
   private T value;
+  private String search = "";
   private final int maxDisplayed;
   private final int maxScroll;
   private int scroll;
+  private int searchTimer;
   private boolean opened;
 
   public DropDownList(
@@ -59,7 +62,7 @@ public class DropDownList<T> extends AbstractButton {
     font.drawShadow(poseStack, visibleText, x + 5, y + 3, 0xe0e0e0);
   }
 
-  public void renderList(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+  public void renderList(PoseStack poseStack) {
     if (!opened) return;
     RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
     int y = this.y + height + 1;
@@ -78,7 +81,20 @@ public class DropDownList<T> extends AbstractButton {
     Font font = minecraft.font;
     for (int i = 0; i < maxDisplayed; i++) {
       String line = toNameFunc.apply(possibleValues.get(i + scroll)).getString();
-      font.drawShadow(poseStack, line, x + 5, y + 3 + i * height, 0xe0e0e0);
+      if (font.width(line) > width - 10) {
+        while (font.width(line + "...") > width - 10) {
+          line = line.substring(0, line.length() - 1);
+        }
+        line += "...";
+      }
+      if (!search.isEmpty() && line.toLowerCase().startsWith(search)) {
+        String search = line.substring(0, this.search.length());
+        font.drawShadow(poseStack, search, x + 5, y + 3 + i * height, 0xFFD642);
+        line = line.substring(search.length());
+        font.drawShadow(poseStack, line, x + 5 + font.width(search), y + 3 + i * height, 0xe0e0e0);
+      } else {
+        font.drawShadow(poseStack, line, x + 5, y + 3 + i * height, 0xe0e0e0);
+      }
     }
   }
 
@@ -126,14 +142,38 @@ public class DropDownList<T> extends AbstractButton {
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
     if (!opened) return false;
-    scroll -= Mth.sign(delta);
-    scroll = Math.min(maxScroll, Math.max(0, scroll));
+    setScroll(scroll - Mth.sign(delta));
     return true;
+  }
+
+  private void setScroll(int scroll) {
+    this.scroll = Math.min(maxScroll, Math.max(0, scroll));
   }
 
   @Override
   public boolean charTyped(char codePoint, int modifiers) {
-    return super.charTyped(codePoint, modifiers);
+    if (!opened) {
+      return false;
+    } else if (SharedConstants.isAllowedChatCharacter(codePoint)) {
+      searchTimer = 40;
+      search += Character.toString(codePoint).toLowerCase();
+      possibleValues.stream()
+          .filter(v -> toNameFunc.apply(v).getString().toLowerCase().startsWith(search))
+          .findFirst()
+          .ifPresent(v -> setScroll(possibleValues.indexOf(v)));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public void tick() {
+    if (searchTimer == 0) {
+      search = "";
+    }
+    if (searchTimer > 0) {
+      searchTimer--;
+    }
   }
 
   public DropDownList<T> setToNameFunc(Function<T, Component> function) {

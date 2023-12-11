@@ -5,6 +5,7 @@ import java.util.Arrays;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -90,6 +91,14 @@ public class TooltipHelper {
     return positive ? ITEM_BONUS_STYLE : ITEM_BONUS_STYLE_NEGATIVE;
   }
 
+  public static MutableComponent getTextureName(ResourceLocation location) {
+    String texture = location.getPath();
+    texture = texture.substring(texture.lastIndexOf("/") + 1);
+    texture = texture.replace(".png", "");
+    texture = TooltipHelper.idToName(texture);
+    return Component.literal(texture);
+  }
+
   @NotNull
   public static String idToName(String path) {
     String[] words = path.split("_");
@@ -101,6 +110,6 @@ public class TooltipHelper {
               name.append(" ");
               name.append(w);
             });
-    return name.toString();
+    return name.substring(1);
   }
 }
