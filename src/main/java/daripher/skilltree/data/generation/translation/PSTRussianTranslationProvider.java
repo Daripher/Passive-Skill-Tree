@@ -219,7 +219,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkill("blacksmith_subclass_special", "Жадные клинки");
     addSkillBranch("blacksmith_subclass_1_defensive", "Броня и Блокирование", 1, 4);
     addSkillBranch("blacksmith_subclass_1_offensive", "Урон в ближнем бою и Блокирование", 1, 4);
-    addSkillBranch("blacksmith_subclass_1_crafting", "Шанс крита создаваемого оружия ближнего боя", 1, 5);
+    addSkillBranch(
+        "blacksmith_subclass_1_crafting", "Шанс крита создаваемого оружия ближнего боя", 1, 5);
     // artisan skills
     addSkill("blacksmith_subclass_2", "Ремесленник");
     addSkill("blacksmith_subclass_2_mastery", "Мастер на все руки");
@@ -272,7 +273,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addSkillBranch("miner_subclass_2_crafting", "Сила самоцветов в бижутерии", 1, 5);
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Урон");
-    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Множитель критического урона");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Критический урон");
     add(PSTSkillBonuses.CRIT_CHANCE.get(), "Шанс критического удара");
     add(PSTSkillBonuses.CRAFTED_ITEM_BONUS.get(), "Создаваемые %s: %s");
     add(PSTSkillBonuses.GEM_POWER.get(), "Самоцветов вставляемые в %s: %s");
@@ -371,6 +372,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTEnchantmentConditions.NONE.get(), "Зачарование");
     // item conditions
     add(PSTItemConditions.WEAPON.get(), "any", "Оружие");
+    add(PSTItemConditions.WEAPON.get(), "any.gems", "Оружии");
     add(PSTItemConditions.WEAPON.get(), "ranged", "Оружие дальнего боя");
     add(PSTItemConditions.WEAPON.get(), "bow", "Лук");
     add(PSTItemConditions.WEAPON.get(), "crossbow", "Арбалет");
@@ -379,28 +381,38 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.WEAPON.get(), "sword", "Меч");
     add(PSTItemConditions.WEAPON.get(), "trident", "Трезубец");
     add(PSTItemConditions.CURIO.get(), "ring", "Кольцо");
+    add(PSTItemConditions.CURIO.get(), "ring.gems", "Кольцах");
     add(PSTItemConditions.CURIO.get(), "necklace", "Ожерелье");
     add(PSTItemConditions.CURIO.get(), "quiver", "Колчан");
+    add(PSTItemConditions.CURIO.get(), "quiver.gems", "Колчане");
     add(PSTItemConditions.ARMOR.get(), "any", "Броня");
+    add(PSTItemConditions.ARMOR.get(), "any.gems", "Броня");
     add(PSTItemConditions.ARMOR.get(), "helmet", "Шлем");
+    add(PSTItemConditions.ARMOR.get(), "helmet.gems", "Шлеме");
     add(PSTItemConditions.ARMOR.get(), "chestplate", "Нагрудник");
+    add(PSTItemConditions.ARMOR.get(), "chestplate.gems", "Нагруднике");
     add(PSTItemConditions.ARMOR.get(), "leggings", "Штаны");
+    add(PSTItemConditions.ARMOR.get(), "leggings.gems", "Штанах");
     add(PSTItemConditions.ARMOR.get(), "boots", "Ботинки");
+    add(PSTItemConditions.ARMOR.get(), "boots.gems", "Ботинках");
     add(PSTItemConditions.ARMOR.get(), "shield", "Щит");
+    add(PSTItemConditions.ARMOR.get(), "shield.gems", "Щите");
     add(PSTItemConditions.EQUIPMENT.get(), "Экипировка");
+    add(PSTItemConditions.EQUIPMENT.get(), "gems", "Экипировке");
     add(PSTItemConditions.POTIONS.get(), "any", "Зелья");
     add(PSTItemConditions.POTIONS.get(), "beneficial", "Благотворные Зелья");
     add(PSTItemConditions.POTIONS.get(), "harmful", "Вредящие Зелья");
     add(PSTItemConditions.POTIONS.get(), "neutral", "Нейтральные Зелья");
     add(PSTItemConditions.FOOD.get(), "Еда");
     add(PSTItemConditions.JEWELRY.get(), "Бижутерия");
+    add(PSTItemConditions.JEWELRY.get(), "gems", "Бижутерии");
     add(PSTItemConditions.PICKAXE.get(), "Кирка");
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
     add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
     add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на %s");
     add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s за каждый уровень зачарований на %s");
-    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый самоцвет в вашем %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый самоцвет в %s");
     add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
     add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s за каждый Блок между Вами и Целью");
     // recipes

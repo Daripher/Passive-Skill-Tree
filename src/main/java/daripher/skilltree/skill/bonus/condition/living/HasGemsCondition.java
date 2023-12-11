@@ -65,7 +65,7 @@ public final class HasGemsCondition implements LivingCondition {
     MutableComponent targetDescription =
         Component.translatable("%s.target.%s".formatted(key, target));
     MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "contains");
+        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "gems");
     if (min == -1) {
       return Component.translatable(
           key + ".max", bonusTooltip, targetDescription, max, itemDescription);

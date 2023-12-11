@@ -52,7 +52,7 @@ public final class GemsAmountMultiplier implements LivingMultiplier {
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip) {
     MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "contains");
+        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "gems");
     return Component.translatable(getDescriptionId(), bonusTooltip, itemDescription);
   }
 
