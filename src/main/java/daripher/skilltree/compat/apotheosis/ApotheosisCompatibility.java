@@ -99,6 +99,10 @@ public enum ApotheosisCompatibility {
     return ImmutableList.copyOf(gems);
   }
 
+  public List<ItemStack> getGems(ItemStack stack) {
+    return getGems(stack, getSockets(stack, null));
+  }
+
   public void ignoreGemTooltips(GatherSkippedAttributeTooltipsEvent event) {
     GemBonusHandler.getBonuses(event.getStack()).stream()
         .filter(ItemSkillBonus.class::isInstance)
