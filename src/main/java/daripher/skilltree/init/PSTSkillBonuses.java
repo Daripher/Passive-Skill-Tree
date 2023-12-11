@@ -57,6 +57,8 @@ public class PSTSkillBonuses {
       REGISTRY.register("arrow_retrieval", ArrowRetrievalBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> HEALTH_RESERVATION =
       REGISTRY.register("health_reservation", HealthReservationBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> ALL_ATTRIBUTES =
+      REGISTRY.register("all_attributes", AllAttributesBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {

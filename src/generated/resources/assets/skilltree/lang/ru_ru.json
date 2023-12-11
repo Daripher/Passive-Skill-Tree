@@ -851,6 +851,7 @@
   "skill.skilltree.miner_subclass_special.name": "Декоративные ботинки",
   "skill.skilltree.void.description": "Ничего не даёт",
   "skill.skilltree.void.name": "Пустота",
+  "skill_bonus.skilltree.all_attributes": "Все характеристики",
   "skill_bonus.skilltree.arrow_retrieval": "Шанс вернуть стрелы",
   "skill_bonus.skilltree.block_break_speed": "Скорость добычи Блоков",
   "skill_bonus.skilltree.crafted_item_bonus": "Создаваемые %s: %s",

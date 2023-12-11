@@ -295,6 +295,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Шанс наложить Поджог на %s");
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Шанс вернуть стрелы");
     add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Удержание здоровья");
+    add(PSTSkillBonuses.ALL_ATTRIBUTES.get(), "Все характеристики");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
     add(PSTItemBonuses.DURABILITY.get(), "Прочность");

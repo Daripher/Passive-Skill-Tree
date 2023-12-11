@@ -68,6 +68,11 @@ public class MixtureRecipe extends CustomRecipe implements SkillRequiringRecipe 
   }
 
   @Override
+  public @NotNull ResourceLocation getId() {
+    return super.getId();
+  }
+
+  @Override
   public @NotNull RecipeSerializer<?> getSerializer() {
     return PSTRecipeSerializers.POTION_MIXING.get();
   }

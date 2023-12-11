@@ -850,6 +850,7 @@
   "skill.skilltree.miner_subclass_2_life_notable_1.name": "Talisman",
   "skill.skilltree.miner_subclass_2_mastery.name": "Aristocrat",
   "skill.skilltree.miner_subclass_special.name": "Decorative Boots",
+  "skill_bonus.skilltree.all_attributes": "All Attributes",
   "skill_bonus.skilltree.arrow_retrieval": "Arrow retrieval chance",
   "skill_bonus.skilltree.block_break_speed": "Block Break Speed",
   "skill_bonus.skilltree.crafted_item_bonus": "Crafted %s: %s",
