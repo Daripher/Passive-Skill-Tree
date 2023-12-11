@@ -25,7 +25,7 @@ public class PassiveSkill {
   private int buttonSize;
   private boolean isStartingPoint;
   private boolean customStyle = false;
-  private @Nullable ChatFormatting skillTittleColor;
+  private String skillTittleColor = "#000000";
 
   public PassiveSkill(
       ResourceLocation id,
@@ -139,11 +139,11 @@ public class PassiveSkill {
     getBonuses().forEach(b -> b.onSkillLearned(player, firstTime));
   }
 
-  public void setTittleColor(@Nonnull ChatFormatting style){
+  public void setTittleColor(String style){
     this.skillTittleColor = style;
   }
 
-  public @Nullable ChatFormatting getTittleColor(){
+  public String getTittleColor(){
     return this.skillTittleColor;
   }
 

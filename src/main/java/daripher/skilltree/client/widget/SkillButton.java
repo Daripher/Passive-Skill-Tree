@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
+
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -203,14 +206,10 @@ public class SkillButton extends Button {
   private Style getTitleStyle() {
 
     if(skill.isCustomStryle()) {
-      if (skill.getTittleColor() == null)
-        return width == 30
-                ? GATEWAY_TITLE_STYLE
-                : width == 24
-                ? KEYSTONE_TITLE_STYLE
-                : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
-      else {
-        return Style.EMPTY.withColor(skill.getTittleColor());
+      try {
+        return Style.EMPTY.withColor(TextColor.fromRgb(Color.decode(skill.getTittleColor()).getRGB()));
+      } catch (NumberFormatException e){
+        return Style.EMPTY.withColor(ChatFormatting.WHITE);
       }
     }
     else return width == 30
