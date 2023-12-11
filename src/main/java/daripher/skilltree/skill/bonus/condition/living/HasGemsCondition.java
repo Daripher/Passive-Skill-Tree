@@ -2,8 +2,10 @@ package daripher.skilltree.skill.bonus.condition.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingConditions;
@@ -15,6 +17,7 @@ import daripher.skilltree.util.PlayerHelper;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
@@ -49,7 +52,11 @@ public final class HasGemsCondition implements LivingCondition {
   }
 
   private int getGems(Stream<ItemStack> items) {
-    return items.map(GemBonusHandler::getGems).map(List::size).reduce(Integer::sum).orElse(0);
+    Function<ItemStack, List<ItemStack>> mapper =
+        SkillTreeMod.apotheosisEnabled()
+            ? ApotheosisCompatibility.INSTANCE::getGems
+            : GemBonusHandler::getGems;
+    return items.map(mapper).map(List::size).reduce(Integer::sum).orElse(0);
   }
 
   @Override
