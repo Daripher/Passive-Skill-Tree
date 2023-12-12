@@ -112,10 +112,6 @@ public final class PotionCondition implements ItemCondition {
     this.type = type;
   }
 
-  public Type getType() {
-    return type;
-  }
-
   public static class Serializer implements ItemCondition.Serializer {
     @Override
     public ItemCondition deserialize(JsonObject json) throws JsonParseException {

@@ -1,6 +1,6 @@
 package daripher.skilltree.item.gem;
 
-import daripher.skilltree.api.IrisciteSeedContainer;
+import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.item.ItemHelper;
@@ -49,7 +49,7 @@ public class IrisciteItem extends GemItem {
 
   protected RandomSource createRandomSource(Player player, ItemStack itemStack) {
     RandomSource random = RandomSource.create();
-    int seed = ((IrisciteSeedContainer) player).getIrisciteSeed();
+    int seed = ((PlayerExtension) player).getGemsRandomSeed();
     int slot = Player.getEquipmentSlotForItem(itemStack).ordinal();
     random.setSeed(seed + slot);
     return random;

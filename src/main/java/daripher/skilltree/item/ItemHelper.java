@@ -3,7 +3,6 @@ package daripher.skilltree.item;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.HasAdditionalSockets;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;

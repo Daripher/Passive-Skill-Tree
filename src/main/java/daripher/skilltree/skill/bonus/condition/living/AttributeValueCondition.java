@@ -121,18 +121,6 @@ public final class AttributeValueCondition implements LivingCondition {
     this.max = max;
   }
 
-  public Attribute getAttribute() {
-    return attribute;
-  }
-
-  public float getMin() {
-    return min;
-  }
-
-  public float getMax() {
-    return max;
-  }
-
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {

@@ -18,7 +18,8 @@ import net.minecraft.util.Mth;
 
 public class ScreenHelper {
   public static void drawCenteredOutlinedText(
-      PoseStack poseStack, String text, Font font, int x, int y, int color) {
+      PoseStack poseStack, String text, int x, int y, int color) {
+    Font font = Minecraft.getInstance().font;
     x -= font.width(text) / 2;
     font.draw(poseStack, text, x + 1, y, 0);
     font.draw(poseStack, text, x - 1, y, 0);

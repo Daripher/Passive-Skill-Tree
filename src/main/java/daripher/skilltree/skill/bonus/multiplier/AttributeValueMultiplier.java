@@ -73,10 +73,6 @@ public final class AttributeValueMultiplier implements LivingMultiplier {
     this.attribute = attribute;
   }
 
-  public Attribute getAttribute() {
-    return attribute;
-  }
-
   public static class Serializer implements LivingMultiplier.Serializer {
     @Override
     public LivingMultiplier deserialize(JsonObject json) throws JsonParseException {

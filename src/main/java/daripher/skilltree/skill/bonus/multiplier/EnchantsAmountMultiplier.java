@@ -5,12 +5,12 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.util.PlayerHelper;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -24,7 +24,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import org.jetbrains.annotations.NotNull;
 
 public final class EnchantsAmountMultiplier implements LivingMultiplier {
   private @Nonnull ItemCondition itemCondition;
@@ -95,10 +94,6 @@ public final class EnchantsAmountMultiplier implements LivingMultiplier {
 
   public void setItemCondition(@Nonnull ItemCondition itemCondition) {
     this.itemCondition = itemCondition;
-  }
-
-  public @NotNull ItemCondition getItemCondition() {
-    return itemCondition;
   }
 
   public static class Serializer implements LivingMultiplier.Serializer {

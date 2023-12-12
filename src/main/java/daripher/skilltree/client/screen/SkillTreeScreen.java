@@ -275,8 +275,8 @@ public class SkillTreeScreen extends Screen {
 
   protected void addSkillButton(ResourceLocation skillId) {
     PassiveSkill skill = SkillTreeClientData.getSkill(skillId);
-    double buttonX = getSkillButtonX(skill);
-    double buttonY = getSkillButtonY(skill);
+    float buttonX = getSkillButtonX(skill);
+    float buttonY = getSkillButtonY(skill);
     SkillButton button =
         new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed);
     addRenderableWidget(button);

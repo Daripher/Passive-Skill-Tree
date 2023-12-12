@@ -32,10 +32,6 @@ public class CheckBox extends Button {
     return isHoveredOrFocused() ? 3 : 4;
   }
 
-  public boolean getValue() {
-    return value;
-  }
-
   public void setResponder(Consumer<Boolean> responder) {
     this.responder = responder;
   }

@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.util.PlayerHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -19,7 +19,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
 
 public final class HasItemEquippedCondition implements LivingCondition {
   private @Nonnull ItemCondition itemCondition;
@@ -83,10 +82,6 @@ public final class HasItemEquippedCondition implements LivingCondition {
 
   public void setItemCondition(@Nonnull ItemCondition itemCondition) {
     this.itemCondition = itemCondition;
-  }
-
-  public @NotNull ItemCondition getItemCondition() {
-    return itemCondition;
   }
 
   public static class Serializer implements LivingCondition.Serializer {

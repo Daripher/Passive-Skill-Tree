@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
     bus = Mod.EventBusSubscriber.Bus.MOD,
     value = Dist.CLIENT)
 public class SkillTexturesData implements ResourceManagerReloadListener {
-  public static Set<ResourceLocation> TOOLTIP_BACKGROUNDS = new TreeSet<>();
-  public static Set<ResourceLocation> BORDERS = new TreeSet<>();
-  public static Set<ResourceLocation> ICONS = new TreeSet<>();
+  public static final Set<ResourceLocation> TOOLTIP_BACKGROUNDS = new TreeSet<>();
+  public static final Set<ResourceLocation> BORDERS = new TreeSet<>();
+  public static final Set<ResourceLocation> ICONS = new TreeSet<>();
 
   @SubscribeEvent
   public static void registerReloadListener(RegisterClientReloadListenersEvent event) {

@@ -8,14 +8,11 @@ import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.Button;
-import daripher.skilltree.client.widget.Label;
-import daripher.skilltree.client.widget.TextField;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.*;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -488,12 +485,7 @@ public class SkillTreeEditorScreen extends Screen {
       toolsY += 19;
       addNumericTextField(0, 0, 40, 14, firstSelectedSkill.getButtonSize())
           .setNumericFilter(d -> d >= 2)
-          .setNumericResponder(
-              v -> {
-                selectedSkills().forEach(skill -> skill.setButtonSize(v.intValue()));
-                getSelectedSkillButtons().forEach(button -> button.setButtonSize(v.intValue()));
-                saveSelectedSkills();
-              });
+          .setNumericResponder(this::setSelectedSkillsSize);
       toolsY += 19;
     }
     if (selectedSkills.size() == 1) {
@@ -502,16 +494,10 @@ public class SkillTreeEditorScreen extends Screen {
       toolsY += 19;
       addNumericTextField(65, 0, 60, 14, firstSelectedSkill.getPositionX())
           .setNumericResponder(
-              v -> {
-                firstSelectedSkill.setPosition(v.floatValue(), firstSelectedSkill.getPositionY());
-                saveSelectedSkills();
-              });
+              v -> setSkillPosition(v.floatValue(), firstSelectedSkill.getPositionY()));
       addNumericTextField(130, 0, 60, 14, firstSelectedSkill.getPositionY())
           .setNumericResponder(
-              v -> {
-                firstSelectedSkill.setPosition(firstSelectedSkill.getPositionX(), v.floatValue());
-                saveSelectedSkills();
-              });
+              v -> setSkillPosition(firstSelectedSkill.getPositionX(), v.floatValue()));
       toolsY += 19;
     }
     if (canEdit(PassiveSkill::getTitle)) {
@@ -548,6 +534,27 @@ public class SkillTreeEditorScreen extends Screen {
       }
       toolsY += 19;
     }
+  }
+
+  private void setSelectedSkillsSize(double size) {
+    selectedSkills()
+        .forEach(
+            skill -> {
+              skill.setButtonSize((int) size);
+              reAddSkillButton(skill);
+            });
+    addSkillConnections();
+    addGatewayConnections();
+    saveSelectedSkills();
+  }
+
+  private void setSkillPosition(float x, float y) {
+    PassiveSkill firstSelectedSkill = getFirstSelectedSkill();
+    firstSelectedSkill.setPosition(x, y);
+    reAddSkillButton(firstSelectedSkill);
+    addSkillConnections();
+    addGatewayConnections();
+    saveSelectedSkills();
   }
 
   private PassiveSkill getFirstSelectedSkill() {
@@ -608,10 +615,6 @@ public class SkillTreeEditorScreen extends Screen {
               saveSelectedSkills();
             });
     toolsY += 19;
-  }
-
-  private Stream<SkillButton> getSelectedSkillButtons() {
-    return selectedSkills.stream().map(skillButtons::get);
   }
 
   private void addConnectionToolsButton() {
@@ -683,6 +686,12 @@ public class SkillTreeEditorScreen extends Screen {
     float skillY = skill.getPositionY();
     if (maxScrollX < Mth.abs(skillX)) maxScrollX = (int) Mth.abs(skillX);
     if (maxScrollY < Mth.abs(skillY)) maxScrollY = (int) Mth.abs(skillY);
+  }
+
+  protected void reAddSkillButton(PassiveSkill skill) {
+    children().removeIf(w -> w instanceof SkillButton b && b.skill == skill);
+    skillButtons.remove(skill.getId());
+    addSkillButton(skill);
   }
 
   private float getSkillButtonX(PassiveSkill skill) {

@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.IrisciteSeedContainer;
+import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends LivingEntity implements IrisciteSeedContainer {
+public abstract class PlayerMixin extends LivingEntity implements PlayerExtension {
   private int rainbowJewelInsertionSeed;
 
   @SuppressWarnings("DataFlowIssue")
@@ -42,12 +42,12 @@ public abstract class PlayerMixin extends LivingEntity implements IrisciteSeedCo
   }
 
   @Override
-  public int getIrisciteSeed() {
+  public int getGemsRandomSeed() {
     return rainbowJewelInsertionSeed;
   }
 
   @Override
-  public void updateIrisciteSeed() {
+  public void updateGemsRandomSeed() {
     rainbowJewelInsertionSeed = random.nextInt();
   }
 }

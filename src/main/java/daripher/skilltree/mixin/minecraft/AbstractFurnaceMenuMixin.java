@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import java.util.Optional;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +24,7 @@ public abstract class AbstractFurnaceMenuMixin extends RecipeBookMenu<Container>
       @NotNull ItemStack itemStack, int fromSlot, int toSlot, boolean beginFromEnd) {
     Slot resultSlot = slots.get(AbstractFurnaceMenu.RESULT_SLOT);
     if (itemStack == resultSlot.getItem()) {
-      Optional<Player> viewingPlayer = ((PlayerContainer) this).getViewingPlayer();
+      Optional<Player> viewingPlayer = ((InteractiveContainer) this).getUser();
       viewingPlayer.ifPresent(
           player -> ForgeEventFactory.firePlayerSmeltedEvent(player, itemStack));
     }

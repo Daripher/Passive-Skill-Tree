@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.apotheosis;
 
-import daripher.skilltree.api.EnchantmentMenuExtension;
+import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;

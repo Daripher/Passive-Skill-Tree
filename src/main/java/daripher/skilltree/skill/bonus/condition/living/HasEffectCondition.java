@@ -75,10 +75,6 @@ public final class HasEffectCondition implements LivingCondition {
     this.effect = effect;
   }
 
-  public MobEffect getEffect() {
-    return effect;
-  }
-
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {

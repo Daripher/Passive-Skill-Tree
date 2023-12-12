@@ -69,10 +69,6 @@ public final class CurioCondition implements ItemCondition {
     this.slot = slot;
   }
 
-  public String getSlot() {
-    return slot;
-  }
-
   public static class Serializer implements ItemCondition.Serializer {
     @Override
     public ItemCondition deserialize(JsonObject json) throws JsonParseException {

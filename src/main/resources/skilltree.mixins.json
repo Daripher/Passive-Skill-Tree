@@ -32,7 +32,8 @@
     "apotheosis/AttributeBonusMixin",
     "apotheosis/EnchantmentBonusMixin",
     "AbstractArrowAccessor",
-    "LivingEntityAccessor"
+    "LivingEntityAccessor",
+    "CampfireBlockEntityAccessor"
   ],
   "client": [
     "minecraft/RecipeBookComponentMixin",

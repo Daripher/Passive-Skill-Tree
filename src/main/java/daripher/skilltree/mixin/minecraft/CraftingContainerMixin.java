@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CraftingContainer.class)
-public class CraftingContainerMixin implements PlayerContainer {
+public class CraftingContainerMixin implements InteractiveContainer {
   private @Shadow @Final AbstractContainerMenu menu;
 
   @Override
-  public Optional<Player> getViewingPlayer() {
-    return Optional.ofNullable(menu).flatMap(menu -> ((PlayerContainer) menu).getViewingPlayer());
+  public Optional<Player> getUser() {
+    return Optional.ofNullable(menu).flatMap(menu -> ((InteractiveContainer) menu).getUser());
   }
 
   @Override
-  public void setViewingPlayer(@Nullable Player player) {}
+  public void setUser(@Nullable Player player) {}
 }

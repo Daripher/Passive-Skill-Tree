@@ -9,7 +9,6 @@ import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.network.NetworkHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -77,11 +76,6 @@ public final class WeaponCondition implements ItemCondition {
 
   public void setType(Type type) {
     this.type = type;
-  }
-
-  @Nullable
-  public Type getType() {
-    return type;
   }
 
   public enum Type {

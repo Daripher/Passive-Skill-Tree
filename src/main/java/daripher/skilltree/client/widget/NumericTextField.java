@@ -21,19 +21,26 @@ public class NumericTextField extends TextField {
   @Override
   public void insertText(@NotNull String text) {
     super.insertText(text);
-    onNumericValueChange(getNumericValue());
+    onNumericValueChange();
   }
 
   @Override
   public void setMaxLength(int length) {
     super.setMaxLength(length);
-    onNumericValueChange(getNumericValue());
+    onNumericValueChange();
   }
 
   @Override
   public void setValue(@NotNull String text) {
     super.setValue(text);
-    onNumericValueChange(getNumericValue());
+    onNumericValueChange();
+  }
+
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    boolean pressed = super.keyPressed(keyCode, scanCode, modifiers);
+    onNumericValueChange();
+    return pressed;
   }
 
   public NumericTextField setNumericFilter(Predicate<Double> filter) {
@@ -57,9 +64,9 @@ public class NumericTextField extends TextField {
     this.numericResponder = numericResponder;
   }
 
-  private void onNumericValueChange(double value) {
+  private void onNumericValueChange() {
     if (numericResponder != null) {
-      numericResponder.accept(value);
+      numericResponder.accept(getNumericValue());
     }
   }
 

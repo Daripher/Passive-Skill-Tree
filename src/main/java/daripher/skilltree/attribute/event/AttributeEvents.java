@@ -7,7 +7,7 @@ import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.LivingEntityAccessor;
-import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

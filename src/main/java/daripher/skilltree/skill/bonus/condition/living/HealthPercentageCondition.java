@@ -100,14 +100,6 @@ public final class HealthPercentageCondition implements LivingCondition {
     this.max = max;
   }
 
-  public float getMin() {
-    return min;
-  }
-
-  public float getMax() {
-    return max;
-  }
-
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {

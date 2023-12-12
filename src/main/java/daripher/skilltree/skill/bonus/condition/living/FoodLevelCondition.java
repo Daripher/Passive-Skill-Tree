@@ -96,14 +96,6 @@ public final class FoodLevelCondition implements LivingCondition {
     this.max = max;
   }
 
-  public int getMin() {
-    return min;
-  }
-
-  public int getMax() {
-    return max;
-  }
-
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {

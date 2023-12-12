@@ -37,7 +37,7 @@ public class LearnSkillMessage {
     assert player != null;
     IPlayerSkills capability = PlayerSkillsProvider.get(player);
     PassiveSkill skill = SkillsReloader.getSkillById(message.skillId);
-    boolean canLearn = capability.learnSkill(player, skill);
+    boolean canLearn = capability.learnSkill(skill);
     if (canLearn) Objects.requireNonNull(skill).learn(player, false);
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));

@@ -4,6 +4,8 @@ import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.network.NetworkDispatcher;
+
+import java.util.Objects;
 import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,7 +22,7 @@ public class GainSkillPointMessage {
       GainSkillPointMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
     Context ctx = ctxSupplier.get();
     ctx.setPacketHandled(true);
-    ServerPlayer player = ctx.getSender();
+    ServerPlayer player = Objects.requireNonNull(ctx.getSender());
     IPlayerSkills capability = PlayerSkillsProvider.get(player);
     int skills = capability.getPlayerSkills().size();
     int points = capability.getSkillPoints();

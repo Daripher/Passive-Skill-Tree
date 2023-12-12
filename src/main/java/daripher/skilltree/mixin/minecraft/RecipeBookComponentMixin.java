@@ -1,7 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import daripher.skilltree.mixin.RecipeCollectionAccessor;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class RecipeBookComponentMixin {
 
   private boolean isUncraftable(Recipe<?> recipe) {
     if (!(recipe instanceof SkillRequiringRecipe aRecipe)) return false;
-    if (!(menu instanceof PlayerContainer container)) return true;
+    if (!(menu instanceof InteractiveContainer container)) return true;
     return aRecipe.isUncraftable(container, recipe);
   }
 }

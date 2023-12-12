@@ -80,10 +80,6 @@ public final class ArmorCondition implements ItemCondition {
     this.type = type;
   }
 
-  public Type getType() {
-    return type;
-  }
-
   public enum Type {
     HELMET("helmet"),
     CHESTPLATE("chestplate"),

@@ -28,18 +28,17 @@ public class SkillButton extends Button {
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454);
   private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
-
-  public final PassiveSkill skill;
   private final Supplier<Float> animationFunction;
-  public double x;
-  public double y;
+  public final PassiveSkill skill;
+  public final float x;
+  public final float y;
   public boolean highlighted;
   public boolean animated;
 
   public SkillButton(
       Supplier<Float> animationFunc,
-      double x,
-      double y,
+      float x,
+      float y,
       PassiveSkill skill,
       OnPress pressFunc,
       OnTooltip tooltipFunc) {
@@ -58,7 +57,7 @@ public class SkillButton extends Button {
   }
 
   public SkillButton(
-      Supplier<Float> animationFunc, double x, double y, PassiveSkill skill, OnPress pressFunc) {
+      Supplier<Float> animationFunc, float x, float y, PassiveSkill skill, OnPress pressFunc) {
     this(animationFunc, x, y, skill, pressFunc, (b, s, mx, my) -> {});
   }
 

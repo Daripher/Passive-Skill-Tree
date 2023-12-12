@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.CraftingMenu;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(CraftingMenu.class)
 public abstract class CraftingMenuMixin extends RecipeBookMenu<CraftingContainer>
-    implements PlayerContainer {
+    implements InteractiveContainer {
   private @Shadow @Final CraftingContainer craftSlots;
   private @Shadow @Final Player player;
   private @Shadow @Final ResultContainer resultSlots;

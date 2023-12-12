@@ -1,6 +1,6 @@
 package daripher.skilltree.item.necklace;
 
-import daripher.skilltree.api.HasAdditionalSockets;
+import daripher.skilltree.item.HasAdditionalSockets;
 
 public class SimpleNecklace extends NecklaceItem implements HasAdditionalSockets {
   @Override

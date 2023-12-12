@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import daripher.skilltree.skill.bonus.player.CraftedItemBonus;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.Optional;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BrewingStandBlockEntity.class)
 public abstract class BrewingStandBlockEntityMixin extends BaseContainerBlockEntity
-    implements PlayerContainer {
+    implements InteractiveContainer {
   private @Nullable Player player;
 
   @SuppressWarnings("DataFlowIssue")
@@ -38,8 +38,8 @@ public abstract class BrewingStandBlockEntityMixin extends BaseContainerBlockEnt
       NonNullList<ItemStack> itemStacks,
       CallbackInfo callbackInfo) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
-    if (!(blockEntity instanceof PlayerContainer playerContainer)) return;
-    Optional<Player> player = playerContainer.getViewingPlayer();
+    if (!(blockEntity instanceof InteractiveContainer aContainer)) return;
+    Optional<Player> player = aContainer.getUser();
     if (player.isEmpty()) return;
     for (int slot = 0; slot < 3; slot++) {
       ItemStack potionStack = itemStacks.get(slot);
@@ -56,7 +56,7 @@ public abstract class BrewingStandBlockEntityMixin extends BaseContainerBlockEnt
   }
 
   @Override
-  public Optional<Player> getViewingPlayer() {
+  public Optional<Player> getUser() {
     return Optional.ofNullable(player);
   }
 }

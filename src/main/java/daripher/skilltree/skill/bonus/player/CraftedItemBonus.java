@@ -136,10 +136,6 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
     this.bonus = bonus;
   }
 
-  public @NotNull ItemCondition getItemCondition() {
-    return itemCondition;
-  }
-
   @Override
   public boolean equals(Object obj) {
     if (obj == this) return true;

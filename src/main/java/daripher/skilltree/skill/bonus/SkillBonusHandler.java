@@ -1,7 +1,7 @@
 package daripher.skilltree.skill.bonus;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.api.EquipmentContainer;
+import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.effect.SkillBonusEffect;
 import daripher.skilltree.item.ItemBonusProvider;
@@ -423,7 +423,7 @@ public class SkillBonusHandler {
   protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
     List<ItemEntity> drops = new ArrayList<>();
     event.getDrops().stream().map(ItemEntity::copy).forEach(drops::add);
-    if (event.getEntity() instanceof EquipmentContainer entity) drops.removeIf(entity::equipped);
+    if (event.getEntity() instanceof EquippedEntity entity) drops.removeIf(entity::hasItemEquipped);
     return drops;
   }
 

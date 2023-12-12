@@ -1,4 +1,4 @@
-package daripher.skilltree.util;
+package daripher.skilltree.entity.player;
 
 import com.google.common.collect.Streams;
 import daripher.skilltree.item.ItemHelper;

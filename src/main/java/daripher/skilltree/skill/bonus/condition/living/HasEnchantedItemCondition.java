@@ -10,7 +10,7 @@ import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -82,10 +82,6 @@ public final class HasEnchantedItemCondition implements LivingCondition {
 
   public void setItemCondition(@Nonnull ItemCondition itemCondition) {
     this.itemCondition = itemCondition;
-  }
-
-  public @Nonnull ItemCondition getItemCondition() {
-    return itemCondition;
   }
 
   public static class Serializer implements LivingCondition.Serializer {

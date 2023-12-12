@@ -1,4 +1,4 @@
-package daripher.skilltree.api;
+package daripher.skilltree.container.menu;
 
 public interface EnchantmentMenuExtension {
   int[] getCostsBeforeReduction();

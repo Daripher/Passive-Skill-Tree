@@ -13,7 +13,7 @@ import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -148,18 +148,6 @@ public final class HasGemsCondition implements LivingCondition {
 
   public void setMin(int min) {
     this.min = min;
-  }
-
-  public int getMin() {
-    return min;
-  }
-
-  public int getMax() {
-    return max;
-  }
-
-  public @Nonnull ItemCondition getItemCondition() {
-    return itemCondition;
   }
 
   public static class Serializer implements LivingCondition.Serializer {

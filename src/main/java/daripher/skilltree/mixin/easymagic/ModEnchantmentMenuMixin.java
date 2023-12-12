@@ -1,7 +1,7 @@
 package daripher.skilltree.mixin.easymagic;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import daripher.skilltree.api.EnchantmentMenuExtension;
+import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import fuzs.easymagic.mixin.accessor.EnchantmentMenuAccessor;

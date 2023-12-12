@@ -1,7 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.IrisciteSeedContainer;
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.entity.player.PlayerExtension;
+import daripher.skilltree.container.InteractiveContainer;
 import daripher.skilltree.init.PSTItems;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -30,13 +30,13 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
       Inventory inventory,
       ContainerLevelAccess levelAccess,
       CallbackInfo callbackInfo) {
-    ((PlayerContainer) inputSlots).setViewingPlayer(inventory.player);
+    ((InteractiveContainer) inputSlots).setUser(inventory.player);
   }
 
   @Inject(method = "onTake", at = @At("HEAD"))
   private void changeRainbowJewelInsertionSeed(
       Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
     if (inputSlots.getItem(1).getItem() != PSTItems.IRISCITE.get()) return;
-    ((IrisciteSeedContainer) player).updateIrisciteSeed();
+    ((PlayerExtension) player).updateGemsRandomSeed();
   }
 }

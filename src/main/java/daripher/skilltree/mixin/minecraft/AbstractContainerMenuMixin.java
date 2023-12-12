@@ -1,6 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.api.PlayerContainer;
+import daripher.skilltree.container.InteractiveContainer;
 import java.util.Optional;
 import javax.annotation.Nullable;
 import net.minecraft.world.entity.player.Player;
@@ -12,22 +12,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContainerMenu.class)
-public class AbstractContainerMenuMixin implements PlayerContainer {
+public class AbstractContainerMenuMixin implements InteractiveContainer {
   private @Nullable Player player;
 
   @Inject(method = "clicked", at = @At("HEAD"))
   private void setViewingPlayer(
       int x, int y, ClickType click, Player player, CallbackInfo callback) {
-    setViewingPlayer(player);
+    setUser(player);
   }
 
   @Override
-  public Optional<Player> getViewingPlayer() {
+  public Optional<Player> getUser() {
     return Optional.ofNullable(player);
   }
 
   @Override
-  public void setViewingPlayer(@Nullable Player player) {
+  public void setUser(@Nullable Player player) {
     this.player = player;
   }
 }

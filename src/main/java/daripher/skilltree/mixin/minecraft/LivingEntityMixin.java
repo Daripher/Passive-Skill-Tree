@@ -1,7 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import daripher.skilltree.api.EquipmentContainer;
+import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin implements EquipmentContainer {
+public abstract class LivingEntityMixin implements EquippedEntity {
   private final List<ItemStack> equippedItems = new ArrayList<>();
 
   @Inject(method = "dropAllDeathLoot", at = @At("HEAD"))
@@ -37,7 +37,7 @@ public abstract class LivingEntityMixin implements EquipmentContainer {
   }
 
   @Override
-  public boolean equipped(ItemStack stack) {
+  public boolean hasItemEquipped(ItemStack stack) {
     return equippedItems.stream().anyMatch(equipped -> ItemStack.matches(stack, equipped));
   }
 

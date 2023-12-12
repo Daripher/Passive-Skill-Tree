@@ -7,7 +7,7 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.WeaponCondition;
-import daripher.skilltree.util.PlayerHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;

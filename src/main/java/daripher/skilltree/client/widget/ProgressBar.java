@@ -7,6 +7,7 @@ import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
@@ -19,8 +20,7 @@ public class ProgressBar extends Button {
   }
 
   private static int getCurrentLevel() {
-    Minecraft minecraft = Minecraft.getInstance();
-    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+    IPlayerSkills capability = PlayerSkillsProvider.get(getLocalPlayer());
     int skills = capability.getPlayerSkills().size();
     int points = capability.getSkillPoints();
     return skills + points;
@@ -52,15 +52,13 @@ public class ProgressBar extends Button {
   protected void renderProgress(PoseStack poseStack) {
     if (showProgressInNumbers) {
       int cost = Config.getSkillPointCost(getCurrentLevel());
-      int exp = Minecraft.getInstance().player.totalExperience;
+      int exp = getLocalPlayer().totalExperience;
       String text = exp + "/" + cost;
-      ScreenHelper.drawCenteredOutlinedText(
-          poseStack, text, Minecraft.getInstance().font, x + width / 2, getTextY(), 0xFCE266);
+      ScreenHelper.drawCenteredOutlinedText(poseStack, text, x + width / 2, getTextY(), 0xFCE266);
     } else {
       float experienceProgress = getExperienceProgress();
       String text = (int) (experienceProgress * 100) + "%";
-      ScreenHelper.drawCenteredOutlinedText(
-          poseStack, text, Minecraft.getInstance().font, x + width / 2, getTextY(), 0xFCE266);
+      ScreenHelper.drawCenteredOutlinedText(poseStack, text, x + width / 2, getTextY(), 0xFCE266);
     }
   }
 
@@ -69,19 +67,14 @@ public class ProgressBar extends Button {
     if (isMaxLevel(currentLevel)) currentLevel--;
     int nextLevel = currentLevel + 1;
     ScreenHelper.drawCenteredOutlinedText(
-        poseStack,
-        "" + nextLevel,
-        Minecraft.getInstance().font,
-        x + width - 17,
-        getTextY(),
-        0xFCE266);
+        poseStack, "" + nextLevel, x + width - 17, getTextY(), 0xFCE266);
   }
 
   protected void renderCurrentLevel(PoseStack poseStack) {
     int currentLevel = getCurrentLevel();
     if (isMaxLevel(currentLevel)) currentLevel--;
     ScreenHelper.drawCenteredOutlinedText(
-        poseStack, "" + currentLevel, Minecraft.getInstance().font, x + 17, getTextY(), 0xFCE266);
+        poseStack, "" + currentLevel, x + 17, getTextY(), 0xFCE266);
   }
 
   protected int getTextY() {
@@ -93,9 +86,13 @@ public class ProgressBar extends Button {
     float progress = 1F;
     if (level < Config.max_skill_points) {
       int levelupCost = Config.getSkillPointCost(level);
-      progress = (float) Minecraft.getInstance().player.totalExperience / levelupCost;
+      progress = (float) getLocalPlayer().totalExperience / levelupCost;
       progress = Math.min(1F, progress);
     }
     return progress;
+  }
+
+  private static LocalPlayer getLocalPlayer() {
+    return Minecraft.getInstance().player;
   }
 }

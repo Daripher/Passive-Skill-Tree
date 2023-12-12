@@ -39,16 +39,11 @@ public class PlayerSkills implements IPlayerSkills {
   }
 
   @Override
-  public boolean learnSkill(ServerPlayer player, PassiveSkill passiveSkill) {
+  public boolean learnSkill(PassiveSkill passiveSkill) {
     if (skillPoints == 0) return false;
     if (skills.contains(passiveSkill)) return false;
     skillPoints--;
     return skills.add(passiveSkill);
-  }
-
-  @Override
-  public boolean hasSkill(ResourceLocation skillId) {
-    return skills.stream().map(PassiveSkill::getId).anyMatch(skillId::equals);
   }
 
   @Override
