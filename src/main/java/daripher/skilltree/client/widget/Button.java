@@ -29,17 +29,29 @@ public class Button extends net.minecraft.client.gui.components.Button {
   @Override
   public void renderButton(
       @NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    renderBackground(poseStack);
+    renderText(poseStack);
+  }
+
+  protected void renderBackground(@NotNull PoseStack poseStack) {
     ScreenHelper.prepareTextureRendering(
         new ResourceLocation("skilltree:textures/screen/widgets.png"));
-    int v = !isActive() ? 0 : isHoveredOrFocused() ? 28 : 14;
+    int v = getTextureVariant() * 14;
     blit(poseStack, x, y, 0, v, width / 2, height);
     blit(poseStack, x + width / 2, y, -width / 2, v, width / 2, height);
+  }
+
+  protected void renderText(@NotNull PoseStack poseStack) {
     Minecraft minecraft = Minecraft.getInstance();
     Font font = minecraft.font;
     int textColor = getFGColor();
     textColor |= Mth.ceil(alpha * 255F) << 24;
     drawCenteredString(
         poseStack, font, getMessage(), x + width / 2, y + (height - 8) / 2, textColor);
+  }
+
+  protected int getTextureVariant() {
+    return !isActive() ? 0 : isHoveredOrFocused() ? 2 : 1;
   }
 
   @Override
