@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
+
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -28,6 +31,7 @@ public class SkillButton extends Button {
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454);
   private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
+
   public final PassiveSkill skill;
   private final Supplier<Float> animationFunction;
   public double x;
@@ -200,11 +204,20 @@ public class SkillButton extends Button {
   }
 
   private Style getTitleStyle() {
-    return width == 30
-        ? GATEWAY_TITLE_STYLE
-        : width == 24
-            ? KEYSTONE_TITLE_STYLE
-            : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+
+    if(skill.isCustomStryle()) {
+      try {
+        return Style.EMPTY.withColor(TextColor.fromRgb(Color.decode(skill.getTittleColor()).getRGB()));
+      } catch (NumberFormatException e){
+        return Style.EMPTY.withColor(ChatFormatting.WHITE);
+      }
+    }
+    else return width == 30
+          ? GATEWAY_TITLE_STYLE
+          : width == 24
+          ? KEYSTONE_TITLE_STYLE
+          : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
+
   }
 
   protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {

@@ -8,11 +8,16 @@ import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.Button;
+import daripher.skilltree.client.widget.Label;
+import daripher.skilltree.client.widget.TextField;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -510,9 +515,19 @@ public class SkillTreeEditorScreen extends Screen {
       titleEditor.setResponder(this::setSelectedSkillsTitle);
       addRenderableWidget(titleEditor);
       toolsY += 19;
+      addLabel(0, 0, "Tittle Color", ChatFormatting.GOLD);
+      toolsY += 19;
+
+      CheckBox checkBox = addCheckBox(60,-19,14,14, skill.isCustomStryle());
+      checkBox.setPressOnFunc(s -> skill.setIsCustomStyle(true));
+      checkBox.setPressOffFunc(s -> skill.setIsCustomStyle(false));
+      TextField colorEditor = addTextField(0, 0, 200, 14, !skill.getTittleColor().isEmpty() ? skill.getTittleColor() : "#000000");
+      colorEditor.setSoftFilter(f -> f.matches("^#[a-zA-Z0-9]{6}"));
+      colorEditor.setResponder(this::setSelectedSkillsTittleColor);
+      addRenderableWidget(colorEditor);
+      toolsY += 19;
     }
   }
-
   private void skillXPosEditorChanged(PassiveSkill skill, NumericTextField xPosEditor) {
     skill.setPosition((float) xPosEditor.getNumericValue(), skill.getPositionY());
     getSelectedSkillButtons()
@@ -535,6 +550,12 @@ public class SkillTreeEditorScreen extends Screen {
 
   private void setSelectedSkillsTitle(String title) {
     selectedSkills().forEach(skill -> skill.setTitle(title));
+    saveSelectedSkills();
+  }
+
+
+  private void setSelectedSkillsTittleColor(String color){
+    selectedSkills().forEach(skill -> skill.setTittleColor(color));
     saveSelectedSkills();
   }
 
@@ -797,6 +818,14 @@ public class SkillTreeEditorScreen extends Screen {
       message.withStyle(style);
     }
     return addRenderableOnly(new Label(toolsX + x, toolsY + y, message));
+  }
+
+
+  public CheckBox addCheckBox(int x, int y, int width, int height, boolean isOn){
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y,width,height, isOn));
+  }
+  public CheckBox addCheckBox(int x, int y, int width, int height){
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y,width,height));
   }
 
   public <T> DropDownList<T> addDropDownList(
