@@ -25,13 +25,13 @@ public class ShapedSkillRequiringRecipe extends ShapedRecipe implements SkillReq
 
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
-    if (isUncraftable(container)) return false;
+    if (isUncraftable(container, this)) return false;
     return super.matches(container, level);
   }
 
   @Override
   public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
-    if (isUncraftable(container)) return ItemStack.EMPTY;
+    if (isUncraftable(container, this)) return ItemStack.EMPTY;
     return super.assemble(container);
   }
 

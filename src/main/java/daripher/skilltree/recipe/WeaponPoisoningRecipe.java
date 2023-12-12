@@ -21,7 +21,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
 
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
-    if (isUncraftable(container)) return false;
+    if (isUncraftable(container, this)) return false;
     int weaponsCount = 0;
     int poisonsCount = 0;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -38,7 +38,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
 
   @Override
   public @NotNull ItemStack assemble(@NotNull CraftingContainer container) {
-    if (isUncraftable(container)) return ItemStack.EMPTY;
+    if (isUncraftable(container, this)) return ItemStack.EMPTY;
     ItemStack weaponStack = ItemStack.EMPTY;
     ItemStack poisonStack = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
@@ -55,11 +55,6 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
   @Override
   public boolean canCraftInDimensions(int width, int height) {
     return width * height >= 2;
-  }
-
-  @Override
-  public @NotNull ResourceLocation getId() {
-    return super.getId();
   }
 
   @Override

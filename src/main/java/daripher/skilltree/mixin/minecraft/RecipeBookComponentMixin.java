@@ -38,6 +38,6 @@ public class RecipeBookComponentMixin {
   private boolean isUncraftable(Recipe<?> recipe) {
     if (!(recipe instanceof SkillRequiringRecipe aRecipe)) return false;
     if (!(menu instanceof PlayerContainer container)) return true;
-    return aRecipe.isUncraftable(container);
+    return aRecipe.isUncraftable(container, recipe);
   }
 }
