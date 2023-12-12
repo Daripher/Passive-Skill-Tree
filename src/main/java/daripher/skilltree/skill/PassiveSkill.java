@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -21,11 +18,10 @@ public class PassiveSkill {
   private ResourceLocation borderTexture;
   private @Nullable ResourceLocation connectedTreeId;
   private @Nullable String title;
+  private @Nullable String titleColor;
   private float positionX, positionY;
   private int buttonSize;
   private boolean isStartingPoint;
-  private boolean customStyle = false;
-  private String skillTittleColor = "#000000";
 
   public PassiveSkill(
       ResourceLocation id,
@@ -139,22 +135,15 @@ public class PassiveSkill {
     getBonuses().forEach(b -> b.onSkillLearned(player, firstTime));
   }
 
-  public void setTittleColor(String style){
-    this.skillTittleColor = style;
+  public void setTittleColor(@Nullable String color) {
+    this.titleColor = color;
   }
 
-  public String getTittleColor(){
-    return this.skillTittleColor;
+  public @Nonnull String getTittleColor() {
+    return titleColor == null ? "" : titleColor;
   }
 
   public void remove(ServerPlayer player) {
     getBonuses().forEach(b -> b.onSkillRemoved(player));
-  }
-
-  public void setIsCustomStyle(boolean style){
-    this.customStyle = style;
-  }
-  public boolean isCustomStryle(){
-    return this.customStyle;
   }
 }
