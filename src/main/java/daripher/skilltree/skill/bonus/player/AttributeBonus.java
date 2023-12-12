@@ -14,8 +14,7 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneMultiplier;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
@@ -24,15 +23,20 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.ISlotType;
 import top.theillusivec4.curios.common.CuriosHelper;
 
 public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBonus.Ticking {
+  private static final Set<Attribute> EDITABLE_ATTRIBUTES = new HashSet<>();
   private Attribute attribute;
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
@@ -200,7 +204,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
     editor.addLabel(0, 0, "Attribute", ChatFormatting.GOLD);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 200, 14, 10, attribute, ForgeRegistries.ATTRIBUTES.getValues())
+        .addDropDownList(0, 0, 200, 14, 10, attribute, getEditableAttributes())
         .setToNameFunc(a -> Component.translatable(a.getDescriptionId()))
         .setResponder(
             a -> {
@@ -263,6 +267,21 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
           setMultiplier(m);
           consumer.accept(this.copy());
         });
+  }
+
+  @SuppressWarnings("deprecation")
+  @NotNull
+  private static Collection<Attribute> getEditableAttributes() {
+    if (EDITABLE_ATTRIBUTES.isEmpty()) {
+      ForgeRegistries.ATTRIBUTES.getValues().stream()
+          .filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute)
+          .forEach(EDITABLE_ATTRIBUTES::add);
+      CuriosApi.getSlotHelper().getSlotTypes().stream()
+          .map(ISlotType::getIdentifier)
+          .map(CuriosHelper::getOrCreateSlotAttribute)
+          .forEach(EDITABLE_ATTRIBUTES::add);
+    }
+    return EDITABLE_ATTRIBUTES;
   }
 
   public Attribute getAttribute() {
