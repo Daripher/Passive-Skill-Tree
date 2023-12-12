@@ -810,12 +810,8 @@ public class SkillTreeEditorScreen extends Screen {
     return addRenderableOnly(new Label(toolsX + x, toolsY + y, message));
   }
 
-  public CheckBox addCheckBox(int x, int y, int width, int height, boolean isOn) {
-    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y, width, height, isOn));
-  }
-
-  public CheckBox addCheckBox(int x, int y, int width, int height) {
-    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y, width, height));
+  public CheckBox addCheckBox(int x, int y, int width, int height, boolean value) {
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y, width, height, value));
   }
 
   public <T> DropDownList<T> addDropDownList(
