@@ -507,14 +507,14 @@ public class SkillTreeEditorScreen extends Screen {
           .setResponder(this::setSelectedSkillsTitle);
       toolsY += 19;
     }
-    boolean canEditTitleColor = canEdit(PassiveSkill::getTittleColor);
+    boolean canEditTitleColor = canEdit(PassiveSkill::getTitleColor);
     if (canEditTitleColor) {
-      addLabel(0, 0, "Tittle Color", ChatFormatting.GOLD);
+      addLabel(0, 0, "Title Color", ChatFormatting.GOLD);
       toolsY += 19;
       TextField colorEditor =
-          addTextField(0, 0, 80, 14, firstSelectedSkill.getTittleColor())
-              .setSoftFilter(f -> f.matches("^#?[a-fA-F0-9]{6}"));
-      colorEditor.setResponder(s -> setSelectedSkillsTittleColor(colorEditor));
+          addTextField(0, 0, 80, 14, firstSelectedSkill.getTitleColor())
+              .setSoftFilter(v -> v.matches("^#?[a-fA-F0-9]{6}"));
+      colorEditor.setResponder(v -> setSelectedSkillsTitleColor(colorEditor));
       toolsY += 19;
     }
     if (canEdit(PassiveSkill::isStartingPoint)) {
@@ -567,12 +567,12 @@ public class SkillTreeEditorScreen extends Screen {
     saveSelectedSkills();
   }
 
-  private void setSelectedSkillsTittleColor(TextField colorEditor) {
+  private void setSelectedSkillsTitleColor(TextField colorEditor) {
     if (!colorEditor.isValueValid()) return;
     String color = colorEditor.getValue();
     if (color.startsWith("#")) color = color.substring(1);
     String finalColor = color;
-    selectedSkills().forEach(skill -> skill.setTittleColor(finalColor));
+    selectedSkills().forEach(skill -> skill.setTitleColor(finalColor));
     saveSelectedSkills();
   }
 

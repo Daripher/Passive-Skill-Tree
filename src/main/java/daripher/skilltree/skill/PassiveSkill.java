@@ -135,11 +135,11 @@ public class PassiveSkill {
     getBonuses().forEach(b -> b.onSkillLearned(player, firstTime));
   }
 
-  public void setTittleColor(@Nullable String color) {
+  public void setTitleColor(@Nullable String color) {
     this.titleColor = color;
   }
 
-  public @Nonnull String getTittleColor() {
+  public @Nonnull String getTitleColor() {
     return titleColor == null ? "" : titleColor;
   }
 

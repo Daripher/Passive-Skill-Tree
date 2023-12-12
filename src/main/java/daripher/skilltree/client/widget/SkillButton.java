@@ -193,7 +193,7 @@ public class SkillButton extends Button {
   }
 
   private Style getTitleStyle() {
-    if (skill.getTittleColor().isEmpty()) {
+    if (skill.getTitleColor().isEmpty()) {
       return width == 30
           ? GATEWAY_TITLE_STYLE
           : width == 24
@@ -201,7 +201,7 @@ public class SkillButton extends Button {
               : width == 20 ? NOTABLE_TITLE_STYLE : LESSER_TITLE_STYLE;
     } else {
       try {
-        return Style.EMPTY.withColor(Integer.parseInt(skill.getTittleColor(), 16));
+        return Style.EMPTY.withColor(Integer.parseInt(skill.getTitleColor(), 16));
       } catch (NumberFormatException e) {
         return Style.EMPTY;
       }
