@@ -103,7 +103,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   @Override
   public MutableComponent getTooltip() {
     MutableComponent tooltip =
-        TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, operation);
+        TooltipHelper.getSkillBonusTooltip(damageCondition.getTooltip(), amount, operation);
     tooltip = playerMultiplier.getTooltip(tooltip);
     tooltip = playerCondition.getTooltip(tooltip, "you");
     tooltip = targetCondition.getTooltip(tooltip, "target");

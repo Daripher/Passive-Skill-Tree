@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.condition.damage;
 
 import daripher.skilltree.init.PSTRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,7 +15,9 @@ public interface DamageCondition {
     return "damage_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
   }
 
-  MutableComponent getTooltip(MutableComponent bonusTooltip);
+  default MutableComponent getTooltip() {
+    return Component.translatable(getDescriptionId());
+  }
 
   Serializer getSerializer();
 

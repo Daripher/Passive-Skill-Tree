@@ -5,8 +5,6 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTDamageConditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.projectile.Projectile;
 
@@ -14,11 +12,6 @@ public record ProjectileDamageCondition() implements DamageCondition {
   @Override
   public boolean met(DamageSource source) {
     return source.getDirectEntity() instanceof Projectile;
-  }
-
-  @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    return Component.translatable(getDescriptionId(), bonusTooltip);
   }
 
   @Override

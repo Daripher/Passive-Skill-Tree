@@ -5,18 +5,12 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTDamageConditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 
 public record NoneDamageCondition() implements DamageCondition {
   @Override
   public boolean met(DamageSource source) {
     return true;
-  }
-
-  @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    return bonusTooltip;
   }
 
   @Override
