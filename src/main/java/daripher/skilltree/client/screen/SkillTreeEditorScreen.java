@@ -16,6 +16,7 @@ import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.*;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -308,8 +309,7 @@ public class SkillTreeEditorScreen extends Screen {
               });
     }
     shiftWidgets(0, 29);
-    ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
-    PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+    PassiveSkill skill = getFirstSelectedSkill();
     if (selectedSkills().anyMatch(otherSkill -> !sameBonuses(skill, otherSkill))) return;
     List<SkillBonus<?>> bonuses = skill.getBonuses();
     if (selectedBonus >= bonuses.size()) {
@@ -399,8 +399,7 @@ public class SkillTreeEditorScreen extends Screen {
     addButton(0, 0, 100, 14, "Back").setPressFunc(b -> selectTools(Tools.MAIN));
     shiftWidgets(0, 29);
     if (selectedSkills.size() != 1) return;
-    ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
-    PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+    PassiveSkill skill = getFirstSelectedSkill();
     addLabel(0, 0, "Distance", ChatFormatting.GOLD);
     addLabel(65, 0, "Angle", ChatFormatting.GOLD);
     toolsY += 19;
@@ -483,56 +482,77 @@ public class SkillTreeEditorScreen extends Screen {
   private void addButtonTools() {
     addButton(0, 0, 100, 14, "Back").setPressFunc(b -> selectTools(Tools.MAIN));
     shiftWidgets(0, 29);
-    ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
-    PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
-    if (selectedSkills().allMatch(otherSkill -> sameSize(skill, otherSkill))) {
+    PassiveSkill firstSelectedSkill = getFirstSelectedSkill();
+    if (canEdit(PassiveSkill::getButtonSize)) {
       addLabel(0, 0, "Size", ChatFormatting.GOLD);
       toolsY += 19;
-      NumericTextField sizeEditor = addNumericTextField(0, 0, 40, 14, skill.getButtonSize());
-      sizeEditor.setNumericFilter(d -> d >= 2);
-      sizeEditor.setResponder(s -> setSelectedSkillsSize((int) sizeEditor.getNumericValue()));
-      addRenderableWidget(sizeEditor);
+      addNumericTextField(0, 0, 40, 14, firstSelectedSkill.getButtonSize())
+          .setNumericFilter(d -> d >= 2)
+          .setNumericResponder(
+              v -> {
+                selectedSkills().forEach(skill -> skill.setButtonSize(v.intValue()));
+                getSelectedSkillButtons().forEach(button -> button.setButtonSize(v.intValue()));
+                saveSelectedSkills();
+              });
       toolsY += 19;
     }
     if (selectedSkills.size() == 1) {
       toolsY -= 38;
       addLabel(65, 0, "Position", ChatFormatting.GOLD);
       toolsY += 19;
-      addNumericTextField(65, 0, 60, 14, skill.getPositionX())
-          .setNumericResponder(v -> setSelectedSkillX(skill, v.floatValue()));
-      addNumericTextField(130, 0, 60, 14, skill.getPositionY())
-          .setNumericResponder(v -> setSelectedSkillY(skill, v.floatValue()));
+      addNumericTextField(65, 0, 60, 14, firstSelectedSkill.getPositionX())
+          .setNumericResponder(
+              v -> {
+                firstSelectedSkill.setPosition(v.floatValue(), firstSelectedSkill.getPositionY());
+                saveSelectedSkills();
+              });
+      addNumericTextField(130, 0, 60, 14, firstSelectedSkill.getPositionY())
+          .setNumericResponder(
+              v -> {
+                firstSelectedSkill.setPosition(firstSelectedSkill.getPositionX(), v.floatValue());
+                saveSelectedSkills();
+              });
       toolsY += 19;
     }
-    if (selectedSkills().allMatch(otherSkill -> sameTitle(skill, otherSkill))) {
+    if (canEdit(PassiveSkill::getTitle)) {
       addLabel(0, 0, "Title", ChatFormatting.GOLD);
       toolsY += 19;
-      addTextField(0, 0, 200, 14, skill.getTitle()).setResponder(this::setSelectedSkillsTitle);
+      addTextField(0, 0, 200, 14, firstSelectedSkill.getTitle())
+          .setResponder(this::setSelectedSkillsTitle);
       toolsY += 19;
+    }
+    boolean canEditTitleColor = canEdit(PassiveSkill::getTittleColor);
+    if (canEditTitleColor) {
       addLabel(0, 0, "Tittle Color", ChatFormatting.GOLD);
       toolsY += 19;
       TextField colorEditor =
-          addTextField(0, 0, 200, 14, skill.getTittleColor())
+          addTextField(0, 0, 80, 14, firstSelectedSkill.getTittleColor())
               .setSoftFilter(f -> f.matches("^#?[a-fA-F0-9]{6}"));
       colorEditor.setResponder(s -> setSelectedSkillsTittleColor(colorEditor));
       toolsY += 19;
     }
+    if (canEdit(PassiveSkill::isStartingPoint)) {
+      if (canEditTitleColor) {
+        shiftWidgets(100, -38);
+      }
+      addLabel(0, 0, "Starting Point", ChatFormatting.GOLD);
+      toolsY += 19;
+      addCheckBox(0, 0, firstSelectedSkill.isStartingPoint())
+          .setResponder(
+              v -> {
+                selectedSkills().forEach(s -> s.setStartingPoint(v));
+                saveSelectedSkills();
+              });
+      if (canEditTitleColor) {
+        shiftWidgets(-100, 0);
+      }
+      toolsY += 19;
+    }
   }
 
-  private void setSelectedSkillX(PassiveSkill skill, float x) {
-    skill.setPosition(x, skill.getPositionY());
-    saveSelectedSkills();
-  }
-
-  private void setSelectedSkillY(PassiveSkill skill, float y) {
-    skill.setPosition(skill.getPositionX(), y);
-    saveSelectedSkills();
-  }
-
-  private void setSelectedSkillsSize(int size) {
-    selectedSkills().forEach(skill -> skill.setButtonSize(size));
-    getSelectedSkillButtons().forEach(button -> button.setButtonSize(size));
-    saveSelectedSkills();
+  private PassiveSkill getFirstSelectedSkill() {
+    ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
+    return SkillTreeClientData.getEditorSkill(skillId);
   }
 
   private void setSelectedSkillsTitle(String title) {
@@ -552,9 +572,13 @@ public class SkillTreeEditorScreen extends Screen {
   private void addTexturesTools() {
     addButton(0, 0, 100, 14, "Back").setPressFunc(b -> selectTools(Tools.MAIN));
     shiftWidgets(0, 29);
-    ResourceLocation skillId = (ResourceLocation) selectedSkills.toArray()[0];
-    PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
-    if (selectedSkills().anyMatch(otherSkill -> !sameTextures(skill, otherSkill))) return;
+    if (!canEdit(
+        PassiveSkill::getBackgroundTexture,
+        PassiveSkill::getBorderTexture,
+        PassiveSkill::getIconTexture)) {
+      return;
+    }
+    PassiveSkill skill = getFirstSelectedSkill();
     addLabel(0, 0, "Border", ChatFormatting.GOLD);
     addLabel(105, 0, "Tooltip", ChatFormatting.GOLD);
     toolsY += 19;
@@ -810,8 +834,8 @@ public class SkillTreeEditorScreen extends Screen {
     return addRenderableOnly(new Label(toolsX + x, toolsY + y, message));
   }
 
-  public CheckBox addCheckBox(int x, int y, int width, int height, boolean value) {
-    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y, width, height, value));
+  public CheckBox addCheckBox(int x, int y, boolean value) {
+    return addRenderableWidget(new CheckBox(toolsX + x, toolsY + y, value));
   }
 
   public <T> DropDownList<T> addDropDownList(
@@ -926,21 +950,18 @@ public class SkillTreeEditorScreen extends Screen {
     return true;
   }
 
-  protected boolean sameTextures(PassiveSkill skill, PassiveSkill otherSkill) {
-    if (skill == otherSkill) return true;
-    if (!skill.getBackgroundTexture().equals(otherSkill.getBackgroundTexture())) return false;
-    if (!skill.getIconTexture().equals(otherSkill.getIconTexture())) return false;
-    return skill.getBorderTexture().equals(otherSkill.getBorderTexture());
-  }
-
-  protected boolean sameSize(PassiveSkill skill, PassiveSkill otherSkill) {
-    if (skill == otherSkill) return true;
-    return skill.getButtonSize() == otherSkill.getButtonSize();
-  }
-
-  protected boolean sameTitle(PassiveSkill skill, PassiveSkill otherSkill) {
-    if (skill == otherSkill) return true;
-    return skill.getTitle().equals(otherSkill.getTitle());
+  @SafeVarargs
+  protected final boolean canEdit(Function<PassiveSkill, ?>... functions) {
+    return selectedSkills()
+        .allMatch(
+            skill -> {
+              PassiveSkill firstSkill = getFirstSelectedSkill();
+              if (skill == firstSkill) return true;
+              for (Function<PassiveSkill, ?> function : functions) {
+                if (!function.apply(firstSkill).equals(function.apply(skill))) return false;
+              }
+              return true;
+            });
   }
 
   private enum Tools {

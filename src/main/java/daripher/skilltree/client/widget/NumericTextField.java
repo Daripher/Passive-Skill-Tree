@@ -36,8 +36,9 @@ public class NumericTextField extends TextField {
     onNumericValueChange(getNumericValue());
   }
 
-  public void setNumericFilter(Predicate<Double> filter) {
+  public NumericTextField setNumericFilter(Predicate<Double> filter) {
     setSoftFilter(DEFAULT_FILTER.and(createNumericFilter(filter)));
+    return this;
   }
 
   public void setDefaultValue(double defaultValue) {
