@@ -27,7 +27,7 @@ public record UnderwaterCondition() implements LivingCondition {
 
   @Override
   public LivingCondition.Serializer getSerializer() {
-    return PSTLivingConditions.BURNING.get();
+    return PSTLivingConditions.UNDERWATER.get();
   }
 
   @Override
