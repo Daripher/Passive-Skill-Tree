@@ -72,6 +72,8 @@ public class NetworkHelper {
     buf.writeBoolean(skill.isStartingPoint());
     buf.writeFloat(skill.getPositionX());
     buf.writeFloat(skill.getPositionY());
+    buf.writeUtf(skill.getTitle());
+    buf.writeUtf(skill.getTitleColor());
     writeResourceLocations(buf, skill.getConnections());
     writeNullableResourceLocation(buf, skill.getConnectedTreeId());
     writeSkillBonuses(buf, skill.getBonuses());
@@ -146,6 +148,8 @@ public class NetworkHelper {
     boolean startingPoint = buf.readBoolean();
     PassiveSkill skill = new PassiveSkill(id, size, background, icon, border, startingPoint);
     skill.setPosition(buf.readFloat(), buf.readFloat());
+    skill.setTitle(buf.readUtf());
+    skill.setTitleColor(buf.readUtf());
     readResourceLocations(buf).forEach(skill.getConnections()::add);
     skill.setConnectedTree(readNullableResourceLocation(buf));
     readSkillBonuses(buf).forEach(skill::addSkillBonus);
