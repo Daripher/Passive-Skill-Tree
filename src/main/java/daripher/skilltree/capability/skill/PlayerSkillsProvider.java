@@ -64,7 +64,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
     if (!(event.getEntity() instanceof ServerPlayer player)) return;
-    get(player).getPlayerSkills().forEach(skill -> skill.learn(player, true));
+    get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
   }
 
   @SubscribeEvent

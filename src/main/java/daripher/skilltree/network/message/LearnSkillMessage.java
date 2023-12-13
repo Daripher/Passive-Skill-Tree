@@ -34,11 +34,13 @@ public class LearnSkillMessage {
     Context ctx = ctxSupplier.get();
     ctx.setPacketHandled(true);
     ServerPlayer player = ctx.getSender();
-    assert player != null;
+    Objects.requireNonNull(player);
     IPlayerSkills capability = PlayerSkillsProvider.get(player);
     PassiveSkill skill = SkillsReloader.getSkillById(message.skillId);
-    boolean canLearn = capability.learnSkill(skill);
-    if (canLearn) Objects.requireNonNull(skill).learn(player, false);
+    Objects.requireNonNull(skill);
+    if (capability.learnSkill(skill)) {
+      skill.learn(player, true);
+    }
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
   }
