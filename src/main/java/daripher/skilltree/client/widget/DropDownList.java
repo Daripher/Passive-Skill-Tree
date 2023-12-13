@@ -178,6 +178,12 @@ public class DropDownList<T> extends AbstractButton {
 
   public DropDownList<T> setToNameFunc(Function<T, Component> function) {
     this.toNameFunc = function;
+    possibleValues.sort(
+        (v1, v2) -> {
+          String name1 = function.apply(v1).getString();
+          String name2 = function.apply(v2).getString();
+          return name1.compareTo(name2);
+        });
     return this;
   }
 
