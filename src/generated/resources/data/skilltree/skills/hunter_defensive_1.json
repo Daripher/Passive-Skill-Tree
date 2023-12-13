@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "skilltree:evasion",
+      "id": "72db98b1-7dfc-4eb6-8cf2-fbe758f17f3f",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_defensive_2"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_defensive_1.png",
-  "position": {
-    "x": 153.631,
-    "y": 68.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_defensive_1.png",
+  "id": "skilltree:hunter_defensive_1",
+  "isStartingPoint": false,
+  "positionX": 161.631,
+  "positionY": 76.008415
 }

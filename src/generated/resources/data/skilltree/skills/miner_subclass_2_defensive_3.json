@@ -1,26 +1,44 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.005,
-      "attribute": "skilltree:evasion_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 0.5,
+      "attribute": "skilltree:evasion",
+      "id": "97b55e4d-a3e9-42b1-bfb0-d643e1309986",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
+      "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "id": "049c6d7b-89e6-449b-822b-c5714732723c",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_defensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
-  "position": {
-    "x": -167.68753,
-    "y": 236.55804
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
+  "id": "skilltree:miner_subclass_2_defensive_3",
+  "isStartingPoint": false,
+  "positionX": -159.68753,
+  "positionY": 244.55804
 }

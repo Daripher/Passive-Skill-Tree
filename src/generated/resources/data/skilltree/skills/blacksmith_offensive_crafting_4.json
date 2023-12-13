@@ -1,21 +1,40 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:crafted_melee_weapon_damage_bonus",
-      "operation": "addition"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.attack_damage",
+          "id": "53a648b1-2fc0-4a05-97b0-d7d6c00b88f9",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "melee"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_offensive_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
-  "position": {
-    "x": -152.6476,
-    "y": -166.5588
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
+  "id": "skilltree:blacksmith_offensive_crafting_4",
+  "isStartingPoint": false,
+  "positionX": -144.6476,
+  "positionY": -158.5588
 }

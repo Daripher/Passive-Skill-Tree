@@ -1,22 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "id": "8f2ad679-4187-4a65-bf6a-6494d729740a",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_7",
     "skilltree:blacksmith_crit_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_1.png",
-  "position": {
-    "x": -292.66266,
-    "y": -110.0113
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_1.png",
+  "id": "skilltree:blacksmith_defensive_6",
+  "isStartingPoint": false,
+  "positionX": -284.66266,
+  "positionY": -102.0113
 }

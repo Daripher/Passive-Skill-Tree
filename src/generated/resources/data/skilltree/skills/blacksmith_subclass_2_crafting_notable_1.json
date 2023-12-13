@@ -1,19 +1,38 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_shields_block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 5.0,
+          "attribute": "skilltree:blocking",
+          "id": "0f4a4885-e1ce-493d-a599-f3164fdfe220",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "shield"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_crafting_notable_1.png",
-  "position": {
-    "x": -480.87152,
-    "y": -66.01534
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_crafting_notable_1.png",
+  "id": "skilltree:blacksmith_subclass_2_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": -470.87152,
+  "positionY": -56.015343
 }

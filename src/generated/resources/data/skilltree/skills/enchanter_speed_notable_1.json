@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.05,
-      "attribute": "skilltree:attack_speed_with_enchanted_weapon",
-      "operation": "multiply_base"
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "37ab4ed7-128d-488b-a546-f209b7101cd2",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_enchanted_item",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_speed_notable_1.png",
-  "position": {
-    "x": 225.15686,
-    "y": -145.7613
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_speed_notable_1.png",
+  "id": "skilltree:enchanter_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": 235.15686,
+  "positionY": -135.7613
 }

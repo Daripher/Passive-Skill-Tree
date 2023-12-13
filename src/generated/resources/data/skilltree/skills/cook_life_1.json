@@ -1,21 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 2.0,
-      "attribute": "skilltree:maximum_life_if_not_hungry",
-      "operation": "addition"
+      "attribute": "minecraft:generic.max_health",
+      "id": "fbadcdd1-8afa-41c3-beb9-b378fa95c1b3",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_life_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_life_1.png",
-  "position": {
-    "x": -35.997005,
-    "y": -253.53247
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_life_1.png",
+  "id": "skilltree:cook_life_1",
+  "isStartingPoint": false,
+  "positionX": -27.99701,
+  "positionY": -245.53247
 }

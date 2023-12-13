@@ -1,22 +1,41 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_weapon_chance_to_ignite",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:ignite_chance",
+          "chance": 0.05,
+          "duration": 5,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          },
+          "target_condition": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_crafting_4",
     "skilltree:enchanter_subclass_1_crafting_5"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
-  "position": {
-    "x": 414.3858,
-    "y": -65.99346
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_1.png",
+  "id": "skilltree:enchanter_subclass_1_crafting_3",
+  "isStartingPoint": false,
+  "positionX": 422.3858,
+  "positionY": -57.99346
 }

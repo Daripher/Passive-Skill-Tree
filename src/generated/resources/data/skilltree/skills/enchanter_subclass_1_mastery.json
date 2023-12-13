@@ -1,31 +1,63 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:chance_to_ignite",
-      "operation": "multiply_base"
+      "type": "skilltree:ignite_chance",
+      "chance": 0.1,
+      "duration": 5,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.1,
-      "attribute": "skilltree:damage_against_burning",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:burning"
+      }
     },
     {
-      "amount": 0.1,
-      "attribute": "skilltree:crit_chance_against_burning",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_chance",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:burning"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
-  "position": {
-    "x": 448.90466,
-    "y": -110.70454
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
+  "id": "skilltree:enchanter_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": 460.90466,
+  "positionY": -98.70454
 }

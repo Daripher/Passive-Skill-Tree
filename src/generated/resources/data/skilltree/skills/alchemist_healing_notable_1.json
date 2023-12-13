@@ -1,19 +1,29 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.5,
-      "attribute": "skilltree:life_per_hit_under_potion_effect",
-      "operation": "addition"
+      "attribute": "skilltree:life_per_hit",
+      "id": "5bd844f7-7e7a-47df-b64e-29f2a36886ec",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
-  "position": {
-    "x": 44.9606,
-    "y": 84.42358
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
+  "id": "skilltree:alchemist_healing_notable_1",
+  "isStartingPoint": false,
+  "positionX": 54.9606,
+  "positionY": 94.42358
 }

@@ -1,26 +1,44 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
+      "type": "skilltree:attribute",
+      "amount": 5.0,
       "attribute": "skilltree:stealth",
-      "operation": "multiply_base"
+      "id": "b5132a2e-07d1-45de-bb94-510da1687ade",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
+      "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "operation": "multiply_base"
+      "id": "c1d06b0b-1449-4010-a2a8-5ab6b0c937c4",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_2"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_1_offensive_1.png",
-  "position": {
-    "x": 224.37805,
-    "y": 275.09222
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_1_offensive_1.png",
+  "id": "skilltree:hunter_subclass_1_offensive_1",
+  "isStartingPoint": false,
+  "positionX": 232.37805,
+  "positionY": 283.09222
 }

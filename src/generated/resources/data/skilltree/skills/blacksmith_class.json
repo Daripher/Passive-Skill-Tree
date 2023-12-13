@@ -1,26 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": 0.25,
-      "attribute": "skilltree:crafted_equipment_durability",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:durability",
+        "chance": 0.25,
+        "operation": 1
+      },
+      "item_condition": {
+        "type": "skilltree:equipment"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_1",
     "skilltree:blacksmith_offensive_1",
     "skilltree:blacksmith_defensive_crafting_1",
     "skilltree:blacksmith_offensive_crafting_1",
     "skilltree:blacksmith_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_class.png",
-  "position": {
-    "x": -143.631,
-    "y": -88.008415
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_class.png",
+  "id": "skilltree:blacksmith_class",
+  "isStartingPoint": true,
+  "positionX": -131.631,
+  "positionY": -76.008415
 }

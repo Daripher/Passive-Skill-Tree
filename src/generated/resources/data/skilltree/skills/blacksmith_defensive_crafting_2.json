@@ -1,21 +1,40 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:crafted_armor_defence",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.1,
+          "attribute": "minecraft:generic.armor",
+          "id": "de54e226-9c74-4a0c-a847-9a8c21f837d6",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_crafting_3"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
-  "position": {
-    "x": -165.631,
-    "y": -54.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_crafting_1.png",
+  "id": "skilltree:blacksmith_defensive_crafting_2",
+  "isStartingPoint": false,
+  "positionX": -157.631,
+  "positionY": -46.008415
 }

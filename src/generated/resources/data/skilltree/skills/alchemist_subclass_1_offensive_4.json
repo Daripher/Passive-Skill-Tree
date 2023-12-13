@@ -1,21 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.02,
-      "attribute": "skilltree:crit_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_chance",
+      "chance": 0.02,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_1_offensive_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_offensive_1.png",
-  "position": {
-    "x": -136.95822,
-    "y": 412.78973
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_offensive_1.png",
+  "id": "skilltree:alchemist_subclass_1_offensive_4",
+  "isStartingPoint": false,
+  "positionX": -128.95822,
+  "positionY": 420.78973
 }

@@ -1,22 +1,39 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:damage_with_gem_in_weapon",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        },
+        "min": 1
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_life_2",
     "skilltree:miner_offensive_5"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_offensive_1.png",
-  "position": {
-    "x": -247.63829,
-    "y": 67.99579
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_offensive_1.png",
+  "id": "skilltree:miner_offensive_4",
+  "isStartingPoint": false,
+  "positionX": -239.63829,
+  "positionY": 75.99579
 }

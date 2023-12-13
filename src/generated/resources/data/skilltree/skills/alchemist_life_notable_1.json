@@ -1,19 +1,29 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 6.0,
-      "attribute": "skilltree:maximum_life_under_potion_effect",
-      "operation": "addition"
+      "attribute": "minecraft:generic.max_health",
+      "id": "233f3610-9a3d-45fb-980f-d8faa25ccc77",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:effect_amount",
+        "min": 1
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_life_notable_1.png",
-  "position": {
-    "x": -9.997005,
-    "y": 235.52727
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_life_notable_1.png",
+  "id": "skilltree:alchemist_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": 0.0029907227,
+  "positionY": 245.52727
 }

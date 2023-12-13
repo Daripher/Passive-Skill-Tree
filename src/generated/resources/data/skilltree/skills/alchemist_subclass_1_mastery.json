@@ -1,21 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.5,
-      "attribute": "skilltree:crit_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_damage",
+      "chance": 0.5,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_mastery.png",
-  "position": {
-    "x": -156.95734,
-    "y": 436.50153
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_mastery.png",
+  "id": "skilltree:alchemist_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": -144.95734,
+  "positionY": 448.50153
 }

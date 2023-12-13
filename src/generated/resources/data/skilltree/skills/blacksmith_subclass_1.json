@@ -1,27 +1,45 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "id": "9d5ccc45-135b-4ca7-bc40-ad6d734a20fb",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.05,
-      "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 5.0,
+      "attribute": "skilltree:blocking",
+      "id": "96f24d0b-42c9-41b6-90b0-a0053cb4048a",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_1",
     "skilltree:blacksmith_subclass_1_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1.png",
-  "position": {
-    "x": -212.37517,
-    "y": -295.09222
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1.png",
+  "id": "skilltree:blacksmith_subclass_1",
+  "isStartingPoint": false,
+  "positionX": -200.37517,
+  "positionY": -283.09222
 }

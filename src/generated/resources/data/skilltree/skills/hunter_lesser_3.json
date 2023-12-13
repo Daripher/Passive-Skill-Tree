@@ -1,19 +1,20 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:double_loot_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:loot_duplication",
+      "chance": 0.05,
+      "loot_type": "mobs",
+      "multiplier": 1.0
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_lesser_1.png",
-  "position": {
-    "x": 308.69507,
-    "y": 142.53
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_lesser_1.png",
+  "id": "skilltree:hunter_lesser_3",
+  "isStartingPoint": false,
+  "positionX": 316.69507,
+  "positionY": 150.53
 }

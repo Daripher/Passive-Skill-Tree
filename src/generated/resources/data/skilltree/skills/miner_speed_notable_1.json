@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.04,
-      "attribute": "skilltree:attack_speed_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "ded32775-b263-44bf-868e-8cbc61ed023d",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_speed_notable_1.png",
-  "position": {
-    "x": -245.15685,
-    "y": 125.76131
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_speed_notable_1.png",
+  "id": "skilltree:miner_speed_notable_1",
+  "isStartingPoint": false,
+  "positionX": -235.15686,
+  "positionY": 135.7613
 }

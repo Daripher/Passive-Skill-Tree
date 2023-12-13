@@ -1,19 +1,24 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:mining_speed",
-      "operation": "multiply_base"
+      "type": "skilltree:block_break_speed",
+      "multiplier": 0.05,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:pickaxe"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_lesser_1.png",
-  "position": {
-    "x": -296.71185,
-    "y": 191.00313
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_lesser_1.png",
+  "id": "skilltree:miner_lesser_3",
+  "isStartingPoint": false,
+  "positionX": -288.71185,
+  "positionY": 199.00313
 }

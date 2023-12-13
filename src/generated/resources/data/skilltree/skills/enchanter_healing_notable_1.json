@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_on_block_per_shield_enchantment",
-      "operation": "addition"
+      "attribute": "skilltree:life_on_block",
+      "id": "a79ba1c4-1195-4246-8805-9bafea5bbfc1",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:enchants_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "shield"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_healing_notable_1.png",
-  "position": {
-    "x": 44.295937,
-    "y": -104.807335
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_healing_notable_1.png",
+  "id": "skilltree:enchanter_healing_notable_1",
+  "isStartingPoint": false,
+  "positionX": 54.295937,
+  "positionY": -94.80734
 }

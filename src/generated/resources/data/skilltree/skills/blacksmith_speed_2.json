@@ -1,21 +1,34 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_with_shield",
-      "operation": "multiply_base"
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "21db2f1d-0bfb-459a-a9c8-d33e78ff85eb",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "shield"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_speed_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_speed_1.png",
-  "position": {
-    "x": -229.14528,
-    "y": -168.02649
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_speed_1.png",
+  "id": "skilltree:blacksmith_speed_2",
+  "isStartingPoint": false,
+  "positionX": -221.14528,
+  "positionY": -160.02649
 }

@@ -1,19 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.35,
-      "attribute": "skilltree:crit_damage_against_poisoned",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_damage",
+      "chance": 0.35,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:has_effect",
+        "effect": "minecraft:poison"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_crit_notable_1.png",
-  "position": {
-    "x": -9.997005,
-    "y": 287.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_crit_notable_1.png",
+  "id": "skilltree:alchemist_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": 0.0029907227,
+  "positionY": 297.52728
 }

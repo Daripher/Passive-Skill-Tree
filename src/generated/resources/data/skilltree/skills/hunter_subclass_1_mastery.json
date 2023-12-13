@@ -1,26 +1,37 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.1,
+      "type": "skilltree:attribute",
+      "amount": 10.0,
       "attribute": "skilltree:stealth",
-      "operation": "multiply_base"
+      "id": "0553bcd0-dcef-4e7c-93cf-d9c5db7c790c",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.5,
-      "attribute": "skilltree:jump_height",
-      "operation": "multiply_base"
+      "type": "skilltree:jump_height",
+      "multiplier": 0.5,
+      "player_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_1_mastery.png",
-  "position": {
-    "x": 303.92465,
-    "y": 337.80984
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_1_mastery.png",
+  "id": "skilltree:hunter_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": 315.92465,
+  "positionY": 349.80984
 }

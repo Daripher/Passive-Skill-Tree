@@ -1,26 +1,44 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "id": "bac8d533-3221-4f5c-96b0-432329c9f81c",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.005,
-      "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 0.5,
+      "attribute": "skilltree:blocking",
+      "id": "ce648d3c-70e9-411a-ab8d-d9e587f1b43a",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_subclass_2_defensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_2_defensive_1.png",
-  "position": {
-    "x": -139.95805,
-    "y": -268.56827
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_subclass_2_defensive_1.png",
+  "id": "skilltree:cook_subclass_2_defensive_3",
+  "isStartingPoint": false,
+  "positionX": -131.95805,
+  "positionY": -260.56827
 }

@@ -1,24 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.3,
-      "attribute": "skilltree:gem_power_in_armor",
-      "operation": "multiply_base"
+      "type": "skilltree:gem_power",
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "any"
+      },
+      "multiplier": 0.3
     },
     {
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_chestplate_sockets",
-      "operation": "addition"
+      "type": "skilltree:player_sockets",
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "chestplate"
+      },
+      "sockets": 1
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_defensive_crafting_keystone_1.png",
-  "position": {
-    "x": -255.68129,
-    "y": 236.0383
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_keystone_1.png",
+  "id": "skilltree:miner_defensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -243.68129,
+  "positionY": 248.0383
 }

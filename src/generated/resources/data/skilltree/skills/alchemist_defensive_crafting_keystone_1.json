@@ -1,19 +1,25 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:brewed_beneficial_potions_strength",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 1.0
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "potion_type": "beneficial"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_defensive_crafting_keystone_1.png",
-  "position": {
-    "x": 80.97753,
-    "y": 323.05035
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_defensive_crafting_keystone_1.png",
+  "id": "skilltree:alchemist_defensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": 92.97753,
+  "positionY": 335.05035
 }

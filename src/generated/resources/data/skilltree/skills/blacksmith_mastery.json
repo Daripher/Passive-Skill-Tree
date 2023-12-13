@@ -1,19 +1,37 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:chance_to_craft_tougher_armor",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.armor_toughness",
+          "id": "8c301934-6fa1-417f-98c0-41ead57474f6",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_mastery.png",
-  "position": {
-    "x": -363.18994,
-    "y": -214.78607
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_mastery.png",
+  "id": "skilltree:blacksmith_mastery",
+  "isStartingPoint": false,
+  "positionX": -351.18997,
+  "positionY": -202.78607
 }

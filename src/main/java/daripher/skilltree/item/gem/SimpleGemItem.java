@@ -1,87 +1,129 @@
 package daripher.skilltree.item.gem;
 
+import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.util.TooltipHelper;
+import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public abstract class SimpleGemItem extends GemItem {
-	private final Map<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<String, Pair<Attribute, AttributeModifier>>();
+  protected final Map<String, ItemBonus<?>> bonuses = new HashMap<>();
 
-	@Override
-	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack) {
-		EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
-		if (ItemHelper.isPickaxe(itemStack) && slot == EquipmentSlot.MAINHAND) return Optional.ofNullable(bonuses.get("pickaxe"));
-		if (ItemHelper.isMeleeWeapon(itemStack) && slot == EquipmentSlot.MAINHAND) return Optional.ofNullable(bonuses.get("melee_weapon"));
-		if (ItemHelper.isShield(itemStack) && slot == EquipmentSlot.OFFHAND) return Optional.ofNullable(bonuses.get("shield"));
-		if (ItemHelper.isHelmet(itemStack) && slot == EquipmentSlot.HEAD) return Optional.ofNullable(bonuses.get("helmet"));
-		if (ItemHelper.isChestplate(itemStack) && slot == EquipmentSlot.CHEST) return Optional.ofNullable(bonuses.get("chestplate"));
-		if (ItemHelper.isLeggings(itemStack) && slot == EquipmentSlot.LEGS) return Optional.ofNullable(bonuses.get("leggings"));
-		if (ItemHelper.isBoots(itemStack) && slot == EquipmentSlot.FEET) return Optional.ofNullable(bonuses.get("boots"));
-		if (ItemHelper.isRangedWeapon(itemStack) && slot == EquipmentSlot.MAINHAND) return Optional.ofNullable(bonuses.get("ranged_weapon"));
-		if (ItemHelper.isRing(itemStack)) return Optional.ofNullable(bonuses.get("ring"));
-		if (ItemHelper.isNecklace(itemStack)) return Optional.ofNullable(bonuses.get("necklace"));
-		return Optional.empty();
-	}
+  public SimpleGemItem(Properties properties) {
+    super(properties);
+  }
 
-	@Override
-	public boolean canInsertInto(Player player, ItemStack stack, int socket) {
-		return super.canInsertInto(player, stack, socket) && getGemBonus(player, stack).isPresent();
-	}
+  public SimpleGemItem() {
+    super(new Properties());
+  }
 
-	@Override
-	protected void appendBonusesTooltip(List<Component> components) {
-		Map<String, Pair<Attribute, AttributeModifier>> bonuses = new TreeMap<>(this.bonuses);
-		groupBonuses(bonuses);
-		bonuses.forEach((slot, bonus) -> components.add(TooltipHelper.getAttributeBonusTooltip(slot, bonus)));
-	}
+  @Override
+  public @Nullable ItemBonus<?> getGemBonus(
+      Player player, ItemStack itemStack, ItemStack gemStack) {
+    EquipmentSlot slot = ItemHelper.getSlotForItem(itemStack);
+    if (ItemHelper.isPickaxe(itemStack) && slot == EquipmentSlot.MAINHAND) {
+      return bonuses.get("pickaxe");
+    }
+    if (ItemHelper.isMeleeWeapon(itemStack) && slot == EquipmentSlot.MAINHAND) {
+      return bonuses.get("melee_weapon");
+    }
+    if (ItemHelper.isShield(itemStack) && slot == EquipmentSlot.OFFHAND) {
+      return bonuses.get("shield");
+    }
+    if (ItemHelper.isHelmet(itemStack) && slot == EquipmentSlot.HEAD) {
+      return bonuses.get("helmet");
+    }
+    if (ItemHelper.isChestplate(itemStack) && slot == EquipmentSlot.CHEST) {
+      return bonuses.get("chestplate");
+    }
+    if (ItemHelper.isLeggings(itemStack) && slot == EquipmentSlot.LEGS) {
+      return bonuses.get("leggings");
+    }
+    if (ItemHelper.isBoots(itemStack) && slot == EquipmentSlot.FEET) {
+      return bonuses.get("boots");
+    }
+    if (ItemHelper.isRangedWeapon(itemStack) && slot == EquipmentSlot.MAINHAND) {
+      return bonuses.get("ranged_weapon");
+    }
+    if (ItemHelper.isRing(itemStack)) {
+      return bonuses.get("ring");
+    }
+    if (ItemHelper.isNecklace(itemStack)) {
+      return bonuses.get("necklace");
+    }
+    return null;
+  }
 
-	protected void groupBonuses(Map<String, Pair<Attribute, AttributeModifier>> bonuses) {
-		groupBonuses(bonuses, "melee_weapon", "ranged_weapon", "weapon");
-		groupBonuses(bonuses, "necklace", "ring", "jewelry");
-	}
+  @Override
+  public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
+    return super.canInsertInto(player, stack, gemStack, socket)
+        && getGemBonus(player, stack, gemStack) != null;
+  }
 
-	protected void groupBonuses(Map<String, Pair<Attribute, AttributeModifier>> bonuses, String type1, String type2, String group) {
-		if (sameBonuses(type1, type2)) {
-			Pair<Attribute, AttributeModifier> bonus = bonuses.get(type1);
-			bonuses.remove(type1);
-			bonuses.remove(type2);
-			bonuses.put(group, bonus);
-		}
-	}
+  @Override
+  protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
+    Map<String, ItemBonus<?>> bonuses = new TreeMap<>(this.bonuses);
+    groupBonuses(bonuses);
+    bonuses.forEach(
+        (slot, bonus) -> {
+          Component slotDescription = Component.translatable("gem_class." + slot);
+          Component tooltip =
+              Component.translatable("gem_class_format", slotDescription, bonus.getTooltip())
+                  .withStyle(ChatFormatting.GRAY);
+          components.add(tooltip);
+        });
+  }
 
-	private boolean sameBonuses(String type1, String type2) {
-		if (!bonuses.containsKey(type1) || !bonuses.containsKey(type2)) return false;
-		Pair<Attribute, AttributeModifier> bonus1 = bonuses.get(type1);
-		Pair<Attribute, AttributeModifier> bonus2 = bonuses.get(type2);
-		if (bonus1.getLeft() != bonus2.getLeft()) return false;
-		return bonus1.getRight().getAmount() == bonus2.getRight().getAmount() && bonus1.getRight().getOperation() == bonus2.getRight().getOperation();
-	}
+  protected void groupBonuses(Map<String, ItemBonus<?>> bonuses) {
+    groupBonuses(bonuses, "melee_weapon", "ranged_weapon", "weapon");
+    groupBonuses(bonuses, "necklace", "ring", "jewelry");
+  }
 
-	public List<Pair<Attribute, AttributeModifier>> getBonusesList() {
-		return bonuses.values().stream().toList();
-	}
+  protected void groupBonuses(
+      Map<String, ItemBonus<?>> bonuses, String type1, String type2, String group) {
+    if (sameBonuses(type1, type2)) {
+      ItemBonus<?> bonus = bonuses.get(type1);
+      bonuses.remove(type1);
+      bonuses.remove(type2);
+      bonuses.put(group, bonus);
+    }
+  }
 
-	public Map<String, Pair<Attribute, AttributeModifier>> getBonuses() {
-		HashMap<String, Pair<Attribute, AttributeModifier>> bonuses = new HashMap<>(this.bonuses);
-		groupBonuses(bonuses);
-		return bonuses;
-	}
+  private boolean sameBonuses(String type1, String type2) {
+    if (!bonuses.containsKey(type1) || !bonuses.containsKey(type2)) return false;
+    return bonuses.get(type1).sameBonus(bonuses.get(type2));
+  }
 
-	protected void setBonuses(Attribute attribute, double value, Operation operation, String... slots) {
-		for (String slot : slots) bonuses.put(slot, Pair.of(attribute, new AttributeModifier("Gem Bonus", value, operation)));
-	}
+  public List<ItemBonus<?>> getBonusesList() {
+    return bonuses.values().stream().toList();
+  }
+
+  public Map<String, ItemBonus<?>> getBonuses() {
+    HashMap<String, ItemBonus<?>> bonuses = new HashMap<>(this.bonuses);
+    groupBonuses(bonuses);
+    return bonuses;
+  }
+
+  protected void setBonuses(ItemBonus<?> bonus, String... slots) {
+    for (String slot : slots) bonuses.put(slot, bonus);
+  }
+
+  protected void setAttributeBonuses(
+      Attribute attribute, double amount, AttributeModifier.Operation operation, String... slots) {
+    ItemBonus<?> bonus =
+        new ItemSkillBonus(
+            new AttributeBonus(attribute, new AttributeModifier("GemBonus", amount, operation)));
+    setBonuses(bonus, slots);
+  }
 }

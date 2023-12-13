@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration_per_gem_in_helmet",
-      "operation": "addition"
+      "attribute": "skilltree:regeneration",
+      "id": "63f8d496-afa8-46e7-be63-5b62988b52d7",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "helmet"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_healing_notable_1.png",
-  "position": {
-    "x": -64.29594,
-    "y": 84.80734
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_healing_notable_1.png",
+  "id": "skilltree:miner_healing_notable_1",
+  "isStartingPoint": false,
+  "positionX": -54.295937,
+  "positionY": 94.80734
 }

@@ -1,19 +1,38 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.3,
-      "attribute": "skilltree:crafted_armor_defence",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.armor",
+          "id": "5f6235ce-180f-4b17-b9bb-da445b9743be",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone_1.png",
-  "position": {
-    "x": -348.64246,
-    "y": -99.01296
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_crafting_keystone_1.png",
+  "id": "skilltree:blacksmith_defensive_crafting_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -336.64246,
+  "positionY": -87.01296
 }

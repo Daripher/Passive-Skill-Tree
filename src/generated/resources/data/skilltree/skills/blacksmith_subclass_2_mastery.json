@@ -1,41 +1,106 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:equipment_repair_efficiency",
-      "operation": "multiply_base"
+      "type": "skilltree:repair_efficiency",
+      "item_condition": {
+        "type": "skilltree:equipment"
+      },
+      "multiplier": 0.05
     },
     {
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_equipment_durability",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:durability",
+        "chance": 0.05,
+        "operation": 1
+      },
+      "item_condition": {
+        "type": "skilltree:equipment"
+      }
     },
     {
-      "amount": 0.05,
-      "attribute": "skilltree:crafted_weapon_attack_speed",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05,
+          "attribute": "minecraft:generic.attack_speed",
+          "id": "cfe45bf1-a9c5-47dd-b875-0d0026e9324f",
+          "name": "SkillBonus",
+          "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
     },
     {
-      "amount": 0.05,
-      "attribute": "skilltree:chance_to_craft_tougher_armor",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 0.05000000074505806,
+          "attribute": "minecraft:generic.armor_toughness",
+          "id": "6aef8cc3-045a-4e36-97db-98b23c4b60d4",
+          "name": "SkillBonus",
+          "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "any"
+      }
     },
     {
-      "amount": 5.0,
-      "attribute": "skilltree:crafted_shields_armor_bonus",
-      "operation": "addition"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 5.0,
+          "attribute": "minecraft:generic.armor",
+          "id": "a157b9fb-d0cd-4403-bd38-5219be6b2fd2",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "shield"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
-  "position": {
-    "x": -472.8894,
-    "y": -110.72784
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
+  "id": "skilltree:blacksmith_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": -460.8894,
+  "positionY": -98.72784
 }

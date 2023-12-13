@@ -1,19 +1,34 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:crit_damage_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        }
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_crit_notable_1.png",
-  "position": {
-    "x": -267.67392,
-    "y": 138.76059
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_crit_notable_1.png",
+  "id": "skilltree:miner_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": -257.67392,
+  "positionY": 148.76059
 }

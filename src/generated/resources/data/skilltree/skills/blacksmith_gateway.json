@@ -1,16 +1,15 @@
 {
-  "attribute_modifiers": [],
-  "background_texture": "skilltree:textures/icons/background/gateway.png",
-  "button_size": 33,
-  "connections": [
+  "backgroundTexture": "skilltree:textures/icons/background/gateway.png",
+  "bonuses": [],
+  "borderTexture": "skilltree:textures/tooltip/gateway.png",
+  "buttonSize": 30,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_1_defensive_1"
   ],
-  "gateway": "skilltree:dimensional_gateway",
-  "icon_texture": "skilltree:textures/icons/void.png",
-  "position": {
-    "x": -227.9862,
-    "y": -16.256615
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/gateway.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "id": "skilltree:blacksmith_gateway",
+  "isStartingPoint": false,
+  "positionX": -212.7852,
+  "positionY": -0.5066986
 }

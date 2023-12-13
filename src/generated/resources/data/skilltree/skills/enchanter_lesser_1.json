@@ -1,21 +1,20 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": -0.05,
-      "attribute": "skilltree:enchantment_level_requirement",
-      "operation": "multiply_base"
+      "type": "skilltree:enchantment_requirement",
+      "multiplier": -0.05
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_lesser_3"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_lesser_1.png",
-  "position": {
-    "x": 258.19476,
-    "y": -194.00385
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_lesser_1.png",
+  "id": "skilltree:enchanter_lesser_1",
+  "isStartingPoint": false,
+  "positionX": 266.19476,
+  "positionY": -186.00385
 }

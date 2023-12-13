@@ -1,27 +1,53 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:damage_if_damaged",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.75
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.2,
-      "attribute": "skilltree:damage_if_wounded",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.2,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_subclass_1_offensive_1",
     "skilltree:cook_subclass_1_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_1.png",
-  "position": {
-    "x": 132.96991,
-    "y": -327.07144
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_subclass_1.png",
+  "id": "skilltree:cook_subclass_1",
+  "isStartingPoint": false,
+  "positionX": 144.96991,
+  "positionY": -315.07144
 }

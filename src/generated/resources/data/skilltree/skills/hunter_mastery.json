@@ -1,19 +1,20 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:triple_loot_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:loot_duplication",
+      "chance": 0.15,
+      "loot_type": "mobs",
+      "multiplier": 2.0
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_mastery.png",
-  "position": {
-    "x": 339.18997,
-    "y": 190.78607
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_mastery.png",
+  "id": "skilltree:hunter_mastery",
+  "isStartingPoint": false,
+  "positionX": 351.18997,
+  "positionY": 202.78607
 }

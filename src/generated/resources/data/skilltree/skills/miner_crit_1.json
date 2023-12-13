@@ -1,21 +1,36 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:crit_chance_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_chance",
+      "chance": 0.01,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        }
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_crit_1.png",
-  "position": {
-    "x": -251.67769,
-    "y": 165.00456
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_crit_1.png",
+  "id": "skilltree:miner_crit_1",
+  "isStartingPoint": false,
+  "positionX": -243.67769,
+  "positionY": 173.00456
 }

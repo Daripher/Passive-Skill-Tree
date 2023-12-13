@@ -1,23 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "operation": "multiply_base"
+      "id": "497cd00a-3f81-4d4e-aa75-2588a2720ad9",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_defensive_4",
     "skilltree:blacksmith_defensive_crafting_5",
     "skilltree:blacksmith_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
-  "position": {
-    "x": -249.631,
-    "y": -56.008415
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_defensive_notable_1.png",
+  "id": "skilltree:blacksmith_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -239.631,
+  "positionY": -46.008415
 }

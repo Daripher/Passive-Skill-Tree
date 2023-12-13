@@ -1,21 +1,27 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:brewed_potions_strength",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 0.1
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "potion_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_crafting_3"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_crafting_1.png",
-  "position": {
-    "x": -8.0,
-    "y": 86.0
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_crafting_1.png",
+  "id": "skilltree:alchemist_crafting_2",
+  "isStartingPoint": false,
+  "positionX": 7.1029515E-15,
+  "positionY": 94.0
 }

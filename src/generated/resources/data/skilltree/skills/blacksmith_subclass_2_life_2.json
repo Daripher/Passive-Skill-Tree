@@ -1,21 +1,40 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:crafted_armor_maximum_life",
-      "operation": "addition"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:attribute",
+          "amount": 1.0,
+          "attribute": "minecraft:generic.max_health",
+          "id": "4c7d5835-a3f0-4f7a-bd79-53eb335799ef",
+          "name": "SkillBonus",
+          "operation": 0,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_2_life_3"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_2_life_1.png",
-  "position": {
-    "x": -391.85773,
-    "y": -80.72495
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_life_1.png",
+  "id": "skilltree:blacksmith_subclass_2_life_2",
+  "isStartingPoint": false,
+  "positionX": -383.85773,
+  "positionY": -72.72495
 }

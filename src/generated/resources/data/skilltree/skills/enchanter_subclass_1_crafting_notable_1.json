@@ -1,19 +1,41 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.2,
-      "attribute": "skilltree:crafted_weapon_damage_against_burning",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:damage",
+          "chance": 0.2,
+          "damage_condition": {
+            "type": "skilltree:none"
+          },
+          "operation": 1,
+          "player_condition": {
+            "type": "skilltree:none"
+          },
+          "player_multiplier": {
+            "type": "skilltree:none"
+          },
+          "target_condition": {
+            "type": "skilltree:burning"
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_crafting_notable_1.png",
-  "position": {
-    "x": 460.8827,
-    "y": -65.99108
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_notable_1.png",
+  "id": "skilltree:enchanter_subclass_1_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": 470.8827,
+  "positionY": -55.99108
 }

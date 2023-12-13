@@ -1,31 +1,61 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 10.0,
+      "attribute": "skilltree:blocking",
+      "id": "73fc6d24-5943-4001-9c54-c46dc08330bf",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
+      "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "operation": "multiply_base"
+      "id": "c7f62f08-ae1b-4e52-ae2c-59cfc9051d37",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.05,
-      "attribute": "skilltree:melee_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:melee"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_mastery.png",
-  "position": {
-    "x": -327.92178,
-    "y": -361.80984
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_mastery.png",
+  "id": "skilltree:blacksmith_subclass_1_mastery",
+  "isStartingPoint": false,
+  "positionX": -315.92178,
+  "positionY": -349.80984
 }

@@ -1,22 +1,34 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:projectile_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:projectile"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_offensive_8",
     "skilltree:hunter_lesser_2"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_offensive_1.png",
-  "position": {
-    "x": 245.17549,
-    "y": 200.54518
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_offensive_1.png",
+  "id": "skilltree:hunter_offensive_7",
+  "isStartingPoint": false,
+  "positionX": 253.17549,
+  "positionY": 208.54518
 }

@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "operation": "addition"
+      "id": "375f9413-3a99-4e8c-a3d5-6ac6a330e450",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_healing_3"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_healing_1.png",
-  "position": {
-    "x": 99.41354,
-    "y": -158.03067
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_healing_1.png",
+  "id": "skilltree:enchanter_healing_1",
+  "isStartingPoint": false,
+  "positionX": 107.41354,
+  "positionY": -150.03067
 }

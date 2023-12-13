@@ -1,19 +1,29 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.1,
-      "attribute": "skilltree:maximum_life_per_evasion",
-      "operation": "addition"
+      "attribute": "minecraft:generic.max_health",
+      "id": "df8616df-0fa4-4f89-bf60-e9db500b4f5d",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:attribute_value",
+        "attribute": "skilltree:evasion"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_life_notable_1.png",
-  "position": {
-    "x": 202.63101,
-    "y": 112.77724
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_life_notable_1.png",
+  "id": "skilltree:hunter_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": 212.63101,
+  "positionY": 122.77724
 }

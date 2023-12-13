@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_gem_in_armor",
-      "operation": "addition"
+      "attribute": "minecraft:generic.max_health",
+      "id": "292539db-a043-4e1e-97bf-c7cfc693220d",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "any"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_life_notable_1.png",
-  "position": {
-    "x": -222.63979,
-    "y": 112.762024
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_life_notable_1.png",
+  "id": "skilltree:miner_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": -212.63979,
+  "positionY": 122.762024
 }

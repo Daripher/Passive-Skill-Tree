@@ -1,24 +1,42 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 6.0,
       "attribute": "minecraft:generic.max_health",
-      "operation": "addition"
+      "id": "dc86b459-8ec5-48d4-8ed1-b65838554d5d",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     },
     {
+      "type": "skilltree:attribute",
       "amount": 0.1,
-      "attribute": "skilltree:experience_per_hour",
-      "operation": "addition"
+      "attribute": "skilltree:exp_per_minute",
+      "id": "e9bba417-8580-4d01-a8a3-1f4e69873025",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_life_notable_1.png",
-  "position": {
-    "x": 315.9333,
-    "y": -317.06915
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_life_notable_1.png",
+  "id": "skilltree:enchanter_subclass_2_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": 325.9333,
+  "positionY": -307.06915
 }

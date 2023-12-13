@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "operation": "addition"
+      "id": "40479fbf-76fc-4f4e-85c2-e1e2f86b7ad5",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_1_defensive_1.png",
-  "position": {
-    "x": -325.6383,
-    "y": 7.9957886
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_1_defensive_1.png",
+  "id": "skilltree:miner_subclass_1_defensive_4",
+  "isStartingPoint": false,
+  "positionX": -317.6383,
+  "positionY": 15.995789
 }

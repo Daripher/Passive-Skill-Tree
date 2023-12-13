@@ -1,22 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "skilltree:blocking",
+      "id": "1733a0a7-7e64-4191-b2bc-ddccf80e2d4d",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_life_1",
     "skilltree:enchanter_defensive_5"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_1.png",
-  "position": {
-    "x": 177.64426,
-    "y": -177.52307
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_defensive_1.png",
+  "id": "skilltree:enchanter_defensive_4",
+  "isStartingPoint": false,
+  "positionX": 185.64426,
+  "positionY": -169.52307
 }

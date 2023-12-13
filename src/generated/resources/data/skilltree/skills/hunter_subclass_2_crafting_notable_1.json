@@ -1,19 +1,28 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:crafted_quivers_chance_to_retrieve_arrows",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:skill_bonus",
+        "skill_bonus": {
+          "type": "skilltree:arrow_retrieval",
+          "chance": 0.1
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:curio",
+        "slot": "quiver"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_crafting_notable_1.png",
-  "position": {
-    "x": 460.87152,
-    "y": 46.015343
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_crafting_notable_1.png",
+  "id": "skilltree:hunter_subclass_2_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": 470.87152,
+  "positionY": 56.015343
 }

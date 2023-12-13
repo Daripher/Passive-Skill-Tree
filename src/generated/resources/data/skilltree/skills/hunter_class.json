@@ -1,26 +1,26 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:double_loot_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:loot_duplication",
+      "chance": 0.15,
+      "loot_type": "mobs",
+      "multiplier": 1.0
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_defensive_1",
     "skilltree:hunter_offensive_1",
     "skilltree:hunter_defensive_crafting_1",
     "skilltree:hunter_offensive_crafting_1",
     "skilltree:hunter_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_class.png",
-  "position": {
-    "x": 119.631,
-    "y": 64.008415
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_class.png",
+  "id": "skilltree:hunter_class",
+  "isStartingPoint": true,
+  "positionX": 131.631,
+  "positionY": 76.008415
 }

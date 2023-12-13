@@ -1,26 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": 0.4,
-      "attribute": "skilltree:brewed_potions_duration",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_duration",
+        "multiplier": 0.4
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "potion_type": "any"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_defensive_1",
     "skilltree:alchemist_offensive_1",
     "skilltree:alchemist_defensive_crafting_1",
     "skilltree:alchemist_offensive_crafting_1",
     "skilltree:alchemist_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_class.png",
-  "position": {
-    "x": -12.0,
-    "y": 140.0
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_class.png",
+  "id": "skilltree:alchemist_class",
+  "isStartingPoint": true,
+  "positionX": 0.0,
+  "positionY": 152.0
 }

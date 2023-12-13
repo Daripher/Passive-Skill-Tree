@@ -1,21 +1,33 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_equipped_jewelry",
-      "operation": "addition"
+      "attribute": "minecraft:generic.max_health",
+      "id": "55116a7c-f4fa-48a5-acd2-44799a679c2f",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:jewelry"
+        }
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_subclass_2_life_1.png",
-  "position": {
-    "x": -285.43646,
-    "y": 301.07153
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_subclass_2_life_1.png",
+  "id": "skilltree:miner_subclass_2_life_3",
+  "isStartingPoint": false,
+  "positionX": -277.43643,
+  "positionY": 309.07153
 }

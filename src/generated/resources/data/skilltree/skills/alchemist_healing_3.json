@@ -1,22 +1,31 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_per_hit",
-      "operation": "addition"
+      "id": "32858792-8ca8-4d7f-b245-e862e5c9eac8",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_healing_2",
     "skilltree:alchemist_healing_4"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_healing_1.png",
-  "position": {
-    "x": 74.95905,
-    "y": 134.92189
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_healing_1.png",
+  "id": "skilltree:alchemist_healing_3",
+  "isStartingPoint": false,
+  "positionX": 82.95905,
+  "positionY": 142.92189
 }

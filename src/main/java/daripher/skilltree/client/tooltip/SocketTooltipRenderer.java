@@ -1,103 +1,105 @@
 package daripher.skilltree.client.tooltip;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.item.gem.GemHelper;
-import daripher.skilltree.util.TooltipHelper;
+import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.item.gem.GemBonusHandler;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 
 // Slightly modified code from https://github.com/Shadows-of-Fire/Apotheosis
 public class SocketTooltipRenderer implements ClientTooltipComponent {
-	public static final ResourceLocation SOCKET = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/socket.png");
-	private final SocketComponent component;
-	private final int spacing = Minecraft.getInstance().font.lineHeight + 2;
+  private final SocketComponent component;
+  private final int spacing = Minecraft.getInstance().font.lineHeight + 2;
 
-	public SocketTooltipRenderer(SocketComponent comp) {
-		this.component = comp;
-	}
+  public SocketTooltipRenderer(SocketComponent comp) {
+    this.component = comp;
+  }
 
-	@Override
-	public int getHeight() {
-		return spacing * component.sockets;
-	}
+  public static Component getSocketDesc(ItemStack stack, int socket) {
+    if (!GemBonusHandler.hasGem(stack, socket)) {
+      return Component.translatable("gem.socket");
+    }
+    return GemBonusHandler.getBonuses(stack).get(socket).getTooltip();
+  }
 
-	@Override
-	public int getWidth(Font font) {
-		int width = 0;
-		for (int i = 0; i < component.sockets; i++) {
-			width = Math.max(width, font.width(getSocketDesc(component.stack, i)) + 12);
-		}
-		return width;
-	}
+  @Override
+  public int getHeight() {
+    return spacing * component.sockets;
+  }
 
-	@Override
-	public void renderImage(Font font, int x, int y, GuiGraphics graphics) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		for (int i = 0; i < component.sockets; i++) {
-			graphics.blit(SOCKET, x, y + spacing * i, 0, 0, 9, 9, 9, 9);
-		}
-		for (ItemStack gem : component.gems) {
-			if (!gem.isEmpty()) {
-				graphics.pose().pushPose();
-				graphics.pose().scale(0.5F, 0.5F, 1);
-				graphics.renderItem(gem, 2 * x + 1, 2 * y + 1);
-				graphics.pose().popPose();
-			}
-			y += spacing;
-		}
-	}
+  @Override
+  public int getWidth(@NotNull Font font) {
+    int width = 0;
+    for (int i = 0; i < component.sockets; i++) {
+      width = Math.max(width, font.width(getSocketDesc(component.stack, i)) + 12);
+    }
+    return width;
+  }
 
-	@Override
-	public void renderText(Font font, int x, int y, Matrix4f matrix, BufferSource buffer) {
-		for (int i = 0; i < component.sockets; i++) {
-			font.drawInBatch(getSocketDesc(component.stack, i), x + 12, y + 1 + spacing * i, 0xAABBCC, true, matrix, buffer, DisplayMode.NORMAL, 0,
-					15728880);
-		}
-	}
+  @Override
+  public void renderImage(@NotNull Font font, int x, int y, @NotNull GuiGraphics graphics) {
+    ResourceLocation texture =
+        new ResourceLocation(SkillTreeMod.MOD_ID, "textures/screen/socket.png");
+    for (int i = 0; i < component.sockets; i++) {
+      graphics.blit(texture, x, y + spacing * i, 0, 0, 0, 9, 9, 9, 9);
+    }
+    for (ItemStack gem : component.gems) {
+      if (!gem.isEmpty()) {
+        PoseStack mvStack = RenderSystem.getModelViewStack();
+        mvStack.pushPose();
+        mvStack.scale(0.5F, 0.5F, 1);
+        graphics.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
+        mvStack.popPose();
+        RenderSystem.applyModelViewMatrix();
+      }
+      y += spacing;
+    }
+  }
 
-	public static Component getSocketDesc(ItemStack stack, int socket) {
-		if (!GemHelper.hasGem(stack, socket)) return Component.translatable("gem.socket");
-		Optional<Pair<Attribute, AttributeModifier>> gemBonus = GemHelper.getAttributeBonus(stack, socket);
-		return TooltipHelper.getAttributeBonusTooltip(gemBonus);
-	}
+  @Override
+  public void renderText(
+      @NotNull Font font,
+      int x,
+      int y,
+      @NotNull Matrix4f matrix,
+      @NotNull MultiBufferSource.BufferSource bufferSource) {
+    for (int i = 0; i < component.sockets; i++) {
+      font.drawInBatch(
+          getSocketDesc(component.stack, i),
+          x + 12,
+          y + 1 + this.spacing * i,
+          0xAABBCC,
+          true,
+          matrix,
+          bufferSource,
+          Font.DisplayMode.NORMAL,
+          0,
+          15728880);
+    }
+  }
 
-	public static class SocketComponent implements TooltipComponent {
-		private final ItemStack stack;
-		private final List<ItemStack> gems;
-		private int sockets;
+  public static class SocketComponent implements TooltipComponent {
+    private final ItemStack stack;
+    private final List<ItemStack> gems;
+    private int sockets;
 
-		public SocketComponent(ItemStack stack) {
-			this.stack = stack;
-			this.gems = new ArrayList<ItemStack>();
-			this.sockets = GemHelper.getMaximumSockets(stack, Minecraft.getInstance().player);
-			int socket = 0;
-			while (GemHelper.hasGem(stack, socket)) {
-				ItemStack gem = new ItemStack(GemHelper.getGem(stack, socket).get());
-				gems.add(gem);
-				socket++;
-			}
-			if (sockets < gems.size()) sockets = gems.size();
-		}
-	}
+    public SocketComponent(ItemStack stack) {
+      this.stack = stack;
+      this.gems = GemBonusHandler.getGems(stack);
+      this.sockets = ItemHelper.getMaximumSockets(stack, Minecraft.getInstance().player);
+      if (sockets < gems.size()) sockets = gems.size();
+    }
+  }
 }

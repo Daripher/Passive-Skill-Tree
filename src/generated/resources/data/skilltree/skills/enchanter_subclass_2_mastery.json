@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 1.5,
-      "attribute": "skilltree:experience_per_hour",
-      "operation": "addition"
+      "attribute": "skilltree:exp_per_minute",
+      "id": "5e95a03e-354d-451d-95d7-80e5384d3b54",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_2_mastery.png",
-  "position": {
-    "x": 303.95526,
-    "y": -361.7826
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_mastery.png",
+  "id": "skilltree:enchanter_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": 315.95526,
+  "positionY": -349.7826
 }

@@ -1,22 +1,38 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:damage_with_shield",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "shield"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_offensive_7",
     "skilltree:blacksmith_crit_2"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_offensive_1.png",
-  "position": {
-    "x": -238.65967,
-    "y": -203.54375
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_offensive_1.png",
+  "id": "skilltree:blacksmith_offensive_6",
+  "isStartingPoint": false,
+  "positionX": -230.65967,
+  "positionY": -195.54375
 }

@@ -1,21 +1,35 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.02,
-      "attribute": "skilltree:attack_speed_with_gem_in_weapon",
-      "operation": "multiply_base"
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "9655858b-2c73-48c0-9361-df05f2322c98",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        },
+        "min": 1
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_speed_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_speed_1.png",
-  "position": {
-    "x": -229.16061,
-    "y": 152.00528
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_speed_1.png",
+  "id": "skilltree:miner_speed_1",
+  "isStartingPoint": false,
+  "positionX": -221.16061,
+  "positionY": 160.00528
 }

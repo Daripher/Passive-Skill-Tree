@@ -1,21 +1,33 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.02,
-      "attribute": "skilltree:crit_chance_against_poisoned",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_chance",
+      "chance": 0.02,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:has_effect",
+        "effect": "minecraft:poison"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_crit_notable_1"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_crit_1.png",
-  "position": {
-    "x": -35.997005,
-    "y": 289.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_crit_1.png",
+  "id": "skilltree:alchemist_crit_2",
+  "isStartingPoint": false,
+  "positionX": -27.99701,
+  "positionY": 297.52728
 }

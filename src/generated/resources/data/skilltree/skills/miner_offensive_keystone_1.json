@@ -1,19 +1,35 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:damage_per_gem_in_weapon",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:gems_amount",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        }
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
-  "position": {
-    "x": -367.68784,
-    "y": 130.9921
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_offensive_keystone_1.png",
+  "id": "skilltree:miner_offensive_keystone_1",
+  "isStartingPoint": false,
+  "positionX": -355.68784,
+  "positionY": 142.9921
 }

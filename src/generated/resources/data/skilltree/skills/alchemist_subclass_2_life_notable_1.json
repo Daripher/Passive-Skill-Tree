@@ -1,24 +1,25 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 4.0,
-      "attribute": "minecraft:generic.max_health",
-      "operation": "addition"
-    },
-    {
-      "amount": 0.05,
-      "attribute": "skilltree:incoming_healing",
-      "operation": "multiply_base"
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.1,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_life_notable_1.png",
-  "position": {
-    "x": 92.97842,
-    "y": 425.7963
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_life_notable_1.png",
+  "id": "skilltree:alchemist_subclass_2_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": 102.97842,
+  "positionY": 435.7963
 }

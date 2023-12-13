@@ -1,26 +1,47 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:melee_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.01,
+      "damage_condition": {
+        "type": "skilltree:melee"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.01,
-      "attribute": "skilltree:block_chance",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "skilltree:blocking",
+      "id": "1634f0fc-9c1d-44de-9d5c-992d1f73e4f5",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:blacksmith_subclass_1_offensive_4"
   ],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_1.png",
-  "position": {
-    "x": -285.40683,
-    "y": -317.0951
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_1.png",
+  "id": "skilltree:blacksmith_subclass_1_offensive_3",
+  "isStartingPoint": false,
+  "positionX": -277.40683,
+  "positionY": -309.0951
 }

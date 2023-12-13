@@ -1,12 +1,23 @@
 package daripher.skilltree.item.gem;
 
-import daripher.skilltree.init.PSTAttributes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import daripher.skilltree.skill.bonus.condition.item.PotionCondition;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.item.PotionAmplificationBonus;
+import daripher.skilltree.skill.bonus.item.PotionDurationBonus;
+import daripher.skilltree.skill.bonus.player.CraftedItemBonus;
 
 public class AdamiteItem extends SimpleGemItem {
-	public AdamiteItem() {
-		super();
-		setBonuses(PSTAttributes.BREWED_POTIONS_STRENGTH.get(), 0.02F, Operation.MULTIPLY_BASE, "necklace");
-		setBonuses(PSTAttributes.BREWED_POTIONS_DURATION.get(), 0.02F, Operation.MULTIPLY_BASE, "ring");
-	}
+  public AdamiteItem() {
+    super();
+    setBonuses(
+        new ItemSkillBonus(
+            new CraftedItemBonus(
+                new PotionCondition(PotionCondition.Type.ANY), new PotionAmplificationBonus(0.02f))),
+        "necklace");
+    setBonuses(
+        new ItemSkillBonus(
+            new CraftedItemBonus(
+                new PotionCondition(PotionCondition.Type.ANY), new PotionDurationBonus(0.02f))),
+        "ring");
+  }
 }

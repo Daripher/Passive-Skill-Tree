@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.25,
-      "attribute": "skilltree:life_regeneration_bonus",
-      "operation": "addition"
+      "attribute": "skilltree:regeneration",
+      "id": "e424b63e-75cc-40ae-ae12-2a3b230940dc",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_healing_3"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_healing_1.png",
-  "position": {
-    "x": -115.41354,
-    "y": 142.03067
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_healing_1.png",
+  "id": "skilltree:miner_healing_1",
+  "isStartingPoint": false,
+  "positionX": -107.41354,
+  "positionY": 150.03067
 }

@@ -1,21 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
+      "type": "skilltree:attribute",
       "amount": 0.01,
       "attribute": "minecraft:generic.attack_speed",
-      "operation": "multiply_base"
+      "id": "63b7a3b8-2315-4909-9d7e-ed12c212e2a5",
+      "name": "SkillBonus",
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_subclass_1_offensive_2"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_subclass_1_offensive_1.png",
-  "position": {
-    "x": 120.970795,
-    "y": -350.78476
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_subclass_1_offensive_1.png",
+  "id": "skilltree:cook_subclass_1_offensive_1",
+  "isStartingPoint": false,
+  "positionX": 128.9708,
+  "positionY": -342.78476
 }

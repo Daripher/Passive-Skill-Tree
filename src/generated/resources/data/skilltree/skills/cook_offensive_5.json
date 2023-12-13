@@ -1,22 +1,35 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.05,
-      "attribute": "skilltree:damage_if_not_hungry",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.05,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:food_level",
+        "min": 15
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_offensive_6",
     "skilltree:cook_speed_2"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_offensive_1.png",
-  "position": {
-    "x": 46.00598,
-    "y": -279.52728
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_offensive_1.png",
+  "id": "skilltree:cook_offensive_5",
+  "isStartingPoint": false,
+  "positionX": 54.00598,
+  "positionY": -271.52728
 }

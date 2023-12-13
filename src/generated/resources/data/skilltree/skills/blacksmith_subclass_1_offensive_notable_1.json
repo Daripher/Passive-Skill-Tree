@@ -1,24 +1,47 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.2,
-      "attribute": "skilltree:melee_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.2,
+      "damage_condition": {
+        "type": "skilltree:melee"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     },
     {
-      "amount": 0.1,
-      "attribute": "skilltree:melee_crit_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_damage",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:melee"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": -335.9039,
-    "y": -317.09735
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:blacksmith_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -325.9039,
+  "positionY": -307.09735
 }

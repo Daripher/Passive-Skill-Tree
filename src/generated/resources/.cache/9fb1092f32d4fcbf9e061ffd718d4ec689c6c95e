@@ -1,8 +1,7 @@
-// 1.20.1	2023-08-05T02:47:20.043193	Recipes
+// 1.20.1	2023-12-13T21:04:15.6299383	Recipes
 5f0bfce5080c249bc2e0e5b8d1c5b12d60411e36 data/skilltree/advancements/recipes/combat/armored_quiver.json
 e9169cdd91f018787d6d4dc3b433568f5417787a data/skilltree/advancements/recipes/combat/bone_quiver.json
 01bbbc198bf268a72a0b293a30f647fc0870a701 data/skilltree/advancements/recipes/combat/diamond_quiver.json
-94dc22f29e52cf2701e697255b818aac8dfa08e0 data/skilltree/advancements/recipes/combat/explosive_quiver.json
 b67516609641e8690572a9d990a9e06ee0b7bb3e data/skilltree/advancements/recipes/combat/fiery_quiver.json
 b3785fdafcc4cd3a33db71aafb56543bbecfa425 data/skilltree/advancements/recipes/combat/gilded_quiver.json
 ba338d6d02f4f66c6dcc8baea6f363ef3e01989a data/skilltree/advancements/recipes/combat/healing_quiver.json
@@ -29,7 +28,6 @@ bc3340fe7ead318df7d2d097ed63cd50e205bd0c data/skilltree/recipes/bone_quiver.json
 0ed29016b571df1b0151ea847fdadf8348a25dfa data/skilltree/recipes/copper_nugget.json
 129a741d1b5669bfec7907417814a6c73e137366 data/skilltree/recipes/copper_ring.json
 004146c65c0381f53240ea26b3dde10119111377 data/skilltree/recipes/diamond_quiver.json
-291a5cdca7053bebcdb34e5afc3a691ff4319450 data/skilltree/recipes/explosive_quiver.json
 8b2aaf778ba451303ffc44f8a7beb6934cca6a25 data/skilltree/recipes/fiery_quiver.json
 8685689318972d190310cf2579afaa42abd63b6b data/skilltree/recipes/fisherman_necklace.json
 8187eed3d9c7620f40be5ab93949c0bb140e80a1 data/skilltree/recipes/gilded_quiver.json

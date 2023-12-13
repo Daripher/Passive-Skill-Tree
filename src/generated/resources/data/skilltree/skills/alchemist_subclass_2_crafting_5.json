@@ -1,21 +1,27 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:brewed_healing_potions_strength",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_amplification",
+        "chance": 0.1
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "potion_type": "beneficial"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_special"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_crafting_1.png",
-  "position": {
-    "x": 175.47227,
-    "y": 373.80008
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_crafting_1.png",
+  "id": "skilltree:alchemist_subclass_2_crafting_5",
+  "isStartingPoint": false,
+  "positionX": 183.47227,
+  "positionY": 381.80008
 }

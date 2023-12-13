@@ -1,19 +1,21 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_equipment_sockets",
-      "operation": "addition"
+      "type": "skilltree:player_sockets",
+      "item_condition": {
+        "type": "skilltree:equipment"
+      },
+      "sockets": 1
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/miner_mastery.png",
-  "position": {
-    "x": -363.2064,
-    "y": 190.75761
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/miner_mastery.png",
+  "id": "skilltree:miner_mastery",
+  "isStartingPoint": false,
+  "positionX": -351.2064,
+  "positionY": 202.75761
 }

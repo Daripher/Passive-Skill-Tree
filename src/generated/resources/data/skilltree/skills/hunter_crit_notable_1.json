@@ -1,19 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.25,
-      "attribute": "skilltree:projectile_crit_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_damage",
+      "chance": 0.25,
+      "damage_condition": {
+        "type": "skilltree:projectile"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/hunter_crit_notable_1.png",
-  "position": {
-    "x": 247.66266,
-    "y": 138.7801
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/hunter_crit_notable_1.png",
+  "id": "skilltree:hunter_crit_notable_1",
+  "isStartingPoint": false,
+  "positionX": 257.66266,
+  "positionY": 148.7801
 }

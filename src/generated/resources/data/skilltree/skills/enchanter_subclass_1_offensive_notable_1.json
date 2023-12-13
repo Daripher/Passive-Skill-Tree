@@ -1,19 +1,30 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:crit_chance_against_burning",
-      "operation": "multiply_base"
+      "type": "skilltree:crit_chance",
+      "chance": 0.1,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:burning"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
-  "position": {
-    "x": 418.90466,
-    "y": -138.70454
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_notable_1.png",
+  "id": "skilltree:enchanter_subclass_1_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 428.90466,
+  "positionY": -128.70454
 }

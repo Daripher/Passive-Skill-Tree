@@ -1,22 +1,22 @@
 package daripher.skilltree.item.quiver;
 
-import java.util.UUID;
+import daripher.skilltree.item.ItemBonusProvider;
+import daripher.skilltree.skill.bonus.condition.living.HasEffectCondition;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.player.DamageBonus;
 
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.function.Consumer;
 
-import daripher.skilltree.init.PSTAttributes;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
 
-public class ToxicQuiverItem extends QuiverItem {
-	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> modifiers = LinkedHashMultimap.create();
-		modifiers.put(PSTAttributes.DAMAGE_AGAINST_POISONED.get(), new AttributeModifier(uuid, "QuiverBonus", 0.05, Operation.MULTIPLY_BASE));
-		return modifiers;
-	}
+public class ToxicQuiverItem extends QuiverItem implements ItemBonusProvider {
+  @Override
+  public void getItemBonuses(Consumer<ItemBonus<?>> consumer) {
+    consumer.accept(
+        new ItemSkillBonus(
+            new DamageBonus(0.05f, Operation.MULTIPLY_BASE)
+                .setTargetCondition(new HasEffectCondition(MobEffects.POISON))));
+  }
 }

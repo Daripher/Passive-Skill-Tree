@@ -1,21 +1,34 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.01,
-      "attribute": "skilltree:maximum_life_per_arrow_in_quiver",
-      "operation": "addition"
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "minecraft:generic.max_health",
+      "id": "dc667000-f4db-4aba-9915-0ac8093887ff",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "ranged"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_subclass_2_life_1.png",
-  "position": {
-    "x": 398.37357,
-    "y": 77.726395
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_subclass_2_life_1.png",
+  "id": "skilltree:hunter_subclass_2_life_3",
+  "isStartingPoint": false,
+  "positionX": 406.37357,
+  "positionY": 85.726395
 }

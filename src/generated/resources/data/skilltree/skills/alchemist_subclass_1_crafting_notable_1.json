@@ -1,19 +1,25 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.25,
-      "attribute": "skilltree:brewed_harmful_potions_duration",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:potion_duration",
+        "multiplier": 0.25
+      },
+      "item_condition": {
+        "type": "skilltree:potion",
+        "potion_type": "harmful"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_1_crafting_notable_1.png",
-  "position": {
-    "x": -196.93625,
-    "y": 425.78738
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_crafting_notable_1.png",
+  "id": "skilltree:alchemist_subclass_1_crafting_notable_1",
+  "isStartingPoint": false,
+  "positionX": -186.93625,
+  "positionY": 435.78738
 }

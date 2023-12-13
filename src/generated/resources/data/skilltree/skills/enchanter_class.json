@@ -1,26 +1,24 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": -0.3,
-      "attribute": "skilltree:enchantment_level_requirement",
-      "operation": "multiply_base"
+      "type": "skilltree:enchantment_requirement",
+      "multiplier": -0.3
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_defensive_1",
     "skilltree:enchanter_offensive_1",
     "skilltree:enchanter_defensive_crafting_1",
     "skilltree:enchanter_offensive_crafting_1",
     "skilltree:enchanter_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_class.png",
-  "position": {
-    "x": 119.63829,
-    "y": -87.99579
-  },
-  "starting_point": true,
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_class.png",
+  "id": "skilltree:enchanter_class",
+  "isStartingPoint": true,
+  "positionX": 131.63829,
+  "positionY": -75.99579
 }

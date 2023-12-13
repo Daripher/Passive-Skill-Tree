@@ -1,23 +1,40 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:damage_with_gem_in_weapon",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.15,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:has_gems",
+        "item_condition": {
+          "type": "skilltree:weapon",
+          "weapon_type": "any"
+        },
+        "min": 1
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:miner_offensive_4",
     "skilltree:miner_offensive_crafting_5",
     "skilltree:miner_subclass_1_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/miner_offensive_notable_1.png",
-  "position": {
-    "x": -249.63829,
-    "y": 35.99579
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/miner_offensive_notable_1.png",
+  "id": "skilltree:miner_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": -239.63829,
+  "positionY": 45.99579
 }

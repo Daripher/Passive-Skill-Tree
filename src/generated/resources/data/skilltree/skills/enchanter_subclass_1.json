@@ -1,27 +1,48 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "bonuses": [
     {
-      "amount": 0.15,
-      "attribute": "skilltree:damage_against_burning",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.15,
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:burning"
+      }
     },
     {
-      "amount": 0.15,
-      "attribute": "skilltree:chance_to_ignite",
-      "operation": "multiply_base"
+      "type": "skilltree:ignite_chance",
+      "chance": 0.15,
+      "duration": 5,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/class.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_subclass_1_offensive_1",
     "skilltree:enchanter_subclass_1_crafting_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_subclass_1.png",
-  "position": {
-    "x": 333.35162,
-    "y": -43.994904
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_subclass_1.png",
+  "id": "skilltree:enchanter_subclass_1",
+  "isStartingPoint": false,
+  "positionX": 345.35162,
+  "positionY": -31.994904
 }

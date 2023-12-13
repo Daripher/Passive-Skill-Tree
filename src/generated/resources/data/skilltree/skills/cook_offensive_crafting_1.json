@@ -1,21 +1,28 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "bonuses": [
     {
-      "amount": 0.0025,
-      "attribute": "skilltree:cooked_food_damage_per_saturation",
-      "operation": "multiply_base"
+      "type": "skilltree:crafted_item_bonus",
+      "item_bonus": {
+        "type": "skilltree:food_effect",
+        "amplifier": 1,
+        "duration": 1200,
+        "effect": "skilltree:damage_bonus"
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/lesser.png",
-  "button_size": 16,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "buttonSize": 16,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:cook_offensive_crafting_2"
   ],
-  "icon_texture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
-  "position": {
-    "x": 17.979803,
-    "y": -144.99834
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/lesser.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
+  "id": "skilltree:cook_offensive_crafting_1",
+  "isStartingPoint": false,
+  "positionX": 25.979803,
+  "positionY": -136.99834
 }

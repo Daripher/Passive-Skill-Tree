@@ -1,26 +1,27 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "bonuses": [
     {
-      "amount": 10.0,
-      "attribute": "minecraft:generic.max_health",
-      "operation": "addition"
-    },
-    {
-      "amount": 0.05,
-      "attribute": "skilltree:incoming_healing",
-      "operation": "multiply_base"
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.25,
+      "player_condition": {
+        "type": "skilltree:health_percentage",
+        "max": 0.5
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/keystone.png",
-  "button_size": 24,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/keystone.png",
+  "buttonSize": 24,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:alchemist_subclass_2_life_4"
   ],
-  "icon_texture": "skilltree:textures/icons/alchemist_subclass_2_mastery.png",
-  "position": {
-    "x": 132.95734,
-    "y": 436.51044
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/keystone.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_mastery.png",
+  "id": "skilltree:alchemist_subclass_2_mastery",
+  "isStartingPoint": false,
+  "positionX": 144.95734,
+  "positionY": 448.51044
 }

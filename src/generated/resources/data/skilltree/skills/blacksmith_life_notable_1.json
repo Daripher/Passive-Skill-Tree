@@ -1,19 +1,32 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 1.0,
-      "attribute": "skilltree:maximum_life_per_boots_armor_bonus",
-      "operation": "addition"
+      "type": "skilltree:attribute",
+      "amount": 4.0,
+      "attribute": "minecraft:generic.max_health",
+      "id": "102d2822-e7d2-41c1-9698-b4f0a81c34ea",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_item_equipped",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "shield"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [],
-  "icon_texture": "skilltree:textures/icons/blacksmith_life_notable_1.png",
-  "position": {
-    "x": -222.63101,
-    "y": -132.77724
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [],
+  "iconTexture": "skilltree:textures/icons/blacksmith_life_notable_1.png",
+  "id": "skilltree:blacksmith_life_notable_1",
+  "isStartingPoint": false,
+  "positionX": -212.63101,
+  "positionY": -122.77724
 }

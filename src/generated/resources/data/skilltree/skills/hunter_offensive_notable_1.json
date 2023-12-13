@@ -1,23 +1,35 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.25,
-      "attribute": "skilltree:projectile_damage",
-      "operation": "multiply_base"
+      "type": "skilltree:damage",
+      "chance": 0.25,
+      "damage_condition": {
+        "type": "skilltree:projectile"
+      },
+      "operation": 1,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:hunter_offensive_4",
     "skilltree:hunter_offensive_crafting_5",
     "skilltree:hunter_subclass_1_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/hunter_offensive_notable_1.png",
-  "position": {
-    "x": 149.64821,
-    "y": 174.54005
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/hunter_offensive_notable_1.png",
+  "id": "skilltree:hunter_offensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 159.64821,
+  "positionY": 184.54005
 }

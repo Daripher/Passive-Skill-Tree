@@ -1,23 +1,36 @@
 {
-  "attribute_modifiers": [
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "bonuses": [
     {
-      "amount": 0.1,
-      "attribute": "skilltree:block_chance_with_enchanted_shield",
-      "operation": "multiply_base"
+      "type": "skilltree:attribute",
+      "amount": 10.0,
+      "attribute": "skilltree:blocking",
+      "id": "d57c377a-f3e0-496e-9500-08e2af9cc67a",
+      "name": "SkillBonus",
+      "operation": 0,
+      "player_condition": {
+        "type": "skilltree:has_enchanted_item",
+        "item_condition": {
+          "type": "skilltree:armor",
+          "armor_type": "shield"
+        }
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
     }
   ],
-  "background_texture": "skilltree:textures/icons/background/notable.png",
-  "button_size": 20,
-  "connections": [
+  "borderTexture": "skilltree:textures/tooltip/notable.png",
+  "buttonSize": 20,
+  "connectedAsGateways": [],
+  "connectedSkills": [
     "skilltree:enchanter_defensive_4",
     "skilltree:enchanter_defensive_crafting_5",
     "skilltree:enchanter_subclass_2_defensive_1"
   ],
-  "icon_texture": "skilltree:textures/icons/enchanter_defensive_notable_1.png",
-  "position": {
-    "x": 149.66446,
-    "y": -194.52473
-  },
-  "tooltip_texture": "skilltree:textures/tooltip/notable.png",
-  "tree": "skilltree:tree"
+  "iconTexture": "skilltree:textures/icons/enchanter_defensive_notable_1.png",
+  "id": "skilltree:enchanter_defensive_notable_1",
+  "isStartingPoint": false,
+  "positionX": 159.66446,
+  "positionY": -184.52473
 }

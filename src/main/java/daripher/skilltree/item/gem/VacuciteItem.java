@@ -1,42 +1,40 @@
 package daripher.skilltree.item.gem;
 
+import daripher.skilltree.skill.bonus.item.ItemBonus;
 import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
-
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class VacuciteItem extends GemItem {
-	public VacuciteItem() {
-		super();
-	}
+  public VacuciteItem() {
+    super(new Properties());
+  }
 
-	@Override
-	public void insertInto(Player player, ItemStack itemStack, int gemstoneSlot, double gemstoneStrength) {
-		GemHelper.removeGems(itemStack);
-	}
+  @Override
+  public void insertInto(
+      Player player, ItemStack itemStack, ItemStack gemStack, int socket) {
+    GemBonusHandler.removeGems(itemStack);
+  }
 
-	@Override
-	public boolean canInsertInto(Player currentPlayer, ItemStack baseItem, int gemstoneSlot) {
-		return GemHelper.hasGem(baseItem, 0);
-	}
+  @Override
+  public boolean canInsertInto(Player player, ItemStack stack, ItemStack gemStack, int socket) {
+    return GemBonusHandler.hasGem(stack, 0);
+  }
 
-	@Override
-	public Optional<Pair<Attribute, AttributeModifier>> getGemBonus(Player player, ItemStack itemStack) {
-		return Optional.empty();
-	}
+  @Override
+  public @Nullable ItemBonus<?> getGemBonus(Player player, ItemStack stack, ItemStack gemStack) {
+    return null;
+  }
 
-	@Override
-	protected void appendBonusesTooltip(List<Component> components) {
-		MutableComponent gemClass = formatGemClass("anything").withStyle(ChatFormatting.GRAY);
-		MutableComponent bonus = Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
-		components.add(gemClass.append(bonus));
-	}
+  @Override
+  protected void appendBonusesTooltip(ItemStack stack, List<Component> components) {
+    MutableComponent gemClass = formatGemClass("anything").withStyle(ChatFormatting.GRAY);
+    MutableComponent bonus =
+        Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.BLUE);
+    components.add(gemClass.append(bonus));
+  }
 }
