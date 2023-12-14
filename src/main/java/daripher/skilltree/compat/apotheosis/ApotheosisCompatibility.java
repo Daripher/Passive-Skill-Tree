@@ -21,11 +21,7 @@ import dev.shadowsoffire.apotheosis.adventure.event.GetItemSocketsEvent;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -128,14 +124,16 @@ public enum ApotheosisCompatibility {
   public boolean hasEmptySockets(ItemStack stack, Player player) {
     return getGems(stack, getSockets(stack, player)).stream()
         .map(GemItem::getGem)
-        .anyMatch(Objects::isNull);
+        .map(DynamicHolder::getOptional)
+        .anyMatch(Optional::isEmpty);
   }
 
   public int getFirstEmptySocket(ItemStack stack, int sockets) {
     List<ItemStack> gems = getGems(stack, sockets);
     for (int socket = 0; socket < sockets; socket++) {
-      Gem gem = GemItem.getGem(gems.get(socket)).get();
-      if (gem == null) return socket;
+      if (GemItem.getGem(gems.get(socket)).getOptional().isEmpty()) {
+        return socket;
+      }
     }
     return 0;
   }

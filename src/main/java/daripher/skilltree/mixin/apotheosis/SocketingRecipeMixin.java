@@ -40,7 +40,7 @@ public class SocketingRecipeMixin {
   private Object applyGemPower(List<Object> gems, int index, Object gem, Container container) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isPresent()) {
-      ItemStack result = container.getItem(0);
+      ItemStack result = container.getItem(1);
       float power = GemBonusHandler.getGemPower(player.get(), result);
       ((ItemStack) gem).getOrCreateTag().putFloat("gem_power", power);
     }

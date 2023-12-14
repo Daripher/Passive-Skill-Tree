@@ -40,8 +40,8 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
   @Override
   public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess access) {
     if (SkillTreeMod.apotheosisEnabled() || !canCraftIn(container)) return ItemStack.EMPTY;
-    ItemStack base = container.getItem(0);
-    ItemStack ingredient = container.getItem(1);
+    ItemStack base = container.getItem(1);
+    ItemStack ingredient = container.getItem(2);
     ItemStack result = base.copy();
     GemItem gem = (GemItem) ingredient.getItem();
     result.setCount(1);
@@ -57,8 +57,8 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
   private boolean canCraftIn(@NotNull Container container) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isEmpty()) return false;
-    ItemStack base = container.getItem(0);
-    ItemStack ingredient = container.getItem(1);
+    ItemStack base = container.getItem(1);
+    ItemStack ingredient = container.getItem(2);
     if (!ItemHelper.canInsertGem(base)) return false;
     if (!(ingredient.getItem() instanceof GemItem gem)) return false;
     int socket = GemBonusHandler.getFirstEmptySocket(base, player.get());
