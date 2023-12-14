@@ -31,6 +31,7 @@
     "apotheosis/SocketingRecipeMixin",
     "apotheosis/AttributeBonusMixin",
     "apotheosis/EnchantmentBonusMixin",
+    "davespotioneering/AdvancedBrewingStandBlockEntityMixin",
     "AbstractArrowAccessor",
     "LivingEntityAccessor",
     "CampfireBlockEntityAccessor",

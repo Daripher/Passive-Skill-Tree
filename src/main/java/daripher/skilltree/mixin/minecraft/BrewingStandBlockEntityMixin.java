@@ -1,7 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.container.InteractiveContainer;
-import daripher.skilltree.skill.bonus.player.CraftedItemBonus;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -42,9 +41,7 @@ public abstract class BrewingStandBlockEntityMixin extends BaseContainerBlockEnt
     Optional<Player> player = aContainer.getUser();
     if (player.isEmpty()) return;
     for (int slot = 0; slot < 3; slot++) {
-      ItemStack potionStack = itemStacks.get(slot);
-      SkillBonusHandler.getSkillBonuses(player.get(), CraftedItemBonus.class)
-          .forEach(bonus -> bonus.itemCrafted(potionStack));
+      SkillBonusHandler.itemCrafted(player.get(), itemStacks.get(slot));
     }
   }
 
