@@ -481,7 +481,7 @@ public class SkillBonusHandler {
     return SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class).stream()
         .map(FreeEnchantmentBonus::getChance)
         .reduce(Float::sum)
-        .orElse(1f);
+        .orElse(0f);
   }
 
   private static double getEnchantmentCostMultiplier(Player player) {
