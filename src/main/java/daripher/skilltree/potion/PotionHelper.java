@@ -35,10 +35,12 @@ public class PotionHelper {
   }
 
   public static float getDurationMultiplier(ItemStack stack) {
-    return ItemHelper.getItemBonuses(stack, PotionDurationBonus.class).stream()
+    float multiplier = 1f;
+    multiplier += ItemHelper.getItemBonuses(stack, PotionDurationBonus.class).stream()
         .map(PotionDurationBonus::getMultiplier)
         .reduce(Float::sum)
-        .orElse(1f);
+        .orElse(0f);
+    return multiplier;
   }
 
   public static void setPotionColor(ItemStack itemStack, int color) {
