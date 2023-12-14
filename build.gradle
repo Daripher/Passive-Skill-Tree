@@ -144,6 +144,9 @@ dependencies {
     // tetra
     implementation fg.deobf("curse.maven:tetra-289712:4857842")
     implementation fg.deobf("curse.maven:mutil-351914:4824501")
+    // dave's potioneering
+    implementation fg.deobf("curse.maven:daves-potioneering-639653:4770409")
+    implementation fg.deobf("curse.maven:geckolib-388172:4933987")
 }
 
 mixin {
