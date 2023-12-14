@@ -152,7 +152,7 @@ public final class AllAttributesBonus
     }
     AttributeModifier mergedModifier =
         new AttributeModifier(
-            UUID.randomUUID(),
+            this.modifier.getId(),
             "Merged",
             this.modifier.getAmount() + otherBonus.modifier.getAmount(),
             this.modifier.getOperation());
