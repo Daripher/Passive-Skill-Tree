@@ -1,9 +1,9 @@
 package daripher.skilltree.skill.bonus;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.effect.SkillBonusEffect;
+import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.item.ItemBonusProvider;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
@@ -485,10 +485,13 @@ public class SkillBonusHandler {
   }
 
   private static double getEnchantmentCostMultiplier(Player player) {
-    return SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class).stream()
-        .map(EnchantmentRequirementBonus::getMultiplier)
-        .reduce(Float::sum)
-        .orElse(1f);
+    float multiplier = 1f;
+    multiplier +=
+        SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class).stream()
+            .map(EnchantmentRequirementBonus::getMultiplier)
+            .reduce(Float::sum)
+            .orElse(0f);
+    return multiplier;
   }
 
   private static float getAmplificationChance(EnchantmentInstance enchantment, Player player) {
