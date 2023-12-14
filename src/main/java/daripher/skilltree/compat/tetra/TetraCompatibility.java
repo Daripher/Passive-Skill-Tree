@@ -18,8 +18,9 @@ public enum TetraCompatibility {
   private void registerReplacementHook(RegisterEvent event) {
     ItemUpgradeRegistry.instance.registerReplacementHook(
         (original, modular) -> {
+          ItemHelper.removeItemBonuses(modular);
           ItemHelper.getItemBonuses(original, ItemBonus.class)
-              .forEach(bonus -> ItemHelper.addItemBonus(modular, bonus.copy()));
+              .forEach(bonus -> ItemHelper.addItemBonus(modular, bonus));
           return modular;
         });
   }

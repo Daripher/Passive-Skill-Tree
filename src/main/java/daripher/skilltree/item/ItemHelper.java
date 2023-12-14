@@ -266,6 +266,11 @@ public class ItemHelper {
     stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
   }
 
+  public static void removeItemBonuses(ItemStack stack) {
+    if (!stack.hasTag()) return;
+    stack.getOrCreateTag().remove("SkillBonuses");
+  }
+
   private static ItemBonus<? extends ItemBonus<?>> mergeIfPossible(
       ItemBonus<?> bonus1, ItemBonus<?> bonus2, ListTag bonusesTag) {
     if (bonus1.canMerge(bonus2)) {
@@ -277,7 +282,7 @@ public class ItemHelper {
 
   private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
     ItemBonus.Serializer serializer = bonus.getSerializer();
-    CompoundTag bonusTag = serializer.serialize(bonus.copy());
+    CompoundTag bonusTag = serializer.serialize(bonus);
     ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
     bonusTag.putString("type", Objects.requireNonNull(id).toString());
     return bonusTag;
