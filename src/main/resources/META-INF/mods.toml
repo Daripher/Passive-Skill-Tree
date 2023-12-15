@@ -9,42 +9,42 @@ license="${mod_license}"
 	authors="${mod_authors}"
 	description='''${mod_description}'''
 
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
     versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
     
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 	
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="attributefix"
     mandatory=true
     versionRange="[17.2.6,)"
     ordering="NONE"
     side="BOTH"
 	
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="maxhealthfix"
     mandatory=true
     versionRange="[8.0.1,)"
     ordering="NONE"
     side="BOTH"
 	
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="curios"
     mandatory=true
     versionRange="[1.19.2-5.1.4.1,)"
     ordering="NONE"
     side="BOTH"
     
-[[dependencies.skilltree]]
+[[dependencies.${mod_id}]]
     modId="apotheosis"
     mandatory=false
     versionRange="[6.4.0,)"
