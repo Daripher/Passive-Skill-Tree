@@ -115,7 +115,9 @@ public class SkillButton extends Button {
 
   private void renderDarkening(GuiGraphics graphics) {
     ResourceLocation texture = skill.getBackgroundTexture();
+    RenderSystem.enableBlend();
     graphics.blit(texture, 0, 0, width, height, width, 0, width, height, width * 3, height);
+    RenderSystem.disableBlend();
   }
 
   private void renderIcon(GuiGraphics graphics) {
