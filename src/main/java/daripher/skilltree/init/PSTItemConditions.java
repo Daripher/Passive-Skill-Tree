@@ -33,6 +33,8 @@ public class PSTItemConditions {
       REGISTRY.register("jewelry", JewelryCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> PICKAXE =
       REGISTRY.register("pickaxe", PickaxeCondition.Serializer::new);
+  public static final RegistryObject<ItemCondition.Serializer> ITEM_ID =
+      REGISTRY.register("item_id", ItemIdCondition.Serializer::new);
 
   public static List<ItemCondition> conditionsList() {
     return PSTRegistries.ITEM_CONDITIONS.get().getValues().stream()

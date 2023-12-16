@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.WeaponCondition;
-import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -32,9 +32,8 @@ public final class DualWieldingCondition implements LivingCondition {
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip, String target) {
     String key = getDescriptionId();
-    MutableComponent targetDescription =
-        Component.translatable("%s.target.%s".formatted(key, target));
-    MutableComponent itemDescription = Component.translatable(weaponCondition.getDescriptionId());
+    Component targetDescription = Component.translatable("%s.target.%s".formatted(key, target));
+    Component itemDescription = Component.translatable(weaponCondition.getDescriptionId());
     return Component.translatable(key, bonusTooltip, targetDescription, itemDescription);
   }
 
