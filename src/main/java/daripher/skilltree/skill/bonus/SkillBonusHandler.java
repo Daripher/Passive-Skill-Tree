@@ -438,6 +438,7 @@ public class SkillBonusHandler {
   }
 
   public static void itemCrafted(Player player, ItemStack stack) {
+    ItemHelper.removeItemBonuses(stack);
     getSkillBonuses(player, CraftedItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
     ItemHelper.getItemBonuses(stack, ItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
   }
