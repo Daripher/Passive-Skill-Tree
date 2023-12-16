@@ -57,6 +57,7 @@ public final class HasItemEquippedCondition implements LivingCondition {
             c -> {
               setItemCondition(c);
               consumer.accept(this);
+              editor.rebuildWidgets();
             });
     editor.shiftWidgets(0, 19);
     itemCondition.addEditorWidgets(
