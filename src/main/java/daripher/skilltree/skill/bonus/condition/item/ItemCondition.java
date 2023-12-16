@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.condition.item;
 
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
+import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +12,7 @@ public interface ItemCondition {
 
   default String getDescriptionId() {
     ResourceLocation id = PSTRegistries.ITEM_CONDITIONS.get().getKey(getSerializer());
-    assert id != null;
+    Objects.requireNonNull(id);
     return "item_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
   }
 
