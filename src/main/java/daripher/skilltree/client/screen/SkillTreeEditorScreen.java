@@ -302,12 +302,8 @@ public class SkillTreeEditorScreen extends Screen {
       addConfirmationButton(110, 0, 90, 14, "Remove", "Confirm")
           .setPressFunc(
               b -> {
-                selectedSkills()
-                    .forEach(
-                        s -> {
-                          removeSkillBonus(s, selectedBonus);
-                          selectEditedBonus(-1);
-                        });
+                selectedSkills().forEach(s -> removeSkillBonus(s, selectedBonus));
+                selectEditedBonus(-1);
                 saveSelectedSkills();
                 rebuildWidgets();
               });
