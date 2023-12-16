@@ -363,6 +363,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.DUAL_WIELDING.get(), "target.you", "Вы держите");
     add(PSTLivingConditions.DUAL_WIELDING.get(), "target.target", "Цель держит");
     add(PSTLivingConditions.DUAL_WIELDING.get(), "%s если %s %s в обеих руках");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "Вас");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Цели");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s если у %s в руке %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Урон снарядов");
     add(PSTDamageConditions.IS_MELEE.get(), "Урон в ближнем бою");

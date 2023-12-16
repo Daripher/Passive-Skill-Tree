@@ -361,6 +361,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.DUAL_WIELDING.get(), "target.you", "You have");
     add(PSTLivingConditions.DUAL_WIELDING.get(), "target.target", "Target has");
     add(PSTLivingConditions.DUAL_WIELDING.get(), "%s if %s %s in both hands");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "You have");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Target has");
+    add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s if %s %s in hand");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee Damage");
