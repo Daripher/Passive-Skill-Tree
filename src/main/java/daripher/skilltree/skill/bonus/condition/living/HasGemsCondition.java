@@ -4,16 +4,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -62,10 +61,8 @@ public final class HasGemsCondition implements LivingCondition {
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip, String target) {
     String key = getDescriptionId();
-    MutableComponent targetDescription =
-        Component.translatable("%s.target.%s".formatted(key, target));
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "gems");
+    Component targetDescription = Component.translatable("%s.target.%s".formatted(key, target));
+    Component itemDescription = itemCondition.getTooltip("where");
     if (min == -1) {
       return Component.translatable(
           key + ".max", bonusTooltip, targetDescription, max, itemDescription);

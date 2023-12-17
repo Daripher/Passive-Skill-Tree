@@ -33,7 +33,7 @@ public final class DualWieldingCondition implements LivingCondition {
   public MutableComponent getTooltip(MutableComponent bonusTooltip, String target) {
     String key = getDescriptionId();
     Component targetDescription = Component.translatable("%s.target.%s".formatted(key, target));
-    Component itemDescription = Component.translatable(weaponCondition.getDescriptionId());
+    Component itemDescription = weaponCondition.getTooltip();
     return Component.translatable(key, bonusTooltip, targetDescription, itemDescription);
   }
 

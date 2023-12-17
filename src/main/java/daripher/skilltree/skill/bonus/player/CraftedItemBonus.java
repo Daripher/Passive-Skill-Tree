@@ -73,9 +73,8 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "crafted");
-    MutableComponent bonusDescription =
+    Component itemDescription = itemCondition.getTooltip("plural.type");
+    Component bonusDescription =
         bonus.getTooltip().withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), itemDescription, bonusDescription)
         .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

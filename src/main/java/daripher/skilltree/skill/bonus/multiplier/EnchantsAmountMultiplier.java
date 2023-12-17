@@ -3,7 +3,6 @@ package daripher.skilltree.skill.bonus.multiplier;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItemConditions;
@@ -47,8 +46,7 @@ public final class EnchantsAmountMultiplier implements LivingMultiplier {
 
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "contains");
+    Component itemDescription = itemCondition.getTooltip("where");
     return Component.translatable(getDescriptionId(), bonusTooltip, itemDescription);
   }
 

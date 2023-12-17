@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "skilltree:stealth",
-      "id": "0154c6c5-7313-4b28-ab53-60faeb7e3da5",
+      "id": "c634dc50-f74d-4d9d-8275-89f8325aa58c",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "052ed8f4-ab07-4969-b08b-5f487124f7ed",
+      "id": "12f16d86-dc66-4a8c-85e8-be4f21fff481",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {

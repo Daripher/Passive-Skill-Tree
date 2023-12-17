@@ -9,10 +9,13 @@
       },
       "operation": 1,
       "player_condition": {
-        "type": "skilltree:has_enchanted_item",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:enchanted",
+          "item_condition": {
+            "type": "skilltree:weapon",
+            "weapon_type": "any"
+          }
         }
       },
       "player_multiplier": {

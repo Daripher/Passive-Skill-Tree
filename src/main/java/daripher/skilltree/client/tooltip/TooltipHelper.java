@@ -55,9 +55,9 @@ public class TooltipHelper {
         });
   }
 
-  public static MutableComponent getOptionalTooltip(String descriptionId, String subtype) {
+  public static Component getOptionalTooltip(String descriptionId, String subtype) {
     String key = "%s.%s".formatted(descriptionId, subtype);
-    MutableComponent tooltip = Component.translatable(key);
+    Component tooltip = Component.translatable(key);
     if (!tooltip.getString().equals(key)) {
       return tooltip;
     }

@@ -5,11 +5,11 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:regeneration",
-      "id": "2f19a66a-3de3-45cd-abb3-932d0fb072cd",
+      "id": "8437a680-aef0-4472-944f-99399ab04895",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
-        "type": "skilltree:has_item_equipped",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
           "type": "skilltree:armor",
           "armor_type": "shield"

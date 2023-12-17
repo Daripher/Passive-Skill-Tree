@@ -35,9 +35,8 @@ public final class HasItemEquippedCondition implements LivingCondition {
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip, String target) {
     String key = getDescriptionId();
-    MutableComponent targetDescription =
-        Component.translatable("%s.target.%s".formatted(key, target));
-    MutableComponent itemDescription = Component.translatable(itemCondition.getDescriptionId());
+    Component targetDescription = Component.translatable("%s.target.%s".formatted(key, target));
+    Component itemDescription = itemCondition.getTooltip();
     return Component.translatable(key, bonusTooltip, targetDescription, itemDescription);
   }
 

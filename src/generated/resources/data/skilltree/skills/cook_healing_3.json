@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "edce1235-328f-45cc-b5d5-1489d1029150",
+      "id": "64e405d5-55c5-4e22-a8c4-1d394cd9210c",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

@@ -60,11 +60,10 @@ public final class PlayerSocketsBonus implements SkillBonus<PlayerSocketsBonus> 
 
   @Override
   public MutableComponent getTooltip() {
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "plural");
-    MutableComponent bonusDescription = Component.translatable(getDescriptionId(), itemDescription);
-    return TooltipHelper.getSkillBonusTooltip(
-            bonusDescription, sockets, AttributeModifier.Operation.ADDITION)
+    Component itemDescription = itemCondition.getTooltip();
+    Component bonusDescription = Component.translatable(getDescriptionId(), itemDescription);
+    AttributeModifier.Operation operation = AttributeModifier.Operation.ADDITION;
+    return TooltipHelper.getSkillBonusTooltip(bonusDescription, sockets, operation)
         .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
 

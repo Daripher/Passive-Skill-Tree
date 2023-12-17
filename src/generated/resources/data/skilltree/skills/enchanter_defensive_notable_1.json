@@ -5,14 +5,17 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:blocking",
-      "id": "78229dfc-b450-4cf1-9ded-c454391f5da0",
+      "id": "2929b347-5779-4265-a281-0a76dbdfe14b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
-        "type": "skilltree:has_enchanted_item",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "shield"
+          "type": "skilltree:enchanted",
+          "item_condition": {
+            "type": "skilltree:armor",
+            "armor_type": "shield"
+          }
         }
       },
       "player_multiplier": {

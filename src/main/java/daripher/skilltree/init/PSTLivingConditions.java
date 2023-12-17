@@ -21,8 +21,6 @@ public class PSTLivingConditions {
       REGISTRY.register("effect_amount", EffectAmountCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HEALTH_PERCENTAGE =
       REGISTRY.register("health_percentage", HealthPercentageCondition.Serializer::new);
-  public static final RegistryObject<LivingCondition.Serializer> HAS_ENCHANTED_ITEM =
-      REGISTRY.register("has_enchanted_item", HasEnchantedItemCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HAS_ITEM_EQUIPPED =
       REGISTRY.register("has_item_equipped", HasItemEquippedCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HAS_GEMS =
