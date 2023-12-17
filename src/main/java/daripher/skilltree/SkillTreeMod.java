@@ -61,7 +61,7 @@ public class SkillTreeMod {
         SlotTypeMessage.REGISTER_TYPE,
         () ->
             new SlotTypeMessage.Builder("quiver")
-                .icon(new ResourceLocation("curios", "category/empty_quiver_slot"))
+                .icon(new ResourceLocation("curios", "slot/empty_quiver_slot"))
                 .build());
   }
 
