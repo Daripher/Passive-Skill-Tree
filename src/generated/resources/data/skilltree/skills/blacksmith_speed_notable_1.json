@@ -5,11 +5,11 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "a6e377cc-ac00-4efe-b167-5d2d4e1409d6",
+      "id": "ba3fcaae-44b6-4356-86bf-b80702554202",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
-        "type": "skilltree:has_item_equipped",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
           "type": "skilltree:armor",
           "armor_type": "shield"

@@ -60,13 +60,11 @@ public final class GemPowerBonus implements SkillBonus<GemPowerBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "crafted");
-    MutableComponent bonusDescription =
-        TooltipHelper.getSkillBonusTooltip(
-                getDescriptionId() + ".bonus",
-                multiplier,
-                AttributeModifier.Operation.MULTIPLY_BASE)
+    Component itemDescription = itemCondition.getTooltip("crafted");
+    AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
+    Component bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
+    bonusDescription =
+        TooltipHelper.getSkillBonusTooltip(bonusDescription, multiplier, operation)
             .withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
     return Component.translatable(getDescriptionId(), itemDescription, bonusDescription)
         .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

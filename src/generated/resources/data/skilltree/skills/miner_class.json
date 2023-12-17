@@ -5,7 +5,7 @@
       "type": "skilltree:block_break_speed",
       "multiplier": 0.15,
       "player_condition": {
-        "type": "skilltree:has_item_equipped",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
           "type": "skilltree:pickaxe"
         }

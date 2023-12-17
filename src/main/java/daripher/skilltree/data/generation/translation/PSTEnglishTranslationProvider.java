@@ -324,9 +324,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "min", "%s if %s at least %s%% health");
     add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "max", "%s if %s at most %s%% health");
     add(PSTLivingConditions.HEALTH_PERCENTAGE.get(), "range", "%s if %s %s%% to %s%% health");
-    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "target.you", "You have");
-    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "target.target", "Target has");
-    add(PSTLivingConditions.HAS_ENCHANTED_ITEM.get(), "%s if %s enchanted %s equipped");
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.you", "You have");
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.target", "Target has");
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "%s if %s %s equipped");
@@ -373,31 +370,53 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTEnchantmentConditions.ARMOR.get(), "Armor Enchantments");
     add(PSTEnchantmentConditions.NONE.get(), "Enchantments");
     // item conditions
+    add(PSTItemConditions.NONE.get(), "Item");
+    add(PSTItemConditions.NONE.get(), "plural.type", "Items");
     add(PSTItemConditions.WEAPON.get(), "any", "Weapon");
+    add(PSTItemConditions.WEAPON.get(), "any.plural.type", "Weapons");
     add(PSTItemConditions.WEAPON.get(), "ranged", "Ranged Weapon");
+    add(PSTItemConditions.WEAPON.get(), "ranged.plural.type", "Ranged Weapons");
     add(PSTItemConditions.WEAPON.get(), "bow", "Bow");
+    add(PSTItemConditions.WEAPON.get(), "bow.plural.type", "Bows");
     add(PSTItemConditions.WEAPON.get(), "crossbow", "Crossbow");
+    add(PSTItemConditions.WEAPON.get(), "crossbow.plural.type", "Crossbows");
     add(PSTItemConditions.WEAPON.get(), "melee", "Melee Weapon");
+    add(PSTItemConditions.WEAPON.get(), "melee.plural.type", "Melee Weapons");
     add(PSTItemConditions.WEAPON.get(), "axe", "Axe");
+    add(PSTItemConditions.WEAPON.get(), "axe.plural.type", "Axes");
     add(PSTItemConditions.WEAPON.get(), "sword", "Sword");
+    add(PSTItemConditions.WEAPON.get(), "sword.plural.type", "Swords");
     add(PSTItemConditions.WEAPON.get(), "trident", "Trident");
+    add(PSTItemConditions.WEAPON.get(), "trident.plural.type", "Tridents");
     add(PSTItemConditions.CURIO.get(), "ring", "Ring");
+    add(PSTItemConditions.CURIO.get(), "ring.plural.type", "Rings");
     add(PSTItemConditions.CURIO.get(), "necklace", "Necklace");
+    add(PSTItemConditions.CURIO.get(), "necklace.plural.type", "Necklaces");
     add(PSTItemConditions.CURIO.get(), "quiver", "Quiver");
+    add(PSTItemConditions.CURIO.get(), "quiver.plural.type", "Quivers");
     add(PSTItemConditions.ARMOR.get(), "any", "Armor");
     add(PSTItemConditions.ARMOR.get(), "helmet", "Helmet");
+    add(PSTItemConditions.ARMOR.get(), "helmet.plural.type", "Helmets");
     add(PSTItemConditions.ARMOR.get(), "chestplate", "Chestplate");
+    add(PSTItemConditions.ARMOR.get(), "chestplate.plural.type", "Chestplates");
     add(PSTItemConditions.ARMOR.get(), "leggings", "Leggings");
     add(PSTItemConditions.ARMOR.get(), "boots", "Boots");
     add(PSTItemConditions.ARMOR.get(), "shield", "Shield");
+    add(PSTItemConditions.ARMOR.get(), "shield.plural.type", "Shields");
     add(PSTItemConditions.EQUIPMENT.get(), "Equipment");
-    add(PSTItemConditions.POTIONS.get(), "any", "Potions");
-    add(PSTItemConditions.POTIONS.get(), "beneficial", "Beneficial Potions");
-    add(PSTItemConditions.POTIONS.get(), "harmful", "Harmful Potions");
-    add(PSTItemConditions.POTIONS.get(), "neutral", "Neutral Potions");
+    add(PSTItemConditions.POTIONS.get(), "any", "Potion");
+    add(PSTItemConditions.POTIONS.get(), "any.plural.type", "Potions");
+    add(PSTItemConditions.POTIONS.get(), "beneficial", "Beneficial Potion");
+    add(PSTItemConditions.POTIONS.get(), "beneficial.plural.type", "Beneficial Potions");
+    add(PSTItemConditions.POTIONS.get(), "harmful", "Harmful Potion");
+    add(PSTItemConditions.POTIONS.get(), "harmful.plural.type", "Harmful Potions");
+    add(PSTItemConditions.POTIONS.get(), "neutral", "Neutral Potion");
+    add(PSTItemConditions.POTIONS.get(), "neutral.plural.type", "Neutral Potions");
     add(PSTItemConditions.FOOD.get(), "Food");
     add(PSTItemConditions.JEWELRY.get(), "Jewelry");
     add(PSTItemConditions.PICKAXE.get(), "Pickaxe");
+    add(PSTItemConditions.PICKAXE.get(), "plural.type", "Pickaxes");
+    add(PSTItemConditions.ENCHANTED.get(), "Enchanted %s");
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
     add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s for each %s point");
@@ -537,8 +556,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("item.apotheosis.gem.skilltree:sapphire", "Sapphire");
     add("item.apotheosis.gem.skilltree:tourmaline", "Tourmaline");
     add("item.apotheosis.gem.skilltree:turquoise", "Turquoise");
-    add("text.apotheosis.category.ring.plural", "Rings");
-    add("text.apotheosis.category.necklace.plural", "Necklaces");
     // jei info
     add(
         "skilltree.jei.gem_info",

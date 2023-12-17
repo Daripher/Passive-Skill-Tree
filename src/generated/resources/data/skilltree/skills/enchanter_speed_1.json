@@ -5,14 +5,17 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "d8c3f186-6fba-4447-98b8-e51786ceb702",
+      "id": "d5d6fcef-6b46-4984-8fa2-32aea7cd0b0a",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
-        "type": "skilltree:has_enchanted_item",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:enchanted",
+          "item_condition": {
+            "type": "skilltree:weapon",
+            "weapon_type": "any"
+          }
         }
       },
       "player_multiplier": {

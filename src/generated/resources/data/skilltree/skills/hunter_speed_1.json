@@ -5,11 +5,11 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "bb91da8d-6e90-483c-aa77-3b3c25abd527",
+      "id": "6057bfab-0080-4f95-bfa7-2d81b39aace9",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
-        "type": "skilltree:has_item_equipped",
+        "type": "skilltree:has_item_in_hand",
         "item_condition": {
           "type": "skilltree:weapon",
           "weapon_type": "ranged"

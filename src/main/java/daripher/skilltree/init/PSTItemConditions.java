@@ -35,6 +35,8 @@ public class PSTItemConditions {
       REGISTRY.register("pickaxe", PickaxeCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> ITEM_ID =
       REGISTRY.register("item_id", ItemIdCondition.Serializer::new);
+  public static final RegistryObject<ItemCondition.Serializer> ENCHANTED =
+      REGISTRY.register("enchanted", EnchantedCondition.Serializer::new);
 
   public static List<ItemCondition> conditionsList() {
     return PSTRegistries.ITEM_CONDITIONS.get().getValues().stream()

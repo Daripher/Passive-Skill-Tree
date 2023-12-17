@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerHelper;
@@ -50,8 +49,7 @@ public final class GemsAmountMultiplier implements LivingMultiplier {
 
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    MutableComponent itemDescription =
-        TooltipHelper.getOptionalTooltip(itemCondition.getDescriptionId(), "gems");
+    Component itemDescription = itemCondition.getTooltip("where");
     return Component.translatable(getDescriptionId(), bonusTooltip, itemDescription);
   }
 

@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "minecraft:generic.armor",
-      "id": "9d5ccc45-135b-4ca7-bc40-ad6d734a20fb",
+      "id": "c7390d9a-5e9f-4c08-8bc5-6287b58e59b1",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "skilltree:blocking",
-      "id": "96f24d0b-42c9-41b6-90b0-a0053cb4048a",
+      "id": "c03dbcad-568d-4982-8a98-2d216a90398a",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
