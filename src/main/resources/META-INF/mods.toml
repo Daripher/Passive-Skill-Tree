@@ -15,11 +15,18 @@ license="${mod_license}"
     versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
-    
+
 [[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
     versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="itemproductionlib"
+    mandatory=true
+    versionRange="[1.0.0,)"
     ordering="NONE"
     side="BOTH"
 	

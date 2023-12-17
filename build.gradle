@@ -150,6 +150,8 @@ dependencies {
     // dave's potioneering
     implementation fg.deobf("curse.maven:daves-potioneering-639653:4769103")
     implementation fg.deobf("curse.maven:geckolib-388172:4407241")
+    // item production lib
+    implementation fg.deobf("curse.maven:item-production-lib-950401:4958711")
 }
 
 def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
