@@ -24,6 +24,13 @@ license="${mod_license}"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="itemproductionlib"
+    mandatory=true
+    versionRange="[1.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="attributefix"
     mandatory=true
     versionRange="[21.0.1,)"

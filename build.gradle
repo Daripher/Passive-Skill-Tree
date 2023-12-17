@@ -25,7 +25,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            
+
             arg "-mixin.config=${mod_id}.mixins.json"
 
             property 'forge.logging.markers', 'REGISTRIES'
@@ -59,8 +59,8 @@ minecraft {
                     source sourceSets.main
                 }
             }
-            
-            
+
+
         }
 
         gameTestServer {
@@ -147,6 +147,8 @@ dependencies {
     // dave's potioneering
     implementation fg.deobf("curse.maven:daves-potioneering-639653:4770409")
     implementation fg.deobf("curse.maven:geckolib-388172:4933987")
+    // item production lib
+    implementation fg.deobf("curse.maven:item-production-lib-950401:4958712")
 }
 
 mixin {
