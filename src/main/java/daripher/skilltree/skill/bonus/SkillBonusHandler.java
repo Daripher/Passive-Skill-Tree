@@ -1,5 +1,6 @@
 package daripher.skilltree.skill.bonus;
 
+import daripher.itemproduction.event.ItemProducedEvent;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.effect.SkillBonusEffect;
@@ -229,13 +230,12 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void setCraftedItemBonus(PlayerEvent.ItemCraftedEvent event) {
-    itemCrafted(event.getEntity(), event.getCrafting());
-  }
-
-  @SubscribeEvent
-  public static void setCraftedItemBonus(PlayerEvent.ItemSmeltedEvent event) {
-    itemCrafted(event.getEntity(), event.getSmelting());
+  public static void setCraftedItemBonus(ItemProducedEvent event) {
+    ItemStack stack = event.getStack();
+    Player player = event.getPlayer();
+    ItemHelper.removeItemBonuses(stack);
+    getSkillBonuses(player, CraftedItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
+    ItemHelper.getItemBonuses(stack, ItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
   }
 
   @SubscribeEvent
@@ -436,12 +436,6 @@ public class SkillBonusHandler {
         .filter(AttributeBonus.class::isInstance)
         .map(AttributeBonus.class::cast)
         .forEach(bonus -> addFunction.accept(bonus.getAttribute(), bonus.getModifier()));
-  }
-
-  public static void itemCrafted(Player player, ItemStack stack) {
-    ItemHelper.removeItemBonuses(stack);
-    getSkillBonuses(player, CraftedItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
-    ItemHelper.getItemBonuses(stack, ItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
   }
 
   public static float getJumpHeightMultiplier(Player player) {
