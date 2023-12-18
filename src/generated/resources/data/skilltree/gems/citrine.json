@@ -6,8 +6,8 @@
       "gem_class": {
         "key": "jewelry",
         "types": [
-          "necklace",
-          "ring"
+          "ring",
+          "necklace"
         ]
       },
       "operation": "addition",

@@ -740,7 +740,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "blacksmith_mastery",
         new CraftedItemBonus(
-            new EquipmentCondition(),
+            new ArmorCondition(ArmorCondition.Type.ANY),
             new ItemSkillBonus(createAttributeBonus(ARMOR_TOUGHNESS, 1f, ADDITION))));
     addSkillBranchAttributeModifier(
         "blacksmith_crit",
