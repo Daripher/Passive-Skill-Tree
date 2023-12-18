@@ -37,7 +37,7 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
 
   public void itemCrafted(ItemStack stack) {
     if (!itemCondition.met(stack)) return;
-    ItemHelper.addItemBonus(stack, bonus);
+    ItemHelper.addItemBonus(stack, bonus.copy());
   }
 
   @Override
