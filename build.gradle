@@ -138,7 +138,7 @@ dependencies {
     // apple skin
 	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
     // apotheosis
-    implementation fg.deobf("curse.maven:apotheosis-313970:4874713")
+    implementation fg.deobf("curse.maven:apotheosis-313970:4960128")
     implementation fg.deobf("curse.maven:placebo-283644:4913663")
     implementation fg.deobf("curse.maven:apothic-attributes-898963:4954000")
     // tetra
