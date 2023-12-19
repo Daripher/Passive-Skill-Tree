@@ -3,7 +3,6 @@ package daripher.skilltree.recipe;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemBonusHandler;
@@ -27,7 +26,7 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
         new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"),
         Ingredient.EMPTY,
         Ingredient.EMPTY,
-        Ingredient.of(PSTItems.getItems(GemItem.class).toArray(new GemItem[0])),
+        Ingredient.EMPTY,
         ItemStack.EMPTY);
   }
 
@@ -44,11 +43,11 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
     ItemStack ingredient = container.getItem(2);
     ItemStack result = base.copy();
     result.setCount(1);
-    GemItem gem = (GemItem) ingredient.getItem();
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     assert player.isPresent();
-    int socket = GemBonusHandler.getFirstEmptySocket(base, player.get());
-    gem.insertInto(player.get(), result, ingredient, socket);
+    int emptySocket = GemBonusHandler.getFirstEmptySocket(base, player.get());
+    GemItem gem = (GemItem) ingredient.getItem();
+    gem.insertInto(player.get(), result, ingredient, emptySocket);
     return result;
   }
 
@@ -56,11 +55,22 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isEmpty()) return false;
     ItemStack base = container.getItem(1);
+    if (!isBaseIngredient(base)) return false;
     ItemStack ingredient = container.getItem(2);
-    if (!ItemHelper.canInsertGem(base)) return false;
-    if (!(ingredient.getItem() instanceof GemItem gem)) return false;
-    int socket = GemBonusHandler.getFirstEmptySocket(base, player.get());
-    return gem.canInsertInto(player.get(), base, ingredient, socket);
+    if (!isAdditionIngredient(ingredient)) return false;
+    int emptySocket = GemBonusHandler.getFirstEmptySocket(base, player.get());
+    GemItem gem = (GemItem) ingredient.getItem();
+    return gem.canInsertInto(player.get(), base, ingredient, emptySocket);
+  }
+
+  @Override
+  public boolean isBaseIngredient(@NotNull ItemStack stack) {
+    return ItemHelper.canInsertGem(stack);
+  }
+
+  @Override
+  public boolean isAdditionIngredient(@NotNull ItemStack stack) {
+    return stack.getItem() instanceof GemItem;
   }
 
   @Override

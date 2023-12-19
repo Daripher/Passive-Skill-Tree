@@ -34,7 +34,6 @@ import daripher.skilltree.item.quiver.ToxicQuiverItem;
 import daripher.skilltree.item.ring.CopperRingItem;
 import daripher.skilltree.item.ring.GoldenRingItem;
 import daripher.skilltree.item.ring.IronRingItem;
-import java.util.List;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -110,12 +109,4 @@ public class PSTItems {
   // resources
   public static final RegistryObject<Item> COPPER_NUGGET =
       REGISTRY.register("copper_nugget", ResourceItem::new);
-
-  public static <T extends Item> List<T> getItems(Class<T> type) {
-    return REGISTRY.getEntries().stream()
-        .map(RegistryObject::get)
-        .filter(type::isInstance)
-        .map(type::cast)
-        .toList();
-  }
 }
