@@ -24,6 +24,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
       require = 0)
   private int uncapEnchantmentLevel(int original) {
     ItemStack base = inputSlots.getItem(0);
+    if (base.getItem() == Items.ENCHANTED_BOOK) return original;
     ItemStack addition = inputSlots.getItem(1);
     if (base.getAllEnchantments().isEmpty() && addition.getItem() == Items.ENCHANTED_BOOK) {
       // no limitations - just applying level from book
