@@ -519,7 +519,7 @@ public class SkillBonusHandler {
         .forEach(
             effect -> {
               SkillBonusEffect skillEffect = (SkillBonusEffect) effect.getEffect();
-              SkillBonus<?> bonus = skillEffect.getBonus();
+              SkillBonus<?> bonus = skillEffect.getBonus().copy();
               if (type.isInstance(bonus)) {
                 bonus = bonus.multiply(effect.getAmplifier());
                 bonuses.add(type.cast(bonus));
