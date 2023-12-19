@@ -97,7 +97,8 @@ public class SkillTreeClientData {
       EDITOR_PASSIVE_SKILLS.clear();
       sendSystemMessage("Error while reading editor files", ChatFormatting.DARK_RED);
       sendSystemMessage("");
-      sendSystemMessage(e.getMessage(), ChatFormatting.RED);
+      String errorMessage = e.getMessage() == null ? "No error message" : e.getMessage();
+      sendSystemMessage(errorMessage, ChatFormatting.RED);
       sendSystemMessage("");
       sendSystemMessage("Try removing files from folder", ChatFormatting.DARK_RED);
       sendSystemMessage("");
