@@ -135,8 +135,8 @@ dependencies {
     // farmer's delight
 	implementation fg.deobf("curse.maven:farmers-delight-398521:4525646")
     // apotheosis
-	implementation fg.deobf("curse.maven:apotheosis-313970:4730358")
-	implementation fg.deobf("curse.maven:placebo-283644:4677899")
+    implementation fg.deobf("curse.maven:apotheosis-313970:4876447")
+    implementation fg.deobf("curse.maven:placebo-283644:4876369")
     // max health fix
 	implementation fg.deobf("curse.maven:max-health-fix-492246:3943055")
     // enchantment descriptions
