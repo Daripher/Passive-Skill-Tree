@@ -3,13 +3,13 @@ package daripher.skilltree.recipe;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.container.ContainerHelper;
+import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.item.gem.GemItem;
 import java.util.Optional;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -27,7 +27,7 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
         new ResourceLocation(SkillTreeMod.MOD_ID, "gem_insertion"),
         Ingredient.EMPTY,
         Ingredient.EMPTY,
-        Ingredient.EMPTY,
+        Ingredient.of(PSTItems.getItems(GemItem.class).toArray(new GemItem[0])),
         ItemStack.EMPTY);
   }
 
@@ -43,11 +43,9 @@ public class GemSocketingRecipe extends SmithingTransformRecipe {
     ItemStack base = container.getItem(1);
     ItemStack ingredient = container.getItem(2);
     ItemStack result = base.copy();
-    GemItem gem = (GemItem) ingredient.getItem();
     result.setCount(1);
-    CompoundTag itemTag = base.getTag();
+    GemItem gem = (GemItem) ingredient.getItem();
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (itemTag != null) result.setTag(itemTag.copy());
     assert player.isPresent();
     int socket = GemBonusHandler.getFirstEmptySocket(base, player.get());
     gem.insertInto(player.get(), result, ingredient, socket);
