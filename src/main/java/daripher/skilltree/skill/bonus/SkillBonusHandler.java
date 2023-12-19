@@ -60,12 +60,13 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyBreakSpeedMultiplier(PlayerEvent.BreakSpeed event) {
     Player player = event.getEntity();
-    float multiplier =
+    float multiplier = 1f;
+    multiplier +=
         getSkillBonuses(player, BlockBreakSpeedBonus.class).stream()
             .filter(bonus -> bonus.getPlayerCondition().met(player))
             .map(BlockBreakSpeedBonus::getMultiplier)
             .reduce(Float::sum)
-            .orElse(1f);
+            .orElse(0f);
     event.setNewSpeed(event.getNewSpeed() * multiplier);
   }
 
