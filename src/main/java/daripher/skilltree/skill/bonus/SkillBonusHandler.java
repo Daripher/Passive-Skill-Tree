@@ -48,6 +48,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.StringUtils;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -388,6 +389,7 @@ public class SkillBonusHandler {
 
   @SubscribeEvent
   public static void applyHealthReservationEffect(TickEvent.PlayerTickEvent event) {
+    if (event.phase == TickEvent.Phase.END || event.side == LogicalSide.CLIENT) return;
     float reservation =
         getSkillBonuses(event.player, HealthReservationBonus.class).stream()
             .map(b -> b.getAmount(event.player))
@@ -501,7 +503,10 @@ public class SkillBonusHandler {
     List<T> bonuses = new ArrayList<>();
     PlayerSkillsProvider.get(player).getPlayerSkills().stream()
         .map(PassiveSkill::getBonuses)
-        .forEach(b -> b.stream().filter(type::isInstance).map(type::cast).forEach(bonuses::add));
+        .flatMap(List::stream)
+        .filter(type::isInstance)
+        .map(type::cast)
+        .forEach(bonuses::add);
     bonuses.addAll(getEffectBonuses(player, type));
     bonuses.addAll(getCurioBonuses(player, type));
     return bonuses;
