@@ -1,6 +1,5 @@
 package daripher.skilltree.client.tooltip;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.ItemHelper;
@@ -57,12 +56,11 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
     }
     for (ItemStack gem : component.gems) {
       if (!gem.isEmpty()) {
-        PoseStack mvStack = RenderSystem.getModelViewStack();
-        mvStack.pushPose();
-        mvStack.scale(0.5F, 0.5F, 1);
+        PoseStack pose = graphics.pose();
+        pose.pushPose();
+        pose.scale(0.5f, 0.5f, 1f);
         graphics.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
-        mvStack.popPose();
-        RenderSystem.applyModelViewMatrix();
+        pose.popPose();
       }
       y += spacing;
     }
