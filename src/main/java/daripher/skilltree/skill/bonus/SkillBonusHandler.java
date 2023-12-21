@@ -82,12 +82,13 @@ public class SkillBonusHandler {
   public static void applyRepairEfficiency(AnvilUpdateEvent event) {
     Player player = event.getPlayer();
     ItemStack stack = event.getLeft();
-    float efficiency =
+    float efficiency = 1f;
+    efficiency +=
         getSkillBonuses(player, RepairEfficiencyBonus.class).stream()
             .filter(bonus -> bonus.getItemCondition().met(stack))
             .map(RepairEfficiencyBonus::getMultiplier)
             .reduce(Float::sum)
-            .orElse(1f);
+            .orElse(0f);
     if (efficiency == 1) return;
     if (!stack.isDamageableItem() || !stack.isDamaged()) return;
     ItemStack material = event.getRight();
