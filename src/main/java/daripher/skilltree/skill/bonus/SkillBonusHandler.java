@@ -273,7 +273,7 @@ public class SkillBonusHandler {
         getSkillBonuses(player, IncomingHealingBonus.class).stream()
             .map(b -> b.getHealingMultiplier(player))
             .reduce(Float::sum)
-            .orElse(1f);
+            .orElse(0f);
     event.setAmount(event.getAmount() * multiplier);
   }
 
