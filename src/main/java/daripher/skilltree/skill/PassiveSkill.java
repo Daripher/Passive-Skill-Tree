@@ -146,4 +146,12 @@ public class PassiveSkill {
   public void remove(ServerPlayer player) {
     getBonuses().forEach(b -> b.onSkillRemoved(player));
   }
+
+  public boolean isBroken() {
+    return getId() == null
+        || getBonuses() == null
+        || getBackgroundTexture() == null
+        || getIconTexture() == null
+        || getBorderTexture() == null;
+  }
 }
