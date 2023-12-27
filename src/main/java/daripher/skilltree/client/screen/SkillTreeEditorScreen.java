@@ -516,7 +516,7 @@ public class SkillTreeEditorScreen extends Screen {
       toolsY += 19;
       TextField colorEditor =
           addTextField(0, 0, 80, 14, firstSelectedSkill.getTitleColor())
-              .setSoftFilter(v -> v.matches("^#?[a-fA-F0-9]{6}"));
+              .setSoftFilter(v -> v.matches("^#?[a-fA-F0-9]{6}") || v.isEmpty());
       colorEditor.setResponder(v -> setSelectedSkillsTitleColor(colorEditor));
       toolsY += 19;
     }
