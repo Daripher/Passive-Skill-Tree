@@ -2,8 +2,8 @@ package daripher.skilltree.network.message;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.skill.PassiveSkill;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +52,15 @@ public class SyncPlayerSkillsMessage {
     ctx.setPacketHandled(true);
     Minecraft minecraft = Minecraft.getInstance();
     assert minecraft.player != null;
-    IPlayerSkills skillsCapability = PlayerSkillsProvider.get(minecraft.player);
-    skillsCapability.getPlayerSkills().clear();
+    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+    capability.getPlayerSkills().clear();
     message.learnedSkills.stream()
         .map(SkillTreeClientData::getSkill)
-        .forEach(skillsCapability.getPlayerSkills()::add);
-    skillsCapability.setSkillPoints(message.skillPoints);
-    if (minecraft.screen instanceof SkillTreeScreen skillTreeScreen) {
-      skillTreeScreen.skillPoints = skillsCapability.getSkillPoints();
-      skillTreeScreen.init();
+        .forEach(capability.getPlayerSkills()::add);
+    capability.setSkillPoints(message.skillPoints);
+    if (minecraft.screen instanceof SkillTreeScreen screen) {
+      screen.skillPoints = capability.getSkillPoints() - screen.newlyLearnedSkills.size();
+      screen.init();
     }
   }
 
