@@ -67,20 +67,6 @@ public class SkillTreeScreen extends Screen {
     this.minecraft = Minecraft.getInstance();
   }
 
-  private static void mergeSkillBonuses(
-      List<SkillBonus<?>> allBonuses, List<SkillBonus<?>> skillBonuses) {
-    skillBonuses.forEach(
-        bonus -> {
-          Optional<SkillBonus<?>> sameBonus = allBonuses.stream().filter(bonus::canMerge).findAny();
-          if (sameBonus.isPresent()) {
-            allBonuses.remove(sameBonus.get());
-            allBonuses.add(sameBonus.get().merge(bonus));
-          } else {
-            allBonuses.add(bonus);
-          }
-        });
-  }
-
   @Override
   public void init() {
     clearWidgets();
@@ -240,13 +226,24 @@ public class SkillTreeScreen extends Screen {
   }
 
   private List<MutableComponent> getMergedSkillBonusesTooltips() {
-    List<SkillBonus<?>> allBonuses = new ArrayList<>();
+    List<SkillBonus<?>> bonuses = new ArrayList<>();
     learnedSkills.stream()
         .map(skillButtons::get)
         .map(button -> button.skill)
         .map(PassiveSkill::getBonuses)
-        .forEach(skillBonuses -> mergeSkillBonuses(allBonuses, skillBonuses));
-    return allBonuses.stream().sorted().map(SkillBonus::getTooltip).toList();
+        .flatMap(List::stream)
+        .forEach(b -> addToMergeList(b, bonuses));
+    return bonuses.stream().sorted().map(SkillBonus::getTooltip).toList();
+  }
+
+  private static void addToMergeList(SkillBonus<?> b, List<SkillBonus<?>> bonuses) {
+    Optional<SkillBonus<?>> same = bonuses.stream().filter(b::canMerge).findAny();
+    if (same.isPresent()) {
+      bonuses.remove(same.get());
+      bonuses.add(same.get().merge(b));
+    } else {
+      bonuses.add(b);
+    }
   }
 
   protected void firstInit() {
