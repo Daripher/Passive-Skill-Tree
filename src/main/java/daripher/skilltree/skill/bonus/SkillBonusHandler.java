@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -231,6 +232,17 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
+  public static void addCraftedItemSkillBonusTooltips(ItemTooltipEvent event) {
+    ItemHelper.getItemBonusesExcludingGems(event.getItemStack()).stream()
+        .filter(ItemSkillBonus.class::isInstance)
+        .map(ItemSkillBonus.class::cast)
+        .map(ItemSkillBonus::getBonus)
+        .filter(Predicate.not(AttributeBonus.class::isInstance))
+        .map(SkillBonus::getTooltip)
+        .forEach(event.getToolTip()::add);
+  }
+
+  @SubscribeEvent
   public static void setCraftedItemBonus(ItemProducedEvent event) {
     ItemStack stack = event.getStack();
     Player player = event.getPlayer();
@@ -337,12 +349,10 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyChanceToIgnite(LivingHurtEvent event) {
     if (!(event.getSource().getEntity() instanceof Player player)) return;
+    LivingEntity target = event.getEntity();
     Map<Integer, Float> chances = new HashMap<>();
     getSkillBonuses(player, IgniteChanceBonus.class)
-        .forEach(
-            b ->
-                chances.computeIfPresent(
-                    b.getDuration(), (d, c) -> c + b.getChance(player, event.getEntity())));
+        .forEach(b -> chances.merge(b.getDuration(), b.getChance(player, target), Float::sum));
     int duration = 0;
     for (Map.Entry<Integer, Float> entry : chances.entrySet()) {
       Integer d = entry.getKey();
@@ -356,7 +366,7 @@ public class SkillBonusHandler {
       }
     }
     if (duration == 0) return;
-    event.getEntity().setSecondsOnFire(duration);
+    target.setSecondsOnFire(duration);
   }
 
   @SubscribeEvent
@@ -503,15 +513,19 @@ public class SkillBonusHandler {
   public static <T> List<T> getSkillBonuses(Player player, Class<T> type) {
     if (!PlayerSkillsProvider.hasSkills(player)) return List.of();
     List<T> bonuses = new ArrayList<>();
-    PlayerSkillsProvider.get(player).getPlayerSkills().stream()
+    bonuses.addAll(getPlayerBonuses(player, type));
+    bonuses.addAll(getEffectBonuses(player, type));
+    bonuses.addAll(getEquipmentBonuses(player, type));
+    return bonuses;
+  }
+
+  private static <T> List<T> getPlayerBonuses(Player player, Class<T> type) {
+    return PlayerSkillsProvider.get(player).getPlayerSkills().stream()
         .map(PassiveSkill::getBonuses)
         .flatMap(List::stream)
         .filter(type::isInstance)
         .map(type::cast)
-        .forEach(bonuses::add);
-    bonuses.addAll(getEffectBonuses(player, type));
-    bonuses.addAll(getCurioBonuses(player, type));
-    return bonuses;
+        .toList();
   }
 
   private static <T> List<T> getEffectBonuses(Player player, Class<T> type) {
@@ -530,18 +544,25 @@ public class SkillBonusHandler {
     return bonuses;
   }
 
-  private static <T> List<T> getCurioBonuses(Player player, Class<T> type) {
-    List<T> bonuses = new ArrayList<>();
-    PlayerHelper.getCurios(player)
-        .map(ItemStack::getItem)
-        .filter(ItemBonusProvider.class::isInstance)
-        .map(ItemBonusProvider.class::cast)
-        .forEach(
-            item ->
-                item.getItemBonuses(
-                    b -> {
-                      if (type.isInstance(b)) bonuses.add(type.cast(b));
-                    }));
-    return bonuses;
+  private static <T> List<T> getEquipmentBonuses(Player player, Class<T> type) {
+    return PlayerHelper.getAllEquipment(player)
+        .map(s -> getItemBonuses(s, type))
+        .flatMap(List::stream)
+        .toList();
+  }
+
+  private static <T> List<T> getItemBonuses(ItemStack stack, Class<T> type) {
+    List<ItemBonus<?>> bonuses = new ArrayList<>();
+    if (stack.getItem() instanceof ItemBonusProvider provider) {
+      bonuses.addAll(provider.getItemBonuses());
+    }
+    bonuses.addAll(ItemHelper.getItemBonuses(stack));
+    return bonuses.stream()
+        .filter(ItemSkillBonus.class::isInstance)
+        .map(ItemSkillBonus.class::cast)
+        .map(ItemSkillBonus::getBonus)
+        .filter(type::isInstance)
+        .map(type::cast)
+        .toList();
   }
 }

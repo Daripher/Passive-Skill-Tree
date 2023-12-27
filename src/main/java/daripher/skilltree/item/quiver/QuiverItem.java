@@ -8,7 +8,6 @@ import daripher.skilltree.skill.bonus.item.QuiverCapacityBonus;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -218,12 +217,14 @@ public class QuiverItem extends Item implements ICurioItem, ItemBonusProvider {
 
   @Override
   public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
-    getItemBonuses(b -> tooltips.add(b.getTooltip()));
+    getItemBonuses().stream().map(ItemBonus::getTooltip).forEach(tooltips::add);
     return tooltips;
   }
 
   @Override
-  public void getItemBonuses(Consumer<ItemBonus<?>> consumer) {}
+  public @NotNull List<ItemBonus<?>> getItemBonuses() {
+    return List.of();
+  }
 
   private void dropArrows(Player player, ItemStack stack, int count) {
     ItemStack arrowsStack = getArrows(stack).copy();
