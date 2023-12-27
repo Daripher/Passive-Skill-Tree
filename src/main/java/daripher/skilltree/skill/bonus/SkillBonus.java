@@ -50,7 +50,7 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
     if (isPositive() != o.isPositive()) {
       return isPositive() ? -1 : 1;
     }
-    String regex = "\\+?-?[0-9]+\\.?[0-9]?%?";
+    String regex = "\\+?-?[0-9]+\\.?[0-9]?%? ";
     String as = getTooltip().getString().replaceAll(regex, "");
     String bs = o.getTooltip().getString().replaceAll(regex, "");
     return as.compareTo(bs);
