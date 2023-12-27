@@ -8,8 +8,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
-public interface SkillBonus<T extends SkillBonus<T>> {
+public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBonus<?>> {
   default void onSkillLearned(ServerPlayer player, boolean firstTime) {}
 
   default void onSkillRemoved(ServerPlayer player) {}
@@ -43,6 +44,17 @@ public interface SkillBonus<T extends SkillBonus<T>> {
   boolean isPositive();
 
   void addEditorWidgets(SkillTreeEditorScreen editor, int index, Consumer<T> consumer);
+
+  @Override
+  default int compareTo(@NotNull SkillBonus<?> o) {
+    if (isPositive() != o.isPositive()) {
+      return isPositive() ? -1 : 1;
+    }
+    String regex = "\\+?-?[0-9]+\\.?[0-9]?%?";
+    String as = getTooltip().getString().replaceAll(regex, "");
+    String bs = o.getTooltip().getString().replaceAll(regex, "");
+    return as.compareTo(bs);
+  }
 
   interface Ticking {
     void tick(ServerPlayer player);
