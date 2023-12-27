@@ -39,7 +39,7 @@ public class SkillTreeScreen extends Screen {
   private final List<SkillConnection> skillConnections = new ArrayList<>();
   private final List<SkillConnection> gatewayConnections = new ArrayList<>();
   private final List<ResourceLocation> learnedSkills = new ArrayList<>();
-  private final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
+  public final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
   private final List<SkillButton> startingPoints = new ArrayList<>();
   private final PassiveSkillTree skillTree;
   public float renderAnimation;
