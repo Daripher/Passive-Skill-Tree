@@ -89,7 +89,7 @@ public class PlayerSkills implements IPlayerSkills {
     for (Tag skillTag : skillsTag) {
       ResourceLocation skillId = new ResourceLocation(skillTag.getAsString());
       PassiveSkill passiveSkill = SkillsReloader.getSkillById(skillId);
-      if (passiveSkill == null) {
+      if (passiveSkill == null || passiveSkill.isBroken()) {
         skills.clear();
         treeReset = true;
         skillPoints += skillsTag.size();
