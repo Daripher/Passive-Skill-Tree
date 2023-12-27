@@ -67,13 +67,6 @@ public class SkillTreeScreen extends Screen {
     this.minecraft = Minecraft.getInstance();
   }
 
-  private static int sortSkillBonusTooltips(Component a, Component b) {
-    String regex = "\\+?-?[0-9]+\\.?[0-9]?%?";
-    String as = a.getString().replaceAll(regex, "");
-    String bs = b.getString().replaceAll(regex, "");
-    return as.compareTo(bs);
-  }
-
   private static void mergeSkillBonuses(
       List<SkillBonus<?>> allBonuses, List<SkillBonus<?>> skillBonuses) {
     skillBonuses.forEach(
@@ -253,10 +246,7 @@ public class SkillTreeScreen extends Screen {
         .map(button -> button.skill)
         .map(PassiveSkill::getBonuses)
         .forEach(skillBonuses -> mergeSkillBonuses(allBonuses, skillBonuses));
-    return allBonuses.stream()
-        .map(SkillBonus::getTooltip)
-        .sorted(SkillTreeScreen::sortSkillBonusTooltips)
-        .toList();
+    return allBonuses.stream().sorted().map(SkillBonus::getTooltip).toList();
   }
 
   protected void firstInit() {
