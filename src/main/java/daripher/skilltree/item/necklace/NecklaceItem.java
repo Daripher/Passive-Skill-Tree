@@ -4,10 +4,10 @@ import daripher.skilltree.init.PSTCreativeTabs;
 import daripher.skilltree.item.ItemBonusProvider;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import java.util.List;
-import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public class NecklaceItem extends Item implements ICurioItem, ItemBonusProvider {
@@ -17,10 +17,12 @@ public class NecklaceItem extends Item implements ICurioItem, ItemBonusProvider 
 
   @Override
   public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
-    getItemBonuses(b -> tooltips.add(b.getTooltip()));
+    getItemBonuses().stream().map(ItemBonus::getTooltip).forEach(tooltips::add);
     return tooltips;
   }
 
   @Override
-  public void getItemBonuses(Consumer<ItemBonus<?>> consumer) {}
+  public @NotNull List<ItemBonus<?>> getItemBonuses() {
+    return List.of();
+  }
 }

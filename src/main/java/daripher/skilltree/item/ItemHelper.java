@@ -1,7 +1,6 @@
 package daripher.skilltree.item;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Streams;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
@@ -10,11 +9,11 @@ import daripher.skilltree.item.gem.GemBonusHandler;
 import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -229,15 +228,21 @@ public class ItemHelper {
     return sockets;
   }
 
-  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
+  public static List<? extends ItemBonus<?>> getItemBonusesExcludingGems(ItemStack stack) {
     if (!stack.hasTag()) return ImmutableList.of();
-    Stream<? extends ItemBonus<?>> itemBonuses =
-        stack.getOrCreateTag().getList("SkillBonuses", Tag.TAG_COMPOUND).stream()
-            .map(CompoundTag.class::cast)
-            .map(ItemHelper::deserializeBonus)
-            .filter(Objects::nonNull);
-    Stream<? extends ItemBonus<?>> gemBonuses = GemBonusHandler.getBonuses(stack).stream();
-    return Streams.concat(gemBonuses, itemBonuses).toList();
+    return stack.getOrCreateTag().getList("SkillBonuses", Tag.TAG_COMPOUND).stream()
+        .map(CompoundTag.class::cast)
+        .map(ItemHelper::deserializeBonus)
+        .filter(Objects::nonNull)
+        .toList();
+  }
+
+  public static List<? extends ItemBonus<?>> getItemBonuses(ItemStack stack) {
+    if (!stack.hasTag()) return ImmutableList.of();
+    List<ItemBonus<?>> bonuses = new ArrayList<>();
+    bonuses.addAll(getItemBonusesExcludingGems(stack));
+    bonuses.addAll(GemBonusHandler.getBonuses(stack));
+    return bonuses;
   }
 
   public static <T extends ItemBonus<?>> List<T> getItemBonuses(ItemStack stack, Class<T> aClass) {
