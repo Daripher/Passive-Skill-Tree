@@ -31,8 +31,8 @@ public class PSTItemConditions {
       REGISTRY.register("food", FoodCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> JEWELRY =
       REGISTRY.register("jewelry", JewelryCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> PICKAXE =
-      REGISTRY.register("pickaxe", PickaxeCondition.Serializer::new);
+  public static final RegistryObject<ItemCondition.Serializer> TOOL =
+      REGISTRY.register("tool", ToolCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> ITEM_ID =
       REGISTRY.register("item_id", ItemIdCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> ENCHANTED =

@@ -515,7 +515,7 @@ public class PSTSkillsProvider implements DataProvider {
     // miner skills
     addSkillAttributeBonus(
         "miner_class",
-        new BlockBreakSpeedBonus(new HasItemInHandCondition(new PickaxeCondition()), 0.15f));
+        new BlockBreakSpeedBonus(new HasItemInHandCondition(new ToolCondition(ToolCondition.Type.PICKAXE)), 0.15f));
     addSkillBranchAttributeModifier(
         "miner_defensive_crafting",
         new GemPowerBonus(new ArmorCondition(ArmorCondition.Type.ANY), 0.1f),
@@ -569,7 +569,7 @@ public class PSTSkillsProvider implements DataProvider {
                 new GemsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
     addSkillBranchAttributeModifier(
         "miner_lesser",
-        new BlockBreakSpeedBonus(new HasItemInHandCondition(new PickaxeCondition()), 0.05f),
+        new BlockBreakSpeedBonus(new HasItemInHandCondition(new ToolCondition(ToolCondition.Type.PICKAXE)), 0.05f),
         1,
         6);
     addSkillAttributeBonus("miner_mastery", new PlayerSocketsBonus(new EquipmentCondition(), 1));

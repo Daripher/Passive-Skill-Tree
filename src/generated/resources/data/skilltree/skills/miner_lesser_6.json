@@ -7,7 +7,8 @@
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:pickaxe"
+          "type": "skilltree:tool",
+          "tool_type": "pickaxe"
         }
       }
     }

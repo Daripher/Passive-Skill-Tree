@@ -414,8 +414,16 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.POTIONS.get(), "neutral.plural.type", "Neutral Potions");
     add(PSTItemConditions.FOOD.get(), "Food");
     add(PSTItemConditions.JEWELRY.get(), "Jewelry");
-    add(PSTItemConditions.PICKAXE.get(), "Pickaxe");
-    add(PSTItemConditions.PICKAXE.get(), "plural.type", "Pickaxes");
+    add(PSTItemConditions.TOOL.get(), "any", "Tool");
+    add(PSTItemConditions.TOOL.get(), "any.plural.type", "Tools");
+    add(PSTItemConditions.TOOL.get(), "axe", "Axe");
+    add(PSTItemConditions.TOOL.get(), "axe.plural.type", "Axes");
+    add(PSTItemConditions.TOOL.get(), "hoe", "Hoe");
+    add(PSTItemConditions.TOOL.get(), "hoe.plural.type", "Hoes");
+    add(PSTItemConditions.TOOL.get(), "pickaxe", "Pickaxe");
+    add(PSTItemConditions.TOOL.get(), "pickaxe.plural.type", "Pickaxes");
+    add(PSTItemConditions.TOOL.get(), "shovel", "Shovel");
+    add(PSTItemConditions.TOOL.get(), "shovel.plural.type", "Shovels");
     add(PSTItemConditions.ENCHANTED.get(), "Enchanted %s");
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
