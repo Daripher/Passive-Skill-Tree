@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:regeneration",
-      "id": "81821911-8f1f-47cf-972c-04fd814c9084",
+      "id": "64eaefb9-6689-4720-ae5d-29c40b9f0860",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

@@ -6,10 +6,7 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.item.ArmorCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.PotionCondition;
-import daripher.skilltree.skill.bonus.condition.item.WeaponCondition;
+import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
@@ -202,6 +199,14 @@ public class SerializationHelper {
 
   public static void serializeWeaponType(JsonObject json, WeaponCondition.Type type) {
     json.addProperty("weapon_type", type.getName());
+  }
+
+  public static ToolCondition.Type deserializeToolType(JsonObject json) {
+    return ToolCondition.Type.byName(json.get("tool_type").getAsString());
+  }
+
+  public static void serializeToolType(JsonObject json, ToolCondition.Type type) {
+    json.addProperty("tool_type", type.getName());
   }
 
   public static ArmorCondition.Type deserializeArmorType(JsonObject json) {
@@ -419,6 +424,14 @@ public class SerializationHelper {
 
   public static void serializeWeaponType(CompoundTag tag, WeaponCondition.Type type) {
     tag.putString("weapon_type", type.getName());
+  }
+
+  public static ToolCondition.Type deserializeToolType(CompoundTag tag) {
+    return ToolCondition.Type.byName(tag.getString("tool_type"));
+  }
+
+  public static void serializeToolType(CompoundTag tag, ToolCondition.Type type) {
+    tag.putString("tool_type", type.getName());
   }
 
   public static ArmorCondition.Type deserializeArmorType(CompoundTag tag) {

@@ -146,6 +146,16 @@ public class ItemHelper {
     return stack.getItem() instanceof AxeItem || stack.is(ItemTags.AXES);
   }
 
+  public static boolean isHoe(ItemStack stack) {
+    if (stack.canPerformAction(ToolActions.HOE_DIG)) return true;
+    return stack.getItem() instanceof HoeItem || stack.is(ItemTags.HOES);
+  }
+
+  public static boolean isShovel(ItemStack stack) {
+    if (stack.canPerformAction(ToolActions.SHOVEL_DIG)) return true;
+    return stack.getItem() instanceof ShovelItem || stack.is(ItemTags.SHOVELS);
+  }
+
   public static boolean isSword(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
     if (Objects.requireNonNull(id).toString().equals("tetra:modular_sword")) return true;
@@ -195,7 +205,7 @@ public class ItemHelper {
     return isWeapon(stack) || isArmor(stack) || isShield(stack) || isTool(stack);
   }
 
-  private static boolean isTool(ItemStack stack) {
+  public static boolean isTool(ItemStack stack) {
     return stack.getItem() instanceof DiggerItem;
   }
 
