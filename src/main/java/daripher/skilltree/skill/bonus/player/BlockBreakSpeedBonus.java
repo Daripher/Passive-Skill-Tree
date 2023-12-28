@@ -60,9 +60,11 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   @Override
   public MutableComponent getTooltip() {
-    return TooltipHelper.getSkillBonusTooltip(
-            getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE)
-        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+    MutableComponent bonusTooltip =
+        TooltipHelper.getSkillBonusTooltip(
+            getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
+    bonusTooltip = playerCondition.getTooltip(bonusTooltip, "you");
+    return bonusTooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
 
   @Override
