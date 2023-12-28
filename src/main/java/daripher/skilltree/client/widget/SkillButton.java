@@ -162,11 +162,10 @@ public class SkillButton extends Button {
   }
 
   protected void addDescriptionTooltip(ArrayList<MutableComponent> tooltip) {
+    skill.getBonuses().stream().map(SkillBonus::getTooltip).forEach(tooltip::add);
     String descriptionId = getSkillId() + ".description";
     String description = Component.translatable(descriptionId).getString();
-    if (description.equals(descriptionId)) {
-      skill.getBonuses().stream().map(SkillBonus::getTooltip).forEach(tooltip::add);
-    } else {
+    if (!description.equals(descriptionId)) {
       List<String> descriptionStrings = Arrays.asList(description.split("/n"));
       descriptionStrings.stream()
           .map(Component::translatable)
