@@ -1,0 +1,5 @@
+{
+  "type" : "skilltree:gem_upgrade",
+  "ingredient": "skilltree:sapphire_0",
+  "result": "skilltree:sapphire_1"
+}

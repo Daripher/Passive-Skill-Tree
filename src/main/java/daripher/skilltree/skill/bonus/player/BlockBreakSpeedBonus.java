@@ -41,7 +41,8 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   @Override
   public BlockBreakSpeedBonus multiply(double multiplier) {
-    return new BlockBreakSpeedBonus(playerCondition, (float) (getMultiplier() * multiplier));
+    this.multiplier = (float) (this.multiplier * multiplier);
+    return this;
   }
 
   @Override

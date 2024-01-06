@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:evasion",
-      "id": "46e779b0-bb85-4c6f-9adc-a5eb346eef71",
+      "id": "174f4d6c-ddc7-4465-ab71-50d0e2f598fa",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:blocking",
-      "id": "01b2c353-4322-402f-a3c7-cc62446a5eb8",
+      "id": "985eb079-4e3d-48c5-8d42-65b9c65b945b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

@@ -3,9 +3,10 @@ package daripher.skilltree.item;
 import com.google.common.collect.ImmutableList;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.config.Config;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;
-import daripher.skilltree.item.gem.GemBonusHandler;
+import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
@@ -45,6 +46,16 @@ public class ItemHelper {
     return isEquipment(stack) || isJewelry(stack);
   }
 
+  public static int getFirstEmptySocket(ItemStack stack, Player player) {
+    int sockets = ItemHelper.getMaximumSockets(stack, player);
+    int socket = 0;
+    for (int i = 0; i < sockets; i++) {
+      socket = i;
+      if (!GemItem.hasGem(stack, socket)) break;
+    }
+    return socket;
+  }
+
   public static void setPoisons(ItemStack result, ItemStack poisonStack) {
     List<MobEffectInstance> effects = PotionUtils.getMobEffects(poisonStack);
     ListTag poisonsTag = new ListTag();
@@ -65,14 +76,6 @@ public class ItemHelper {
     if (tag == null) return ImmutableList.of();
     ListTag poisonsTags = tag.getList("Poisons", 10);
     return poisonsTags.stream().map(CompoundTag.class::cast).map(MobEffectInstance::load).toList();
-  }
-
-  public static EquipmentSlot getSlotForItem(ItemStack stack) {
-    EquipmentSlot slot = Player.getEquipmentSlotForItem(stack);
-    if (ItemHelper.isMeleeWeapon(stack) && slot == EquipmentSlot.OFFHAND) {
-      slot = EquipmentSlot.MAINHAND;
-    }
-    return slot;
   }
 
   public static int getDefaultSockets(ItemStack stack) {
@@ -233,7 +236,7 @@ public class ItemHelper {
     if (SkillTreeMod.apotheosisEnabled()) return 0;
     int sockets = ItemHelper.getDefaultSockets(stack) + ItemHelper.getAdditionalSockets(stack);
     if (player != null) {
-      sockets += GemBonusHandler.getPlayerSockets(stack, player);
+      sockets += PlayerHelper.getPlayerSockets(stack, player);
     }
     return sockets;
   }
@@ -251,7 +254,7 @@ public class ItemHelper {
     if (!stack.hasTag()) return ImmutableList.of();
     List<ItemBonus<?>> bonuses = new ArrayList<>();
     bonuses.addAll(getItemBonusesExcludingGems(stack));
-    bonuses.addAll(GemBonusHandler.getBonuses(stack));
+    bonuses.addAll(GemItem.getGemBonuses(stack));
     return bonuses;
   }
 

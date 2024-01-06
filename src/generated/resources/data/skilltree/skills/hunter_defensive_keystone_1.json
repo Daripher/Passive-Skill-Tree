@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "minecraft:generic.armor",
-      "id": "ff5bc772-40f1-475b-89a3-4debea0b4495",
+      "id": "da5a0f95-54f5-4f81-927e-ab211ac1ffc0",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

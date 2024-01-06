@@ -47,7 +47,8 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
 
   @Override
   public JumpHeightBonus multiply(double multiplier) {
-    return new JumpHeightBonus(playerCondition, (float) (getMultiplier() * multiplier));
+    this.multiplier = (float) (this.multiplier * multiplier);
+    return this;
   }
 
   @Override

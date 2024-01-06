@@ -1,0 +1,5 @@
+{
+  "type" : "skilltree:gem_upgrade",
+  "ingredient": "skilltree:jade_2",
+  "result": "skilltree:jade_3"
+}

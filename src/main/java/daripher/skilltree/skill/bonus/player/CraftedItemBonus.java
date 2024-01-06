@@ -52,7 +52,7 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
 
   @Override
   public CraftedItemBonus multiply(double multiplier) {
-    this.bonus.multiply(multiplier);
+    bonus = bonus.copy().multiply(multiplier);
     return this;
   }
 

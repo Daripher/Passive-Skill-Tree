@@ -4,17 +4,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.AmnesiaScrollItem;
 import daripher.skilltree.item.ResourceItem;
 import daripher.skilltree.item.WisdomScrollItem;
-import daripher.skilltree.item.gem.AdamiteItem;
-import daripher.skilltree.item.gem.CitrineItem;
-import daripher.skilltree.item.gem.IrisciteItem;
-import daripher.skilltree.item.gem.JadeItem;
-import daripher.skilltree.item.gem.MoonstoneItem;
-import daripher.skilltree.item.gem.OnyxItem;
-import daripher.skilltree.item.gem.RubyItem;
-import daripher.skilltree.item.gem.SapphireItem;
-import daripher.skilltree.item.gem.TourmalineItem;
-import daripher.skilltree.item.gem.TurquoiseItem;
-import daripher.skilltree.item.gem.VacuciteItem;
+import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.necklace.ArsonistNecklace;
 import daripher.skilltree.item.necklace.AssassinNecklace;
 import daripher.skilltree.item.necklace.FishermanNecklace;
@@ -43,24 +33,7 @@ public class PSTItems {
   public static final DeferredRegister<Item> REGISTRY =
       DeferredRegister.create(ForgeRegistries.ITEMS, SkillTreeMod.MOD_ID);
 
-  // gems
-  public static final RegistryObject<Item> RUBY = REGISTRY.register("ruby", RubyItem::new);
-  public static final RegistryObject<Item> ONYX = REGISTRY.register("onyx", OnyxItem::new);
-  public static final RegistryObject<Item> MOONSTONE =
-      REGISTRY.register("moonstone", MoonstoneItem::new);
-  public static final RegistryObject<Item> VACUCITE =
-      REGISTRY.register("vacucite", VacuciteItem::new);
-  public static final RegistryObject<Item> IRISCITE =
-      REGISTRY.register("iriscite", IrisciteItem::new);
-  public static final RegistryObject<Item> CITRINE = REGISTRY.register("citrine", CitrineItem::new);
-  public static final RegistryObject<Item> ADAMITE = REGISTRY.register("adamite", AdamiteItem::new);
-  public static final RegistryObject<Item> JADE = REGISTRY.register("jade", JadeItem::new);
-  public static final RegistryObject<Item> SAPPHIRE =
-      REGISTRY.register("sapphire", SapphireItem::new);
-  public static final RegistryObject<Item> TOURMALINE =
-      REGISTRY.register("tourmaline", TourmalineItem::new);
-  public static final RegistryObject<Item> TURQUOISE =
-      REGISTRY.register("turquoise", TurquoiseItem::new);
+  public static final RegistryObject<Item> GEM = REGISTRY.register("gem", GemItem::new);
   // scrolls
   public static final RegistryObject<Item> WISDOM_SCROLL =
       REGISTRY.register("wisdom_scroll", WisdomScrollItem::new);

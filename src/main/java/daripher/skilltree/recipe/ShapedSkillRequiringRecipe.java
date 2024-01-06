@@ -41,18 +41,21 @@ public class ShapedSkillRequiringRecipe extends ShapedRecipe implements SkillReq
   }
 
   public static class Serializer implements RecipeSerializer<ShapedSkillRequiringRecipe> {
+    @Override
     public @NotNull ShapedSkillRequiringRecipe fromJson(
         @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromJson(id, json);
       return new ShapedSkillRequiringRecipe(recipe);
     }
 
+    @Override
     public ShapedSkillRequiringRecipe fromNetwork(
         @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(id, byteBuf);
       return new ShapedSkillRequiringRecipe(Objects.requireNonNull(recipe));
     }
 
+    @Override
     public void toNetwork(
         @NotNull FriendlyByteBuf byteBuf, @NotNull ShapedSkillRequiringRecipe recipe) {
       SHAPED_RECIPE.toNetwork(byteBuf, recipe);

@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "skilltree:stealth",
-          "id": "b98e0060-2f5c-4885-818f-0ed50aff733a",
+          "id": "f3c7a174-b880-47ad-8199-e26b23c72883",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {

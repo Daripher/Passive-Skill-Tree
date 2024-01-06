@@ -1,8 +1,11 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.container.InteractiveContainer;
+import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.init.PSTItems;
+import daripher.skilltree.item.gem.GemItem;
+import daripher.skilltree.item.gem.bonus.GemBonusProvider;
+import daripher.skilltree.item.gem.bonus.RandomGemBonusProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -36,7 +39,11 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
   @Inject(method = "onTake", at = @At("HEAD"))
   private void changeRainbowJewelInsertionSeed(
       Player player, ItemStack itemStack, CallbackInfo callbackInfo) {
-    if (inputSlots.getItem(1).getItem() != PSTItems.IRISCITE.get()) return;
-    ((PlayerExtension) player).updateGemsRandomSeed();
+    ItemStack gemStack = inputSlots.getItem(1);
+    if (gemStack.getItem() != PSTItems.GEM.get()) return;
+    GemBonusProvider bonusProvider = GemItem.getGemType(gemStack).getBonusProvider(itemStack);
+    if (bonusProvider instanceof RandomGemBonusProvider) {
+      ((PlayerExtension) player).updateGemsRandomSeed();
+    }
   }
 }

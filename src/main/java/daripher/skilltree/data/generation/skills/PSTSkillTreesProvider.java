@@ -37,7 +37,7 @@ public class PSTSkillTreesProvider implements DataProvider {
 
   public String getSkillTreePath(PassiveSkillTree skillTree) {
     ResourceLocation id = skillTree.getId();
-    return "data/" + id.getNamespace() + "/skill_trees/" + id.getPath() + ".json";
+    return "data/%s/skill_trees/%s.json".formatted(id.getNamespace(), id.getPath());
   }
 
   @Override

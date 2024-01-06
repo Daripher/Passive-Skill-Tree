@@ -5,8 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.item.gem.GemBonusHandler;
+
 import java.util.List;
+
+import daripher.skilltree.item.gem.GemItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -32,10 +34,10 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
   }
 
   public static Component getSocketDesc(ItemStack stack, int socket) {
-    if (!GemBonusHandler.hasGem(stack, socket)) {
+    if (!GemItem.hasGem(stack, socket)) {
       return Component.translatable("gem.socket");
     }
-    return GemBonusHandler.getBonuses(stack).get(socket).getTooltip();
+    return GemItem.getGemBonuses(stack).get(socket).getTooltip();
   }
 
   @Override
@@ -104,7 +106,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     public SocketComponent(ItemStack stack) {
       this.stack = stack;
-      this.gems = GemBonusHandler.getGems(stack);
+      this.gems = GemItem.getGems(stack);
       this.sockets = ItemHelper.getMaximumSockets(stack, Minecraft.getInstance().player);
       if (sockets < gems.size()) sockets = gems.size();
     }

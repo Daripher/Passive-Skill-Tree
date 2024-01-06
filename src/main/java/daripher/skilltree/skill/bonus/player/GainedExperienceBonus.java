@@ -35,7 +35,8 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
   @Override
   public GainedExperienceBonus multiply(double multiplier) {
-    return new GainedExperienceBonus((float) (this.multiplier * multiplier), experienceSource);
+    this.multiplier = (float) (this.multiplier * multiplier);
+    return this;
   }
 
   @Override

@@ -3,7 +3,6 @@ package daripher.skilltree.data.reloader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.mojang.logging.LogUtils;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.serializers.SkillBonusSerializer;
 import daripher.skilltree.skill.PassiveSkill;
@@ -19,7 +18,6 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillsReloader extends SimpleJsonResourceReloadListener {
@@ -29,7 +27,6 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
           .registerTypeAdapter(SkillBonus.class, new SkillBonusSerializer())
           .setPrettyPrinting()
           .create();
-  private static final Logger LOGGER = LogUtils.getLogger();
   private static final Map<ResourceLocation, PassiveSkill> SKILLS = new HashMap<>();
 
   public SkillsReloader() {
@@ -63,7 +60,7 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
       PassiveSkill skill = GSON.fromJson(json, PassiveSkill.class);
       SKILLS.put(skill.getId(), skill);
     } catch (Exception exception) {
-      LOGGER.error("Couldn't load passive skill {}", id);
+      SkillTreeMod.LOGGER.error("Couldn't load passive skill {}", id);
       exception.printStackTrace();
     }
   }

@@ -1,8 +1,10 @@
 package daripher.skilltree.data;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
@@ -10,11 +12,16 @@ import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -258,6 +265,43 @@ public class SerializationHelper {
     json.add("enchantment_condition", conditionJson);
   }
 
+  @Nonnull
+  public static <T> List<T> deserializeObjects(
+      JsonObject json, String elementName, Function<JsonObject, T> deserializer) {
+    return StreamSupport.stream(json.getAsJsonArray(elementName).spliterator(), true)
+        .map(JsonObject.class::cast)
+        .map(deserializer)
+        .toList();
+  }
+
+  public static <T> void serializeObjects(
+      JsonObject json, String elementName, List<T> objects, BiConsumer<JsonObject, T> serializer) {
+    JsonArray objectsJson = new JsonArray();
+    objects.forEach(
+        o -> {
+          JsonObject objectJson = new JsonObject();
+          serializer.accept(objectJson, o);
+          objectsJson.add(objectJson);
+        });
+    json.add(elementName, objectsJson);
+  }
+
+  public static GemBonusProvider deserializeGemBonusProvider(JsonObject json) {
+    JsonObject providerJson = json.getAsJsonObject("bonus_provider");
+    String type = providerJson.get("type").getAsString();
+    ResourceLocation serializerId = new ResourceLocation(type);
+    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(providerJson);
+  }
+
+  public static void serializeGemBonusProvider(JsonObject json, GemBonusProvider provider) {
+    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
+    JsonObject bonusJson = new JsonObject();
+    provider.getSerializer().serialize(bonusJson, provider);
+    bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
+    json.add("bonus_provider", bonusJson);
+  }
+
   @Nullable
   public static Attribute deserializeAttribute(CompoundTag tag) {
     ResourceLocation attributeId = new ResourceLocation(tag.getString("attribute"));
@@ -478,5 +522,41 @@ public class SerializationHelper {
     ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
     conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("enchantment_condition", conditionTag);
+  }
+
+  @Nonnull
+  public static <T> List<T> deserializeObjects(
+      CompoundTag tag, String elementName, Function<CompoundTag, T> deserializer) {
+    return tag.getList(elementName, CompoundTag.TAG_COMPOUND).stream()
+        .map(CompoundTag.class::cast)
+        .map(deserializer)
+        .toList();
+  }
+
+  public static <T> void serializeObjects(
+      CompoundTag tag, String elementName, List<T> objects, BiConsumer<CompoundTag, T> serializer) {
+    ListTag objectsTag = new ListTag();
+    objects.forEach(
+        o -> {
+          CompoundTag objectTag = new CompoundTag();
+          serializer.accept(objectTag, o);
+          objectsTag.add(objectTag);
+        });
+    tag.put(elementName, objectsTag);
+  }
+
+  public static GemBonusProvider deserializeGemBonusProvider(CompoundTag tag) {
+    CompoundTag bonusTag = tag.getCompound("bonus_provider");
+    String type = bonusTag.getString("type");
+    ResourceLocation serializerId = new ResourceLocation(type);
+    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(bonusTag);
+  }
+
+  public static void serializeGemBonusProvider(CompoundTag tag, GemBonusProvider provider) {
+    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
+    CompoundTag bonusTag = provider.getSerializer().serialize(provider);
+    bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
+    tag.put("bonus_provider", bonusTag);
   }
 }

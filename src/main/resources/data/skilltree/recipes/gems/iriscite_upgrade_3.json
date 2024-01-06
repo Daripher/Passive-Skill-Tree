@@ -1,0 +1,5 @@
+{
+  "type" : "skilltree:gem_upgrade",
+  "ingredient": "skilltree:iriscite_3",
+  "result": "skilltree:iriscite_4"
+}

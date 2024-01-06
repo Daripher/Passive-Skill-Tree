@@ -527,41 +527,21 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("gem.additional_socket_1", "• Имеет дополнительное гнездо");
     add("gem.disabled", "Отключено с модулем приключений Apotheosis");
     add("gem_class_format", "• %s: %s");
-    add("gem_class.helmet", "Шлемы");
-    add("gem_class.chestplate", "Нагрудники");
-    add("gem_class.boots", "Ботинки");
-    add("gem_class.other_armor", "Другая броня");
-    add("gem_class.weapon", "Оружие");
-    add("gem_class.shield", "Щиты");
-    add("gem_class.bow", "Луки");
-    add("gem_class.melee_weapon", "Оружие ближнего боя");
-    add("gem_class.armor_and_shield", "Броню и щиты");
-    add("gem_class.anything", "Что угодно");
-    add("gem_class.armor", "Броню");
-    add("gem_class.pickaxe", "Кирки");
-    add("gem_class.ring", "Кольца");
-    add("gem_class.necklace", "Ожерелья");
-    add("gem_class.jewelry", "Бижутерию");
     add("gem.tooltip", "• Можно вставить в предметы с гнёздами");
-    addTooltip(PSTItems.VACUCITE.get(), "Уничтожает Самоцветы в предмете");
-    addTooltip(PSTItems.IRISCITE.get(), "Результат непредсказуем");
+    add("gem_bonus.removal", "Уничтожает Самоцветы в предмете");
+    add("gem_bonus.random", "Результат непредсказуем");
     // weapon info
     add("weapon.poisoned", "Отравлено:");
     // quiver info
     add("quiver.capacity", "• Вмещает до %s стрел");
     add("quiver.contents", "• Внутри: %s");
     // items
-    add(PSTItems.ADAMITE.get(), "Адамит");
-    add(PSTItems.CITRINE.get(), "Цитрин");
-    add(PSTItems.IRISCITE.get(), "Ирисцит");
-    add(PSTItems.MOONSTONE.get(), "Лунный камень");
-    add(PSTItems.ONYX.get(), "Оникс");
-    add(PSTItems.RUBY.get(), "Рубин");
-    add(PSTItems.VACUCITE.get(), "Вакуцит");
-    add(PSTItems.JADE.get(), "Нефрит");
-    add(PSTItems.SAPPHIRE.get(), "Сапфир");
-    add(PSTItems.TOURMALINE.get(), "Турмалин");
-    add(PSTItems.TURQUOISE.get(), "Бирюза");
+    addGem("citrine", "цитрин");
+    addGem("ruby", "рубин");
+    addGem("sapphire", "сапфир");
+    addGem("jade", "нефрит");
+    addGem("iriscite", "ирисцит");
+    addGem("vacucite", "вакуцит");
     add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
     add(PSTItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
     add(PSTItems.COPPER_RING.get(), "Медное кольцо");
@@ -653,5 +633,14 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/greedy.suffix", "Жадности");
     add("affix.skilltree:jewelry/attribute/healthy", "Здоровый");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
+  }
+
+  protected void addGem(String type, String name) {
+    add("item.skilltree.gem.skilltree." + type + "_0", "Раскрошенный " + name);
+    add("item.skilltree.gem.skilltree." + type + "_1", "Сломанный " + name);
+    add("item.skilltree.gem.skilltree." + type + "_2", "Некачественный " + name);
+    add("item.skilltree.gem.skilltree." + type + "_3", "Большой " + name);
+    add("item.skilltree.gem.skilltree." + type + "_4", "Редкий " + name);
+    add("item.skilltree.gem.skilltree." + type + "_5", "Исключительный " + name);
   }
 }
