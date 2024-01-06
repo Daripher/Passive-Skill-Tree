@@ -1,0 +1,13 @@
+{
+  "bonuses": [
+    {
+      "bonus_provider": {
+        "type": "skilltree:gem_removal"
+      },
+      "item_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "id": "skilltree:vacucite_3"
+}

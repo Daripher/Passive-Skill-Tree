@@ -1,15 +1,5 @@
 {
   "values": [
-    "skilltree:ruby",
-    "skilltree:onyx",
-    "skilltree:moonstone",
-    "skilltree:vacucite",
-    "skilltree:iriscite",
-    "skilltree:citrine",
-    "skilltree:adamite",
-    "skilltree:jade",
-    "skilltree:sapphire",
-    "skilltree:tourmaline",
-    "skilltree:turquoise"
+    "skilltree:gem"
   ]
 }

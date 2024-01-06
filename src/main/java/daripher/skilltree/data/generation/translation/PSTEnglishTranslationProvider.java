@@ -465,42 +465,21 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("gem.additional_socket_1", "• Has an additional socket");
     add("gem.disabled", "Disabled with Apotheosis adventure module enabled");
     add("gem_class_format", "• %s: %s");
-    add("gem_class.helmet", "Helmets");
-    add("gem_class.chestplate", "Chestplates");
-    add("gem_class.boots", "Boots");
-    add("gem_class.other_armor", "Other Armor");
-    add("gem_class.weapon", "Weapons");
-    add("gem_class.shield", "Shields");
-    add("gem_class.bow", "Bows");
-    add("gem_class.melee_weapon", "Melee Weapon");
-    add("gem_class.armor_and_shield", "Armor and Shields");
-    add("gem_class.anything", "Anything");
-    add("gem_class.armor", "Armor");
-    add("gem_class.pickaxe", "Pickaxes");
-    add("gem_class.ring", "Rings");
-    add("gem_class.necklace", "Necklaces");
-    add("gem_class.jewelry", "Jewelry");
-    add("gem_class.ranged_weapon", "Ranged Weapon");
-    add("gem.tooltip", "• Can be inserted into items with chance");
-    addTooltip(PSTItems.VACUCITE.get(), "Destroys gems in the item");
-    addTooltip(PSTItems.IRISCITE.get(), "Outcome unpredictable");
+    add("gem.tooltip", "• Can be inserted into items with sockets");
+    add("gem_bonus.removal", "Destroys gems in the item");
+    add("gem_bonus.random", "Outcome unpredictable");
     // weapon info
     add("weapon.poisoned", "Poisoned:");
     // quiver info
     add("quiver.capacity", "• Can hold up to %s arrows");
     add("quiver.contents", "• Contents: %s");
     // items
-    add(PSTItems.ADAMITE.get(), "Adamite");
-    add(PSTItems.CITRINE.get(), "Citrine");
-    add(PSTItems.IRISCITE.get(), "Iriscite");
-    add(PSTItems.MOONSTONE.get(), "Moonstone");
-    add(PSTItems.ONYX.get(), "Onyx");
-    add(PSTItems.RUBY.get(), "Ruby");
-    add(PSTItems.VACUCITE.get(), "Vacucite");
-    add(PSTItems.JADE.get(), "Jade");
-    add(PSTItems.SAPPHIRE.get(), "Sapphire");
-    add(PSTItems.TOURMALINE.get(), "Tourmaline");
-    add(PSTItems.TURQUOISE.get(), "Turquoise");
+    addGem("citrine", "Citrine");
+    addGem("ruby", "Ruby");
+    addGem("sapphire", "Sapphire");
+    addGem("jade", "Jade");
+    addGem("iriscite", "Iriscite");
+    addGem("vacucite", "Vacucite");
     add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
     add(PSTItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
     add(PSTItems.COPPER_RING.get(), "Copper Ring");
@@ -567,7 +546,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     // jei info
     add(
         "skilltree.jei.gem_info",
-        "Gems can be inserted into items with chance on a smithing table. Drop from any ore with a small chance (requires no silk touch tool).");
+        "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with" +
+            " a small chance (requires no silk touch tool).");
     // curios info
     add("curios.identifier.quiver", "Quiver");
     add("curios.modifiers.quiver", "When worn:");
@@ -590,5 +570,14 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/greedy.suffix", "of Greed");
     add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
+  }
+
+  protected void addGem(String type, String name) {
+    add("item.skilltree.gem.skilltree." + type + "_0", "Crumbled " + name);
+    add("item.skilltree.gem.skilltree." + type + "_1", "Broken " + name);
+    add("item.skilltree.gem.skilltree." + type + "_2", "Low-Quality " + name);
+    add("item.skilltree.gem.skilltree." + type + "_3", "Big " + name);
+    add("item.skilltree.gem.skilltree." + type + "_4", "Rare " + name);
+    add("item.skilltree.gem.skilltree." + type + "_5", "Exceptional " + name);
   }
 }

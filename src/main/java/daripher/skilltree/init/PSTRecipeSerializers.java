@@ -1,12 +1,7 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.recipe.GemSocketingRecipe;
-import daripher.skilltree.recipe.MixtureRecipe;
-import daripher.skilltree.recipe.ShapedSkillRequiringRecipe;
-import daripher.skilltree.recipe.ShapelessSkillRequiringRecipe;
-import daripher.skilltree.recipe.QuiverFillingRecipe;
-import daripher.skilltree.recipe.WeaponPoisoningRecipe;
+import daripher.skilltree.recipe.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,7 +12,7 @@ public class PSTRecipeSerializers {
       DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, SkillTreeMod.MOD_ID);
 
   public static final RegistryObject<RecipeSerializer<?>> GEM_INSERTION =
-      REGISTRY.register("gem_insertion", GemSocketingRecipe.Serializer::new);
+      REGISTRY.register("gem_insertion", GemInsertionRecipe.Serializer::new);
   public static final RegistryObject<RecipeSerializer<?>> WEAPON_POISONING =
       REGISTRY.register("weapon_poisoning", WeaponPoisoningRecipe.Serializer::new);
   public static final RegistryObject<RecipeSerializer<?>> POTION_MIXING =
@@ -28,4 +23,6 @@ public class PSTRecipeSerializers {
       REGISTRY.register("crafting_shapeless", ShapelessSkillRequiringRecipe.Serializer::new);
   public static final RegistryObject<RecipeSerializer<?>> QUIVER_FILLING =
       REGISTRY.register("quiver_filling", QuiverFillingRecipe.Serializer::new);
+  public static final RegistryObject<RecipeSerializer<?>> GEM_UPGRADE =
+      REGISTRY.register("gem_upgrade", GemUpgradeRecipe.Serializer::new);
 }

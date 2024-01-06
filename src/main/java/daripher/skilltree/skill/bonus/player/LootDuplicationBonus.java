@@ -38,7 +38,8 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
   @Override
   public LootDuplicationBonus multiply(double multiplier) {
-    return new LootDuplicationBonus((float) (chance * multiplier), this.multiplier, lootType);
+    chance = (float) (chance * multiplier);
+    return this;
   }
 
   @Override

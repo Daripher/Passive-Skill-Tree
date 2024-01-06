@@ -1,0 +1,151 @@
+{
+  "bonuses": [
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.03999999910593033,
+            "attribute": "minecraft:generic.movement_speed",
+            "id": "a2171860-531a-44cb-aafc-0a5136cab545",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "boots"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.019999999552965164,
+            "attribute": "skilltree:evasion",
+            "id": "77ebae97-e246-4154-816e-8f19f209cae2",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:jewelry"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:gained_experience",
+            "experience_source": "mobs",
+            "multiplier": 0.1
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "helmet"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.03999999910593033,
+            "attribute": "skilltree:evasion",
+            "id": "ceb97f1c-16ee-46d9-a593-5c8d1f0d7e28",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.03999999910593033,
+            "attribute": "skilltree:blocking",
+            "id": "dadf0de9-9432-4ce9-8aed-f1e4f847d189",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.03999999910593033,
+            "attribute": "minecraft:generic.attack_speed",
+            "id": "e091e990-54df-465c-b899-8a6ea95637ce",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
+    }
+  ],
+  "id": "skilltree:jade_3"
+}

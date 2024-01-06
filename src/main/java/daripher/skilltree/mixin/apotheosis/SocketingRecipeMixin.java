@@ -2,12 +2,11 @@ package daripher.skilltree.mixin.apotheosis;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.container.ContainerHelper;
-import daripher.skilltree.item.gem.GemBonusHandler;
-import java.util.List;
-import java.util.Optional;
-
+import daripher.skilltree.entity.player.PlayerHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketingRecipe;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +40,7 @@ public class SocketingRecipeMixin {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isPresent()) {
       ItemStack result = container.getItem(1);
-      float power = GemBonusHandler.getGemPower(player.get(), result);
+      float power = PlayerHelper.getGemPower(player.get(), result);
       ((ItemStack) gem).getOrCreateTag().putFloat("gem_power", power);
     }
     return gems.set(index, gem);

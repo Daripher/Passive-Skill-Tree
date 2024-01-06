@@ -3,10 +3,8 @@ package daripher.skilltree.compat.apotheosis;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.item.ItemHelper;
-import daripher.skilltree.item.gem.GemBonusHandler;
-import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
-import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -19,7 +17,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer;
 import dev.shadowsoffire.apotheosis.adventure.event.GetItemSocketsEvent;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
-import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import java.util.*;
 import java.util.stream.Stream;
@@ -36,7 +33,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -69,7 +65,6 @@ public enum ApotheosisCompatibility {
 
     IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
     forgeEventBus.addListener(this::addItemSockets);
-    forgeEventBus.addListener(this::ignoreGemTooltips);
     forgeEventBus.addListener(EventPriority.LOW, this::addJewelrySocketTooltip);
     forgeEventBus.addListener(this::applyCurioAttributeAffixes);
     forgeEventBus.addListener(this::applyCurioDamageAffixes);
@@ -100,20 +95,8 @@ public enum ApotheosisCompatibility {
     return getGems(stack, getSockets(stack, null));
   }
 
-  public void ignoreGemTooltips(GatherSkippedAttributeTooltipsEvent event) {
-    GemBonusHandler.getBonuses(event.getStack()).stream()
-        .filter(ItemSkillBonus.class::isInstance)
-        .map(ItemSkillBonus.class::cast)
-        .map(ItemSkillBonus::getBonus)
-        .filter(AttributeBonus.class::isInstance)
-        .map(AttributeBonus.class::cast)
-        .map(AttributeBonus::getModifier)
-        .map(AttributeModifier::getId)
-        .forEach(event::skipUUID);
-  }
-
   public int getSockets(ItemStack stack, @Nullable Player player) {
-    int playerSockets = player == null ? 0 : GemBonusHandler.getPlayerSockets(stack, player);
+    int playerSockets = player == null ? 0 : PlayerHelper.getPlayerSockets(stack, player);
     int sockets = SocketHelper.getSockets(stack);
     int gems = SocketHelper.getGems(stack).size();
     playerSockets -= gems;

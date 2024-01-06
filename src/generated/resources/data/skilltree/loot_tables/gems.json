@@ -5,59 +5,110 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "skilltree:ruby",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_2",
+          "weight": 10
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:onyx",
-          "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "name": "skilltree:moonstone",
-          "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "name": "skilltree:vacucite",
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_3",
           "quality": 1
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:iriscite",
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_3",
           "quality": 1
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:citrine",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_2",
+          "weight": 10
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:adamite",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_1",
+          "weight": 50
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:jade",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_0",
+          "weight": 1000
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:sapphire",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_2",
+          "weight": 10
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:tourmaline",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_3",
+          "quality": 1
         },
         {
-          "type": "minecraft:item",
-          "name": "skilltree:turquoise",
-          "weight": 3
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_0",
+          "weight": 1000
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_1",
+          "weight": 50
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_3",
+          "quality": 1
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_2",
+          "weight": 10
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_1",
+          "weight": 50
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:vacucite_3",
+          "quality": 1,
+          "weight": 100
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_0",
+          "weight": 1000
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_2",
+          "weight": 10
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_3",
+          "quality": 1
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_0",
+          "weight": 1000
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_1",
+          "weight": 50
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_0",
+          "weight": 1000
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_1",
+          "weight": 50
         }
       ],
       "rolls": 1.0

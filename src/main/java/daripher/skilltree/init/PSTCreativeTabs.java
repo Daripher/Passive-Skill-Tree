@@ -1,6 +1,9 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.data.reloader.GemTypesReloader;
+import daripher.skilltree.item.gem.GemItem;
+import java.util.function.Predicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,10 +23,16 @@ public class PSTCreativeTabs {
                 .title(Component.translatable("itemGroup.skilltree"))
                 .icon(() -> new ItemStack(PSTItems.AMNESIA_SCROLL.get()))
                 .displayItems(
-                    (params, output) ->
-                        PSTItems.REGISTRY.getEntries().stream()
-                            .map(RegistryObject::get)
-                            .forEach(output::accept))
+                    (params, output) -> {
+                      GemTypesReloader.getGemTypes().values().stream()
+                          .sorted()
+                          .map(GemItem::getDefaultGemStack)
+                          .forEach(output::accept);
+                      PSTItems.REGISTRY.getEntries().stream()
+                          .map(RegistryObject::get)
+                          .filter(Predicate.not(PSTItems.GEM.get()::equals))
+                          .forEach(output::accept);
+                    })
                 .build());
   }
 }

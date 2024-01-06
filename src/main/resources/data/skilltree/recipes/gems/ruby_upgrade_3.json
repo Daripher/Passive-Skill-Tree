@@ -1,0 +1,5 @@
+{
+  "type" : "skilltree:gem_upgrade",
+  "ingredient": "skilltree:ruby_3",
+  "result": "skilltree:ruby_4"
+}

@@ -4,6 +4,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
@@ -317,6 +318,21 @@ public class NetworkHelper {
   @NotNull
   public static MobEffectInstance readEffectInstance(FriendlyByteBuf buf) {
     return new MobEffectInstance(readEffect(buf), buf.readInt(), buf.readInt());
+  }
+
+  public static void writeGemBonusProvider(FriendlyByteBuf buf, GemBonusProvider provider) {
+    GemBonusProvider.Serializer serializer = provider.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(serializer);
+    Objects.requireNonNull(serializerId);
+    buf.writeUtf(serializerId.toString());
+    serializer.serialize(buf, provider);
+  }
+
+  public static GemBonusProvider readGemBonusProvider(FriendlyByteBuf buf) {
+    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
+    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
+    Objects.requireNonNull(serializer);
+    return serializer.deserialize(buf);
   }
 
   public static void writeSkillTreeConfig(FriendlyByteBuf buf) {

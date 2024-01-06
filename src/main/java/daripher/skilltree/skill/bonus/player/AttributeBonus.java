@@ -46,6 +46,13 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
     this.modifier = modifier;
   }
 
+  public AttributeBonus(
+      Attribute attribute, String name, float amount, AttributeModifier.Operation operation) {
+    this.attribute = attribute;
+    this.modifier = new AttributeModifier(UUID.randomUUID(), name, amount, operation);
+  }
+
+  @SuppressWarnings("deprecation")
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (!(playerCondition instanceof NoneLivingCondition)
@@ -312,6 +319,14 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   public SkillBonus<?> setMultiplier(LivingMultiplier multiplier) {
     this.playerMultiplier = multiplier;
     return this;
+  }
+
+  public boolean hasCondition() {
+    return !(playerCondition instanceof NoneLivingCondition);
+  }
+
+  public boolean hasMultiplier() {
+    return !(playerMultiplier instanceof NoneMultiplier);
   }
 
   public static class Serializer implements SkillBonus.Serializer {

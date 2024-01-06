@@ -448,6 +448,8 @@ public class SkillBonusHandler {
         .map(ItemSkillBonus::getBonus)
         .filter(AttributeBonus.class::isInstance)
         .map(AttributeBonus.class::cast)
+        .filter(Predicate.not(AttributeBonus::hasCondition))
+        .filter(Predicate.not(AttributeBonus::hasMultiplier))
         .forEach(bonus -> addFunction.accept(bonus.getAttribute(), bonus.getModifier()));
   }
 
@@ -537,7 +539,7 @@ public class SkillBonusHandler {
               SkillBonusEffect skillEffect = (SkillBonusEffect) effect.getEffect();
               SkillBonus<?> bonus = skillEffect.getBonus().copy();
               if (type.isInstance(bonus)) {
-                bonus = bonus.multiply(effect.getAmplifier());
+                bonus = bonus.copy().multiply(effect.getAmplifier());
                 bonuses.add(type.cast(bonus));
               }
             });

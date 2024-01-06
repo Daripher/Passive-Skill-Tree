@@ -43,18 +43,21 @@ public class ShapelessSkillRequiringRecipe extends ShapelessRecipe implements Sk
   }
 
   public static class Serializer implements RecipeSerializer<ShapelessSkillRequiringRecipe> {
+    @Override
     public @NotNull ShapelessSkillRequiringRecipe fromJson(
         @NotNull ResourceLocation id, @NotNull JsonObject json) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(id, json);
       return new ShapelessSkillRequiringRecipe(recipe);
     }
 
+    @Override
     public ShapelessSkillRequiringRecipe fromNetwork(
         @NotNull ResourceLocation id, @NotNull FriendlyByteBuf byteBuf) {
       ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(id, byteBuf);
       return new ShapelessSkillRequiringRecipe(Objects.requireNonNull(recipe));
     }
 
+    @Override
     public void toNetwork(
         @NotNull FriendlyByteBuf byteBuf, @NotNull ShapelessSkillRequiringRecipe recipe) {
       SHAPELESS_RECIPE.toNetwork(byteBuf, recipe);

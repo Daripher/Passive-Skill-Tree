@@ -98,7 +98,7 @@ public class Config {
     BUILDER.pop();
 
     BUILDER.push("Gems");
-    GEM_DROP_CHANCE = BUILDER.defineInRange("Base drop chance", 0.05, 0, 1);
+    GEM_DROP_CHANCE = BUILDER.defineInRange("Base drop chance", 0.15, 0, 1);
     BUILDER.pop();
 
     BUILDER.push("Equipment");

@@ -1414,7 +1414,7 @@ public class PSTSkillsProvider implements DataProvider {
 
   public String getPath(PassiveSkill skill) {
     ResourceLocation id = skill.getId();
-    return "data/" + id.getNamespace() + "/skills/" + id.getPath() + ".json";
+    return "data/%s/skills/%s.json".formatted(id.getNamespace(), id.getPath());
   }
 
   public Map<ResourceLocation, PassiveSkill> getSkills() {

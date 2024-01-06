@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.armor_toughness",
-          "id": "3aeb0e3b-b58d-407f-9b5a-da088e713645",
+          "id": "f68a15fd-7199-44af-9ca6-2ff539a84d82",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {

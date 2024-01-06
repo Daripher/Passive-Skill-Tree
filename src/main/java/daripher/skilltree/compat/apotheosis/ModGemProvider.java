@@ -2,11 +2,6 @@ package daripher.skilltree.compat.apotheosis;
 
 import com.mojang.serialization.JsonOps;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.PSTItems;
-import daripher.skilltree.item.gem.SimpleGemItem;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
-import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
@@ -14,20 +9,16 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.util.StepFunction;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.JsonCodecProvider;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class ModGemProvider extends JsonCodecProvider<Gem> {
   public ModGemProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
@@ -46,37 +37,38 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
     dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus.initCodecs();
     Map<String, GemClass> gemClasses = createGemsClasses();
     HashMap<ResourceLocation, Gem> gems = new HashMap<>();
-//    getSkillTreeGems()
-//        .forEach(
-//            gem ->
-//                gem.getBonuses()
-//                    .forEach((type, bonus) -> createApothGem(gem, type, bonus, gemClasses, gems)));
+    //    getSkillTreeGems()
+    //        .forEach(
+    //            gem ->
+    //                gem.getBonuses()
+    //                    .forEach((type, bonus) -> createApothGem(gem, type, bonus, gemClasses,
+    // gems)));
     return gems;
   }
 
-  private static void createApothGem(
-      SimpleGemItem gem,
-      String type,
-      ItemBonus<?> bonus,
-      Map<String, GemClass> gemClasses,
-      HashMap<ResourceLocation, Gem> gems) {
-    if (!(bonus instanceof ItemSkillBonus skillBonus)) return;
-    if (!(skillBonus.getBonus() instanceof AttributeBonus attributeBonus)) return;
-    List<GemBonus> bonuses = new ArrayList<>();
-    GemClass gemClass = gemClasses.get(type);
-    if (gemClass == null) return;
-    Map<LootRarity, StepFunction> func =
-        generateBonuses((float) attributeBonus.getModifier().getAmount());
-    dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus apothBonus =
-        new dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus(
-            gemClass,
-            attributeBonus.getAttribute(),
-            attributeBonus.getModifier().getOperation(),
-            func);
-    bonuses.add(apothBonus);
-    ResourceLocation id = ForgeRegistries.ITEMS.getKey(gem);
-    gems.put(id, createGem(bonuses));
-  }
+  //  private static void createApothGem(
+  //      SimpleGemItem gem,
+  //      String type,
+  //      ItemBonus<?> bonus,
+  //      Map<String, GemClass> gemClasses,
+  //      HashMap<ResourceLocation, Gem> gems) {
+  //    if (!(bonus instanceof ItemSkillBonus skillBonus)) return;
+  //    if (!(skillBonus.getBonus() instanceof AttributeBonus attributeBonus)) return;
+  //    List<GemBonus> bonuses = new ArrayList<>();
+  //    GemClass gemClass = gemClasses.get(type);
+  //    if (gemClass == null) return;
+  //    Map<LootRarity, StepFunction> func =
+  //        generateBonuses((float) attributeBonus.getModifier().getAmount());
+  //    shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus apothBonus =
+  //        new shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus(
+  //            gemClass,
+  //            attributeBonus.getAttribute(),
+  //            attributeBonus.getModifier().getOperation(),
+  //            func);
+  //    bonuses.add(apothBonus);
+  //    ResourceLocation id = ForgeRegistries.ITEMS.getKey(gem);
+  //    gems.put(id, createGem(bonuses));
+  //  }
 
   private static Map<String, GemClass> createGemsClasses() {
     Map<String, GemClass> classes = new HashMap<>();
@@ -116,12 +108,12 @@ public class ModGemProvider extends JsonCodecProvider<Gem> {
     return classes;
   }
 
-  private static Stream<SimpleGemItem> getSkillTreeGems() {
-    return PSTItems.REGISTRY.getEntries().stream()
-        .map(RegistryObject::get)
-        .filter(SimpleGemItem.class::isInstance)
-        .map(SimpleGemItem.class::cast);
-  }
+  //  private static Stream<SimpleGemItem> getSkillTreeGems() {
+  //    return PSTItems.REGISTRY.getEntries().stream()
+  //        .map(RegistryObject::get)
+  //        .filter(SimpleGemItem.class::isInstance)
+  //        .map(SimpleGemItem.class::cast);
+  //  }
 
   private static Map<LootRarity, StepFunction> generateBonuses(float min) {
     HashMap<LootRarity, StepFunction> bonuses = new HashMap<>();
