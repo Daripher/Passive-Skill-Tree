@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -414,23 +415,31 @@ public class SkillBonusHandler {
   }
 
   public static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
-    Map<Float, Float> multipliers = new HashMap<>();
-    getSkillBonuses(player, LootDuplicationBonus.class).stream()
-        .filter(b -> b.getLootType() == lootType)
-        .forEach(b -> multipliers.computeIfPresent(b.getMultiplier(), (m, c) -> c + b.getChance()));
+    Map<Float, Float> multipliers = getLootMultipliers(player, lootType);
     float multiplier = 0f;
     for (Map.Entry<Float, Float> entry : multipliers.entrySet()) {
-      Float m = entry.getKey();
-      Float c = entry.getValue();
-      while (c > 1) {
-        multiplier += m;
-        c--;
+      float chance = entry.getValue();
+      while (chance > 1) {
+        multiplier += entry.getKey();
+        chance--;
       }
-      if (player.getRandom().nextFloat() < c) {
-        multiplier += m;
+      if (player.getRandom().nextFloat() < chance) {
+        multiplier += entry.getKey();
       }
     }
     return multiplier;
+  }
+
+  @Nonnull
+  private static Map<Float, Float> getLootMultipliers(
+      Player player, LootDuplicationBonus.LootType lootType) {
+    Map<Float, Float> multipliers = new HashMap<>();
+    for (LootDuplicationBonus b : getSkillBonuses(player, LootDuplicationBonus.class)) {
+      if (b.getLootType() != lootType) continue;
+      float chance = b.getChance() + multipliers.getOrDefault(b.getMultiplier(), 0f);
+      multipliers.put(b.getMultiplier(), chance);
+    }
+    return multipliers;
   }
 
   protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
