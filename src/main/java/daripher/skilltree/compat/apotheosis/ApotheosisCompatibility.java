@@ -24,6 +24,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
@@ -147,6 +148,7 @@ public enum ApotheosisCompatibility {
   }
 
   private void addItemSockets(GetItemSocketsEvent event) {
+    if (Apoth.Affixes.SOCKET.get() == null) return;
     ItemStack stack = event.getStack();
     if (!ItemHelper.hasSockets(stack)) return;
     int sockets = event.getSockets();
