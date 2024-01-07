@@ -6,10 +6,39 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
+            "type": "skilltree:damage",
+            "chance": 0.049999997,
+            "damage_condition": {
+              "type": "skilltree:none"
+            },
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            },
+            "target_condition": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.knockback_resistance",
-            "id": "fd44e0f4-757f-4af8-afef-bc7db138d427",
+            "id": "fa4f2c10-f914-4f6f-af1d-ad2983887d03",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -30,12 +59,26 @@
       "bonus_provider": {
         "type": "skilltree:simple",
         "item_bonus": {
+          "type": "skilltree:durability",
+          "chance": 50.0,
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.024999999441206455,
             "attribute": "skilltree:blocking",
-            "id": "09ad2cfa-edd9-451c-9539-442789efef3b",
+            "id": "1c4df96f-c611-422b-af4a-2b43429e534e",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -60,7 +103,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.armor",
-            "id": "a81c5ae7-61c1-40a4-bfdc-6d90b539c98f",
+            "id": "ab5b377b-ca2d-4976-9dd5-ad60658b877c",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -86,7 +129,7 @@
             "type": "skilltree:attribute",
             "amount": 0.5000000074505806,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "c0a180b5-bbe5-48c8-b0fb-406886eb9047",
+            "id": "26e0f879-9c89-4df2-b0a0-ab4d971e9275",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -101,49 +144,6 @@
       "item_condition": {
         "type": "skilltree:armor",
         "armor_type": "chestplate"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:durability",
-          "chance": 50.0,
-          "operation": 0
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "shield"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:damage",
-            "chance": 0.049999997,
-            "damage_condition": {
-              "type": "skilltree:none"
-            },
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "target_condition": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
       }
     }
   ],

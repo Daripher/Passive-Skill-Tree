@@ -1,10 +1,15 @@
-package daripher.skilltree.item.gem;
+package daripher.skilltree.item.gem.loot;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.data.reloader.GemTypesReloader;
 import java.util.function.Consumer;
+
+import daripher.skilltree.item.gem.GemItem;
+import daripher.skilltree.item.gem.GemType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -33,6 +38,10 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
   @Override
   protected void createItemStack(
       @NotNull Consumer<ItemStack> consumer, @NotNull LootContext context) {
+    if (SkillTreeMod.apotheosisEnabled()) {
+      ApotheosisCompatibility.INSTANCE.createGemStack(consumer, context, gemTypeId);
+      return;
+    }
     GemType gemType = GemTypesReloader.getGemTypeById(gemTypeId);
     consumer.accept(GemItem.getDefaultGemStack(gemType));
   }
@@ -56,7 +65,12 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 
     @Override
     public @NotNull LootPoolEntryContainer build() {
-      return new GemLootPoolEntry(gemTypeId, weight, quality, getConditions(), getFunctions());
+      return new GemLootPoolEntry(
+          gemTypeId,
+          GemLootHandler.getGemLootWeight(gemTypeId),
+          GemLootHandler.getGemLootQuality(gemTypeId),
+          getConditions(),
+          getFunctions());
     }
   }
 

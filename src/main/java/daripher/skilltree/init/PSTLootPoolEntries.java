@@ -1,7 +1,7 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.item.gem.GemLootPoolEntry;
+import daripher.skilltree.item.gem.loot.GemLootPoolEntry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraftforge.registries.DeferredRegister;

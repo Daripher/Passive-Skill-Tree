@@ -6,109 +6,184 @@
       "entries": [
         {
           "type": "skilltree:gem",
+          "gem": "skilltree:jade_5",
+          "quality": 15,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
           "gem": "skilltree:citrine_2",
-          "weight": 10
+          "quality": -1,
+          "weight": 100
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_4",
+          "quality": 5,
+          "weight": 0
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:citrine_3",
-          "quality": 1
-        },
-        {
-          "type": "skilltree:gem",
-          "gem": "skilltree:jade_3",
-          "quality": 1
-        },
-        {
-          "type": "skilltree:gem",
-          "gem": "skilltree:jade_2",
           "weight": 10
         },
         {
           "type": "skilltree:gem",
+          "gem": "skilltree:jade_3",
+          "weight": 10
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_4",
+          "quality": 5,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:jade_2",
+          "quality": -1,
+          "weight": 100
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:citrine_5",
+          "quality": 15,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
           "gem": "skilltree:jade_1",
-          "weight": 50
+          "quality": -10,
+          "weight": 350
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:jade_0",
+          "quality": -50,
           "weight": 1000
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:iriscite_2",
-          "weight": 10
+          "quality": -1,
+          "weight": 100
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:iriscite_3",
-          "quality": 1
+          "weight": 10
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:iriscite_0",
+          "quality": -50,
           "weight": 1000
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:iriscite_1",
-          "weight": 50
+          "quality": -10,
+          "weight": 350
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_4",
+          "quality": 5,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:iriscite_5",
+          "quality": 15,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_5",
+          "quality": 15,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:ruby_4",
+          "quality": 5,
+          "weight": 0
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:ruby_3",
-          "quality": 1
-        },
-        {
-          "type": "skilltree:gem",
-          "gem": "skilltree:ruby_2",
           "weight": 10
         },
         {
           "type": "skilltree:gem",
+          "gem": "skilltree:ruby_2",
+          "quality": -1,
+          "weight": 100
+        },
+        {
+          "type": "skilltree:gem",
           "gem": "skilltree:ruby_1",
-          "weight": 50
+          "quality": -10,
+          "weight": 350
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:vacucite_3",
           "quality": 1,
-          "weight": 100
+          "weight": 200
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:ruby_0",
+          "quality": -50,
           "weight": 1000
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:sapphire_2",
-          "weight": 10
+          "quality": -1,
+          "weight": 100
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:sapphire_3",
-          "quality": 1
+          "weight": 10
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:sapphire_0",
+          "quality": -50,
           "weight": 1000
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:sapphire_1",
-          "weight": 50
+          "quality": -10,
+          "weight": 350
+        },
+        {
+          "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_4",
+          "quality": 5,
+          "weight": 0
         },
         {
           "type": "skilltree:gem",
           "gem": "skilltree:citrine_0",
+          "quality": -50,
           "weight": 1000
         },
         {
           "type": "skilltree:gem",
+          "gem": "skilltree:sapphire_5",
+          "quality": 15,
+          "weight": 0
+        },
+        {
+          "type": "skilltree:gem",
           "gem": "skilltree:citrine_1",
-          "weight": 50
+          "quality": -10,
+          "weight": 350
         }
       ],
       "rolls": 1.0

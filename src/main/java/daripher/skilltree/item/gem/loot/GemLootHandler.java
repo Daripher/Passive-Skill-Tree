@@ -1,7 +1,6 @@
-package daripher.skilltree.item.gem;
+package daripher.skilltree.item.gem.loot;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
@@ -32,16 +31,45 @@ public class GemLootHandler {
     if (!canDropGem(event, player)) return;
     ServerLevel serverLevel = (ServerLevel) player.level();
     LootTable lootTable = getGemsLootTable(serverLevel);
-    LootParams lootContext = createGemsLootParams(event, serverLevel, player);
+    LootParams lootParams = createGemsLootParams(event, serverLevel, player);
     float multiplier =
         1f + SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.GEMS);
     while (multiplier > 1) {
-      dropGems(player, serverLevel, event.getPos(), lootTable, lootContext);
+      dropGems(serverLevel, event.getPos(), lootTable, lootParams);
       multiplier--;
     }
     if (player.getRandom().nextFloat() < multiplier) {
-      dropGems(player, serverLevel, event.getPos(), lootTable, lootContext);
+      dropGems(serverLevel, event.getPos(), lootTable, lootParams);
     }
+  }
+
+  public static int getGemLootWeight(ResourceLocation gemId) {
+    if (gemId.getPath().contains("vacucite")) {
+      return 200;
+    }
+    int tier = Integer.parseInt(gemId.getPath().substring(gemId.getPath().length() - 1));
+    return switch (tier) {
+      case 0 -> 1000;
+      case 1 -> 350;
+      case 2 -> 100;
+      case 3 -> 10;
+      default -> 0;
+    };
+  }
+
+  public static int getGemLootQuality(ResourceLocation gemId) {
+    if (gemId.getPath().contains("vacucite")) {
+      return 1;
+    }
+    int tier = Integer.parseInt(gemId.getPath().substring(gemId.getPath().length() - 1));
+    return switch (tier) {
+      case 0 -> -50;
+      case 1 -> -10;
+      case 2 -> -1;
+      case 4 -> 5;
+      case 5 -> 15;
+      default -> 0;
+    };
   }
 
   private static boolean canDropGem(BlockEvent.BreakEvent event, Player player) {
@@ -56,10 +84,9 @@ public class GemLootHandler {
 
   @NotNull
   private static LootTable getGemsLootTable(ServerLevel serverLevel) {
-    return serverLevel
-        .getServer()
-        .getLootData()
-        .getLootTable(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
+    String name = SkillTreeMod.apotheosisEnabled() ? "apotheosis_gems" : "gems";
+    ResourceLocation id = new ResourceLocation(SkillTreeMod.MOD_ID, name);
+    return serverLevel.getServer().getLootData().getLootTable(id);
   }
 
   @NotNull
@@ -67,6 +94,7 @@ public class GemLootHandler {
       BlockEvent.BreakEvent event, ServerLevel serverLevel, Player player) {
     return new LootParams.Builder(serverLevel)
         .withParameter(LootContextParams.BLOCK_STATE, event.getState())
+        .withParameter(LootContextParams.THIS_ENTITY, player)
         .withParameter(
             LootContextParams.ORIGIN,
             new Vec3(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
@@ -76,11 +104,7 @@ public class GemLootHandler {
   }
 
   private static void dropGems(
-      Player player, Level level, BlockPos blockPos, LootTable lootTable, LootParams lootParams) {
-    if (SkillTreeMod.apotheosisEnabled()) {
-      ApotheosisCompatibility.INSTANCE.dropGemFromOre(player, (ServerLevel) level, blockPos);
-      return;
-    }
+      Level level, BlockPos blockPos, LootTable lootTable, LootParams lootParams) {
     lootTable.getRandomItems(lootParams).forEach(s -> Block.popResource(level, blockPos, s));
   }
 }

@@ -35,7 +35,7 @@
         }
     },
     "types": [
-        "necklace",
-        "ring"
+        "curios:necklace",
+        "curios:ring"
     ]
 }

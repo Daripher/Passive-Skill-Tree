@@ -1,6 +1,8 @@
 package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
+import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.data.reloader.GemTypesReloader;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.gem.GemItem;
@@ -41,14 +43,26 @@ public class GemUpgradeRecipe implements CraftingRecipe {
 
   @Override
   public @NotNull ItemStack getResultItem(@NotNull RegistryAccess access) {
+    if (SkillTreeMod.apotheosisEnabled()) {
+      return ApotheosisCompatibility.INSTANCE.getGemStack(result);
+    }
     return GemItem.getDefaultGemStack(GemTypesReloader.getGemTypeById(result));
   }
 
   @Override
   public @NotNull NonNullList<Ingredient> getIngredients() {
-    Ingredient ingredient =
-        Ingredient.of(GemItem.getDefaultGemStack(GemTypesReloader.getGemTypeById(this.ingredient)));
+    Ingredient ingredient = getIngredient();
     return NonNullList.withSize(9, ingredient);
+  }
+
+  private Ingredient getIngredient() {
+    ItemStack gemStack;
+    if (SkillTreeMod.apotheosisEnabled()) {
+      gemStack = ApotheosisCompatibility.INSTANCE.getGemStack(this.ingredient);
+    } else {
+      gemStack = GemItem.getDefaultGemStack(GemTypesReloader.getGemTypeById(this.ingredient));
+    }
+    return Ingredient.of(gemStack);
   }
 
   @Override
@@ -56,14 +70,22 @@ public class GemUpgradeRecipe implements CraftingRecipe {
     int gemsCount = 0;
     for (int j = 0; j < container.getContainerSize(); j++) {
       ItemStack stack = container.getItem(j);
-      if (!GemItem.getGemType(stack).id().equals(ingredient)) return false;
+      if (!isIngredient(stack)) return false;
       gemsCount++;
     }
     return gemsCount == 9;
   }
 
+  private boolean isIngredient(ItemStack stack) {
+    if (SkillTreeMod.apotheosisEnabled()) {
+      return ingredient.equals(ApotheosisCompatibility.INSTANCE.getGemId(stack));
+    }
+    return GemTypesReloader.getGemTypeById(ingredient) == GemItem.getGemType(stack);
+  }
+
   @Override
-  public @NotNull ItemStack assemble(@NotNull CraftingContainer container, @NotNull RegistryAccess access) {
+  public @NotNull ItemStack assemble(
+      @NotNull CraftingContainer container, @NotNull RegistryAccess access) {
     return getResultItem(access).copy();
   }
 

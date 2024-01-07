@@ -305,6 +305,12 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
             modifier.getId(), modifier.getName(), amount, modifier.getOperation());
   }
 
+  public void setUUID(UUID id) {
+    this.modifier =
+        new AttributeModifier(
+            id, modifier.getName(), modifier.getAmount(), modifier.getOperation());
+  }
+
   public void setOperation(AttributeModifier.Operation operation) {
     this.modifier =
         new AttributeModifier(
