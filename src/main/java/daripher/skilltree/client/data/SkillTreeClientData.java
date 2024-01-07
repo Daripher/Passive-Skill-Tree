@@ -80,7 +80,7 @@ public class SkillTreeClientData {
       if (!folder.exists()) {
         folder.mkdirs();
       }
-      File mcmetaFile = new File(getSavesFolder(), "pack.mcmeta");
+      File mcmetaFile = new File(getEditorFolder(), "pack.mcmeta");
       if (!mcmetaFile.exists()) {
         generatePackMcmetaFile(mcmetaFile);
       }
@@ -187,7 +187,11 @@ public class SkillTreeClientData {
   }
 
   private static File getSavesFolder() {
-    return new File(FMLPaths.GAMEDIR.get().toFile(), "skilltree/editor/data");
+    return new File(getEditorFolder(), "data");
+  }
+
+  private static File getEditorFolder() {
+    return new File(FMLPaths.GAMEDIR.get().toFile(), "skilltree/editor");
   }
 
   private static File getSkillSavesFolder(ResourceLocation skillId) {
