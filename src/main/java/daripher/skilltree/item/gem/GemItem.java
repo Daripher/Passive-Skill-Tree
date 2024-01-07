@@ -60,6 +60,11 @@ public class GemItem extends Item {
   }
 
   @Override
+  public boolean isFoil(@NotNull ItemStack stack) {
+    return true;
+  }
+
+  @Override
   public void appendHoverText(
       @NotNull ItemStack stack,
       @Nullable Level level,
