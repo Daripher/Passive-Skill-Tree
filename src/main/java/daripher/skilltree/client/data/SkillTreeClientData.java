@@ -7,10 +7,7 @@ import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
@@ -79,9 +76,13 @@ public class SkillTreeClientData {
 
   public static @Nullable PassiveSkillTree getOrCreateEditorTree(ResourceLocation treeId) {
     try {
-      File skillTreeSavesFolder = getSkillTreeSavesFolder(treeId);
-      if (!skillTreeSavesFolder.exists()) {
-        skillTreeSavesFolder.mkdirs();
+      File folder = getSkillTreeSavesFolder(treeId);
+      if (!folder.exists()) {
+        folder.mkdirs();
+      }
+      File mcmetaFile = new File(getSavesFolder(), "pack.mcmeta");
+      if (!mcmetaFile.exists()) {
+        generatePackMcmetaFile(mcmetaFile);
       }
       if (!getSkillTreeSaveFile(treeId).exists() && SKILL_TREES.containsKey(treeId)) {
         saveEditorSkillTree(SKILL_TREES.get(treeId));
@@ -104,6 +105,26 @@ public class SkillTreeClientData {
       sendSystemMessage("");
       sendSystemMessage(getSavesFolder().getPath(), ChatFormatting.RED);
       return null;
+    }
+  }
+
+  private static void generatePackMcmetaFile(File file) {
+    try {
+      BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+      writer.write(
+          """
+          {
+            "pack": {
+              "description": {
+                "text": "PST editor data"
+              },
+              "pack_format": 15
+            }
+          }
+          """);
+      writer.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
