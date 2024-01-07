@@ -6,6 +6,7 @@ import daripher.skilltree.compat.apotheosis.gem.PSTGemBonus;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
@@ -135,6 +136,7 @@ public enum ApotheosisCompatibility {
   }
 
   private void addItemSockets(GetItemSocketsEvent event) {
+    if (Apoth.Affixes.SOCKET.get() == null) return;
     ItemStack stack = event.getStack();
     if (!ItemHelper.hasSockets(stack)) return;
     int sockets = event.getSockets();
