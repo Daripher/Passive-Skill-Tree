@@ -143,6 +143,9 @@ public class GemItem extends Item {
   }
 
   public static List<? extends ItemBonus<?>> getGemBonuses(ItemStack stack) {
+    if (SkillTreeMod.apotheosisEnabled()) {
+      return ApotheosisCompatibility.INSTANCE.getGemBonuses(stack);
+    }
     if (!stack.hasTag()) return List.of();
     return stack.getOrCreateTag().getList("gem_bonuses", Tag.TAG_COMPOUND).stream()
         .map(CompoundTag.class::cast)
@@ -151,7 +154,9 @@ public class GemItem extends Item {
   }
 
   public static List<ItemStack> getGems(ItemStack stack) {
-    if (SkillTreeMod.apotheosisEnabled()) return ApotheosisCompatibility.INSTANCE.getGems(stack);
+    if (SkillTreeMod.apotheosisEnabled()) {
+      return ApotheosisCompatibility.INSTANCE.getGems(stack);
+    }
     if (!stack.hasTag()) return List.of();
     return stack.getOrCreateTag().getList("gems", Tag.TAG_STRING).stream()
         .map(StringTag.class::cast)

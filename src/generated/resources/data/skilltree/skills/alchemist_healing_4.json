@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_per_hit",
-      "id": "ea343044-cfe3-4f5d-8fd8-c649fecb9982",
+      "id": "0abd17c8-3f5d-43d0-ad9c-3c221c2afe8d",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

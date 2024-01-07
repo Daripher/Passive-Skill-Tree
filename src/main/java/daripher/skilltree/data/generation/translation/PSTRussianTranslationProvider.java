@@ -373,7 +373,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTEnchantmentConditions.NONE.get(), "Зачарование");
     // item conditions
     add(PSTItemConditions.NONE.get(), "Предмет");
-    add(PSTItemConditions.NONE.get(), "where","Предмете");
+    add(PSTItemConditions.NONE.get(), "where", "Предмете");
     add(PSTItemConditions.NONE.get(), "type", "ый Предмет");
     add(PSTItemConditions.NONE.get(), "plural.type", "ые Предметы");
     add(PSTItemConditions.WEAPON.get(), "any", "Оружие");
@@ -596,17 +596,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("widget.show_stats", "Список бонусов");
     add("key.categories.skilltree", "Древо пассивных умений");
     add("key.display_skill_tree", "Открыть древо пассивных умений");
-    // apotheosis compatibility
-    add("item.apotheosis.gem.skilltree:ruby", "Рубин");
-    add("item.apotheosis.gem.skilltree:onyx", "Оникс");
-    add("item.apotheosis.gem.skilltree:moonstone", "Лунный камень");
-    add("item.apotheosis.gem.skilltree:opal", "Опал");
-    add("item.apotheosis.gem.skilltree:adamite", "Адамит");
-    add("item.apotheosis.gem.skilltree:citrine", "Цитрин");
-    add("item.apotheosis.gem.skilltree:jade", "Нефрит");
-    add("item.apotheosis.gem.skilltree:sapphire", "Сапфир");
-    add("item.apotheosis.gem.skilltree:tourmaline", "Турмалин");
-    add("item.apotheosis.gem.skilltree:turquoise", "Бирюза");
     // jei info
     add(
         "skilltree.jei.gem_info",
@@ -618,6 +607,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("itemGroup.skilltree", "Passive Skill Tree");
     // misc
     add("item.modifiers.both_hands", "Когда в руке:");
+    //apotheosis compatibility
+    add("text.apotheosis.category.curios:ring.plural", "Кольца");
+    add("text.apotheosis.category.curios:necklace.plural", "Ожерелья");
+    add("gem_class.jewelry", "Бижутерия");
     // affix names
     add("affix.skilltree:jewelry/dmg_reduction/tempered", "Закалённый");
     add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "Закалки");
@@ -636,11 +629,14 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
   }
 
   protected void addGem(String type, String name) {
-    add("item.skilltree.gem.skilltree." + type + "_0", "Раскрошенный " + name);
-    add("item.skilltree.gem.skilltree." + type + "_1", "Сломанный " + name);
-    add("item.skilltree.gem.skilltree." + type + "_2", "Некачественный " + name);
-    add("item.skilltree.gem.skilltree." + type + "_3", "Большой " + name);
-    add("item.skilltree.gem.skilltree." + type + "_4", "Редкий " + name);
-    add("item.skilltree.gem.skilltree." + type + "_5", "Исключительный " + name);
+    super.addGem(
+        type,
+        name,
+        "Раскрошенный",
+        "Сломанный",
+        "Некачественный",
+        "Большой",
+        "Редкий",
+        "Исключительный");
   }
 }

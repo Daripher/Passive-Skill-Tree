@@ -1,2 +1,3 @@
-// 1.19.2	2024-01-06T16:46:06.5829495	LootTables
-f6d1b1c3310c08f476d79e86f2225c31b531fe5b data/skilltree/loot_tables/gems.json
+// 1.19.2	2024-01-07T10:39:49.021783	LootTables
+f608c05fee17c90d63916ddb8fbbd617c2b50a51 data/skilltree/loot_tables/apotheosis_gems.json
+c0da716352352f55ff406e2ee4c7670186e15157 data/skilltree/loot_tables/gems.json

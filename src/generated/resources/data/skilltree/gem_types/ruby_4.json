@@ -7,27 +7,6 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:incoming_healing",
-            "multiplier": 0.024999999,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:jewelry"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:incoming_healing",
             "multiplier": 0.049999997,
             "player_condition": {
               "type": "skilltree:none"
@@ -51,34 +30,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
-            "attribute": "minecraft:generic.max_health",
-            "id": "43f24590-c92e-43f8-8832-2b059b1b0985",
-            "name": "Ruby",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "helmet"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.04999999888241291,
             "attribute": "skilltree:regeneration",
-            "id": "fc7d1435-c87c-48f5-83e0-5eba056ded68",
+            "id": "99fab9e9-d091-4f0b-aafc-7de22da7eaaa",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -103,8 +56,60 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.2500000037252903,
+            "attribute": "skilltree:life_per_hit",
+            "id": "c42e0eb7-68bd-4687-b714-6ed8cc18f2f8",
+            "name": "Ruby",
+            "operation": 0,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:weapon",
+        "weapon_type": "any"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.04999999888241291,
+            "attribute": "minecraft:generic.max_health",
+            "id": "a248149c-eb77-4c83-8f09-51e702f05f6b",
+            "name": "Ruby",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "helmet"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.2500000037252903,
             "attribute": "skilltree:life_on_block",
-            "id": "0537ac17-9639-4639-a4fc-9f5673a4983f",
+            "id": "828efe55-e184-448a-915b-8a16266451ca",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -127,12 +132,8 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.2500000037252903,
-            "attribute": "skilltree:life_per_hit",
-            "id": "f86c12da-ff42-4ff4-ac96-3a7d47a0be8b",
-            "name": "Ruby",
-            "operation": 0,
+            "type": "skilltree:incoming_healing",
+            "multiplier": 0.024999999,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -143,8 +144,7 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
+        "type": "skilltree:jewelry"
       }
     }
   ],

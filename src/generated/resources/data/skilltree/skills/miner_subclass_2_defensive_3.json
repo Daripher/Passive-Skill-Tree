@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:evasion",
-      "id": "886fef8f-9fd0-49e9-aa89-c12c75490c99",
+      "id": "c1462318-8f91-4951-b57d-8b72aa1ab44c",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "0b3fa1c3-8c03-416e-ad27-ba53cc2585df",
+      "id": "89aeda3c-4b50-49f4-b75d-cd7d29325acc",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

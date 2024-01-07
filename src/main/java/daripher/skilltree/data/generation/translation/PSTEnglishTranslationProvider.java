@@ -532,22 +532,11 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("widget.show_stats", "Show Stats");
     add("key.categories.skilltree", "Passive Skill Tree");
     add("key.display_skill_tree", "Open Skill Tree");
-    // apotheosis compatibility
-    add("item.apotheosis.gem.skilltree:ruby", "Ruby");
-    add("item.apotheosis.gem.skilltree:onyx", "Onyx");
-    add("item.apotheosis.gem.skilltree:moonstone", "Moonstone");
-    add("item.apotheosis.gem.skilltree:opal", "Opal");
-    add("item.apotheosis.gem.skilltree:adamite", "Adamite");
-    add("item.apotheosis.gem.skilltree:citrine", "Citrine");
-    add("item.apotheosis.gem.skilltree:jade", "Jade");
-    add("item.apotheosis.gem.skilltree:sapphire", "Sapphire");
-    add("item.apotheosis.gem.skilltree:tourmaline", "Tourmaline");
-    add("item.apotheosis.gem.skilltree:turquoise", "Turquoise");
     // jei info
     add(
         "skilltree.jei.gem_info",
-        "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with" +
-            " a small chance (requires no silk touch tool).");
+        "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with"
+            + " a small chance (requires no silk touch tool).");
     // curios info
     add("curios.identifier.quiver", "Quiver");
     add("curios.modifiers.quiver", "When worn:");
@@ -555,6 +544,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("itemGroup.skilltree", "Passive Skill Tree");
     // misc
     add("item.modifiers.both_hands", "When Held:");
+    //apotheosis compatibility
+    add("text.apotheosis.category.curios:ring.plural", "Rings");
+    add("text.apotheosis.category.curios:necklace.plural", "Necklaces");
+    add("gem_class.jewelry", "Jewelry");
     // affix names
     add("affix.skilltree:jewelry/dmg_reduction/tempered", "Tempered");
     add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "of Hardening");
@@ -573,11 +566,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
   }
 
   protected void addGem(String type, String name) {
-    add("item.skilltree.gem.skilltree." + type + "_0", "Crumbled " + name);
-    add("item.skilltree.gem.skilltree." + type + "_1", "Broken " + name);
-    add("item.skilltree.gem.skilltree." + type + "_2", "Low-Quality " + name);
-    add("item.skilltree.gem.skilltree." + type + "_3", "Big " + name);
-    add("item.skilltree.gem.skilltree." + type + "_4", "Rare " + name);
-    add("item.skilltree.gem.skilltree." + type + "_5", "Exceptional " + name);
+    super.addGem(type, name, "Crumbled", "Broken", "Low-Quality", "Big", "Rare", "Exceptional");
   }
 }

@@ -27,7 +27,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
@@ -92,7 +91,9 @@ public class ItemHelper {
 
   public static int getAdditionalSockets(ItemStack stack) {
     int sockets =
-        getItemBonuses(stack, ItemSocketsBonus.class).stream()
+        getItemBonusesExcludingGems(stack).stream()
+            .filter(ItemSocketsBonus.class::isInstance)
+            .map(ItemSocketsBonus.class::cast)
             .map(ItemSocketsBonus::getAmount)
             .reduce(Integer::sum)
             .orElse(0);
@@ -111,7 +112,6 @@ public class ItemHelper {
   }
 
   public static boolean isShield(ItemStack stack) {
-    if (stack.canPerformAction(ToolActions.SHIELD_BLOCK)) return true;
     if (Config.forced_shields.contains(stack.getItem())) return true;
     return stack.getItem() instanceof ShieldItem || stack.is(Tags.Items.TOOLS_SHIELDS);
   }
@@ -145,25 +145,20 @@ public class ItemHelper {
   }
 
   public static boolean isAxe(ItemStack stack) {
-    if (stack.canPerformAction(ToolActions.AXE_DIG)) return true;
     return stack.getItem() instanceof AxeItem || stack.is(Tags.Items.TOOLS_AXES);
   }
 
   public static boolean isHoe(ItemStack stack) {
-    if (stack.canPerformAction(ToolActions.HOE_DIG)) return true;
     return stack.getItem() instanceof HoeItem || stack.is(Tags.Items.TOOLS_HOES);
   }
 
   public static boolean isShovel(ItemStack stack) {
-    if (stack.canPerformAction(ToolActions.SHOVEL_DIG)) return true;
     return stack.getItem() instanceof ShovelItem || stack.is(Tags.Items.TOOLS_SHOVELS);
   }
 
   public static boolean isSword(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
     if (Objects.requireNonNull(id).toString().equals("tetra:modular_sword")) return true;
-    if (stack.canPerformAction(ToolActions.SWORD_DIG)) return true;
-    if (stack.canPerformAction(ToolActions.SWORD_SWEEP)) return true;
     return stack.getItem() instanceof SwordItem || stack.is(Tags.Items.TOOLS_SWORDS);
   }
 
@@ -200,7 +195,6 @@ public class ItemHelper {
   }
 
   public static boolean isPickaxe(ItemStack stack) {
-    if (stack.canPerformAction(ToolActions.PICKAXE_DIG)) return true;
     return stack.getItem() instanceof PickaxeItem || stack.is(Tags.Items.TOOLS_PICKAXES);
   }
 
