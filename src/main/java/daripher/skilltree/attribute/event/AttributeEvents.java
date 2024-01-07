@@ -3,11 +3,11 @@ package daripher.skilltree.attribute.event;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.config.Config;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.LivingEntityAccessor;
-import daripher.skilltree.entity.player.PlayerHelper;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -53,11 +53,11 @@ public class AttributeEvents {
   @SubscribeEvent
   public static void applyEvasionBonus(LivingAttackEvent event) {
     if (!(event.getEntity() instanceof Player player)) return;
-    double evasion = player.getAttributeValue(PSTAttributes.EVASION.get());
-    if (evasion == 0) return;
     if (!(event.getSource() instanceof EntityDamageSource damageSource)) return;
     if (!(damageSource.getEntity() instanceof LivingEntity)) return;
-    if (!(player.getRandom().nextFloat() < evasion / 100)) return;
+    double evasion = player.getAttributeValue(PSTAttributes.EVASION.get());
+    double evasionChance = (evasion * 0.05) / (1 + evasion * 0.05) * 0.8;
+    if (!(player.getRandom().nextFloat() < evasionChance)) return;
     player.level.playSound(
         null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
     event.setCanceled(true);
@@ -74,7 +74,8 @@ public class AttributeEvents {
     if (attacker instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) return;
     ItemStack shield = player.getOffhandItem();
     if (!ItemHelper.isShield(shield)) return;
-    double blockChance = player.getAttributeValue(PSTAttributes.BLOCKING.get()) / 100d;
+    double blocking = player.getAttributeValue(PSTAttributes.BLOCKING.get());
+    double blockChance = (blocking * 0.05) / (1 + blocking * 0.05) * 0.8;
     if (player.getRandom().nextFloat() >= blockChance) return;
     ShieldBlockEvent blockEvent = ForgeHooks.onShieldBlock(player, damageSource, damage);
     if (blockEvent.isCanceled()) return;
