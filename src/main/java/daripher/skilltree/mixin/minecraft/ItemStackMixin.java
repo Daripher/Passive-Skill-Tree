@@ -16,7 +16,7 @@ public abstract class ItemStackMixin implements IForgeItemStack {
   @ModifyReturnValue(method = "getMaxDamage", at = @At("RETURN"))
   private int applyDurabilityModifiers(int original) {
     List<ItemDurabilityBonus> durabilityBonuses =
-        ItemHelper.getItemBonuses((ItemStack) (Object) this, ItemDurabilityBonus.class);
+        ItemHelper.getDurabilityBonuses((ItemStack) (Object) this);
     original += getDurabilityBonus(durabilityBonuses, AttributeModifier.Operation.ADDITION);
     original *= getDurabilityBonus(durabilityBonuses, AttributeModifier.Operation.MULTIPLY_BASE);
     original *= getDurabilityBonus(durabilityBonuses, AttributeModifier.Operation.MULTIPLY_TOTAL);

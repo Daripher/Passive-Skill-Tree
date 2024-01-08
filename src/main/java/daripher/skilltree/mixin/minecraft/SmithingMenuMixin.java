@@ -1,9 +1,11 @@
 package daripher.skilltree.mixin.minecraft;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import daripher.skilltree.container.InteractiveContainer;
 import daripher.skilltree.entity.player.PlayerExtension;
-import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.init.PSTItems;
+import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.item.gem.bonus.RandomGemBonusProvider;
@@ -46,5 +48,20 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
     if (bonusProvider instanceof RandomGemBonusProvider) {
       ((PlayerExtension) player).updateGemsRandomSeed();
     }
+  }
+
+  @Inject(
+      method = "createResult",
+      at =
+          @At(
+              value = "INVOKE",
+              target =
+                  "Lnet/minecraft/world/inventory/ResultContainer;"
+                      + "setItem(ILnet/minecraft/world/item/ItemStack;)V",
+              shift = At.Shift.BEFORE,
+              ordinal = 1))
+  private void itemProduced(
+      CallbackInfo callbackInfo, @Local(ordinal = 0) LocalRef<ItemStack> stack) {
+    ItemHelper.refreshDurabilityBonuses(stack.get());
   }
 }

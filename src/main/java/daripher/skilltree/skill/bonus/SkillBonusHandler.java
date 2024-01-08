@@ -251,6 +251,7 @@ public class SkillBonusHandler {
     ItemHelper.removeItemBonuses(stack);
     getSkillBonuses(player, CraftedItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
     ItemHelper.getItemBonuses(stack, ItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
+    ItemHelper.refreshDurabilityBonuses(stack);
   }
 
   @SubscribeEvent
