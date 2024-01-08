@@ -490,6 +490,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
     add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "divisor", "%s за каждые %s %s");
     add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на %s");
     add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s за каждый уровень зачарований на %s");
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый Самоцвет в %s");
