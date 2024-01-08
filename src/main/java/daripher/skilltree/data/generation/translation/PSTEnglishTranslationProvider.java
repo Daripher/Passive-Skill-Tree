@@ -427,7 +427,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.ENCHANTED.get(), "Enchanted %s");
     // skill multipliers
     add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
-    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s for each %s point");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s per %s point");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "divisor", "%s per %s %s points");
     add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s for each enchantment on your %s");
     add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");

@@ -1005,6 +1005,7 @@
   "skill_bonus.skilltree.repair_efficiency": "Ремонтируем%s: %s",
   "skill_bonus.skilltree.repair_efficiency.bonus": "Прочности восстановлено",
   "skill_bonus_multiplier.skilltree.attribute_value": "%s за каждую единицу %s",
+  "skill_bonus_multiplier.skilltree.attribute_value.divisor": "%s за каждые %s %s",
   "skill_bonus_multiplier.skilltree.distance_to_target": "%s за каждый Блок между Вами и Целью",
   "skill_bonus_multiplier.skilltree.effect_amount": "%s за каждый эффект на вас",
   "skill_bonus_multiplier.skilltree.enchants_amount": "%s за каждое зачарование на %s",

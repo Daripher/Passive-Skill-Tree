@@ -74,8 +74,12 @@ public class TooltipHelper {
     if (amount < 0) visibleAmount *= -1;
     String operationDescription = amount > 0 ? "plus" : "take";
     operationDescription = "attribute.modifier." + operationDescription + "." + operation.ordinal();
-    String multiplierDescription = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(visibleAmount);
+    String multiplierDescription = formatNumber(visibleAmount);
     return Component.translatable(operationDescription, multiplierDescription, bonusDescription);
+  }
+
+  public static String formatNumber(double number) {
+    return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(number);
   }
 
   public static MutableComponent getSkillBonusTooltip(
