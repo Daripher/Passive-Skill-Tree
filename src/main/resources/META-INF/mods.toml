@@ -38,13 +38,6 @@ license="${mod_license}"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
-    modId="maxhealthfix"
-    mandatory=true
-    versionRange="[12.0.1,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.${mod_id}]]
     modId="curios"
     mandatory=true
     versionRange="[5.3.1+1.20.1,)"
