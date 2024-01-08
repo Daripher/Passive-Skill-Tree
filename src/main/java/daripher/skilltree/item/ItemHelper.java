@@ -9,6 +9,7 @@ import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.quiver.QuiverItem;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
 import java.util.ArrayList;
 import java.util.List;
@@ -283,6 +284,28 @@ public class ItemHelper {
   public static void removeItemBonuses(ItemStack stack) {
     if (!stack.hasTag()) return;
     stack.getOrCreateTag().remove("SkillBonuses");
+  }
+
+  public static void refreshDurabilityBonuses(ItemStack stack) {
+    if (stack.hasTag()) {
+      stack.getOrCreateTag().remove("DurabilityBonuses");
+    }
+    ListTag durabilityTags = new ListTag();
+    getItemBonuses(stack, ItemDurabilityBonus.class).stream()
+        .map(ItemHelper::serializeBonus)
+        .forEach(durabilityTags::add);
+    if (durabilityTags.isEmpty()) return;
+    stack.getOrCreateTag().put("DurabilityBonuses", durabilityTags);
+  }
+
+  public static List<ItemDurabilityBonus> getDurabilityBonuses(ItemStack stack) {
+    if (!stack.hasTag()) return ImmutableList.of();
+    return stack.getOrCreateTag().getList("DurabilityBonuses", Tag.TAG_COMPOUND).stream()
+        .map(CompoundTag.class::cast)
+        .map(ItemHelper::deserializeBonus)
+        .filter(ItemDurabilityBonus.class::isInstance)
+        .map(ItemDurabilityBonus.class::cast)
+        .toList();
   }
 
   private static ItemBonus<? extends ItemBonus<?>> mergeIfPossible(
