@@ -136,7 +136,7 @@ public enum ApotheosisCompatibility {
   }
 
   private void addItemSockets(GetItemSocketsEvent event) {
-    if (Apoth.Affixes.SOCKET.get() == null) return;
+    if (!Apoth.Affixes.SOCKET.isBound()) return;
     ItemStack stack = event.getStack();
     if (!ItemHelper.hasSockets(stack)) return;
     int sockets = event.getSockets();
