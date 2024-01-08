@@ -113,6 +113,8 @@ public class ItemHelper {
 
   public static boolean isShield(ItemStack stack) {
     if (Config.forced_shields.contains(stack.getItem())) return true;
+    ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_shield")) return true;
     return stack.getItem() instanceof ShieldItem || stack.is(Tags.Items.TOOLS_SHIELDS);
   }
 

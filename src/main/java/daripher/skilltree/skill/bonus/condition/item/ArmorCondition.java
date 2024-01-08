@@ -26,15 +26,17 @@ public final class ArmorCondition implements ItemCondition {
 
   @Override
   public boolean met(ItemStack stack) {
-    if (!ItemHelper.isArmor(stack) && !ItemHelper.isShield(stack)) return false;
+    boolean shield = ItemHelper.isShield(stack);
+    boolean armor = ItemHelper.isArmor(stack);
+    if (!armor && !shield) return false;
     final EquipmentSlot slot = Player.getEquipmentSlotForItem(stack);
     return switch (type) {
       case ANY -> true;
       case BOOTS -> slot == EquipmentSlot.FEET;
       case HELMET -> slot == EquipmentSlot.HEAD;
-      case SHIELD -> slot == EquipmentSlot.OFFHAND;
       case LEGGINGS -> slot == EquipmentSlot.LEGS;
       case CHESTPLATE -> slot == EquipmentSlot.CHEST;
+      case SHIELD -> shield;
     };
   }
 
