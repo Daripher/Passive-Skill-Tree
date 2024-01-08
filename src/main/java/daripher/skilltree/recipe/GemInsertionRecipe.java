@@ -52,8 +52,8 @@ public class GemInsertionRecipe extends SmithingTransformRecipe {
   private boolean canCraftIn(@NotNull Container container) {
     Optional<Player> player = ContainerHelper.getViewingPlayer(container);
     if (player.isEmpty()) return false;
-    ItemStack base = container.getItem(0);
-    ItemStack ingredient = container.getItem(1);
+    ItemStack base = container.getItem(1);
+    ItemStack ingredient = container.getItem(2);
     if (ingredient.getItem() != PSTItems.GEM.get()) return false;
     return GemItem.canInsertGem(player.get(), base, ingredient);
   }
