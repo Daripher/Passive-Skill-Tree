@@ -31,8 +31,7 @@ public class TooltipHelper {
     } else {
       effectDescription = effect.getEffect().getDisplayName();
       if (effect.getAmplifier() == 0) return effectDescription;
-      MutableComponent amplifier =
-          Component.translatable("potion.potency." + effect.getAmplifier());
+      Component amplifier = Component.translatable("potion.potency." + effect.getAmplifier());
       effectDescription =
           Component.translatable("potion.withAmplifier", effectDescription, amplifier);
     }

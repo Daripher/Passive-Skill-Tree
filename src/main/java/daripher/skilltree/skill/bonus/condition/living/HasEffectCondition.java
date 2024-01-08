@@ -14,28 +14,46 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public final class HasEffectCondition implements LivingCondition {
   private MobEffect effect;
+  private int amplifier;
 
   public HasEffectCondition(MobEffect effect) {
+    this(effect, 0);
+  }
+
+  public HasEffectCondition(MobEffect effect, int amplifier) {
     this.effect = effect;
+    this.amplifier = amplifier;
   }
 
   @Override
   public boolean met(LivingEntity living) {
-    return living.hasEffect(this.effect);
+    if (amplifier == 0) {
+      return living.hasEffect(this.effect);
+    }
+    MobEffectInstance effect = living.getEffect(this.effect);
+    return effect != null && effect.getAmplifier() >= this.amplifier;
   }
 
   @Override
   public MutableComponent getTooltip(MutableComponent bonusTooltip, String target) {
     String key = getDescriptionId();
-    MutableComponent targetDescription =
-        Component.translatable("%s.target.%s".formatted(key, target));
-    return Component.translatable(key, bonusTooltip, targetDescription, effect.getDisplayName());
+    Component targetDescription = Component.translatable("%s.target.%s".formatted(key, target));
+    Component effectDescription = effect.getDisplayName();
+    if (amplifier == 0) {
+      return Component.translatable(key, bonusTooltip, targetDescription, effectDescription);
+    }
+    Component amplifierDescription = Component.translatable("potion.potency." + amplifier);
+    effectDescription =
+        Component.translatable("potion.withAmplifier", effectDescription, amplifierDescription);
+    return Component.translatable(
+        key + ".amplifier", bonusTooltip, targetDescription, effectDescription);
   }
 
   @Override
@@ -46,13 +64,22 @@ public final class HasEffectCondition implements LivingCondition {
   @Override
   public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<LivingCondition> consumer) {
     editor.addLabel(0, 0, "Effect", ChatFormatting.GREEN);
+    editor.addLabel(150, 0, "Level", ChatFormatting.GREEN);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 200, 14, 10, effect, ForgeRegistries.MOB_EFFECTS.getValues())
+        .addDropDownList(0, 0, 145, 14, 10, effect, ForgeRegistries.MOB_EFFECTS.getValues())
         .setToNameFunc(a -> Component.translatable(a.getDescriptionId()))
         .setResponder(
             e -> {
               setEffect(e);
+              consumer.accept(this);
+            });
+    editor
+        .addNumericTextField(150, 0, 50, 14, amplifier)
+        .setNumericFilter(d -> d >= 0 && d == d.intValue())
+        .setNumericResponder(
+            v -> {
+              setAmplifier(v.intValue());
               consumer.accept(this);
             });
     editor.shiftWidgets(0, 19);
@@ -63,23 +90,28 @@ public final class HasEffectCondition implements LivingCondition {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     HasEffectCondition that = (HasEffectCondition) o;
-    return Objects.equals(effect, that.effect);
+    return amplifier == that.amplifier && Objects.equals(effect, that.effect);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(effect);
+    return Objects.hash(effect, amplifier);
   }
 
   public void setEffect(MobEffect effect) {
     this.effect = effect;
   }
 
+  public void setAmplifier(int amplifier) {
+    this.amplifier = amplifier;
+  }
+
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
       MobEffect effect = SerializationHelper.deserializeEffect(json);
-      return new HasEffectCondition(effect);
+      int amplifier = !json.has("amplifier") ? 1 : json.get("amplifier").getAsInt();
+      return new HasEffectCondition(effect, amplifier);
     }
 
     @Override
@@ -88,12 +120,14 @@ public final class HasEffectCondition implements LivingCondition {
         throw new IllegalArgumentException();
       }
       SerializationHelper.serializeEffect(json, aCondition.effect);
+      json.addProperty("amplifier", 1);
     }
 
     @Override
     public LivingCondition deserialize(CompoundTag tag) {
       MobEffect effect = SerializationHelper.deserializeEffect(tag);
-      return new HasEffectCondition(effect);
+      int amplifier = !tag.contains("amplifier") ? 1 : tag.getInt("amplifier");
+      return new HasEffectCondition(effect, amplifier);
     }
 
     @Override
@@ -103,12 +137,13 @@ public final class HasEffectCondition implements LivingCondition {
       }
       CompoundTag tag = new CompoundTag();
       SerializationHelper.serializeEffect(tag, aCondition.effect);
+      tag.putInt("amplifier", aCondition.amplifier);
       return tag;
     }
 
     @Override
     public LivingCondition deserialize(FriendlyByteBuf buf) {
-      return new HasEffectCondition(NetworkHelper.readEffect(buf));
+      return new HasEffectCondition(NetworkHelper.readEffect(buf), buf.readInt());
     }
 
     @Override
@@ -117,6 +152,7 @@ public final class HasEffectCondition implements LivingCondition {
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeEffect(buf, aCondition.effect);
+      buf.writeInt(aCondition.amplifier);
     }
 
     @Override

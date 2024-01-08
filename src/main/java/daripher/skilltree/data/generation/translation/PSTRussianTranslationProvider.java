@@ -297,6 +297,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Шанс вернуть стрелы");
     add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Удержание здоровья");
     add(PSTSkillBonuses.ALL_ATTRIBUTES.get(), "Все характеристики");
+    add(PSTSkillBonuses.EFFECT_ON_ATTACK.get(), "Шанс наложить %s на %s");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
     add(PSTItemBonuses.DURABILITY.get(), "Прочность");
@@ -338,6 +339,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "Вас");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Цель");
     add(PSTLivingConditions.HAS_EFFECT.get(), "%s если на %s действует %s");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "amplifier", "%s если на %s действует %s или выше");
     add(PSTLivingConditions.BURNING.get(), "target.you", "Вы горите");
     add(PSTLivingConditions.BURNING.get(), "target.target", "Цель горит");
     add(PSTLivingConditions.BURNING.get(), "%s если %s");
@@ -496,6 +498,20 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый Самоцвет в %s");
     add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
     add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s за каждый Блок между Вами и Целью");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
+        "%s за каждую единицу недостающего здоровья");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
+        "divisor",
+        "%s за каждые %s недостающего здоровья");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
+        "%s за каждый процент недостающего здоровья");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
+        "divisor",
+        "%s за каждые %s недостающего здоровья");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Отравление Оружия");
     addRecipe("skilltree:potion_mixing", "Смешивание Зелий");
@@ -608,7 +624,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("itemGroup.skilltree", "Passive Skill Tree");
     // misc
     add("item.modifiers.both_hands", "Когда в руке:");
-    //apotheosis compatibility
+    // apotheosis compatibility
     add("text.apotheosis.category.curios:ring.plural", "Кольца");
     add("text.apotheosis.category.curios:necklace.plural", "Ожерелья");
     add("gem_class.jewelry", "Бижутерия");

@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -366,6 +367,26 @@ public class SkillBonusHandler {
     }
     if (duration == 0) return;
     target.setSecondsOnFire(duration);
+  }
+
+  @SubscribeEvent
+  public static void applyChanceToApplyEffect(LivingHurtEvent event) {
+    if (!(event.getSource().getEntity() instanceof Player player)) return;
+    LivingEntity target = event.getEntity();
+    Map<MobEffectInstance, Float> chances = new HashMap<>();
+    getSkillBonuses(player, EffectOnAttackBonus.class)
+        .forEach(b -> chances.merge(b.getEffect(), b.getChance(player, target), Float::sum));
+    for (Map.Entry<MobEffectInstance, Float> entry : chances.entrySet()) {
+      MobEffectInstance effect = entry.getKey();
+      Float c = entry.getValue();
+      while (c > 1) {
+        target.addEffect(new MobEffectInstance(effect));
+        c--;
+      }
+      if (player.getRandom().nextFloat() < c) {
+        target.addEffect(new MobEffectInstance(effect));
+      }
+    }
   }
 
   @SubscribeEvent
