@@ -31,6 +31,11 @@ public class PSTLivingMultipliers {
       REGISTRY.register("food_level", HungerLevelMultiplier.Serializer::new);
   public static final RegistryObject<LivingMultiplier.Serializer> DISTANCE_TO_TARGET =
       REGISTRY.register("distance_to_target", DistanceToTargetMultiplier.Serializer::new);
+  public static final RegistryObject<LivingMultiplier.Serializer> MISSING_HEALTH_POINTS =
+      REGISTRY.register("missing_health_points", MissingHealthPointsMultiplier.Serializer::new);
+  public static final RegistryObject<LivingMultiplier.Serializer> MISSING_HEALTH_PERCENTAGE =
+      REGISTRY.register(
+          "missing_health_percentage", MissingHealthPercentageMultiplier.Serializer::new);
 
   public static List<LivingMultiplier> multiplierList() {
     return PSTRegistries.LIVING_MULTIPLIERS.get().getValues().stream()

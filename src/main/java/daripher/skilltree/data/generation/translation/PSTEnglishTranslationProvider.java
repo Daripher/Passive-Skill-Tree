@@ -295,6 +295,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Arrow retrieval chance");
     add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Health Reservation");
     add(PSTSkillBonuses.ALL_ATTRIBUTES.get(), "All Attributes");
+    add(PSTSkillBonuses.EFFECT_ON_ATTACK.get(), "Chance to inflict %s for %s");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");
@@ -336,6 +337,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "You are");
     add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "Target is");
     add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s");
+    add(PSTLivingConditions.HAS_EFFECT.get(), "amplifier", "%s if %s affected by %s or higher");
     add(PSTLivingConditions.BURNING.get(), "target.you", "You are");
     add(PSTLivingConditions.BURNING.get(), "target.target", "Target is");
     add(PSTLivingConditions.BURNING.get(), "%s if %s burning");
@@ -434,6 +436,16 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
     add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
     add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s for each Block between You and Target");
+    add(PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(), "%s per missing health point");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
+        "divisor",
+        "%s per %s missing health points");
+    add(PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(), "%s per missing health percent");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
+        "divisor",
+        "%s per %s missing health");
     // recipes
     addRecipe("skilltree:weapon_poisoning", "Weapon Poisoning");
     addRecipe("skilltree:potion_mixing", "Potion Mixing");
@@ -545,7 +557,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("itemGroup.skilltree", "Passive Skill Tree");
     // misc
     add("item.modifiers.both_hands", "When Held:");
-    //apotheosis compatibility
+    // apotheosis compatibility
     add("text.apotheosis.category.curios:ring.plural", "Rings");
     add("text.apotheosis.category.curios:necklace.plural", "Necklaces");
     add("gem_class.jewelry", "Jewelry");
