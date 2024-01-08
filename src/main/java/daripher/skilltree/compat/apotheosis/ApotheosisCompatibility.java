@@ -37,7 +37,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public enum ApotheosisCompatibility {
   INSTANCE;
 
-  public void addCompatibility() {
+  public void register() {
     GemBonus.CODEC.register(
         new ResourceLocation(SkillTreeMod.MOD_ID, "gem_bonus"), PSTGemBonus.CODEC);
     IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;

@@ -10,7 +10,7 @@ import se.mickelus.tetra.module.ItemUpgradeRegistry;
 public enum TetraCompatibility {
   INSTANCE;
 
-  public void addCompatibility() {
+  public void register() {
     IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     modEventBus.addListener(this::registerReplacementHook);
   }

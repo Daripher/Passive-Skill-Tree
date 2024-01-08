@@ -1,6 +1,7 @@
 package daripher.skilltree;
 
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
+import daripher.skilltree.compat.attributeslib.AttributesLibCompatibility;
 import daripher.skilltree.compat.tetra.TetraCompatibility;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.Config;
@@ -46,7 +47,8 @@ public class SkillTreeMod {
   }
 
   protected void addCompatibilities() {
-    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.INSTANCE.addCompatibility();
-    if (ModList.get().isLoaded("tetra")) TetraCompatibility.INSTANCE.addCompatibility();
+    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.INSTANCE.register();
+    if (ModList.get().isLoaded("tetra")) TetraCompatibility.INSTANCE.register();
+    if (ModList.get().isLoaded("attributeslib")) AttributesLibCompatibility.INSTANCE.register();
   }
 }
