@@ -2,8 +2,8 @@ package daripher.skilltree.network.message;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
+import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class SyncPlayerSkillsMessage {
     IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
     capability.getPlayerSkills().clear();
     message.learnedSkills.stream()
-        .map(SkillTreeClientData::getSkill)
+        .map(SkillsReloader::getSkillById)
         .forEach(capability.getPlayerSkills()::add);
     capability.setSkillPoints(message.skillPoints);
     if (minecraft.screen instanceof SkillTreeScreen screen) {

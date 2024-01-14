@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.data.reloader.SkillTreesReloader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -23,7 +23,7 @@ public class PSTClientCommands {
   public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER =
       (ctx, builder) ->
           SharedSuggestionProvider.suggest(
-              SkillTreeClientData.getAllTreesIds().stream().map(ResourceLocation::toString),
+              SkillTreesReloader.getSkillTrees().keySet().stream().map(ResourceLocation::toString),
               builder);
   private static ResourceLocation tree_to_display;
   private static int timer;

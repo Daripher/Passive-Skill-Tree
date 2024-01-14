@@ -3,7 +3,7 @@ package daripher.skilltree.capability.skill;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
-import daripher.skilltree.network.message.SyncSkillTreeDataMessage;
+import daripher.skilltree.network.message.SyncServerDataMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +58,7 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
     if (event.getEntity().level().isClientSide) return;
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()),
-        new SyncSkillTreeDataMessage());
+        new SyncServerDataMessage());
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
