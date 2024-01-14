@@ -8,6 +8,8 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.config.ClientConfig;
+import daripher.skilltree.data.reloader.SkillTreesReloader;
+import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
@@ -63,7 +65,7 @@ public class SkillTreeScreen extends Screen {
 
   public SkillTreeScreen(ResourceLocation skillTreeId) {
     super(Component.empty());
-    this.skillTree = SkillTreeClientData.getSkillTree(skillTreeId);
+    this.skillTree = SkillTreesReloader.getSkillTreeById(skillTreeId);
     this.minecraft = Minecraft.getInstance();
   }
 
@@ -261,7 +263,8 @@ public class SkillTreeScreen extends Screen {
   }
 
   protected void addSkillButton(ResourceLocation skillId) {
-    PassiveSkill skill = SkillTreeClientData.getSkill(skillId);
+    PassiveSkill skill = SkillsReloader.getSkillById(skillId);
+    if (skill == null) return;
     float buttonX = getSkillButtonX(skill);
     float buttonY = getSkillButtonY(skill);
     SkillButton button =
@@ -301,7 +304,7 @@ public class SkillTreeScreen extends Screen {
   }
 
   private Stream<PassiveSkill> getTreeSkills() {
-    return skillTree.getSkillIds().stream().map(SkillTreeClientData::getSkill);
+    return skillTree.getSkillIds().stream().map(SkillsReloader::getSkillById);
   }
 
   private void addSkillConnections(PassiveSkill skill) {

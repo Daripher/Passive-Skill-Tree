@@ -4,6 +4,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.item.gem.GemType;
 import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
@@ -334,6 +335,41 @@ public class NetworkHelper {
     GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
+  }
+
+  public static void writeGemTypes(FriendlyByteBuf buf, Collection<GemType> types) {
+    buf.writeInt(types.size());
+    types.forEach(t -> writeGemType(buf, t));
+  }
+
+  public static List<GemType> readGemTypes(FriendlyByteBuf buf) {
+    int size = buf.readInt();
+    List<GemType> list = new ArrayList<>();
+    for (int i = 0; i < size; i++) {
+      list.add(readGemType(buf));
+    }
+    return list;
+  }
+
+  private static void writeGemType(FriendlyByteBuf buf, GemType type) {
+    buf.writeInt(type.bonuses().size());
+    type.bonuses()
+        .forEach(
+            (c, p) -> {
+              writeItemCondition(buf, c);
+              writeGemBonusProvider(buf, p);
+            });
+    buf.writeUtf(type.id().toString());
+  }
+
+  public static GemType readGemType(FriendlyByteBuf buf) {
+    int bonuses = buf.readInt();
+    Map<ItemCondition, GemBonusProvider> bonusProviders = new HashMap<>();
+    for (int i = 0; i < bonuses; i++) {
+      bonusProviders.put(readItemCondition(buf), readGemBonusProvider(buf));
+    }
+    ResourceLocation id = new ResourceLocation(buf.readUtf());
+    return new GemType(id, bonusProviders);
   }
 
   public static void writeSkillTreeConfig(FriendlyByteBuf buf) {

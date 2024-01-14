@@ -5,11 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.serializers.SkillBonusSerializer;
+import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -44,6 +46,11 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
 
   public static @Nullable PassiveSkill getSkillById(ResourceLocation id) {
     return SKILLS.get(id);
+  }
+
+  public static void loadFromByteBuf(FriendlyByteBuf buf) {
+    SKILLS.clear();
+    NetworkHelper.readPassiveSkills(buf).forEach(s -> SKILLS.put(s.getId(), s));
   }
 
   @Override

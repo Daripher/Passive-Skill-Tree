@@ -4,7 +4,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
-import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import java.io.*;
@@ -13,15 +12,12 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 public class SkillTreeClientData {
-  private static final Map<ResourceLocation, PassiveSkill> PASSIVE_SKILLS = new HashMap<>();
-  private static final Map<ResourceLocation, PassiveSkillTree> SKILL_TREES = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkillTree> EDITOR_TREES = new HashMap<>();
   public static int[] skill_points_costs;
@@ -41,37 +37,8 @@ public class SkillTreeClientData {
     return first_skill_cost + (last_skill_cost - first_skill_cost) * level / max_skill_points;
   }
 
-  public static void loadFromByteBuf(FriendlyByteBuf buf) {
-    PASSIVE_SKILLS.clear();
-    SKILL_TREES.clear();
-    NetworkHelper.readPassiveSkills(buf).forEach(SkillTreeClientData::storeSkill);
-    NetworkHelper.readPassiveSkillTrees(buf).forEach(SkillTreeClientData::storeSkillTree);
-  }
-
-  private static void storeSkill(PassiveSkill skill) {
-    PASSIVE_SKILLS.put(skill.getId(), skill);
-  }
-
-  private static void storeSkillTree(PassiveSkillTree skillTree) {
-    SKILL_TREES.put(skillTree.getId(), skillTree);
-  }
-
-  public static List<ResourceLocation> getAllTreesIds() {
-    ArrayList<ResourceLocation> ids = new ArrayList<>(SKILL_TREES.keySet());
-    ids.addAll(EDITOR_TREES.keySet());
-    return ids;
-  }
-
-  public static PassiveSkill getSkill(ResourceLocation id) {
-    return PASSIVE_SKILLS.get(id);
-  }
-
   public static PassiveSkill getEditorSkill(ResourceLocation id) {
     return EDITOR_PASSIVE_SKILLS.get(id);
-  }
-
-  public static PassiveSkillTree getSkillTree(ResourceLocation id) {
-    return SKILL_TREES.get(id);
   }
 
   public static @Nullable PassiveSkillTree getOrCreateEditorTree(ResourceLocation treeId) {
@@ -84,15 +51,17 @@ public class SkillTreeClientData {
       if (!mcmetaFile.exists()) {
         generatePackMcmetaFile(mcmetaFile);
       }
-      if (!getSkillTreeSaveFile(treeId).exists() && SKILL_TREES.containsKey(treeId)) {
-        saveEditorSkillTree(SKILL_TREES.get(treeId));
+      if (!getSkillTreeSaveFile(treeId).exists()) {
+        PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(treeId);
+        if (skillTree != null) saveEditorSkillTree(skillTree);
       }
       if (!EDITOR_TREES.containsKey(treeId)) {
         loadEditorSkillTree(treeId);
       }
-      PassiveSkillTree skillTree = EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
-      skillTree.getSkillIds().forEach(SkillTreeClientData::loadOrCreateEditorSkill);
-      return skillTree;
+      PassiveSkillTree editorSkillTree =
+          EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
+      editorSkillTree.getSkillIds().forEach(SkillTreeClientData::loadOrCreateEditorSkill);
+      return editorSkillTree;
     } catch (RuntimeException e) {
       EDITOR_TREES.clear();
       EDITOR_PASSIVE_SKILLS.clear();
@@ -132,8 +101,9 @@ public class SkillTreeClientData {
     if (!skillSavesFolder.exists()) {
       skillSavesFolder.mkdirs();
     }
-    if (!getSkillSaveFile(skillId).exists() && PASSIVE_SKILLS.containsKey(skillId)) {
-      saveEditorSkill(PASSIVE_SKILLS.get(skillId));
+    if (!getSkillSaveFile(skillId).exists()) {
+      PassiveSkill skill = SkillsReloader.getSkillById(skillId);
+      if (skill != null) saveEditorSkill(skill);
     }
     if (!EDITOR_PASSIVE_SKILLS.containsKey(skillId)) {
       loadEditorSkill(skillId);

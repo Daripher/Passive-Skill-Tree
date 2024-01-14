@@ -6,9 +6,11 @@ import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.serializers.GemTypeSerializer;
 import daripher.skilltree.item.gem.GemType;
+import daripher.skilltree.network.NetworkHelper;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -48,13 +50,17 @@ public class GemTypesReloader extends SimpleJsonResourceReloadListener {
     return GEM_TYPES.getOrDefault(id, NO_TYPE);
   }
 
+  public static void loadFromByteBuf(FriendlyByteBuf buf) {
+    GEM_TYPES.clear();
+    NetworkHelper.readGemTypes(buf).forEach(t -> GEM_TYPES.put(t.id(), t));
+  }
+
   @Override
   protected void apply(
       Map<ResourceLocation, JsonElement> map,
       @NotNull ResourceManager resourceManager,
       @NotNull ProfilerFiller profilerFiller) {
     GEM_TYPES.clear();
-
     map.forEach(this::readGemType);
   }
 
