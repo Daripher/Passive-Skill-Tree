@@ -330,7 +330,7 @@ public class SkillTreeEditorScreen extends Screen {
               this,
               selectedBonus,
               b -> {
-                selectedSkills().forEach(s -> s.getBonuses().set(selectedBonus, b));
+                selectedSkills().forEach(s -> s.getBonuses().set(selectedBonus, b.copy()));
                 saveSelectedSkills();
               });
     }
