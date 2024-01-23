@@ -53,7 +53,7 @@ public class SkillTreeClientData {
       }
       if (!getSkillTreeSaveFile(treeId).exists()) {
         PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(treeId);
-        if (skillTree != null) saveEditorSkillTree(skillTree);
+        saveEditorSkillTree(skillTree);
       }
       if (!EDITOR_TREES.containsKey(treeId)) {
         loadEditorSkillTree(treeId);
@@ -62,7 +62,7 @@ public class SkillTreeClientData {
           EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
       editorSkillTree.getSkillIds().forEach(SkillTreeClientData::loadOrCreateEditorSkill);
       return editorSkillTree;
-    } catch (RuntimeException e) {
+    } catch (Exception e) {
       EDITOR_TREES.clear();
       EDITOR_PASSIVE_SKILLS.clear();
       sendSystemMessage("Error while reading editor files", ChatFormatting.DARK_RED);
@@ -92,6 +92,7 @@ public class SkillTreeClientData {
           """);
       writer.close();
     } catch (IOException e) {
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }
@@ -114,6 +115,7 @@ public class SkillTreeClientData {
     try (FileWriter writer = new FileWriter(getSkillTreeSaveFile(skillTree.getId()))) {
       SkillTreesReloader.GSON.toJson(skillTree, writer);
     } catch (JsonIOException | IOException e) {
+      e.printStackTrace();
       throw new RuntimeException("Can't save editor skill tree " + skillTree.getId());
     }
   }
@@ -123,6 +125,7 @@ public class SkillTreeClientData {
     try {
       skillTree = readFromFile(PassiveSkillTree.class, getSkillTreeSaveFile(treeId));
     } catch (IOException e) {
+      e.printStackTrace();
       throw new RuntimeException("Can't load editor tree " + treeId);
     }
     if (skillTree == null) {
@@ -136,6 +139,7 @@ public class SkillTreeClientData {
     try (FileWriter writer = new FileWriter(getSkillSaveFile(skill.getId()))) {
       SkillsReloader.GSON.toJson(skill, writer);
     } catch (JsonIOException | IOException e) {
+      e.printStackTrace();
       throw new RuntimeException("Can't save editor skill " + skill.getId());
     }
   }
@@ -145,6 +149,7 @@ public class SkillTreeClientData {
     try {
       skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
     } catch (IOException e) {
+      e.printStackTrace();
       throw new RuntimeException("Can't load editor skill " + skillId);
     }
     EDITOR_PASSIVE_SKILLS.put(skillId, skill);

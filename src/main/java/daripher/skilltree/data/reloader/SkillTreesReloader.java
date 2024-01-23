@@ -8,7 +8,6 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkillTree;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nullable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -41,8 +40,8 @@ public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
     return SKILL_TREES;
   }
 
-  public static @Nullable PassiveSkillTree getSkillTreeById(ResourceLocation id) {
-    return SKILL_TREES.get(id);
+  public static PassiveSkillTree getSkillTreeById(ResourceLocation id) {
+    return SKILL_TREES.getOrDefault(id, new PassiveSkillTree(id));
   }
 
   public static void loadFromByteBuf(FriendlyByteBuf buf) {
