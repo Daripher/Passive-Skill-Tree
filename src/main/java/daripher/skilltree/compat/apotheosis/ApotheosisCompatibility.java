@@ -134,7 +134,9 @@ public enum ApotheosisCompatibility {
   public ItemStack getGemStack(ResourceLocation gemTypeId) {
     Gem gem = GemManager.INSTANCE.getValue(gemTypeId);
     if (gem == null) return ItemStack.EMPTY;
-    return GemManager.createGemStack(gem, LootRarity.EPIC);
+    LootRarity rarity = gem.getMinRarity();
+    if (rarity == null) return ItemStack.EMPTY;
+    return GemManager.createGemStack(gem, rarity);
   }
 
   public @Nullable ResourceLocation getGemId(ItemStack stack) {
