@@ -396,6 +396,9 @@ public class SkillBonusHandler {
   public static void applyArrowRetrievalBonus(LivingHurtEvent event) {
     if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) return;
     if (!(event.getSource().getEntity() instanceof Player player)) return;
+    AbstractArrowAccessor arrowAccessor = (AbstractArrowAccessor) arrow;
+    ItemStack arrowStack = arrowAccessor.invokeGetPickupItem();
+    if (arrowStack == null) return;
     float chance =
         getSkillBonuses(player, ArrowRetrievalBonus.class).stream()
             .map(ArrowRetrievalBonus::getChance)
@@ -405,8 +408,7 @@ public class SkillBonusHandler {
     LivingEntity target = event.getEntity();
     CompoundTag targetData = target.getPersistentData();
     ListTag stuckArrowsTag = targetData.getList("StuckArrows", new CompoundTag().getId());
-    AbstractArrowAccessor arrowAccessor = (AbstractArrowAccessor) arrow;
-    stuckArrowsTag.add(arrowAccessor.invokeGetPickupItem().save(new CompoundTag()));
+    stuckArrowsTag.add(arrowStack.save(new CompoundTag()));
     targetData.put("StuckArrows", stuckArrowsTag);
   }
 

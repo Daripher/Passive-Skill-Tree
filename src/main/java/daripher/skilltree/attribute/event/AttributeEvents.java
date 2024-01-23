@@ -115,6 +115,7 @@ public class AttributeEvents {
     if (!(damageSource.getDirectEntity() instanceof ThrownTrident trident)) return;
     AbstractArrowAccessor arrowAccessor = (AbstractArrowAccessor) trident;
     ItemStack weapon = arrowAccessor.invokeGetPickupItem();
+    if (weapon == null) return;
     if (!ItemHelper.hasPoisons(weapon)) return;
     List<MobEffectInstance> poisons = ItemHelper.getPoisons(weapon);
     LivingEntity target = event.getEntity();
