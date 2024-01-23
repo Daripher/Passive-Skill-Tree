@@ -90,6 +90,8 @@ public class NetworkHelper {
   }
 
   public static void writeAttributeModifier(FriendlyByteBuf buf, AttributeModifier modifier) {
+    buf.writeLong(modifier.getId().getMostSignificantBits());
+    buf.writeLong(modifier.getId().getLeastSignificantBits());
     buf.writeUtf(modifier.getName());
     buf.writeDouble(modifier.getAmount());
     writeOperation(buf, modifier.getOperation());
@@ -97,10 +99,11 @@ public class NetworkHelper {
 
   @Nonnull
   public static AttributeModifier readAttributeModifier(FriendlyByteBuf buf) {
+    UUID id = new UUID(buf.readLong(), buf.readLong());
     String name = buf.readUtf();
     double amount = buf.readDouble();
     AttributeModifier.Operation operation = readOperation(buf);
-    return new AttributeModifier(name, amount, operation);
+    return new AttributeModifier(id, name, amount, operation);
   }
 
   public static void writeNullableResourceLocation(
