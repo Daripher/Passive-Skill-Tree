@@ -50,3 +50,10 @@ license="${mod_license}"
     versionRange="[6.4.0,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="apothiccurios"
+    mandatory=true
+    versionRange="[1.0.3,)"
+    ordering="NONE"
+    side="BOTH"
