@@ -160,7 +160,7 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
   protected void addGem(String type, String name, String... qualities) {
     for (int i = 0; i < qualities.length; i++) {
       add("item.skilltree.gem.skilltree." + type + "_" + i, qualities[i] + " " + name);
-      add("item.apotheosis.gem.skilltree:" + type + "_" + i, qualities[i] + " " + name);
+      add("item.apotheosis.gem.skilltree:" + type + "_" + i, name);
     }
   }
 }

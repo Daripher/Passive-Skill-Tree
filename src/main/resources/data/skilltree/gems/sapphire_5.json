@@ -168,7 +168,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "epic",
-  "min_rarity": "epic",
+  "max_rarity": "ancient",
+  "min_rarity": "ancient",
   "weight": 0
 }

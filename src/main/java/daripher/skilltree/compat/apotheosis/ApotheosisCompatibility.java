@@ -18,6 +18,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.event.GetItemSocketsEvent;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import java.util.*;
@@ -124,7 +125,9 @@ public enum ApotheosisCompatibility {
   public ItemStack getGemStack(ResourceLocation gemTypeId) {
     Gem gem = GemRegistry.INSTANCE.getValue(gemTypeId);
     if (gem == null) return ItemStack.EMPTY;
-    return GemRegistry.createGemStack(gem, RarityRegistry.byLegacyId("epic").get());
+    LootRarity rarity = gem.getMinRarity();
+    if (rarity == null) return ItemStack.EMPTY;
+    return GemRegistry.createGemStack(gem, rarity);
   }
 
   public @Nullable ResourceLocation getGemId(ItemStack stack) {
