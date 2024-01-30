@@ -1,7 +1,6 @@
 package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Axis;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.data.SkillTreeClientData;
@@ -461,7 +460,8 @@ public class SkillTreeScreen extends Screen {
   }
 
   protected void renderConnections(GuiGraphics graphics, int mouseX, int mouseY) {
-    skillConnections.forEach(c -> renderConnection(graphics, c));
+    skillConnections.forEach(
+        c -> ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, renderAnimation));
     gatewayConnections.forEach(c -> renderGatewayConnection(graphics, c, mouseX, mouseY));
   }
 
@@ -471,66 +471,11 @@ public class SkillTreeScreen extends Screen {
     SkillButton button2 = connection.getSecondButton();
     SkillButton hoveredSkill = getSkillAt(mouseX, mouseY);
     boolean learned = isSkillLearned(button1.skill) || isSkillLearned(button2.skill);
-    if (learned) {
-      if (learnedSkills.contains(button2.skill.getId())
-          || newlyLearnedSkills.contains(button2.skill.getId())) {
-        renderGatewayConnection(graphics, button2, button1);
-      } else {
-        renderGatewayConnection(graphics, button1, button2);
-      }
-      return;
-    }
     boolean hovered = hoveredSkill == button1 || hoveredSkill == button2;
-    if (hovered) {
-      if (hoveredSkill == button2) {
-        renderGatewayConnection(graphics, button2, button1);
-      } else {
-        renderGatewayConnection(graphics, button1, button2);
-      }
+    if (learned || hovered) {
+      ScreenHelper.renderGatewayConnection(
+          graphics, scrollX, scrollY, connection, learned, zoom, renderAnimation);
     }
-  }
-
-  private void renderGatewayConnection(
-      GuiGraphics graphics, SkillButton button1, SkillButton button2) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/gateway_connection.png");
-    graphics.pose().pushPose();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-    int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
-    boolean highlighted = isSkillLearned(button1.skill);
-    graphics.pose().scale(zoom, zoom, 1F);
-    graphics.blit(
-        texture, 0, -3, length, 6, -renderAnimation, highlighted ? 0 : 6, length, 6, 30, 12);
-    graphics.pose().popPose();
-  }
-
-  private void renderConnection(GuiGraphics graphics, SkillConnection connection) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_connection.png");
-    graphics.pose().pushPose();
-    SkillButton button1 = connection.getFirstButton();
-    SkillButton button2 = connection.getSecondButton();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-    int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
-    boolean highlighted = button1.highlighted && button2.highlighted;
-    graphics.pose().scale(1F, zoom, 1F);
-    graphics.blit(texture, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
-    boolean shouldAnimate =
-        button1.highlighted && button2.animated || button2.highlighted && button1.animated;
-    if (!highlighted && shouldAnimate) {
-      RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(getAnimation() / 3F) + 1) / 2);
-      graphics.blit(texture, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
-      RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-    }
-    graphics.pose().popPose();
   }
 
   public float getAnimation() {

@@ -1,7 +1,6 @@
 package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Axis;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.data.SkillTreeClientData;
@@ -890,67 +889,19 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   protected void renderConnections(GuiGraphics graphics, int mouseX, int mouseY) {
-    skillConnections.forEach(c -> renderConnection(graphics, c));
-    gatewayConnections.forEach(c -> renderGatewayConnection(graphics, c, mouseX, mouseY));
+    skillConnections.forEach(
+        c -> ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, 0));
+    gatewayConnections.forEach(c -> getRenderGatewayConnection(graphics, c, mouseX, mouseY));
   }
 
-  private void renderGatewayConnection(
+  private void getRenderGatewayConnection(
       GuiGraphics graphics, SkillConnection connection, int mouseX, int mouseY) {
-    SkillButton button1 = connection.getFirstButton();
-    SkillButton button2 = connection.getSecondButton();
-    SkillButton skillAtMouse = getSkillAt(mouseX, mouseY);
-    boolean selected =
-        selectedSkills.contains(button1.skill.getId())
-            || selectedSkills.contains(button2.skill.getId());
-    if (selected) {
-      if (selectedSkills.contains(button2.skill.getId())) {
-        renderGatewayConnection(graphics, button2, button1);
-      } else {
-        renderGatewayConnection(graphics, button1, button2);
-      }
+    SkillButton hoveredSkill = getSkillAt(mouseX, mouseY);
+    if (hoveredSkill != connection.getFirstButton()
+        && hoveredSkill != connection.getSecondButton()) {
       return;
     }
-    boolean hovered = skillAtMouse == button1 || skillAtMouse == button2;
-    if (hovered) {
-      if (skillAtMouse == button2) {
-        renderGatewayConnection(graphics, button2, button1);
-      } else {
-        renderGatewayConnection(graphics, button1, button2);
-      }
-    }
-  }
-
-  private void renderGatewayConnection(
-      GuiGraphics graphics, SkillButton button1, SkillButton button2) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/gateway_connection.png");
-    graphics.pose().pushPose();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-    int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
-    graphics.pose().scale(zoom, zoom, 1F);
-    graphics.blit(texture, 0, -3, length, 6, 0, 0, length, 6, 30, 12);
-    graphics.pose().popPose();
-  }
-
-  private void renderConnection(GuiGraphics graphics, SkillConnection connection) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_connection.png");
-    graphics.pose().pushPose();
-    SkillButton button1 = connection.getFirstButton();
-    SkillButton button2 = connection.getSecondButton();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    graphics.pose().translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    graphics.pose().mulPose(Axis.ZP.rotation(rotation));
-    int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
-    graphics.pose().scale(1F, zoom, 1F);
-    graphics.blit(texture, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
-    graphics.pose().popPose();
+    ScreenHelper.renderGatewayConnection(graphics, scrollX, scrollY, connection, true, zoom, 0);
   }
 
   protected boolean sameBonuses(PassiveSkill skill, PassiveSkill otherSkill) {
