@@ -629,19 +629,19 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("text.apotheosis.category.curios:necklace.plural", "Ожерелья");
     add("gem_class.jewelry", "Бижутерия");
     // affix names
-    add("affix.skilltree:jewelry/dmg_reduction/tempered", "Закалённый");
+    add("affix.skilltree:jewelry/dmg_reduction/tempered", "Закалённое");
     add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "Закалки");
-    add("affix.skilltree:jewelry/attribute/immortal", "Бессмертный");
+    add("affix.skilltree:jewelry/attribute/immortal", "Бессмертное");
     add("affix.skilltree:jewelry/attribute/immortal.suffix", "Бессмертия");
-    add("affix.skilltree:jewelry/attribute/experienced", "Опытный");
+    add("affix.skilltree:jewelry/attribute/experienced", "Опытное");
     add("affix.skilltree:jewelry/attribute/experienced.suffix", "Опыта");
-    add("affix.skilltree:jewelry/attribute/lucky", "Удачливый");
+    add("affix.skilltree:jewelry/attribute/lucky", "Удачливое");
     add("affix.skilltree:jewelry/attribute/lucky.suffix", "Удачи");
-    add("affix.skilltree:jewelry/attribute/hasty", "Спешащий");
+    add("affix.skilltree:jewelry/attribute/hasty", "Спешащее");
     add("affix.skilltree:jewelry/attribute/hasty.suffix", "Спешки");
-    add("affix.skilltree:jewelry/attribute/greedy", "Жадный");
-    add("affix.skilltree:jewelry/attribute/greedy.suffix", "Жадности");
-    add("affix.skilltree:jewelry/attribute/healthy", "Здоровый");
+    add("affix.skilltree:jewelry/attribute/hidden", "Сокрытое");
+    add("affix.skilltree:jewelry/attribute/hidden.suffix", "Скрытности");
+    add("affix.skilltree:jewelry/attribute/healthy", "Здоровое");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
   }
 

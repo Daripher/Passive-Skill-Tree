@@ -572,8 +572,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/lucky.suffix", "of Luck");
     add("affix.skilltree:jewelry/attribute/hasty", "Hasty");
     add("affix.skilltree:jewelry/attribute/hasty.suffix", "of Haste");
-    add("affix.skilltree:jewelry/attribute/greedy", "Greedy");
-    add("affix.skilltree:jewelry/attribute/greedy.suffix", "of Greed");
+    add("affix.skilltree:jewelry/attribute/hidden", "Hidden");
+    add("affix.skilltree:jewelry/attribute/hidden.suffix", "of Hiding");
     add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
   }
