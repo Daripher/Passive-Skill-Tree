@@ -54,6 +54,7 @@ public class SkillButton extends Button {
   @Override
   public void renderWidget(
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    RenderSystem.enableBlend();
     graphics.pose().pushPose();
     graphics.pose().translate(x, y, 0);
     renderFavoriteSkillHighlight(graphics);
@@ -81,6 +82,7 @@ public class SkillButton extends Button {
       graphics.setColor(1F, 1F, 1F, 1F);
     }
     graphics.pose().popPose();
+    RenderSystem.disableBlend();
   }
 
   private void renderFavoriteSkillHighlight(GuiGraphics graphics) {
@@ -105,7 +107,7 @@ public class SkillButton extends Button {
     graphics.pose().translate(-size / 2f, -size / 2f, 0f);
     graphics.blit(texture, 0, 0, size, size, 0, 0, 80, 80, 80, 80);
     graphics.pose().popPose();
-    RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+    graphics.setColor(1f, 1f, 1f, 1f);
   }
 
   private void renderFrame(GuiGraphics graphics) {
@@ -115,9 +117,7 @@ public class SkillButton extends Button {
 
   private void renderDarkening(GuiGraphics graphics) {
     ResourceLocation texture = skill.getBackgroundTexture();
-    RenderSystem.enableBlend();
     graphics.blit(texture, 0, 0, width, height, width, 0, width, height, width * 3, height);
-    RenderSystem.disableBlend();
   }
 
   private void renderIcon(GuiGraphics graphics) {
