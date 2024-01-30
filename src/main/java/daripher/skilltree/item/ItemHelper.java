@@ -56,6 +56,17 @@ public class ItemHelper {
     return socket;
   }
 
+  public static int getGemsAmount(ItemStack stack) {
+    if (!stack.hasTag() || !stack.getOrCreateTag().contains("gems_count")) {
+      refreshGemsAmount(stack);
+    }
+    return stack.getOrCreateTag().getInt("gems_count");
+  }
+
+  public static void refreshGemsAmount(ItemStack stack) {
+    stack.getOrCreateTag().putInt("gems_count", GemItem.getGems(stack).size());
+  }
+
   public static void setPoisons(ItemStack result, ItemStack poisonStack) {
     List<MobEffectInstance> effects = PotionUtils.getMobEffects(poisonStack);
     ListTag poisonsTag = new ListTag();

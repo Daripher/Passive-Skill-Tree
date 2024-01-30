@@ -63,5 +63,6 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
   private void itemProduced(
       CallbackInfo callbackInfo, @Local(ordinal = 0) LocalRef<ItemStack> stack) {
     ItemHelper.refreshDurabilityBonuses(stack.get());
+    ItemHelper.refreshGemsAmount(stack.get());
   }
 }
