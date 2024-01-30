@@ -3,7 +3,9 @@ package daripher.skilltree.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.math.Vector3f;
 import daripher.skilltree.client.widget.SkillButton;
+import daripher.skilltree.client.widget.SkillConnection;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -128,5 +130,63 @@ public class ScreenHelper {
     buffer.endBatch();
     poseStack.popPose();
     itemRenderer.blitOffset = zOffset;
+  }
+
+  public static void renderGatewayConnection(
+      PoseStack poseStack,
+      double x,
+      double y,
+      SkillConnection connection,
+      boolean highlighted,
+      float zoom,
+      float animation) {
+    ScreenHelper.prepareTextureRendering(
+        new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
+    poseStack.pushPose();
+    SkillButton button1 = connection.getFirstButton();
+    SkillButton button2 = connection.getSecondButton();
+    double connectionX = button1.x + button1.getWidth() / 2F;
+    double connectionY = button1.y + button1.getHeight() / 2F;
+    poseStack.translate(connectionX + x, connectionY + y, 0);
+    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
+    poseStack.mulPose(Vector3f.ZP.rotation(rotation));
+    int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
+    poseStack.scale(zoom, zoom, 1F);
+    GuiComponent.blit(
+        poseStack, 0, -8, length, 6, -animation, highlighted ? 0 : 6, length, 6, 30, 12);
+    GuiComponent.blit(
+        poseStack, 0, 2, length, 6, animation, highlighted ? 0 : 6, length, 6, -30, 12);
+    poseStack.popPose();
+  }
+
+  public static void renderConnection(
+      PoseStack poseStack,
+      double x,
+      double y,
+      SkillConnection connection,
+      float zoom,
+      float animation) {
+    ScreenHelper.prepareTextureRendering(
+        new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
+    poseStack.pushPose();
+    SkillButton button1 = connection.getFirstButton();
+    SkillButton button2 = connection.getSecondButton();
+    double connectionX = button1.x + button1.getWidth() / 2F;
+    double connectionY = button1.y + button1.getHeight() / 2F;
+    poseStack.translate(connectionX + x, connectionY + y, 0);
+    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
+    poseStack.mulPose(Vector3f.ZP.rotation(rotation));
+    int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
+    boolean highlighted = button1.highlighted && button2.highlighted;
+    poseStack.scale(1F, zoom, 1F);
+    GuiComponent.blit(poseStack, 0, -3, length, 6, 0, highlighted ? 0 : 6, length, 6, 50, 12);
+    boolean shouldAnimate =
+        button1.highlighted && button2.animated || button2.highlighted && button1.animated;
+    if (!highlighted && shouldAnimate) {
+      RenderSystem.setShaderColor(1F, 1F, 1F, (Mth.sin(animation / 3F) + 1) / 2);
+      GuiComponent.blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
+      RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+    }
+    poseStack.popPose();
   }
 }

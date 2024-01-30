@@ -1,7 +1,6 @@
 package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.data.SkillTreeClientData;
@@ -858,7 +857,6 @@ public class SkillTreeEditorScreen extends Screen {
 
   public <T extends Enum<T>> DropDownList<T> addDropDownList(
       int x, int y, int width, int height, int maxDisplayed, T defaultValue) {
-    @SuppressWarnings("unchecked")
     Class<T> enumClass = (Class<T>) defaultValue.getClass();
     List<T> enums = Stream.of(enumClass.getEnumConstants()).map(enumClass::cast).toList();
     return addRenderableWidget(
@@ -880,68 +878,19 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY) {
-    ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
-    skillConnections.forEach(connection -> renderConnection(poseStack, connection));
-    ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
-    gatewayConnections.forEach(
-        connection -> renderGatewayConnection(poseStack, connection, mouseX, mouseY));
+    skillConnections.forEach(
+        c -> ScreenHelper.renderConnection(poseStack, scrollX, scrollY, c, zoom, 0));
+    gatewayConnections.forEach(c -> renderGatewayConnection(poseStack, c, mouseX, mouseY));
   }
 
   private void renderGatewayConnection(
       PoseStack poseStack, SkillConnection connection, int mouseX, int mouseY) {
-    SkillButton button1 = connection.getFirstButton();
-    SkillButton button2 = connection.getSecondButton();
-    SkillButton skillAtMouse = getSkillAt(mouseX, mouseY);
-    boolean selected =
-        selectedSkills.contains(button1.skill.getId())
-            || selectedSkills.contains(button2.skill.getId());
-    if (selected) {
-      if (selectedSkills.contains(button2.skill.getId())) {
-        renderGatewayConnection(poseStack, button2, button1);
-      } else {
-        renderGatewayConnection(poseStack, button1, button2);
-      }
+    SkillButton hoveredSkill = getSkillAt(mouseX, mouseY);
+    if (hoveredSkill != connection.getFirstButton()
+        && hoveredSkill != connection.getSecondButton()) {
       return;
     }
-    boolean hovered = skillAtMouse == button1 || skillAtMouse == button2;
-    if (hovered) {
-      if (skillAtMouse == button2) {
-        renderGatewayConnection(poseStack, button2, button1);
-      } else {
-        renderGatewayConnection(poseStack, button1, button2);
-      }
-    }
-  }
-
-  private void renderGatewayConnection(
-      PoseStack poseStack, SkillButton button1, SkillButton button2) {
-    poseStack.pushPose();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    poseStack.mulPose(Vector3f.ZP.rotation(rotation));
-    int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
-    poseStack.scale(zoom, zoom, 1F);
-    blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 30, 12);
-    poseStack.popPose();
-  }
-
-  private void renderConnection(PoseStack poseStack, SkillConnection connection) {
-    poseStack.pushPose();
-    SkillButton button1 = connection.getFirstButton();
-    SkillButton button2 = connection.getSecondButton();
-    double connectionX = button1.x + button1.getWidth() / 2F;
-    double connectionY = button1.y + button1.getHeight() / 2F;
-    poseStack.translate(connectionX + scrollX, connectionY + scrollY, 0);
-    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
-    poseStack.mulPose(Vector3f.ZP.rotation(rotation));
-    int length = (int) ScreenHelper.getDistanceBetweenButtons(button1, button2);
-    poseStack.scale(1F, zoom, 1F);
-    blit(poseStack, 0, -3, length, 6, 0, 0, length, 6, 50, 12);
-    poseStack.popPose();
+    ScreenHelper.renderGatewayConnection(poseStack, scrollX, scrollY, connection, true, zoom, 0);
   }
 
   protected boolean sameBonuses(PassiveSkill skill, PassiveSkill otherSkill) {
