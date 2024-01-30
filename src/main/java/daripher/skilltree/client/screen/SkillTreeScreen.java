@@ -382,8 +382,17 @@ public class SkillTreeScreen extends Screen {
   }
 
   protected void skillButtonPressed(SkillButton button) {
-    assert minecraft != null;
+    Objects.requireNonNull(minecraft);
     PassiveSkill skill = button.skill;
+    if (!newlyLearnedSkills.isEmpty()) {
+      int lastLearned = newlyLearnedSkills.size() - 1;
+      if (newlyLearnedSkills.get(lastLearned).equals(skill.getId())) {
+        skillPoints++;
+        newlyLearnedSkills.remove(lastLearned);
+        rebuildWidgets();
+        return;
+      }
+    }
     if (button.animated) {
       skillPoints--;
       newlyLearnedSkills.add(skill.getId());
