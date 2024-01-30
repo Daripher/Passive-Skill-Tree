@@ -67,7 +67,7 @@ public class ScreenHelper {
     for (MutableComponent component : tooltip) {
       int k = font.width(component);
       if (k > tooltipWidth) tooltipWidth = k;
-      tooltipHeight += font.lineHeight;
+      tooltipHeight += font.lineHeight + 2;
     }
     tooltipWidth += 42;
     float tooltipX = x + 12;
@@ -96,10 +96,10 @@ public class ScreenHelper {
     }
     MutableComponent title = tooltip.remove(0);
     graphics.drawCenteredString(font, title, tooltipWidth / 2, textY, 0xFFFFFF);
-    textY += 17;
+    textY += 19;
     for (MutableComponent component : tooltip) {
       graphics.drawString(font, component, textX, textY, 0xFFFFFF);
-      textY += font.lineHeight + 1;
+      textY += font.lineHeight + 2;
     }
     graphics.pose().popPose();
   }
