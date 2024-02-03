@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +53,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
     this.modifier = new AttributeModifier(UUID.randomUUID(), name, amount, operation);
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (!(playerCondition instanceof NoneLivingCondition)
@@ -72,7 +72,9 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
           attribute);
       return;
     }
-    if (!instance.hasModifier(modifier)) instance.addTransientModifier(modifier);
+    if (!instance.hasModifier(modifier)) {
+      applyAttributeModifier(instance, modifier, player);
+    }
   }
 
   @Override
@@ -112,18 +114,27 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   }
 
   private void applyDynamicAttributeBonus(ServerPlayer player) {
-    AttributeInstance playerAttribute = player.getAttribute(attribute);
-    if (playerAttribute == null) return;
-    AttributeModifier oldModifier = playerAttribute.getModifier(modifier.getId());
+    AttributeInstance instance = player.getAttribute(attribute);
+    if (instance == null) return;
+    AttributeModifier oldModifier = instance.getModifier(modifier.getId());
     double value = modifier.getAmount();
     value *= playerMultiplier.getValue(player);
     if (oldModifier != null) {
       if (oldModifier.getAmount() == value) return;
-      playerAttribute.removeModifier(modifier.getId());
+      instance.removeModifier(modifier.getId());
     }
-    playerAttribute.addPermanentModifier(
-        new AttributeModifier(modifier.getId(), "DynamicBonus", value, modifier.getOperation()));
-    if (attribute == Attributes.MAX_HEALTH) player.setHealth(player.getHealth());
+    AttributeModifier dynamicModifier =
+        new AttributeModifier(modifier.getId(), "DynamicBonus", value, modifier.getOperation());
+    applyAttributeModifier(instance, dynamicModifier, player);
+  }
+
+  private void applyAttributeModifier(
+      AttributeInstance instance, AttributeModifier modifier, Player player) {
+    float healthPercentage = player.getHealth() / player.getMaxHealth();
+    instance.addTransientModifier(modifier);
+    if (attribute == Attributes.MAX_HEALTH) {
+      player.setHealth(player.getMaxHealth() * healthPercentage);
+    }
   }
 
   @Override
