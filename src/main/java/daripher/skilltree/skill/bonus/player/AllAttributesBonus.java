@@ -27,8 +27,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -53,7 +55,7 @@ public final class AllAttributesBonus
         .map(player::getAttribute)
         .filter(Objects::nonNull)
         .filter(a -> !a.hasModifier(modifier))
-        .forEach(a -> a.addTransientModifier(modifier));
+        .forEach(a -> applyAttributeModifier(a, modifier, player));
   }
 
   @Override
@@ -100,11 +102,20 @@ public final class AllAttributesBonus
               AttributeModifier dynamicModifier =
                   new AttributeModifier(
                       modifier.getId(), "Dynamic", value, modifier.getOperation());
-              playerAttribute.addPermanentModifier(dynamicModifier);
+              applyAttributeModifier(playerAttribute, dynamicModifier, player);
               if (playerAttribute.getAttribute() == Attributes.MAX_HEALTH) {
                 player.setHealth(player.getHealth());
               }
             });
+  }
+
+  private void applyAttributeModifier(
+      AttributeInstance instance, AttributeModifier modifier, Player player) {
+    float healthPercentage = player.getHealth() / player.getMaxHealth();
+    instance.addTransientModifier(modifier);
+    if (getAffectedAttributes().contains(Attributes.MAX_HEALTH)) {
+      player.setHealth(player.getMaxHealth() * healthPercentage);
+    }
   }
 
   @Override
