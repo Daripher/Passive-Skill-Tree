@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.max_health",
-          "id": "81285266-2c7b-40d2-bcf2-7f3f2dcb0e91",
+          "id": "7f7bad03-b34e-4cfe-8092-77996091fac9",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors"
       }
     }
   ],

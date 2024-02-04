@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.max_health",
-          "id": "3efa61dd-9d8a-4d68-b4a0-9c7e9c3c551a",
+          "id": "b0f149c1-bb1a-4050-afa7-1160b9edd9e2",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:curio",
-        "slot": "necklace"
+        "type": "skilltree:tag",
+        "tag_id": "curios:necklace"
       }
     }
   ],

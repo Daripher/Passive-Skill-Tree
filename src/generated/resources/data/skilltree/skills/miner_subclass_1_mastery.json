@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "boots"
+          "type": "skilltree:tag",
+          "tag_id": "forge:armors/boots"
         }
       },
       "target_condition": {

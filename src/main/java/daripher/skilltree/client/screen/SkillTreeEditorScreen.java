@@ -872,7 +872,6 @@ public class SkillTreeEditorScreen extends Screen {
 
   public <T extends Enum<T>> DropDownList<T> addDropDownList(
       int x, int y, int width, int height, int maxDisplayed, T defaultValue) {
-    @SuppressWarnings("unchecked")
     Class<T> enumClass = (Class<T>) defaultValue.getClass();
     List<T> enums = Stream.of(enumClass.getEnumConstants()).map(enumClass::cast).toList();
     return addRenderableWidget(

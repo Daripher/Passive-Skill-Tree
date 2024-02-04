@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.max_health",
-          "id": "264c1273-9956-40b6-9a61-e692eea66b68",
+          "id": "1a12474e-9089-4f63-aba1-c572251ec95c",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "shield"
+        "type": "skilltree:tag",
+        "tag_id": "forge:tools/shields"
       }
     }
   ],

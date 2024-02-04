@@ -23,8 +23,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "axe"
+        "type": "skilltree:tag",
+        "tag_id": "minecraft:axes"
       }
     }
   ],

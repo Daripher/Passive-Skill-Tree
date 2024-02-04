@@ -23,8 +23,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "melee"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons/melee"
       }
     }
   ],

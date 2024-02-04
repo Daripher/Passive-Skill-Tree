@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "skilltree:blocking",
-          "id": "bc27bd9b-d793-4667-be8f-253f4b5ad446",
+          "id": "8c586559-9842-41b4-a5bb-29d2aa48bd58",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "shield"
+        "type": "skilltree:tag",
+        "tag_id": "forge:tools/shields"
       }
     }
   ],

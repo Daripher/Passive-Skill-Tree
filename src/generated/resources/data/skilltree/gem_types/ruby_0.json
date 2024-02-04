@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.05000000074505806,
             "attribute": "skilltree:life_per_hit",
-            "id": "77dfe1eb-0448-4bb3-a8e9-bd957f82194a",
+            "id": "24b9691a-78cc-440d-b309-17c88870b8b6",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -22,8 +22,34 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.05000000074505806,
+            "attribute": "skilltree:life_on_block",
+            "id": "d78f7fa9-328d-4d88-b925-ac43ca42f5be",
+            "name": "Ruby",
+            "operation": 0,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:tag",
+        "tag_id": "forge:tools/shields"
       }
     },
     {
@@ -44,7 +70,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:jewelry"
+        "type": "skilltree:tag",
+        "tag_id": "forge:curios/jewelry"
       }
     },
     {
@@ -55,34 +82,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.009999999776482582,
-            "attribute": "minecraft:generic.max_health",
-            "id": "071f8669-d4fd-4517-a044-5c60b50d717e",
-            "name": "Ruby",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "helmet"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.05000000074505806,
-            "attribute": "skilltree:life_on_block",
-            "id": "234891bb-6b7c-4b89-8ec0-2fbb5e7061c0",
+            "attribute": "skilltree:regeneration",
+            "id": "0166c24e-06ea-4f5c-b45b-5ba33a0ff3eb",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -95,8 +96,34 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "shield"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors/boots"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.009999999776482582,
+            "attribute": "minecraft:generic.max_health",
+            "id": "fc01cd23-3ce2-4a42-b03c-f2e72a0b4aaf",
+            "name": "Ruby",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors/helmets"
       }
     },
     {
@@ -117,34 +144,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "chestplate"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.009999999776482582,
-            "attribute": "skilltree:regeneration",
-            "id": "9c47781e-378c-475b-908e-f6cb38b723de",
-            "name": "Ruby",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "boots"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors/chestplates"
       }
     }
   ],

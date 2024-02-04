@@ -7,11 +7,12 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTSkillBonuses;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.condition.item.ItemTagCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import java.util.Objects;
@@ -203,7 +204,7 @@ public final class CraftedItemBonus implements SkillBonus<CraftedItemBonus> {
     @Override
     public SkillBonus<?> createDefaultInstance() {
       return new CraftedItemBonus(
-          new EquipmentCondition(),
+          new ItemTagCondition(PSTTags.EQUIPMENT.location()),
           new ItemDurabilityBonus(100f, AttributeModifier.Operation.ADDITION));
     }
   }

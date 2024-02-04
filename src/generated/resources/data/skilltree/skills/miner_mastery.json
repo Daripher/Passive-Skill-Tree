@@ -4,7 +4,8 @@
     {
       "type": "skilltree:player_sockets",
       "item_condition": {
-        "type": "skilltree:equipment"
+        "type": "skilltree:tag",
+        "tag_id": "forge:equipment"
       },
       "sockets": 1
     }

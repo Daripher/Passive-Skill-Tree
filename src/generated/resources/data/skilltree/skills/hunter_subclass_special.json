@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.5,
           "attribute": "skilltree:life_per_hit",
-          "id": "1206a780-8af9-498a-a436-397c267298fa",
+          "id": "e6b1f5c6-5f16-4aa3-9f58-de3dbbbc602c",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons"
       }
     }
   ],

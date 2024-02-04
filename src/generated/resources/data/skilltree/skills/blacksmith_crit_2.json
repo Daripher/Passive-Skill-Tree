@@ -10,8 +10,8 @@
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "shield"
+          "type": "skilltree:tag",
+          "tag_id": "forge:tools/shields"
         }
       },
       "player_multiplier": {

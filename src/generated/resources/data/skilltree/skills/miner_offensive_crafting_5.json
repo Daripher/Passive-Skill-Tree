@@ -4,8 +4,8 @@
     {
       "type": "skilltree:gem_power",
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons"
       },
       "multiplier": 0.1
     }

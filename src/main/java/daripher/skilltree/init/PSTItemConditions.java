@@ -17,26 +17,16 @@ public class PSTItemConditions {
 
   public static final RegistryObject<ItemCondition.Serializer> NONE =
       REGISTRY.register("none", NoneItemCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> ARMOR =
-      REGISTRY.register("armor", ArmorCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> WEAPON =
-      REGISTRY.register("weapon", WeaponCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> EQUIPMENT =
-      REGISTRY.register("equipment", EquipmentCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> CURIO =
-      REGISTRY.register("curio", CurioCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> POTIONS =
       REGISTRY.register("potion", PotionCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> FOOD =
       REGISTRY.register("food", FoodCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> JEWELRY =
-      REGISTRY.register("jewelry", JewelryCondition.Serializer::new);
-  public static final RegistryObject<ItemCondition.Serializer> TOOL =
-      REGISTRY.register("tool", ToolCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> ITEM_ID =
       REGISTRY.register("item_id", ItemIdCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> ENCHANTED =
       REGISTRY.register("enchanted", EnchantedCondition.Serializer::new);
+  public static final RegistryObject<ItemCondition.Serializer> TAG =
+      REGISTRY.register("tag", ItemTagCondition.Serializer::new);
 
   public static List<ItemCondition> conditionsList() {
     return PSTRegistries.ITEM_CONDITIONS.get().getValues().stream()

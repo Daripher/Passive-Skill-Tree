@@ -4,7 +4,8 @@
     {
       "type": "skilltree:gem_power",
       "item_condition": {
-        "type": "skilltree:jewelry"
+        "type": "skilltree:tag",
+        "tag_id": "forge:curios/jewelry"
       },
       "multiplier": 0.05
     }

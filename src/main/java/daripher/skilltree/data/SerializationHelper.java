@@ -200,30 +200,6 @@ public class SerializationHelper {
     json.addProperty("effect", Objects.requireNonNull(effectId).toString());
   }
 
-  public static WeaponCondition.Type deserializeWeaponType(JsonObject json) {
-    return WeaponCondition.Type.byName(json.get("weapon_type").getAsString());
-  }
-
-  public static void serializeWeaponType(JsonObject json, WeaponCondition.Type type) {
-    json.addProperty("weapon_type", type.getName());
-  }
-
-  public static ToolCondition.Type deserializeToolType(JsonObject json) {
-    return ToolCondition.Type.byName(json.get("tool_type").getAsString());
-  }
-
-  public static void serializeToolType(JsonObject json, ToolCondition.Type type) {
-    json.addProperty("tool_type", type.getName());
-  }
-
-  public static ArmorCondition.Type deserializeArmorType(JsonObject json) {
-    return ArmorCondition.Type.byName(json.get("armor_type").getAsString());
-  }
-
-  public static void serializeArmorType(JsonObject json, ArmorCondition.Type type) {
-    json.addProperty("armor_type", type.getName());
-  }
-
   @Nullable
   public static PotionCondition.Type deserializePotionType(JsonObject json) {
     return PotionCondition.Type.byName(json.get("potion_type").getAsString());
@@ -460,30 +436,6 @@ public class SerializationHelper {
     CompoundTag bonusTag = bonus.getSerializer().serialize(bonus);
     bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("item_bonus", bonusTag);
-  }
-
-  public static WeaponCondition.Type deserializeWeaponType(CompoundTag tag) {
-    return WeaponCondition.Type.byName(tag.getString("weapon_type"));
-  }
-
-  public static void serializeWeaponType(CompoundTag tag, WeaponCondition.Type type) {
-    tag.putString("weapon_type", type.getName());
-  }
-
-  public static ToolCondition.Type deserializeToolType(CompoundTag tag) {
-    return ToolCondition.Type.byName(tag.getString("tool_type"));
-  }
-
-  public static void serializeToolType(CompoundTag tag, ToolCondition.Type type) {
-    tag.putString("tool_type", type.getName());
-  }
-
-  public static ArmorCondition.Type deserializeArmorType(CompoundTag tag) {
-    return ArmorCondition.Type.byName(tag.getString("armor_type"));
-  }
-
-  public static void serializeArmorType(CompoundTag tag, ArmorCondition.Type type) {
-    tag.putString("armor_type", type.getName());
   }
 
   public static PotionCondition.Type deserializePotionType(CompoundTag tag) {

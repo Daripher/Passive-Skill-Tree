@@ -5,14 +5,14 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "a59fee97-a230-4d73-868c-7d45fd73fcde",
+      "id": "9f5350b4-49a6-493a-bc8f-537fb4db8072",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "shield"
+          "type": "skilltree:tag",
+          "tag_id": "forge:tools/shields"
         }
       },
       "player_multiplier": {

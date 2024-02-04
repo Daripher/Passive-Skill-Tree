@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "0db01697-8dd7-44ea-a0d9-205fe03cd6c9",
+      "id": "92a1dba7-777e-4fa6-81dd-761153dfc500",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:enchants_amount",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "any"
+          "type": "skilltree:tag",
+          "tag_id": "forge:armors"
         }
       }
     }

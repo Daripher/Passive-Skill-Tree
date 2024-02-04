@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.reloader.GemTypesReloader;
 import daripher.skilltree.init.PSTAttributes;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.gem.GemType;
 import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.item.gem.bonus.GemRemovalBonusProvider;
@@ -26,6 +27,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 public class PSTGemTypesProvider implements DataProvider {
@@ -190,12 +192,12 @@ public class PSTGemTypesProvider implements DataProvider {
       ItemBonus<?> shieldBonus,
       ItemBonus<?> jewelryBonus) {
     Map<ItemCondition, ItemBonus<?>> bonuses = new HashMap<>();
-    bonuses.put(new WeaponCondition(WeaponCondition.Type.ANY), weaponBonus);
-    bonuses.put(new ArmorCondition(ArmorCondition.Type.CHESTPLATE), chestplateBonus);
-    bonuses.put(new ArmorCondition(ArmorCondition.Type.HELMET), helmetBonus);
-    bonuses.put(new ArmorCondition(ArmorCondition.Type.BOOTS), bootsBonus);
-    bonuses.put(new ArmorCondition(ArmorCondition.Type.SHIELD), shieldBonus);
-    bonuses.put(new JewelryCondition(), jewelryBonus);
+    bonuses.put(new ItemTagCondition(PSTTags.WEAPONS.location()), weaponBonus);
+    bonuses.put(new ItemTagCondition(Tags.Items.ARMORS_CHESTPLATES.location()), chestplateBonus);
+    bonuses.put(new ItemTagCondition(Tags.Items.ARMORS_HELMETS.location()), helmetBonus);
+    bonuses.put(new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()), bootsBonus);
+    bonuses.put(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()), shieldBonus);
+    bonuses.put(new ItemTagCondition(PSTTags.JEWELRY.location()), jewelryBonus);
     return bonuses;
   }
 

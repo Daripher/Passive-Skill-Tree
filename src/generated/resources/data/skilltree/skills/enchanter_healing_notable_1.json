@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "ff13b38e-2356-4a9f-9c55-992f2cfb4475",
+      "id": "0ead106a-7322-47ad-b86b-a6273a92372b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:enchants_amount",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "shield"
+          "type": "skilltree:tag",
+          "tag_id": "forge:tools/shields"
         }
       }
     }

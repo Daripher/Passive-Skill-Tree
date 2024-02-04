@@ -8,8 +8,8 @@
         "amount": 1
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "ranged"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons/ranged"
       }
     }
   ],

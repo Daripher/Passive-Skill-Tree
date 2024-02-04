@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "3a98f6e6-1602-4dc6-8322-704c7b57e207",
+      "id": "400afcd8-99ba-4e68-a55d-aeac6a5a7eff",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -13,8 +13,8 @@
         "item_condition": {
           "type": "skilltree:enchanted",
           "item_condition": {
-            "type": "skilltree:weapon",
-            "weapon_type": "any"
+            "type": "skilltree:tag",
+            "tag_id": "forge:weapons"
           }
         }
       },

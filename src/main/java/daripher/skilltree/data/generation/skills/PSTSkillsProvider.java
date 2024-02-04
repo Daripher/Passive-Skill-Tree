@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.init.PSTEffects;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.MeleeDamageCondition;
@@ -31,12 +32,14 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.SlotAttribute;
@@ -337,7 +340,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "alchemist_subclass_special",
         new CraftedItemBonus(
-            new CurioCondition("ring"), new ItemSkillBonus(new CritDamageBonus(0.1f))));
+            new ItemTagCondition(PSTTags.RINGS.location()), new ItemSkillBonus(new CritDamageBonus(0.1f))));
     // healer skills
     addSkillBranchAttributeModifier("alchemist_subclass_2_defensive", EVASION, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("alchemist_subclass_2", new IncomingHealingBonus(0.15f));
@@ -367,14 +370,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "hunter_defensive_crafting",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(EVASION.get(), 1, ADDITION))),
         1,
         7);
     addSkillBranchAttributeModifier(
         "hunter_offensive_crafting",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.RANGED),
+            new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.04, MULTIPLY_BASE))),
         1,
         7);
@@ -405,14 +408,14 @@ public class PSTSkillsProvider implements DataProvider {
         "hunter_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
-                new HasItemInHandCondition(new WeaponCondition(WeaponCondition.Type.RANGED))),
+                new HasItemInHandCondition(new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "hunter_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
-                new HasItemInHandCondition(new WeaponCondition(WeaponCondition.Type.RANGED))));
+                new HasItemInHandCondition(new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()))));
     addSkillBranchAttributeModifier(
         "hunter_lesser",
         new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.MOBS),
@@ -432,17 +435,17 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "hunter_defensive_crafting_keystone_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.HELMET), new ItemSocketsBonus(1)));
+            new ItemTagCondition(Tags.Items.ARMORS_HELMETS.location()), new ItemSocketsBonus(1)));
     addSkillAttributeBonus(
         "hunter_offensive_crafting_keystone_1",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.RANGED), new ItemSocketsBonus(1)));
+            new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()), new ItemSocketsBonus(1)));
     addSkillBranchAttributeModifier("hunter_healing", LIFE_PER_HIT, 0.25, ADDITION, 1, 4);
     addSkillAttributeBonus(
         "hunter_healing_notable_1",
         createAttributeBonus(LIFE_PER_HIT.get(), 0.5, ADDITION)
             .setCondition(
-                new HasItemInHandCondition(new WeaponCondition(WeaponCondition.Type.RANGED))));
+                new HasItemInHandCondition(new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()))));
     addSkillAttributeBonus("hunter_crafting_notable_1", new ArrowRetrievalBonus(0.1f));
     addSkillAttributeBonus(
         "hunter_defensive_keystone_1",
@@ -463,14 +466,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "hunter_subclass_1_crafting",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(STEALTH.get(), 1, ADDITION))),
         1,
         5);
     addSkillAttributeBonus(
         "hunter_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.BOOTS),
+            new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()),
             new ItemSkillBonus(createAttributeBonus(STEALTH.get(), 5, ADDITION))));
     addSkillAttributeBonus(
         "hunter_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
@@ -481,7 +484,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "hunter_subclass_special",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.ANY),
+            new ItemTagCondition(PSTTags.WEAPONS.location()),
             new ItemSkillBonus(createAttributeBonus(LIFE_PER_HIT.get(), 0.5, ADDITION))));
     // fletcher skills
     addSkillBranchAttributeModifier("hunter_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
@@ -489,43 +492,45 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "hunter_subclass_2",
         new CraftedItemBonus(
-            new CurioCondition("quiver"), new ItemSkillBonus(new ArrowRetrievalBonus(0.05f))));
+            new ItemTagCondition(PSTTags.QUIVERS.location()),
+            new ItemSkillBonus(new ArrowRetrievalBonus(0.05f))));
     addSkillBranchAttributeModifier(
         "hunter_subclass_2_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setCondition(
-                new HasItemInHandCondition(new WeaponCondition(WeaponCondition.Type.RANGED))),
+                new HasItemInHandCondition(new ItemTagCondition(PSTTags.RANGED_WEAPONS.location()))),
         1,
         4);
     addSkillBranchAttributeModifier(
         "hunter_subclass_2_crafting",
-        new CraftedItemBonus(new CurioCondition("quiver"), new QuiverCapacityBonus(10, ADDITION)),
+        new CraftedItemBonus(new ItemTagCondition(PSTTags.QUIVERS.location()), new QuiverCapacityBonus(10, ADDITION)),
         1,
         5);
     addSkillAttributeBonus(
         "hunter_subclass_2_crafting_notable_1",
         new CraftedItemBonus(
-            new CurioCondition("quiver"), new ItemSkillBonus(new ArrowRetrievalBonus(0.1f))));
+            new ItemTagCondition(PSTTags.QUIVERS.location()), new ItemSkillBonus(new ArrowRetrievalBonus(0.1f))));
     addSkillAttributeBonus(
         "hunter_subclass_2_life_notable_1",
         new CraftedItemBonus(
-            new CurioCondition("quiver"),
+            new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
     addSkillAttributeBonus(
         "hunter_subclass_2_mastery",
-        new CraftedItemBonus(new CurioCondition("quiver"), new QuiverCapacityBonus(25, ADDITION)));
+        new CraftedItemBonus(new ItemTagCondition(PSTTags.QUIVERS.location()), new QuiverCapacityBonus(25, ADDITION)));
     // miner skills
     addSkillAttributeBonus(
         "miner_class",
-        new BlockBreakSpeedBonus(new HasItemInHandCondition(new ToolCondition(ToolCondition.Type.PICKAXE)), 0.15f));
+        new BlockBreakSpeedBonus(
+            new HasItemInHandCondition(new ItemTagCondition(ItemTags.PICKAXES.location())), 0.15f));
     addSkillBranchAttributeModifier(
         "miner_defensive_crafting",
-        new GemPowerBonus(new ArmorCondition(ArmorCondition.Type.ANY), 0.1f),
+        new GemPowerBonus(new ItemTagCondition(Tags.Items.ARMORS.location()), 0.1f),
         1,
         7);
     addSkillBranchAttributeModifier(
         "miner_offensive_crafting",
-        new GemPowerBonus(new WeaponCondition(WeaponCondition.Type.ANY), 0.1f),
+        new GemPowerBonus(new ItemTagCondition(PSTTags.WEAPONS.location()), 0.1f),
         1,
         7);
     addSkillBranchAttributeModifier("miner_defensive", ARMOR, 1, ADDITION, 1, 8);
@@ -533,60 +538,62 @@ public class PSTSkillsProvider implements DataProvider {
         "miner_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
-                new HasGemsCondition(1, -1, new WeaponCondition(WeaponCondition.Type.ANY))),
+                new HasGemsCondition(1, -1, new ItemTagCondition(PSTTags.WEAPONS.location()))),
         1,
         8);
     addSkillAttributeBonus(
         "miner_defensive_notable_1",
         createAttributeBonus(ARMOR, 2, ADDITION)
             .setMultiplier(
-                new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.HELMET))));
+                new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS_HELMETS.location()))));
     addSkillAttributeBonus(
         "miner_offensive_notable_1",
         new DamageBonus(0.15f, MULTIPLY_BASE)
             .setPlayerCondition(
-                new HasGemsCondition(1, -1, new WeaponCondition(WeaponCondition.Type.ANY))));
+                new HasGemsCondition(1, -1, new ItemTagCondition(PSTTags.WEAPONS.location()))));
     addSkillBranchAttributeModifier(
         "miner_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setMultiplier(
-                new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.HELMET))),
+                new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS_HELMETS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "miner_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
-            .setMultiplier(new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.ANY))));
+            .setMultiplier(new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS.location()))));
     addSkillBranchAttributeModifier(
         "miner_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
-                new HasGemsCondition(1, -1, new WeaponCondition(WeaponCondition.Type.ANY))),
+                new HasGemsCondition(1, -1, new ItemTagCondition(PSTTags.WEAPONS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "miner_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.04, MULTIPLY_BASE)
             .setMultiplier(
-                new GemsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
+                new GemsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))));
     addSkillBranchAttributeModifier(
         "miner_lesser",
-        new BlockBreakSpeedBonus(new HasItemInHandCondition(new ToolCondition(ToolCondition.Type.PICKAXE)), 0.05f),
+        new BlockBreakSpeedBonus(new HasItemInHandCondition(new ItemTagCondition(ItemTags.PICKAXES.location())), 0.05f),
         1,
         6);
-    addSkillAttributeBonus("miner_mastery", new PlayerSocketsBonus(new EquipmentCondition(), 1));
+    addSkillAttributeBonus(
+        "miner_mastery",
+        new PlayerSocketsBonus(new ItemTagCondition(PSTTags.EQUIPMENT.location()), 1));
     addSkillBranchAttributeModifier(
         "miner_crit",
         new CritChanceBonus(0.01f)
             .setPlayerMultiplier(
-                new GemsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))),
+                new GemsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "miner_crit_notable_1",
         new CritDamageBonus(0.1f)
             .setPlayerMultiplier(
-                new GemsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
+                new GemsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))));
     addSkillBranchAttributeModifier(
         "miner_crafting",
         new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.GEMS),
@@ -594,22 +601,22 @@ public class PSTSkillsProvider implements DataProvider {
         3);
     addSkillAttributeBonus(
         "miner_defensive_crafting_keystone_1",
-        new GemPowerBonus(new ArmorCondition(ArmorCondition.Type.ANY), 0.3f));
+        new GemPowerBonus(new ItemTagCondition(Tags.Items.ARMORS.location()), 0.3f));
     addSkillAttributeBonus(
         "miner_defensive_crafting_keystone_1",
-        new PlayerSocketsBonus(new ArmorCondition(ArmorCondition.Type.CHESTPLATE), 1));
+        new PlayerSocketsBonus(new ItemTagCondition(Tags.Items.ARMORS_CHESTPLATES.location()), 1));
     addSkillAttributeBonus(
         "miner_offensive_crafting_keystone_1",
-        new GemPowerBonus(new WeaponCondition(WeaponCondition.Type.ANY), 0.3f));
+        new GemPowerBonus(new ItemTagCondition(PSTTags.WEAPONS.location()), 0.3f));
     addSkillAttributeBonus(
         "miner_offensive_crafting_keystone_1",
-        new PlayerSocketsBonus(new WeaponCondition(WeaponCondition.Type.ANY), 1));
+        new PlayerSocketsBonus(new ItemTagCondition(PSTTags.WEAPONS.location()), 1));
     addSkillBranchAttributeModifier("miner_healing", REGENERATION, 0.25, ADDITION, 1, 4);
     addSkillAttributeBonus(
         "miner_healing_notable_1",
         createAttributeBonus(REGENERATION.get(), 0.25, ADDITION)
             .setMultiplier(
-                new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.HELMET))));
+                new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS_HELMETS.location()))));
     addSkillAttributeBonus(
         "miner_crafting_notable_1",
         new LootDuplicationBonus(0.1f, 1f, LootDuplicationBonus.LootType.GEMS));
@@ -617,12 +624,12 @@ public class PSTSkillsProvider implements DataProvider {
         "miner_defensive_keystone_1",
         createAttributeBonus(ARMOR, 5, ADDITION)
             .setMultiplier(
-                new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.CHESTPLATE))));
+                new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS_CHESTPLATES.location()))));
     addSkillAttributeBonus(
         "miner_offensive_keystone_1",
         new DamageBonus(0.1f, MULTIPLY_BASE)
             .setPlayerMultiplier(
-                new GemsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
+                new GemsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))));
     // traveler skills
     addSkillBranchAttributeModifier("miner_subclass_1_defensive", ARMOR, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("miner_subclass_1", ATTACK_SPEED, 0.1, MULTIPLY_BASE);
@@ -632,14 +639,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "miner_subclass_1_crafting",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.BOOTS),
+            new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()),
             new ItemSkillBonus(createAttributeBonus(MOVEMENT_SPEED, 0.02, MULTIPLY_BASE))),
         1,
         5);
     addSkillAttributeBonus(
         "miner_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.BOOTS),
+            new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()),
             new ItemSkillBonus(createAttributeBonus(MOVEMENT_SPEED, 0.05, MULTIPLY_BASE))));
     addSkillAttributeBonus(
         "miner_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
@@ -649,30 +656,30 @@ public class PSTSkillsProvider implements DataProvider {
         "miner_subclass_1_mastery",
         new DamageBonus(0.1f, MULTIPLY_BASE)
             .setPlayerMultiplier(
-                new GemsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.BOOTS))));
+                new GemsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()))));
     addSkillAttributeBonus(
         "miner_subclass_special",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.BOOTS), new ItemSocketsBonus(1)));
+            new ItemTagCondition(Tags.Items.ARMORS_BOOTS.location()), new ItemSocketsBonus(1)));
     // jeweler skills
     addSkillBranchAttributeModifier("miner_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
     addSkillBranchAttributeModifier("miner_subclass_2_defensive", ARMOR, 0.5, ADDITION, 1, 4);
     addSkillAttributeBonus(
-        "miner_subclass_2", new PlayerSocketsBonus(new CurioCondition("ring"), 1));
+        "miner_subclass_2", new PlayerSocketsBonus(new ItemTagCondition(PSTTags.RINGS.location()), 1));
     addSkillBranchAttributeModifier(
         "miner_subclass_2_life",
         createAttributeBonus(MAX_HEALTH, 1d, ADDITION)
-            .setMultiplier(new GemsAmountMultiplier(new JewelryCondition())),
+            .setMultiplier(new GemsAmountMultiplier(new ItemTagCondition(PSTTags.JEWELRY.location()))),
         1,
         4);
     addSkillBranchAttributeModifier(
-        "miner_subclass_2_crafting", new GemPowerBonus(new JewelryCondition(), 0.05f), 1, 5);
+        "miner_subclass_2_crafting", new GemPowerBonus(new ItemTagCondition(PSTTags.JEWELRY.location()), 0.05f), 1, 5);
     addSkillAttributeBonus(
-        "miner_subclass_2_crafting_notable_1", new GemPowerBonus(new JewelryCondition(), 0.25f));
+        "miner_subclass_2_crafting_notable_1", new GemPowerBonus(new ItemTagCondition(PSTTags.JEWELRY.location()), 0.25f));
     addSkillAttributeBonus(
         "miner_subclass_2_life_notable_1",
         new CraftedItemBonus(
-            new CurioCondition("necklace"),
+            new ItemTagCondition(PSTTags.NECKLACES.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
     addSkillAttributeBonus(
         "miner_subclass_2_mastery", SlotAttribute.getOrCreate("ring"), 1, ADDITION);
@@ -680,18 +687,18 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "blacksmith_class",
         new CraftedItemBonus(
-            new EquipmentCondition(), new ItemDurabilityBonus(0.25f, MULTIPLY_BASE)));
+            new ItemTagCondition(PSTTags.EQUIPMENT.location()), new ItemDurabilityBonus(0.25f, MULTIPLY_BASE)));
     addSkillBranchAttributeModifier(
         "blacksmith_defensive_crafting",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 0.1, ADDITION))),
         1,
         7);
     addSkillBranchAttributeModifier(
         "blacksmith_offensive_crafting",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.MELEE),
+            new ItemTagCondition(PSTTags.MELEE_WEAPONS.location()),
             new ItemSkillBonus(createAttributeBonus(ATTACK_DAMAGE, 1, ADDITION))),
         1,
         7);
@@ -700,7 +707,7 @@ public class PSTSkillsProvider implements DataProvider {
         "blacksmith_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))),
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))),
         1,
         8);
     addSkillAttributeBonus("blacksmith_defensive_notable_1", ARMOR, 0.05, MULTIPLY_BASE);
@@ -708,81 +715,81 @@ public class PSTSkillsProvider implements DataProvider {
         "blacksmith_offensive_notable_1",
         new DamageBonus(0.25f, MULTIPLY_BASE)
             .setPlayerCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillBranchAttributeModifier(
         "blacksmith_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))),
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "blacksmith_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 4, ADDITION)
             .setCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillBranchAttributeModifier(
         "blacksmith_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))),
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "blacksmith_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillBranchAttributeModifier(
         "blacksmith_lesser",
         new CraftedItemBonus(
-            new EquipmentCondition(), new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)),
+            new ItemTagCondition(PSTTags.EQUIPMENT.location()), new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)),
         1,
         6);
     addSkillAttributeBonus(
         "blacksmith_mastery",
         new CraftedItemBonus(
-            new EquipmentCondition(),
+            new ItemTagCondition(PSTTags.EQUIPMENT.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR_TOUGHNESS, 1f, ADDITION))));
     addSkillBranchAttributeModifier(
         "blacksmith_crit",
         new CritChanceBonus(0.02f)
             .setPlayerCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))),
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))),
         1,
         2);
     addSkillAttributeBonus(
         "blacksmith_crit_notable_1",
         new CritDamageBonus(0.3f)
             .setPlayerCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillBranchAttributeModifier(
         "blacksmith_crafting",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.SHIELD),
+            new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 2, ADDITION))),
         1,
         3);
     addSkillAttributeBonus(
         "blacksmith_defensive_crafting_keystone_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 1, ADDITION))));
     addSkillAttributeBonus(
         "blacksmith_offensive_crafting_keystone_1",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.MELEE),
+            new ItemTagCondition(PSTTags.MELEE_WEAPONS.location()),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.25, MULTIPLY_BASE))));
     addSkillBranchAttributeModifier("blacksmith_healing", REGENERATION, 0.25, ADDITION, 1, 4);
     addSkillAttributeBonus(
         "blacksmith_healing_notable_1",
         createAttributeBonus(REGENERATION.get(), 0.5, ADDITION)
             .setCondition(
-                new HasItemInHandCondition(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new HasItemInHandCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillAttributeBonus(
         "blacksmith_crafting_notable_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.SHIELD),
+            new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 4, ADDITION))));
     addSkillAttributeBonus(
         "blacksmith_defensive_keystone_1",
@@ -811,14 +818,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "blacksmith_subclass_1_crafting",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.MELEE),
+            new ItemTagCondition(PSTTags.MELEE_WEAPONS.location()),
             new ItemSkillBonus(new CritChanceBonus(0.01f))),
         1,
         5);
     addSkillAttributeBonus(
         "blacksmith_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.MELEE),
+            new ItemTagCondition(PSTTags.MELEE_WEAPONS.location()),
             new ItemSkillBonus(new CritChanceBonus(0.05f))));
     addSkillAttributeBonus(
         "blacksmith_subclass_1_offensive_notable_1",
@@ -834,56 +841,56 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "blacksmith_subclass_special",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.ANY),
+            new ItemTagCondition(PSTTags.WEAPONS.location()),
             new ItemSkillBonus(
                 new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.MOBS))));
     // artisan skills
     addSkillBranchAttributeModifier("blacksmith_subclass_2_defensive", ARMOR, 1, ADDITION, 1, 4);
     addSkillAttributeBonus(
-        "blacksmith_subclass_2", new RepairEfficiencyBonus(new EquipmentCondition(), 1f));
+        "blacksmith_subclass_2", new RepairEfficiencyBonus(new ItemTagCondition(PSTTags.EQUIPMENT.location()), 1f));
     addSkillBranchAttributeModifier(
         "blacksmith_subclass_2_life",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 1, ADDITION))),
         1,
         4);
     addSkillBranchAttributeModifier(
         "blacksmith_subclass_2_crafting",
-        new RepairEfficiencyBonus(new EquipmentCondition(), 0.05f),
+        new RepairEfficiencyBonus(new ItemTagCondition(PSTTags.EQUIPMENT.location()), 0.05f),
         1,
         5);
     addSkillAttributeBonus(
         "blacksmith_subclass_2_crafting_notable_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.SHIELD),
+            new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()),
             new ItemSkillBonus(createAttributeBonus(BLOCKING.get(), 5, ADDITION))));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_life_notable_1",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.SHIELD),
+            new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_mastery",
-        new RepairEfficiencyBonus(new EquipmentCondition(), 0.05f));
+        new RepairEfficiencyBonus(new ItemTagCondition(PSTTags.EQUIPMENT.location()), 0.05f));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
-            new EquipmentCondition(), new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)));
+            new ItemTagCondition(PSTTags.EQUIPMENT.location()), new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.ANY),
+            new ItemTagCondition(PSTTags.WEAPONS.location()),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE))));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.ANY),
+            new ItemTagCondition(Tags.Items.ARMORS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR_TOUGHNESS, 0.05f, MULTIPLY_BASE))));
     addSkillAttributeBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
-            new ArmorCondition(ArmorCondition.Type.SHIELD),
+            new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 5, ADDITION))));
     // enchanter skills
     addSkillAttributeBonus("enchanter_class", new EnchantmentRequirementBonus(-0.3f));
@@ -903,7 +910,7 @@ public class PSTSkillsProvider implements DataProvider {
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.ANY)))),
+                    new EnchantedCondition(new ItemTagCondition(PSTTags.WEAPONS.location())))),
         1,
         8);
     addSkillAttributeBonus(
@@ -911,13 +918,13 @@ public class PSTSkillsProvider implements DataProvider {
         createAttributeBonus(BLOCKING.get(), 10, ADDITION)
             .setCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new ArmorCondition(ArmorCondition.Type.SHIELD)))));
+                    new EnchantedCondition(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location())))));
     addSkillAttributeBonus(
         "enchanter_offensive_notable_1",
         new DamageBonus(0.2f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.ANY)))));
+                    new EnchantedCondition(new ItemTagCondition(PSTTags.WEAPONS.location())))));
     addSkillBranchAttributeModifier(
         "enchanter_life",
         createAttributeBonus(MAX_HEALTH, 2, ADDITION)
@@ -929,13 +936,13 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setMultiplier(
-                new EnchantsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.ANY))));
+                new EnchantsAmountMultiplier(new ItemTagCondition(Tags.Items.ARMORS.location()))));
     addSkillBranchAttributeModifier(
         "enchanter_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.ANY)))),
+                    new EnchantedCondition(new ItemTagCondition(PSTTags.WEAPONS.location())))),
         1,
         2);
     addSkillAttributeBonus(
@@ -943,7 +950,7 @@ public class PSTSkillsProvider implements DataProvider {
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.ANY)))));
+                    new EnchantedCondition(new ItemTagCondition(PSTTags.WEAPONS.location())))));
     addSkillBranchAttributeModifier(
         "enchanter_lesser", new EnchantmentRequirementBonus(-0.05f), 1, 6);
     addSkillAttributeBonus(
@@ -953,14 +960,14 @@ public class PSTSkillsProvider implements DataProvider {
         new CritChanceBonus(0.02f)
             .setPlayerCondition(
                 new HasItemInHandCondition(
-                    new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.ANY)))),
+                    new EnchantedCondition(new ItemTagCondition(PSTTags.WEAPONS.location())))),
         1,
         2);
     addSkillAttributeBonus(
         "enchanter_crit_notable_1",
         new CritDamageBonus(0.05f)
             .setPlayerMultiplier(
-                new EnchantsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
+                new EnchantsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))));
     addSkillBranchAttributeModifier("enchanter_crafting", new FreeEnchantmentBonus(0.05f), 1, 3);
     addSkillAttributeBonus(
         "enchanter_defensive_crafting_keystone_1",
@@ -973,18 +980,18 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_healing_notable_1",
         createAttributeBonus(LIFE_ON_BLOCK.get(), 0.25, ADDITION)
             .setMultiplier(
-                new EnchantsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new EnchantsAmountMultiplier(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillAttributeBonus("enchanter_crafting_notable_1", new FreeEnchantmentBonus(0.1f));
     addSkillAttributeBonus(
         "enchanter_defensive_keystone_1",
         createAttributeBonus(BLOCKING.get(), 5, ADDITION)
             .setMultiplier(
-                new EnchantsAmountMultiplier(new ArmorCondition(ArmorCondition.Type.SHIELD))));
+                new EnchantsAmountMultiplier(new ItemTagCondition(Tags.Items.TOOLS_SHIELDS.location()))));
     addSkillAttributeBonus(
         "enchanter_offensive_keystone_1",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerMultiplier(
-                new EnchantLevelsAmountMultiplier(new WeaponCondition(WeaponCondition.Type.ANY))));
+                new EnchantLevelsAmountMultiplier(new ItemTagCondition(PSTTags.WEAPONS.location()))));
     // arsonist skills
     addSkillBranchAttributeModifier("enchanter_subclass_1_defensive", EVASION, 0.5, ADDITION, 1, 4);
     addSkillBranchAttributeModifier(
@@ -1001,14 +1008,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "enchanter_subclass_1_crafting",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.ANY),
+            new ItemTagCondition(PSTTags.WEAPONS.location()),
             new ItemSkillBonus(new IgniteChanceBonus(0.05f, 5))),
         1,
         5);
     addSkillAttributeBonus(
         "enchanter_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.ANY),
+            new ItemTagCondition(PSTTags.WEAPONS.location()),
             new ItemSkillBonus(
                 new DamageBonus(0.2f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()))));
     addSkillAttributeBonus(
@@ -1024,13 +1031,13 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "enchanter_subclass_special",
         new CraftedItemBonus(
-            new CurioCondition("quiver"),
+            new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(
                 new DamageBonus(0.1f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()))));
     addSkillAttributeBonus(
         "enchanter_subclass_special",
         new CraftedItemBonus(
-            new CurioCondition("quiver"), new ItemSkillBonus(new IgniteChanceBonus(0.1f, 5))));
+            new ItemTagCondition(PSTTags.QUIVERS.location()), new ItemSkillBonus(new IgniteChanceBonus(0.1f, 5))));
     // scholar skills
     addSkillBranchAttributeModifier("enchanter_subclass_2_defensive", BLOCKING, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("enchanter_subclass_2", EXP_PER_MINUTE, 2, ADDITION);
@@ -1156,14 +1163,14 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier(
         "cook_subclass_1_crafting",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.AXE),
+            new ItemTagCondition(ItemTags.AXES.location()),
             new ItemSkillBonus(new CritChanceBonus(0.01f))),
         1,
         5);
     addSkillAttributeBonus(
         "cook_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
-            new WeaponCondition(WeaponCondition.Type.AXE),
+            new ItemTagCondition(ItemTags.AXES.location()),
             new ItemSkillBonus(new CritChanceBonus(0.05f))));
     addSkillAttributeBonus(
         "cook_subclass_1_offensive_notable_1",
