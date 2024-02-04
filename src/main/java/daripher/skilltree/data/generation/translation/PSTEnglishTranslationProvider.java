@@ -5,7 +5,6 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.Tags;
 import top.theillusivec4.curios.common.CuriosHelper;
