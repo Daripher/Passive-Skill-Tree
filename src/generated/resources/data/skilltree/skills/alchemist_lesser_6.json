@@ -15,13 +15,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_mastery"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_lesser_1.png",
   "id": "skilltree:alchemist_lesser_6",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 0.0029907227,
   "positionY": 375.52728
 }

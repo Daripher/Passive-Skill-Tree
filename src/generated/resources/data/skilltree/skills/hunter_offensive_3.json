@@ -21,13 +21,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_offensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_offensive_1.png",
   "id": "skilltree:hunter_offensive_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 172.62874,
   "positionY": 147.0238
 }

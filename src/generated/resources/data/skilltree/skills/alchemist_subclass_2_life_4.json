@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "2510ea92-11b7-412b-b258-e20bd36d1c1c",
+      "id": "ebaba0bc-ff46-4e0d-9181-9ea57df4168a",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -28,13 +28,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_2_life_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_2_life_1.png",
   "id": "skilltree:alchemist_subclass_2_life_4",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 128.95822,
   "positionY": 420.79712
 }

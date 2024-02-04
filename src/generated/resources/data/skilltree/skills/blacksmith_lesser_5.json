@@ -15,14 +15,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_lesser_3",
     "skilltree:blacksmith_lesser_6"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_lesser_1.png",
   "id": "skilltree:blacksmith_lesser_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -302.69434,
   "positionY": -174.78297
 }

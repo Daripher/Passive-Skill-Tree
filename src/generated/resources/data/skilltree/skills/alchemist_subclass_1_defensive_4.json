@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:evasion",
-      "id": "10bc1c8f-4dff-401f-a82b-0e970f4ab5d2",
+      "id": "fe4287a0-1909-4524-a5be-050ec1c542ef",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "cd87eb5c-7c63-461d-bd5b-4c8797598382",
+      "id": "3ec128f9-0e74-4cae-8a7f-e5a221803261",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,13 +32,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_1"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_defensive_1.png",
   "id": "skilltree:alchemist_subclass_1_defensive_4",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -144.95734,
   "positionY": 283.07642
 }

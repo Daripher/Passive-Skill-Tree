@@ -30,13 +30,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_special"
   ],
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_crafting_1.png",
   "id": "skilltree:cook_subclass_1_crafting_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 183.48875,
   "positionY": -381.7825
 }

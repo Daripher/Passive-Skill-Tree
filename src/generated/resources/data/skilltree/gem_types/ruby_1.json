@@ -6,58 +6,10 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:incoming_healing",
-            "multiplier": 0.02,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "chestplate"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.019999999552965164,
-            "attribute": "skilltree:regeneration",
-            "id": "3834eba8-1c99-4e71-aacb-3cea193b23b2",
-            "name": "Ruby",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.10000000149011612,
             "attribute": "skilltree:life_per_hit",
-            "id": "98bd482e-311f-41ad-b8f3-aeb44f296510",
+            "id": "7e8d77ee-9b9d-4ce7-bccd-8ffe47f6480a",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -80,10 +32,31 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
+            "type": "skilltree:incoming_healing",
+            "multiplier": 0.01,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:jewelry"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.019999999552965164,
             "attribute": "minecraft:generic.max_health",
-            "id": "f491668f-cd59-4e16-a51a-74b7a88f8df3",
+            "id": "1f132e32-d83a-440a-92a7-e1313e8a8241",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -109,7 +82,7 @@
             "type": "skilltree:attribute",
             "amount": 0.10000000149011612,
             "attribute": "skilltree:life_on_block",
-            "id": "af83cbea-0ae5-4432-8ed7-d3b036586baf",
+            "id": "41f8d8f3-2025-4668-9bc1-37674664d0b5",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -133,7 +106,7 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:incoming_healing",
-            "multiplier": 0.01,
+            "multiplier": 0.02,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -144,7 +117,34 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:jewelry"
+        "type": "skilltree:armor",
+        "armor_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.019999999552965164,
+            "attribute": "skilltree:regeneration",
+            "id": "49550323-abef-42f9-9ef4-2e1da8c1eb8f",
+            "name": "Ruby",
+            "operation": 0,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:armor",
+        "armor_type": "boots"
       }
     }
   ],

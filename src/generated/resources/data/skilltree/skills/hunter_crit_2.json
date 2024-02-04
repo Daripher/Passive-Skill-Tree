@@ -20,13 +20,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_crit_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_crit_1.png",
   "id": "skilltree:hunter_crit_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 243.6611,
   "positionY": 173.02792
 }

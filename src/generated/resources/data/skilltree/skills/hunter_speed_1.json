@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "8b3be521-ee6e-4932-a0be-bcd2b2f6832f",
+      "id": "eec68a12-f373-4120-bd71-ed45f44d131a",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -22,13 +22,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_speed_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_speed_1.png",
   "id": "skilltree:hunter_speed_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 249.14754,
   "positionY": 111.52569
 }

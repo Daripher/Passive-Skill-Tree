@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "7a404bd8-eeef-4a8b-b9de-f504018be172",
+      "id": "0db01697-8dd7-44ea-a0d9-205fe03cd6c9",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -22,11 +22,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/enchanter_life_notable_1.png",
   "id": "skilltree:enchanter_life_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 212.63979,
   "positionY": -122.762024
 }

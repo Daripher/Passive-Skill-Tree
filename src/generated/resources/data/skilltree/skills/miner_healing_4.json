@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:regeneration",
-      "id": "d385a2b9-6623-4818-9324-ff0b9a10a83d",
+      "id": "3ef3e7a1-6851-4cfa-afe1-ffbf68dd7a71",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_healing_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/miner_healing_1.png",
   "id": "skilltree:miner_healing_4",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -69.2976,
   "positionY": 120.78715
 }

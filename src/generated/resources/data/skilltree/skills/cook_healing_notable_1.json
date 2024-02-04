@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:life_on_block",
-      "id": "d53406a7-2d1f-43fc-9b0a-376b158bf5df",
+      "id": "8fa11541-3de9-4488-933b-65449741e058",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,11 +19,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/cook_healing_notable_1.png",
   "id": "skilltree:cook_healing_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -54.9606,
   "positionY": -94.42358
 }

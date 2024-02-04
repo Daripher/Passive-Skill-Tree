@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:evasion",
-      "id": "c1462318-8f91-4951-b57d-8b72aa1ab44c",
+      "id": "a765ad54-39de-476e-97cb-93acf1a94192",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "89aeda3c-4b50-49f4-b75d-cd7d29325acc",
+      "id": "0f67c4cf-6368-4eee-93b5-9c42ff2a19ba",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,13 +32,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_2_defensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_defensive_1.png",
   "id": "skilltree:miner_subclass_2_defensive_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -159.68753,
   "positionY": 244.55804
 }

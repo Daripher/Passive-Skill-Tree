@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "id": "f7a82783-22dd-48d0-b650-79b185cb067f",
+      "id": "ac2a42c2-a1a5-4340-ac2b-463129032d41",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_1_defensive_2"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_defensive_1.png",
   "id": "skilltree:miner_subclass_1_defensive_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -239.63829,
   "positionY": 15.995789
 }

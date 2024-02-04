@@ -25,13 +25,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_1_offensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_mastery.png",
   "id": "skilltree:miner_subclass_1_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -460.90466,
   "positionY": 98.70454
 }

@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.attack_damage",
-          "id": "50d422a1-3ca6-4e2b-af36-10f0bbb94bff",
+          "id": "453d6b46-89db-45d2-876d-51b9527454dc",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -28,13 +28,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_offensive_crafting_2"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_offensive_crafting_1.png",
   "id": "skilltree:blacksmith_offensive_crafting_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -105.64976,
   "positionY": -91.00758
 }

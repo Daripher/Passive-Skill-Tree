@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "minecraft:generic.armor",
-      "id": "8894a00b-3174-47ab-92a7-19fa74fbf113",
+      "id": "161fc288-e6ea-450d-a80e-3fc8e0239df0",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:blocking",
-      "id": "8ca99db4-4b25-417d-866c-b0e3e234b11c",
+      "id": "42dedf62-f302-400a-910e-770513e4bbd6",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,13 +32,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_2_defensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_defensive_1.png",
   "id": "skilltree:cook_subclass_2_defensive_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -131.95805,
   "positionY": -260.56827
 }

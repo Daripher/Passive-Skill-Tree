@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "46904727-b7f5-4d02-9b4a-8332562322a1",
+      "id": "5021127d-a452-4113-89a0-ec0df00ec4b3",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.movement_speed",
-      "id": "fe44ccb1-a6a5-45aa-9120-759876a62737",
+      "id": "c3d0dca8-b33a-4d45-afd5-839226342f47",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -32,14 +32,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_1_offensive_1",
     "skilltree:miner_subclass_1_crafting_1"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_1.png",
   "id": "skilltree:miner_subclass_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -345.35162,
   "positionY": 31.994904
 }

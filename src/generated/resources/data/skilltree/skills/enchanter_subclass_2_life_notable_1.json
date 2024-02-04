@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 6.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "266d1d8d-d9b5-4b3e-aabd-8cc87d3ea4f6",
+      "id": "f4e89247-7445-4e82-ae84-c975d2157b18",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "skilltree:exp_per_minute",
-      "id": "05a06c9b-e056-4d71-b118-e08b572d84a4",
+      "id": "72759798-3bc9-4439-b629-99cd7fa5377e",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,11 +32,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_life_notable_1.png",
   "id": "skilltree:enchanter_subclass_2_life_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 325.9333,
   "positionY": -307.06915
 }

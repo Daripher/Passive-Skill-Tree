@@ -11,8 +11,9 @@ import net.minecraft.server.level.ServerPlayer;
 public class PassiveSkill {
   private final ResourceLocation id;
   private final List<SkillBonus<?>> bonuses = new ArrayList<>();
-  private final List<ResourceLocation> connectedSkills = new ArrayList<>();
-  private final List<ResourceLocation> connectedAsGateways = new ArrayList<>();
+  private @Nullable List<ResourceLocation> directConnections = new ArrayList<>();
+  private @Nullable List<ResourceLocation> longConnections = new ArrayList<>();
+  private @Nullable List<ResourceLocation> oneWayConnections = new ArrayList<>();
   private ResourceLocation backgroundTexture;
   private ResourceLocation iconTexture;
   private ResourceLocation borderTexture;
@@ -99,7 +100,7 @@ public class PassiveSkill {
   }
 
   public void connect(PassiveSkill otherSkill) {
-    connectedSkills.add(otherSkill.getId());
+    getDirectConnections().add(otherSkill.getId());
   }
 
   public void setPosition(float x, float y) {
@@ -115,12 +116,28 @@ public class PassiveSkill {
     return positionY;
   }
 
-  public List<ResourceLocation> getConnections() {
-    return connectedSkills;
+  @Nonnull
+  public List<ResourceLocation> getDirectConnections() {
+    if (directConnections == null) {
+      directConnections = new ArrayList<>();
+    }
+    return directConnections;
   }
 
-  public List<ResourceLocation> getGatewayConnections() {
-    return connectedAsGateways;
+  @Nonnull
+  public List<ResourceLocation> getLongConnections() {
+    if (longConnections == null) {
+      longConnections = new ArrayList<>();
+    }
+    return longConnections;
+  }
+
+  @Nonnull
+  public List<ResourceLocation> getOneWayConnections() {
+    if (oneWayConnections == null) {
+      oneWayConnections = new ArrayList<>();
+    }
+    return oneWayConnections;
   }
 
   public @Nonnull String getTitle() {
@@ -147,7 +164,7 @@ public class PassiveSkill {
     getBonuses().forEach(b -> b.onSkillRemoved(player));
   }
 
-  public boolean isBroken() {
+  public boolean isInvalid() {
     return getId() == null
         || getBonuses() == null
         || getBackgroundTexture() == null

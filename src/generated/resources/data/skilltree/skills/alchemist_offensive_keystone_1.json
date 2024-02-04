@@ -21,11 +21,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/alchemist_offensive_keystone_1.png",
   "id": "skilltree:alchemist_offensive_keystone_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -53.99701,
   "positionY": 379.52728
 }

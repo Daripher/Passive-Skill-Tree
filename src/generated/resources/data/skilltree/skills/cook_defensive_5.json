@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "cbbe88ea-2fb0-49b3-b832-3bb6a301f07b",
+      "id": "4f077ddd-e4fa-47e4-9f0b-dd3e35ac2088",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,14 +18,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_defensive_6",
     "skilltree:cook_speed_1"
   ],
   "iconTexture": "skilltree:textures/icons/cook_defensive_1.png",
   "id": "skilltree:cook_defensive_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -53.99701,
   "positionY": -271.53247
 }

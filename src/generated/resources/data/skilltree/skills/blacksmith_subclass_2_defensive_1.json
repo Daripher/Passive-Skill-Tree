@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.armor",
-      "id": "a1bee862-0f9b-44fe-a55c-afbb45d73091",
+      "id": "e7b81044-a727-4cad-9e9c-104680a31eba",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,8 +18,7 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_subclass_2_defensive_2",
     "skilltree:blacksmith_gateway",
     "skilltree:miner_subclass_1_defensive_1"
@@ -27,6 +26,8 @@
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_defensive_1.png",
   "id": "skilltree:blacksmith_subclass_2_defensive_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -239.631,
   "positionY": -16.008415
 }

@@ -14,13 +14,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_lesser_4"
   ],
   "iconTexture": "skilltree:textures/icons/cook_lesser_1.png",
   "id": "skilltree:cook_lesser_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 28.005981,
   "positionY": -323.52728
 }

@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_per_hit",
-      "id": "a706f5f1-6900-454a-a0f3-a675646849fe",
+      "id": "b993dbf8-675f-4372-b198-6e12d85a52b1",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_offensive_crafting_3"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_healing_1.png",
   "id": "skilltree:hunter_healing_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 183.63277,
   "positionY": -18.7629
 }

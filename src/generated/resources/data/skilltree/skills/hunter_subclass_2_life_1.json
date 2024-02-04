@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "7ce152b4-e912-429d-9e81-97252505b7c0",
+      "id": "1adba694-c70d-4069-ac88-704534eb65d1",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -22,13 +22,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_subclass_2_life_2"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2_life_1.png",
   "id": "skilltree:hunter_subclass_2_life_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 361.3419,
   "positionY": 59.72351
 }

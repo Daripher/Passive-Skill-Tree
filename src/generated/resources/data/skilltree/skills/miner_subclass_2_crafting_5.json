@@ -11,13 +11,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_special"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_crafting_1.png",
   "id": "skilltree:miner_subclass_2_crafting_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -238.92113,
   "positionY": 349.78406
 }

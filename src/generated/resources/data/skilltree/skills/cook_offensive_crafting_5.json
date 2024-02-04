@@ -16,13 +16,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_offensive_crafting_6"
   ],
   "iconTexture": "skilltree:textures/icons/cook_offensive_crafting_1.png",
   "id": "skilltree:cook_offensive_crafting_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 92.98723,
   "positionY": -253.04143
 }

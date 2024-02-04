@@ -15,8 +15,7 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_defensive_1",
     "skilltree:alchemist_offensive_1",
     "skilltree:alchemist_defensive_crafting_1",
@@ -26,6 +25,8 @@
   "iconTexture": "skilltree:textures/icons/alchemist_class.png",
   "id": "skilltree:alchemist_class",
   "isStartingPoint": true,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 0.0,
   "positionY": 152.0
 }

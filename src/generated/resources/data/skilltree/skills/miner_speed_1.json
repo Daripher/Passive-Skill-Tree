@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "1d2ac6f7-aafc-40c0-8d7a-031ddd731aae",
+      "id": "b42e80b4-2859-44c6-ae8e-f6ba8eadd74d",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -23,13 +23,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_speed_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/miner_speed_1.png",
   "id": "skilltree:miner_speed_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -221.16061,
   "positionY": 160.00528
 }

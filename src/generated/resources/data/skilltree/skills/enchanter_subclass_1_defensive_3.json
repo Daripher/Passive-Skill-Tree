@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:evasion",
-      "id": "1390ae98-0597-440b-8e37-72ab9484e7cf",
+      "id": "447a608c-b68f-4dd7-8dd0-c71a7a3b461b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:blocking",
-      "id": "e9d1da22-7aff-4ef3-91c2-6ae5582ce8fd",
+      "id": "98c9a6be-82da-48da-82ba-729402a7657a",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,13 +32,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_subclass_1_defensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_defensive_1.png",
   "id": "skilltree:enchanter_subclass_1_defensive_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 291.6383,
   "positionY": -15.995789
 }

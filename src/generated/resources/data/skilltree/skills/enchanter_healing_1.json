@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "96077f39-d0f4-4d54-8e99-8eb6730bac51",
+      "id": "6abfc1f4-ef6e-4885-b9f1-eb6db065c491",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_healing_3"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_healing_1.png",
   "id": "skilltree:enchanter_healing_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 107.41354,
   "positionY": -150.03067
 }

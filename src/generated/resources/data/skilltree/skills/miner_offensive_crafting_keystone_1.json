@@ -20,11 +20,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/miner_offensive_crafting_keystone_1.png",
   "id": "skilltree:miner_offensive_crafting_keystone_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -336.65372,
   "positionY": 86.993515
 }

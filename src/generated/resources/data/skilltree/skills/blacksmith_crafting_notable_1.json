@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 4.0,
           "attribute": "minecraft:generic.armor",
-          "id": "0401e9f4-24a0-4420-b7ba-e96ba5ef1084",
+          "id": "99e5605e-b321-4475-bf24-457b4d306ee6",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -28,11 +28,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_crafting_notable_1.png",
   "id": "skilltree:blacksmith_crafting_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -32.041756,
   "positionY": -18.502047
 }

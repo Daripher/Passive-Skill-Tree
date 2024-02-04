@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:life_per_hit",
-      "id": "46e9900c-37f2-4f5b-9f77-75563a9cdb6c",
+      "id": "b2f52ead-157c-4067-a891-5bed800e650a",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,11 +19,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/alchemist_healing_notable_1.png",
   "id": "skilltree:alchemist_healing_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 54.9606,
   "positionY": 94.42358
 }

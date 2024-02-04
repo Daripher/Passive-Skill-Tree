@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:evasion",
-      "id": "b5f8b19c-3d53-4bc9-9385-bbae68a79423",
+      "id": "35d10488-3e38-4423-bdd9-681cabdbc438",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,14 +18,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_defensive_6",
     "skilltree:hunter_speed_1"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_defensive_1.png",
   "id": "skilltree:hunter_defensive_5",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 262.14682,
   "positionY": 89.00986
 }

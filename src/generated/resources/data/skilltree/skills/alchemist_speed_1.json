@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "55b8024d-90f5-4ef7-b0a7-560f7931021b",
+      "id": "8fcf2873-6392-4d5e-80a0-9cc04d77ab01",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -19,13 +19,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_speed_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_speed_1.png",
   "id": "skilltree:alchemist_speed_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 27.99701,
   "positionY": 271.53247
 }

@@ -27,13 +27,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_crit_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_crit_1.png",
   "id": "skilltree:enchanter_crit_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 243.67769,
   "positionY": -173.00456
 }

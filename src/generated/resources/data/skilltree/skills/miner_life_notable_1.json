@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "ac2397b7-cc62-4886-aaa9-2fff65cba66f",
+      "id": "445d9fd4-507d-43af-86ac-f0f237b8a23b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -22,11 +22,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/miner_life_notable_1.png",
   "id": "skilltree:miner_life_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -212.63979,
   "positionY": 122.762024
 }

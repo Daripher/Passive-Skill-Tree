@@ -141,7 +141,7 @@ public class ScreenHelper {
       float zoom,
       float animation) {
     ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/gateway_connection.png"));
+        new ResourceLocation("skilltree:textures/screen/long_connection.png"));
     poseStack.pushPose();
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();
@@ -159,6 +159,31 @@ public class ScreenHelper {
     poseStack.popPose();
   }
 
+  public static void renderOneWayConnection(
+      PoseStack poseStack,
+      double x,
+      double y,
+      SkillConnection connection,
+      boolean highlighted,
+      float zoom,
+      float animation) {
+    ScreenHelper.prepareTextureRendering(
+        new ResourceLocation("skilltree:textures/screen/one_way_connection.png"));
+    poseStack.pushPose();
+    SkillButton button1 = connection.getFirstButton();
+    SkillButton button2 = connection.getSecondButton();
+    double connectionX = button1.x + button1.getWidth() / 2F;
+    double connectionY = button1.y + button1.getHeight() / 2F;
+    poseStack.translate(connectionX + x, connectionY + y, 0);
+    float rotation = ScreenHelper.getAngleBetweenButtons(button1, button2);
+    poseStack.mulPose(Vector3f.ZP.rotation(rotation));
+    int length = (int) (ScreenHelper.getDistanceBetweenButtons(button1, button2) / zoom);
+    poseStack.scale(zoom, zoom, 1F);
+    GuiComponent.blit(
+        poseStack, 0, -3, length, 6, -animation, highlighted ? 0 : 6, length, 6, 30, 12);
+    poseStack.popPose();
+  }
+
   public static void renderConnection(
       PoseStack poseStack,
       double x,
@@ -167,7 +192,7 @@ public class ScreenHelper {
       float zoom,
       float animation) {
     ScreenHelper.prepareTextureRendering(
-        new ResourceLocation("skilltree:textures/screen/skill_connection.png"));
+        new ResourceLocation("skilltree:textures/screen/direct_connection.png"));
     poseStack.pushPose();
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();

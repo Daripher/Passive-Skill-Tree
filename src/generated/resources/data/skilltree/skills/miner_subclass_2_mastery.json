@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "curios:ring",
-      "id": "946b4505-cea9-4360-b5e7-4fe8d4de409d",
+      "id": "3d7d3e87-5efb-49cb-a0b1-858ef60eeb70",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_2_life_4"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_2_mastery.png",
   "id": "skilltree:miner_subclass_2_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -315.95526,
   "positionY": 349.7826
 }

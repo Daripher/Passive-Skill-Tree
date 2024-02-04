@@ -3,15 +3,16 @@
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
   "buttonSize": 30,
-  "connectedAsGateways": [
-    "skilltree:miner_gateway"
-  ],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_1_defensive_1"
   ],
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:enchanter_gateway",
   "isStartingPoint": false,
+  "longConnections": [
+    "skilltree:miner_gateway"
+  ],
+  "oneWayConnections": [],
   "positionX": 106.83738,
   "positionY": -184.02725
 }

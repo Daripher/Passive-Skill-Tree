@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.25,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "d3c419ec-1d52-459a-a563-e6d92ee06e9b",
+          "id": "93018e56-e918-4327-876c-cc4e5c9d12d4",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -28,11 +28,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_offensive_crafting_keystone_1.png",
   "id": "skilltree:blacksmith_offensive_crafting_keystone_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -243.6575,
   "positionY": -248.06166
 }

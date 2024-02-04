@@ -10,8 +10,7 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_defensive_1",
     "skilltree:hunter_offensive_1",
     "skilltree:hunter_defensive_crafting_1",
@@ -21,6 +20,8 @@
   "iconTexture": "skilltree:textures/icons/hunter_class.png",
   "id": "skilltree:hunter_class",
   "isStartingPoint": true,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 131.631,
   "positionY": 76.008415
 }

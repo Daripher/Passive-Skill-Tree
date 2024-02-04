@@ -22,7 +22,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "fc86d5bf-f7b8-488d-8480-269f28486325",
+      "id": "8c83e648-9a0e-4bc3-ab25-30745c1e5181",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -35,13 +35,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_subclass_1_offensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_offensive_1.png",
   "id": "skilltree:blacksmith_subclass_1_offensive_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -277.40683,
   "positionY": -309.0951
 }

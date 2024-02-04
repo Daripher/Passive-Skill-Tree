@@ -20,13 +20,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_1_offensive_3"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_1_offensive_1.png",
   "id": "skilltree:alchemist_subclass_1_offensive_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -128.95822,
   "positionY": 368.78973
 }

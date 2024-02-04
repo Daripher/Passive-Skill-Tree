@@ -15,13 +15,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_2_life_4"
   ],
   "iconTexture": "skilltree:textures/icons/cook_subclass_2_mastery.png",
   "id": "skilltree:cook_subclass_2_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -144.95468,
   "positionY": -448.51044
 }

@@ -51,13 +51,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_subclass_1_offensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_mastery.png",
   "id": "skilltree:enchanter_subclass_1_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 460.90466,
   "positionY": -98.70454
 }

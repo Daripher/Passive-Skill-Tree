@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:evasion",
-      "id": "8b543a65-48f5-428d-b35c-e655b74872e8",
+      "id": "054ece71-cb0e-485d-80ee-cf70319b1582",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_defensive_3"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_defensive_1.png",
   "id": "skilltree:alchemist_defensive_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 27.99845,
   "positionY": 200.49832
 }
