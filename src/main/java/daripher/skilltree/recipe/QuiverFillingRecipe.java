@@ -8,6 +8,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -31,7 +32,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
       if (stack.isEmpty()) continue;
       itemsCount++;
       if (ItemHelper.isQuiver(stack)) quiver = stack;
-      if (ItemHelper.isArrow(stack)) arrows = stack;
+      if (stack.is(ItemTags.ARROWS)) arrows = stack;
     }
     if (itemsCount != 2) return false;
     if (quiver.isEmpty() || arrows.isEmpty()) return false;
@@ -48,7 +49,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
       ItemStack stack = container.getItem(slot);
       if (stack.isEmpty()) continue;
       if (ItemHelper.isQuiver(stack)) quiver = stack;
-      if (ItemHelper.isArrow(stack)) arrows = stack;
+      if (stack.is(ItemTags.ARROWS)) arrows = stack;
     }
     ItemStack result = quiver.copy();
     int capacity = QuiverItem.getCapacity(result);
@@ -66,7 +67,7 @@ public class QuiverFillingRecipe extends CustomRecipe {
       ItemStack stack = container.getItem(slot);
       if (stack.isEmpty()) continue;
       if (ItemHelper.isQuiver(stack)) quiver = stack;
-      if (ItemHelper.isArrow(stack)) {
+      if (stack.is(ItemTags.ARROWS)) {
         arrows = stack;
         arrowsSlot = slot;
       }
