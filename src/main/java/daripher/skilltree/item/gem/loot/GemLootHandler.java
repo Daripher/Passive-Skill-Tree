@@ -4,12 +4,12 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
-import net.minecraft.core.BlockPos;
+import java.util.List;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -29,18 +29,23 @@ public class GemLootHandler {
   public static void dropGemFromOre(BlockEvent.BreakEvent event) {
     Player player = event.getPlayer();
     if (!canDropGem(event, player)) return;
-    ServerLevel serverLevel = (ServerLevel) player.level();
-    LootTable lootTable = getGemsLootTable(serverLevel);
-    LootParams lootParams = createGemsLootParams(event, serverLevel, player);
-    float multiplier =
-        1f + SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.GEMS);
-    while (multiplier > 1) {
-      dropGems(serverLevel, event.getPos(), lootTable, lootParams);
-      multiplier--;
+    ServerLevel level = (ServerLevel) player.level();
+    LootTable lootTable = getGemsLootTable(level);
+    LootParams lootParams = createGemsLootParams(event, level, player);
+    float multiplier = getGemLootMultiplier(player);
+    if (player.getRandom().nextFloat() < multiplier % 1) {
+      multiplier++;
     }
-    if (player.getRandom().nextFloat() < multiplier) {
-      dropGems(serverLevel, event.getPos(), lootTable, lootParams);
+    List<ItemStack> foundGems = lootTable.getRandomItems(lootParams);
+    for (int i = 0; i < (int) multiplier; i++) {
+      foundGems.stream()
+          .map(ItemStack::copy)
+          .forEach(s -> Block.popResource(level, event.getPos(), s));
     }
+  }
+
+  private static float getGemLootMultiplier(Player player) {
+    return 1f + SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.GEMS);
   }
 
   public static int getGemLootWeight(ResourceLocation gemId) {
@@ -101,10 +106,5 @@ public class GemLootHandler {
         .withParameter(LootContextParams.TOOL, player.getMainHandItem())
         .withLuck(player.getLuck())
         .create(LootContextParamSets.BLOCK);
-  }
-
-  private static void dropGems(
-      Level level, BlockPos blockPos, LootTable lootTable, LootParams lootParams) {
-    lootTable.getRandomItems(lootParams).forEach(s -> Block.popResource(level, blockPos, s));
   }
 }
