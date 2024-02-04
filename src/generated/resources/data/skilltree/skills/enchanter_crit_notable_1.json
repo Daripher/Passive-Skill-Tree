@@ -13,8 +13,8 @@
       "player_multiplier": {
         "type": "skilltree:enchants_amount",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:tag",
+          "tag_id": "forge:weapons"
         }
       },
       "target_condition": {

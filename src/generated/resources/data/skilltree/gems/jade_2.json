@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "89c621ba-5105-4839-8b74-4e75cc7c9b5b",
+            "id": "b3f1f01a-3cfb-4ad4-964a-38b21dbdd1a9",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -41,7 +41,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "skilltree:evasion",
-            "id": "395bc94b-7634-44ec-bd9f-cfedcbb9a6c2",
+            "id": "d6623aae-cb2c-433a-9f1d-37ab272a623a",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -88,7 +88,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "dc58edb3-bf2f-44d2-b549-2b9c7bf7a776",
+            "id": "debe1f80-7f43-4ac5-87b6-d75c08884a8e",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -116,7 +116,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "skilltree:blocking",
-            "id": "d58923e0-cb80-41a1-b82c-a41b202caaa6",
+            "id": "761cd97a-09af-4354-916d-ecb3597fe55a",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -144,7 +144,7 @@
             "type": "skilltree:attribute",
             "amount": 0.015,
             "attribute": "skilltree:evasion",
-            "id": "5ed5f2dc-f2db-47f1-97b8-4f90b42b2137",
+            "id": "f6868027-5c00-4033-b505-1233852e7c8f",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -168,7 +168,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "rare",
-  "min_rarity": "rare",
+  "max_rarity": "epic",
+  "min_rarity": "epic",
   "weight": 0
 }

@@ -8,8 +8,8 @@
         "amount": 1
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "helmet"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors/helmets"
       }
     }
   ],

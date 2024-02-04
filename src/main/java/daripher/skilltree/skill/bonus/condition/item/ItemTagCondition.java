@@ -9,111 +9,113 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotContext;
+import net.minecraftforge.common.Tags;
 
-public final class CurioCondition implements ItemCondition {
-  private String slot;
+public class ItemTagCondition implements ItemCondition {
+  private ResourceLocation tagId;
 
-  public CurioCondition(String slot) {
-    this.slot = slot;
+  public ItemTagCondition(ResourceLocation tagId) {
+    this.tagId = tagId;
   }
 
   @Override
   public boolean met(ItemStack stack) {
-    SlotContext ctx = new SlotContext(slot, null, 0, false, false);
-    return CuriosApi.getCuriosHelper().isStackValid(ctx, stack);
+    return stack.is(ItemTags.create(tagId));
   }
 
   @Override
   public String getDescriptionId() {
-    return "%s.%s".formatted(ItemCondition.super.getDescriptionId(), slot);
+    return "item_tag.%s".formatted(tagId.toString());
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    CurioCondition that = (CurioCondition) o;
-    return Objects.equals(slot, that.slot);
+    ItemTagCondition that = (ItemTagCondition) o;
+    return Objects.equals(tagId, that.tagId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(slot);
+    return Objects.hash(tagId);
   }
 
   @Override
   public ItemCondition.Serializer getSerializer() {
-    return PSTItemConditions.CURIO.get();
+    return PSTItemConditions.TAG.get();
   }
 
   @Override
   public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<ItemCondition> consumer) {
-    editor.addLabel(0, 0, "Type", ChatFormatting.GREEN);
+    editor.addLabel(0, 0, "Tag", ChatFormatting.GREEN);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 200, 14, 10, slot, CuriosApi.getSlotHelper().getSlotTypeIds())
-        .setToNameFunc(s -> Component.literal(s.substring(0, 1).toUpperCase() + s.substring(1)))
+        .addTextField(0, 0, 200, 14, tagId.toString())
+        .setSoftFilter(ResourceLocation::isValidResourceLocation)
         .setResponder(
-            t -> {
-              setSlot(t);
+            s -> {
+              setTagId(new ResourceLocation(s));
               consumer.accept(this);
             });
     editor.shiftWidgets(0, 19);
   }
 
-  public void setSlot(String slot) {
-    this.slot = slot;
+  public void setTagId(ResourceLocation tagId) {
+    this.tagId = tagId;
   }
 
   public static class Serializer implements ItemCondition.Serializer {
     @Override
     public ItemCondition deserialize(JsonObject json) throws JsonParseException {
-      return new CurioCondition(json.get("slot").getAsString());
+      ResourceLocation tagId = new ResourceLocation(json.get("tag_id").getAsString());
+      return new ItemTagCondition(tagId);
     }
 
     @Override
     public void serialize(JsonObject json, ItemCondition condition) {
-      if (!(condition instanceof CurioCondition aCondition)) {
+      if (!(condition instanceof ItemTagCondition aCondition)) {
         throw new IllegalArgumentException();
       }
-      json.addProperty("slot", aCondition.slot);
+      json.addProperty("tag_id", aCondition.tagId.toString());
     }
 
     @Override
     public ItemCondition deserialize(CompoundTag tag) {
-      return new CurioCondition(tag.getString("slot"));
+      ResourceLocation tagId = new ResourceLocation(tag.getString("tag_id"));
+      return new ItemTagCondition(tagId);
     }
 
     @Override
     public CompoundTag serialize(ItemCondition condition) {
-      if (!(condition instanceof CurioCondition aCondition)) {
+      if (!(condition instanceof ItemTagCondition aCondition)) {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      tag.putString("slot", aCondition.slot);
+      tag.putString("tag_id", aCondition.tagId.toString());
       return tag;
     }
 
     @Override
     public ItemCondition deserialize(FriendlyByteBuf buf) {
-      return new CurioCondition(buf.readUtf());
+      ResourceLocation tagId = new ResourceLocation(buf.readUtf());
+      return new ItemTagCondition(tagId);
     }
 
     @Override
     public void serialize(FriendlyByteBuf buf, ItemCondition condition) {
-      if (!(condition instanceof CurioCondition aCondition)) {
+      if (!(condition instanceof ItemTagCondition aCondition)) {
         throw new IllegalArgumentException();
       }
-      buf.writeUtf(aCondition.slot);
+      buf.writeUtf(aCondition.tagId.toString());
     }
 
     @Override
     public ItemCondition createDefaultInstance() {
-      return new CurioCondition("ring");
+      return new ItemTagCondition(Tags.Items.ARMORS.location());
     }
   }
 }

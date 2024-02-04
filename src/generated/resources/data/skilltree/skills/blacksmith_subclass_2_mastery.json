@@ -4,7 +4,8 @@
     {
       "type": "skilltree:repair_efficiency",
       "item_condition": {
-        "type": "skilltree:equipment"
+        "type": "skilltree:tag",
+        "tag_id": "forge:equipment"
       },
       "multiplier": 0.05
     },
@@ -16,7 +17,8 @@
         "operation": 1
       },
       "item_condition": {
-        "type": "skilltree:equipment"
+        "type": "skilltree:tag",
+        "tag_id": "forge:equipment"
       }
     },
     {
@@ -27,7 +29,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "10424c7a-9344-43f0-8e79-6e496ba692fc",
+          "id": "2d7dee90-55cd-47d3-99bb-71c4ad79f13d",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -39,8 +41,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons"
       }
     },
     {
@@ -51,7 +53,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05000000074505806,
           "attribute": "minecraft:generic.armor_toughness",
-          "id": "59bf9ba5-5d8b-4ab0-9780-96d9b4a75b14",
+          "id": "4fb6b96d-ba04-4f53-817e-df5ee3cdd661",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -63,8 +65,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors"
       }
     },
     {
@@ -75,7 +77,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.armor",
-          "id": "c22077f9-0e88-46b5-9931-a628bffb8794",
+          "id": "ad1fe252-d88b-4f40-be6c-9842b41e092f",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -87,8 +89,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "shield"
+        "type": "skilltree:tag",
+        "tag_id": "forge:tools/shields"
       }
     }
   ],

@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.15000000223517418,
             "attribute": "skilltree:life_per_hit",
-            "id": "534ad38b-e922-4736-99fa-a8f14598c66a",
+            "id": "61dca70a-dcfe-4f03-a562-95d8e88096b3",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -65,7 +65,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "minecraft:generic.max_health",
-            "id": "6a673c6e-f06b-4fc2-a634-bc2ff8ce3167",
+            "id": "e8409149-eb0b-4f6f-9e68-a08bc8b1e706",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -93,7 +93,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03,
             "attribute": "skilltree:regeneration",
-            "id": "a97b8653-9f2a-4e6a-a1e0-821fb0cd143a",
+            "id": "2359d900-7b79-422a-8cc1-81f8f68baa2c",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -121,7 +121,7 @@
             "type": "skilltree:attribute",
             "amount": 0.15000000223517418,
             "attribute": "skilltree:life_on_block",
-            "id": "97a707a6-4c69-4bdd-8f8f-ae57d9c18b48",
+            "id": "15f4aff2-4b8d-4a4b-963d-1a384d732dcc",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -169,7 +169,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "rare",
-  "min_rarity": "rare",
+  "max_rarity": "epic",
+  "min_rarity": "epic",
   "weight": 0
 }

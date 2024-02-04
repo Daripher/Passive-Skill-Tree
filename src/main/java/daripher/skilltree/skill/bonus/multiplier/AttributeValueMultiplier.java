@@ -24,7 +24,7 @@ public final class AttributeValueMultiplier implements LivingMultiplier {
   private float divisor;
 
   public AttributeValueMultiplier(Attribute attribute) {
-    this.attribute = attribute;
+    this(attribute, 1f);
   }
 
   public AttributeValueMultiplier(Attribute attribute, float divisor) {

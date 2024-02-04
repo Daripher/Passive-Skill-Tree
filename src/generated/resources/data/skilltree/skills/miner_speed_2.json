@@ -5,14 +5,14 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "b42e80b4-2859-44c6-ae8e-f6ba8eadd74d",
+      "id": "2f15e199-4c33-4703-9cfe-a2a997c4be7c",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
         "type": "skilltree:has_gems",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:tag",
+          "tag_id": "forge:weapons"
         },
         "min": 1
       },

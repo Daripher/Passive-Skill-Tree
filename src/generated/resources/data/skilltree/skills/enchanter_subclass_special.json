@@ -24,8 +24,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:curio",
-        "slot": "quiver"
+        "type": "skilltree:tag",
+        "tag_id": "curios:quiver"
       }
     },
     {
@@ -48,8 +48,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:curio",
-        "slot": "quiver"
+        "type": "skilltree:tag",
+        "tag_id": "curios:quiver"
       }
     }
   ],

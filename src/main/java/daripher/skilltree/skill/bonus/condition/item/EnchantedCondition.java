@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.Tags;
 
 public final class EnchantedCondition implements ItemCondition {
   private ItemCondition itemCondition;
@@ -125,7 +126,7 @@ public final class EnchantedCondition implements ItemCondition {
 
     @Override
     public ItemCondition createDefaultInstance() {
-      return new EnchantedCondition(new WeaponCondition(WeaponCondition.Type.SWORD));
+      return new EnchantedCondition(new ItemTagCondition(Tags.Items.TOOLS_SWORDS.location()));
     }
   }
 }

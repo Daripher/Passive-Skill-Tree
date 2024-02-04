@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.04,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "c7174887-e04b-4c1e-80f8-f9e03ff9155e",
+          "id": "f37ddad0-a8c7-4169-95c6-d51fe131344b",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "ranged"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons/ranged"
       }
     }
   ],

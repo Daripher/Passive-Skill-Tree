@@ -4,16 +4,16 @@
     {
       "type": "skilltree:gem_power",
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors"
       },
       "multiplier": 0.3
     },
     {
       "type": "skilltree:player_sockets",
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "chestplate"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors/chestplates"
       },
       "sockets": 1
     }

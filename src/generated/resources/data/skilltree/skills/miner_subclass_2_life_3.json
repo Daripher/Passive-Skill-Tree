@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "fd87d775-2bd6-47ab-929e-566b8d625a26",
+      "id": "3b18225c-bedf-414e-825b-74bc64e95537",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,7 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:jewelry"
+          "type": "skilltree:tag",
+          "tag_id": "forge:curios/jewelry"
         }
       }
     }

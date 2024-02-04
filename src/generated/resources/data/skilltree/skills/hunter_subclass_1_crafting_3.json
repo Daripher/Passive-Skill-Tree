@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "skilltree:stealth",
-          "id": "8de64edd-6ac0-4ba4-9993-692ff21388b2",
+          "id": "4e6f47c8-b7bf-4551-9557-9c58cb28c5db",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:armor",
-        "armor_type": "any"
+        "type": "skilltree:tag",
+        "tag_id": "forge:armors"
       }
     }
   ],

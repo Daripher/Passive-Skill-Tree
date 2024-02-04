@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.2,
             "attribute": "skilltree:life_per_hit",
-            "id": "198e6cae-170f-4aac-8893-4f0648ad73d9",
+            "id": "0d1efad9-103c-4e54-8c6f-69f2804d6a7b",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -65,7 +65,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "minecraft:generic.max_health",
-            "id": "bad65570-fbbc-44c0-9c20-ffe3f1d53877",
+            "id": "5c635257-0e8f-4600-a3a9-9ed05b1081dd",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -93,7 +93,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "skilltree:regeneration",
-            "id": "c2163e65-6e97-4502-9f72-5c9fc4b68e04",
+            "id": "692e10c4-4f99-4095-9c5a-4e73c1a6b277",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -121,7 +121,7 @@
             "type": "skilltree:attribute",
             "amount": 0.2,
             "attribute": "skilltree:life_on_block",
-            "id": "75fddc4c-f1da-4dd3-896f-c6fe6f2c6d11",
+            "id": "504512e3-9d0e-434a-95bc-585e5c7743fb",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {

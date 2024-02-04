@@ -11,8 +11,8 @@
       "player_condition": {
         "type": "skilltree:has_gems",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:tag",
+          "tag_id": "forge:weapons"
         },
         "min": 1
       },

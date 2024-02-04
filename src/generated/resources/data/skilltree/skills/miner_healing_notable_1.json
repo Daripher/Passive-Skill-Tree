@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:regeneration",
-      "id": "eed1c668-17df-4679-ae5d-b10b9581f8ec",
+      "id": "8d462cfa-c01e-4b69-917c-a0a93e271fa0",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:armor",
-          "armor_type": "helmet"
+          "type": "skilltree:tag",
+          "tag_id": "forge:armors/helmets"
         }
       }
     }

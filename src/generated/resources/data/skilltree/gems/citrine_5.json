@@ -26,11 +26,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -43,7 +43,7 @@
             "type": "skilltree:attribute",
             "amount": 1.0000000149011612,
             "attribute": "minecraft:generic.luck",
-            "id": "5ddb6534-b167-48d7-97a4-7c013a2e8273",
+            "id": "fd4027eb-6dd5-4efa-bf07-7c74866d331e",
             "name": "Citrine",
             "operation": 0,
             "player_condition": {
@@ -112,7 +112,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.luck",
-            "id": "c8dc0203-b909-4bf9-b1c2-1dc939ed6d7c",
+            "id": "9c69a3ad-1db1-4da6-a0db-7959cb110b94",
             "name": "Citrine",
             "operation": 1,
             "player_condition": {
@@ -156,7 +156,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "ancient",
-  "min_rarity": "ancient",
+  "max_rarity": "epic",
+  "min_rarity": "epic",
   "weight": 0
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import javax.annotation.Nullable;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
@@ -141,6 +142,18 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     ResourceLocation id = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     assert id != null;
     String key = "item_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
+    add(key, value);
+  }
+
+  protected void add(TagKey<Item> itemTag, String value) {
+    ResourceLocation id = itemTag.location();
+    String key = "item_tag.%s".formatted(id.toString());
+    add(key, value);
+  }
+
+  protected void add(TagKey<Item> itemTag, String type, String value) {
+    ResourceLocation id = itemTag.location();
+    String key = "item_tag.%s.%s".formatted(id.toString(), type);
     add(key, value);
   }
 

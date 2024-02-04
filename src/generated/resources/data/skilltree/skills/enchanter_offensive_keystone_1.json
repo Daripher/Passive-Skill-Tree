@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:enchants_levels",
         "item_condition": {
-          "type": "skilltree:weapon",
-          "weapon_type": "any"
+          "type": "skilltree:tag",
+          "tag_id": "forge:weapons"
         }
       },
       "target_condition": {

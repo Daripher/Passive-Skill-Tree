@@ -27,11 +27,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -44,7 +44,7 @@
             "type": "skilltree:attribute",
             "amount": 0.1,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "05b7f8a1-ac40-4454-9e1b-4d3e7bf08eb3",
+            "id": "d2179bb9-0559-452d-9f96-9fa71841a243",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -72,7 +72,7 @@
             "type": "skilltree:attribute",
             "amount": 0.01,
             "attribute": "minecraft:generic.armor",
-            "id": "a4ea4a12-4b40-40b1-9eb6-31756ce1f4a0",
+            "id": "b844dcda-17ea-49db-a404-8d6ce76a755c",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -100,7 +100,7 @@
             "type": "skilltree:attribute",
             "amount": 0.01,
             "attribute": "minecraft:generic.knockback_resistance",
-            "id": "1b025a3b-ddec-4a8a-a603-24e17e8de457",
+            "id": "3ddb3158-5e57-4c7a-a97e-fa0391b59225",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -144,7 +144,7 @@
             "type": "skilltree:attribute",
             "amount": 0.005,
             "attribute": "skilltree:blocking",
-            "id": "777d5611-9a01-4ef4-bf6c-59adcfbf546c",
+            "id": "aa423520-2c9e-4439-ba77-bec9006104de",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -168,7 +168,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "common",
-  "min_rarity": "common",
+  "max_rarity": "epic",
+  "min_rarity": "epic",
   "weight": 0
 }

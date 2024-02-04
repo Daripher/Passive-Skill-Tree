@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.25,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "93018e56-e918-4327-876c-cc4e5c9d12d4",
+          "id": "1c65651c-81c8-43d9-a7c4-570492811ec5",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:weapon",
-        "weapon_type": "melee"
+        "type": "skilltree:tag",
+        "tag_id": "forge:weapons/melee"
       }
     }
   ],

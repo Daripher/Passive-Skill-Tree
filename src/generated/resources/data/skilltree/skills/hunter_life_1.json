@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.max_health",
-      "id": "ffe2ffab-ec14-4dc3-9ba7-a935d071eec8",
+      "id": "b06c158d-10dd-4b34-91a9-e80b8d54e789",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,7 +14,7 @@
       "player_multiplier": {
         "type": "skilltree:attribute_value",
         "attribute": "skilltree:evasion",
-        "divisor": 0.0
+        "divisor": 1.0
       }
     }
   ],

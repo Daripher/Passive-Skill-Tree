@@ -6,8 +6,10 @@ import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.network.NetworkHelper;
-import daripher.skilltree.skill.bonus.condition.item.WeaponCondition;
+import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.condition.item.ItemTagCondition;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -18,9 +20,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
 public final class DualWieldingCondition implements LivingCondition {
-  private @Nonnull WeaponCondition weaponCondition;
+  private @Nonnull ItemCondition weaponCondition;
 
-  public DualWieldingCondition(@Nonnull WeaponCondition weaponCondition) {
+  public DualWieldingCondition(@Nonnull ItemCondition weaponCondition) {
     this.weaponCondition = weaponCondition;
   }
 
@@ -47,7 +49,7 @@ public final class DualWieldingCondition implements LivingCondition {
     weaponCondition.addEditorWidgets(
         editor,
         c -> {
-          setWeaponCondition((WeaponCondition) c);
+          setWeaponCondition(c);
           consumer.accept(this);
         });
   }
@@ -65,15 +67,14 @@ public final class DualWieldingCondition implements LivingCondition {
     return Objects.hash(weaponCondition);
   }
 
-  public void setWeaponCondition(@Nonnull WeaponCondition weaponCondition) {
+  public void setWeaponCondition(@Nonnull ItemCondition weaponCondition) {
     this.weaponCondition = weaponCondition;
   }
 
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
-      return new DualWieldingCondition(
-          (WeaponCondition) SerializationHelper.deserializeItemCondition(json));
+      return new DualWieldingCondition(SerializationHelper.deserializeItemCondition(json));
     }
 
     @Override
@@ -86,8 +87,7 @@ public final class DualWieldingCondition implements LivingCondition {
 
     @Override
     public LivingCondition deserialize(CompoundTag tag) {
-      return new DualWieldingCondition(
-          (WeaponCondition) SerializationHelper.deserializeItemCondition(tag));
+      return new DualWieldingCondition(SerializationHelper.deserializeItemCondition(tag));
     }
 
     @Override
@@ -102,7 +102,7 @@ public final class DualWieldingCondition implements LivingCondition {
 
     @Override
     public LivingCondition deserialize(FriendlyByteBuf buf) {
-      return new DualWieldingCondition((WeaponCondition) NetworkHelper.readItemCondition(buf));
+      return new DualWieldingCondition(NetworkHelper.readItemCondition(buf));
     }
 
     @Override
@@ -115,7 +115,7 @@ public final class DualWieldingCondition implements LivingCondition {
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new DualWieldingCondition(new WeaponCondition(WeaponCondition.Type.ANY));
+      return new DualWieldingCondition(new ItemTagCondition(PSTTags.WEAPONS.location()));
     }
   }
 }
