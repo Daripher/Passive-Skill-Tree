@@ -21,13 +21,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_subclass_1_offensive_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_offensive_1.png",
   "id": "skilltree:enchanter_subclass_1_offensive_4",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 428.90466,
   "positionY": -98.704544
 }

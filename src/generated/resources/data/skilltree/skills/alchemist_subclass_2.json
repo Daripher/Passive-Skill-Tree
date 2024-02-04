@@ -14,14 +14,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_2_crafting_1",
     "skilltree:alchemist_subclass_2_life_1"
   ],
   "iconTexture": "skilltree:textures/icons/alchemist_subclass_2.png",
   "id": "skilltree:alchemist_subclass_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 144.95734,
   "positionY": 315.08533
 }

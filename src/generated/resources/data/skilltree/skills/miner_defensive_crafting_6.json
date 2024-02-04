@@ -12,13 +12,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_defensive_crafting_7"
   ],
   "iconTexture": "skilltree:textures/icons/miner_defensive_crafting_1.png",
   "id": "skilltree:miner_defensive_crafting_6",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -195.18297,
   "positionY": 220.03984
 }

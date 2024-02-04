@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:life_on_block",
-      "id": "baf7262e-d1bf-4b91-8f14-b63142c3cccc",
+      "id": "ed1dd9c0-b167-48ba-8355-cc7f444dfa0b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_offensive_crafting_3"
   ],
   "iconTexture": "skilltree:textures/icons/cook_healing_1.png",
   "id": "skilltree:cook_healing_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -108.07291,
   "positionY": -149.652
 }

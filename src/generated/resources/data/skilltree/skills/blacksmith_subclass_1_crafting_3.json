@@ -30,14 +30,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_subclass_1_crafting_4",
     "skilltree:blacksmith_subclass_1_crafting_5"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1_crafting_1.png",
   "id": "skilltree:blacksmith_subclass_1_crafting_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -261.40594,
   "positionY": -336.8084
 }

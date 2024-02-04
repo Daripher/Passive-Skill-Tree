@@ -1373,7 +1373,7 @@ public class PSTSkillsProvider implements DataProvider {
   }
 
   private void addGatewayConnection(String gatewayId1, String gatewayId2) {
-    getSkill(gatewayId1).getGatewayConnections().add(new ResourceLocation("skilltree", gatewayId2));
+    getSkill(gatewayId1).getLongConnections().add(new ResourceLocation("skilltree", gatewayId2));
   }
 
   private void addSkill(String name, String icon, int size) {

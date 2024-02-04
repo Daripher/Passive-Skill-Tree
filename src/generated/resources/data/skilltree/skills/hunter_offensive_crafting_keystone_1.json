@@ -15,11 +15,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/hunter_offensive_crafting_keystone_1.png",
   "id": "skilltree:hunter_offensive_crafting_keystone_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 243.65894,
   "positionY": 248.06166
 }

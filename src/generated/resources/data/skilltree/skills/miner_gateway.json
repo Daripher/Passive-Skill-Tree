@@ -3,13 +3,14 @@
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
   "buttonSize": 30,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_subclass_1_defensive_1"
   ],
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:miner_gateway",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -106.83738,
   "positionY": 184.02725
 }

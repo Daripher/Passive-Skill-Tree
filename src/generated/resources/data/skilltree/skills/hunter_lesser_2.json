@@ -10,13 +10,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_lesser_4"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_lesser_1.png",
   "id": "skilltree:hunter_lesser_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 266.17694,
   "positionY": 186.02936
 }

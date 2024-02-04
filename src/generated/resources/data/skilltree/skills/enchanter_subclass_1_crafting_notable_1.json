@@ -31,11 +31,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_1_crafting_notable_1.png",
   "id": "skilltree:enchanter_subclass_1_crafting_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 470.8827,
   "positionY": -55.99108
 }

@@ -14,8 +14,7 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_defensive_1",
     "skilltree:cook_offensive_1",
     "skilltree:cook_defensive_crafting_1",
@@ -25,6 +24,8 @@
   "iconTexture": "skilltree:textures/icons/cook_class.png",
   "id": "skilltree:cook_class",
   "isStartingPoint": true,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 1.8614632E-14,
   "positionY": -152.0
 }

@@ -15,17 +15,19 @@
       },
       "target_condition": {
         "type": "skilltree:has_effect",
+        "amplifier": 1,
         "effect": "minecraft:poison"
       }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/alchemist_crit_notable_1.png",
   "id": "skilltree:alchemist_crit_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 0.0029907227,
   "positionY": 297.52728
 }

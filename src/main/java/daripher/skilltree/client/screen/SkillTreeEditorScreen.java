@@ -32,8 +32,7 @@ import org.lwjgl.glfw.GLFW;
 public class SkillTreeEditorScreen extends Screen {
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
   private final List<SkillConnection> skillConnections = new ArrayList<>();
-  private final List<SkillConnection> gatewayConnections = new ArrayList<>();
-  private final Set<ResourceLocation> selectedSkills = new HashSet<>();
+  private final Set<ResourceLocation> selectedSkills = new LinkedHashSet<>();
   private final PassiveSkillTree skillTree;
   private Tools selectedTools = Tools.MAIN;
   protected double scrollSpeedX;
@@ -69,7 +68,6 @@ public class SkillTreeEditorScreen extends Screen {
     if (maxScrollX < 0) maxScrollX = 0;
     if (maxScrollY < 0) maxScrollY = 0;
     addSkillConnections();
-    addGatewayConnections();
     addToolButtons();
   }
 
@@ -546,7 +544,6 @@ public class SkillTreeEditorScreen extends Screen {
               reAddSkillButton(skill);
             });
     addSkillConnections();
-    addGatewayConnections();
     saveSelectedSkills();
   }
 
@@ -555,7 +552,6 @@ public class SkillTreeEditorScreen extends Screen {
     firstSelectedSkill.setPosition(x, y);
     reAddSkillButton(firstSelectedSkill);
     addSkillConnections();
-    addGatewayConnections();
     saveSelectedSkills();
   }
 
@@ -633,37 +629,52 @@ public class SkillTreeEditorScreen extends Screen {
       addRenderableWidget(disconnectButton);
       disconnectButton.setPressFunc(
           b -> {
-            firstSkill.getConnections().remove(second);
-            secondSkill.getConnections().remove(first);
-            firstSkill.getGatewayConnections().remove(second);
-            secondSkill.getGatewayConnections().remove(first);
+            firstSkill.getDirectConnections().remove(second);
+            secondSkill.getDirectConnections().remove(first);
+            firstSkill.getLongConnections().remove(second);
+            secondSkill.getLongConnections().remove(first);
+            firstSkill.getOneWayConnections().remove(second);
+            secondSkill.getOneWayConnections().remove(first);
             saveSelectedSkills();
             rebuildWidgets();
           });
     } else {
-      addButton(0, 0, 100, 14, "Connect")
+      addLabel(0, 0, "Connect");
+      shiftWidgets(0, 19);
+      addButton(0, 0, 100, 14, "Direct")
           .setPressFunc(
               b -> {
-                skillButtons.get(first).skill.getConnections().add(second);
+                skillButtons.get(first).skill.getDirectConnections().add(second);
                 saveSelectedSkills();
                 rebuildWidgets();
               });
-      addButton(105, 0, 100, 14, "Connect Gateways")
+      shiftWidgets(0, 19);
+      addButton(0, 0, 100, 14, "Long")
           .setPressFunc(
               b -> {
-                skillButtons.get(first).skill.getGatewayConnections().add(second);
+                skillButtons.get(first).skill.getLongConnections().add(second);
+                saveSelectedSkills();
+                rebuildWidgets();
+              });
+      shiftWidgets(0, 19);
+      addButton(0, 0, 100, 14, "One Way")
+          .setPressFunc(
+              b -> {
+                skillButtons.get(first).skill.getOneWayConnections().add(second);
                 saveSelectedSkills();
                 rebuildWidgets();
               });
     }
-    toolsY += 19;
+    shiftWidgets(0, 19);
   }
 
   private boolean skillsConnected(PassiveSkill first, PassiveSkill second) {
-    return first.getConnections().contains(second.getId())
-        || second.getConnections().contains(first.getId())
-        || first.getGatewayConnections().contains(second.getId())
-        || second.getGatewayConnections().contains(first.getId());
+    return first.getDirectConnections().contains(second.getId())
+        || second.getDirectConnections().contains(first.getId())
+        || first.getLongConnections().contains(second.getId())
+        || second.getLongConnections().contains(first.getId())
+        || first.getOneWayConnections().contains(second.getId())
+        || second.getOneWayConnections().contains(first.getId());
   }
 
   private void saveSelectedSkills() {
@@ -711,39 +722,33 @@ public class SkillTreeEditorScreen extends Screen {
     getTreeSkills().forEach(this::addSkillConnections);
   }
 
-  public void addGatewayConnections() {
-    gatewayConnections.clear();
-    getTreeSkills().forEach(this::addGatewayConnections);
-  }
-
   private Stream<PassiveSkill> getTreeSkills() {
     return skillTree.getSkillIds().stream().map(SkillTreeClientData::getEditorSkill);
   }
 
   private void addSkillConnections(PassiveSkill skill) {
-    for (ResourceLocation connectedSkillId : new ArrayList<>(skill.getConnections())) {
+    readSkillConnections(skill, SkillConnection.Type.DIRECT, skill.getDirectConnections());
+    readSkillConnections(skill, SkillConnection.Type.LONG, skill.getLongConnections());
+    readSkillConnections(skill, SkillConnection.Type.ONE_WAY, skill.getOneWayConnections());
+  }
+
+  private void readSkillConnections(
+      PassiveSkill skill, SkillConnection.Type type, List<ResourceLocation> connections) {
+    for (ResourceLocation connectedSkillId : new ArrayList<>(connections)) {
       if (SkillTreeClientData.getEditorSkill(connectedSkillId) == null) {
-        skill.getConnections().remove(connectedSkillId);
+        connections.remove(connectedSkillId);
         SkillTreeClientData.saveEditorSkill(skill);
         continue;
       }
-      connectSkills(skillConnections, skill.getId(), connectedSkillId);
+      connectSkills(type, skill.getId(), connectedSkillId);
     }
   }
 
-  private void addGatewayConnections(PassiveSkill skill) {
-    skill
-        .getGatewayConnections()
-        .forEach(
-            connectedSkillId -> connectSkills(gatewayConnections, skill.getId(), connectedSkillId));
-  }
-
   protected void connectSkills(
-      List<SkillConnection> connections, ResourceLocation skillId1, ResourceLocation skillId2) {
+      SkillConnection.Type type, ResourceLocation skillId1, ResourceLocation skillId2) {
     SkillButton button1 = skillButtons.get(skillId1);
     SkillButton button2 = skillButtons.get(skillId2);
-    if (button1 == null || button2 == null) return;
-    connections.add(new SkillConnection(button1, button2));
+    skillConnections.add(new SkillConnection(type, button1, button2));
   }
 
   protected void skillButtonPressed(SkillButton button) {
@@ -889,12 +894,22 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   protected void renderConnections(GuiGraphics graphics, int mouseX, int mouseY) {
-    skillConnections.forEach(
-        c -> ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, 0));
-    gatewayConnections.forEach(c -> getRenderGatewayConnection(graphics, c, mouseX, mouseY));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.DIRECT)
+        .forEach(c -> renderDirectConnection(graphics, c));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.LONG)
+        .forEach(c -> renderLongConnection(graphics, c, mouseX, mouseY));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.ONE_WAY)
+        .forEach(c -> renderOneWayConnection(graphics, c));
   }
 
-  private void getRenderGatewayConnection(
+  private void renderDirectConnection(GuiGraphics graphics, SkillConnection c) {
+    ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, 0);
+  }
+
+  private void renderLongConnection(
       GuiGraphics graphics, SkillConnection connection, int mouseX, int mouseY) {
     SkillButton hoveredSkill = getSkillAt(mouseX, mouseY);
     if (hoveredSkill != connection.getFirstButton()
@@ -902,6 +917,10 @@ public class SkillTreeEditorScreen extends Screen {
       return;
     }
     ScreenHelper.renderGatewayConnection(graphics, scrollX, scrollY, connection, true, zoom, 0);
+  }
+
+  private void renderOneWayConnection(GuiGraphics graphics, SkillConnection connection) {
+    ScreenHelper.renderOneWayConnection(graphics, scrollX, scrollY, connection, true, zoom, 0);
   }
 
   protected boolean sameBonuses(PassiveSkill skill, PassiveSkill otherSkill) {

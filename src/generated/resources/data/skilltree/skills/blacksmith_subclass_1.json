@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "minecraft:generic.armor",
-      "id": "6d6d3e0c-1470-45f7-b3ed-a7cd2abd14cf",
+      "id": "bccb0d43-4bf6-48f6-92d7-f3a04aa0ca68",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "skilltree:blocking",
-      "id": "ca75f4d6-91d8-42da-bc34-6fcb3fe25cd8",
+      "id": "f1c4c55f-7a0e-4a29-87fd-83fd86b0cbcf",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,14 +32,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_subclass_1_offensive_1",
     "skilltree:blacksmith_subclass_1_crafting_1"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_1.png",
   "id": "skilltree:blacksmith_subclass_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -200.37517,
   "positionY": -283.09222
 }

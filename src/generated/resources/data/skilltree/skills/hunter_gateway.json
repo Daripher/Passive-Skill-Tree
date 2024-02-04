@@ -3,15 +3,16 @@
   "bonuses": [],
   "borderTexture": "skilltree:textures/tooltip/gateway.png",
   "buttonSize": 30,
-  "connectedAsGateways": [
-    "skilltree:blacksmith_gateway"
-  ],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_subclass_1_defensive_1"
   ],
   "iconTexture": "skilltree:textures/icons/void.png",
   "id": "skilltree:hunter_gateway",
   "isStartingPoint": false,
+  "longConnections": [
+    "skilltree:blacksmith_gateway"
+  ],
+  "oneWayConnections": [],
   "positionX": 212.7852,
   "positionY": 0.5066986
 }

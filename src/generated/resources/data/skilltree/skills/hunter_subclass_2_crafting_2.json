@@ -16,14 +16,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_subclass_2_crafting_3",
     "skilltree:hunter_subclass_2_crafting_5"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2_crafting_1.png",
   "id": "skilltree:hunter_subclass_2_crafting_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 399.8586,
   "positionY": 45.011627
 }

@@ -27,7 +27,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "064106ed-0237-45e3-91f2-17cb9d0f5df7",
+          "id": "10424c7a-9344-43f0-8e79-6e496ba692fc",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -51,7 +51,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05000000074505806,
           "attribute": "minecraft:generic.armor_toughness",
-          "id": "619c2137-2588-4665-ac7d-092173fd1e44",
+          "id": "59bf9ba5-5d8b-4ab0-9780-96d9b4a75b14",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -75,7 +75,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.armor",
-          "id": "8535737c-8d75-4d5d-9358-97144e861721",
+          "id": "c22077f9-0e88-46b5-9931-a628bffb8794",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -94,13 +94,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_subclass_2_life_4"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_subclass_2_mastery.png",
   "id": "skilltree:blacksmith_subclass_2_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -460.8894,
   "positionY": -98.72784
 }

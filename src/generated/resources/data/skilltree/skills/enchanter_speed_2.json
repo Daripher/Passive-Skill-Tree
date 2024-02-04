@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.02,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "85a19da1-c3b4-455c-8ab2-468d8ffeb1fe",
+      "id": "3a98f6e6-1602-4dc6-8322-704c7b57e207",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -25,13 +25,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_speed_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_speed_1.png",
   "id": "skilltree:enchanter_speed_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 249.15608,
   "positionY": -111.512146
 }

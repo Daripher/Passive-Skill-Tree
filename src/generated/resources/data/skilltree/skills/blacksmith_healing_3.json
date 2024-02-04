@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.25,
       "attribute": "skilltree:regeneration",
-      "id": "5c02c37e-e1ab-4ed3-ba91-ac08a8df4e4a",
+      "id": "2bd886ff-69bc-4b20-bf45-892e8ffd6ecf",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,14 +18,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:blacksmith_healing_2",
     "skilltree:blacksmith_healing_4"
   ],
   "iconTexture": "skilltree:textures/icons/blacksmith_healing_1.png",
   "id": "skilltree:blacksmith_healing_3",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -165.24622,
   "positionY": 0.37635994
 }

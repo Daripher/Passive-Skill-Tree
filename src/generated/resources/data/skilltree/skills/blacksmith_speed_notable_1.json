@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "adc7eab4-024a-43b2-950e-6f8dc471eb08",
+      "id": "7ed2e80c-1b5e-41cb-aed5-4abd8b0730e8",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -22,11 +22,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/blacksmith_speed_notable_1.png",
   "id": "skilltree:blacksmith_speed_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -235.14684,
   "positionY": -135.77867
 }

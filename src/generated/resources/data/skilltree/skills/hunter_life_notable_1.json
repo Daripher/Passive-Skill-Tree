@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.max_health",
-      "id": "f47bc376-f5ec-4956-91ab-d90da6c65c8e",
+      "id": "3a2029e9-d911-4e95-a9bf-045e0645d2a9",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -13,17 +13,19 @@
       },
       "player_multiplier": {
         "type": "skilltree:attribute_value",
-        "attribute": "skilltree:evasion"
+        "attribute": "skilltree:evasion",
+        "divisor": 0.0
       }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/hunter_life_notable_1.png",
   "id": "skilltree:hunter_life_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 212.63101,
   "positionY": 122.77724
 }

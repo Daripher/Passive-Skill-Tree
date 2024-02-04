@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.01,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "1e7bd236-dc15-4920-80e5-81b420e72c2b",
+      "id": "8ce3ab92-c506-4a8e-b7ad-8f6f2eaa4be5",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_1_offensive_2"
   ],
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_offensive_1.png",
   "id": "skilltree:cook_subclass_1_offensive_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 128.9708,
   "positionY": -342.78476
 }

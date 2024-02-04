@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.02,
           "attribute": "minecraft:generic.movement_speed",
-          "id": "42fd4061-930b-46f9-a851-bafba2927476",
+          "id": "9f307605-3cdb-4105-8363-1e1c9c820b38",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -28,13 +28,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_1_crafting_2"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_1_crafting_1.png",
   "id": "skilltree:miner_subclass_1_crafting_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -377.35162,
   "positionY": 31.994904
 }

@@ -12,14 +12,15 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:miner_subclass_2_crafting_1",
     "skilltree:miner_subclass_2_life_1"
   ],
   "iconTexture": "skilltree:textures/icons/miner_subclass_2.png",
   "id": "skilltree:miner_subclass_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -200.40228,
   "positionY": 283.073
 }

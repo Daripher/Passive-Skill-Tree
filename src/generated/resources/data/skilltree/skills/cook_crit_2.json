@@ -21,13 +21,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_crit_notable_1"
   ],
   "iconTexture": "skilltree:textures/icons/cook_crit_1.png",
   "id": "skilltree:cook_crit_2",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 28.005981,
   "positionY": -297.52728
 }

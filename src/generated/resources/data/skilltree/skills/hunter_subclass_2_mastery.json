@@ -16,13 +16,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:hunter_subclass_2_life_4"
   ],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_2_mastery.png",
   "id": "skilltree:hunter_subclass_2_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 460.8894,
   "positionY": 98.72784
 }

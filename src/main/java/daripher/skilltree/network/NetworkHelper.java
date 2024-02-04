@@ -40,10 +40,11 @@ public class NetworkHelper {
     buf.writeFloat(skill.getPositionY());
     buf.writeUtf(skill.getTitle());
     buf.writeUtf(skill.getTitleColor());
-    writeResourceLocations(buf, skill.getConnections());
+    writeResourceLocations(buf, skill.getDirectConnections());
     writeNullableResourceLocation(buf, skill.getConnectedTreeId());
     writeSkillBonuses(buf, skill.getBonuses());
-    writeResourceLocations(buf, skill.getGatewayConnections());
+    writeResourceLocations(buf, skill.getLongConnections());
+    writeResourceLocations(buf, skill.getOneWayConnections());
   }
 
   public static PassiveSkill readPassiveSkill(FriendlyByteBuf buf) {
@@ -57,10 +58,11 @@ public class NetworkHelper {
     skill.setPosition(buf.readFloat(), buf.readFloat());
     skill.setTitle(buf.readUtf());
     skill.setTitleColor(buf.readUtf());
-    readResourceLocations(buf).forEach(skill.getConnections()::add);
+    readResourceLocations(buf).forEach(skill.getDirectConnections()::add);
     skill.setConnectedTree(readNullableResourceLocation(buf));
     readSkillBonuses(buf).forEach(skill::addSkillBonus);
-    readResourceLocations(buf).forEach(skill.getGatewayConnections()::add);
+    readResourceLocations(buf).forEach(skill.getLongConnections()::add);
+    readResourceLocations(buf).forEach(skill.getOneWayConnections()::add);
     return skill;
   }
 

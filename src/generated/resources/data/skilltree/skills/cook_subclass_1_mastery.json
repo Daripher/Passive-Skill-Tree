@@ -22,7 +22,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:life_per_hit",
-      "id": "3a5b3a61-138c-4c78-ba55-5f0a87b5ba08",
+      "id": "6c02ecd8-fd88-4ec4-a087-d8727559910b",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -36,13 +36,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/keystone.png",
   "buttonSize": 24,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:cook_subclass_1_offensive_4"
   ],
   "iconTexture": "skilltree:textures/icons/cook_subclass_1_mastery.png",
   "id": "skilltree:cook_subclass_1_mastery",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 144.97256,
   "positionY": -448.49655
 }

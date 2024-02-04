@@ -38,7 +38,6 @@ public class SkillTreeScreen extends Screen {
   public static final int BACKGROUND_SIZE = 2048;
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
   private final List<SkillConnection> skillConnections = new ArrayList<>();
-  private final List<SkillConnection> gatewayConnections = new ArrayList<>();
   private final List<ResourceLocation> learnedSkills = new ArrayList<>();
   public final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
   private final List<SkillButton> startingPoints = new ArrayList<>();
@@ -96,7 +95,6 @@ public class SkillTreeScreen extends Screen {
     if (maxScrollX < 0) maxScrollX = 0;
     if (maxScrollY < 0) maxScrollY = 0;
     addSkillConnections();
-    addGatewayConnections();
     highlightSkillsThatCanBeLearned();
   }
 
@@ -298,34 +296,27 @@ public class SkillTreeScreen extends Screen {
     getTreeSkills().forEach(this::addSkillConnections);
   }
 
-  public void addGatewayConnections() {
-    gatewayConnections.clear();
-    getTreeSkills().forEach(this::addGatewayConnections);
-  }
-
   private Stream<PassiveSkill> getTreeSkills() {
     return skillTree.getSkillIds().stream().map(SkillsReloader::getSkillById);
   }
 
   private void addSkillConnections(PassiveSkill skill) {
     skill
-        .getConnections()
-        .forEach(
-            connectedSkillId -> connectSkills(skillConnections, skill.getId(), connectedSkillId));
-  }
-
-  private void addGatewayConnections(PassiveSkill skill) {
+        .getDirectConnections()
+        .forEach(id -> connectSkills(SkillConnection.Type.DIRECT, skill.getId(), id));
     skill
-        .getGatewayConnections()
-        .forEach(
-            connectedSkillId -> connectSkills(gatewayConnections, skill.getId(), connectedSkillId));
+        .getLongConnections()
+        .forEach(id -> connectSkills(SkillConnection.Type.LONG, skill.getId(), id));
+    skill
+        .getOneWayConnections()
+        .forEach(id -> connectSkills(SkillConnection.Type.ONE_WAY, skill.getId(), id));
   }
 
   protected void connectSkills(
-      List<SkillConnection> connections, ResourceLocation skillId1, ResourceLocation skillId2) {
+      SkillConnection.Type type, ResourceLocation skillId1, ResourceLocation skillId2) {
     SkillButton button1 = skillButtons.get(skillId1);
     SkillButton button2 = skillButtons.get(skillId2);
-    connections.add(new SkillConnection(button1, button2));
+    skillConnections.add(new SkillConnection(type, button1, button2));
   }
 
   private void highlightSkillsThatCanBeLearned() {
@@ -337,7 +328,6 @@ public class SkillTreeScreen extends Screen {
     if (learnedSkills.size() + newlyLearnedSkills.size() >= SkillTreeClientData.max_skill_points)
       return;
     skillConnections.forEach(SkillConnection::updateAnimation);
-    gatewayConnections.forEach(SkillConnection::updateAnimation);
   }
 
   public void buttonPressed(net.minecraft.client.gui.components.Button button) {
@@ -469,12 +459,22 @@ public class SkillTreeScreen extends Screen {
   }
 
   protected void renderConnections(GuiGraphics graphics, int mouseX, int mouseY) {
-    skillConnections.forEach(
-        c -> ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, renderAnimation));
-    gatewayConnections.forEach(c -> renderGatewayConnection(graphics, c, mouseX, mouseY));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.DIRECT)
+        .forEach(c -> renderDirectConnection(graphics, c));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.LONG)
+        .forEach(c -> renderLongConnection(graphics, c, mouseX, mouseY));
+    skillConnections.stream()
+        .filter(c -> c.getType() == SkillConnection.Type.ONE_WAY)
+        .forEach(c -> renderOneWayConnection(graphics, c));
   }
 
-  private void renderGatewayConnection(
+  private void renderDirectConnection(GuiGraphics graphics, SkillConnection c) {
+    ScreenHelper.renderConnection(graphics, scrollX, scrollY, c, zoom, renderAnimation);
+  }
+
+  private void renderLongConnection(
       GuiGraphics graphics, SkillConnection connection, int mouseX, int mouseY) {
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();
@@ -485,6 +485,12 @@ public class SkillTreeScreen extends Screen {
       ScreenHelper.renderGatewayConnection(
           graphics, scrollX, scrollY, connection, learned, zoom, renderAnimation);
     }
+  }
+
+  private void renderOneWayConnection(GuiGraphics graphics, SkillConnection connection) {
+    boolean highlighted = isSkillLearned(connection.getFirstButton().skill);
+    ScreenHelper.renderOneWayConnection(
+        graphics, scrollX, scrollY, connection, highlighted, zoom, renderAnimation);
   }
 
   public float getAnimation() {

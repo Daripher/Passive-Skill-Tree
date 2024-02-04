@@ -16,14 +16,14 @@
       },
       "target_condition": {
         "type": "skilltree:has_effect",
+        "amplifier": 1,
         "effect": "minecraft:poison"
       }
     }
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:alchemist_offensive_4",
     "skilltree:alchemist_offensive_crafting_5",
     "skilltree:alchemist_subclass_1_defensive_1"
@@ -31,6 +31,8 @@
   "iconTexture": "skilltree:textures/icons/alchemist_offensive_notable_1.png",
   "id": "skilltree:alchemist_offensive_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": -79.97825,
   "positionY": 230.52809
 }

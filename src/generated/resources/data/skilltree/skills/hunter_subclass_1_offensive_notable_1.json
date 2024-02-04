@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "89ff6570-bf3c-4928-9b5a-6d4ef5db8683",
+      "id": "73c0b79e-8015-4fc1-8baa-0548b1158410",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "skilltree:stealth",
-      "id": "6031ef1f-a8fe-4c1f-8374-d7e54b630106",
+      "id": "65758786-a384-4465-9c8f-ff8c4fd7e2b5",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -32,11 +32,12 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/notable.png",
   "buttonSize": 20,
-  "connectedAsGateways": [],
-  "connectedSkills": [],
+  "directConnections": [],
   "iconTexture": "skilltree:textures/icons/hunter_subclass_1_offensive_notable_1.png",
   "id": "skilltree:hunter_subclass_1_offensive_notable_1",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 325.90677,
   "positionY": 307.09735
 }

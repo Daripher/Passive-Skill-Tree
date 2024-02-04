@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "fa84daa3-4ff5-4dc0-9a56-443450f83102",
+      "id": "e13dcbf5-8af2-4e27-834d-2a46aca6c2ad",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -18,13 +18,14 @@
   ],
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
   "buttonSize": 16,
-  "connectedAsGateways": [],
-  "connectedSkills": [
+  "directConnections": [
     "skilltree:enchanter_subclass_2"
   ],
   "iconTexture": "skilltree:textures/icons/enchanter_subclass_2_defensive_1.png",
   "id": "skilltree:enchanter_subclass_2_defensive_4",
   "isStartingPoint": false,
+  "longConnections": [],
+  "oneWayConnections": [],
   "positionX": 172.68896,
   "positionY": -267.07388
 }
