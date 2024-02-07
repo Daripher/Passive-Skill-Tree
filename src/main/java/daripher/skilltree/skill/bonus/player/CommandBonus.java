@@ -5,6 +5,7 @@ import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.function.Consumer;
+import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
@@ -15,20 +16,32 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
 public class CommandBonus implements SkillBonus<CommandBonus> {
-  private String command;
+  private @Nonnull String command;
+  private @Nonnull String removeCommand;
 
-  public CommandBonus(String command) {
+  public CommandBonus(@Nonnull String command, @Nonnull String removeCommand) {
     this.command = command;
+    this.removeCommand = removeCommand;
   }
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (!firstTime) return;
+    issueCommand(player, this.command);
+  }
+
+  @Override
+  public void onSkillRemoved(ServerPlayer player) {
+    issueCommand(player, this.removeCommand);
+  }
+
+  private void issueCommand(ServerPlayer player, String command) {
+    if (command.isEmpty()) return;
     MinecraftServer server = player.getServer();
     if (server == null) return;
     CommandSourceStack commandSourceStack = server.createCommandSourceStack();
     String playerName = player.getGameProfile().getName();
-    String command = this.command.replaceAll("<p>", playerName);
+    command = command.replaceAll("<p>", playerName);
     server.getCommands().performPrefixedCommand(commandSourceStack, command);
   }
 
@@ -39,7 +52,7 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
 
   @Override
   public CommandBonus copy() {
-    return new CommandBonus(command);
+    return new CommandBonus(command, removeCommand);
   }
 
   @Override
@@ -86,47 +99,67 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
               consumer.accept(this.copy());
             });
     editor.shiftWidgets(0, 19);
+    editor.addLabel(0, 0, "Remove Command", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addTextField(0, 0, 200, 14, removeCommand)
+        .setResponder(
+            c -> {
+              setRemoveCommand(c);
+              consumer.accept(this.copy());
+            });
+    editor.shiftWidgets(0, 19);
   }
 
-  public void setCommand(String command) {
+  public void setCommand(@Nonnull String command) {
     this.command = command;
+  }
+
+  public void setRemoveCommand(@Nonnull String removeCommand) {
+    this.removeCommand = removeCommand;
   }
 
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public CommandBonus deserialize(JsonObject json) throws JsonParseException {
       String command = json.get("command").getAsString();
-      return new CommandBonus(command);
+      String removeCommand =
+          json.has("remove_command") ? json.get("remove_command").getAsString() : "";
+      return new CommandBonus(command, removeCommand);
     }
 
     @Override
     public void serialize(JsonObject json, SkillBonus<?> bonus) {
-      if (!(bonus instanceof CommandBonus commandBonus)) {
+      if (!(bonus instanceof CommandBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      json.addProperty("command", commandBonus.command);
+      json.addProperty("command", aBonus.command);
+      json.addProperty("remove_command", aBonus.removeCommand);
     }
 
     @Override
     public CommandBonus deserialize(CompoundTag tag) {
       String command = tag.getString("command");
-      return new CommandBonus(command);
+      String removeCommand = tag.contains("remove_command") ? tag.getString("remove_command") : "";
+      return new CommandBonus(command, removeCommand);
     }
 
     @Override
     public CompoundTag serialize(SkillBonus<?> bonus) {
-      if (!(bonus instanceof CommandBonus commandBonus)) {
+      if (!(bonus instanceof CommandBonus aBonus)) {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      tag.putString("command", commandBonus.command);
+      tag.putString("command", aBonus.command);
+      tag.putString("remove_command", aBonus.removeCommand);
       return tag;
     }
 
     @Override
     public CommandBonus deserialize(FriendlyByteBuf buf) {
       String command = buf.readUtf();
-      return new CommandBonus(command);
+      String removeCommand = buf.readUtf();
+      return new CommandBonus(command, removeCommand);
     }
 
     @Override
@@ -135,11 +168,12 @@ public class CommandBonus implements SkillBonus<CommandBonus> {
         throw new IllegalArgumentException();
       }
       buf.writeUtf(commandBonus.command);
+      buf.writeUtf(commandBonus.removeCommand);
     }
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new CommandBonus("give <p> minecraft:apple");
+      return new CommandBonus("give <p> minecraft:apple", "");
     }
   }
 }
