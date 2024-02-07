@@ -7,7 +7,7 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:damage",
-            "chance": 0.03,
+            "amount": 0.03,
             "damage_condition": {
               "type": "skilltree:none"
             },
@@ -52,7 +52,7 @@
             "type": "skilltree:attribute",
             "amount": 0.014999999664723873,
             "attribute": "skilltree:blocking",
-            "id": "ea850add-87ba-489f-bc3d-8b8d56d9de84",
+            "id": "7ec60d4d-a349-44e8-81f6-2d2412f7fc16",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -78,7 +78,7 @@
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
             "attribute": "minecraft:generic.knockback_resistance",
-            "id": "6c4198f5-2df0-4601-96d1-985f478d923b",
+            "id": "413ffa46-87d7-469d-906e-e930fba6c6ce",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -104,7 +104,7 @@
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
             "attribute": "minecraft:generic.armor",
-            "id": "cfa8bccb-68cf-43c8-94b7-52145befcf41",
+            "id": "2f7d24e4-f14b-43ea-b0be-8adb06a4f213",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -130,7 +130,7 @@
             "type": "skilltree:attribute",
             "amount": 0.30000000447034836,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "30464193-9096-45ef-a462-863a3f4966a7",
+            "id": "cc1156c2-d058-4546-83b0-bacd90bfd8e0",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {

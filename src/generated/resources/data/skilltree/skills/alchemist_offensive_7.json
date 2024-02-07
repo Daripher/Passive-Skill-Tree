@@ -3,7 +3,7 @@
   "bonuses": [
     {
       "type": "skilltree:damage",
-      "chance": 0.05,
+      "amount": 0.05,
       "damage_condition": {
         "type": "skilltree:none"
       },
