@@ -235,7 +235,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public DamageBonus deserialize(JsonObject json) throws JsonParseException {
-      float amount = json.get("chance").getAsFloat();
+      float amount = json.get("amount").getAsFloat();
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(json);
       DamageBonus bonus = new DamageBonus(amount, operation);
       bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
@@ -252,7 +252,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       if (!(bonus instanceof DamageBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      json.addProperty("chance", aBonus.amount);
+      json.addProperty("amount", aBonus.amount);
       SerializationHelper.serializeOperation(json, aBonus.operation);
       SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
       SerializationHelper.serializeLivingCondition(
@@ -264,7 +264,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
 
     @Override
     public DamageBonus deserialize(CompoundTag tag) {
-      float amount = tag.getFloat("Amount");
+      float amount = tag.getFloat("amount");
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(tag);
       DamageBonus bonus = new DamageBonus(amount, operation);
       bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
@@ -282,7 +282,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      tag.putFloat("Amount", aBonus.amount);
+      tag.putFloat("amount", aBonus.amount);
       SerializationHelper.serializeOperation(tag, aBonus.operation);
       SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
