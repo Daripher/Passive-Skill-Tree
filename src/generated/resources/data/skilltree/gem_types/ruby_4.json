@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.2500000037252903,
             "attribute": "skilltree:life_per_hit",
-            "id": "4ec168b0-4478-4c53-b626-6247d3befa0e",
+            "id": "8f003036-bc67-4a32-bbd4-78d9243bd8be",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -35,7 +35,7 @@
             "type": "skilltree:attribute",
             "amount": 0.2500000037252903,
             "attribute": "skilltree:life_on_block",
-            "id": "042596da-0c2f-47bf-a72a-ecb97066c47f",
+            "id": "0001ff2a-44e9-495d-aaa1-7153672e231d",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -83,7 +83,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:regeneration",
-            "id": "879f6fe9-476e-4d5a-82fa-c63c9a4c09d6",
+            "id": "2a3c575b-8fb0-4e26-8670-2bcc1b3cfcf9",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -109,7 +109,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.max_health",
-            "id": "27cd1d82-15a8-4a10-95ca-4fb4147ff32a",
+            "id": "0e23d479-245c-4e55-8736-8f58736cd541",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {

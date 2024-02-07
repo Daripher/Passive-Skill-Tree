@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.attack_damage",
-          "id": "ae87ab22-e81b-4346-9d44-3e3ae2dd5013",
+          "id": "055f91fe-7e28-4c87-8280-0f2e0ec23204",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {

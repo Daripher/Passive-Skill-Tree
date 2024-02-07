@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:blocking",
-      "id": "13431256-67b2-49ac-ae8c-42596eae3874",
+      "id": "7d17971a-ee15-4b8e-8119-687ea6e84f37",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.05,
       "attribute": "minecraft:generic.armor",
-      "id": "bf44d650-6a8e-4f3c-8480-f5e3d669c429",
+      "id": "3192c451-d751-47b1-9790-fcb91c81cc1d",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {
@@ -31,7 +31,7 @@
     },
     {
       "type": "skilltree:damage",
-      "chance": 0.05,
+      "amount": 0.05,
       "damage_condition": {
         "type": "skilltree:melee"
       },

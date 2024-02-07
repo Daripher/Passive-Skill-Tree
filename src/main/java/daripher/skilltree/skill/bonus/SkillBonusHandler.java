@@ -16,12 +16,13 @@ import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -61,12 +62,12 @@ public class SkillBonusHandler {
   public static void applyBreakSpeedMultiplier(PlayerEvent.BreakSpeed event) {
     Player player = event.getEntity();
     float multiplier = 1f;
-    multiplier +=
-        getSkillBonuses(player, BlockBreakSpeedBonus.class).stream()
-            .filter(bonus -> bonus.getPlayerCondition().met(player))
-            .map(BlockBreakSpeedBonus::getMultiplier)
-            .reduce(Float::sum)
-            .orElse(0f);
+    List<BlockBreakSpeedBonus> bonuses = getSkillBonuses(player, BlockBreakSpeedBonus.class);
+    for (BlockBreakSpeedBonus bonus : bonuses) {
+      if (bonus.getPlayerCondition().met(player)) {
+        multiplier += bonus.getMultiplier();
+      }
+    }
     event.setNewSpeed(event.getNewSpeed() * multiplier);
   }
 
@@ -82,13 +83,7 @@ public class SkillBonusHandler {
   public static void applyRepairEfficiency(AnvilUpdateEvent event) {
     Player player = event.getPlayer();
     ItemStack stack = event.getLeft();
-    float efficiency = 1f;
-    efficiency +=
-        getSkillBonuses(player, RepairEfficiencyBonus.class).stream()
-            .filter(bonus -> bonus.getItemCondition().met(stack))
-            .map(RepairEfficiencyBonus::getMultiplier)
-            .reduce(Float::sum)
-            .orElse(0f);
+    float efficiency = getRepairEfficiency(player, stack);
     if (efficiency == 1) return;
     if (!stack.isDamageableItem() || !stack.isDamaged()) return;
     ItemStack material = event.getRight();
@@ -96,14 +91,13 @@ public class SkillBonusHandler {
     ItemStack result = stack.copy();
     int durabilityPerMaterial = (int) (result.getMaxDamage() * 12 * (1 + efficiency) / 100);
     int durabilityRestored = durabilityPerMaterial;
-    int materialsUsed;
+    int materialsUsed = 0;
     int cost = 0;
-    for (materialsUsed = 0;
-        durabilityRestored > 0 && materialsUsed < material.getCount();
-        materialsUsed++) {
+    while (durabilityRestored > 0 && materialsUsed < material.getCount()) {
       result.setDamageValue(result.getDamageValue() - durabilityRestored);
       cost++;
       durabilityRestored = Math.min(result.getDamageValue(), durabilityPerMaterial);
+      materialsUsed++;
     }
     if (event.getName() != null && !StringUtils.isBlank(event.getName())) {
       if (!event.getName().equals(stack.getHoverName().getString())) {
@@ -117,6 +111,16 @@ public class SkillBonusHandler {
     event.setMaterialCost(materialsUsed);
     event.setCost(cost);
     event.setOutput(result);
+  }
+
+  private static float getRepairEfficiency(Player player, ItemStack stack) {
+    float efficiency = 1f;
+    for (RepairEfficiencyBonus bonus : getSkillBonuses(player, RepairEfficiencyBonus.class)) {
+      if (bonus.getItemCondition().met(stack)) {
+        efficiency += bonus.getMultiplier();
+      }
+    }
+    return efficiency;
   }
 
   @SubscribeEvent
@@ -234,13 +238,16 @@ public class SkillBonusHandler {
 
   @SubscribeEvent
   public static void addCraftedItemSkillBonusTooltips(ItemTooltipEvent event) {
-    ItemHelper.getItemBonusesExcludingGems(event.getItemStack()).stream()
-        .filter(ItemSkillBonus.class::isInstance)
-        .map(ItemSkillBonus.class::cast)
-        .map(ItemSkillBonus::getBonus)
-        .filter(Predicate.not(AttributeBonus.class::isInstance))
-        .map(SkillBonus::getTooltip)
-        .forEach(event.getToolTip()::add);
+    List<Component> components = event.getToolTip();
+    for (ItemBonus<?> itemBonus : ItemHelper.getItemBonusesExcludingGems(event.getItemStack())) {
+      if (itemBonus instanceof ItemSkillBonus skillBonus) {
+        SkillBonus<?> bonus = skillBonus.getBonus();
+        if (bonus instanceof AttributeBonus) {
+          MutableComponent tooltip = bonus.getTooltip();
+          components.add(tooltip);
+        }
+      }
+    }
   }
 
   @SubscribeEvent
@@ -271,11 +278,10 @@ public class SkillBonusHandler {
   public static void applyFoodHealing(LivingEntityUseItemEvent.Finish event) {
     ItemStack stack = event.getItem();
     if (stack.getFoodProperties(event.getEntity()) == null) return;
-    float healing =
-        ItemHelper.getItemBonuses(stack, FoodHealingBonus.class).stream()
-            .map(FoodHealingBonus::getAmount)
-            .reduce(Float::sum)
-            .orElse(0f);
+    float healing = 0f;
+    for (FoodHealingBonus bonus : ItemHelper.getItemBonuses(stack, FoodHealingBonus.class)) {
+      healing += bonus.getAmount();
+    }
     event.getEntity().heal(healing);
   }
 
@@ -283,11 +289,9 @@ public class SkillBonusHandler {
   public static void applyIncomingHealingBonus(LivingHealEvent event) {
     if (!(event.getEntity() instanceof Player player)) return;
     float multiplier = 1f;
-    multiplier +=
-        getSkillBonuses(player, IncomingHealingBonus.class).stream()
-            .map(b -> b.getHealingMultiplier(player))
-            .reduce(Float::sum)
-            .orElse(0f);
+    for (IncomingHealingBonus bonus : getSkillBonuses(player, IncomingHealingBonus.class)) {
+      multiplier += bonus.getHealingMultiplier(player);
+    }
     event.setAmount(event.getAmount() * multiplier);
   }
 
@@ -340,11 +344,13 @@ public class SkillBonusHandler {
 
   private static float getExperienceMultiplier(
       Player player, GainedExperienceBonus.ExperienceSource source) {
-    return getSkillBonuses(player, GainedExperienceBonus.class).stream()
-        .filter(b -> b.getSource() == source)
-        .map(GainedExperienceBonus::getMultiplier)
-        .reduce(Float::sum)
-        .orElse(0f);
+    float multiplier = 0f;
+    for (GainedExperienceBonus bonus : getSkillBonuses(player, GainedExperienceBonus.class)) {
+      if (bonus.getSource() == source) {
+        multiplier += bonus.getMultiplier();
+      }
+    }
+    return multiplier;
   }
 
   @SubscribeEvent
@@ -397,12 +403,11 @@ public class SkillBonusHandler {
     AbstractArrowAccessor arrowAccessor = (AbstractArrowAccessor) arrow;
     ItemStack arrowStack = arrowAccessor.invokeGetPickupItem();
     if (arrowStack == null) return;
-    float chance =
-        getSkillBonuses(player, ArrowRetrievalBonus.class).stream()
-            .map(ArrowRetrievalBonus::getChance)
-            .reduce(Float::sum)
-            .orElse(0f);
-    if (player.getRandom().nextFloat() >= chance) return;
+    float retrievalChance = 0f;
+    for (ArrowRetrievalBonus bonus : getSkillBonuses(player, ArrowRetrievalBonus.class)) {
+      retrievalChance += bonus.getChance();
+    }
+    if (player.getRandom().nextFloat() >= retrievalChance) return;
     LivingEntity target = event.getEntity();
     CompoundTag targetData = target.getPersistentData();
     ListTag stuckArrowsTag = targetData.getList("StuckArrows", new CompoundTag().getId());
@@ -416,20 +421,20 @@ public class SkillBonusHandler {
     ListTag arrowsTag =
         entity.getPersistentData().getList("StuckArrows", new CompoundTag().getId());
     if (arrowsTag.isEmpty()) return;
-    arrowsTag.stream()
-        .map(CompoundTag.class::cast)
-        .map(ItemStack::of)
-        .forEach(entity::spawnAtLocation);
+    for (Tag tag : arrowsTag) {
+      ItemStack arrowStack = ItemStack.of((CompoundTag) tag);
+      entity.spawnAtLocation(arrowStack);
+    }
   }
 
   @SubscribeEvent
   public static void applyHealthReservationEffect(TickEvent.PlayerTickEvent event) {
     if (event.phase == TickEvent.Phase.END || event.side == LogicalSide.CLIENT) return;
-    float reservation =
-        getSkillBonuses(event.player, HealthReservationBonus.class).stream()
-            .map(b -> b.getAmount(event.player))
-            .reduce(Float::sum)
-            .orElse(0f);
+    float reservation = 0f;
+    for (HealthReservationBonus bonus :
+        getSkillBonuses(event.player, HealthReservationBonus.class)) {
+      reservation += bonus.getAmount(event.player);
+    }
     if (reservation == 0) return;
     if (event.player.getHealth() / event.player.getMaxHealth() > 1 - reservation) {
       event.player.setHealth(event.player.getMaxHealth() * (1 - reservation));
@@ -466,31 +471,33 @@ public class SkillBonusHandler {
 
   protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
     List<ItemEntity> drops = new ArrayList<>();
-    event.getDrops().stream().map(ItemEntity::copy).forEach(drops::add);
+    for (ItemEntity itemEntity : event.getDrops()) {
+      ItemEntity copy = itemEntity.copy();
+      drops.add(copy);
+    }
     if (event.getEntity() instanceof EquippedEntity entity) drops.removeIf(entity::hasItemEquipped);
     return drops;
   }
 
   private static void addAttributeModifiers(
       BiConsumer<Attribute, AttributeModifier> addFunction, ItemStack stack) {
-    ItemHelper.getItemBonuses(stack).stream()
-        .filter(ItemSkillBonus.class::isInstance)
-        .map(ItemSkillBonus.class::cast)
-        .map(ItemSkillBonus::getBonus)
-        .filter(AttributeBonus.class::isInstance)
-        .map(AttributeBonus.class::cast)
-        .filter(Predicate.not(AttributeBonus::hasCondition))
-        .filter(Predicate.not(AttributeBonus::hasMultiplier))
-        .forEach(bonus -> addFunction.accept(bonus.getAttribute(), bonus.getModifier()));
+    for (ItemBonus<?> itemBonus : ItemHelper.getItemBonuses(stack)) {
+      if (itemBonus instanceof ItemSkillBonus itemSkillBonus) {
+        SkillBonus<?> bonus = itemSkillBonus.getBonus();
+        if (bonus instanceof AttributeBonus attributeBonus) {
+          if (!attributeBonus.hasMultiplier() && !attributeBonus.hasCondition()) {
+            addFunction.accept(attributeBonus.getAttribute(), attributeBonus.getModifier());
+          }
+        }
+      }
+    }
   }
 
   public static float getJumpHeightMultiplier(Player player) {
     float multiplier = 1f;
-    multiplier +=
-        getSkillBonuses(player, JumpHeightBonus.class).stream()
-            .map(b -> b.getJumpHeightMultiplier(player))
-            .reduce(Float::sum)
-            .orElse(0f);
+    for (JumpHeightBonus bonus : getSkillBonuses(player, JumpHeightBonus.class)) {
+      multiplier += bonus.getJumpHeightMultiplier(player);
+    }
     return multiplier;
   }
 
@@ -519,28 +526,32 @@ public class SkillBonusHandler {
   }
 
   public static float getFreeEnchantmentChance(Player player) {
-    return SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class).stream()
-        .map(FreeEnchantmentBonus::getChance)
-        .reduce(Float::sum)
-        .orElse(0f);
+    float chance = 0f;
+    for (FreeEnchantmentBonus bonus :
+        SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class)) {
+      chance += bonus.getChance();
+    }
+    return chance;
   }
 
   private static double getEnchantmentCostMultiplier(Player player) {
     float multiplier = 1f;
-    multiplier +=
-        SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class).stream()
-            .map(EnchantmentRequirementBonus::getMultiplier)
-            .reduce(Float::sum)
-            .orElse(0f);
+    for (EnchantmentRequirementBonus bonus :
+        SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class)) {
+      multiplier += bonus.getMultiplier();
+    }
     return multiplier;
   }
 
   private static float getAmplificationChance(EnchantmentInstance enchantment, Player player) {
-    return SkillBonusHandler.getSkillBonuses(player, EnchantmentAmplificationBonus.class).stream()
-        .filter(bonus -> bonus.getCondition().met(enchantment.enchantment.category))
-        .map(EnchantmentAmplificationBonus::getChance)
-        .reduce(Float::sum)
-        .orElse(0f);
+    float chance = 0f;
+    for (EnchantmentAmplificationBonus bonus :
+        SkillBonusHandler.getSkillBonuses(player, EnchantmentAmplificationBonus.class)) {
+      if (bonus.getCondition().met(enchantment.enchantment.category)) {
+        chance += bonus.getChance();
+      }
+    }
+    return chance;
   }
 
   public static <T> List<T> getSkillBonuses(Player player, Class<T> type) {
@@ -553,27 +564,29 @@ public class SkillBonusHandler {
   }
 
   private static <T> List<T> getPlayerBonuses(Player player, Class<T> type) {
-    return PlayerSkillsProvider.get(player).getPlayerSkills().stream()
-        .map(PassiveSkill::getBonuses)
-        .flatMap(List::stream)
-        .filter(type::isInstance)
-        .map(type::cast)
-        .toList();
+    List<T> list = new ArrayList<>();
+    for (PassiveSkill skill : PlayerSkillsProvider.get(player).getPlayerSkills()) {
+      List<SkillBonus<?>> bonuses = skill.getBonuses();
+      for (SkillBonus<?> skillBonus : bonuses) {
+        if (type.isInstance(skillBonus)) {
+          list.add(type.cast(skillBonus));
+        }
+      }
+    }
+    return list;
   }
 
   private static <T> List<T> getEffectBonuses(Player player, Class<T> type) {
     List<T> bonuses = new ArrayList<>();
-    player.getActiveEffects().stream()
-        .filter(e -> e.getEffect() instanceof SkillBonusEffect)
-        .forEach(
-            effect -> {
-              SkillBonusEffect skillEffect = (SkillBonusEffect) effect.getEffect();
-              SkillBonus<?> bonus = skillEffect.getBonus().copy();
-              if (type.isInstance(bonus)) {
-                bonus = bonus.copy().multiply(effect.getAmplifier());
-                bonuses.add(type.cast(bonus));
-              }
-            });
+    for (MobEffectInstance e : player.getActiveEffects()) {
+      if (e.getEffect() instanceof SkillBonusEffect skillEffect) {
+        SkillBonus<?> bonus = skillEffect.getBonus().copy();
+        if (type.isInstance(bonus)) {
+          bonus = bonus.copy().multiply(e.getAmplifier());
+          bonuses.add(type.cast(bonus));
+        }
+      }
+    }
     return bonuses;
   }
 
@@ -585,17 +598,20 @@ public class SkillBonusHandler {
   }
 
   private static <T> List<T> getItemBonuses(ItemStack stack, Class<T> type) {
-    List<ItemBonus<?>> bonuses = new ArrayList<>();
+    List<ItemBonus<?>> itemBonuses = new ArrayList<>();
     if (stack.getItem() instanceof ItemBonusProvider provider) {
-      bonuses.addAll(provider.getItemBonuses());
+      itemBonuses.addAll(provider.getItemBonuses());
     }
-    bonuses.addAll(ItemHelper.getItemBonuses(stack));
-    return bonuses.stream()
-        .filter(ItemSkillBonus.class::isInstance)
-        .map(ItemSkillBonus.class::cast)
-        .map(ItemSkillBonus::getBonus)
-        .filter(type::isInstance)
-        .map(type::cast)
-        .toList();
+    itemBonuses.addAll(ItemHelper.getItemBonuses(stack));
+    List<T> bonuses = new ArrayList<>();
+    for (ItemBonus<?> itemBonus : itemBonuses) {
+      if (itemBonus instanceof ItemSkillBonus skillBonus) {
+        SkillBonus<?> bonus = skillBonus.getBonus();
+        if (type.isInstance(bonus)) {
+          bonuses.add(type.cast(bonus));
+        }
+      }
+    }
+    return bonuses;
   }
 }

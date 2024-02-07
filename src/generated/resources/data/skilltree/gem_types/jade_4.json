@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "494b61ab-898c-4108-8efe-6e2dba0e0814",
+            "id": "1b92fd88-6b8a-4ea0-8431-9e6282625b20",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -35,7 +35,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:blocking",
-            "id": "e5feb929-4b21-4264-a934-fc97fe299582",
+            "id": "230aae2b-0532-40da-80b6-6aca553243b2",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -61,7 +61,7 @@
             "type": "skilltree:attribute",
             "amount": 0.024999999441206455,
             "attribute": "skilltree:evasion",
-            "id": "0d50acb6-1b12-41bf-94c6-2bf63a40d818",
+            "id": "8e5c3e5e-8a66-4b5b-8dad-44977bd35f7a",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -87,7 +87,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "b8f7cd64-3695-4df2-9b4a-6980960dbff8",
+            "id": "e3c16262-5a8b-49b3-b6bc-4f436cccadc8",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -130,7 +130,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:evasion",
-            "id": "a25e34d1-74f3-4211-a4e4-d15416a9dd82",
+            "id": "a5289b9c-cfa0-4e65-aa0b-5af2be27af36",
             "name": "Jade",
             "operation": 1,
             "player_condition": {

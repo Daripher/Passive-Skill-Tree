@@ -3,7 +3,7 @@
   "bonuses": [
     {
       "type": "skilltree:damage",
-      "chance": 0.01,
+      "amount": 0.01,
       "damage_condition": {
         "type": "skilltree:melee"
       },
@@ -22,7 +22,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "17dca971-76b4-43ff-ad57-3fba0d093048",
+      "id": "72ef7e3f-7e85-4d9d-98cb-4d2c60b68e59",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

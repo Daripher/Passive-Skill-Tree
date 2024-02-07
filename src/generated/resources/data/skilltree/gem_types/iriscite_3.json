@@ -13,7 +13,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.20000000298023224,
                   "attribute": "skilltree:life_per_hit",
-                  "id": "0a32cded-4961-47a0-b26a-f1f7a9198ab0",
+                  "id": "fa4c4a0b-f3da-4e54-ac31-6c5a0f525797",
                   "name": "Ruby",
                   "operation": 0,
                   "player_condition": {
@@ -35,7 +35,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.20000000298023224,
                   "attribute": "skilltree:life_on_block",
-                  "id": "2893a321-2f75-486f-8d34-f67bde7bdd27",
+                  "id": "0538d034-7349-4dbf-850b-35e96668c8d9",
                   "name": "Ruby",
                   "operation": 0,
                   "player_condition": {
@@ -75,7 +75,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "skilltree:regeneration",
-                  "id": "7a3160e2-15a1-409e-9f1d-a0d868d05e7d",
+                  "id": "dc9955b4-a2d7-4ad8-980b-aefb02ab39cf",
                   "name": "Ruby",
                   "operation": 0,
                   "player_condition": {
@@ -97,7 +97,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.max_health",
-                  "id": "e1c5f502-e133-4baa-af17-c9ee3eab7512",
+                  "id": "4e61abed-4229-47f1-99fd-35f29827c96d",
                   "name": "Ruby",
                   "operation": 1,
                   "player_condition": {
@@ -161,7 +161,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.luck",
-                  "id": "2e18c303-0362-4613-a6ae-101f1d155f70",
+                  "id": "ab5f1f19-3cba-440d-9204-60e87bf8b129",
                   "name": "Citrine",
                   "operation": 1,
                   "player_condition": {
@@ -226,7 +226,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.4000000059604645,
                   "attribute": "minecraft:generic.luck",
-                  "id": "8fbfa0de-fcdc-46f1-b936-b5c211bda65c",
+                  "id": "c82ef6b2-e075-4093-9599-08d0a897558c",
                   "name": "Citrine",
                   "operation": 0,
                   "player_condition": {
@@ -248,7 +248,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.attack_speed",
-                  "id": "c7e37937-e6e6-4685-9d66-2140a42520b6",
+                  "id": "4a719b16-6070-440a-a5b6-b3a49070e848",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -270,7 +270,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "skilltree:blocking",
-                  "id": "7bd6eb39-e1ea-421c-b87c-fafbe56720e8",
+                  "id": "c4b07357-25bc-42b1-a76c-2a8b039569f3",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -292,7 +292,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.019999999552965164,
                   "attribute": "skilltree:evasion",
-                  "id": "c4b7fe87-a744-4d9a-99f2-099addeed1b8",
+                  "id": "761ca6a6-7c14-4c78-b575-eb8f780c5005",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -314,7 +314,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.movement_speed",
-                  "id": "9c2b2131-795c-422f-b053-4e5c39756f38",
+                  "id": "ca0509da-fda0-4f9a-ba91-5bbbf8749496",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -349,7 +349,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "skilltree:evasion",
-                  "id": "9bd94b2d-7538-4d69-b887-b782ab54124d",
+                  "id": "cc6bf267-4c9e-476b-89d5-7d217e8e185d",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -369,7 +369,7 @@
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
                   "type": "skilltree:damage",
-                  "chance": 0.04,
+                  "amount": 0.04,
                   "damage_condition": {
                     "type": "skilltree:none"
                   },
@@ -406,7 +406,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.019999999552965164,
                   "attribute": "skilltree:blocking",
-                  "id": "6ca0bfba-0ecc-4c3f-9bb3-b897d7b110c2",
+                  "id": "a534902b-6a1b-4d97-832f-fa712152fe44",
                   "name": "Sapphire",
                   "operation": 1,
                   "player_condition": {
@@ -428,7 +428,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.knockback_resistance",
-                  "id": "43d7db93-65ee-4096-a699-893df163251f",
+                  "id": "b5facd94-0a40-4a07-a937-1e30e34e54da",
                   "name": "Sapphire",
                   "operation": 0,
                   "player_condition": {
@@ -450,7 +450,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.03999999910593033,
                   "attribute": "minecraft:generic.armor",
-                  "id": "749b7d30-444d-4bb1-8664-fff9d01ebcc3",
+                  "id": "97051bbb-9db3-41c4-bca2-30b0925133d4",
                   "name": "Sapphire",
                   "operation": 1,
                   "player_condition": {
@@ -472,7 +472,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.4000000059604645,
                   "attribute": "minecraft:generic.armor_toughness",
-                  "id": "166acd46-0d91-4659-8401-e0e339f25fa7",
+                  "id": "717f8057-707e-46e9-8456-5654a585154e",
                   "name": "Sapphire",
                   "operation": 0,
                   "player_condition": {
