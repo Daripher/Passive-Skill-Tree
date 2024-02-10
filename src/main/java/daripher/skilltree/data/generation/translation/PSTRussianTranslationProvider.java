@@ -511,8 +511,14 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         "divisor",
         "%s за каждые %s недостающего здоровья");
     // recipes
-    addRecipe("skilltree:weapon_poisoning", "Отравление Оружия");
-    addRecipe("skilltree:potion_mixing", "Смешивание Зелий");
+    add("recipe.skilltree.weapon_poisoning", "Отравление Оружия");
+    add(
+        "recipe.skilltree.weapon_poisoning.info",
+        "(Объедините оружие ближнего боя и вредящее зелье на верстаке что бы отравить оружие)");
+    add("recipe.skilltree.potion_mixing", "Смешивание Зелий");
+    add(
+        "recipe.skilltree.potion_mixing.info",
+        "(Объедините два разных зелья на верстаке что бы создать микстуру)");
     // potions info
     add("potion.superior", "Качественное %s");
     add("item.minecraft.potion.mixture", "Микстура");
@@ -586,11 +592,19 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
     add(PSTAttributes.LIFE_PER_HIT.get(), "Здоровье за удар");
     add(PSTAttributes.EVASION.get(), "Уклонение");
+    add(
+        PSTAttributes.EVASION.get().getDescriptionId() + ".info",
+        "(Уклонение дает шанс избежать урон некоторых атак)");
     add(PSTAttributes.BLOCKING.get(), "Блокирование");
+    add(
+        PSTAttributes.BLOCKING.get().getDescriptionId() + ".info",
+        "(Блокирование дает шанс заблокировать урон некоторых атак, требует щит)");
     add(PSTAttributes.LIFE_ON_BLOCK.get(), "Здоровье при блоке");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
     add(SlotAttribute.getOrCreate("ring"), "Слоты колец");
     add(PSTAttributes.STEALTH.get(), "Скрытность");
+    add(PSTAttributes.STEALTH.get().getDescriptionId() + ".info",
+        "(Скрытность снижает дальность агрессии монстров)");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
     add(PSTEffects.DAMAGE_BONUS.get(), "Урон");

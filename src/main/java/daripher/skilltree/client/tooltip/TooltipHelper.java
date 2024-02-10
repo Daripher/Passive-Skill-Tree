@@ -2,6 +2,7 @@ package daripher.skilltree.client.tooltip;
 
 import daripher.skilltree.effect.SkillBonusEffect;
 import java.util.Arrays;
+import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -63,6 +64,13 @@ public class TooltipHelper {
     return Component.translatable(descriptionId);
   }
 
+  public static void consumeTranslated(String descriptionId, Consumer<MutableComponent> consumer) {
+    MutableComponent tooltip = Component.translatable(descriptionId);
+    if (!tooltip.getString().equals(descriptionId)) {
+      consumer.accept(tooltip);
+    }
+  }
+
   public static MutableComponent getSkillBonusTooltip(
       Component bonusDescription, double amount, AttributeModifier.Operation operation) {
     float multiplier = 1;
@@ -100,6 +108,10 @@ public class TooltipHelper {
     texture = texture.replace(".png", "");
     texture = TooltipHelper.idToName(texture);
     return Component.literal(texture);
+  }
+
+  public static String getRecipeDescriptionId(ResourceLocation recipeId) {
+    return "recipe.%s.%s".formatted(recipeId.getNamespace(), recipeId.getPath());
   }
 
   @NotNull

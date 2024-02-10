@@ -209,6 +209,12 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   }
 
   @Override
+  public void gatherInfo(Consumer<MutableComponent> consumer) {
+    SkillBonus.super.gatherInfo(consumer);
+    TooltipHelper.consumeTranslated(attribute.getDescriptionId() + ".info", consumer);
+  }
+
+  @Override
   public boolean isPositive() {
     return modifier.getAmount() > 0;
   }

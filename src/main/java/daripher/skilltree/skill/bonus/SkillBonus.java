@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus;
 
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -39,6 +40,10 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
 
   default MutableComponent getAdvancedTooltip() {
     return Component.empty();
+  }
+
+  default void gatherInfo(Consumer<MutableComponent> consumer) {
+    TooltipHelper.consumeTranslated(getDescriptionId() + ".info", consumer);
   }
 
   boolean isPositive();

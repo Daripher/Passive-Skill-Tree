@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -138,6 +139,7 @@ public class SkillButton extends Button {
     ArrayList<MutableComponent> tooltip = new ArrayList<>();
     addTitleTooltip(tooltip);
     addDescriptionTooltip(tooltip);
+    addInfoTooltip(tooltip);
     addLoreTooltip(tooltip);
     Minecraft minecraft = Minecraft.getInstance();
     boolean useAdvancedTooltip = minecraft.options.advancedItemTooltips;
@@ -145,7 +147,22 @@ public class SkillButton extends Button {
     return tooltip;
   }
 
-  protected void addAdvancedTooltip(ArrayList<MutableComponent> tooltip) {
+  private void addInfoTooltip(List<MutableComponent> tooltip) {
+    List<MutableComponent> info = new ArrayList<>();
+    for (SkillBonus<?> skillBonus : skill.getBonuses()) {
+      skillBonus.gatherInfo(
+          component -> {
+            component = component.withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+            info.add(component);
+          });
+    }
+    if (!info.isEmpty()) {
+      tooltip.add(Component.empty());
+      tooltip.addAll(info);
+    }
+  }
+
+  protected void addAdvancedTooltip(List<MutableComponent> tooltip) {
     addIdTooltip(tooltip);
     String descriptionId = getSkillId() + ".description";
     String description = Component.translatable(descriptionId).getString();
@@ -154,7 +171,7 @@ public class SkillButton extends Button {
     }
   }
 
-  protected void addDescriptionTooltip(ArrayList<MutableComponent> tooltip) {
+  protected void addDescriptionTooltip(List<MutableComponent> tooltip) {
     skill.getBonuses().stream().map(SkillBonus::getTooltip).forEach(tooltip::add);
     String descriptionId = getSkillId() + ".description";
     String description = Component.translatable(descriptionId).getString();
@@ -167,14 +184,14 @@ public class SkillButton extends Button {
     }
   }
 
-  private void addLoreTooltip(ArrayList<MutableComponent> tooltip) {
+  private void addLoreTooltip(List<MutableComponent> tooltip) {
     String loreId = getSkillId() + ".lore";
     MutableComponent loreComponent = Component.translatable(loreId);
     if (loreId.equals(loreComponent.getString())) return;
     tooltip.add(loreComponent.withStyle(LORE_STYLE));
   }
 
-  protected void addTitleTooltip(ArrayList<MutableComponent> tooltip) {
+  protected void addTitleTooltip(List<MutableComponent> tooltip) {
     MutableComponent title;
     if (skill.getTitle().isEmpty()) {
       title = Component.translatable(getSkillId() + ".name");
@@ -200,7 +217,7 @@ public class SkillButton extends Button {
     }
   }
 
-  protected void addIdTooltip(ArrayList<MutableComponent> tooltip) {
+  protected void addIdTooltip(List<MutableComponent> tooltip) {
     MutableComponent idComponent = Component.literal(skill.getId().toString()).withStyle(ID_STYLE);
     tooltip.add(idComponent);
   }
