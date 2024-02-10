@@ -446,8 +446,14 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         "divisor",
         "%s per %s missing health");
     // recipes
-    addRecipe("skilltree:weapon_poisoning", "Weapon Poisoning");
-    addRecipe("skilltree:potion_mixing", "Potion Mixing");
+    add("recipe.skilltree.weapon_poisoning", "Weapon Poisoning");
+    add(
+        "recipe.skilltree.weapon_poisoning.info",
+        "(Combine a Melee Weapon and a Harmful Potion on a Crafting Bench to poison a weapon)");
+    add("recipe.skilltree.potion_mixing", "Potion Mixing");
+    add(
+        "recipe.skilltree.potion_mixing.info",
+        "(Combine two different potions on a Crafting Bench to create a mixture)");
     // potions info
     add("potion.superior", "Superior %s");
     add("item.minecraft.potion.mixture", "Mixture");
@@ -521,11 +527,19 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
     add(PSTAttributes.LIFE_PER_HIT.get(), "Life per Hit");
     add(PSTAttributes.EVASION.get(), "Evasion");
+    add(
+        PSTAttributes.EVASION.get().getDescriptionId() + ".info",
+        "(Evasion grants a chance to avoid damage from some attacks)");
     add(PSTAttributes.BLOCKING.get(), "Blocking");
+    add(
+        PSTAttributes.BLOCKING.get().getDescriptionId() + ".info",
+        "(Blocking grants a chance to block damage from some attacks, requires a shield)");
     add(PSTAttributes.LIFE_ON_BLOCK.get(), "Life on Block");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Ring Slots");
     add(PSTAttributes.STEALTH.get(), "Stealth");
+    add(PSTAttributes.STEALTH.get().getDescriptionId() + ".info",
+        "(Stealth reduces monsters aggression range)");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Critical Damage");
     add(PSTEffects.DAMAGE_BONUS.get(), "Damage");

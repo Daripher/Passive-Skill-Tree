@@ -164,12 +164,6 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add(key, value);
   }
 
-  protected void addRecipe(String recipeId, String value) {
-    ResourceLocation id = new ResourceLocation(recipeId);
-    String key = "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
-    add(key, value);
-  }
-
   protected void addGem(String type, String name, String... qualities) {
     for (int i = 0; i < qualities.length; i++) {
       add("item.skilltree.gem.skilltree." + type + "_" + i, qualities[i] + " " + name);
