@@ -53,7 +53,7 @@ license="${mod_license}"
 
 [[dependencies.${mod_id}]]
     modId="apothiccurios"
-    mandatory=true
+    mandatory=false
     versionRange="[1.0.3,)"
     ordering="NONE"
     side="BOTH"
