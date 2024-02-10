@@ -5,6 +5,7 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTAttributes;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.LivingEntityAccessor;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.GrindstoneEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -73,7 +75,7 @@ public class AttributeEvents {
     Entity attacker = damageSource.getDirectEntity();
     if (attacker instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) return;
     ItemStack shield = player.getOffhandItem();
-    if (!ItemHelper.isShield(shield)) return;
+    if (!shield.is(Tags.Items.TOOLS_SHIELDS)) return;
     double blocking = player.getAttributeValue(PSTAttributes.BLOCKING.get());
     double blockChance = (blocking * 0.05) / (1 + blocking * 0.05) * 0.8;
     if (player.getRandom().nextFloat() >= blockChance) return;
@@ -184,7 +186,7 @@ public class AttributeEvents {
 
   @SubscribeEvent
   public static void applyRangedWeaponAttackSpeedBonus(LivingEntityUseItemEvent.Tick event) {
-    if (!ItemHelper.isRangedWeapon(event.getItem())) return;
+    if (!event.getItem().is(PSTTags.RANGED_WEAPONS)) return;
     AttributeInstance attribute = event.getEntity().getAttribute(Attributes.ATTACK_SPEED);
     if (attribute == null) return;
     double attackSpeedBonus = attribute.getValue() / attribute.getBaseValue() - 1;

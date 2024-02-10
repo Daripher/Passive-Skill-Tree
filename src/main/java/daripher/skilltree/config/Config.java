@@ -3,10 +3,7 @@ package daripher.skilltree.config;
 import daripher.skilltree.SkillTreeMod;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,13 +38,6 @@ public class Config {
   private static final ConfigValue<Boolean> USE_POINTS_COSTS_ARRAY;
   private static final ConfigValue<List<? extends Integer>> SKILL_POINTS_COSTS;
   private static final ConfigValue<List<? extends String>> SOCKET_BLACKLIST;
-  private static final ConfigValue<List<? extends String>> FORCED_HELMETS;
-  private static final ConfigValue<List<? extends String>> FORCED_CHESTPLATES;
-  private static final ConfigValue<List<? extends String>> FORCED_LEGGINGS;
-  private static final ConfigValue<List<? extends String>> FORCED_BOOTS;
-  private static final ConfigValue<List<? extends String>> FORCED_SHIELDS;
-  private static final ConfigValue<List<? extends String>> FORCED_MELEE_WEAPON;
-  private static final ConfigValue<List<? extends String>> FORCED_RANGED_WEAPON;
   public static final int DEFAULT_MAX_SKILLS = 85;
   public static int max_skill_points;
   public static int first_skill_cost;
@@ -71,13 +61,6 @@ public class Config {
   public static boolean dragon_drops_amnesia_scroll;
   public static List<? extends Integer> skill_points_costs;
   public static List<? extends String> socket_blacklist;
-  public static Set<Item> forced_helmets;
-  public static Set<Item> forced_chestplates;
-  public static Set<Item> forced_leggings;
-  public static Set<Item> forced_boots;
-  public static Set<Item> forced_shields;
-  public static Set<Item> forced_melee_weapon;
-  public static Set<Item> forced_ranged_weapon;
 
   static {
     BUILDER.push("Skill Points");
@@ -121,29 +104,6 @@ public class Config {
             ArrayList::new,
             Config::validateItemName);
     BUILDER.comment("You can force items from other mods into equipmentType categories here");
-    FORCED_HELMETS =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into helmets category"), ArrayList::new, Config::validateItemName);
-    FORCED_CHESTPLATES =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into chestplates category"), ArrayList::new, Config::validateItemName);
-    FORCED_LEGGINGS =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into leggings category"), ArrayList::new, Config::validateItemName);
-    FORCED_BOOTS =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into boots category"), ArrayList::new, Config::validateItemName);
-    FORCED_SHIELDS =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into shields category"), ArrayList::new, Config::validateItemName);
-    FORCED_MELEE_WEAPON =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into melee weapons category"), ArrayList::new, Config::validateItemName);
-    FORCED_RANGED_WEAPON =
-        BUILDER.defineListAllowEmpty(
-            List.of("Force into ranged weapons category"),
-            ArrayList::new,
-            Config::validateItemName);
     BUILDER.pop();
 
     BUILDER.push("Amnesia Scroll");
@@ -205,13 +165,6 @@ public class Config {
     enable_exp_exchange = ENABLE_EXP_EXCHANGE.get();
     dragon_drops_amnesia_scroll = DRAGON_DROPS_AMNESIA_SCROLL.get();
     socket_blacklist = SOCKET_BLACKLIST.get();
-    forced_helmets = getItems(FORCED_HELMETS.get());
-    forced_chestplates = getItems(FORCED_CHESTPLATES.get());
-    forced_leggings = getItems(FORCED_LEGGINGS.get());
-    forced_boots = getItems(FORCED_BOOTS.get());
-    forced_shields = getItems(FORCED_SHIELDS.get());
-    forced_melee_weapon = getItems(FORCED_MELEE_WEAPON.get());
-    forced_ranged_weapon = getItems(FORCED_RANGED_WEAPON.get());
     mixture_effects_duration = MIXTURE_EFFECTS_DURATION.get();
     mixture_effects_strength = MIXTURE_EFFECTS_STRENGTH.get();
   }
@@ -226,12 +179,5 @@ public class Config {
     }
     return FIRST_SKILL_COST.get()
         + (LAST_SKILL_COST.get() - FIRST_SKILL_COST.get()) * level / max_skill_points;
-  }
-
-  static Set<Item> getItems(List<? extends String> names) {
-    return names.stream()
-        .map(ResourceLocation::new)
-        .map(ForgeRegistries.ITEMS::getValue)
-        .collect(Collectors.toSet());
   }
 }

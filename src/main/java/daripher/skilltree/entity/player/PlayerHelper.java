@@ -1,7 +1,7 @@
 package daripher.skilltree.entity.player;
 
 import com.google.common.collect.Streams;
-import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.GemPowerBonus;
 import daripher.skilltree.skill.bonus.player.PlayerSocketsBonus;
@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
@@ -78,7 +79,7 @@ public class PlayerHelper {
   @NotNull
   private static ItemStack getEquipment(LivingEntity living, EquipmentSlot slot) {
     ItemStack item = living.getItemBySlot(slot);
-    if (slot == EquipmentSlot.MAINHAND && !ItemHelper.isWeapon(item)) {
+    if (slot == EquipmentSlot.MAINHAND && !item.is(PSTTags.WEAPONS) && !item.is(Tags.Items.TOOLS)) {
       return ItemStack.EMPTY;
     }
     return item;
