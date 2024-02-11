@@ -2,6 +2,10 @@
   "values": [
     "#minecraft:swords",
     "#minecraft:axes",
-    "#forge:tools/tridents"
+    "#forge:tools/tridents",
+    {
+      "id": "#simplyswords:swords",
+      "required": false
+    }
   ]
 }

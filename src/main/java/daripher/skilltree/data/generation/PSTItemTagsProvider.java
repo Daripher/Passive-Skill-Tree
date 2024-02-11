@@ -11,7 +11,9 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.Tags;
@@ -43,7 +45,9 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
     add(PSTTags.QUIVERS, QuiverItem.class);
     add(PSTTags.NUGGETS_COPPER, PSTItems.COPPER_NUGGET.get());
     tag(PSTTags.JEWELRY).addTags(PSTTags.RINGS, PSTTags.NECKLACES);
-    tag(PSTTags.MELEE_WEAPONS).addTags(ItemTags.SWORDS, ItemTags.AXES, Tags.Items.TOOLS_TRIDENTS);
+    tag(PSTTags.MELEE_WEAPONS)
+        .addTags(ItemTags.SWORDS, ItemTags.AXES, Tags.Items.TOOLS_TRIDENTS)
+        .add(TagEntry.optionalTag(new ResourceLocation("simplyswords:swords")));
     tag(PSTTags.RANGED_WEAPONS).addTags(Tags.Items.TOOLS_BOWS, Tags.Items.TOOLS_CROSSBOWS);
     tag(PSTTags.WEAPONS).addTags(PSTTags.MELEE_WEAPONS, PSTTags.RANGED_WEAPONS);
     tag(PSTTags.EQUIPMENT).addTags(PSTTags.WEAPONS, Tags.Items.TOOLS, Tags.Items.ARMORS);
