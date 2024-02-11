@@ -377,7 +377,7 @@ public class SkillTreeEditorScreen extends Screen {
       addButton(0, 0, buttonsWidth, 14, "New Skill").setPressFunc(b -> selectTools(Tools.NODE));
       shiftWidgets(0, 19);
     }
-    if (selectedSkills.size() == 2) {
+    if (selectedSkills.size() >= 2) {
       addButton(0, 0, buttonsWidth, 14, "Connections")
           .setPressFunc(b -> selectTools(Tools.CONNECTIONS));
       shiftWidgets(0, 19);
@@ -637,54 +637,67 @@ public class SkillTreeEditorScreen extends Screen {
   private void addConnectionToolsButton() {
     addButton(0, 0, 100, 14, "Back").setPressFunc(b -> selectTools(Tools.MAIN));
     shiftWidgets(0, 29);
-    if (selectedSkills.size() != 2) return;
-    ResourceLocation first = (ResourceLocation) selectedSkills.toArray()[0];
-    ResourceLocation second = (ResourceLocation) selectedSkills.toArray()[1];
-    PassiveSkill firstSkill = SkillTreeClientData.getEditorSkill(first);
-    PassiveSkill secondSkill = SkillTreeClientData.getEditorSkill(second);
-    if (skillsConnected(firstSkill, secondSkill)) {
+    if (selectedSkills.size() < 2) return;
+    if (selectedSkillsConnected()) {
       Button disconnectButton =
           new Button(toolsX, toolsY, 100, 14, Component.literal("Disconnect"));
       addRenderableWidget(disconnectButton);
-      disconnectButton.setPressFunc(
-          b -> {
-            firstSkill.getDirectConnections().remove(second);
-            secondSkill.getDirectConnections().remove(first);
-            firstSkill.getLongConnections().remove(second);
-            secondSkill.getLongConnections().remove(first);
-            firstSkill.getOneWayConnections().remove(second);
-            secondSkill.getOneWayConnections().remove(first);
-            saveSelectedSkills();
-            rebuildWidgets();
-          });
+      disconnectButton.setPressFunc(b -> disconnectSelectedSkills());
     } else {
       addLabel(0, 0, "Connect");
       shiftWidgets(0, 19);
       addButton(0, 0, 100, 14, "Direct")
-          .setPressFunc(
-              b -> {
-                skillButtons.get(first).skill.getDirectConnections().add(second);
-                saveSelectedSkills();
-                rebuildWidgets();
-              });
+          .setPressFunc(b -> connectSelectedSkills(SkillConnection.Type.DIRECT));
       shiftWidgets(0, 19);
       addButton(0, 0, 100, 14, "Long")
-          .setPressFunc(
-              b -> {
-                skillButtons.get(first).skill.getLongConnections().add(second);
-                saveSelectedSkills();
-                rebuildWidgets();
-              });
+          .setPressFunc(b -> connectSelectedSkills(SkillConnection.Type.LONG));
       shiftWidgets(0, 19);
       addButton(0, 0, 100, 14, "One Way")
-          .setPressFunc(
-              b -> {
-                skillButtons.get(first).skill.getOneWayConnections().add(second);
-                saveSelectedSkills();
-                rebuildWidgets();
-              });
+          .setPressFunc(b -> connectSelectedSkills(SkillConnection.Type.ONE_WAY));
     }
     shiftWidgets(0, 19);
+  }
+
+  private void connectSelectedSkills(SkillConnection.Type connectionType) {
+    ResourceLocation[] selectedSkillsArray = selectedSkills.toArray(new ResourceLocation[0]);
+    for (int i = 0; i < selectedSkills.size() - 1; i++) {
+      PassiveSkill skill = SkillTreeClientData.getEditorSkill(selectedSkillsArray[i]);
+      List<ResourceLocation> connections =
+          switch (connectionType) {
+            case DIRECT -> skill.getDirectConnections();
+            case LONG -> skill.getLongConnections();
+            case ONE_WAY -> skill.getOneWayConnections();
+          };
+      connections.add(selectedSkillsArray[i + 1]);
+    }
+    saveSelectedSkills();
+    rebuildWidgets();
+  }
+
+  private void disconnectSelectedSkills() {
+    ResourceLocation[] selectedSkillsArray = selectedSkills.toArray(new ResourceLocation[0]);
+    for (int i = 0; i < selectedSkills.size() - 1; i++) {
+      PassiveSkill skill1 = SkillTreeClientData.getEditorSkill(selectedSkillsArray[i]);
+      PassiveSkill skill2 = SkillTreeClientData.getEditorSkill(selectedSkillsArray[i + 1]);
+      skill1.getDirectConnections().remove(skill2.getId());
+      skill2.getDirectConnections().remove(skill1.getId());
+      skill1.getLongConnections().remove(skill2.getId());
+      skill2.getLongConnections().remove(skill1.getId());
+      skill1.getOneWayConnections().remove(skill2.getId());
+      skill2.getOneWayConnections().remove(skill1.getId());
+    }
+    saveSelectedSkills();
+    rebuildWidgets();
+  }
+
+  private boolean selectedSkillsConnected() {
+    ResourceLocation[] selectedSkillsArray = selectedSkills.toArray(new ResourceLocation[0]);
+    for (int i = 0; i < selectedSkills.size() - 1; i++) {
+      PassiveSkill skill1 = SkillTreeClientData.getEditorSkill(selectedSkillsArray[i]);
+      PassiveSkill skill2 = SkillTreeClientData.getEditorSkill(selectedSkillsArray[i + 1]);
+      if (!skillsConnected(skill1, skill2)) return false;
+    }
+    return true;
   }
 
   private boolean skillsConnected(PassiveSkill first, PassiveSkill second) {
