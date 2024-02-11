@@ -517,6 +517,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("quiver.capacity", "• Can hold up to %s arrows");
     add("quiver.contents", "• Contents: %s");
     // items
+    add("item.cant_use.info", "You can not use this");
     addGem("citrine", "Citrine");
     addGem("ruby", "Ruby");
     addGem("sapphire", "Sapphire");

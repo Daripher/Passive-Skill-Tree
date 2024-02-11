@@ -1,5 +1,6 @@
 package daripher.skilltree.skill.bonus;
 
+import com.mojang.datafixers.util.Either;
 import daripher.itemproduction.event.ItemProducedEvent;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -40,6 +42,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -55,6 +60,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.StringUtils;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
+import top.theillusivec4.curios.api.event.CurioEquipEvent;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandler {
@@ -464,6 +470,32 @@ public class SkillBonusHandler {
     }
   }
 
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(CurioEquipEvent event) {
+    if (!(event.getEntity() instanceof Player player)) return;
+    for (CantUseItemBonus bonus : getSkillBonuses(player, CantUseItemBonus.class)) {
+      if (bonus.getItemCondition().met(event.getStack())) {
+        event.setResult(Event.Result.DENY);
+        return;
+      }
+    }
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void addCantUseItemTooltip(RenderTooltipEvent.GatherComponents event) {
+    Player player = Minecraft.getInstance().player;
+    if (player == null) return;
+    for (CantUseItemBonus bonus : getSkillBonuses(player, CantUseItemBonus.class)) {
+      if (bonus.getItemCondition().met(event.getItemStack())) {
+        MutableComponent tooltip =
+            Component.translatable("item.cant_use.info").withStyle(ChatFormatting.RED);
+        event.getTooltipElements().add(Either.left(tooltip));
+        return;
+      }
+    }
+  }
+
   public static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
     Map<Float, Float> multipliers = getLootMultipliers(player, lootType);
     float multiplier = 0f;
@@ -577,7 +609,7 @@ public class SkillBonusHandler {
     return chance;
   }
 
-  public static <T> List<T> getSkillBonuses(Player player, Class<T> type) {
+  public static <T> List<T> getSkillBonuses(@Nonnull Player player, Class<T> type) {
     if (!PlayerSkillsProvider.hasSkills(player)) return List.of();
     List<T> bonuses = new ArrayList<>();
     bonuses.addAll(getPlayerBonuses(player, type));
