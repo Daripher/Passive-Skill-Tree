@@ -585,6 +585,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("quiver.capacity", "• Вмещает до %s стрел");
     add("quiver.contents", "• Внутри: %s");
     // items
+    add("item.cant_use.info", "Вы не можете это использовать");
     addGem("citrine", "цитрин");
     addGem("ruby", "рубин");
     addGem("sapphire", "сапфир");
