@@ -116,7 +116,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
     value *= playerMultiplier.getValue(player);
     if (oldModifier != null) {
       if (oldModifier.getAmount() == value) return;
-      instance.removeModifier(modifier.getId());
     }
     AttributeModifier dynamicModifier =
         new AttributeModifier(modifier.getId(), "DynamicBonus", value, modifier.getOperation());
@@ -126,6 +125,9 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   private void applyAttributeModifier(
       AttributeInstance instance, AttributeModifier modifier, Player player) {
     float healthPercentage = player.getHealth() / player.getMaxHealth();
+    if (instance.getModifier(modifier.getId()) != null) {
+      instance.removeModifier(modifier.getId());
+    }
     instance.addTransientModifier(modifier);
     if (attribute == Attributes.MAX_HEALTH) {
       player.setHealth(player.getMaxHealth() * healthPercentage);
