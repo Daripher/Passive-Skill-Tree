@@ -17,7 +17,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public final class AttributeValueMultiplier implements LivingMultiplier {
   private Attribute attribute;
@@ -51,18 +50,19 @@ public final class AttributeValueMultiplier implements LivingMultiplier {
   @Override
   public void addEditorWidgets(SkillTreeEditorScreen editor, Consumer<LivingMultiplier> consumer) {
     editor.addLabel(0, 0, "Attribute", ChatFormatting.GREEN);
-    editor.addLabel(150, 0, "Divisor", ChatFormatting.GREEN);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 145, 14, 10, attribute, ForgeRegistries.ATTRIBUTES.getValues())
-        .setToNameFunc(a -> Component.translatable(a.getDescriptionId()))
+        .addAttributePicker(0, 0, 200, 14, 10, attribute)
         .setResponder(
             a -> {
               setAttribute(a);
               consumer.accept(this);
             });
+    editor.shiftWidgets(0, 19);
+    editor.addLabel(0, 0, "Divisor", ChatFormatting.GREEN);
+    editor.shiftWidgets(0, 19);
     editor
-        .addNumericTextField(150, 0, 50, 14, divisor)
+        .addNumericTextField(0, 0, 50, 14, divisor)
         .setNumericFilter(d -> d > 0)
         .setNumericResponder(
             v -> {

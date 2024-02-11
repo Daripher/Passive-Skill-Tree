@@ -17,7 +17,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public final class AttributeValueCondition implements LivingCondition {
   private Attribute attribute;
@@ -68,8 +67,7 @@ public final class AttributeValueCondition implements LivingCondition {
     editor.addLabel(0, 0, "Attribute", ChatFormatting.GREEN);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 200, 14, 10, attribute, ForgeRegistries.ATTRIBUTES.getValues())
-        .setToNameFunc(a -> Component.translatable(a.getDescriptionId()))
+        .addAttributePicker(0, 0, 200, 14, 10, attribute)
         .setResponder(
             a -> {
               setAttribute(a);

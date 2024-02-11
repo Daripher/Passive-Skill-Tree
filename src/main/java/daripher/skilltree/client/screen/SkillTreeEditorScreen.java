@@ -25,8 +25,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.ISlotType;
+import top.theillusivec4.curios.common.CuriosHelper;
 
 public class SkillTreeEditorScreen extends Screen {
   private final Map<ResourceLocation, SkillButton> skillButtons = new HashMap<>();
@@ -910,6 +917,20 @@ public class SkillTreeEditorScreen extends Screen {
             toolsX + x, toolsY + y, width, height, maxDisplayed, enums, defaultValue));
   }
 
+  public DropDownList<Attribute> addAttributePicker(
+      int x, int y, int width, int height, int maxDisplayed, Attribute defaultValue) {
+    return addDropDownList(x, y, width, height, maxDisplayed, defaultValue, getEditableAttributes())
+        .setToNameFunc(
+            attribute -> {
+              ResourceLocation id = ForgeRegistries.ATTRIBUTES.getKey(attribute);
+              if (attribute instanceof CuriosHelper.SlotAttributeWrapper slotAttribute) {
+                id = new ResourceLocation("curios", slotAttribute.identifier);
+              }
+              Objects.requireNonNull(id);
+              return Component.literal(id.toString());
+            });
+  }
+
   public Button addButton(int x, int y, int width, int height, String message) {
     return addRenderableWidget(
         new Button(toolsX + x, toolsY + y, width, height, Component.literal(message)));
@@ -921,6 +942,23 @@ public class SkillTreeEditorScreen extends Screen {
         new ConfirmationButton(toolsX + x, toolsY + y, width, height, Component.literal(message));
     button.setConfirmationMessage(Component.literal(confirmationMessage));
     return addRenderableWidget(button);
+  }
+
+  private static final Set<Attribute> EDITABLE_ATTRIBUTES = new HashSet<>();
+
+  @SuppressWarnings("deprecation")
+  @NotNull
+  private static Collection<Attribute> getEditableAttributes() {
+    if (EDITABLE_ATTRIBUTES.isEmpty()) {
+      ForgeRegistries.ATTRIBUTES.getValues().stream()
+          .filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute)
+          .forEach(EDITABLE_ATTRIBUTES::add);
+      CuriosApi.getSlotHelper().getSlotTypes().stream()
+          .map(ISlotType::getIdentifier)
+          .map(CuriosHelper::getOrCreateSlotAttribute)
+          .forEach(EDITABLE_ATTRIBUTES::add);
+    }
+    return EDITABLE_ATTRIBUTES;
   }
 
   protected void renderConnections(PoseStack poseStack, int mouseX, int mouseY) {
