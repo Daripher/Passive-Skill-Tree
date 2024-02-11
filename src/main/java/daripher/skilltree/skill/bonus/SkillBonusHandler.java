@@ -28,6 +28,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -44,10 +45,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -440,6 +438,29 @@ public class SkillBonusHandler {
     if (reservation == 0) return;
     if (event.player.getHealth() / event.player.getMaxHealth() > 1 - reservation) {
       event.player.setHealth(event.player.getMaxHealth() * (1 - reservation));
+    }
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(AttackEntityEvent event) {
+    for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
+      if (bonus.getItemCondition().met(event.getEntity().getMainHandItem())) {
+        event.setCanceled(true);
+        return;
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(PlayerInteractEvent event) {
+    for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
+      if (bonus.getItemCondition().met(event.getItemStack())) {
+        event.setCancellationResult(InteractionResult.FAIL);
+        if (event.isCancelable()) {
+          event.setCanceled(true);
+        }
+        return;
+      }
     }
   }
 

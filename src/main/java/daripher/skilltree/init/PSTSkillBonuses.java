@@ -61,6 +61,8 @@ public class PSTSkillBonuses {
       REGISTRY.register("all_attributes", AllAttributesBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> EFFECT_ON_ATTACK =
       REGISTRY.register("effect_on_attack", EffectOnAttackBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> CANT_USE_ITEM =
+      REGISTRY.register("cant_use_item", CantUseItemBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {
