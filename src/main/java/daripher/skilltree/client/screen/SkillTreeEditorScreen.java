@@ -370,7 +370,7 @@ public class SkillTreeEditorScreen extends Screen {
     shiftWidgets(0, 19);
     addButton(0, 0, buttonsWidth, 14, "Button").setPressFunc(b -> selectTools(Tools.BUTTON));
     shiftWidgets(0, 19);
-    if (selectedSkills.size() == 1) {
+    if (!selectedSkills.isEmpty()) {
       addButton(0, 0, buttonsWidth, 14, "New Skill").setPressFunc(b -> selectTools(Tools.NODE));
       shiftWidgets(0, 19);
     }
@@ -392,40 +392,45 @@ public class SkillTreeEditorScreen extends Screen {
   private void addNodeToolsButtons() {
     addButton(0, 0, 100, 14, "Back").setPressFunc(b -> selectTools(Tools.MAIN));
     shiftWidgets(0, 29);
-    if (selectedSkills.size() != 1) return;
-    PassiveSkill skill = getFirstSelectedSkill();
+    if (selectedSkills.isEmpty()) return;
     addLabel(0, 0, "Distance", ChatFormatting.GOLD);
     addLabel(65, 0, "Angle", ChatFormatting.GOLD);
     toolsY += 19;
     NumericTextField distanceEditor = addNumericTextField(0, 0, 60, 14, 10);
     NumericTextField angleEditor = addNumericTextField(65, 0, 60, 14, 0);
     toolsY += 19;
-    addButton(0, 0, 60, 14, "Add")
-        .setPressFunc(b -> createNewSkill(angleEditor, distanceEditor, skill));
+    addButton(0, 0, 60, 14, "Add").setPressFunc(b -> createNewSkills(angleEditor, distanceEditor));
     addButton(65, 0, 60, 14, "Copy")
-        .setPressFunc(b -> createSelectedSkillCopy(angleEditor, distanceEditor, skill));
+        .setPressFunc(b -> createSelectedSkillsCopies(angleEditor, distanceEditor));
     toolsY += 19;
   }
 
-  private void createSelectedSkillCopy(
-      NumericTextField angleEditor, NumericTextField distanceEditor, PassiveSkill skill) {
+  private void createSelectedSkillsCopies(
+      NumericTextField angleEditor, NumericTextField distanceEditor) {
     float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
-    float distance = (float) distanceEditor.getNumericValue();
-    distance += skill.getButtonSize() / 2f + 8;
-    float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
-    float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-    createCopiedSkill(skillX, skillY, skill);
+    selectedSkills.forEach(
+        skillId -> {
+          PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+          float distance = (float) distanceEditor.getNumericValue();
+          distance += skill.getButtonSize() / 2f + 8;
+          float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+          float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+          createCopiedSkill(skillX, skillY, skill);
+        });
     rebuildWidgets();
   }
 
-  private void createNewSkill(
-      NumericTextField angleEditor, NumericTextField distanceEditor, PassiveSkill skill) {
+  private void createNewSkills(NumericTextField angleEditor, NumericTextField distanceEditor) {
     float angle = (float) (angleEditor.getNumericValue() * Mth.PI / 180F);
-    float distance = (float) distanceEditor.getNumericValue();
-    distance += skill.getButtonSize() / 2f + 8;
-    float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
-    float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
-    createNewSkill(skillX, skillY, skill);
+    selectedSkills.forEach(
+        skillId -> {
+          PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
+          float distance = (float) distanceEditor.getNumericValue();
+          distance += skill.getButtonSize() / 2f + 8;
+          float skillX = skill.getPositionX() + Mth.sin(angle) * distance;
+          float skillY = skill.getPositionY() + Mth.cos(angle) * distance;
+          createNewSkill(skillX, skillY, skill);
+        });
     rebuildWidgets();
   }
 
@@ -558,7 +563,7 @@ public class SkillTreeEditorScreen extends Screen {
   private void moveSelectedSkills(float x, float y) {
     selectedSkills.forEach(
         skillId -> {
-          PassiveSkill skill = skillButtons.get(skillId).skill;
+          PassiveSkill skill = SkillTreeClientData.getEditorSkill(skillId);
           skill.setPosition(skill.getPositionX() + x, skill.getPositionY() + y);
           reAddSkillButton(skill);
         });
