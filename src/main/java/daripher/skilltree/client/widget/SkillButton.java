@@ -31,8 +31,8 @@ public class SkillButton extends Button {
   private static final Style LORE_STYLE = Style.EMPTY.withColor(0xB96526).withItalic(true);
   private final Supplier<Float> animationFunction;
   public final PassiveSkill skill;
-  public final float x;
-  public final float y;
+  public float x;
+  public float y;
   public boolean highlighted;
   public boolean animated;
 

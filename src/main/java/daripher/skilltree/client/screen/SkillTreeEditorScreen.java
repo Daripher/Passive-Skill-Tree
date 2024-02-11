@@ -139,12 +139,7 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
-    if (clickedWidget(mouseX, mouseY, button)) {
-      return true;
-    }
-    SkillButton skillAtMouse = getSkillAt(mouseX, mouseY);
-    if (skillAtMouse == null) return false;
-    return skillAtMouse.mouseClicked(skillAtMouse.x + 1, skillAtMouse.y + 1, button);
+    return clickedWidget(mouseX, mouseY, button) || clickedSkill(mouseX, mouseY, button);
   }
 
   private boolean clickedWidget(double mouseX, double mouseY, int button) {
@@ -152,11 +147,16 @@ public class SkillTreeEditorScreen extends Screen {
     for (GuiEventListener child : widgets().toList()) {
       if (child.mouseClicked(mouseX, mouseY, button)) {
         setFocused(child);
-        if (button == 0) setDragging(true);
         clicked = true;
       }
     }
     return clicked;
+  }
+
+  private boolean clickedSkill(double mouseX, double mouseY, int button) {
+    SkillButton skillAtMouse = getSkillAt(mouseX, mouseY);
+    if (skillAtMouse == null) return false;
+    return skillAtMouse.mouseClicked(skillAtMouse.x + 1, skillAtMouse.y + 1, button);
   }
 
   private Stream<EditBox> textFields() {
@@ -494,10 +494,14 @@ public class SkillTreeEditorScreen extends Screen {
       toolsY += 19;
       addNumericTextField(65, 0, 60, 14, firstSelectedSkill.getPositionX())
           .setNumericResponder(
-              v -> setSkillPosition(v.floatValue(), firstSelectedSkill.getPositionY()));
+              v ->
+                  setSkillPosition(
+                      getFirstSelectedSkill(), v.floatValue(), firstSelectedSkill.getPositionY()));
       addNumericTextField(130, 0, 60, 14, firstSelectedSkill.getPositionY())
           .setNumericResponder(
-              v -> setSkillPosition(firstSelectedSkill.getPositionX(), v.floatValue()));
+              v ->
+                  setSkillPosition(
+                      getFirstSelectedSkill(), firstSelectedSkill.getPositionX(), v.floatValue()));
       toolsY += 19;
     }
     if (canEdit(PassiveSkill::getTitle)) {
@@ -547,10 +551,20 @@ public class SkillTreeEditorScreen extends Screen {
     saveSelectedSkills();
   }
 
-  private void setSkillPosition(float x, float y) {
-    PassiveSkill firstSelectedSkill = getFirstSelectedSkill();
-    firstSelectedSkill.setPosition(x, y);
-    reAddSkillButton(firstSelectedSkill);
+  private void setSkillPosition(PassiveSkill skill, float x, float y) {
+    skill.setPosition(x, y);
+    reAddSkillButton(skill);
+    addSkillConnections();
+    saveSelectedSkills();
+  }
+
+  private void moveSelectedSkills(float x, float y) {
+    selectedSkills.forEach(
+        skillId -> {
+          PassiveSkill skill = skillButtons.get(skillId).skill;
+          skill.setPosition(skill.getPositionX() + x, skill.getPositionY() + y);
+          reAddSkillButton(skill);
+        });
     addSkillConnections();
     saveSelectedSkills();
   }
@@ -752,6 +766,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   protected void skillButtonPressed(SkillButton button) {
+    if (hasControlDown()) return;
     if (!hasShiftDown() && !selectedSkills.isEmpty()) {
       selectedSkills.clear();
     }
@@ -800,6 +815,10 @@ public class SkillTreeEditorScreen extends Screen {
   public boolean mouseDragged(
       double mouseX, double mouseY, int mouseButton, double dragAmountX, double dragAmountY) {
     if (mouseButton != 0 && mouseButton != 2) return false;
+    if (mouseButton == 0 && hasControlDown() && !selectedSkills.isEmpty()) {
+      moveSelectedSkills((float) dragAmountX / zoom, (float) dragAmountY / zoom);
+      return true;
+    }
     if (maxScrollX > 0) scrollSpeedX += dragAmountX * 0.25;
     if (maxScrollY > 0) scrollSpeedY += dragAmountY * 0.25;
     return true;
