@@ -29,7 +29,7 @@ import net.minecraft.world.entity.player.Player;
 public final class IgniteChanceBonus implements SkillBonus<IgniteChanceBonus> {
   private float chance;
   private int duration;
-  private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
+  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
   private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
 
