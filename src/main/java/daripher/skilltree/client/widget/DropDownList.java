@@ -90,14 +90,18 @@ public class DropDownList<T> extends AbstractButton {
         }
         line += "...";
       }
-      if (!search.isEmpty() && line.toLowerCase().startsWith(search)) {
-        String search = line.substring(0, this.search.length());
-        graphics.drawString(font, search, getX() + 5, y + 3 + i * height, 0xFFD642, true);
-        line = line.substring(search.length());
-        graphics.drawString(
-            font, line, getX() + 5 + font.width(search), y + 3 + i * height, 0xe0e0e0, true);
+      int textX = getX() + 5;
+      int textY = y + 3 + i * height;
+      if (!search.isEmpty() && line.toLowerCase().contains(search)) {
+        String split1 = line.substring(0, line.indexOf(search));
+        graphics.drawString(font, split1, textX, textY, 0xe0e0e0);
+        textX += font.width(split1);
+        graphics.drawString(font, search, textX, textY, 0xFFD642);
+        textX += font.width(search);
+        String split2 = line.substring(line.indexOf(search) + search.length());
+        graphics.drawString(font, split2, textX, textY, 0xe0e0e0);
       } else {
-        graphics.drawString(font, line, getX() + 5, y + 3 + i * height, 0xe0e0e0, true);
+        graphics.drawString(font, line, textX, textY, 0xe0e0e0);
       }
     }
   }
@@ -165,7 +169,7 @@ public class DropDownList<T> extends AbstractButton {
       searchTimer = 40;
       search += Character.toString(codePoint).toLowerCase();
       possibleValues.stream()
-          .filter(v -> toNameFunc.apply(v).getString().toLowerCase().startsWith(search))
+          .filter(v -> toNameFunc.apply(v).getString().toLowerCase().contains(search))
           .findFirst()
           .ifPresent(v -> setScroll(possibleValues.indexOf(v)));
       return true;
