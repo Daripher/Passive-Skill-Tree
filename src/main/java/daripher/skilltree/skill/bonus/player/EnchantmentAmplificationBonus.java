@@ -30,6 +30,10 @@ public final class EnchantmentAmplificationBonus
     this.chance = chance;
   }
 
+  public EnchantmentAmplificationBonus(float chance) {
+    this(NoneEnchantmentCondition.INSTANCE, chance);
+  }
+
   @Override
   public SkillBonus.Serializer getSerializer() {
     return PSTSkillBonuses.ENCHANTMENT_AMPLIFICATION.get();
@@ -182,7 +186,7 @@ public final class EnchantmentAmplificationBonus
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new EnchantmentAmplificationBonus(new NoneEnchantmentCondition(), 0.1f);
+      return new EnchantmentAmplificationBonus(0.1f);
     }
   }
 }
