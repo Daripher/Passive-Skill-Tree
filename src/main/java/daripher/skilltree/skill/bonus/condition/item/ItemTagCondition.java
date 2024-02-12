@@ -58,6 +58,7 @@ public class ItemTagCondition implements ItemCondition {
         .setSoftFilter(ResourceLocation::isValidResourceLocation)
         .setResponder(
             s -> {
+              if (!ResourceLocation.isValidResourceLocation(s)) return;
               setTagId(new ResourceLocation(s));
               consumer.accept(this);
             });
