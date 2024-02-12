@@ -13,8 +13,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:weapons"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "weapon"
         }
       },
       "target_condition": {

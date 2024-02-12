@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 5.0,
       "attribute": "minecraft:generic.armor",
-      "id": "a0eff48e-1212-47d4-b1f3-534d3c70d99c",
+      "id": "9a79bdf8-78bd-4c30-89f3-77f044743692",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:armors/chestplates"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "chestplate"
         }
       }
     }

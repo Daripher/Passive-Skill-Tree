@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "skilltree:evasion",
-          "id": "fe624a6e-a5f4-4ada-be47-4eae6064708f",
+          "id": "2fca3f74-4fb4-4907-9cdb-f59a28014a75",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "armor"
       }
     }
   ],

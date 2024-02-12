@@ -8,14 +8,13 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.gem.GemItem;
 import daripher.skilltree.item.quiver.QuiverItem;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import daripher.skilltree.skill.bonus.item.ItemSocketsBonus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,7 +24,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
@@ -41,7 +39,7 @@ public class ItemHelper {
     if (blacklist.contains(itemId.toString())) return false;
     String namespace = itemId.getNamespace();
     if (blacklist.contains(namespace + ":*")) return false;
-    return stack.is(PSTTags.EQUIPMENT) || stack.is(PSTTags.JEWELRY);
+    return EquipmentCondition.isEquipment(stack) || stack.is(PSTTags.JEWELRY);
   }
 
   public static int getFirstEmptySocket(ItemStack stack, Player player) {
@@ -84,29 +82,34 @@ public class ItemHelper {
     CompoundTag tag = stack.getTag();
     if (tag == null) return ImmutableList.of();
     ListTag poisonsTags = tag.getList("Poisons", 10);
-    return poisonsTags.stream().map(CompoundTag.class::cast).map(MobEffectInstance::load).toList();
+    List<MobEffectInstance> list = new ArrayList<>();
+    for (Tag poisonsTag : poisonsTags) {
+      CompoundTag compoundTag = (CompoundTag) poisonsTag;
+      MobEffectInstance load = MobEffectInstance.load(compoundTag);
+      list.add(load);
+    }
+    return list;
   }
 
   public static int getDefaultSockets(ItemStack stack) {
-    if (stack.is(Tags.Items.ARMORS_HELMETS)) return Config.default_helmet_sockets;
-    if (stack.is(Tags.Items.ARMORS_CHESTPLATES)) return Config.default_chestplate_sockets;
-    if (stack.is(Tags.Items.ARMORS_LEGGINGS)) return Config.default_leggings_sockets;
-    if (stack.is(Tags.Items.ARMORS_BOOTS)) return Config.default_boots_sockets;
-    if (stack.is(PSTTags.WEAPONS)) return Config.default_weapon_sockets;
-    if (stack.is(Tags.Items.TOOLS_SHIELDS)) return Config.default_shield_sockets;
+    if (EquipmentCondition.isHelmet(stack)) return Config.default_helmet_sockets;
+    if (EquipmentCondition.isChestplate(stack)) return Config.default_chestplate_sockets;
+    if (EquipmentCondition.isLeggings(stack)) return Config.default_leggings_sockets;
+    if (EquipmentCondition.isBoots(stack)) return Config.default_boots_sockets;
+    if (EquipmentCondition.isWeapon(stack)) return Config.default_weapon_sockets;
+    if (EquipmentCondition.isShield(stack)) return Config.default_shield_sockets;
     if (stack.is(PSTTags.RINGS)) return Config.default_ring_sockets;
     if (stack.is(PSTTags.NECKLACES)) return Config.default_necklace_sockets;
     return 0;
   }
 
   public static int getAdditionalSockets(ItemStack stack) {
-    int sockets =
-        getItemBonusesExcludingGems(stack).stream()
-            .filter(ItemSocketsBonus.class::isInstance)
-            .map(ItemSocketsBonus.class::cast)
-            .map(ItemSocketsBonus::getAmount)
-            .reduce(Integer::sum)
-            .orElse(0);
+    int sockets = 0;
+    for (ItemBonus<?> itemBonus : getItemBonusesExcludingGems(stack)) {
+      if (itemBonus instanceof ItemSocketsBonus socketsBonus) {
+        sockets += socketsBonus.getAmount();
+      }
+    }
     if (stack.getItem() instanceof HasAdditionalSockets bonus) {
       sockets += bonus.getAdditionalSockets();
     }
@@ -128,11 +131,13 @@ public class ItemHelper {
 
   public static List<? extends ItemBonus<?>> getItemBonusesExcludingGems(ItemStack stack) {
     if (!stack.hasTag()) return ImmutableList.of();
-    return stack.getOrCreateTag().getList("SkillBonuses", Tag.TAG_COMPOUND).stream()
-        .map(CompoundTag.class::cast)
-        .map(ItemHelper::deserializeBonus)
-        .filter(Objects::nonNull)
-        .toList();
+    List<ItemBonus<?>> list = new ArrayList<>();
+    for (Tag tag : stack.getOrCreateTag().getList("SkillBonuses", Tag.TAG_COMPOUND)) {
+      CompoundTag compoundTag = (CompoundTag) tag;
+      ItemBonus<?> itemBonus = deserializeBonus(compoundTag);
+      if (itemBonus != null) list.add(itemBonus);
+    }
+    return list;
   }
 
   public static List<? extends ItemBonus<?>> getItemBonuses(ItemStack stack) {
@@ -144,28 +149,35 @@ public class ItemHelper {
   }
 
   public static <T extends ItemBonus<?>> List<T> getItemBonuses(ItemStack stack, Class<T> aClass) {
-    return getItemBonuses(stack).stream()
-        .filter(aClass::isInstance)
-        .map(aClass::cast)
-        .collect(Collectors.toList());
+    List<T> list = new ArrayList<>();
+    for (ItemBonus<?> itemBonus : getItemBonuses(stack)) {
+      if (aClass.isInstance(itemBonus)) {
+        T cast = aClass.cast(itemBonus);
+        list.add(cast);
+      }
+    }
+    return list;
   }
 
   public static void addItemBonus(ItemStack stack, ItemBonus<?> bonus) {
     ListTag bonusesTag = new ListTag();
     bonusesTag.add(serializeBonus(bonus));
-    ItemHelper.getItemBonuses(stack).stream()
-        .map(bonus2 -> mergeIfPossible(bonus, bonus2, bonusesTag))
-        .map(ItemHelper::serializeBonus)
-        .forEach(bonusesTag::add);
+    for (ItemBonus<?> bonus2 : ItemHelper.getItemBonuses(stack)) {
+      ItemBonus<? extends ItemBonus<?>> itemBonus = mergeIfPossible(bonus, bonus2, bonusesTag);
+      CompoundTag tag = serializeBonus(itemBonus);
+      bonusesTag.add(tag);
+    }
     stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
   }
 
   public static void removeItemBonus(ItemStack stack, ItemBonus<?> bonus) {
     ListTag bonusesTag = new ListTag();
-    ItemHelper.getItemBonuses(stack).stream()
-        .filter(Predicate.not(bonus::equals))
-        .map(ItemHelper::serializeBonus)
-        .forEach(bonusesTag::add);
+    for (ItemBonus<?> itemBonus : ItemHelper.getItemBonuses(stack)) {
+      if (!bonus.equals(itemBonus)) {
+        CompoundTag tag = serializeBonus(itemBonus);
+        bonusesTag.add(tag);
+      }
+    }
     stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
   }
 
@@ -179,21 +191,24 @@ public class ItemHelper {
       stack.getOrCreateTag().remove("DurabilityBonuses");
     }
     ListTag durabilityTags = new ListTag();
-    getItemBonuses(stack, ItemDurabilityBonus.class).stream()
-        .map(ItemHelper::serializeBonus)
-        .forEach(durabilityTags::add);
+    for (ItemDurabilityBonus bonus : getItemBonuses(stack, ItemDurabilityBonus.class)) {
+      durabilityTags.add(serializeBonus(bonus));
+    }
     if (durabilityTags.isEmpty()) return;
     stack.getOrCreateTag().put("DurabilityBonuses", durabilityTags);
   }
 
   public static List<ItemDurabilityBonus> getDurabilityBonuses(ItemStack stack) {
     if (!stack.hasTag()) return ImmutableList.of();
-    return stack.getOrCreateTag().getList("DurabilityBonuses", Tag.TAG_COMPOUND).stream()
-        .map(CompoundTag.class::cast)
-        .map(ItemHelper::deserializeBonus)
-        .filter(ItemDurabilityBonus.class::isInstance)
-        .map(ItemDurabilityBonus.class::cast)
-        .toList();
+    List<ItemDurabilityBonus> list = new ArrayList<>();
+    for (Tag tag : stack.getOrCreateTag().getList("DurabilityBonuses", Tag.TAG_COMPOUND)) {
+      CompoundTag compoundTag = (CompoundTag) tag;
+      ItemBonus<?> itemBonus = deserializeBonus(compoundTag);
+      if (itemBonus instanceof ItemDurabilityBonus bonus) {
+        list.add(bonus);
+      }
+    }
+    return list;
   }
 
   private static ItemBonus<? extends ItemBonus<?>> mergeIfPossible(

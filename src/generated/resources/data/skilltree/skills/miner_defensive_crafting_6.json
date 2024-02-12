@@ -4,8 +4,8 @@
     {
       "type": "skilltree:gem_power",
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "armor"
       },
       "multiplier": 0.1
     }

@@ -5,10 +5,10 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.config.Config;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTAttributes;
-import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.LivingEntityAccessor;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -186,7 +186,7 @@ public class AttributeEvents {
 
   @SubscribeEvent
   public static void applyRangedWeaponAttackSpeedBonus(LivingEntityUseItemEvent.Tick event) {
-    if (!event.getItem().is(PSTTags.RANGED_WEAPONS)) return;
+    if (!EquipmentCondition.isRangedWeapon(event.getItem())) return;
     AttributeInstance attribute = event.getEntity().getAttribute(Attributes.ATTACK_SPEED);
     if (attribute == null) return;
     double attackSpeedBonus = attribute.getValue() / attribute.getBaseValue() - 1;

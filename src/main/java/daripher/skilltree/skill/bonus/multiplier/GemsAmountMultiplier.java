@@ -7,16 +7,14 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
-import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
-
-import daripher.skilltree.skill.bonus.condition.item.ItemTagCondition;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -142,7 +140,7 @@ public final class GemsAmountMultiplier implements LivingMultiplier {
 
     @Override
     public LivingMultiplier createDefaultInstance() {
-      return new GemsAmountMultiplier(new ItemTagCondition(PSTTags.EQUIPMENT.location()));
+      return new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.ANY));
     }
   }
 }

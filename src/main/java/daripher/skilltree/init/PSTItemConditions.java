@@ -27,6 +27,8 @@ public class PSTItemConditions {
       REGISTRY.register("enchanted", EnchantedCondition.Serializer::new);
   public static final RegistryObject<ItemCondition.Serializer> TAG =
       REGISTRY.register("tag", ItemTagCondition.Serializer::new);
+  public static final RegistryObject<ItemCondition.Serializer> EQUIPMENT_TYPE =
+      REGISTRY.register("equipment_type", EquipmentCondition.Serializer::new);
 
   public static List<ItemCondition> conditionsList() {
     return PSTRegistries.ITEM_CONDITIONS.get().getValues().stream()

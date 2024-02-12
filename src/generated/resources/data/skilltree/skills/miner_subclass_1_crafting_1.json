@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.02,
           "attribute": "minecraft:generic.movement_speed",
-          "id": "2af2c12d-d186-45dc-97d5-b0767a9042df",
+          "id": "53970aed-41bd-42ec-8f8e-84fe86a5c2c6",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     }
   ],

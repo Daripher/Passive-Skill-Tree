@@ -6,10 +6,9 @@ import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTLivingConditions;
-import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemTagCondition;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -115,7 +114,7 @@ public final class DualWieldingCondition implements LivingCondition {
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new DualWieldingCondition(new ItemTagCondition(PSTTags.WEAPONS.location()));
+      return new DualWieldingCondition(new EquipmentCondition(EquipmentCondition.Type.WEAPON));
     }
   }
 }
