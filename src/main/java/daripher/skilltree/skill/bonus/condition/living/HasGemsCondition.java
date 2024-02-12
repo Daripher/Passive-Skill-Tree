@@ -206,7 +206,7 @@ public final class HasGemsCondition implements LivingCondition {
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new HasGemsCondition(1, -1, new NoneItemCondition());
+      return new HasGemsCondition(1, -1, NoneItemCondition.INSTANCE);
     }
   }
 }

@@ -186,7 +186,7 @@ public final class PlayerSocketsBonus implements SkillBonus<PlayerSocketsBonus> 
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new PlayerSocketsBonus(new NoneItemCondition(), 1);
+      return new PlayerSocketsBonus(NoneItemCondition.INSTANCE, 1);
     }
   }
 }

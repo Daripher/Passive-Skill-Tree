@@ -190,7 +190,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new RepairEfficiencyBonus(new NoneItemCondition(), 0.1f);
+      return new RepairEfficiencyBonus(NoneItemCondition.INSTANCE, 0.1f);
     }
   }
 }

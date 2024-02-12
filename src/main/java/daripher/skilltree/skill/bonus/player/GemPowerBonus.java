@@ -190,7 +190,7 @@ public final class GemPowerBonus implements SkillBonus<GemPowerBonus> {
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new GemPowerBonus(new NoneItemCondition(), 0.1f);
+      return new GemPowerBonus(NoneItemCondition.INSTANCE, 0.1f);
     }
   }
 }

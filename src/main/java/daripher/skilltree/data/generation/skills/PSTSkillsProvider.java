@@ -964,7 +964,7 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_life",
         createAttributeBonus(MAX_HEALTH, 2, ADDITION)
             .setCondition(
-                new HasItemEquippedCondition(new EnchantedCondition(new NoneItemCondition()))),
+                new HasItemEquippedCondition(new EnchantedCondition(NoneItemCondition.INSTANCE))),
         1,
         2);
     addSkillAttributeBonus(

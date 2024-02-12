@@ -158,12 +158,12 @@ public class PSTGemTypesProvider implements DataProvider {
     for (int i = 0; i < 6; i++) {
       ResourceLocation id = new ResourceLocation(SkillTreeMod.MOD_ID, "iriscite_" + i);
       Map<ItemCondition, GemBonusProvider> bonuses =
-          Map.of(new NoneItemCondition(), new RandomGemBonusProvider(irisciteBonuses.get(i)));
+          Map.of(NoneItemCondition.INSTANCE, new RandomGemBonusProvider(irisciteBonuses.get(i)));
       gemTypes.put(id, new GemType(id, bonuses));
     }
     ResourceLocation vacuciteId = new ResourceLocation(SkillTreeMod.MOD_ID, "vacucite_3");
     Map<ItemCondition, GemBonusProvider> vacuciteBonuses =
-        Map.of(new NoneItemCondition(), new GemRemovalBonusProvider());
+        Map.of(NoneItemCondition.INSTANCE, new GemRemovalBonusProvider());
     gemTypes.put(vacuciteId, new GemType(vacuciteId, vacuciteBonuses));
   }
 
