@@ -15,7 +15,7 @@ import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -31,7 +31,7 @@ import net.minecraft.world.entity.player.Player;
 
 public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
   private float amount;
-  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
+  private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;

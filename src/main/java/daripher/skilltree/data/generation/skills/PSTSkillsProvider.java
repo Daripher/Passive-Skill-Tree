@@ -16,7 +16,6 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.MeleeDamageCondition;
 import daripher.skilltree.skill.bonus.condition.damage.ProjectileDamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.ArmorEnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.WeaponEnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.*;
@@ -461,8 +460,7 @@ public class PSTSkillsProvider implements DataProvider {
     // ranger skills
     addSkillBranchAttributeModifier("hunter_subclass_1_defensive", EVASION, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("hunter_subclass_1", STEALTH, 10, ADDITION);
-    addSkillAttributeBonus(
-        "hunter_subclass_1", new JumpHeightBonus(0.1f));
+    addSkillAttributeBonus("hunter_subclass_1", new JumpHeightBonus(0.1f));
     addSkillBranchAttributeModifier("hunter_subclass_1_offensive", STEALTH, 5, ADDITION, 1, 4);
     addSkillBranchAttributeModifier(
         "hunter_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
@@ -482,8 +480,7 @@ public class PSTSkillsProvider implements DataProvider {
         "hunter_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
     addSkillAttributeBonus("hunter_subclass_1_offensive_notable_1", STEALTH, 5, ADDITION);
     addSkillAttributeBonus("hunter_subclass_1_mastery", STEALTH, 10, ADDITION);
-    addSkillAttributeBonus(
-        "hunter_subclass_1_mastery", new JumpHeightBonus(0.5f));
+    addSkillAttributeBonus("hunter_subclass_1_mastery", new JumpHeightBonus(0.5f));
     addSkillAttributeBonus(
         "hunter_subclass_special",
         new CraftedItemBonus(
@@ -991,8 +988,7 @@ public class PSTSkillsProvider implements DataProvider {
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))));
     addSkillBranchAttributeModifier(
         "enchanter_lesser", new EnchantmentRequirementBonus(-0.05f), 1, 6);
-    addSkillAttributeBonus(
-        "enchanter_mastery", new EnchantmentAmplificationBonus(new NoneEnchantmentCondition(), 1f));
+    addSkillAttributeBonus("enchanter_mastery", new EnchantmentAmplificationBonus(1f));
     addSkillBranchAttributeModifier(
         "enchanter_crit",
         new CritChanceBonus(0.02f)
