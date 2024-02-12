@@ -30,6 +30,10 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
     this.multiplier = multiplier;
   }
 
+  public JumpHeightBonus(float multiplier) {
+    this(NoneLivingCondition.INSTANCE, multiplier);
+  }
+
   public float getJumpHeightMultiplier(Player player) {
     if (!playerCondition.met(player)) return 0f;
     return multiplier;
@@ -192,7 +196,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new JumpHeightBonus(new NoneLivingCondition(), 0.1f);
+      return new JumpHeightBonus(0.1f);
     }
   }
 }

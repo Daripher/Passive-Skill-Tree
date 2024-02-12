@@ -27,7 +27,7 @@ import net.minecraft.world.entity.player.Player;
 public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBonus> {
   private float multiplier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public IncomingHealingBonus(float multiplier) {
     this.multiplier = multiplier;

@@ -11,7 +11,6 @@ import daripher.skilltree.item.gem.bonus.GemRemovalBonusProvider;
 import daripher.skilltree.item.gem.bonus.RandomGemBonusProvider;
 import daripher.skilltree.item.gem.bonus.SimpleGemBonusProvider;
 import daripher.skilltree.skill.bonus.condition.item.*;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -138,7 +137,7 @@ public class PSTGemTypesProvider implements DataProvider {
                     Attributes.LUCK, "Citrine", 0.1f, AttributeModifier.Operation.ADDITION)),
             new ItemSkillBonus(
                 new LootDuplicationBonus(0.01f, 2f, LootDuplicationBonus.LootType.GEMS)),
-            new ItemSkillBonus(new JumpHeightBonus(new NoneLivingCondition(), 0.01f)),
+            new ItemSkillBonus(new JumpHeightBonus(0.01f)),
             new ItemSkillBonus(
                 new AttributeBonus(
                     Attributes.LUCK, "Citrine", 0.01f, AttributeModifier.Operation.MULTIPLY_BASE)),

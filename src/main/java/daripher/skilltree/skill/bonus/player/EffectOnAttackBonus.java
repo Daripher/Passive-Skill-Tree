@@ -34,8 +34,8 @@ public final class EffectOnAttackBonus implements SkillBonus<EffectOnAttackBonus
   private MobEffectInstance effect;
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
-  private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
 
   public EffectOnAttackBonus(float chance, MobEffectInstance effect) {
     this.chance = chance;

@@ -191,7 +191,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new BlockBreakSpeedBonus(new NoneLivingCondition(), 0.1f);
+      return new BlockBreakSpeedBonus(NoneLivingCondition.INSTANCE, 0.1f);
     }
   }
 }

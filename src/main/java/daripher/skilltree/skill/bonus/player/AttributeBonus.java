@@ -36,7 +36,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   private Attribute attribute;
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
     this.attribute = attribute;
@@ -51,7 +51,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (!(playerCondition instanceof NoneLivingCondition)
+    if (playerCondition != NoneLivingCondition.INSTANCE
         || playerMultiplier != NoneMultiplier.INSTANCE) {
       return;
     }
@@ -93,11 +93,11 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
 
   @Override
   public void tick(ServerPlayer player) {
-    if (playerCondition instanceof NoneLivingCondition
+    if (playerCondition == NoneLivingCondition.INSTANCE
         && playerMultiplier == NoneMultiplier.INSTANCE) {
       return;
     }
-    if (!(playerCondition instanceof NoneLivingCondition)) {
+    if (playerCondition != NoneLivingCondition.INSTANCE) {
       if (!playerCondition.met(player)) {
         onSkillRemoved(player);
         return;
@@ -329,7 +329,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   }
 
   public boolean hasCondition() {
-    return !(playerCondition instanceof NoneLivingCondition);
+    return playerCondition != NoneLivingCondition.INSTANCE;
   }
 
   public boolean hasMultiplier() {

@@ -39,7 +39,7 @@ public final class AllAttributesBonus
   private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public AllAttributesBonus(AttributeModifier modifier) {
     this.modifier = modifier;
@@ -47,7 +47,7 @@ public final class AllAttributesBonus
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (!(playerCondition instanceof NoneLivingCondition)
+    if (playerCondition != NoneLivingCondition.INSTANCE
         || playerMultiplier != NoneMultiplier.INSTANCE) {
       return;
     }
@@ -69,11 +69,11 @@ public final class AllAttributesBonus
 
   @Override
   public void tick(ServerPlayer player) {
-    if (playerCondition instanceof NoneLivingCondition
+    if (playerCondition == NoneLivingCondition.INSTANCE
         && playerMultiplier == NoneMultiplier.INSTANCE) {
       return;
     }
-    if (!(playerCondition instanceof NoneLivingCondition)) {
+    if (playerCondition != NoneLivingCondition.INSTANCE) {
       if (!playerCondition.met(player)) {
         onSkillRemoved(player);
         return;

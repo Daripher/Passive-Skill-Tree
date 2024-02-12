@@ -27,7 +27,7 @@ import net.minecraft.world.entity.player.Player;
 public final class HealthReservationBonus implements SkillBonus<HealthReservationBonus> {
   private float amount;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public HealthReservationBonus(float amount) {
     this.amount = amount;
