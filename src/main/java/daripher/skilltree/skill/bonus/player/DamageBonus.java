@@ -33,7 +33,7 @@ import net.minecraft.world.entity.player.Player;
 public final class DamageBonus implements SkillBonus<DamageBonus> {
   private float amount;
   private AttributeModifier.Operation operation;
-  private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
+  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
   private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
   private @Nonnull DamageCondition damageCondition = new NoneDamageCondition();

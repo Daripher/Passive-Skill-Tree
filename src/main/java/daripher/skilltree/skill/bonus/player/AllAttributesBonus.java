@@ -38,7 +38,7 @@ public final class AllAttributesBonus
     implements SkillBonus<AllAttributesBonus>, SkillBonus.Ticking {
   private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
   private AttributeModifier modifier;
-  private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
+  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
 
   public AllAttributesBonus(AttributeModifier modifier) {
@@ -48,7 +48,7 @@ public final class AllAttributesBonus
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (!(playerCondition instanceof NoneLivingCondition)
-        || !(playerMultiplier instanceof NoneMultiplier)) {
+        || playerMultiplier != NoneMultiplier.INSTANCE) {
       return;
     }
     getAffectedAttributes().stream()
@@ -70,7 +70,7 @@ public final class AllAttributesBonus
   @Override
   public void tick(ServerPlayer player) {
     if (playerCondition instanceof NoneLivingCondition
-        && playerMultiplier instanceof NoneMultiplier) {
+        && playerMultiplier == NoneMultiplier.INSTANCE) {
       return;
     }
     if (!(playerCondition instanceof NoneLivingCondition)) {
@@ -79,7 +79,7 @@ public final class AllAttributesBonus
         return;
       }
     }
-    if (!(playerMultiplier instanceof NoneMultiplier) && playerMultiplier.getValue(player) == 0) {
+    if (playerMultiplier != NoneMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
       onSkillRemoved(player);
       return;
     }

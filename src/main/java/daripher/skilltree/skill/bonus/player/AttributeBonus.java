@@ -35,7 +35,7 @@ import top.theillusivec4.curios.common.CuriosHelper;
 public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBonus.Ticking {
   private Attribute attribute;
   private AttributeModifier modifier;
-  private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
+  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
 
   public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
@@ -52,7 +52,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (!(playerCondition instanceof NoneLivingCondition)
-        || !(playerMultiplier instanceof NoneMultiplier)) {
+        || playerMultiplier != NoneMultiplier.INSTANCE) {
       return;
     }
     if (attribute instanceof CuriosHelper.SlotAttributeWrapper wrapper) {
@@ -94,7 +94,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   @Override
   public void tick(ServerPlayer player) {
     if (playerCondition instanceof NoneLivingCondition
-        && playerMultiplier instanceof NoneMultiplier) {
+        && playerMultiplier == NoneMultiplier.INSTANCE) {
       return;
     }
     if (!(playerCondition instanceof NoneLivingCondition)) {
@@ -103,7 +103,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
         return;
       }
     }
-    if (!(playerMultiplier instanceof NoneMultiplier) && playerMultiplier.getValue(player) == 0) {
+    if (playerMultiplier != NoneMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
       onSkillRemoved(player);
       return;
     }
@@ -333,7 +333,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   }
 
   public boolean hasMultiplier() {
-    return !(playerMultiplier instanceof NoneMultiplier);
+    return playerMultiplier != NoneMultiplier.INSTANCE;
   }
 
   public static class Serializer implements SkillBonus.Serializer {

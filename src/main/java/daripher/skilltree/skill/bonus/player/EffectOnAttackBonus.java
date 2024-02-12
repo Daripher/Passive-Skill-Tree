@@ -33,7 +33,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class EffectOnAttackBonus implements SkillBonus<EffectOnAttackBonus> {
   private MobEffectInstance effect;
   private float chance;
-  private @Nonnull LivingMultiplier playerMultiplier = new NoneMultiplier();
+  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
   private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
 
