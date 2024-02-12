@@ -36,7 +36,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull DamageCondition damageCondition = new NoneDamageCondition();
+  private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
 
   public DamageBonus(float amount, AttributeModifier.Operation operation) {
     this.amount = amount;
