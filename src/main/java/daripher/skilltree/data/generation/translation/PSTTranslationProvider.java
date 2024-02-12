@@ -52,13 +52,6 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     }
   }
 
-  protected void addMixture(String name, MobEffect... effects) {
-    name = "Mixture of " + name;
-    addMixture(name, "potion", effects);
-    addMixture("Splash " + name, "splash_potion", effects);
-    addMixture("Lingering " + name, "lingering_potion", effects);
-  }
-
   protected void addMixture(String name, String potionType, MobEffect... effects) {
     StringBuilder potionName = new StringBuilder("item.minecraft." + potionType + ".mixture");
     Arrays.stream(effects)
