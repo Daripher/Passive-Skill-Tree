@@ -32,8 +32,8 @@ import net.minecraft.world.entity.player.Player;
 public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
-  private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull DamageCondition damageCondition = new NoneDamageCondition();
 
   public CritChanceBonus(float chance) {

@@ -30,8 +30,8 @@ public final class IgniteChanceBonus implements SkillBonus<IgniteChanceBonus> {
   private float chance;
   private int duration;
   private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = new NoneLivingCondition();
-  private @Nonnull LivingCondition targetCondition = new NoneLivingCondition();
+  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
 
   public IgniteChanceBonus(float chance, int duration) {
     this.chance = chance;

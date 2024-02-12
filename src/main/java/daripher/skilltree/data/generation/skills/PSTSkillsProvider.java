@@ -462,7 +462,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillBranchAttributeModifier("hunter_subclass_1_defensive", EVASION, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("hunter_subclass_1", STEALTH, 10, ADDITION);
     addSkillAttributeBonus(
-        "hunter_subclass_1", new JumpHeightBonus(new NoneLivingCondition(), 0.1f));
+        "hunter_subclass_1", new JumpHeightBonus(0.1f));
     addSkillBranchAttributeModifier("hunter_subclass_1_offensive", STEALTH, 5, ADDITION, 1, 4);
     addSkillBranchAttributeModifier(
         "hunter_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
@@ -483,7 +483,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus("hunter_subclass_1_offensive_notable_1", STEALTH, 5, ADDITION);
     addSkillAttributeBonus("hunter_subclass_1_mastery", STEALTH, 10, ADDITION);
     addSkillAttributeBonus(
-        "hunter_subclass_1_mastery", new JumpHeightBonus(new NoneLivingCondition(), 0.5f));
+        "hunter_subclass_1_mastery", new JumpHeightBonus(0.5f));
     addSkillAttributeBonus(
         "hunter_subclass_special",
         new CraftedItemBonus(
