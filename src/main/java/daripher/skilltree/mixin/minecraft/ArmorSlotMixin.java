@@ -17,7 +17,11 @@ public abstract class ArmorSlotMixin extends Slot {
     super(null, 0, 0, 0);
   }
 
-  @Inject(method = "mayPlace", at = @At("HEAD"), cancellable = true)
+  @Inject(
+      method = {"mayPlace", "m_5857_"},
+      at = @At("HEAD"),
+      cancellable = true,
+      remap = false)
   private void preventItemUsage(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
     if (!(container instanceof Inventory inventory)) return;
     for (CantUseItemBonus bonus :
