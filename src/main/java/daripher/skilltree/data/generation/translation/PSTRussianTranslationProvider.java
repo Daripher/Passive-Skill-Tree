@@ -5,6 +5,8 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.common.Tags;
 import top.theillusivec4.curios.common.CuriosHelper;
@@ -632,7 +634,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Слоты колец");
     add(PSTAttributes.STEALTH.get(), "Скрытность");
-    add(PSTAttributes.STEALTH.get().getDescriptionId() + ".info",
+    add(
+        PSTAttributes.STEALTH.get().getDescriptionId() + ".info",
         "(Скрытность снижает дальность агрессии монстров)");
     // effects
     add(PSTEffects.CRIT_DAMAGE_BONUS.get(), "Критический урон");
@@ -684,6 +687,12 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/hidden.suffix", "Скрытности");
     add("affix.skilltree:jewelry/attribute/healthy", "Здоровое");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
+  }
+
+  protected void addMixture(String name, MobEffect... effects) {
+    addMixture("Микстура " + name, "potion", effects);
+    addMixture("Взрывная микстура" + name, "splash_potion", effects);
+    addMixture("Туманная микстура " + name, "lingering_potion", effects);
   }
 
   protected void addGem(String type, String name) {
