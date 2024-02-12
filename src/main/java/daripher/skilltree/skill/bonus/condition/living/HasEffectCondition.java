@@ -34,9 +34,7 @@ public final class HasEffectCondition implements LivingCondition {
 
   @Override
   public boolean met(LivingEntity living) {
-    if (amplifier == 0) {
-      return living.hasEffect(this.effect);
-    }
+    if (amplifier == 0) return living.hasEffect(this.effect);
     MobEffectInstance effect = living.getEffect(this.effect);
     return effect != null && effect.getAmplifier() >= this.amplifier;
   }
@@ -110,7 +108,7 @@ public final class HasEffectCondition implements LivingCondition {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
       MobEffect effect = SerializationHelper.deserializeEffect(json);
-      int amplifier = !json.has("amplifier") ? 1 : json.get("amplifier").getAsInt();
+      int amplifier = !json.has("amplifier") ? 0 : json.get("amplifier").getAsInt();
       return new HasEffectCondition(effect, amplifier);
     }
 
@@ -120,13 +118,13 @@ public final class HasEffectCondition implements LivingCondition {
         throw new IllegalArgumentException();
       }
       SerializationHelper.serializeEffect(json, aCondition.effect);
-      json.addProperty("amplifier", 1);
+      json.addProperty("amplifier", aCondition.amplifier);
     }
 
     @Override
     public LivingCondition deserialize(CompoundTag tag) {
       MobEffect effect = SerializationHelper.deserializeEffect(tag);
-      int amplifier = !tag.contains("amplifier") ? 1 : tag.getInt("amplifier");
+      int amplifier = !tag.contains("amplifier") ? 0 : tag.getInt("amplifier");
       return new HasEffectCondition(effect, amplifier);
     }
 
