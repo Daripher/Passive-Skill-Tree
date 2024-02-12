@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 2.0,
           "attribute": "minecraft:generic.armor",
-          "id": "58561a68-2fa0-42a5-8dab-46e746bb29b2",
+          "id": "95e77bfa-391b-4026-a122-c4ed63606adc",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/shields"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     }
   ],

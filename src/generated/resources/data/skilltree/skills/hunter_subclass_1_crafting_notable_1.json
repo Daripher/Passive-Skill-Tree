@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "skilltree:stealth",
-          "id": "2d3b9170-09bd-4eba-82ed-7ece1be7ff73",
+          "id": "441fe3bb-8d21-4290-b63e-68e8525faf7a",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     }
   ],

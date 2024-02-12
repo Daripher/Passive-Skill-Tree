@@ -4,8 +4,8 @@
     {
       "type": "skilltree:repair_efficiency",
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:equipment"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "any"
       },
       "multiplier": 0.05
     }

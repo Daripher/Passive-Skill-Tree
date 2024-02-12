@@ -5,14 +5,14 @@
       "type": "skilltree:attribute",
       "amount": 0.5,
       "attribute": "skilltree:life_per_hit",
-      "id": "70e9e6d2-9069-4dd3-88ea-fbb953570f88",
+      "id": "39dbf852-2728-43a1-a9e1-08eaa2c8688f",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:weapons/ranged"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "ranged_weapon"
         }
       },
       "player_multiplier": {

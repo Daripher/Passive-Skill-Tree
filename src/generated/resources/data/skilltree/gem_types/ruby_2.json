@@ -6,10 +6,32 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
+            "type": "skilltree:incoming_healing",
+            "multiplier": 0.03,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.15000000223517418,
-            "attribute": "skilltree:life_per_hit",
-            "id": "3dfa99eb-aa7a-4f66-882b-46c7d9b0a6cc",
+            "amount": 0.029999999329447746,
+            "attribute": "skilltree:regeneration",
+            "id": "2ad4636f-a142-46e6-a3f8-d46515468d7b",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -22,8 +44,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:weapons"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     },
     {
@@ -35,7 +57,7 @@
             "type": "skilltree:attribute",
             "amount": 0.15000000223517418,
             "attribute": "skilltree:life_on_block",
-            "id": "1b596215-f8bb-46c0-87ef-c97f069f2f2f",
+            "id": "387471f2-136f-45ef-950c-779405c2e03c",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -48,8 +70,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/shields"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     },
     {
@@ -82,34 +104,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
-            "attribute": "skilltree:regeneration",
-            "id": "36d6d7d4-6f52-4504-aaf6-9b864464cd62",
-            "name": "Ruby",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.029999999329447746,
             "attribute": "minecraft:generic.max_health",
-            "id": "dd6e2aec-7469-468b-bcea-e2121bd2afe5",
+            "id": "391f9bf9-1d2d-4c06-90b8-8ee74a7acc5c",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -122,8 +118,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/helmets"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
       }
     },
     {
@@ -132,8 +128,12 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:incoming_healing",
-            "multiplier": 0.03,
+            "type": "skilltree:attribute",
+            "amount": 0.15000000223517418,
+            "attribute": "skilltree:life_per_hit",
+            "id": "0d2fc05d-0031-4640-a85d-799739c29b82",
+            "name": "Ruby",
+            "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -144,8 +144,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/chestplates"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "weapon"
       }
     }
   ],

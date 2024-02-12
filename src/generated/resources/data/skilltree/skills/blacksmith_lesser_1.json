@@ -9,8 +9,8 @@
         "operation": 1
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:equipment"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "any"
       }
     }
   ],

@@ -6,27 +6,50 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:damage",
-            "amount": 0.03,
-            "damage_condition": {
-              "type": "skilltree:none"
-            },
-            "operation": 1,
+            "type": "skilltree:attribute",
+            "amount": 0.30000000447034836,
+            "attribute": "minecraft:generic.armor_toughness",
+            "id": "30023bd9-965b-493d-8f20-3776a9e0beb8",
+            "name": "Sapphire",
+            "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "target_condition": {
               "type": "skilltree:none"
             }
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:weapons"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.029999999329447746,
+            "attribute": "minecraft:generic.knockback_resistance",
+            "id": "c5fc9039-aa67-4778-a72e-11787dedea72",
+            "name": "Sapphire",
+            "operation": 0,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     },
     {
@@ -39,8 +62,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/shields"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     },
     {
@@ -52,7 +75,7 @@
             "type": "skilltree:attribute",
             "amount": 0.014999999664723873,
             "attribute": "skilltree:blocking",
-            "id": "7ec60d4d-a349-44e8-81f6-2d2412f7fc16",
+            "id": "5f67def0-9b01-4833-9503-a150dd8780eb",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -77,34 +100,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
-            "attribute": "minecraft:generic.knockback_resistance",
-            "id": "413ffa46-87d7-469d-906e-e930fba6c6ce",
-            "name": "Sapphire",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.029999999329447746,
             "attribute": "minecraft:generic.armor",
-            "id": "2f7d24e4-f14b-43ea-b0be-8adb06a4f213",
+            "id": "54b970e2-6e03-4962-b434-8df2d18d1f9c",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -117,8 +114,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/helmets"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
       }
     },
     {
@@ -127,24 +124,27 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.30000000447034836,
-            "attribute": "minecraft:generic.armor_toughness",
-            "id": "cc1156c2-d058-4546-83b0-bacd90bfd8e0",
-            "name": "Sapphire",
-            "operation": 0,
+            "type": "skilltree:damage",
+            "amount": 0.03,
+            "damage_condition": {
+              "type": "skilltree:none"
+            },
+            "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
+              "type": "skilltree:none"
+            },
+            "target_condition": {
               "type": "skilltree:none"
             }
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/chestplates"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "weapon"
       }
     }
   ],

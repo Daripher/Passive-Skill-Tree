@@ -2,8 +2,8 @@ package daripher.skilltree.recipe;
 
 import com.google.gson.JsonObject;
 import daripher.skilltree.init.PSTRecipeSerializers;
-import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.item.ItemHelper;
+import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -28,7 +28,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
       ItemStack stackInSlot = container.getItem(slot);
       if (stackInSlot.isEmpty()) continue;
-      if (stackInSlot.is(PSTTags.MELEE_WEAPONS)) {
+      if (EquipmentCondition.isMeleeWeapon(stackInSlot)) {
         weaponsCount++;
         continue;
       }
@@ -45,7 +45,7 @@ public class WeaponPoisoningRecipe extends CustomRecipe implements SkillRequirin
     for (int slot = 0; slot < container.getContainerSize(); slot++) {
       ItemStack stackInSlot = container.getItem(slot);
       if (stackInSlot.isEmpty()) continue;
-      if (stackInSlot.is(PSTTags.MELEE_WEAPONS)) weaponStack = stackInSlot;
+      if (EquipmentCondition.isMeleeWeapon(stackInSlot)) weaponStack = stackInSlot;
       if (isPoison(stackInSlot)) poisonStack = stackInSlot;
     }
     ItemStack result = weaponStack.copy();

@@ -7,8 +7,8 @@
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:tools/pickaxes"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "pickaxe"
         }
       }
     }

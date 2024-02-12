@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 1.0,
           "attribute": "minecraft:generic.attack_damage",
-          "id": "055f91fe-7e28-4c87-8280-0f2e0ec23204",
+          "id": "69c7829b-d360-46da-b374-ebbe0cf82023",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {
@@ -21,8 +21,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:weapons/melee"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "melee_weapon"
       }
     }
   ],

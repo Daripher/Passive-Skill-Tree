@@ -23,8 +23,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/axes"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "axe"
       }
     }
   ],

@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.2,
       "attribute": "skilltree:exp_per_minute",
-      "id": "277c93f2-d5a1-41f8-aff9-0adda8c59e95",
+      "id": "6dfaf6a5-8453-4c9a-b798-0aa8bc625e16",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

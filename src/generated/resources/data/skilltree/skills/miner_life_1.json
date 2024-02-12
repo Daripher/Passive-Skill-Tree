@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "a91a449f-9aea-45a1-907f-8d236e2f54be",
+      "id": "cc86c6e7-8b04-405c-bd51-70a26be233aa",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -14,8 +14,8 @@
       "player_multiplier": {
         "type": "skilltree:gems_amount",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:armors/helmets"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "helmet"
         }
       }
     }

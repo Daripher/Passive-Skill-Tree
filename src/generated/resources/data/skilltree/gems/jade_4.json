@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "5a083bba-27e2-407f-a4e5-8dd78f002d13",
+            "id": "f3c032e9-6c2c-4b6e-aea0-a51e7a2133e2",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "crossbow",
-          "bow",
           "sword",
           "heavy_weapon",
-          "trident"
+          "trident",
+          "crossbow",
+          "bow"
         ]
       }
     },
@@ -41,7 +41,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:evasion",
-            "id": "30f9e765-f931-4cfe-aa8f-cba99e5c7fac",
+            "id": "bb642d82-a425-482e-a268-54c875b2715f",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -88,7 +88,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "6a4bfa78-09bf-4ae4-b76e-6ff77803ea8f",
+            "id": "9e1b7166-7e1e-49ea-aa28-65b13b76ddd6",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -116,7 +116,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:blocking",
-            "id": "b87fe75b-f2ac-4dc1-a133-e406813b5f38",
+            "id": "66e0fe74-220b-4ad6-b204-cea009cfd2a5",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -144,7 +144,7 @@
             "type": "skilltree:attribute",
             "amount": 0.024999999441206455,
             "attribute": "skilltree:evasion",
-            "id": "58c4ddd1-7dcb-443a-a346-00200758dc4d",
+            "id": "294db5c7-4513-46f1-ab62-ba121f9855d6",
             "name": "Jade",
             "operation": 1,
             "player_condition": {

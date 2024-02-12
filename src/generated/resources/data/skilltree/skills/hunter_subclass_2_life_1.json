@@ -5,14 +5,14 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "03cb4cf0-9243-41a5-a436-08c172c7f89a",
+      "id": "2827d75d-352f-4bdd-b204-92e7250c18bc",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
         "type": "skilltree:has_item_in_hand",
         "item_condition": {
-          "type": "skilltree:tag",
-          "tag_id": "forge:weapons/ranged"
+          "type": "skilltree:equipment_type",
+          "equipment_type": "ranged_weapon"
         }
       },
       "player_multiplier": {

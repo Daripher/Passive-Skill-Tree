@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "a01a4225-d347-4930-9a30-fe5fbcb76cae",
+            "id": "83a4dacc-21f5-4478-b462-1cc38330084b",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "crossbow",
-          "bow",
           "sword",
           "heavy_weapon",
-          "trident"
+          "trident",
+          "crossbow",
+          "bow"
         ]
       }
     },
@@ -41,7 +41,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "skilltree:evasion",
-            "id": "a1e58fa1-fdcb-40b8-a46e-79b20416f8b1",
+            "id": "77d756df-7f9f-403a-aa4b-4e5d20de4882",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -88,7 +88,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "cca5e4dc-5de8-48c1-86e5-6729c414c6b9",
+            "id": "1031e00c-1521-42a7-b699-bef7f6c21659",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -116,7 +116,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "skilltree:blocking",
-            "id": "f6a79ce7-b76a-474f-bc3b-7f43b4fd630a",
+            "id": "7b03f50c-1322-428c-b304-604f5cd981bd",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -144,7 +144,7 @@
             "type": "skilltree:attribute",
             "amount": 0.02,
             "attribute": "skilltree:evasion",
-            "id": "b6f1864b-fabf-4723-b05f-2501de005984",
+            "id": "29f53bb5-56ce-4d95-b0e7-b330f214c757",
             "name": "Jade",
             "operation": 1,
             "player_condition": {

@@ -6,26 +6,43 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:crit_chance",
-            "chance": 0.099999994,
-            "damage_condition": {
-              "type": "skilltree:none"
-            },
+            "type": "skilltree:attribute",
+            "amount": 1.0000000149011612,
+            "attribute": "minecraft:generic.luck",
+            "id": "5bcafce8-e172-4cb9-a05d-1e3d695496c2",
+            "name": "Citrine",
+            "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "target_condition": {
               "type": "skilltree:none"
             }
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:weapons"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:jump_height",
+            "multiplier": 0.099999994,
+            "player_condition": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     },
     {
@@ -37,7 +54,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.luck",
-            "id": "40adc3ed-b3c3-434a-b449-ebe895653c8c",
+            "id": "6b0e6b1a-5f0a-4fbb-8099-b9aeb3e42556",
             "name": "Citrine",
             "operation": 1,
             "player_condition": {
@@ -50,8 +67,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/shields"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     },
     {
@@ -78,25 +95,6 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:jump_height",
-            "multiplier": 0.099999994,
-            "player_condition": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
             "type": "skilltree:loot_duplication",
             "chance": 0.099999994,
             "loot_type": "gems",
@@ -105,8 +103,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/helmets"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
       }
     },
     {
@@ -115,24 +113,26 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 1.0000000149011612,
-            "attribute": "minecraft:generic.luck",
-            "id": "536d1928-3396-481d-9ea5-23b8ce1ed8e0",
-            "name": "Citrine",
-            "operation": 0,
+            "type": "skilltree:crit_chance",
+            "chance": 0.099999994,
+            "damage_condition": {
+              "type": "skilltree:none"
+            },
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
+              "type": "skilltree:none"
+            },
+            "target_condition": {
               "type": "skilltree:none"
             }
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/chestplates"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "weapon"
       }
     }
   ],

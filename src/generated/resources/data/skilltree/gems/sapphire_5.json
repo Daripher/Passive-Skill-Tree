@@ -7,7 +7,7 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:damage",
-            "chance": 0.099999994,
+            "amount": 0.099999994,
             "damage_condition": {
               "type": "skilltree:none"
             },
@@ -27,11 +27,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "crossbow",
-          "bow",
           "sword",
           "heavy_weapon",
-          "trident"
+          "trident",
+          "crossbow",
+          "bow"
         ]
       }
     },
@@ -44,7 +44,7 @@
             "type": "skilltree:attribute",
             "amount": 1.0000000149011612,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "70e59b08-3132-4b2e-83c2-cf44bbe8a5d4",
+            "id": "ec89efb3-9ed3-4269-a3fa-c08e9fc033e1",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -72,7 +72,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.armor",
-            "id": "94f38ea2-892e-4bb1-8d5f-72390ab1a3fe",
+            "id": "849514fd-b319-4702-a991-63e50ec54dd4",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -100,7 +100,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.knockback_resistance",
-            "id": "7fe4ba2d-fc1a-451d-8832-e4a786faa0cd",
+            "id": "ac4c9ad5-8bd1-4c3e-b004-626fdb50ec5d",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
@@ -144,7 +144,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:blocking",
-            "id": "d4dba1d9-8221-4cdd-bc0b-5fe3a2f2a6a3",
+            "id": "be64942c-43a9-4bb5-aa72-2740dc80a06e",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {

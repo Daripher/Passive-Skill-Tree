@@ -8,8 +8,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
-            "attribute": "minecraft:generic.attack_speed",
-            "id": "eb12ce14-8d57-4218-acc2-99d1cf4efaf5",
+            "attribute": "skilltree:evasion",
+            "id": "a42caa82-74cc-4376-8e43-3379db8091c7",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -22,8 +22,34 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:weapons"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.029999999329447746,
+            "attribute": "minecraft:generic.movement_speed",
+            "id": "64a0bce6-0f4b-47e5-b3d3-5c07bc6ba3c0",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     },
     {
@@ -35,7 +61,7 @@
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
             "attribute": "skilltree:blocking",
-            "id": "e3896200-20be-4c6f-83b9-6964c91d1876",
+            "id": "c0dd928e-9208-4538-93e1-5f72773af067",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -48,8 +74,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:tools/shields"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     },
     {
@@ -61,7 +87,7 @@
             "type": "skilltree:attribute",
             "amount": 0.014999999664723873,
             "attribute": "skilltree:evasion",
-            "id": "528e34fd-967d-41ee-9709-a6433af2909a",
+            "id": "700e67a2-2836-42f3-8d62-4f9fa5db73a2",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -84,32 +110,6 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.029999999329447746,
-            "attribute": "minecraft:generic.movement_speed",
-            "id": "df9e2f3f-b199-42d8-98fe-9019a46253de",
-            "name": "Jade",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
             "type": "skilltree:gained_experience",
             "experience_source": "mobs",
             "multiplier": 0.075
@@ -117,8 +117,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/helmets"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
       }
     },
     {
@@ -129,8 +129,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.029999999329447746,
-            "attribute": "skilltree:evasion",
-            "id": "101e378d-0d1e-4ea4-88c4-a00bcab075d8",
+            "attribute": "minecraft:generic.attack_speed",
+            "id": "9c8f9c61-c9da-4de4-b56f-f66e26226147",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -143,8 +143,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:armors/chestplates"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "weapon"
       }
     }
   ],

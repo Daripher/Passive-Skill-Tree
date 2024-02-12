@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 10.0,
       "attribute": "skilltree:blocking",
-      "id": "e2cb6ce7-e461-4f27-ad44-efccd1f682a4",
+      "id": "a6361b48-ebaf-4062-a064-730173e1776f",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -13,8 +13,8 @@
         "item_condition": {
           "type": "skilltree:enchanted",
           "item_condition": {
-            "type": "skilltree:tag",
-            "tag_id": "forge:tools/shields"
+            "type": "skilltree:equipment_type",
+            "equipment_type": "shield"
           }
         }
       },
