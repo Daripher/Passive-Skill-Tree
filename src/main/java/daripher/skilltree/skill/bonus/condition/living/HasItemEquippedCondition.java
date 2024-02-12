@@ -128,7 +128,7 @@ public final class HasItemEquippedCondition implements LivingCondition {
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new HasItemEquippedCondition(new NoneItemCondition());
+      return new HasItemEquippedCondition(NoneItemCondition.INSTANCE);
     }
   }
 }

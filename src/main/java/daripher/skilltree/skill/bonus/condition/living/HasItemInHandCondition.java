@@ -128,7 +128,7 @@ public final class HasItemInHandCondition implements LivingCondition {
 
     @Override
     public LivingCondition createDefaultInstance() {
-      return new HasItemInHandCondition(new NoneItemCondition());
+      return new HasItemInHandCondition(NoneItemCondition.INSTANCE);
     }
   }
 }
