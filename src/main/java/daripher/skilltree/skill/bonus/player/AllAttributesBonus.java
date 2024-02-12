@@ -12,7 +12,7 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -38,7 +38,7 @@ public final class AllAttributesBonus
     implements SkillBonus<AllAttributesBonus>, SkillBonus.Ticking {
   private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
   private AttributeModifier modifier;
-  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
+  private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public AllAttributesBonus(AttributeModifier modifier) {
@@ -48,7 +48,7 @@ public final class AllAttributesBonus
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (playerCondition != NoneLivingCondition.INSTANCE
-        || playerMultiplier != NoneMultiplier.INSTANCE) {
+        || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
       return;
     }
     getAffectedAttributes().stream()
@@ -70,7 +70,7 @@ public final class AllAttributesBonus
   @Override
   public void tick(ServerPlayer player) {
     if (playerCondition == NoneLivingCondition.INSTANCE
-        && playerMultiplier == NoneMultiplier.INSTANCE) {
+        && playerMultiplier == NoneLivingMultiplier.INSTANCE) {
       return;
     }
     if (playerCondition != NoneLivingCondition.INSTANCE) {
@@ -79,7 +79,7 @@ public final class AllAttributesBonus
         return;
       }
     }
-    if (playerMultiplier != NoneMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
+    if (playerMultiplier != NoneLivingMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
       onSkillRemoved(player);
       return;
     }

@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
-public enum NoneMultiplier implements LivingMultiplier {
+public enum NoneLivingMultiplier implements LivingMultiplier {
   INSTANCE;
 
   @Override
@@ -34,7 +34,7 @@ public enum NoneMultiplier implements LivingMultiplier {
 
     @Override
     public void serialize(JsonObject json, LivingMultiplier multiplier) {
-      if (multiplier != NoneMultiplier.INSTANCE) {
+      if (multiplier != NoneLivingMultiplier.INSTANCE) {
         throw new IllegalArgumentException();
       }
     }
@@ -46,7 +46,7 @@ public enum NoneMultiplier implements LivingMultiplier {
 
     @Override
     public CompoundTag serialize(LivingMultiplier multiplier) {
-      if (multiplier != NoneMultiplier.INSTANCE) {
+      if (multiplier != NoneLivingMultiplier.INSTANCE) {
         throw new IllegalArgumentException();
       }
       return new CompoundTag();
@@ -59,7 +59,7 @@ public enum NoneMultiplier implements LivingMultiplier {
 
     @Override
     public void serialize(FriendlyByteBuf buf, LivingMultiplier multiplier) {
-      if (multiplier != NoneMultiplier.INSTANCE) {
+      if (multiplier != NoneLivingMultiplier.INSTANCE) {
         throw new IllegalArgumentException();
       }
     }

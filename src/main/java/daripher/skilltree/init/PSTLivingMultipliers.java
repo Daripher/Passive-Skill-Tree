@@ -16,7 +16,7 @@ public class PSTLivingMultipliers {
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
   public static final RegistryObject<LivingMultiplier.Serializer> NONE =
-      REGISTRY.register("none", NoneMultiplier.Serializer::new);
+      REGISTRY.register("none", NoneLivingMultiplier.Serializer::new);
   public static final RegistryObject<LivingMultiplier.Serializer> EFFECT_AMOUNT =
       REGISTRY.register("effect_amount", EffectAmountMultiplier.Serializer::new);
   public static final RegistryObject<LivingMultiplier.Serializer> ATTRIBUTE_VALUE =

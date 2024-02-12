@@ -13,7 +13,7 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -35,7 +35,7 @@ import top.theillusivec4.curios.common.CuriosHelper;
 public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBonus.Ticking {
   private Attribute attribute;
   private AttributeModifier modifier;
-  private @Nonnull LivingMultiplier playerMultiplier = NoneMultiplier.INSTANCE;
+  private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
 
   public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
@@ -52,7 +52,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
     if (playerCondition != NoneLivingCondition.INSTANCE
-        || playerMultiplier != NoneMultiplier.INSTANCE) {
+        || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
       return;
     }
     if (attribute instanceof CuriosHelper.SlotAttributeWrapper wrapper) {
@@ -94,7 +94,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   @Override
   public void tick(ServerPlayer player) {
     if (playerCondition == NoneLivingCondition.INSTANCE
-        && playerMultiplier == NoneMultiplier.INSTANCE) {
+        && playerMultiplier == NoneLivingMultiplier.INSTANCE) {
       return;
     }
     if (playerCondition != NoneLivingCondition.INSTANCE) {
@@ -103,7 +103,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
         return;
       }
     }
-    if (playerMultiplier != NoneMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
+    if (playerMultiplier != NoneLivingMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
       onSkillRemoved(player);
       return;
     }
@@ -333,7 +333,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   }
 
   public boolean hasMultiplier() {
-    return playerMultiplier != NoneMultiplier.INSTANCE;
+    return playerMultiplier != NoneLivingMultiplier.INSTANCE;
   }
 
   public static class Serializer implements SkillBonus.Serializer {
