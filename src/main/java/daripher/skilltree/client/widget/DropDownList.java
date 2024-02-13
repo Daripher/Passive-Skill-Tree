@@ -89,14 +89,17 @@ public class DropDownList<T> extends AbstractButton {
       }
       int textX = x + 5;
       int textY = y + 3 + i * height;
-      if (!search.isEmpty() && line.toLowerCase().contains(search)) {
-        String split1 = line.substring(0, line.indexOf(search));
+      String lowerCase = line.toLowerCase();
+      if (!search.isEmpty() && lowerCase.contains(search)) {
+        String split1 = line.substring(0, lowerCase.indexOf(search));
         font.drawShadow(poseStack, split1, textX, textY, 0xe0e0e0);
         textX += font.width(split1);
-        font.drawShadow(poseStack, search, textX, textY, 0xFFD642);
-        textX += font.width(search);
-        String split2 = line.substring(line.indexOf(search) + search.length());
-        font.drawShadow(poseStack, split2, textX, textY, 0xe0e0e0);
+        String split2 =
+            line.substring(lowerCase.indexOf(search), lowerCase.indexOf(search) + search.length());
+        font.drawShadow(poseStack, split2, textX, textY, 0xFFD642);
+        textX += font.width(split2);
+        String split3 = line.substring(lowerCase.indexOf(search) + search.length());
+        font.drawShadow(poseStack, split3, textX, textY, 0xe0e0e0);
       } else {
         font.drawShadow(poseStack, line, textX, textY, 0xe0e0e0);
       }
