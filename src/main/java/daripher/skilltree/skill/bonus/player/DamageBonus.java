@@ -34,6 +34,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   private float amount;
   private AttributeModifier.Operation operation;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
+  private @Nonnull LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
@@ -64,6 +65,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   public DamageBonus copy() {
     DamageBonus bonus = new DamageBonus(amount, operation);
     bonus.playerMultiplier = this.playerMultiplier;
+    bonus.enemyMultiplier = this.enemyMultiplier;
     bonus.playerCondition = this.playerCondition;
     bonus.damageCondition = this.damageCondition;
     bonus.targetCondition = this.targetCondition;
@@ -80,6 +82,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof DamageBonus otherBonus)) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
+    if (!Objects.equals(otherBonus.enemyMultiplier, this.enemyMultiplier)) return false;
     if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
     if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) return false;
     if (!Objects.equals(otherBonus.targetCondition, this.targetCondition)) return false;
@@ -94,6 +97,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
     float mergedAmount = otherBonus.amount + this.amount;
     DamageBonus mergedBonus = new DamageBonus(mergedAmount, this.operation);
     mergedBonus.playerMultiplier = this.playerMultiplier;
+    mergedBonus.enemyMultiplier = this.enemyMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
     mergedBonus.damageCondition = this.damageCondition;
     mergedBonus.targetCondition = this.targetCondition;
@@ -104,7 +108,8 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   public MutableComponent getTooltip() {
     MutableComponent tooltip =
         TooltipHelper.getSkillBonusTooltip(damageCondition.getTooltip(), amount, operation);
-    tooltip = playerMultiplier.getTooltip(tooltip);
+    tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
+    tooltip = enemyMultiplier.getTooltip(tooltip, Target.ENEMY);
     tooltip = playerCondition.getTooltip(tooltip, "you");
     tooltip = targetCondition.getTooltip(tooltip, "target");
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
@@ -202,6 +207,24 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
           setPlayerMultiplier(m);
           consumer.accept(this.copy());
         });
+    editor.addLabel(0, 0, "Enemy Multiplier", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, enemyMultiplier, PSTLivingMultipliers.multiplierList())
+        .setToNameFunc(m -> Component.literal(PSTLivingMultipliers.getName(m)))
+        .setResponder(
+            m -> {
+              setEnemyMultiplier(m);
+              consumer.accept(this.copy());
+              editor.rebuildWidgets();
+            });
+    editor.shiftWidgets(0, 19);
+    enemyMultiplier.addEditorWidgets(
+        editor,
+        m -> {
+          setEnemyMultiplier(m);
+          consumer.accept(this.copy());
+        });
   }
 
   public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
@@ -224,6 +247,11 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
     return this;
   }
 
+  public SkillBonus<?> setEnemyMultiplier(LivingMultiplier multiplier) {
+    this.enemyMultiplier = multiplier;
+    return this;
+  }
+
   public void setAmount(float amount) {
     this.amount = amount;
   }
@@ -238,7 +266,10 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       float amount = json.get("amount").getAsFloat();
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(json);
       DamageBonus bonus = new DamageBonus(amount, operation);
-      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+      bonus.playerMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+      bonus.enemyMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(json, "enemy_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(json);
@@ -254,7 +285,10 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       }
       json.addProperty("amount", aBonus.amount);
       SerializationHelper.serializeOperation(json, aBonus.operation);
-      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          json, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          json, aBonus.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(json, aBonus.damageCondition);
@@ -267,7 +301,10 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       float amount = tag.getFloat("amount");
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(tag);
       DamageBonus bonus = new DamageBonus(amount, operation);
-      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+      bonus.playerMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+      bonus.enemyMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(tag, "enemy_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(tag);
@@ -284,7 +321,10 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       CompoundTag tag = new CompoundTag();
       tag.putFloat("amount", aBonus.amount);
       SerializationHelper.serializeOperation(tag, aBonus.operation);
-      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          tag, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          tag, aBonus.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(tag, aBonus.damageCondition);
       SerializationHelper.serializeLivingCondition(tag, aBonus.targetCondition, "target_condition");
@@ -297,6 +337,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       AttributeModifier.Operation operation = AttributeModifier.Operation.fromValue(buf.readInt());
       DamageBonus bonus = new DamageBonus(amount, operation);
       bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
+      bonus.enemyMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       bonus.damageCondition = NetworkHelper.readDamageCondition(buf);
       bonus.targetCondition = NetworkHelper.readLivingCondition(buf);
@@ -311,6 +352,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       buf.writeFloat(aBonus.amount);
       buf.writeInt(aBonus.operation.toValue());
       NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.enemyMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
       NetworkHelper.writeDamageCondition(buf, aBonus.damageCondition);
       NetworkHelper.writeLivingCondition(buf, aBonus.targetCondition);

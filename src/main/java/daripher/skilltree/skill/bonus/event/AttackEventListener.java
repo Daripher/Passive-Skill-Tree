@@ -58,8 +58,8 @@ public class AttackEventListener implements SkillEventListener {
         Component.translatable(getDescriptionId(), bonusTooltip, damageDescription);
     eventTooltip = playerCondition.getTooltip(eventTooltip, "you");
     eventTooltip = enemyCondition.getTooltip(eventTooltip, "target");
-    //    eventTooltip = playerMultiplier.getTooltip(eventTooltip, "you");
-    //    eventTooltip = enemyMultiplier.getTooltip(eventTooltip, "target");
+    eventTooltip = playerMultiplier.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
+    eventTooltip = enemyMultiplier.getTooltip(eventTooltip, SkillBonus.Target.ENEMY);
     return eventTooltip;
   }
 

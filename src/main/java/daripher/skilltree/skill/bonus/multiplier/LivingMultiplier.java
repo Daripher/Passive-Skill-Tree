@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.multiplier;
 
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,13 +14,15 @@ public interface LivingMultiplier {
 
   Serializer getSerializer();
 
-  default String getDescriptionId() {
+  default String getDescriptionId(SkillBonus.Target target) {
     ResourceLocation id = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(getSerializer());
     Objects.requireNonNull(id);
-    return "skill_bonus_multiplier.%s.%s".formatted(id.getNamespace(), id.getPath());
+    String targetDescription = target.name().toLowerCase();
+    return "skill_bonus_multiplier.%s.%s.%s"
+        .formatted(id.getNamespace(), id.getPath(), targetDescription);
   }
 
-  MutableComponent getTooltip(MutableComponent bonusTooltip);
+  MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target);
 
   default void addEditorWidgets(
       SkillTreeEditorScreen editor, Consumer<LivingMultiplier> consumer) {}

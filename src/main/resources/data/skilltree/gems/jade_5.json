@@ -17,6 +17,9 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
+              "type": "skilltree:none"
             }
           }
         }
@@ -48,6 +51,9 @@
               "type": "skilltree:none"
             },
             "player_multiplier": {
+              "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -96,6 +102,9 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
+              "type": "skilltree:none"
             }
           }
         }
@@ -124,6 +133,9 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
+              "type": "skilltree:none"
             }
           }
         }
@@ -151,6 +163,9 @@
               "type": "skilltree:none"
             },
             "player_multiplier": {
+              "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }

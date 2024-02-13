@@ -3,6 +3,7 @@ package daripher.skilltree.skill.bonus.multiplier;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTLivingMultipliers;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,7 +18,7 @@ public enum NoneLivingMultiplier implements LivingMultiplier {
   }
 
   @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
+  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
     return bonusTooltip;
   }
 

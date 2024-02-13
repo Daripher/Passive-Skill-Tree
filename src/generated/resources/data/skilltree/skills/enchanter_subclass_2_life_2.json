@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 2.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "19d931db-573a-479f-a7bd-21a90daec93e",
+      "id": "b1b56cb5-6797-410d-9a7b-668daf32b5a3",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {
@@ -19,7 +19,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "skilltree:exp_per_minute",
-      "id": "6cf97a10-c1a8-4037-9f37-eee8269a7aa0",
+      "id": "6c1e4dd5-b77e-4155-9487-3977b7419643",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

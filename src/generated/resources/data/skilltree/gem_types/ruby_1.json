@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.019999999552965164,
             "attribute": "minecraft:generic.max_health",
-            "id": "4e0bd120-5c17-43be-92ac-d1c99c96aaea",
+            "id": "93517207-3ae5-42a6-b574-f349cb11733b",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -54,10 +54,32 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
+            "type": "skilltree:incoming_healing",
+            "multiplier": 0.02,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.019999999552965164,
-            "attribute": "skilltree:regeneration",
-            "id": "0222e8f4-ece3-4bee-b4bf-399dcaca22ba",
+            "amount": 0.10000000149011612,
+            "attribute": "skilltree:life_per_hit",
+            "id": "db445f68-a359-435c-96ce-92fec23830bc",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -71,7 +93,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "boots"
+        "equipment_type": "weapon"
       }
     },
     {
@@ -83,7 +105,7 @@
             "type": "skilltree:attribute",
             "amount": 0.10000000149011612,
             "attribute": "skilltree:life_on_block",
-            "id": "b9a69057-aee3-40fa-ac90-4c44908535ec",
+            "id": "487f13cc-c473-4e78-bf79-93fb707eb0e2",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -107,9 +129,9 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.10000000149011612,
-            "attribute": "skilltree:life_per_hit",
-            "id": "deb41c41-77a1-464b-ab94-ef8fd52dc685",
+            "amount": 0.019999999552965164,
+            "attribute": "skilltree:regeneration",
+            "id": "0a2df662-b222-4550-a74a-fc1db60d7eb3",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -123,29 +145,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "weapon"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:incoming_healing",
-            "multiplier": 0.02,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "chestplate"
+        "equipment_type": "boots"
       }
     }
   ],

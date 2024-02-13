@@ -178,7 +178,7 @@ public final class AllAttributesBonus
     MutableComponent tooltip =
         TooltipHelper.getSkillBonusTooltip(
             getDescriptionId(), modifier.getAmount(), modifier.getOperation());
-    tooltip = playerMultiplier.getTooltip(tooltip);
+    tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     tooltip = playerCondition.getTooltip(tooltip, "you");
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }

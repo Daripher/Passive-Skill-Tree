@@ -7,6 +7,9 @@
       "damage_condition": {
         "type": "skilltree:none"
       },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
       "player_condition": {
         "type": "skilltree:none"
       },
@@ -19,8 +22,11 @@
     },
     {
       "type": "skilltree:crit_damage",
-      "chance": 0.15,
+      "amount": 0.15,
       "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
         "type": "skilltree:none"
       },
       "player_condition": {

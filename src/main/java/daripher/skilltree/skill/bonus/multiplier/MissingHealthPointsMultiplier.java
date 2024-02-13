@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTLivingMultipliers;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
@@ -27,13 +28,10 @@ public final class MissingHealthPointsMultiplier implements LivingMultiplier {
   }
 
   @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    if (divisor != 1) {
-      String divisorDescription = TooltipHelper.formatNumber(divisor);
-      return Component.translatable(
-          getDescriptionId() + ".divisor", bonusTooltip, divisorDescription);
-    }
-    return Component.translatable(getDescriptionId(), bonusTooltip);
+  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
+    String multiplierDescription = getDescriptionId(target);
+    String divisorDescription = TooltipHelper.formatNumber(divisor);
+    return Component.translatable(multiplierDescription, bonusTooltip, divisorDescription);
   }
 
   @Override

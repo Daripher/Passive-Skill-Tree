@@ -31,6 +31,9 @@
       "damage_condition": {
         "type": "skilltree:none"
       },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
       "operation": 1,
       "player_condition": {
         "type": "skilltree:none"
@@ -46,6 +49,9 @@
       "type": "skilltree:crit_chance",
       "chance": 0.1,
       "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
         "type": "skilltree:none"
       },
       "player_condition": {
