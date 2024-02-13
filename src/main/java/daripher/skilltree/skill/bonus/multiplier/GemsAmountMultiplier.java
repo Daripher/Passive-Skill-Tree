@@ -9,6 +9,7 @@ import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import java.util.Objects;
@@ -40,9 +41,9 @@ public final class GemsAmountMultiplier implements LivingMultiplier {
   }
 
   @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
+  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
     Component itemDescription = itemCondition.getTooltip("where");
-    return Component.translatable(getDescriptionId(), bonusTooltip, itemDescription);
+    return Component.translatable(getDescriptionId(target), bonusTooltip, itemDescription);
   }
 
   @Override

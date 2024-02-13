@@ -3,9 +3,12 @@
   "bonuses": [
     {
       "type": "skilltree:crit_damage",
-      "chance": 0.25,
+      "amount": 0.25,
       "damage_condition": {
         "type": "skilltree:projectile"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
       },
       "player_condition": {
         "type": "skilltree:none"

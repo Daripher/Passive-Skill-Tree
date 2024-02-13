@@ -459,24 +459,32 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "shovel.plural", "Shovels");
     add(PSTItemConditions.ENCHANTED.get(), "Enchanted %s");
     // skill multipliers
-    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s for each effect on you");
-    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s per %s point");
-    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "divisor", "%s per %s %s points");
-    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s for each enchantment on your %s");
-    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s for each enchantment level on your %s");
-    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s for each Gem in your %s");
-    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s for each Hunger point");
-    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s for each Block between You and Target");
-    add(PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(), "%s per missing health point");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "player", "%s per effect on you");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "enemy", "%s per effect on enemies");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "player", "%s per %s %s");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "enemy", "%s per %s enemy's %s");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "player", "%s per enchantment on %s");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "enemy", "%s per enchantment on enemy's %s");
+    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "player", "%s per enchantment level on %s");
+    add(
+        PSTLivingMultipliers.ENCHANTS_LEVELS.get(),
+        "enemy",
+        "%s per enchantment level on enemy's %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "player", "%s per Gem in %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "enemy", "%s per Gem in enemy's %s");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "player", "%s per Hunger point");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "enemy", "%s per enemy's Hunger point");
+    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "player", "%s per block to enemy");
+    add(PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(), "player", "%s per %s missing health");
     add(
         PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
-        "divisor",
-        "%s per %s missing health points");
-    add(PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(), "%s per missing health percent");
+        "enemy",
+        "%s per %s enemy's missing health");
+    add(PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(), "player", "%s per %s missing health");
     add(
         PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
-        "divisor",
-        "%s per %s missing health");
+        "enemy",
+        "%s per %s enemy's missing health");
     // recipes
     add("recipe.skilltree.weapon_poisoning", "Weapon Poisoning");
     add(

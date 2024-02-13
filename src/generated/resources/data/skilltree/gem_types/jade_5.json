@@ -26,7 +26,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:evasion",
-            "id": "5b03bd48-d9fc-4b8b-9cde-90c96b38028f",
+            "id": "5f5446d0-1c59-479b-9adf-d87fedefdcec",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -51,8 +51,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
-            "attribute": "minecraft:generic.movement_speed",
-            "id": "448deb1d-7e41-4c1c-804a-44a764f42530",
+            "attribute": "skilltree:evasion",
+            "id": "e4994ff7-37e2-41bc-94c0-4281e403b824",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -66,33 +66,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.09999999776482582,
-            "attribute": "skilltree:blocking",
-            "id": "ab300fb8-ea9d-4a70-9449-a6ae2854a6fa",
-            "name": "Jade",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "shield"
+        "equipment_type": "chestplate"
       }
     },
     {
@@ -104,7 +78,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "195143bb-09be-475c-a318-81531cfc34a1",
+            "id": "4c53d65c-9513-49b9-a48a-1050660f3d68",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -129,8 +103,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
-            "attribute": "skilltree:evasion",
-            "id": "d6484d9b-fbf1-4a8f-951d-990f41af6083",
+            "attribute": "skilltree:blocking",
+            "id": "c8fae809-2699-4315-a13c-44bda62eb27c",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -144,7 +118,33 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "chestplate"
+        "equipment_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.09999999776482582,
+            "attribute": "minecraft:generic.movement_speed",
+            "id": "c3d901d2-d0d7-4437-bce3-5fe3c3dad5fb",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     }
   ],

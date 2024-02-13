@@ -7,6 +7,9 @@
       "damage_condition": {
         "type": "skilltree:projectile"
       },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
       "player_condition": {
         "type": "skilltree:none"
       },

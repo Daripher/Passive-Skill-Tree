@@ -32,8 +32,9 @@ import net.minecraft.world.entity.player.Player;
 public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
+  private @Nonnull LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingCondition enemyCondition = NoneLivingCondition.INSTANCE;
   private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
 
   public CritChanceBonus(float chance) {
@@ -43,7 +44,7 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   public float getChanceBonus(DamageSource source, Player attacker, LivingEntity target) {
     if (!damageCondition.met(source)) return 0f;
     if (!playerCondition.met(attacker)) return 0f;
-    if (!targetCondition.met(target)) return 0f;
+    if (!enemyCondition.met(target)) return 0f;
     return chance * playerMultiplier.getValue(attacker);
   }
 
@@ -56,9 +57,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   public CritChanceBonus copy() {
     CritChanceBonus bonus = new CritChanceBonus(chance);
     bonus.playerMultiplier = this.playerMultiplier;
+    bonus.enemyMultiplier = this.enemyMultiplier;
     bonus.playerCondition = this.playerCondition;
     bonus.damageCondition = this.damageCondition;
-    bonus.targetCondition = this.targetCondition;
+    bonus.enemyCondition = this.enemyCondition;
     return bonus;
   }
 
@@ -72,9 +74,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof CritChanceBonus otherBonus)) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
+    if (!Objects.equals(otherBonus.enemyMultiplier, this.enemyMultiplier)) return false;
     if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
     if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) return false;
-    return Objects.equals(otherBonus.targetCondition, this.targetCondition);
+    return Objects.equals(otherBonus.enemyCondition, this.enemyCondition);
   }
 
   @Override
@@ -84,9 +87,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
     }
     CritChanceBonus mergedBonus = new CritChanceBonus(otherBonus.chance + this.chance);
     mergedBonus.playerMultiplier = this.playerMultiplier;
+    mergedBonus.enemyMultiplier = this.enemyMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
     mergedBonus.damageCondition = this.damageCondition;
-    mergedBonus.targetCondition = this.targetCondition;
+    mergedBonus.enemyCondition = this.enemyCondition;
     return mergedBonus;
   }
 
@@ -95,9 +99,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
     MutableComponent tooltip =
         TooltipHelper.getSkillBonusTooltip(
             getDescriptionId(), chance, AttributeModifier.Operation.MULTIPLY_BASE);
-    tooltip = playerMultiplier.getTooltip(tooltip);
+    tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
+    tooltip = enemyMultiplier.getTooltip(tooltip, Target.ENEMY);
     tooltip = playerCondition.getTooltip(tooltip, "you");
-    tooltip = targetCondition.getTooltip(tooltip, "target");
+    tooltip = enemyCondition.getTooltip(tooltip, "target");
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
 
@@ -151,7 +156,7 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
     editor.addLabel(0, 0, "Target Condition", ChatFormatting.GOLD);
     editor.shiftWidgets(0, 19);
     editor
-        .addDropDownList(0, 0, 200, 14, 10, targetCondition, PSTLivingConditions.conditionsList())
+        .addDropDownList(0, 0, 200, 14, 10, enemyCondition, PSTLivingConditions.conditionsList())
         .setToNameFunc(c -> Component.literal(PSTLivingConditions.getName(c)))
         .setResponder(
             c -> {
@@ -160,7 +165,7 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
               editor.rebuildWidgets();
             });
     editor.shiftWidgets(0, 19);
-    targetCondition.addEditorWidgets(
+    enemyCondition.addEditorWidgets(
         editor,
         c -> {
           setTargetCondition(c);
@@ -184,6 +189,24 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
           setPlayerMultiplier(m);
           consumer.accept(this.copy());
         });
+    editor.addLabel(0, 0, "Enemy Multiplier", ChatFormatting.GOLD);
+    editor.shiftWidgets(0, 19);
+    editor
+        .addDropDownList(0, 0, 200, 14, 10, enemyMultiplier, PSTLivingMultipliers.multiplierList())
+        .setToNameFunc(m -> Component.literal(PSTLivingMultipliers.getName(m)))
+        .setResponder(
+            m -> {
+              setEnemyMultiplier(m);
+              consumer.accept(this.copy());
+              editor.rebuildWidgets();
+            });
+    editor.shiftWidgets(0, 19);
+    enemyMultiplier.addEditorWidgets(
+        editor,
+        m -> {
+          setEnemyMultiplier(m);
+          consumer.accept(this.copy());
+        });
   }
 
   public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
@@ -197,12 +220,17 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
   }
 
   public SkillBonus<?> setTargetCondition(LivingCondition condition) {
-    this.targetCondition = condition;
+    this.enemyCondition = condition;
     return this;
   }
 
   public SkillBonus<?> setPlayerMultiplier(LivingMultiplier multiplier) {
     this.playerMultiplier = multiplier;
+    return this;
+  }
+
+  public SkillBonus<?> setEnemyMultiplier(@Nonnull LivingMultiplier multiplier) {
+    this.enemyMultiplier = multiplier;
     return this;
   }
 
@@ -215,11 +243,14 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
     public CritChanceBonus deserialize(JsonObject json) throws JsonParseException {
       float amount = json.get("chance").getAsFloat();
       CritChanceBonus bonus = new CritChanceBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+      bonus.playerMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+      bonus.enemyMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(json, "enemy_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(json);
-      bonus.targetCondition =
+      bonus.enemyCondition =
           SerializationHelper.deserializeLivingCondition(json, "target_condition");
       return bonus;
     }
@@ -230,23 +261,28 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
         throw new IllegalArgumentException();
       }
       json.addProperty("chance", aBonus.chance);
-      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          json, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          json, aBonus.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(json, aBonus.damageCondition);
-      SerializationHelper.serializeLivingCondition(
-          json, aBonus.targetCondition, "target_condition");
+      SerializationHelper.serializeLivingCondition(json, aBonus.enemyCondition, "target_condition");
     }
 
     @Override
     public CritChanceBonus deserialize(CompoundTag tag) {
       float amount = tag.getFloat("chance");
       CritChanceBonus bonus = new CritChanceBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+      bonus.playerMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+      bonus.enemyMultiplier =
+          SerializationHelper.deserializeLivingMultiplier(tag, "enemy_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(tag);
-      bonus.targetCondition =
+      bonus.enemyCondition =
           SerializationHelper.deserializeLivingCondition(tag, "target_condition");
       return bonus;
     }
@@ -258,10 +294,13 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
       }
       CompoundTag tag = new CompoundTag();
       tag.putFloat("chance", aBonus.chance);
-      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          tag, aBonus.playerMultiplier, "player_multiplier");
+      SerializationHelper.serializeLivingMultiplier(
+          tag, aBonus.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(tag, aBonus.damageCondition);
-      SerializationHelper.serializeLivingCondition(tag, aBonus.targetCondition, "target_condition");
+      SerializationHelper.serializeLivingCondition(tag, aBonus.enemyCondition, "target_condition");
       return tag;
     }
 
@@ -270,9 +309,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
       float amount = buf.readFloat();
       CritChanceBonus bonus = new CritChanceBonus(amount);
       bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
+      bonus.enemyMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       bonus.damageCondition = NetworkHelper.readDamageCondition(buf);
-      bonus.targetCondition = NetworkHelper.readLivingCondition(buf);
+      bonus.enemyCondition = NetworkHelper.readLivingCondition(buf);
       return bonus;
     }
 
@@ -283,9 +323,10 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
       }
       buf.writeFloat(aBonus.chance);
       NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.enemyMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
       NetworkHelper.writeDamageCondition(buf, aBonus.damageCondition);
-      NetworkHelper.writeLivingCondition(buf, aBonus.targetCondition);
+      NetworkHelper.writeLivingCondition(buf, aBonus.enemyCondition);
     }
 
     @Override

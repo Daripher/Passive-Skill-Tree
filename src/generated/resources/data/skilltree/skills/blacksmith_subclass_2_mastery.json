@@ -29,7 +29,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05,
           "attribute": "minecraft:generic.attack_speed",
-          "id": "e54b3747-7e68-4a4c-8461-a9e93fa8db68",
+          "id": "6576b866-0f3b-4914-9e41-e8f26dd251b7",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -53,7 +53,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05000000074505806,
           "attribute": "minecraft:generic.armor_toughness",
-          "id": "5e09d20d-49d5-4303-a4fb-34948dc89f87",
+          "id": "0e603d65-0491-4fee-a5c2-b6a934edf280",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {
@@ -77,7 +77,7 @@
           "type": "skilltree:attribute",
           "amount": 5.0,
           "attribute": "minecraft:generic.armor",
-          "id": "32dae6bf-184c-4092-a041-7ad9ea58a8ce",
+          "id": "b47be620-d011-4c18-acc5-97b7079b014a",
           "name": "SkillBonus",
           "operation": 0,
           "player_condition": {

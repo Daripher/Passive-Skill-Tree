@@ -530,28 +530,44 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "shovel.plural", "Лопаты");
     add(PSTItemConditions.ENCHANTED.get(), "Зачарованн%s");
     // skill multipliers
-    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "%s за каждый эффект на вас");
-    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "%s за каждую единицу %s");
-    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "divisor", "%s за каждые %s %s");
-    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "%s за каждое зачарование на %s");
-    add(PSTLivingMultipliers.ENCHANTS_LEVELS.get(), "%s за каждый уровень зачарований на %s");
-    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "%s за каждый Самоцвет в %s");
-    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "%s за каждую единицу Голода");
-    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "%s за каждый Блок между Вами и Целью");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "player", "%s за каждый эффект");
+    add(PSTLivingMultipliers.EFFECT_AMOUNT.get(), "enemy", "%s за каждый эффект врага");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "player", "%s за каждые %s %s");
+    add(PSTLivingMultipliers.ATTRIBUTE_VALUE.get(), "enemy", "%s за каждые %s %s врага");
+    add(PSTLivingMultipliers.ENCHANTS_AMOUNT.get(), "player", "%s за каждое зачарование на %s");
+    add(
+        PSTLivingMultipliers.ENCHANTS_AMOUNT.get(),
+        "enemy",
+        "%s за каждое зачарование на %s врага");
+    add(
+        PSTLivingMultipliers.ENCHANTS_LEVELS.get(),
+        "player",
+        "%s за каждый уровень зачарований на %s");
+    add(
+        PSTLivingMultipliers.ENCHANTS_LEVELS.get(),
+        "enemy",
+        "%s за каждый уровень зачарований на %s врага");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "player", "%s за каждый Самоцвет в %s");
+    add(PSTLivingMultipliers.GEMS_AMOUNT.get(), "enemy", "%s за каждый Самоцвет в %s врага");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "player", "%s за каждую единицу Голода");
+    add(PSTLivingMultipliers.FOOD_LEVEL.get(), "enemy", "%s за каждую единицу Голода врага");
+    add(PSTLivingMultipliers.DISTANCE_TO_TARGET.get(), "player", "%s за каждый блок до врага");
     add(
         PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
-        "%s за каждую единицу недостающего здоровья");
+        "player",
+        "%s за каждые %s недостающего здоровья");
     add(
         PSTLivingMultipliers.MISSING_HEALTH_POINTS.get(),
-        "divisor",
+        "enemy",
+        "%s за каждые %s недостающего здоровья врага");
+    add(
+        PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
+        "player",
         "%s за каждые %s недостающего здоровья");
     add(
         PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
-        "%s за каждый процент недостающего здоровья");
-    add(
-        PSTLivingMultipliers.MISSING_HEALTH_PERCENTAGE.get(),
-        "divisor",
-        "%s за каждые %s недостающего здоровья");
+        "enemy",
+        "%s за каждые %s недостающего здоровья врага");
     // recipes
     add("recipe.skilltree.weapon_poisoning", "Отравление Оружия");
     add(

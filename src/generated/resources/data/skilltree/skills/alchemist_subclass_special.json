@@ -7,8 +7,11 @@
         "type": "skilltree:skill_bonus",
         "skill_bonus": {
           "type": "skilltree:crit_damage",
-          "chance": 0.1,
+          "amount": 0.1,
           "damage_condition": {
+            "type": "skilltree:none"
+          },
+          "enemy_multiplier": {
             "type": "skilltree:none"
           },
           "player_condition": {

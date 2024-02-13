@@ -7,6 +7,9 @@
       "damage_condition": {
         "type": "skilltree:melee"
       },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
       "operation": 1,
       "player_condition": {
         "type": "skilltree:none"
@@ -22,7 +25,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "skilltree:blocking",
-      "id": "b0c8e47f-4b41-4595-ba62-77eee2f5f281",
+      "id": "d0d63d6b-71b8-47d2-bbb1-e0fa71a60120",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

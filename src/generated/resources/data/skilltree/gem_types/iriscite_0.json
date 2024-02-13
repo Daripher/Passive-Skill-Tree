@@ -13,7 +13,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.009999999776482582,
                   "attribute": "minecraft:generic.max_health",
-                  "id": "f5bd24df-9b1c-4d90-99d4-a1f03af95707",
+                  "id": "457288a1-fd71-44b0-a9f6-1258fc8afbe9",
                   "name": "Ruby",
                   "operation": 1,
                   "player_condition": {
@@ -50,10 +50,28 @@
               "item_bonus": {
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
+                  "type": "skilltree:incoming_healing",
+                  "multiplier": 0.01,
+                  "player_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
-                  "attribute": "skilltree:regeneration",
-                  "id": "3c080580-da12-43b0-bd2d-d0aecaee6e1d",
+                  "amount": 0.05000000074505806,
+                  "attribute": "skilltree:life_per_hit",
+                  "id": "f8e6abf7-d8be-48c0-9a87-2fe95fb8a42d",
                   "name": "Ruby",
                   "operation": 0,
                   "player_condition": {
@@ -75,7 +93,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.05000000074505806,
                   "attribute": "skilltree:life_on_block",
-                  "id": "7d8c5a0d-b0fd-418c-b992-1d6b51ae73b8",
+                  "id": "0ff88dbe-7b01-4bb9-96ac-bae0e17673dd",
                   "name": "Ruby",
                   "operation": 0,
                   "player_condition": {
@@ -95,29 +113,11 @@
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.05000000074505806,
-                  "attribute": "skilltree:life_per_hit",
-                  "id": "a9a7b312-e03b-437e-a11f-39c9950159ba",
+                  "amount": 0.009999999776482582,
+                  "attribute": "skilltree:regeneration",
+                  "id": "f74f6201-8b57-4225-b440-27f37bc2754e",
                   "name": "Ruby",
                   "operation": 0,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "player_multiplier": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
-                  "type": "skilltree:incoming_healing",
-                  "multiplier": 0.01,
                   "player_condition": {
                     "type": "skilltree:none"
                   },
@@ -150,73 +150,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.004999999888241291,
                   "attribute": "skilltree:evasion",
-                  "id": "65dd7e06-593d-4c4d-96b1-b56622afb08e",
-                  "name": "Jade",
-                  "operation": 1,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "player_multiplier": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
-                  "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
-                  "attribute": "minecraft:generic.movement_speed",
-                  "id": "c2663f58-a020-44d1-88f3-295aef9dc2aa",
-                  "name": "Jade",
-                  "operation": 1,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "player_multiplier": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
-                  "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
-                  "attribute": "skilltree:blocking",
-                  "id": "a0f6540b-8aa3-46bd-8f96-cc14c14bfbf6",
-                  "name": "Jade",
-                  "operation": 1,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "player_multiplier": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
-                  "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
-                  "attribute": "minecraft:generic.attack_speed",
-                  "id": "9fe7416f-1484-4151-977a-34c9924d3fd5",
+                  "id": "b1d6a299-30f5-4dc9-adef-9901dadd79af",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -238,7 +172,73 @@
                   "type": "skilltree:attribute",
                   "amount": 0.009999999776482582,
                   "attribute": "skilltree:evasion",
-                  "id": "4882a12c-669a-42e7-9251-3b732a0eea1a",
+                  "id": "56a0668f-4199-4f81-b0d1-fd59c51a12b6",
+                  "name": "Jade",
+                  "operation": 1,
+                  "player_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
+                  "type": "skilltree:attribute",
+                  "amount": 0.009999999776482582,
+                  "attribute": "minecraft:generic.attack_speed",
+                  "id": "dcd4c388-4b6d-4730-bef7-cebfd2a7eed1",
+                  "name": "Jade",
+                  "operation": 1,
+                  "player_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
+                  "type": "skilltree:attribute",
+                  "amount": 0.009999999776482582,
+                  "attribute": "skilltree:blocking",
+                  "id": "4318e66d-ea87-4ee2-b5a9-ae0fc768fa0f",
+                  "name": "Jade",
+                  "operation": 1,
+                  "player_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
+                  "type": "skilltree:attribute",
+                  "amount": 0.009999999776482582,
+                  "attribute": "minecraft:generic.movement_speed",
+                  "id": "f7312267-9501-4fcd-aba0-9239ae64a623",
                   "name": "Jade",
                   "operation": 1,
                   "player_condition": {
@@ -260,7 +260,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.009999999776482582,
                   "attribute": "minecraft:generic.armor",
-                  "id": "d3aca792-eed4-4563-b1a0-e4d405640cb4",
+                  "id": "3c3326a1-0ba7-4e3b-ab03-a8016e2af560",
                   "name": "Sapphire",
                   "operation": 1,
                   "player_condition": {
@@ -282,7 +282,7 @@
                   "type": "skilltree:attribute",
                   "amount": 0.004999999888241291,
                   "attribute": "skilltree:blocking",
-                  "id": "1d0a16bc-876b-4ba1-b21c-59859c9a34ce",
+                  "id": "ef5c0078-652d-4a73-be84-c67338a51c1a",
                   "name": "Sapphire",
                   "operation": 1,
                   "player_condition": {
@@ -302,15 +302,43 @@
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
-                  "attribute": "minecraft:generic.knockback_resistance",
-                  "id": "0038a7e8-487a-48ea-b17e-d30731678da5",
+                  "amount": 0.10000000149011612,
+                  "attribute": "minecraft:generic.armor_toughness",
+                  "id": "36e42b31-3a10-4fd1-b1e7-bdfa57c47568",
                   "name": "Sapphire",
                   "operation": 0,
                   "player_condition": {
                     "type": "skilltree:none"
                   },
                   "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
+                  "type": "skilltree:damage",
+                  "amount": 0.01,
+                  "damage_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "enemy_multiplier": {
+                    "type": "skilltree:none"
+                  },
+                  "operation": 1,
+                  "player_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "player_multiplier": {
+                    "type": "skilltree:none"
+                  },
+                  "target_condition": {
                     "type": "skilltree:none"
                   }
                 }
@@ -333,35 +361,10 @@
               "item_bonus": {
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
-                  "type": "skilltree:damage",
-                  "amount": 0.01,
-                  "damage_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "operation": 1,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  },
-                  "player_multiplier": {
-                    "type": "skilltree:none"
-                  },
-                  "target_condition": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.10000000149011612,
-                  "attribute": "minecraft:generic.armor_toughness",
-                  "id": "b46a16ae-a1fa-4e2d-9367-9acb5a864706",
+                  "amount": 0.009999999776482582,
+                  "attribute": "minecraft:generic.knockback_resistance",
+                  "id": "cbc8fd1e-67a8-4a75-bdcd-3634acadf796",
                   "name": "Sapphire",
                   "operation": 0,
                   "player_condition": {
@@ -408,27 +411,12 @@
               "item_bonus": {
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
-                  "type": "skilltree:jump_height",
-                  "multiplier": 0.01,
-                  "player_condition": {
-                    "type": "skilltree:none"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "bonus_provider": {
-              "type": "skilltree:simple",
-              "item_bonus": {
-                "type": "skilltree:skill_bonus",
-                "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.009999999776482582,
+                  "amount": 0.10000000149011612,
                   "attribute": "minecraft:generic.luck",
-                  "id": "29ebfce3-be05-4b25-9678-4df71d6b0c7a",
+                  "id": "5a3fcca8-b1b0-4a57-bf20-1ef0c1674507",
                   "name": "Citrine",
-                  "operation": 1,
+                  "operation": 0,
                   "player_condition": {
                     "type": "skilltree:none"
                   },
@@ -448,6 +436,9 @@
                   "type": "skilltree:crit_chance",
                   "chance": 0.01,
                   "damage_condition": {
+                    "type": "skilltree:none"
+                  },
+                  "enemy_multiplier": {
                     "type": "skilltree:none"
                   },
                   "player_condition": {
@@ -470,15 +461,30 @@
                 "type": "skilltree:skill_bonus",
                 "skill_bonus": {
                   "type": "skilltree:attribute",
-                  "amount": 0.10000000149011612,
+                  "amount": 0.009999999776482582,
                   "attribute": "minecraft:generic.luck",
-                  "id": "357c203d-95e9-498c-bd90-3340ddf6430c",
+                  "id": "47564ad6-90e7-4469-9efb-912939cc4757",
                   "name": "Citrine",
-                  "operation": 0,
+                  "operation": 1,
                   "player_condition": {
                     "type": "skilltree:none"
                   },
                   "player_multiplier": {
+                    "type": "skilltree:none"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "bonus_provider": {
+              "type": "skilltree:simple",
+              "item_bonus": {
+                "type": "skilltree:skill_bonus",
+                "skill_bonus": {
+                  "type": "skilltree:jump_height",
+                  "multiplier": 0.01,
+                  "player_condition": {
                     "type": "skilltree:none"
                   }
                 }

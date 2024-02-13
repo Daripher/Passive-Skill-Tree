@@ -42,31 +42,12 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:jump_height",
-            "multiplier": 0.03,
-            "player_condition": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.029999999329447746,
+            "amount": 0.30000000447034836,
             "attribute": "minecraft:generic.luck",
-            "id": "669ff498-2805-4def-9c95-0a298ebf2d23",
+            "id": "c9667ad2-e128-4434-add2-8e8d3cff1927",
             "name": "Citrine",
-            "operation": 1,
+            "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -78,7 +59,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "shield"
+        "equipment_type": "chestplate"
       }
     },
     {
@@ -90,6 +71,9 @@
             "type": "skilltree:crit_chance",
             "chance": 0.03,
             "damage_condition": {
+              "type": "skilltree:none"
+            },
+            "enemy_multiplier": {
               "type": "skilltree:none"
             },
             "player_condition": {
@@ -116,11 +100,11 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.30000000447034836,
+            "amount": 0.029999999329447746,
             "attribute": "minecraft:generic.luck",
-            "id": "c42478e9-0849-4997-8b45-fb83bcd1e50f",
+            "id": "dd57d8d9-7c47-44c3-897f-2c18eb9c5b8e",
             "name": "Citrine",
-            "operation": 0,
+            "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -132,7 +116,26 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "chestplate"
+        "equipment_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:jump_height",
+            "multiplier": 0.03,
+            "player_condition": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "boots"
       }
     }
   ],

@@ -3,6 +3,7 @@ package daripher.skilltree.skill.bonus.multiplier;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTLivingMultipliers;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -18,8 +19,8 @@ public class HungerLevelMultiplier implements LivingMultiplier {
   }
 
   @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip) {
-    return Component.translatable(getDescriptionId(), bonusTooltip);
+  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
+    return Component.translatable(getDescriptionId(target), bonusTooltip);
   }
 
   @Override
