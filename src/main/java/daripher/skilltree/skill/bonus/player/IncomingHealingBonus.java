@@ -161,7 +161,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     public IncomingHealingBonus deserialize(JsonObject json) throws JsonParseException {
       float multiplier = json.get("multiplier").getAsFloat();
       IncomingHealingBonus bonus = new IncomingHealingBonus(multiplier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       return bonus;
@@ -173,7 +173,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
         throw new IllegalArgumentException();
       }
       json.addProperty("multiplier", aBonus.multiplier);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
     }
@@ -182,7 +182,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     public IncomingHealingBonus deserialize(CompoundTag tag) {
       float multiplier = tag.getFloat("multiplier");
       IncomingHealingBonus bonus = new IncomingHealingBonus(multiplier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       return bonus;
@@ -195,7 +195,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
       }
       CompoundTag tag = new CompoundTag();
       tag.putFloat("multiplier", aBonus.multiplier);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       return tag;
     }
@@ -203,7 +203,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     @Override
     public IncomingHealingBonus deserialize(FriendlyByteBuf buf) {
       IncomingHealingBonus bonus = new IncomingHealingBonus(buf.readFloat());
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       return bonus;
     }
@@ -214,7 +214,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.multiplier);
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
     }
 

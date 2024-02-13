@@ -215,7 +215,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
     public CritDamageBonus deserialize(JsonObject json) throws JsonParseException {
       float amount = json.get("chance").getAsFloat();
       CritDamageBonus bonus = new CritDamageBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(json);
@@ -230,7 +230,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
         throw new IllegalArgumentException();
       }
       json.addProperty("chance", aBonus.amount);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(json, aBonus.damageCondition);
@@ -242,7 +242,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
     public CritDamageBonus deserialize(CompoundTag tag) {
       float amount = tag.getFloat("Amount");
       CritDamageBonus bonus = new CritDamageBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(tag);
@@ -258,7 +258,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
       }
       CompoundTag tag = new CompoundTag();
       tag.putFloat("Amount", aBonus.amount);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(tag, aBonus.damageCondition);
       SerializationHelper.serializeLivingCondition(tag, aBonus.targetCondition, "target_condition");
@@ -269,7 +269,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
     public CritDamageBonus deserialize(FriendlyByteBuf buf) {
       float amount = buf.readFloat();
       CritDamageBonus bonus = new CritDamageBonus(amount);
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       bonus.damageCondition = NetworkHelper.readDamageCondition(buf);
       bonus.targetCondition = NetworkHelper.readLivingCondition(buf);
@@ -282,7 +282,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.amount);
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
       NetworkHelper.writeDamageCondition(buf, aBonus.damageCondition);
       NetworkHelper.writeLivingCondition(buf, aBonus.targetCondition);

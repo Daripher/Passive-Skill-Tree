@@ -294,11 +294,17 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Получаемое лечение");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Шанс получить +%s%% %s");
     add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Опыт %s");
-    add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Шанс наложить Поджог на %s");
+    add(PSTSkillBonuses.IGNITE.get(), "player", "Вы загораетесь на %s");
+    add(PSTSkillBonuses.IGNITE.get(), "player.chance", "Шанс загореться на %s");
+    add(PSTSkillBonuses.IGNITE.get(), "enemy", "Вы поджигаете врагов на %s");
+    add(PSTSkillBonuses.IGNITE.get(), "enemy.chance", "Шанс поджечь врагов на %s");
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Шанс вернуть стрелы");
     add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Удержание здоровья");
     add(PSTSkillBonuses.ALL_ATTRIBUTES.get(), "Все характеристики");
-    add(PSTSkillBonuses.EFFECT_ON_ATTACK.get(), "Шанс наложить %s на %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "player", "Вы получаете %s на %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "player.chance", "Шанс получить %s на %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy", "Вы накладываете %s на %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy.chance", "Шанс наложить %s на %s");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Нельзя использовать %s");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
@@ -367,8 +373,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "Вас");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Цели");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s если у %s в руке %s");
+    // event listeners
+    add(PSTEventListeners.ATTACK.get(), "%s когда вы наносите %s");
     // damage conditions
-    add(PSTDamageConditions.IS_PROJECTILE.get(), "Урон снарядов");
+    add(PSTDamageConditions.IS_PROJECTILE.get(), "Урон снарядами");
     add(PSTDamageConditions.IS_MELEE.get(), "Урон в ближнем бою");
     add(PSTDamageConditions.NONE.get(), "Урон");
     // enchantment conditions
