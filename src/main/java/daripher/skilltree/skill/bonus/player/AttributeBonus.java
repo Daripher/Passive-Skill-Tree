@@ -342,7 +342,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       Attribute attribute = SerializationHelper.deserializeAttribute(json);
       AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(json);
       AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       return bonus;
@@ -355,7 +355,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       }
       SerializationHelper.serializeAttribute(json, aBonus.attribute);
       SerializationHelper.serializeAttributeModifier(json, aBonus.modifier);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
     }
@@ -365,7 +365,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       Attribute attribute = SerializationHelper.deserializeAttribute(tag);
       AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(tag);
       AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       return bonus;
@@ -379,7 +379,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       CompoundTag tag = new CompoundTag();
       SerializationHelper.serializeAttribute(tag, aBonus.attribute);
       SerializationHelper.serializeAttributeModifier(tag, aBonus.modifier);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       return tag;
     }
@@ -389,7 +389,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       Attribute attribute = NetworkHelper.readAttribute(buf);
       AttributeModifier modifier = NetworkHelper.readAttributeModifier(buf);
       AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       return bonus;
     }
@@ -401,7 +401,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
       }
       NetworkHelper.writeAttribute(buf, aBonus.attribute);
       NetworkHelper.writeAttributeModifier(buf, aBonus.modifier);
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
     }
 

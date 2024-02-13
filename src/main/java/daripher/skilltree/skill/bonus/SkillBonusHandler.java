@@ -11,6 +11,7 @@ import daripher.skilltree.item.ItemBonusProvider;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.skill.PassiveSkill;
+import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.item.FoodHealingBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -358,46 +359,34 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyChanceToIgnite(LivingHurtEvent event) {
-    if (!(event.getSource().getEntity() instanceof Player player)) return;
-    LivingEntity target = event.getEntity();
-    Map<Integer, Float> chances = new HashMap<>();
-    getSkillBonuses(player, IgniteChanceBonus.class)
-        .forEach(b -> chances.merge(b.getDuration(), b.getChance(player, target), Float::sum));
-    int duration = 0;
-    for (Map.Entry<Integer, Float> entry : chances.entrySet()) {
-      Integer d = entry.getKey();
-      Float c = entry.getValue();
-      while (c > 1) {
-        duration += d;
-        c--;
-      }
-      if (player.getRandom().nextFloat() < c) {
-        duration += d;
+  public static void applyChanceToApplyEffect(LivingHurtEvent event) {
+    if (event.getSource().getEntity() instanceof Player player) {
+      List<SkillBonus.EventListener> skillBonuses =
+          getSkillBonuses(player, SkillBonus.EventListener.class);
+      for (SkillBonus.EventListener bonus : mergeSkillBonuses(skillBonuses)) {
+        if (!(bonus.getEventListener() instanceof AttackEventListener listener)) continue;
+        SkillBonus<?> skillBonus = ((SkillBonus<?>) bonus).copy();
+        bonus = (SkillBonus.EventListener) skillBonus;
+        listener.onAttack(
+            player, event.getEntity(), event.getSource(), skillBonus::multiply, bonus);
       }
     }
-    if (duration == 0) return;
-    target.setSecondsOnFire(duration);
   }
 
-  @SubscribeEvent
-  public static void applyChanceToApplyEffect(LivingHurtEvent event) {
-    if (!(event.getSource().getEntity() instanceof Player player)) return;
-    LivingEntity target = event.getEntity();
-    Map<MobEffectInstance, Float> chances = new HashMap<>();
-    getSkillBonuses(player, EffectOnAttackBonus.class)
-        .forEach(b -> chances.merge(b.getEffect(), b.getChance(player, target), Float::sum));
-    for (Map.Entry<MobEffectInstance, Float> entry : chances.entrySet()) {
-      MobEffectInstance effect = entry.getKey();
-      Float c = entry.getValue();
-      while (c > 1) {
-        target.addEffect(new MobEffectInstance(effect));
-        c--;
+  private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
+    List<T> mergedBonuses = new ArrayList<>();
+    for (T bonus : bonuses) {
+      List<T> mergedCopy = new ArrayList<>(mergedBonuses);
+      for (int i = 0; i < mergedCopy.size(); i++) {
+        SkillBonus<?> merged = (SkillBonus<?>) mergedCopy.get(i);
+        if (merged.canMerge((SkillBonus<?>) bonus)) {
+          mergedBonuses.set(i, (T) merged.merge((SkillBonus<?>) bonus));
+          break;
+        }
       }
-      if (player.getRandom().nextFloat() < c) {
-        target.addEffect(new MobEffectInstance(effect));
-      }
+      mergedBonuses.add(bonus);
     }
+    return mergedBonuses;
   }
 
   @SubscribeEvent

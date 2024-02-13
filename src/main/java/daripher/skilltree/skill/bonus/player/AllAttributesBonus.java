@@ -285,7 +285,7 @@ public final class AllAttributesBonus
     public AllAttributesBonus deserialize(JsonObject json) throws JsonParseException {
       AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(json);
       AllAttributesBonus bonus = new AllAttributesBonus(modifier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       return bonus;
@@ -297,7 +297,7 @@ public final class AllAttributesBonus
         throw new IllegalArgumentException();
       }
       SerializationHelper.serializeAttributeModifier(json, aBonus.modifier);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
     }
@@ -306,7 +306,7 @@ public final class AllAttributesBonus
     public AllAttributesBonus deserialize(CompoundTag tag) {
       AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(tag);
       AllAttributesBonus bonus = new AllAttributesBonus(modifier);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       return bonus;
@@ -319,7 +319,7 @@ public final class AllAttributesBonus
       }
       CompoundTag tag = new CompoundTag();
       SerializationHelper.serializeAttributeModifier(tag, aBonus.modifier);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       return tag;
     }
@@ -328,7 +328,7 @@ public final class AllAttributesBonus
     public AllAttributesBonus deserialize(FriendlyByteBuf buf) {
       AttributeModifier modifier = NetworkHelper.readAttributeModifier(buf);
       AllAttributesBonus bonus = new AllAttributesBonus(modifier);
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       return bonus;
     }
@@ -339,7 +339,7 @@ public final class AllAttributesBonus
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeAttributeModifier(buf, aBonus.modifier);
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
     }
 

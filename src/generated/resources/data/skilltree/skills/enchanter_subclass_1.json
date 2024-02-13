@@ -19,17 +19,27 @@
       }
     },
     {
-      "type": "skilltree:ignite_chance",
+      "type": "skilltree:ignite",
       "chance": 0.15,
       "duration": 5,
-      "player_condition": {
-        "type": "skilltree:none"
-      },
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
-      "target_condition": {
-        "type": "skilltree:none"
+      "event_listener": {
+        "type": "skilltree:attack",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "enemy"
       }
     }
   ],

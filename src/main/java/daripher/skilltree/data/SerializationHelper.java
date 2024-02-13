@@ -10,6 +10,7 @@ import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.List;
@@ -115,23 +116,24 @@ public class SerializationHelper {
     json.addProperty("operation", operation.toValue());
   }
 
-  public static @Nonnull LivingMultiplier deserializePlayerMultiplier(JsonObject json) {
-    JsonObject multiplierJson = json.getAsJsonObject("player_multiplier");
+  public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
+      JsonObject json, String name) {
+    JsonObject multiplierJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(multiplierJson.get("type").getAsString());
     LivingMultiplier.Serializer serializer =
         PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(multiplierJson);
   }
 
-  public static void serializePlayerMultiplier(
-      JsonObject json, @Nonnull LivingMultiplier multiplier) {
+  public static void serializeLivingMultiplier(
+      JsonObject json, @Nonnull LivingMultiplier multiplier, String name) {
     JsonObject multiplierJson = new JsonObject();
     LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     serializer.serialize(multiplierJson, multiplier);
     ResourceLocation serializerId = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(serializer);
     assert serializerId != null;
     multiplierJson.addProperty("type", serializerId.toString());
-    json.add("player_multiplier", multiplierJson);
+    json.add(name, multiplierJson);
   }
 
   public static @Nonnull LivingCondition deserializeLivingCondition(JsonObject json, String name) {
@@ -186,6 +188,24 @@ public class SerializationHelper {
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
     json.add("item_condition", conditionJson);
+  }
+
+  public static @Nonnull SkillEventListener deserializeEventListener(JsonObject json) {
+    JsonObject conditionJson = json.getAsJsonObject("event_listener");
+    ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
+    SkillEventListener.Serializer serializer =
+        PSTRegistries.EVENT_LISTENERS.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(conditionJson);
+  }
+
+  public static void serializeEventListener(
+      JsonObject json, @Nonnull SkillEventListener condition) {
+    JsonObject conditionJson = new JsonObject();
+    SkillEventListener.Serializer serializer = condition.getSerializer();
+    serializer.serialize(conditionJson, condition);
+    ResourceLocation serializerId = PSTRegistries.EVENT_LISTENERS.get().getKey(serializer);
+    conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
+    json.add("event_listener", conditionJson);
   }
 
   @Nullable
@@ -271,7 +291,8 @@ public class SerializationHelper {
   }
 
   public static void serializeGemBonusProvider(JsonObject json, GemBonusProvider provider) {
-    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
+    ResourceLocation serializerId =
+        PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
     JsonObject bonusJson = new JsonObject();
     provider.getSerializer().serialize(bonusJson, provider);
     bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
@@ -329,21 +350,22 @@ public class SerializationHelper {
     tag.putInt("operation", operation.toValue());
   }
 
-  public static @Nonnull LivingMultiplier deserializePlayerMultiplier(CompoundTag tag) {
-    CompoundTag multiplierTag = tag.getCompound("player_multiplier");
+  public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
+      CompoundTag tag, String name) {
+    CompoundTag multiplierTag = tag.getCompound(name);
     ResourceLocation serializerId = new ResourceLocation(multiplierTag.getString("type"));
     LivingMultiplier.Serializer serializer =
         PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(multiplierTag);
   }
 
-  public static void serializePlayerMultiplier(
-      CompoundTag tag, @Nonnull LivingMultiplier multiplier) {
+  public static void serializeLivingMultiplier(
+      CompoundTag tag, @Nonnull LivingMultiplier multiplier, String name) {
     LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     CompoundTag multiplierTag = serializer.serialize(multiplier);
     ResourceLocation serializerId = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(serializer);
     multiplierTag.putString("type", Objects.requireNonNull(serializerId).toString());
-    tag.put("player_multiplier", multiplierTag);
+    tag.put(name, multiplierTag);
   }
 
   public static @Nonnull LivingCondition deserializeLivingCondition(CompoundTag tag, String name) {
@@ -394,6 +416,23 @@ public class SerializationHelper {
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("item_condition", conditionTag);
+  }
+
+  public static @Nonnull SkillEventListener deserializeEventListener(CompoundTag tag) {
+    CompoundTag conditionTag = tag.getCompound("event_listener");
+    ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
+    SkillEventListener.Serializer serializer =
+        PSTRegistries.EVENT_LISTENERS.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(conditionTag);
+  }
+
+  public static void serializeEventListener(
+      CompoundTag tag, @Nonnull SkillEventListener condition) {
+    SkillEventListener.Serializer serializer = condition.getSerializer();
+    CompoundTag conditionTag = serializer.serialize(condition);
+    ResourceLocation serializerId = PSTRegistries.EVENT_LISTENERS.get().getKey(serializer);
+    conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
+    tag.put("event_listener", conditionTag);
   }
 
   @Nullable
@@ -506,7 +545,8 @@ public class SerializationHelper {
   }
 
   public static void serializeGemBonusProvider(CompoundTag tag, GemBonusProvider provider) {
-    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
+    ResourceLocation serializerId =
+        PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
     CompoundTag bonusTag = provider.getSerializer().serialize(provider);
     bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("bonus_provider", bonusTag);

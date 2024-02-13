@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "4694995b-80cd-46d6-9c41-0c13eccfeb44",
+      "id": "31024e60-8f26-4800-8e8c-3c738d96bc85",
       "name": "SkillBonus",
       "operation": 1,
       "player_condition": {

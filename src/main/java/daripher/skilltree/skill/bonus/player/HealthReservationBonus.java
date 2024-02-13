@@ -161,7 +161,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
     public HealthReservationBonus deserialize(JsonObject json) throws JsonParseException {
       float amount = json.get("amount").getAsFloat();
       HealthReservationBonus bonus = new HealthReservationBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       return bonus;
@@ -173,7 +173,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
         throw new IllegalArgumentException();
       }
       json.addProperty("amount", aBonus.amount);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
     }
@@ -182,7 +182,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
     public HealthReservationBonus deserialize(CompoundTag tag) {
       float amount = tag.getFloat("amount");
       HealthReservationBonus bonus = new HealthReservationBonus(amount);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       return bonus;
@@ -195,7 +195,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
       }
       CompoundTag tag = new CompoundTag();
       tag.putFloat("amount", aBonus.amount);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       return tag;
     }
@@ -204,7 +204,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
     public HealthReservationBonus deserialize(FriendlyByteBuf buf) {
       float amount = buf.readFloat();
       HealthReservationBonus bonus = new HealthReservationBonus(amount);
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       return bonus;
     }
@@ -215,7 +215,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.amount);
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
     }
 

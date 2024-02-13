@@ -7,6 +7,7 @@ import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.function.Supplier;
@@ -35,6 +36,8 @@ public class PSTRegistries {
       PSTEnchantmentConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
   public static final Supplier<IForgeRegistry<GemBonusProvider.Serializer>> GEM_BONUSES =
       PSTGemBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
+  public static final Supplier<IForgeRegistry<SkillEventListener.Serializer>> EVENT_LISTENERS =
+      PSTEventListeners.REGISTRY.makeRegistry(RegistryBuilder::new);
 
   @SubscribeEvent
   public static void registerRegistries(NewRegistryEvent event) {
@@ -46,6 +49,7 @@ public class PSTRegistries {
     createRegistry(event, PSTItemBonuses.REGISTRY_ID);
     createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);
     createRegistry(event, PSTGemBonuses.REGISTRY_ID);
+    createRegistry(event, PSTEventListeners.REGISTRY_ID);
   }
 
   private static <T> void createRegistry(NewRegistryEvent event, ResourceLocation id) {

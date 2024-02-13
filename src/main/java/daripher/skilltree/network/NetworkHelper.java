@@ -13,6 +13,7 @@ import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.*;
@@ -201,7 +202,7 @@ public class NetworkHelper {
     return skillTree;
   }
 
-  public static void writeBonusMultiplier(
+  public static void writeLivingMultiplier(
       FriendlyByteBuf buf, @Nonnull LivingMultiplier multiplier) {
     LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     ResourceLocation serializerId = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(serializer);
@@ -209,7 +210,7 @@ public class NetworkHelper {
     serializer.serialize(buf, multiplier);
   }
 
-  public static @Nonnull LivingMultiplier readBonusMultiplier(FriendlyByteBuf buf) {
+  public static @Nonnull LivingMultiplier readLivingMultiplier(FriendlyByteBuf buf) {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
     LivingMultiplier.Serializer serializer =
         PSTRegistries.LIVING_MULTIPLIERS.get().getValue(serializerId);
@@ -256,6 +257,21 @@ public class NetworkHelper {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
     ItemCondition.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
+    return Objects.requireNonNull(serializer).deserialize(buf);
+  }
+
+  public static void writeEventListener(FriendlyByteBuf buf,
+                                        @Nonnull SkillEventListener condition) {
+    SkillEventListener.Serializer serializer = condition.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.EVENT_LISTENERS.get().getKey(serializer);
+    buf.writeUtf(Objects.requireNonNull(serializerId).toString());
+    serializer.serialize(buf, condition);
+  }
+
+  public static @Nonnull SkillEventListener readEventListener(FriendlyByteBuf buf) {
+    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
+    SkillEventListener.Serializer serializer =
+        PSTRegistries.EVENT_LISTENERS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
 

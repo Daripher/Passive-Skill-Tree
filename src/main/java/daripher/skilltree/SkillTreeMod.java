@@ -38,6 +38,7 @@ public class SkillTreeMod {
     PSTEnchantmentConditions.REGISTRY.register(modEventBus);
     PSTLootPoolEntries.REGISTRY.register(modEventBus);
     PSTGemBonuses.REGISTRY.register(modEventBus);
+    PSTEventListeners.REGISTRY.register(modEventBus);
     modEventBus.addListener(this::registerCurioSlots);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);

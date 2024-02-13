@@ -7,6 +7,7 @@ import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.Arrays;
@@ -72,6 +73,20 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition);
     assert id != null;
     String key = "living_condition.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
+    add(key, value);
+  }
+
+  protected void add(SkillEventListener.Serializer condition, String value) {
+    ResourceLocation id = PSTRegistries.EVENT_LISTENERS.get().getKey(condition);
+    assert id != null;
+    String key = "event_listener.%s.%s".formatted(id.getNamespace(), id.getPath());
+    add(key, value);
+  }
+
+  protected void add(SkillEventListener.Serializer condition, String type, String value) {
+    ResourceLocation id = PSTRegistries.EVENT_LISTENERS.get().getKey(condition);
+    assert id != null;
+    String key = "event_listener.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
     add(key, value);
   }
 

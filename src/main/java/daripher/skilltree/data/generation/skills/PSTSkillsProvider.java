@@ -1036,7 +1036,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "enchanter_subclass_1",
         new DamageBonus(0.15f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus("enchanter_subclass_1", new IgniteChanceBonus(0.15f, 5));
+    addSkillAttributeBonus("enchanter_subclass_1", new IgniteBonus(0.15f, 5));
     addSkillBranchAttributeModifier(
         "enchanter_subclass_1_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()),
@@ -1046,7 +1046,7 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
-            new ItemSkillBonus(new IgniteChanceBonus(0.05f, 5))),
+            new ItemSkillBonus(new IgniteBonus(0.05f, 5))),
         1,
         5);
     addSkillAttributeBonus(
@@ -1058,7 +1058,7 @@ public class PSTSkillsProvider implements DataProvider {
     addSkillAttributeBonus(
         "enchanter_subclass_1_offensive_notable_1",
         new CritChanceBonus(0.1f).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus("enchanter_subclass_1_mastery", new IgniteChanceBonus(0.1f, 5));
+    addSkillAttributeBonus("enchanter_subclass_1_mastery", new IgniteBonus(0.1f, 5));
     addSkillAttributeBonus(
         "enchanter_subclass_1_mastery",
         new DamageBonus(0.1f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()));
@@ -1075,7 +1075,7 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_subclass_special",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
-            new ItemSkillBonus(new IgniteChanceBonus(0.1f, 5))));
+            new ItemSkillBonus(new IgniteBonus(0.1f, 5))));
     // scholar skills
     addSkillBranchAttributeModifier("enchanter_subclass_2_defensive", BLOCKING, 1, ADDITION, 1, 4);
     addSkillAttributeBonus("enchanter_subclass_2", EXP_PER_MINUTE, 2, ADDITION);

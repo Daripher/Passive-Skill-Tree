@@ -238,7 +238,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       float amount = json.get("amount").getAsFloat();
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(json);
       DamageBonus bonus = new DamageBonus(amount, operation);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(json);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(json);
@@ -254,7 +254,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       }
       json.addProperty("amount", aBonus.amount);
       SerializationHelper.serializeOperation(json, aBonus.operation);
-      SerializationHelper.serializePlayerMultiplier(json, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(json, aBonus.damageCondition);
@@ -267,7 +267,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       float amount = tag.getFloat("amount");
       AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(tag);
       DamageBonus bonus = new DamageBonus(amount, operation);
-      bonus.playerMultiplier = SerializationHelper.deserializePlayerMultiplier(tag);
+      bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       bonus.damageCondition = SerializationHelper.deserializeDamageCondition(tag);
@@ -284,7 +284,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       CompoundTag tag = new CompoundTag();
       tag.putFloat("amount", aBonus.amount);
       SerializationHelper.serializeOperation(tag, aBonus.operation);
-      SerializationHelper.serializePlayerMultiplier(tag, aBonus.playerMultiplier);
+      SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
       SerializationHelper.serializeDamageCondition(tag, aBonus.damageCondition);
       SerializationHelper.serializeLivingCondition(tag, aBonus.targetCondition, "target_condition");
@@ -296,7 +296,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       float amount = buf.readFloat();
       AttributeModifier.Operation operation = AttributeModifier.Operation.fromValue(buf.readInt());
       DamageBonus bonus = new DamageBonus(amount, operation);
-      bonus.playerMultiplier = NetworkHelper.readBonusMultiplier(buf);
+      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
       bonus.damageCondition = NetworkHelper.readDamageCondition(buf);
       bonus.targetCondition = NetworkHelper.readLivingCondition(buf);
@@ -310,7 +310,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       }
       buf.writeFloat(aBonus.amount);
       buf.writeInt(aBonus.operation.toValue());
-      NetworkHelper.writeBonusMultiplier(buf, aBonus.playerMultiplier);
+      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
       NetworkHelper.writeDamageCondition(buf, aBonus.damageCondition);
       NetworkHelper.writeLivingCondition(buf, aBonus.targetCondition);

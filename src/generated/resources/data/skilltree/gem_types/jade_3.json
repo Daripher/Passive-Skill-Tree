@@ -6,10 +6,27 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
+            "type": "skilltree:gained_experience",
+            "experience_source": "mobs",
+            "multiplier": 0.1
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.03999999910593033,
+            "amount": 0.019999999552965164,
             "attribute": "skilltree:evasion",
-            "id": "e624dcb0-c5cc-4d97-a9be-1cc46d261cbb",
+            "id": "ced9e88f-38e9-4e25-8276-585fcff75f50",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -22,8 +39,8 @@
         }
       },
       "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "chestplate"
+        "type": "skilltree:tag",
+        "tag_id": "forge:curios/jewelry"
       }
     },
     {
@@ -35,7 +52,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03999999910593033,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "d7c51a0f-9685-446d-a143-423e9fddca63",
+            "id": "6a1fae0f-b68f-4e40-904e-bd2f748288be",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -61,7 +78,7 @@
             "type": "skilltree:attribute",
             "amount": 0.03999999910593033,
             "attribute": "skilltree:blocking",
-            "id": "7edec6c4-31c8-45b5-bd08-89f4133b71b8",
+            "id": "40dd8ad7-69fa-4ba8-8937-06b59ad8fb25",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -85,52 +102,9 @@
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:attribute",
-            "amount": 0.019999999552965164,
-            "attribute": "skilltree:evasion",
-            "id": "1617a5dd-a36b-45a6-b529-7bad40a3d11c",
-            "name": "Jade",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:curios/jewelry"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:gained_experience",
-            "experience_source": "mobs",
-            "multiplier": 0.1
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "helmet"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
             "amount": 0.03999999910593033,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "98c5db2d-5251-48c4-b25c-ca6dd0de76a4",
+            "id": "0b9c48c1-b764-4152-ae30-4808efcd76da",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -145,6 +119,32 @@
       "item_condition": {
         "type": "skilltree:equipment_type",
         "equipment_type": "weapon"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.03999999910593033,
+            "attribute": "skilltree:evasion",
+            "id": "a0213d02-d65c-46d3-968e-0c905c867dbe",
+            "name": "Jade",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "chestplate"
       }
     }
   ],

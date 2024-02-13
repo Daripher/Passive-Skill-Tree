@@ -5,7 +5,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.max_health",
-      "id": "2c2ce7d2-bede-410c-b775-d6005be85c26",
+      "id": "0f91983f-3046-4e81-88bc-e2fa7c45fd16",
       "name": "SkillBonus",
       "operation": 0,
       "player_condition": {

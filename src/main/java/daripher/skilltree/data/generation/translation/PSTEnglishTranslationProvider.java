@@ -292,11 +292,17 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Incoming Healing");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Chance to get +%s%% %s");
     add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Experience from %s");
-    add(PSTSkillBonuses.IGNITE_CHANCE.get(), "Chance to inflict Ignite for %s");
+    add(PSTSkillBonuses.IGNITE.get(), "player", "You catch fire for %s");
+    add(PSTSkillBonuses.IGNITE.get(), "player.chance", "Chance to catch fire for %s");
+    add(PSTSkillBonuses.IGNITE.get(), "enemy", "Set enemies on fire for %s");
+    add(PSTSkillBonuses.IGNITE.get(), "enemy.chance", "Chance to set enemies on fire for %s");
     add(PSTSkillBonuses.ARROW_RETRIEVAL.get(), "Arrow retrieval chance");
     add(PSTSkillBonuses.HEALTH_RESERVATION.get(), "Health Reservation");
     add(PSTSkillBonuses.ALL_ATTRIBUTES.get(), "All Attributes");
-    add(PSTSkillBonuses.EFFECT_ON_ATTACK.get(), "Chance to inflict %s for %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "player", "Gain %s for %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "player.chance", "Chance to gain %s for %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy", "Inflict %s for %s");
+    add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy.chance", "Chance to inflict %s for %s");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Can not use %s");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
@@ -365,6 +371,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "You have");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Target has");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s if %s %s in hand");
+    // event listeners
+    add(PSTEventListeners.ATTACK.get(), "%s when you deal %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee Damage");
