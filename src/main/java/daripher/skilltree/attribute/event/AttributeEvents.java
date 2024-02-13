@@ -138,23 +138,6 @@ public class AttributeEvents {
   }
 
   @SubscribeEvent
-  public static void applyLifePerHitBonus(LivingHurtEvent event) {
-    Entity directAttacker = event.getSource().getDirectEntity();
-    Entity indirectAttacker = event.getSource().getEntity();
-    Player player = null;
-    if (directAttacker instanceof Player) {
-      player = (Player) directAttacker;
-    } else if (directAttacker instanceof AbstractArrow && indirectAttacker instanceof Player) {
-      player = (Player) indirectAttacker;
-    }
-    if (player == null) return;
-    if (player.getFoodData().getFoodLevel() == 0) return;
-    double lifePerHit = player.getAttributeValue(PSTAttributes.LIFE_PER_HIT.get());
-    player.getFoodData().addExhaustion((float) (lifePerHit / 5));
-    player.heal((float) lifePerHit);
-  }
-
-  @SubscribeEvent
   public static void applyExperiencePerMinuteBonus(PlayerTickEvent event) {
     Player player = event.player;
     if (player.level.isClientSide) return;
