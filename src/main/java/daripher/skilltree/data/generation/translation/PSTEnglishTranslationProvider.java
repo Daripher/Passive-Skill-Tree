@@ -304,6 +304,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy", "Inflict %s for %s");
     add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy.chance", "Chance to inflict %s for %s");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Can not use %s");
+    add(PSTSkillBonuses.HEALING.get(), "player", "Recover %s life");
+    add(PSTSkillBonuses.HEALING.get(), "player.chance", "Chance to recover %s life");
+    add(PSTSkillBonuses.HEALING.get(), "enemy", "Enemies recover %s life");
+    add(PSTSkillBonuses.HEALING.get(), "enemy.chance", "Chance for enemies to recover %s life");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");
@@ -374,6 +378,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s when you deal %s");
     add(PSTEventListeners.BLOCK.get(), "%s when you block %s");
+    add(PSTEventListeners.EVASION.get(), "%s when you evade an attack");
+    add(PSTEventListeners.ITEM_USED.get(), "%s when you use %s");
+    add(PSTEventListeners.DAMAGE_TAKEN.get(), "%s when you take %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee Damage");
@@ -567,7 +574,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
-    add(PSTAttributes.LIFE_PER_HIT.get(), "Life per Hit");
     add(PSTAttributes.EVASION.get(), "Evasion");
     add(
         PSTAttributes.EVASION.get().getDescriptionId() + ".info",
@@ -576,7 +582,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(
         PSTAttributes.BLOCKING.get().getDescriptionId() + ".info",
         "(Blocking grants a chance to block damage from some attacks, requires a shield)");
-    add(PSTAttributes.LIFE_ON_BLOCK.get(), "Life on Block");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
     add(CuriosHelper.getOrCreateSlotAttribute("ring"), "Ring Slots");
     add(PSTAttributes.STEALTH.get(), "Stealth");

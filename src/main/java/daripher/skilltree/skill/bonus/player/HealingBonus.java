@@ -20,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 
 public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   private float chance;
@@ -33,12 +34,15 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   }
 
   public HealingBonus(float chance, float amount) {
-    this(chance, amount, new AttackEventListener());
+    this(chance, amount, new AttackEventListener().setTarget(Target.PLAYER));
   }
 
   @Override
   public void applyEffect(LivingEntity target) {
     if (target.getRandom().nextFloat() < chance) {
+      if (target.getHealth() < target.getMaxHealth() && target instanceof Player player) {
+        player.getFoodData().addExhaustion(amount / 2);
+      }
       target.heal(amount);
     }
   }
@@ -101,7 +105,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
 
   @Override
   public boolean isPositive() {
-    return chance > 0 ^ eventListener.getTarget() == Target.PLAYER;
+    return chance > 0 ^ eventListener.getTarget() == Target.ENEMY;
   }
 
   @Override

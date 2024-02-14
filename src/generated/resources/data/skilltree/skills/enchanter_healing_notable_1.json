@@ -2,21 +2,31 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:life_on_block",
-      "id": "7fab871f-a033-4e50-9f23-a97e67285766",
-      "name": "SkillBonus",
-      "operation": 0,
-      "player_condition": {
-        "type": "skilltree:none"
-      },
-      "player_multiplier": {
-        "type": "skilltree:enchants_amount",
-        "item_condition": {
-          "type": "skilltree:equipment_type",
-          "equipment_type": "shield"
-        }
+      "type": "skilltree:healing",
+      "amount": 0.2,
+      "chance": 1.0,
+      "event_listener": {
+        "type": "skilltree:block",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:enchants_amount",
+          "item_condition": {
+            "type": "skilltree:equipment_type",
+            "equipment_type": "shield"
+          }
+        },
+        "target": "player"
       }
     }
   ],

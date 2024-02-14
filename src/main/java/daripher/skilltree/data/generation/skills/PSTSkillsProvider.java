@@ -18,6 +18,9 @@ import daripher.skilltree.skill.bonus.condition.enchantment.ArmorEnchantmentCond
 import daripher.skilltree.skill.bonus.condition.enchantment.WeaponEnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.*;
+import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.BlockEventListener;
+import daripher.skilltree.skill.bonus.event.ItemUsedEventListener;
 import daripher.skilltree.skill.bonus.item.*;
 import daripher.skilltree.skill.bonus.multiplier.*;
 import daripher.skilltree.skill.bonus.player.*;
@@ -210,197 +213,195 @@ public class PSTSkillsProvider implements DataProvider {
 
   private void setSkillsAttributeModifiers() {
     // alchemist skills
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_class",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.ANY), new PotionDurationBonus(0.4f)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_defensive_crafting",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.BENEFICIAL),
             new PotionAmplificationBonus(0.1f)),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_offensive_crafting",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.HARMFUL), new PotionAmplificationBonus(0.1f)),
         1,
         7);
-    addSkillBranchAttributeModifier("alchemist_defensive", EVASION, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("alchemist_defensive", EVASION, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "alchemist_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setTargetCondition(new HasEffectCondition(MobEffects.POISON)),
         1,
         8);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_defensive_notable_1",
         createAttributeBonus(EVASION.get(), 10, ADDITION)
             .setCondition(new EffectAmountCondition(1, -1)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_offensive_notable_1",
         new DamageBonus(0.25f, MULTIPLY_BASE)
             .setTargetCondition(new HasEffectCondition(MobEffects.POISON)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_life",
         createAttributeBonus(MAX_HEALTH, 2, ADDITION)
             .setCondition(new EffectAmountCondition(1, -1)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 6, ADDITION)
             .setCondition(new EffectAmountCondition(1, -1)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_speed",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(new EffectAmountCondition(1, -1)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.1, MULTIPLY_BASE)
             .setCondition(new EffectAmountCondition(1, -1)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_lesser",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.ANY), new PotionDurationBonus(0.05f)),
         1,
         6);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_mastery",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.ANY), new PotionAmplificationBonus(1f)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_crit",
         new CritChanceBonus(0.02f).setTargetCondition(new HasEffectCondition(MobEffects.POISON)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_crit_notable_1",
         new CritDamageBonus(0.35f).setTargetCondition(new HasEffectCondition(MobEffects.POISON)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "alchemist_crafting",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.ANY), new PotionAmplificationBonus(0.1f)),
         1,
         3);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_defensive_crafting_keystone_1",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.BENEFICIAL),
             new PotionAmplificationBonus(1f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_offensive_crafting_keystone_1",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.HARMFUL), new PotionAmplificationBonus(0.5f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_offensive_crafting_keystone_1",
         new RecipeUnlockBonus(new ResourceLocation("skilltree:weapon_poisoning")));
-    addSkillBranchAttributeModifier("alchemist_healing", LIFE_PER_HIT, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("alchemist_healing", new HealingBonus(1f, 0.1f), 1, 4);
+    addSkillBonus(
         "alchemist_healing_notable_1",
-        createAttributeBonus(LIFE_PER_HIT.get(), 0.5, ADDITION)
-            .setCondition(new EffectAmountCondition(1, -1)));
-    addSkillAttributeBonus(
+        new HealingBonus(
+            1f, 2f, new ItemUsedEventListener(new PotionCondition(PotionCondition.Type.ANY))));
+    addSkillBonus(
         "alchemist_crafting_notable_1",
         new RecipeUnlockBonus(new ResourceLocation("skilltree:potion_mixing")));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_defensive_keystone_1",
         createAttributeBonus(EVASION.get(), 2, ADDITION)
             .setMultiplier(new EffectAmountMultiplier()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_offensive_keystone_1",
         new DamageBonus(0.15f, MULTIPLY_BASE).setPlayerMultiplier(new EffectAmountMultiplier()));
     // assassin skills
-    addSkillBranchAttributeModifier("alchemist_subclass_1_defensive", EVASION, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier("alchemist_subclass_1_defensive", ARMOR, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus("alchemist_subclass_1", new CritChanceBonus(0.05f));
-    addSkillAttributeBonus("alchemist_subclass_1", new CritDamageBonus(0.15f));
-    addSkillBranchAttributeModifier(
-        "alchemist_subclass_1_offensive", new CritChanceBonus(0.02f), 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("alchemist_subclass_1_defensive", EVASION, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("alchemist_subclass_1_defensive", ARMOR, 0.5, ADDITION, 1, 4);
+    addSkillBonus("alchemist_subclass_1", new CritChanceBonus(0.05f));
+    addSkillBonus("alchemist_subclass_1", new CritDamageBonus(0.15f));
+    addSkillBranchBonuses("alchemist_subclass_1_offensive", new CritChanceBonus(0.02f), 1, 4);
+    addSkillBranchBonuses(
         "alchemist_subclass_1_crafting",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.HARMFUL), new PotionAmplificationBonus(0.1f)),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.HARMFUL), new PotionDurationBonus(0.25f)));
-    addSkillAttributeBonus("alchemist_subclass_1_offensive_notable_1", new CritChanceBonus(0.05f));
-    addSkillAttributeBonus("alchemist_subclass_1_mastery", new CritDamageBonus(0.5f));
-    addSkillAttributeBonus(
+    addSkillBonus("alchemist_subclass_1_offensive_notable_1", new CritChanceBonus(0.05f));
+    addSkillBonus("alchemist_subclass_1_mastery", new CritDamageBonus(0.5f));
+    addSkillBonus(
         "alchemist_subclass_special",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.RINGS.location()),
             new ItemSkillBonus(new CritDamageBonus(0.1f))));
     // healer skills
-    addSkillBranchAttributeModifier("alchemist_subclass_2_defensive", EVASION, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus("alchemist_subclass_2", new IncomingHealingBonus(0.15f));
-    addSkillBranchAttributeModifier("alchemist_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "alchemist_subclass_2_life", new IncomingHealingBonus(0.05f), 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("alchemist_subclass_2_defensive", EVASION, 1, ADDITION, 1, 4);
+    addSkillBonus("alchemist_subclass_2", new IncomingHealingBonus(0.15f));
+    addSkillBranchBonuses("alchemist_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
+    addSkillBranchBonuses("alchemist_subclass_2_life", new IncomingHealingBonus(0.05f), 1, 4);
+    addSkillBranchBonuses(
         "alchemist_subclass_2_crafting",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.BENEFICIAL),
             new PotionAmplificationBonus(0.1f)),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_subclass_2_crafting_notable_1",
         new CraftedItemBonus(
             new PotionCondition(PotionCondition.Type.BENEFICIAL), new PotionDurationBonus(0.1f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_subclass_2_life_notable_1",
         new IncomingHealingBonus(0.1f).setCondition(new HealthPercentageCondition(-1, 0.5f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "alchemist_subclass_2_mastery",
         new IncomingHealingBonus(0.25f).setCondition(new HealthPercentageCondition(-1, 0.5f)));
     // hunter skills
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_class", new LootDuplicationBonus(0.15f, 1f, LootDuplicationBonus.LootType.MOBS));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_defensive_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(EVASION.get(), 1, ADDITION))),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_offensive_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.04, MULTIPLY_BASE))),
         1,
         7);
-    addSkillBranchAttributeModifier("hunter_defensive", EVASION, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("hunter_defensive", EVASION, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "hunter_offensive",
         new DamageBonus(0.1f, MULTIPLY_BASE).setDamageCondition(new ProjectileDamageCondition()),
         1,
         8);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_defensive_notable_1",
         createAttributeBonus(EVASION.get(), 10, ADDITION)
             .setCondition(new HealthPercentageCondition(-1f, 0.5f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_offensive_notable_1",
         new DamageBonus(0.25f, MULTIPLY_BASE).setDamageCondition(new ProjectileDamageCondition()));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_life",
         createAttributeBonus(MAX_HEALTH, 0.05, ADDITION)
             .setMultiplier(new AttributeValueMultiplier(EVASION.get())),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 0.1, ADDITION)
             .setMultiplier(new AttributeValueMultiplier(EVASION.get())));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
@@ -408,91 +409,93 @@ public class PSTSkillsProvider implements DataProvider {
                     new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_lesser",
         new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.MOBS),
         1,
         6);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_mastery", new LootDuplicationBonus(0.15f, 2f, LootDuplicationBonus.LootType.MOBS));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_crit",
         new CritChanceBonus(0.02f).setDamageCondition(new ProjectileDamageCondition()),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_crit_notable_1",
         new CritDamageBonus(0.25f).setDamageCondition(new ProjectileDamageCondition()));
-    addSkillBranchAttributeModifier("hunter_crafting", new ArrowRetrievalBonus(0.05f), 1, 3);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("hunter_crafting", new ArrowRetrievalBonus(0.05f), 1, 3);
+    addSkillBonus(
         "hunter_defensive_crafting_keystone_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.HELMET), new ItemSocketsBonus(1)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_offensive_crafting_keystone_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON),
             new ItemSocketsBonus(1)));
-    addSkillBranchAttributeModifier("hunter_healing", LIFE_PER_HIT, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("hunter_healing", new HealingBonus(1f, 0.1f), 1, 4);
+    addSkillBonus(
         "hunter_healing_notable_1",
-        createAttributeBonus(LIFE_PER_HIT.get(), 0.5, ADDITION)
-            .setCondition(
-                new HasItemInHandCondition(
-                    new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON))));
-    addSkillAttributeBonus("hunter_crafting_notable_1", new ArrowRetrievalBonus(0.1f));
-    addSkillAttributeBonus(
+        new HealingBonus(
+            1f,
+            1f,
+            new AttackEventListener()
+                .setTarget(SkillBonus.Target.PLAYER)
+                .setDamageCondition(new ProjectileDamageCondition())));
+    addSkillBonus("hunter_crafting_notable_1", new ArrowRetrievalBonus(0.1f));
+    addSkillBonus(
         "hunter_defensive_keystone_1",
         createAttributeBonus(ARMOR, 0.25, ADDITION)
             .setMultiplier(new AttributeValueMultiplier(EVASION.get())));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_offensive_keystone_1",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerMultiplier(new DistanceToTargetMultiplier()));
     // ranger skills
-    addSkillBranchAttributeModifier("hunter_subclass_1_defensive", EVASION, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus("hunter_subclass_1", STEALTH, 10, ADDITION);
-    addSkillAttributeBonus("hunter_subclass_1", new JumpHeightBonus(0.1f));
-    addSkillBranchAttributeModifier("hunter_subclass_1_offensive", STEALTH, 5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "hunter_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("hunter_subclass_1_defensive", EVASION, 1, ADDITION, 1, 4);
+    addSkillBonus("hunter_subclass_1", STEALTH, 10, ADDITION);
+    addSkillBonus("hunter_subclass_1", new JumpHeightBonus(0.1f));
+    addSkillBranchBonuses("hunter_subclass_1_offensive", STEALTH, 5, ADDITION, 1, 4);
+    addSkillBranchBonuses("hunter_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
+    addSkillBranchBonuses(
         "hunter_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(STEALTH.get(), 1, ADDITION))),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.BOOTS),
             new ItemSkillBonus(createAttributeBonus(STEALTH.get(), 5, ADDITION))));
-    addSkillAttributeBonus(
-        "hunter_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
-    addSkillAttributeBonus("hunter_subclass_1_offensive_notable_1", STEALTH, 5, ADDITION);
-    addSkillAttributeBonus("hunter_subclass_1_mastery", STEALTH, 10, ADDITION);
-    addSkillAttributeBonus("hunter_subclass_1_mastery", new JumpHeightBonus(0.5f));
-    addSkillAttributeBonus(
+    addSkillBonus("hunter_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
+    addSkillBonus("hunter_subclass_1_offensive_notable_1", STEALTH, 5, ADDITION);
+    addSkillBonus("hunter_subclass_1_mastery", STEALTH, 10, ADDITION);
+    addSkillBonus("hunter_subclass_1_mastery", new JumpHeightBonus(0.5f));
+    addSkillBonus(
         "hunter_subclass_special",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
-            new ItemSkillBonus(createAttributeBonus(LIFE_PER_HIT.get(), 0.5, ADDITION))));
+            new ItemSkillBonus(
+                new HealingBonus(
+                    1f, 0.5f, new AttackEventListener().setTarget(SkillBonus.Target.PLAYER)))));
     // fletcher skills
-    addSkillBranchAttributeModifier("hunter_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier("hunter_subclass_2_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("hunter_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("hunter_subclass_2_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
+    addSkillBonus(
         "hunter_subclass_2",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(new ArrowRetrievalBonus(0.05f))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_subclass_2_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setCondition(
@@ -500,46 +503,46 @@ public class PSTSkillsProvider implements DataProvider {
                     new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON))),
         1,
         4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "hunter_subclass_2_crafting",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new QuiverCapacityBonus(10, ADDITION)),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_subclass_2_crafting_notable_1",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(new ArrowRetrievalBonus(0.1f))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_subclass_2_life_notable_1",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "hunter_subclass_2_mastery",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new QuiverCapacityBonus(25, ADDITION)));
     // miner skills
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_class",
         new BlockBreakSpeedBonus(
             new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.PICKAXE)),
             0.15f));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_defensive_crafting",
         new GemPowerBonus(new EquipmentCondition(EquipmentCondition.Type.ARMOR), 0.1f),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_offensive_crafting",
         new GemPowerBonus(new EquipmentCondition(EquipmentCondition.Type.WEAPON), 0.1f),
         1,
         7);
-    addSkillBranchAttributeModifier("miner_defensive", ARMOR, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("miner_defensive", ARMOR, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "miner_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
@@ -547,30 +550,30 @@ public class PSTSkillsProvider implements DataProvider {
                     1, -1, new EquipmentCondition(EquipmentCondition.Type.WEAPON))),
         1,
         8);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_defensive_notable_1",
         createAttributeBonus(ARMOR, 2, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.HELMET))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_offensive_notable_1",
         new DamageBonus(0.15f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasGemsCondition(
                     1, -1, new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.HELMET))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.ARMOR))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
@@ -578,361 +581,356 @@ public class PSTSkillsProvider implements DataProvider {
                     1, -1, new EquipmentCondition(EquipmentCondition.Type.WEAPON))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.04, MULTIPLY_BASE)
             .setMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_lesser",
         new BlockBreakSpeedBonus(
             new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.PICKAXE)),
             0.05f),
         1,
         6);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_mastery",
         new PlayerSocketsBonus(new EquipmentCondition(EquipmentCondition.Type.ANY), 1));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_crit",
         new CritChanceBonus(0.01f)
             .setPlayerMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.WEAPON))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_crit_notable_1",
         new CritDamageBonus(0.1f)
             .setPlayerMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_crafting",
         new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.GEMS),
         1,
         3);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_defensive_crafting_keystone_1",
         new GemPowerBonus(new EquipmentCondition(EquipmentCondition.Type.ARMOR), 0.3f));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_defensive_crafting_keystone_1",
         new PlayerSocketsBonus(new EquipmentCondition(EquipmentCondition.Type.CHESTPLATE), 1));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_offensive_crafting_keystone_1",
         new GemPowerBonus(new EquipmentCondition(EquipmentCondition.Type.WEAPON), 0.3f));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_offensive_crafting_keystone_1",
         new PlayerSocketsBonus(new EquipmentCondition(EquipmentCondition.Type.WEAPON), 1));
-    addSkillBranchAttributeModifier("miner_healing", REGENERATION, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("miner_healing", REGENERATION, 0.1, ADDITION, 1, 4);
+    addSkillBonus(
         "miner_healing_notable_1",
-        createAttributeBonus(REGENERATION.get(), 0.25, ADDITION)
+        createAttributeBonus(REGENERATION.get(), 0.1, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.HELMET))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_crafting_notable_1",
         new LootDuplicationBonus(0.1f, 1f, LootDuplicationBonus.LootType.GEMS));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_defensive_keystone_1",
         createAttributeBonus(ARMOR, 5, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(
                     new EquipmentCondition(EquipmentCondition.Type.CHESTPLATE))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_offensive_keystone_1",
         new DamageBonus(0.1f, MULTIPLY_BASE)
             .setPlayerMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
     // traveler skills
-    addSkillBranchAttributeModifier("miner_subclass_1_defensive", ARMOR, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus("miner_subclass_1", ATTACK_SPEED, 0.1, MULTIPLY_BASE);
-    addSkillAttributeBonus("miner_subclass_1", MOVEMENT_SPEED, 0.1, MULTIPLY_BASE);
-    addSkillBranchAttributeModifier(
-        "miner_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("miner_subclass_1_defensive", ARMOR, 1, ADDITION, 1, 4);
+    addSkillBonus("miner_subclass_1", ATTACK_SPEED, 0.1, MULTIPLY_BASE);
+    addSkillBonus("miner_subclass_1", MOVEMENT_SPEED, 0.1, MULTIPLY_BASE);
+    addSkillBranchBonuses("miner_subclass_1_offensive", ATTACK_SPEED, 0.02, MULTIPLY_BASE, 1, 4);
+    addSkillBranchBonuses(
         "miner_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.BOOTS),
             new ItemSkillBonus(createAttributeBonus(MOVEMENT_SPEED, 0.02, MULTIPLY_BASE))),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.BOOTS),
             new ItemSkillBonus(createAttributeBonus(MOVEMENT_SPEED, 0.05, MULTIPLY_BASE))));
-    addSkillAttributeBonus(
-        "miner_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
-    addSkillAttributeBonus(
-        "miner_subclass_1_offensive_notable_1", MOVEMENT_SPEED, 0.05, MULTIPLY_BASE);
-    addSkillAttributeBonus(
+    addSkillBonus("miner_subclass_1_offensive_notable_1", ATTACK_SPEED, 0.05, MULTIPLY_BASE);
+    addSkillBonus("miner_subclass_1_offensive_notable_1", MOVEMENT_SPEED, 0.05, MULTIPLY_BASE);
+    addSkillBonus(
         "miner_subclass_1_mastery",
         new DamageBonus(0.1f, MULTIPLY_BASE)
             .setPlayerMultiplier(
                 new GemsAmountMultiplier(new EquipmentCondition(EquipmentCondition.Type.BOOTS))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_subclass_special",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.BOOTS), new ItemSocketsBonus(1)));
     // jeweler skills
-    addSkillBranchAttributeModifier("miner_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier("miner_subclass_2_defensive", ARMOR, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("miner_subclass_2_defensive", EVASION, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("miner_subclass_2_defensive", ARMOR, 0.5, ADDITION, 1, 4);
+    addSkillBonus(
         "miner_subclass_2",
         new PlayerSocketsBonus(new ItemTagCondition(PSTTags.RINGS.location()), 1));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_subclass_2_life",
         createAttributeBonus(MAX_HEALTH, 1d, ADDITION)
             .setMultiplier(
                 new GemsAmountMultiplier(new ItemTagCondition(PSTTags.JEWELRY.location()))),
         1,
         4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "miner_subclass_2_crafting",
         new GemPowerBonus(new ItemTagCondition(PSTTags.JEWELRY.location()), 0.05f),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_subclass_2_crafting_notable_1",
         new GemPowerBonus(new ItemTagCondition(PSTTags.JEWELRY.location()), 0.25f));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "miner_subclass_2_life_notable_1",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.NECKLACES.location()),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
-    addSkillAttributeBonus(
-        "miner_subclass_2_mastery", CuriosHelper.getOrCreateSlotAttribute("ring"), 1, ADDITION);
+    addSkillBonus("miner_subclass_2_mastery", CuriosHelper.getOrCreateSlotAttribute("ring"), 1, ADDITION);
     // blacksmith skills
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_class",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ANY),
             new ItemDurabilityBonus(0.25f, MULTIPLY_BASE)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_defensive_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 0.1, ADDITION))),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_offensive_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.MELEE_WEAPON),
             new ItemSkillBonus(createAttributeBonus(ATTACK_DAMAGE, 1, ADDITION))),
         1,
         7);
-    addSkillBranchAttributeModifier("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("blacksmith_defensive", ARMOR, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "blacksmith_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.SHIELD))),
         1,
         8);
-    addSkillAttributeBonus("blacksmith_defensive_notable_1", ARMOR, 0.05, MULTIPLY_BASE);
-    addSkillAttributeBonus(
+    addSkillBonus("blacksmith_defensive_notable_1", ARMOR, 0.05, MULTIPLY_BASE);
+    addSkillBonus(
         "blacksmith_offensive_notable_1",
         new DamageBonus(0.25f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_life",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setCondition(
                 new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.SHIELD))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 4, ADDITION)
             .setCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.SHIELD))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_lesser",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ANY),
             new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)),
         1,
         6);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_mastery",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ANY),
             new ItemSkillBonus(createAttributeBonus(ARMOR_TOUGHNESS, 1f, ADDITION))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_crit",
         new CritChanceBonus(0.02f)
             .setPlayerCondition(
                 new HasItemInHandCondition(new EquipmentCondition(EquipmentCondition.Type.SHIELD))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_crit_notable_1",
         new CritDamageBonus(0.3f)
             .setPlayerCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.SHIELD),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 2, ADDITION))),
         1,
         3);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_defensive_crafting_keystone_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 1, ADDITION))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_offensive_crafting_keystone_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.MELEE_WEAPON),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.25, MULTIPLY_BASE))));
-    addSkillBranchAttributeModifier("blacksmith_healing", REGENERATION, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("blacksmith_healing", REGENERATION, 0.1, ADDITION, 1, 4);
+    addSkillBonus(
         "blacksmith_healing_notable_1",
-        createAttributeBonus(REGENERATION.get(), 0.5, ADDITION)
+        createAttributeBonus(REGENERATION.get(), 0.2, ADDITION)
             .setCondition(
                 new HasItemInHandCondition(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.SHIELD),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 4, ADDITION))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_defensive_keystone_1",
         createAttributeBonus(ARMOR, 0.1, MULTIPLY_BASE)
             .setCondition(new AttributeValueCondition(ARMOR, 50, -1)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_defensive_keystone_1",
         createAttributeBonus(ARMOR, 0.1, MULTIPLY_BASE)
             .setCondition(new AttributeValueCondition(ARMOR, 100, -1)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_offensive_keystone_1",
         createAttributeBonus(ATTACK_DAMAGE, 0.1, ADDITION)
             .setMultiplier(new AttributeValueMultiplier(ARMOR)));
     // soldier skills
-    addSkillBranchAttributeModifier("blacksmith_subclass_1_defensive", ARMOR, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "blacksmith_subclass_1_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus("blacksmith_subclass_1", ARMOR, 5, ADDITION);
-    addSkillAttributeBonus("blacksmith_subclass_1", BLOCKING, 5, ADDITION);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("blacksmith_subclass_1_defensive", ARMOR, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("blacksmith_subclass_1_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
+    addSkillBonus("blacksmith_subclass_1", ARMOR, 5, ADDITION);
+    addSkillBonus("blacksmith_subclass_1", BLOCKING, 5, ADDITION);
+    addSkillBranchBonuses(
         "blacksmith_subclass_1_offensive",
         new DamageBonus(0.01f, MULTIPLY_BASE).setDamageCondition(new MeleeDamageCondition()),
         1,
         4);
-    addSkillBranchAttributeModifier("blacksmith_subclass_1_offensive", BLOCKING, 1, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("blacksmith_subclass_1_offensive", BLOCKING, 1, ADDITION, 1, 4);
+    addSkillBranchBonuses(
         "blacksmith_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.MELEE_WEAPON),
             new ItemSkillBonus(new CritChanceBonus(0.01f))),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.MELEE_WEAPON),
             new ItemSkillBonus(new CritChanceBonus(0.05f))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_1_offensive_notable_1",
         new DamageBonus(0.2f, MULTIPLY_BASE).setDamageCondition(new MeleeDamageCondition()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_1_offensive_notable_1",
         new CritDamageBonus(0.1f).setDamageCondition(new MeleeDamageCondition()));
-    addSkillAttributeBonus("blacksmith_subclass_1_mastery", BLOCKING, 10, ADDITION);
-    addSkillAttributeBonus("blacksmith_subclass_1_mastery", ARMOR, 0.05, MULTIPLY_BASE);
-    addSkillAttributeBonus(
+    addSkillBonus("blacksmith_subclass_1_mastery", BLOCKING, 10, ADDITION);
+    addSkillBonus("blacksmith_subclass_1_mastery", ARMOR, 0.05, MULTIPLY_BASE);
+    addSkillBonus(
         "blacksmith_subclass_1_mastery",
         new DamageBonus(0.05f, MULTIPLY_BASE).setDamageCondition(new MeleeDamageCondition()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_special",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
             new ItemSkillBonus(
                 new LootDuplicationBonus(0.05f, 1f, LootDuplicationBonus.LootType.MOBS))));
     // artisan skills
-    addSkillBranchAttributeModifier("blacksmith_subclass_2_defensive", ARMOR, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("blacksmith_subclass_2_defensive", ARMOR, 1, ADDITION, 1, 4);
+    addSkillBonus(
         "blacksmith_subclass_2",
         new RepairEfficiencyBonus(new EquipmentCondition(EquipmentCondition.Type.ANY), 1f));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_subclass_2_life",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 1, ADDITION))),
         1,
         4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "blacksmith_subclass_2_crafting",
         new RepairEfficiencyBonus(new EquipmentCondition(EquipmentCondition.Type.ANY), 0.05f),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.SHIELD),
             new ItemSkillBonus(createAttributeBonus(BLOCKING.get(), 5, ADDITION))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_life_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.SHIELD),
             new ItemSkillBonus(createAttributeBonus(MAX_HEALTH, 5, ADDITION))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_mastery",
         new RepairEfficiencyBonus(new EquipmentCondition(EquipmentCondition.Type.ANY), 0.05f));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ANY),
             new ItemDurabilityBonus(0.05f, MULTIPLY_BASE)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
             new ItemSkillBonus(createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.ARMOR),
             new ItemSkillBonus(createAttributeBonus(ARMOR_TOUGHNESS, 0.05f, MULTIPLY_BASE))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "blacksmith_subclass_2_mastery",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.SHIELD),
             new ItemSkillBonus(createAttributeBonus(ARMOR, 5, ADDITION))));
     // enchanter skills
-    addSkillAttributeBonus("enchanter_class", new EnchantmentRequirementBonus(-0.3f));
-    addSkillBranchAttributeModifier(
+    addSkillBonus("enchanter_class", new EnchantmentRequirementBonus(-0.3f));
+    addSkillBranchBonuses(
         "enchanter_defensive_crafting",
         new EnchantmentAmplificationBonus(new ArmorEnchantmentCondition(), 0.1f),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "enchanter_offensive_crafting",
         new EnchantmentAmplificationBonus(new WeaponEnchantmentCondition(), 0.1f),
         1,
         7);
-    addSkillBranchAttributeModifier("enchanter_defensive", BLOCKING, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("enchanter_defensive", BLOCKING, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "enchanter_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerCondition(
@@ -941,34 +939,34 @@ public class PSTSkillsProvider implements DataProvider {
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))),
         1,
         8);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_defensive_notable_1",
         createAttributeBonus(BLOCKING.get(), 10, ADDITION)
             .setCondition(
                 new HasItemInHandCondition(
                     new EnchantedCondition(
                         new EquipmentCondition(EquipmentCondition.Type.SHIELD)))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_offensive_notable_1",
         new DamageBonus(0.2f, MULTIPLY_BASE)
             .setPlayerCondition(
                 new HasItemInHandCondition(
                     new EnchantedCondition(
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "enchanter_life",
         createAttributeBonus(MAX_HEALTH, 2, ADDITION)
             .setCondition(
                 new HasItemEquippedCondition(new EnchantedCondition(NoneItemCondition.INSTANCE))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION)
             .setMultiplier(
                 new EnchantsAmountMultiplier(
                     new EquipmentCondition(EquipmentCondition.Type.ARMOR))));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "enchanter_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(
@@ -977,17 +975,16 @@ public class PSTSkillsProvider implements DataProvider {
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.05, MULTIPLY_BASE)
             .setCondition(
                 new HasItemInHandCondition(
                     new EnchantedCondition(
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))));
-    addSkillBranchAttributeModifier(
-        "enchanter_lesser", new EnchantmentRequirementBonus(-0.05f), 1, 6);
-    addSkillAttributeBonus("enchanter_mastery", new EnchantmentAmplificationBonus(1f));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("enchanter_lesser", new EnchantmentRequirementBonus(-0.05f), 1, 6);
+    addSkillBonus("enchanter_mastery", new EnchantmentAmplificationBonus(1f));
+    addSkillBranchBonuses(
         "enchanter_crit",
         new CritChanceBonus(0.02f)
             .setPlayerCondition(
@@ -996,162 +993,167 @@ public class PSTSkillsProvider implements DataProvider {
                         new EquipmentCondition(EquipmentCondition.Type.WEAPON)))),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_crit_notable_1",
         new CritDamageBonus(0.05f)
             .setPlayerMultiplier(
                 new EnchantsAmountMultiplier(
                     new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
-    addSkillBranchAttributeModifier("enchanter_crafting", new FreeEnchantmentBonus(0.05f), 1, 3);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("enchanter_crafting", new FreeEnchantmentBonus(0.05f), 1, 3);
+    addSkillBonus(
         "enchanter_defensive_crafting_keystone_1",
         new EnchantmentAmplificationBonus(new ArmorEnchantmentCondition(), 0.4f));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_offensive_crafting_keystone_1",
         new EnchantmentAmplificationBonus(new WeaponEnchantmentCondition(), 0.4f));
-    addSkillBranchAttributeModifier("enchanter_healing", LIFE_ON_BLOCK, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses(
+        "enchanter_healing",
+        new HealingBonus(1f, 0.1f, new BlockEventListener().setTarget(SkillBonus.Target.PLAYER)),
+        1,
+        4);
+    addSkillBonus(
         "enchanter_healing_notable_1",
-        createAttributeBonus(LIFE_ON_BLOCK.get(), 0.25, ADDITION)
-            .setMultiplier(
-                new EnchantsAmountMultiplier(
-                    new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillAttributeBonus("enchanter_crafting_notable_1", new FreeEnchantmentBonus(0.1f));
-    addSkillAttributeBonus(
+        new HealingBonus(
+            1f,
+            0.2f,
+            new BlockEventListener()
+                .setTarget(SkillBonus.Target.PLAYER)
+                .setPlayerMultiplier(
+                    new EnchantsAmountMultiplier(
+                        new EquipmentCondition(EquipmentCondition.Type.SHIELD)))));
+    addSkillBonus("enchanter_crafting_notable_1", new FreeEnchantmentBonus(0.1f));
+    addSkillBonus(
         "enchanter_defensive_keystone_1",
         createAttributeBonus(BLOCKING.get(), 5, ADDITION)
             .setMultiplier(
                 new EnchantsAmountMultiplier(
                     new EquipmentCondition(EquipmentCondition.Type.SHIELD))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_offensive_keystone_1",
         new DamageBonus(0.05f, MULTIPLY_BASE)
             .setPlayerMultiplier(
                 new EnchantLevelsAmountMultiplier(
                     new EquipmentCondition(EquipmentCondition.Type.WEAPON))));
     // arsonist skills
-    addSkillBranchAttributeModifier("enchanter_subclass_1_defensive", EVASION, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "enchanter_subclass_1_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("enchanter_subclass_1_defensive", EVASION, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("enchanter_subclass_1_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
+    addSkillBonus(
         "enchanter_subclass_1",
         new DamageBonus(0.15f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus("enchanter_subclass_1", new IgniteBonus(0.15f, 5));
-    addSkillBranchAttributeModifier(
+    addSkillBonus("enchanter_subclass_1", new IgniteBonus(0.15f, 5));
+    addSkillBranchBonuses(
         "enchanter_subclass_1_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()),
         1,
         4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "enchanter_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
             new ItemSkillBonus(new IgniteBonus(0.05f, 5))),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.WEAPON),
             new ItemSkillBonus(
                 new DamageBonus(0.2f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_subclass_1_offensive_notable_1",
         new CritChanceBonus(0.1f).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus("enchanter_subclass_1_mastery", new IgniteBonus(0.1f, 5));
-    addSkillAttributeBonus(
+    addSkillBonus("enchanter_subclass_1_mastery", new IgniteBonus(0.1f, 5));
+    addSkillBonus(
         "enchanter_subclass_1_mastery",
         new DamageBonus(0.1f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_subclass_1_mastery",
         new CritChanceBonus(0.1f).setTargetCondition(new BurningCondition()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_subclass_special",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(
                 new DamageBonus(0.1f, MULTIPLY_BASE).setTargetCondition(new BurningCondition()))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "enchanter_subclass_special",
         new CraftedItemBonus(
             new ItemTagCondition(PSTTags.QUIVERS.location()),
             new ItemSkillBonus(new IgniteBonus(0.1f, 5))));
     // scholar skills
-    addSkillBranchAttributeModifier("enchanter_subclass_2_defensive", BLOCKING, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus("enchanter_subclass_2", EXP_PER_MINUTE, 2, ADDITION);
-    addSkillBranchAttributeModifier("enchanter_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "enchanter_subclass_2_life", EXP_PER_MINUTE, 0.1, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
-        "enchanter_subclass_2_crafting", EXP_PER_MINUTE, 0.2, ADDITION, 1, 5);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("enchanter_subclass_2_defensive", BLOCKING, 1, ADDITION, 1, 4);
+    addSkillBonus("enchanter_subclass_2", EXP_PER_MINUTE, 2, ADDITION);
+    addSkillBranchBonuses("enchanter_subclass_2_life", MAX_HEALTH, 2, ADDITION, 1, 4);
+    addSkillBranchBonuses("enchanter_subclass_2_life", EXP_PER_MINUTE, 0.1, ADDITION, 1, 4);
+    addSkillBranchBonuses("enchanter_subclass_2_crafting", EXP_PER_MINUTE, 0.2, ADDITION, 1, 5);
+    addSkillBonus(
         "enchanter_subclass_2_crafting_notable_1",
         new GainedExperienceBonus(1f, GainedExperienceBonus.ExperienceSource.ORE));
-    addSkillAttributeBonus("enchanter_subclass_2_life_notable_1", MAX_HEALTH, 6, ADDITION);
-    addSkillAttributeBonus("enchanter_subclass_2_life_notable_1", EXP_PER_MINUTE, 0.1, ADDITION);
-    addSkillAttributeBonus("enchanter_subclass_2_mastery", EXP_PER_MINUTE, 1.5, ADDITION);
+    addSkillBonus("enchanter_subclass_2_life_notable_1", MAX_HEALTH, 6, ADDITION);
+    addSkillBonus("enchanter_subclass_2_life_notable_1", EXP_PER_MINUTE, 0.1, ADDITION);
+    addSkillBonus("enchanter_subclass_2_mastery", EXP_PER_MINUTE, 1.5, ADDITION);
     // cook skills
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_class", new CraftedItemBonus(new FoodCondition(), new FoodSaturationBonus(0.2f)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_defensive_crafting",
-        new CraftedItemBonus(new FoodCondition(), new FoodHealingBonus(0.25f)),
+        new CraftedItemBonus(new FoodCondition(), new FoodHealingBonus(0.1f)),
         1,
         7);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_offensive_crafting",
         new CraftedItemBonus(
             new FoodCondition(),
             new FoodEffectBonus(new MobEffectInstance(PSTEffects.DAMAGE_BONUS.get(), 1200, 1))),
         1,
         7);
-    addSkillBranchAttributeModifier("cook_defensive", BLOCKING, 1, ADDITION, 1, 8);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("cook_defensive", BLOCKING, 1, ADDITION, 1, 8);
+    addSkillBranchBonuses(
         "cook_offensive",
         new DamageBonus(0.05f, MULTIPLY_BASE).setPlayerCondition(new FoodLevelCondition(15, -1)),
         1,
         8);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_defensive_notable_1",
         createAttributeBonus(BLOCKING.get(), 10, ADDITION)
             .setCondition(new FoodLevelCondition(15, -1)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_offensive_notable_1",
         new DamageBonus(0.2f, MULTIPLY_BASE).setPlayerCondition(new FoodLevelCondition(15, -1)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_life",
         createAttributeBonus(MAX_HEALTH, 2, ADDITION).setCondition(new FoodLevelCondition(15, -1)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_life_notable_1",
         createAttributeBonus(MAX_HEALTH, 1, ADDITION).setMultiplier(new HungerLevelMultiplier()));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_speed",
         createAttributeBonus(ATTACK_SPEED, 0.02, MULTIPLY_BASE)
             .setCondition(new FoodLevelCondition(15, -1)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_speed_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.1, MULTIPLY_BASE)
             .setCondition(new FoodLevelCondition(15, -1)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_lesser",
         new CraftedItemBonus(new FoodCondition(), new FoodSaturationBonus(0.05f)),
         1,
         6);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_mastery", new CraftedItemBonus(new FoodCondition(), new FoodSaturationBonus(0.5f)));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_crit",
         new CritChanceBonus(0.02f).setPlayerCondition(new FoodLevelCondition(15, -1)),
         1,
         2);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_crit_notable_1",
         new CritDamageBonus(0.01f).setPlayerMultiplier(new HungerLevelMultiplier()));
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses(
         "cook_crafting",
         new CraftedItemBonus(
             new FoodCondition(),
@@ -1159,99 +1161,110 @@ public class PSTSkillsProvider implements DataProvider {
                 new MobEffectInstance(PSTEffects.LIFE_REGENERATION_BONUS.get(), 1200, 9))),
         1,
         3);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_defensive_crafting_keystone_1",
-        new CraftedItemBonus(new FoodCondition(), new FoodHealingBonus(1f)));
-    addSkillAttributeBonus(
+        new CraftedItemBonus(new FoodCondition(), new FoodHealingBonus(0.3f)));
+    addSkillBonus(
         "cook_offensive_crafting_keystone_1",
         new CraftedItemBonus(
             new FoodCondition(),
             new FoodEffectBonus(
                 new MobEffectInstance(PSTEffects.CRIT_DAMAGE_BONUS.get(), 1200, 19))));
-    addSkillBranchAttributeModifier("cook_healing", LIFE_ON_BLOCK, 0.25, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses(
+        "cook_healing",
+        new HealingBonus(1f, 0.1f, new BlockEventListener().setTarget(SkillBonus.Target.PLAYER)),
+        1,
+        4);
+    addSkillBonus(
         "cook_healing_notable_1",
-        createAttributeBonus(LIFE_ON_BLOCK.get(), 0.5, ADDITION)
-            .setCondition(new FoodLevelCondition(15, -1)));
-    addSkillAttributeBonus(
+        new HealingBonus(
+            1f,
+            1f,
+            new BlockEventListener()
+                .setTarget(SkillBonus.Target.PLAYER)
+                .setPlayerCondition(new FoodLevelCondition(15, -1))));
+    addSkillBonus(
         "cook_crafting_notable_1",
         new CraftedItemBonus(
             new FoodCondition(),
             new FoodEffectBonus(
                 new MobEffectInstance(PSTEffects.LIFE_REGENERATION_BONUS.get(), 1200, 19))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_defensive_keystone_1",
         createAttributeBonus(BLOCKING.get(), 1, ADDITION)
             .setMultiplier(new HungerLevelMultiplier()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_offensive_keystone_1",
         new DamageBonus(0.02f, MULTIPLY_BASE).setPlayerMultiplier(new HungerLevelMultiplier()));
     // berserker skills
-    addSkillBranchAttributeModifier("cook_subclass_1_defensive", BLOCKING, 1, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("cook_subclass_1_defensive", BLOCKING, 1, ADDITION, 1, 4);
+    addSkillBonus(
         "cook_subclass_1",
         new DamageBonus(0.1f, MULTIPLY_BASE)
             .setPlayerCondition(new HealthPercentageCondition(-1f, 0.75f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_1",
         new DamageBonus(0.2f, MULTIPLY_BASE)
             .setPlayerCondition(new HealthPercentageCondition(-1f, 0.5f)));
-    addSkillBranchAttributeModifier(
-        "cook_subclass_1_offensive", ATTACK_SPEED, 0.01, MULTIPLY_BASE, 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("cook_subclass_1_offensive", ATTACK_SPEED, 0.01, MULTIPLY_BASE, 1, 4);
+    addSkillBranchBonuses(
         "cook_subclass_1_crafting",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.AXE),
             new ItemSkillBonus(new CritChanceBonus(0.01f))),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_1_crafting_notable_1",
         new CraftedItemBonus(
             new EquipmentCondition(EquipmentCondition.Type.AXE),
             new ItemSkillBonus(new CritChanceBonus(0.05f))));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_1_offensive_notable_1",
         createAttributeBonus(ATTACK_SPEED, 0.1, MULTIPLY_BASE)
             .setCondition(new HealthPercentageCondition(-1, 0.5f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_1_mastery",
         new CritChanceBonus(0.15f).setPlayerCondition(new HealthPercentageCondition(-1, 0.5f)));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_1_mastery",
-        createAttributeBonus(LIFE_PER_HIT.get(), 1, ADDITION)
-            .setCondition(new HealthPercentageCondition(-1, 0.5f)));
-    addSkillAttributeBonus(
+        new HealingBonus(
+            1f,
+            1f,
+            new AttackEventListener()
+                .setTarget(SkillBonus.Target.PLAYER)
+                .setPlayerCondition(new HealthPercentageCondition(-1, 0.5f))));
+    addSkillBonus(
         "cook_subclass_special",
         new GainedExperienceBonus(0.5f, GainedExperienceBonus.ExperienceSource.MOBS));
     // fisherman skills
-    addSkillBranchAttributeModifier("cook_subclass_2_defensive", ARMOR, 0.5, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier("cook_subclass_2_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
-    addSkillAttributeBonus(
+    addSkillBranchBonuses("cook_subclass_2_defensive", ARMOR, 0.5, ADDITION, 1, 4);
+    addSkillBranchBonuses("cook_subclass_2_defensive", BLOCKING, 0.5, ADDITION, 1, 4);
+    addSkillBonus(
         "cook_subclass_2",
         new LootDuplicationBonus(0.15f, 1f, LootDuplicationBonus.LootType.FISHING));
-    addSkillBranchAttributeModifier("cook_subclass_2_life", MAX_HEALTH, 1, ADDITION, 1, 4);
-    addSkillBranchAttributeModifier(
+    addSkillBranchBonuses("cook_subclass_2_life", MAX_HEALTH, 1, ADDITION, 1, 4);
+    addSkillBranchBonuses(
         "cook_subclass_2_crafting",
         new GainedExperienceBonus(0.2f, GainedExperienceBonus.ExperienceSource.FISHING),
         1,
         5);
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_2_crafting_notable_1",
         new GainedExperienceBonus(0.5f, GainedExperienceBonus.ExperienceSource.FISHING));
-    addSkillAttributeBonus("cook_subclass_2_life_notable_1", MAX_HEALTH, 4, ADDITION);
-    addSkillAttributeBonus(
+    addSkillBonus("cook_subclass_2_life_notable_1", MAX_HEALTH, 4, ADDITION);
+    addSkillBonus(
         "cook_subclass_2_life_notable_1",
         createAttributeBonus(LUCK, 1, ADDITION).setCondition(new FishingCondition()));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_2_mastery",
         new GainedExperienceBonus(0.5f, GainedExperienceBonus.ExperienceSource.FISHING));
-    addSkillAttributeBonus(
+    addSkillBonus(
         "cook_subclass_2_mastery",
         new LootDuplicationBonus(0.05f, 5f, LootDuplicationBonus.LootType.FISHING));
   }
 
-  private void addSkillBranchAttributeModifier(
+  private void addSkillBranchBonuses(
       String branchName,
       Attribute attribute,
       double amount,
@@ -1259,23 +1272,22 @@ public class PSTSkillsProvider implements DataProvider {
       int from,
       int to) {
     for (int node = from; node <= to; node++) {
-      addSkillAttributeBonus(branchName + "_" + node, attribute, amount, operation);
+      addSkillBonus(branchName + "_" + node, attribute, amount, operation);
     }
   }
 
-  private void addSkillBranchAttributeModifier(
-      String branchName, SkillBonus<?> bonus, int from, int to) {
+  private void addSkillBranchBonuses(String branchName, SkillBonus<?> bonus, int from, int to) {
     for (int node = from; node <= to; node++) {
-      addSkillAttributeBonus(branchName + "_" + node, bonus);
+      addSkillBonus(branchName + "_" + node, bonus);
     }
   }
 
-  private void addSkillAttributeBonus(
+  private void addSkillBonus(
       String skillName, Attribute attribute, double amount, Operation operation) {
     getSkill(skillName).addSkillBonus(createAttributeBonus(attribute, amount, operation));
   }
 
-  private void addSkillAttributeBonus(String skillName, SkillBonus<?> bonus) {
+  private void addSkillBonus(String skillName, SkillBonus<?> bonus) {
     getSkill(skillName).addSkillBonus(bonus);
   }
 
@@ -1286,19 +1298,19 @@ public class PSTSkillsProvider implements DataProvider {
         attribute, new AttributeModifier(UUID.randomUUID(), "SkillBonus", amount, operation));
   }
 
-  private void addSkillBranchAttributeModifier(
+  private void addSkillBranchBonuses(
       String branchName,
       RegistryObject<Attribute> attribute,
       double amount,
       Operation operation,
       int from,
       int to) {
-    addSkillBranchAttributeModifier(branchName, attribute.get(), amount, operation, from, to);
+    addSkillBranchBonuses(branchName, attribute.get(), amount, operation, from, to);
   }
 
-  private void addSkillAttributeBonus(
+  private void addSkillBonus(
       String skillName, RegistryObject<Attribute> attribute, double amount, Operation operation) {
-    addSkillAttributeBonus(skillName, attribute.get(), amount, operation);
+    addSkillBonus(skillName, attribute.get(), amount, operation);
   }
 
   public void addSkillBranch(

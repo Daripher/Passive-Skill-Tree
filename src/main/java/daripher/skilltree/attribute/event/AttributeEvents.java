@@ -8,7 +8,11 @@ import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.LivingEntityAccessor;
+import daripher.skilltree.skill.bonus.EventListenerBonus;
+import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
+import daripher.skilltree.skill.bonus.event.EvasionEventListener;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -56,13 +60,19 @@ public class AttributeEvents {
   public static void applyEvasionBonus(LivingAttackEvent event) {
     if (!(event.getEntity() instanceof Player player)) return;
     if (!(event.getSource() instanceof EntityDamageSource damageSource)) return;
-    if (!(damageSource.getEntity() instanceof LivingEntity)) return;
+    if (!(damageSource.getEntity() instanceof LivingEntity attacker)) return;
     double evasion = player.getAttributeValue(PSTAttributes.EVASION.get());
     double evasionChance = (evasion * 0.05) / (1 + evasion * 0.05) * 0.8;
     if (!(player.getRandom().nextFloat() < evasionChance)) return;
     player.level.playSound(
         null, player, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5F, 1.5F);
     event.setCanceled(true);
+    for (EventListenerBonus<?> bonus :
+        SkillBonusHandler.getSkillBonuses(player, EventListenerBonus.class, true)) {
+      if (!(bonus.getEventListener() instanceof EvasionEventListener listener)) continue;
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      listener.onEvent(player, attacker, (EventListenerBonus<?>) copy);
+    }
   }
 
   @SubscribeEvent
@@ -90,16 +100,6 @@ public class AttributeEvents {
     if (!(attacker instanceof LivingEntity livingAttacker)) return;
     LivingEntityAccessor entityAccessor = (LivingEntityAccessor) player;
     entityAccessor.invokeBlockUsingShield(livingAttacker);
-  }
-
-  @SubscribeEvent
-  public static void applyLifeOnBlockBonus(ShieldBlockEvent event) {
-    if (!(event.getEntity() instanceof Player player)) return;
-    if (player.getFoodData().getFoodLevel() == 0) return;
-    float lifeOnBlock = (float) player.getAttributeValue(PSTAttributes.LIFE_ON_BLOCK.get());
-    if (lifeOnBlock == 0) return;
-    player.getFoodData().addExhaustion(lifeOnBlock / 5F);
-    player.heal(lifeOnBlock);
   }
 
   @SubscribeEvent

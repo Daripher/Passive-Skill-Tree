@@ -22,18 +22,28 @@
       }
     },
     {
-      "type": "skilltree:attribute",
+      "type": "skilltree:healing",
       "amount": 1.0,
-      "attribute": "skilltree:life_per_hit",
-      "id": "c9037ac1-514d-4299-8cb8-a214de6c4073",
-      "name": "SkillBonus",
-      "operation": 0,
-      "player_condition": {
-        "type": "skilltree:health_percentage",
-        "max": 0.5
-      },
-      "player_multiplier": {
-        "type": "skilltree:none"
+      "chance": 1.0,
+      "event_listener": {
+        "type": "skilltree:attack",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:health_percentage",
+          "max": 0.5
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "player"
       }
     }
   ],

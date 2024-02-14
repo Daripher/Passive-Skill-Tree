@@ -6,20 +6,27 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.5000000074505806,
-            "attribute": "skilltree:life_per_hit",
-            "id": "4e44dd0e-5ac0-4aa3-977d-763f373e45a6",
-            "name": "Ruby",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
-              "type": "skilltree:none"
+            "type": "skilltree:healing",
+            "amount": 1,
+            "chance": 1,
+            "event_listener": {
+              "type": "skilltree:attack",
+              "damage_condition": {
+                "type": "skilltree:none"
+              },
+              "enemy_condition": {
+                "type": "skilltree:none"
+              },
+              "enemy_multiplier": {
+                "type": "skilltree:none"
+              },
+              "player_condition": {
+                "type": "skilltree:none"
+              },
+              "player_multiplier": {
+                "type": "skilltree:none"
+              },
+              "target": "player"
             }
           }
         }
@@ -27,11 +34,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "bow",
           "sword",
           "heavy_weapon",
           "trident",
-          "crossbow",
-          "bow"
+          "crossbow"
         ]
       }
     },
@@ -71,7 +78,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.max_health",
-            "id": "b192ed59-29d9-40bb-90b4-966536d2cc18",
+            "id": "60bfa387-528f-4b81-b3b3-64b25613e20f",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -102,7 +109,7 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "skilltree:regeneration",
-            "id": "547dd476-2f5d-4fec-b393-2fe290fef9f0",
+            "id": "81332708-5003-49b1-a009-1642526717fb",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -130,20 +137,27 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.5000000074505806,
-            "attribute": "skilltree:life_on_block",
-            "id": "e3e9336d-7fca-44b6-9d12-5c804f82151b",
-            "name": "Ruby",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
-              "type": "skilltree:none"
+            "type": "skilltree:healing",
+            "amount": 1,
+            "chance": 1,
+            "event_listener": {
+              "type": "skilltree:block",
+              "damage_condition": {
+                "type": "skilltree:none"
+              },
+              "enemy_condition": {
+                "type": "skilltree:none"
+              },
+              "enemy_multiplier": {
+                "type": "skilltree:none"
+              },
+              "player_condition": {
+                "type": "skilltree:none"
+              },
+              "player_multiplier": {
+                "type": "skilltree:none"
+              },
+              "target": "player"
             }
           }
         }
@@ -187,7 +201,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "epic",
-  "min_rarity": "epic",
+  "max_rarity": "ancient",
+  "min_rarity": "ancient",
   "weight": 0
 }

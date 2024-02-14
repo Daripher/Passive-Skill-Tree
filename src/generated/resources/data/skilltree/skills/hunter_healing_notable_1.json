@@ -2,21 +2,27 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.5,
-      "attribute": "skilltree:life_per_hit",
-      "id": "0532f278-bdd5-457c-93bd-770eacecb092",
-      "name": "SkillBonus",
-      "operation": 0,
-      "player_condition": {
-        "type": "skilltree:has_item_in_hand",
-        "item_condition": {
-          "type": "skilltree:equipment_type",
-          "equipment_type": "ranged_weapon"
-        }
-      },
-      "player_multiplier": {
-        "type": "skilltree:none"
+      "type": "skilltree:healing",
+      "amount": 1.0,
+      "chance": 1.0,
+      "event_listener": {
+        "type": "skilltree:attack",
+        "damage_condition": {
+          "type": "skilltree:projectile"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "player"
       }
     }
   ],

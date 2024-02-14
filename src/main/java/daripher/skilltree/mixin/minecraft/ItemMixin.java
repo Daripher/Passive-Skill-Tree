@@ -51,7 +51,7 @@ public abstract class ItemMixin implements IForgeItem {
     properties.getEffects().forEach(pair -> newProperties.effect(pair::getFirst, pair.getSecond()));
     bonusEffects.forEach(effect -> newProperties.effect(() -> effect, 1f));
     newProperties.nutrition((int) (properties.getNutrition() * restorationMultiplier));
-    newProperties.saturationMod(properties.getSaturationModifier() / restorationMultiplier);
+    newProperties.saturationMod(properties.getSaturationModifier());
     return newProperties.build();
   }
 }
