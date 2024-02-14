@@ -210,6 +210,10 @@ public class DropDownList<T> extends AbstractButton {
     return value;
   }
 
+  public boolean isOpened() {
+    return opened;
+  }
+
   @Override
   public boolean isHoveredOrFocused() {
     return super.isHoveredOrFocused() || opened;

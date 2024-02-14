@@ -252,7 +252,14 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private Optional<? extends GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
-    return widgets().filter(e -> e.isMouseOver(mouseX, mouseY)).findFirst();
+    Optional<? extends GuiEventListener> openedList =
+        widgets()
+            .filter(DropDownList.class::isInstance)
+            .map(DropDownList.class::cast)
+            .filter(w -> w.isOpened() && w.isMouseOver(mouseX, mouseY))
+            .findFirst();
+    if (openedList.isPresent()) return openedList;
+    return widgets().filter(w -> w.isMouseOver(mouseX, mouseY)).findFirst();
   }
 
   private Stream<? extends GuiEventListener> widgets() {
@@ -260,6 +267,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private @Nullable SkillButton getSkillAt(double mouseX, double mouseY) {
+    if (mouseX > toolsX && mouseY < toolsY) return null;
     mouseX -= scrollX;
     mouseY -= scrollY;
     for (SkillButton button : skillButtons.values()) {
