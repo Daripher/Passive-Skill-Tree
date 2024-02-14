@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.mixin.EditBoxAccessor;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
@@ -44,6 +45,15 @@ public class TextField extends EditBox {
     boolean result = super.charTyped(codePoint, modifiers);
     setSuggestion(suggestionProvider.apply(getValue()));
     return result;
+  }
+
+  @Override
+  public void setResponder(@NotNull Consumer<String> responder) {
+    super.setResponder(
+        s -> {
+          if (!isValueValid()) return;
+          responder.accept(s);
+        });
   }
 
   public void setSuggestionProvider(Function<String, @Nullable String> suggestionProvider) {

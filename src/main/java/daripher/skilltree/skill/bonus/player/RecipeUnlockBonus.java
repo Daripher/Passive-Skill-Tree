@@ -83,7 +83,6 @@ public final class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
         .setSoftFilter(ResourceLocation::isValidResourceLocation)
         .setResponder(
             s -> {
-              if (!ResourceLocation.isValidResourceLocation(s)) return;
               setRecipeId(new ResourceLocation(s));
               consumer.accept(this.copy());
             });
