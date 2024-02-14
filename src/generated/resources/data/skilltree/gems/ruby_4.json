@@ -55,9 +55,6 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
-              "type": "skilltree:none"
             }
           }
         }
@@ -78,16 +75,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.max_health",
-            "id": "f79c61ad-6714-4234-a9fa-cb43b093d7c8",
+            "id": "903113e9-931b-4582-8d26-bdd389c9fd47",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -109,16 +103,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:regeneration",
-            "id": "3c8a5dc5-138e-4460-858f-96ef7596778d",
+            "id": "31678bb5-a93c-475c-a0bd-f4fc0f284552",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -182,9 +173,6 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
-              "type": "skilltree:none"
             }
           }
         }
@@ -201,7 +189,7 @@
   "dimensions": [
     "skilltree:fake_dimension"
   ],
-  "max_rarity": "mythic",
-  "min_rarity": "mythic",
+  "max_rarity": "epic",
+  "min_rarity": "epic",
   "weight": 0
 }

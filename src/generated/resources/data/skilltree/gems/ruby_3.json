@@ -55,9 +55,6 @@
             },
             "player_multiplier": {
               "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
-              "type": "skilltree:none"
             }
           }
         }
@@ -78,16 +75,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "minecraft:generic.max_health",
-            "id": "bad65570-fbbc-44c0-9c20-ffe3f1d53877",
+            "id": "14fcbb89-2167-4c78-970b-4d993a78c3ba",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -109,16 +103,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "skilltree:regeneration",
-            "id": "c2163e65-6e97-4502-9f72-5c9fc4b68e04",
+            "id": "5f9948d3-18e6-4664-b373-713d2f35eb4d",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -181,9 +172,6 @@
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }

@@ -11,14 +11,14 @@
             "damage_condition": {
               "type": "skilltree:none"
             },
+            "enemy_multiplier": {
+              "type": "skilltree:none"
+            },
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             },
             "target_condition": {
@@ -30,11 +30,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "bow",
           "sword",
           "heavy_weapon",
           "trident",
-          "crossbow",
-          "bow"
+          "crossbow"
         ]
       }
     },
@@ -47,16 +47,13 @@
             "type": "skilltree:attribute",
             "amount": 0.5000000074505806,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "56beaad7-f684-45cd-a344-a6ecd4556b3f",
+            "id": "b3eeda96-f537-465d-babd-d592de7e0c9c",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -78,16 +75,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.armor",
-            "id": "41918611-b580-4781-b8e5-be253543c81b",
+            "id": "5f93f53d-cf55-4605-8e34-f38b5bf10dbc",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -109,16 +103,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.knockback_resistance",
-            "id": "71b081d2-3b60-444f-83e0-1086d0b8062c",
+            "id": "041a178a-c30d-45d0-8b26-e6276c880b38",
             "name": "Sapphire",
             "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -156,16 +147,13 @@
             "type": "skilltree:attribute",
             "amount": 0.024999999441206455,
             "attribute": "skilltree:blocking",
-            "id": "b6681809-4826-4397-9c96-20043c0afaa5",
+            "id": "7cfbc2ca-e02a-4b02-999b-aca22999c0c2",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }

@@ -3,7 +3,9 @@ package daripher.skilltree.compat.apotheosis.gem;
 import com.mojang.serialization.JsonOps;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTAttributes;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.BlockEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -110,11 +112,8 @@ public class PSTGemsProvider extends JsonCodecProvider<Gem> {
         "ruby",
         createGemBonuses(
             new ItemSkillBonus(
-                new AttributeBonus(
-                    PSTAttributes.LIFE_PER_HIT.get(),
-                    "Ruby",
-                    0.05f,
-                    AttributeModifier.Operation.ADDITION)),
+                new HealingBonus(
+                    1f, 0.1f, new AttackEventListener().setTarget(SkillBonus.Target.PLAYER))),
             new ItemSkillBonus(new IncomingHealingBonus(0.01f)),
             new ItemSkillBonus(
                 new AttributeBonus(
@@ -129,11 +128,8 @@ public class PSTGemsProvider extends JsonCodecProvider<Gem> {
                     0.01f,
                     AttributeModifier.Operation.ADDITION)),
             new ItemSkillBonus(
-                new AttributeBonus(
-                    PSTAttributes.LIFE_ON_BLOCK.get(),
-                    "Ruby",
-                    0.05f,
-                    AttributeModifier.Operation.ADDITION)),
+                new HealingBonus(
+                    1f, 0.1f, new BlockEventListener().setTarget(SkillBonus.Target.PLAYER))),
             new ItemSkillBonus(new IncomingHealingBonus(0.005f))));
     addSimpleGems(
         "citrine",
@@ -144,7 +140,7 @@ public class PSTGemsProvider extends JsonCodecProvider<Gem> {
                     Attributes.LUCK, "Citrine", 0.1f, AttributeModifier.Operation.ADDITION)),
             new ItemSkillBonus(
                 new LootDuplicationBonus(0.01f, 2f, LootDuplicationBonus.LootType.GEMS)),
-            new ItemSkillBonus(new JumpHeightBonus(new NoneLivingCondition(), 0.01f)),
+            new ItemSkillBonus(new JumpHeightBonus(0.01f)),
             new ItemSkillBonus(
                 new AttributeBonus(
                     Attributes.LUCK, "Citrine", 0.01f, AttributeModifier.Operation.MULTIPLY_BASE)),

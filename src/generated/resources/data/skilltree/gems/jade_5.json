@@ -9,16 +9,13 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "bbdce24b-07da-4ebe-9491-a4ea0c313a3c",
+            "id": "95f99f56-4f85-4ede-9a35-c1dd3b86576b",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -27,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "bow",
           "sword",
           "heavy_weapon",
           "trident",
-          "crossbow",
-          "bow"
+          "crossbow"
         ]
       }
     },
@@ -44,16 +41,13 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "skilltree:evasion",
-            "id": "9b38efb8-6ebd-4d3e-b0a6-dbe16c8eda2d",
+            "id": "87eaa253-453d-4e04-9569-5029b44d0869",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -94,16 +88,13 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.movement_speed",
-            "id": "a8c81482-0bed-4cd6-b458-55240d49c580",
+            "id": "d6946aa4-6141-4504-80f1-40107cf97d65",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -125,16 +116,13 @@
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
             "attribute": "skilltree:blocking",
-            "id": "b77e2f36-93a2-41de-b842-efd51eb4fce9",
+            "id": "194ca8cd-8620-4ff7-9450-f4f66f5f7f67",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -156,16 +144,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "skilltree:evasion",
-            "id": "1cc729e7-1921-4613-957b-fe8daef0f5fc",
+            "id": "547d458b-4ce5-44b4-8d8e-6b3f7d08111e",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }

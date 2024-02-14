@@ -11,13 +11,13 @@
             "damage_condition": {
               "type": "skilltree:none"
             },
+            "enemy_multiplier": {
+              "type": "skilltree:none"
+            },
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             },
             "target_condition": {
@@ -29,11 +29,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "bow",
           "sword",
           "heavy_weapon",
           "trident",
-          "crossbow",
-          "bow"
+          "crossbow"
         ]
       }
     },
@@ -46,16 +46,13 @@
             "type": "skilltree:attribute",
             "amount": 0.5000000074505806,
             "attribute": "minecraft:generic.luck",
-            "id": "5b5dfbdb-ea03-41b7-a118-4f372dfad53c",
+            "id": "2d948ae9-8ce7-4cfd-977b-e284866e35da",
             "name": "Citrine",
             "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
@@ -118,16 +115,13 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.luck",
-            "id": "2c70cf60-0863-4f88-abfd-eb55e444cd43",
+            "id": "c5834373-fc27-4dc2-8b6b-abaee4f74a94",
             "name": "Citrine",
             "operation": 1,
             "player_condition": {
               "type": "skilltree:none"
             },
             "player_multiplier": {
-              "type": "skilltree:none"
-            },
-            "enemy_multiplier": {
               "type": "skilltree:none"
             }
           }
