@@ -373,6 +373,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s if %s %s in hand");
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s when you deal %s");
+    add(PSTEventListeners.BLOCK.get(), "%s when you block %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.IS_MELEE.get(), "Melee Damage");

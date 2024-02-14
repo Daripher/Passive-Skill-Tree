@@ -21,6 +21,7 @@ import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +31,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
-public class AttackEventListener implements SkillEventListener {
+public class BlockEventListener implements SkillEventListener {
   private LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
   private LivingCondition enemyCondition = NoneLivingCondition.INSTANCE;
   private DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
@@ -40,13 +41,15 @@ public class AttackEventListener implements SkillEventListener {
 
   public void onEvent(
       @Nonnull Player player,
-      @Nonnull LivingEntity enemy,
+      @Nullable LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
+    if (enemyCondition != NoneLivingCondition.INSTANCE && enemy == null) return;
     if (!playerCondition.met(player)) return;
     if (!enemyCondition.met(enemy)) return;
     if (!damageCondition.met(damage)) return;
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
+    if (target == null) return;
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))
         .applyEffect(target);
@@ -66,14 +69,14 @@ public class AttackEventListener implements SkillEventListener {
 
   @Override
   public SkillEventListener.Serializer getSerializer() {
-    return PSTEventListeners.ATTACK.get();
+    return PSTEventListeners.BLOCK.get();
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    AttackEventListener listener = (AttackEventListener) o;
+    BlockEventListener listener = (BlockEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(enemyCondition, listener.enemyCondition)
         && Objects.equals(damageCondition, listener.damageCondition)
@@ -222,7 +225,7 @@ public class AttackEventListener implements SkillEventListener {
   public static class Serializer implements SkillEventListener.Serializer {
     @Override
     public SkillEventListener deserialize(JsonObject json) throws JsonParseException {
-      AttackEventListener listener = new AttackEventListener();
+      BlockEventListener listener = new BlockEventListener();
       listener.setDamageCondition(SerializationHelper.deserializeDamageCondition(json));
       listener.setEnemyCondition(
           SerializationHelper.deserializeLivingCondition(json, "enemy_condition"));
@@ -238,7 +241,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public void serialize(JsonObject json, SkillEventListener listener) {
-      if (!(listener instanceof AttackEventListener aListener)) {
+      if (!(listener instanceof BlockEventListener aListener)) {
         throw new IllegalArgumentException();
       }
       SerializationHelper.serializeDamageCondition(json, aListener.damageCondition);
@@ -255,7 +258,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener deserialize(CompoundTag tag) {
-      AttackEventListener listener = new AttackEventListener();
+      BlockEventListener listener = new BlockEventListener();
       listener.setDamageCondition(SerializationHelper.deserializeDamageCondition(tag));
       listener.setEnemyCondition(
           SerializationHelper.deserializeLivingCondition(tag, "enemy_condition"));
@@ -271,7 +274,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public CompoundTag serialize(SkillEventListener listener) {
-      if (!(listener instanceof AttackEventListener aListener)) {
+      if (!(listener instanceof BlockEventListener aListener)) {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
@@ -290,7 +293,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener deserialize(FriendlyByteBuf buf) {
-      AttackEventListener listener = new AttackEventListener();
+      BlockEventListener listener = new BlockEventListener();
       listener.setDamageCondition(NetworkHelper.readDamageCondition(buf));
       listener.setEnemyCondition(NetworkHelper.readLivingCondition(buf));
       listener.setPlayerCondition(NetworkHelper.readLivingCondition(buf));
@@ -302,7 +305,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public void serialize(FriendlyByteBuf buf, SkillEventListener listener) {
-      if (!(listener instanceof AttackEventListener aListener)) {
+      if (!(listener instanceof BlockEventListener aListener)) {
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeDamageCondition(buf, aListener.damageCondition);
@@ -315,7 +318,7 @@ public class AttackEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener createDefaultInstance() {
-      return new AttackEventListener();
+      return new BlockEventListener();
     }
   }
 }

@@ -3,16 +3,12 @@ package daripher.skilltree.skill.bonus;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
-
 import java.util.Objects;
 import java.util.function.Consumer;
-
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBonus<?>> {
@@ -67,12 +63,6 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
 
   interface Ticking {
     void tick(ServerPlayer player);
-  }
-
-  interface EventListener {
-    SkillEventListener getEventListener();
-
-    void applyEffect(LivingEntity target);
   }
 
   enum Target {

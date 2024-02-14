@@ -7,6 +7,7 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
@@ -21,7 +22,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-public final class IgniteBonus implements SkillBonus<IgniteBonus>, SkillBonus.EventListener {
+public final class IgniteBonus implements EventListenerBonus<IgniteBonus> {
   private float chance;
   private int duration;
   private SkillEventListener eventListener;
@@ -67,7 +68,7 @@ public final class IgniteBonus implements SkillBonus<IgniteBonus>, SkillBonus.Ev
   }
 
   @Override
-  public SkillBonus<IgniteBonus> merge(SkillBonus<?> other) {
+  public SkillBonus<EventListenerBonus<IgniteBonus>> merge(SkillBonus<?> other) {
     if (!(other instanceof IgniteBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
@@ -104,7 +105,7 @@ public final class IgniteBonus implements SkillBonus<IgniteBonus>, SkillBonus.Ev
 
   @Override
   public void addEditorWidgets(
-      SkillTreeEditorScreen editor, int row, Consumer<IgniteBonus> consumer) {
+      SkillTreeEditorScreen editor, int row, Consumer<EventListenerBonus<IgniteBonus>> consumer) {
     editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
     editor.addLabel(110, 0, "Duration", ChatFormatting.GOLD);
     editor.shiftWidgets(0, 19);

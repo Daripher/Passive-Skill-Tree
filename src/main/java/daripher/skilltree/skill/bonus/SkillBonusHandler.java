@@ -12,6 +12,7 @@ import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.BlockEventListener;
 import daripher.skilltree.skill.bonus.item.FoodHealingBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -32,6 +33,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -67,8 +69,7 @@ public class SkillBonusHandler {
   public static void applyBreakSpeedMultiplier(PlayerEvent.BreakSpeed event) {
     Player player = event.getEntity();
     float multiplier = 1f;
-    List<BlockBreakSpeedBonus> bonuses = getSkillBonuses(player, BlockBreakSpeedBonus.class);
-    for (BlockBreakSpeedBonus bonus : bonuses) {
+    for (BlockBreakSpeedBonus bonus : getSkillBonuses(player, BlockBreakSpeedBonus.class)) {
       if (bonus.getPlayerCondition().met(player)) {
         multiplier += bonus.getMultiplier();
       }
@@ -175,9 +176,8 @@ public class SkillBonusHandler {
       DamageSource damageSource,
       LivingEntity target,
       AttributeModifier.Operation operation) {
-    List<DamageBonus> bonuses = getSkillBonuses(player, DamageBonus.class);
     float amount = 0;
-    for (DamageBonus bonus : bonuses) {
+    for (DamageBonus bonus : getSkillBonuses(player, DamageBonus.class)) {
       amount += bonus.getDamageBonus(operation, damageSource, player, target);
     }
     return amount;
@@ -212,9 +212,8 @@ public class SkillBonusHandler {
 
   private static float getCritDamageMultiplier(
       ServerPlayer player, DamageSource source, LivingEntity target) {
-    List<CritDamageBonus> damageBonuses = getSkillBonuses(player, CritDamageBonus.class);
     float multiplier = 1.5f;
-    for (CritDamageBonus bonus : damageBonuses) {
+    for (CritDamageBonus bonus : getSkillBonuses(player, CritDamageBonus.class)) {
       multiplier += bonus.getDamageBonus(source, player, target);
     }
     return multiplier;
@@ -223,8 +222,7 @@ public class SkillBonusHandler {
   private static float getCritChance(
       ServerPlayer player, DamageSource source, LivingEntity target) {
     float critChance = 0f;
-    List<CritChanceBonus> chanceBonuses = getSkillBonuses(player, CritChanceBonus.class);
-    for (CritChanceBonus bonus : chanceBonuses) {
+    for (CritChanceBonus bonus : getSkillBonuses(player, CritChanceBonus.class)) {
       critChance += bonus.getChanceBonus(source, player, target);
     }
     return critChance;
@@ -359,34 +357,27 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyChanceToApplyEffect(LivingHurtEvent event) {
-    if (event.getSource().getEntity() instanceof Player player) {
-      List<SkillBonus.EventListener> skillBonuses =
-          getSkillBonuses(player, SkillBonus.EventListener.class);
-      for (SkillBonus.EventListener bonus : mergeSkillBonuses(skillBonuses)) {
-        if (!(bonus.getEventListener() instanceof AttackEventListener listener)) continue;
-        SkillBonus<?> skillBonus = ((SkillBonus<?>) bonus).copy();
-        bonus = (SkillBonus.EventListener) skillBonus;
-        listener.onAttack(
-            player, event.getEntity(), event.getSource(), skillBonus::multiply, bonus);
-      }
+  public static void applyEventListenerEffect(LivingHurtEvent event) {
+    if (!(event.getSource().getEntity() instanceof Player player)) return;
+    for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
+      if (!(bonus.getEventListener() instanceof AttackEventListener listener)) continue;
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      listener.onEvent(player, event.getEntity(), event.getSource(), (EventListenerBonus<?>) copy);
     }
   }
 
-  private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
-    List<T> mergedBonuses = new ArrayList<>();
-    for (T bonus : bonuses) {
-      List<T> mergedCopy = new ArrayList<>(mergedBonuses);
-      for (int i = 0; i < mergedCopy.size(); i++) {
-        SkillBonus<?> merged = (SkillBonus<?>) mergedCopy.get(i);
-        if (merged.canMerge((SkillBonus<?>) bonus)) {
-          mergedBonuses.set(i, (T) merged.merge((SkillBonus<?>) bonus));
-          break;
-        }
-      }
-      mergedBonuses.add(bonus);
+  @SubscribeEvent
+  public static void applyEventListenerEffect(ShieldBlockEvent event) {
+    if (!(event.getEntity() instanceof Player player)) return;
+    for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
+      if (!(bonus.getEventListener() instanceof BlockEventListener listener)) continue;
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      DamageSource source = event.getDamageSource();
+      Entity sourceEntity = source.getEntity();
+      LivingEntity attacker =
+          sourceEntity instanceof LivingEntity ? (LivingEntity) sourceEntity : null;
+      listener.onEvent(player, attacker, source, (EventListenerBonus<?>) copy);
     }
-    return mergedBonuses;
   }
 
   @SubscribeEvent
@@ -597,12 +588,32 @@ public class SkillBonusHandler {
   }
 
   public static <T> List<T> getSkillBonuses(@Nonnull Player player, Class<T> type) {
+    return getSkillBonuses(player, type, false);
+  }
+
+  public static <T> List<T> getSkillBonuses(@Nonnull Player player, Class<T> type, boolean merge) {
     if (!PlayerSkillsProvider.hasSkills(player)) return List.of();
     List<T> bonuses = new ArrayList<>();
     bonuses.addAll(getPlayerBonuses(player, type));
     bonuses.addAll(getEffectBonuses(player, type));
     bonuses.addAll(getEquipmentBonuses(player, type));
-    return bonuses;
+    return merge ? mergeSkillBonuses(bonuses) : bonuses;
+  }
+
+  private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
+    List<T> mergedBonuses = new ArrayList<>();
+    for (T bonus : bonuses) {
+      List<T> mergedCopy = new ArrayList<>(mergedBonuses);
+      for (int i = 0; i < mergedCopy.size(); i++) {
+        SkillBonus<?> merged = (SkillBonus<?>) mergedCopy.get(i);
+        if (merged.canMerge((SkillBonus<?>) bonus)) {
+          mergedBonuses.set(i, (T) merged.merge((SkillBonus<?>) bonus));
+          break;
+        }
+      }
+      mergedBonuses.add(bonus);
+    }
+    return mergedBonuses;
   }
 
   private static <T> List<T> getPlayerBonuses(Player player, Class<T> type) {

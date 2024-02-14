@@ -7,6 +7,7 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
@@ -20,7 +21,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-public final class HealingBonus implements SkillBonus<HealingBonus>, SkillBonus.EventListener {
+public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   private float chance;
   private float amount;
   private SkillEventListener eventListener;
@@ -70,7 +71,7 @@ public final class HealingBonus implements SkillBonus<HealingBonus>, SkillBonus.
   }
 
   @Override
-  public SkillBonus<HealingBonus> merge(SkillBonus<?> other) {
+  public HealingBonus merge(SkillBonus<?> other) {
     if (!(other instanceof HealingBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
@@ -110,7 +111,7 @@ public final class HealingBonus implements SkillBonus<HealingBonus>, SkillBonus.
 
   @Override
   public void addEditorWidgets(
-      SkillTreeEditorScreen editor, int row, Consumer<HealingBonus> consumer) {
+      SkillTreeEditorScreen editor, int row, Consumer<EventListenerBonus<HealingBonus>> consumer) {
     editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
     editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
     editor.shiftWidgets(0, 19);
