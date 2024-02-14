@@ -3,7 +3,7 @@
   "bonuses": [
     {
       "type": "skilltree:healing",
-      "amount": 0.2,
+      "amount": 0.3,
       "chance": 1.0,
       "event_listener": {
         "type": "skilltree:block",
