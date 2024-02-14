@@ -1017,7 +1017,7 @@ public class PSTSkillsProvider implements DataProvider {
         "enchanter_healing_notable_1",
         new HealingBonus(
             1f,
-            0.2f,
+            0.3f,
             new BlockEventListener()
                 .setTarget(SkillBonus.Target.PLAYER)
                 .setPlayerMultiplier(
