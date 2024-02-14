@@ -36,6 +36,7 @@
   "enchantment_condition.skilltree.none": "Зачарование",
   "enchantment_condition.skilltree.weapon": "Зачарование оружия",
   "event_listener.skilltree.attack": "%s когда вы наносите %s",
+  "event_listener.skilltree.block": "%s когда вы блокируете %s",
   "experience.source.fishing": "за Рыбалку",
   "experience.source.mobs": "с Существ",
   "experience.source.ore": "из Руды",

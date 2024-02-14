@@ -36,6 +36,7 @@
   "enchantment_condition.skilltree.none": "Enchantments",
   "enchantment_condition.skilltree.weapon": "Weapon Enchantments",
   "event_listener.skilltree.attack": "%s when you deal %s",
+  "event_listener.skilltree.block": "%s when you block %s",
   "experience.source.fishing": "Fishing",
   "experience.source.mobs": "Mobs",
   "experience.source.ore": "Ores",

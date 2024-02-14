@@ -7,6 +7,7 @@ import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
@@ -26,7 +27,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class MobEffectBonus implements SkillBonus<MobEffectBonus>, SkillBonus.EventListener {
+public final class MobEffectBonus implements EventListenerBonus<MobEffectBonus> {
   private MobEffectInstance effect;
   private SkillEventListener eventListener;
   private float chance;
@@ -72,7 +73,7 @@ public final class MobEffectBonus implements SkillBonus<MobEffectBonus>, SkillBo
   }
 
   @Override
-  public SkillBonus<MobEffectBonus> merge(SkillBonus<?> other) {
+  public SkillBonus<EventListenerBonus<MobEffectBonus>> merge(SkillBonus<?> other) {
     if (!(other instanceof MobEffectBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
@@ -113,7 +114,7 @@ public final class MobEffectBonus implements SkillBonus<MobEffectBonus>, SkillBo
 
   @Override
   public void addEditorWidgets(
-      SkillTreeEditorScreen editor, int row, Consumer<MobEffectBonus> consumer) {
+      SkillTreeEditorScreen editor, int row, Consumer<EventListenerBonus<MobEffectBonus>> consumer) {
     editor.addLabel(0, 0, "Effect", ChatFormatting.GOLD);
     editor.addLabel(150, 0, "Chance", ChatFormatting.GOLD);
     editor.shiftWidgets(0, 19);
