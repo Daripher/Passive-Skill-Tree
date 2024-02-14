@@ -19,8 +19,6 @@ public class PSTAttributes {
 
   public static final RegistryObject<Attribute> EXP_PER_MINUTE = create("exp_per_minute", 100d);
   public static final RegistryObject<Attribute> EVASION = create("evasion", 90d);
-  public static final RegistryObject<Attribute> LIFE_PER_HIT = create("life_per_hit", 100d);
-  public static final RegistryObject<Attribute> LIFE_ON_BLOCK = create("life_on_block", 100d);
   public static final RegistryObject<Attribute> REGENERATION = create("regeneration", 100d);
   public static final RegistryObject<Attribute> BLOCKING = create("blocking", 90d);
   public static final RegistryObject<Attribute> STEALTH = create("stealth", 90d);

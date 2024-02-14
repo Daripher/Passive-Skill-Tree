@@ -11,7 +11,10 @@ import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.item.gem.bonus.GemRemovalBonusProvider;
 import daripher.skilltree.item.gem.bonus.RandomGemBonusProvider;
 import daripher.skilltree.item.gem.bonus.SimpleGemBonusProvider;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.item.*;
+import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.BlockEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemDurabilityBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -105,11 +108,8 @@ public class PSTGemTypesProvider implements DataProvider {
         "ruby",
         createGemBonuses(
             new ItemSkillBonus(
-                new AttributeBonus(
-                    PSTAttributes.LIFE_PER_HIT.get(),
-                    "Ruby",
-                    0.05f,
-                    AttributeModifier.Operation.ADDITION)),
+                new HealingBonus(
+                    1f, 0.1f, new AttackEventListener().setTarget(SkillBonus.Target.PLAYER))),
             new ItemSkillBonus(new IncomingHealingBonus(0.01f)),
             new ItemSkillBonus(
                 new AttributeBonus(
@@ -124,11 +124,8 @@ public class PSTGemTypesProvider implements DataProvider {
                     0.01f,
                     AttributeModifier.Operation.ADDITION)),
             new ItemSkillBonus(
-                new AttributeBonus(
-                    PSTAttributes.LIFE_ON_BLOCK.get(),
-                    "Ruby",
-                    0.05f,
-                    AttributeModifier.Operation.ADDITION)),
+                new HealingBonus(
+                    1f, 0.1f, new BlockEventListener().setTarget(SkillBonus.Target.PLAYER))),
             new ItemSkillBonus(new IncomingHealingBonus(0.005f))));
     addSimpleGems(
         "citrine",

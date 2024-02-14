@@ -2,9 +2,7 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.skill.bonus.event.AttackEventListener;
-import daripher.skilltree.skill.bonus.event.BlockEventListener;
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.event.*;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +19,12 @@ public class PSTEventListeners {
       REGISTRY.register("attack", AttackEventListener.Serializer::new);
   public static final RegistryObject<SkillEventListener.Serializer> BLOCK =
       REGISTRY.register("block", BlockEventListener.Serializer::new);
+  public static final RegistryObject<SkillEventListener.Serializer> EVASION =
+      REGISTRY.register("evasion", EvasionEventListener.Serializer::new);
+  public static final RegistryObject<SkillEventListener.Serializer> ITEM_USED =
+      REGISTRY.register("item_used", ItemUsedEventListener.Serializer::new);
+  public static final RegistryObject<SkillEventListener.Serializer> DAMAGE_TAKEN =
+      REGISTRY.register("damage_taken", DamageTakenEventListener.Serializer::new);
 
   public static List<SkillEventListener> eventsList() {
     return PSTRegistries.EVENT_LISTENERS.get().getValues().stream()

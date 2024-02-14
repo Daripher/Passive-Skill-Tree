@@ -9,7 +9,7 @@
           "type": "skilltree:attribute",
           "amount": 0.05,
           "attribute": "minecraft:generic.movement_speed",
-          "id": "5e019eca-07b2-42b5-8a39-fd7b7c1a3171",
+          "id": "87a2e625-a983-4494-a604-7cae6868811f",
           "name": "SkillBonus",
           "operation": 1,
           "player_condition": {

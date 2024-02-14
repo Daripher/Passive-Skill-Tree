@@ -195,28 +195,34 @@ public class AttackEventListener implements SkillEventListener {
     return target;
   }
 
-  public void setDamageCondition(DamageCondition damageCondition) {
+  public AttackEventListener setDamageCondition(DamageCondition damageCondition) {
     this.damageCondition = damageCondition;
+    return this;
   }
 
-  public void setEnemyCondition(LivingCondition enemyCondition) {
+  public AttackEventListener setEnemyCondition(LivingCondition enemyCondition) {
     this.enemyCondition = enemyCondition;
+    return this;
   }
 
-  public void setPlayerCondition(LivingCondition playerCondition) {
+  public AttackEventListener setPlayerCondition(LivingCondition playerCondition) {
     this.playerCondition = playerCondition;
+    return this;
   }
 
-  public void setEnemyMultiplier(LivingMultiplier enemyMultiplier) {
+  public AttackEventListener setEnemyMultiplier(LivingMultiplier enemyMultiplier) {
     this.enemyMultiplier = enemyMultiplier;
+    return this;
   }
 
-  public void setPlayerMultiplier(LivingMultiplier playerMultiplier) {
+  public AttackEventListener setPlayerMultiplier(LivingMultiplier playerMultiplier) {
     this.playerMultiplier = playerMultiplier;
+    return this;
   }
 
-  public void setTarget(SkillBonus.Target target) {
+  public AttackEventListener setTarget(SkillBonus.Target target) {
     this.target = target;
+    return this;
   }
 
   public static class Serializer implements SkillEventListener.Serializer {

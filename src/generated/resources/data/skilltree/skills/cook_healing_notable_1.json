@@ -2,18 +2,28 @@
   "backgroundTexture": "skilltree:textures/icons/background/notable.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.5,
-      "attribute": "skilltree:life_on_block",
-      "id": "f400c4f6-aaf7-4ad1-83c0-c9e7ffa8578a",
-      "name": "SkillBonus",
-      "operation": 0,
-      "player_condition": {
-        "type": "skilltree:food_level",
-        "min": 15
-      },
-      "player_multiplier": {
-        "type": "skilltree:none"
+      "type": "skilltree:healing",
+      "amount": 1.0,
+      "chance": 1.0,
+      "event_listener": {
+        "type": "skilltree:block",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:food_level",
+          "min": 15
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "player"
       }
     }
   ],

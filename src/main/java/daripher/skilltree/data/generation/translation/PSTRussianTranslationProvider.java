@@ -306,6 +306,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy", "Вы накладываете %s на %s");
     add(PSTSkillBonuses.MOB_EFFECT.get(), "enemy.chance", "Шанс наложить %s на %s");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Нельзя использовать %s");
+    add(PSTSkillBonuses.HEALING.get(), "player", "Вы восстанавливаете %s здоровья");
+    add(PSTSkillBonuses.HEALING.get(), "player.chance", "Шанс восстановить %s здоровья");
+    add(PSTSkillBonuses.HEALING.get(), "enemy", "Враги восстанавливают %s здоровья");
+    add(PSTSkillBonuses.HEALING.get(), "enemy.chance", "Шанс для врагов восстановить %s здоровья");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
     add(PSTItemBonuses.DURABILITY.get(), "Прочность");
@@ -376,6 +380,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s когда вы наносите %s");
     add(PSTEventListeners.BLOCK.get(), "%s когда вы блокируете %s");
+    add(PSTEventListeners.EVASION.get(), "%s когда вы уклоняетесь от атаки");
+    add(PSTEventListeners.ITEM_USED.get(), "%s когда вы используете %s");
+    add(PSTEventListeners.DAMAGE_TAKEN.get(), "%s когда вы получаете %s");
     // damage conditions
     add(PSTDamageConditions.IS_PROJECTILE.get(), "Урон снарядами");
     add(PSTDamageConditions.IS_MELEE.get(), "Урон в ближнем бою");
@@ -650,7 +657,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
-    add(PSTAttributes.LIFE_PER_HIT.get(), "Здоровье за удар");
     add(PSTAttributes.EVASION.get(), "Уклонение");
     add(
         PSTAttributes.EVASION.get().getDescriptionId() + ".info",
@@ -659,7 +665,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(
         PSTAttributes.BLOCKING.get().getDescriptionId() + ".info",
         "(Блокирование дает шанс заблокировать урон некоторых атак, требует щит)");
-    add(PSTAttributes.LIFE_ON_BLOCK.get(), "Здоровье при блоке");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
     add(SlotAttribute.getOrCreate("ring"), "Слоты колец");
     add(PSTAttributes.STEALTH.get(), "Скрытность");

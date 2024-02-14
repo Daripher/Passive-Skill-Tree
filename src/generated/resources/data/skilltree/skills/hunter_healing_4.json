@@ -2,17 +2,27 @@
   "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "amount": 0.25,
-      "attribute": "skilltree:life_per_hit",
-      "id": "6bd29367-b75c-4819-947d-094895ea8ac0",
-      "name": "SkillBonus",
-      "operation": 0,
-      "player_condition": {
-        "type": "skilltree:none"
-      },
-      "player_multiplier": {
-        "type": "skilltree:none"
+      "type": "skilltree:healing",
+      "amount": 0.1,
+      "chance": 1.0,
+      "event_listener": {
+        "type": "skilltree:attack",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "player"
       }
     }
   ],

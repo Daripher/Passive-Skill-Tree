@@ -13,6 +13,8 @@ import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.BlockEventListener;
+import daripher.skilltree.skill.bonus.event.DamageTakenEventListener;
+import daripher.skilltree.skill.bonus.event.ItemUsedEventListener;
 import daripher.skilltree.skill.bonus.item.FoodHealingBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
@@ -360,11 +362,23 @@ public class SkillBonusHandler {
 
   @SubscribeEvent
   public static void applyEventListenerEffect(LivingHurtEvent event) {
-    if (!(event.getSource().getEntity() instanceof Player player)) return;
-    for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
-      if (!(bonus.getEventListener() instanceof AttackEventListener listener)) continue;
-      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
-      listener.onEvent(player, event.getEntity(), event.getSource(), (EventListenerBonus<?>) copy);
+    Entity sourceEntity = event.getSource().getEntity();
+    if (sourceEntity instanceof Player player) {
+      for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
+        if (!(bonus.getEventListener() instanceof AttackEventListener listener)) continue;
+        SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+        listener.onEvent(
+            player, event.getEntity(), event.getSource(), (EventListenerBonus<?>) copy);
+      }
+    }
+    if (event.getEntity() instanceof Player player) {
+      for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
+        if (!(bonus.getEventListener() instanceof DamageTakenEventListener listener)) continue;
+        SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+        LivingEntity attacker =
+            sourceEntity instanceof LivingEntity ? (LivingEntity) sourceEntity : null;
+        listener.onEvent(player, attacker, event.getSource(), (EventListenerBonus<?>) copy);
+      }
     }
   }
 
@@ -379,6 +393,16 @@ public class SkillBonusHandler {
       LivingEntity attacker =
           sourceEntity instanceof LivingEntity ? (LivingEntity) sourceEntity : null;
       listener.onEvent(player, attacker, source, (EventListenerBonus<?>) copy);
+    }
+  }
+
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void applyEventListenerEffect(LivingEntityUseItemEvent.Finish event) {
+    if (!(event.getEntity() instanceof Player player)) return;
+    for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class, true)) {
+      if (!(bonus.getEventListener() instanceof ItemUsedEventListener listener)) continue;
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      listener.onEvent(player, event.getItem(), (EventListenerBonus<?>) copy);
     }
   }
 

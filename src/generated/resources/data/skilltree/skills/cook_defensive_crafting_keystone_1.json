@@ -5,7 +5,7 @@
       "type": "skilltree:crafted_item_bonus",
       "item_bonus": {
         "type": "skilltree:food_healing",
-        "amount": 1.0
+        "amount": 0.3
       },
       "item_condition": {
         "type": "skilltree:food"
