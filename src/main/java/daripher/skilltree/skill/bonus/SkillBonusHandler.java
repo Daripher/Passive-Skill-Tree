@@ -10,6 +10,7 @@ import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.item.ItemBonusProvider;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
+import daripher.skilltree.potion.PotionHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.BlockEventListener;
@@ -258,6 +259,7 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void setCraftedItemBonus(ItemProducedEvent event) {
     ItemStack stack = event.getStack();
+    if (PotionHelper.isMixture(stack)) return;
     Player player = event.getPlayer();
     ItemHelper.removeItemBonuses(stack);
     getSkillBonuses(player, CraftedItemBonus.class).forEach(bonus -> bonus.itemCrafted(stack));
