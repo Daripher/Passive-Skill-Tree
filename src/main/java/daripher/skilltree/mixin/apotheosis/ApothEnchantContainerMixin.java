@@ -1,10 +1,10 @@
 package daripher.skilltree.mixin.apotheosis;
 
-import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
+import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -32,13 +32,14 @@ public class ApothEnchantContainerMixin {
       Level level, BlockPos pos, int slot, int power, ItemStack itemStack, int enchantmentLevel) {
     @SuppressWarnings("DataFlowIssue")
     ApothEnchantmentMenu menu = (ApothEnchantmentMenu) (Object) this;
+    Player player = ContainerHelper.getViewingPlayer(menu);
     int[] costs = menu.costs;
     int cost =
         ForgeEventFactory.onEnchantmentLevelSet(level, pos, slot, power, itemStack, costs[slot]);
+    if (player == null) return cost;
     EnchantmentMenuExtension extension = (EnchantmentMenuExtension) this;
     extension.getCostsBeforeReduction()[slot] = cost;
-    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
-    return player.map(value -> SkillBonusHandler.adjustEnchantmentCost(cost, value)).orElse(cost);
+    return SkillBonusHandler.adjustEnchantmentCost(cost, player);
   }
 
   @Redirect(
@@ -76,10 +77,10 @@ public class ApothEnchantContainerMixin {
     RandomSource random = RandomSource.create(enchantmentSeed);
     @SuppressWarnings("DataFlowIssue")
     ApothEnchantmentMenu menu = (ApothEnchantmentMenu) (Object) this;
-    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
-    if (player.isEmpty()) return enchantments;
-    assert enchantments != null;
-    SkillBonusHandler.amplifyEnchantments(enchantments, random, player.get());
+    Player player = ContainerHelper.getViewingPlayer(menu);
+    if (player == null) return enchantments;
+    Objects.requireNonNull(enchantments);
+    SkillBonusHandler.amplifyEnchantments(enchantments, random, player);
     return enchantments;
   }
 

@@ -1,10 +1,9 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.container.ContainerHelper;
+import daripher.skilltree.container.menu.EnchantmentMenuExtension;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.Nonnull;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -41,8 +40,9 @@ public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtension {
     costsBeforeReduction[slot] = cost;
     @SuppressWarnings("DataFlowIssue")
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
-    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
-    return player.map(p -> SkillBonusHandler.adjustEnchantmentCost(cost, p)).orElse(cost);
+    Player player = ContainerHelper.getViewingPlayer(menu);
+    if (player == null) return cost;
+    return SkillBonusHandler.adjustEnchantmentCost(cost, player);
   }
 
   @Redirect(
@@ -75,9 +75,9 @@ public abstract class EnchantmentMenuMixin implements EnchantmentMenuExtension {
     RandomSource random = RandomSource.create(enchantmentSeed.get());
     @SuppressWarnings("DataFlowIssue")
     EnchantmentMenu menu = (EnchantmentMenu) (Object) this;
-    Optional<Player> player = ContainerHelper.getViewingPlayer(menu);
-    if (player.isEmpty()) return enchantments;
-    SkillBonusHandler.amplifyEnchantments(enchantments, random, player.get());
+    Player player = ContainerHelper.getViewingPlayer(menu);
+    if (player == null) return enchantments;
+    SkillBonusHandler.amplifyEnchantments(enchantments, random, player);
     return enchantments;
   }
 

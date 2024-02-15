@@ -6,8 +6,7 @@ import daripher.skilltree.container.ContainerHelper;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.gem.GemItem;
-import java.util.Optional;
-import net.minecraft.nbt.CompoundTag;
+import java.util.Objects;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -41,21 +40,19 @@ public class GemInsertionRecipe extends UpgradeRecipe {
     ItemStack ingredient = container.getItem(1);
     ItemStack result = base.copy();
     result.setCount(1);
-    CompoundTag itemTag = base.getTag();
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (itemTag != null) result.setTag(itemTag.copy());
-    assert player.isPresent();
-    GemItem.insertGem(player.get(), result, ingredient);
+    Player player = ContainerHelper.getViewingPlayer(container);
+    Objects.requireNonNull(player);
+    GemItem.insertGem(player, result, ingredient);
     return result;
   }
 
   private boolean canCraftIn(@NotNull Container container) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return false;
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return false;
     ItemStack base = container.getItem(0);
     ItemStack ingredient = container.getItem(1);
     if (ingredient.getItem() != PSTItems.GEM.get()) return false;
-    return GemItem.canInsertGem(player.get(), base, ingredient);
+    return GemItem.canInsertGem(player, base, ingredient);
   }
 
   @Override

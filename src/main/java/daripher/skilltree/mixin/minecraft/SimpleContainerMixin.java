@@ -1,19 +1,18 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.container.InteractiveContainer;
-import java.util.Optional;
+import daripher.itemproduction.block.entity.Interactive;
 import javax.annotation.Nullable;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SimpleContainer.class)
-public class SimpleContainerMixin implements InteractiveContainer {
+public class SimpleContainerMixin implements Interactive {
   private @Nullable Player player;
 
   @Override
-  public Optional<Player> getUser() {
-    return Optional.ofNullable(player);
+  public @Nullable Player getUser() {
+    return player;
   }
 
   @Override
