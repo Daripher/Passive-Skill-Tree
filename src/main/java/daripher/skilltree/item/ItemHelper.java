@@ -233,6 +233,11 @@ public class ItemHelper {
     ResourceLocation id = new ResourceLocation(tag.getString("type"));
     ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
     if (serializer == null) return null;
-    return serializer.deserialize(tag);
+    try {
+      return serializer.deserialize(tag);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }
