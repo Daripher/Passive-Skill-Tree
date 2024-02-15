@@ -2,7 +2,7 @@ package daripher.skilltree.mixin.minecraft;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import daripher.skilltree.container.InteractiveContainer;
+import daripher.itemproduction.block.entity.Interactive;
 import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.item.ItemHelper;
@@ -36,7 +36,7 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
       Inventory inventory,
       ContainerLevelAccess levelAccess,
       CallbackInfo callbackInfo) {
-    ((InteractiveContainer) inputSlots).setUser(inventory.player);
+    ((Interactive) inputSlots).setUser(inventory.player);
   }
 
   @Inject(method = "onTake", at = @At("HEAD"))

@@ -6,7 +6,6 @@ import daripher.skilltree.entity.player.PlayerHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketingRecipe;
 import java.util.List;
-import java.util.Optional;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,9 +24,9 @@ public class SocketingRecipeMixin {
               target =
                   "Ldev/shadowsoffire/apotheosis/adventure/affix/socket/SocketHelper;hasEmptySockets(Lnet/minecraft/world/item/ItemStack;)Z"))
   private boolean checkPlayerSockets(ItemStack stack, Container container, Level level) {
-    return ContainerHelper.getViewingPlayer(container)
-        .map(player -> ApotheosisCompatibility.INSTANCE.hasEmptySockets(stack, player))
-        .orElseGet(() -> SocketHelper.hasEmptySockets(stack));
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return SocketHelper.hasEmptySockets(stack);
+    return ApotheosisCompatibility.INSTANCE.hasEmptySockets(stack, player);
   }
 
   @Redirect(
@@ -37,12 +36,11 @@ public class SocketingRecipeMixin {
               value = "INVOKE",
               target = "Ljava/util/List;set(ILjava/lang/Object;)Ljava/lang/Object;"))
   private Object applyGemPower(List<Object> gems, int index, Object gem, Container container) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isPresent()) {
-      ItemStack result = container.getItem(1);
-      float power = PlayerHelper.getGemPower(player.get(), result);
-      ((ItemStack) gem).getOrCreateTag().putFloat("gem_power", power);
-    }
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return gems.set(index, gem);
+    ItemStack result = container.getItem(1);
+    float power = PlayerHelper.getGemPower(player, result);
+    ((ItemStack) gem).getOrCreateTag().putFloat("gem_power", power);
     return gems.set(index, gem);
   }
 
@@ -54,9 +52,9 @@ public class SocketingRecipeMixin {
               target =
                   "Ldev/shadowsoffire/apotheosis/adventure/affix/socket/SocketHelper;getFirstEmptySocket(Lnet/minecraft/world/item/ItemStack;)I"))
   private int applyPlayerSockets(ItemStack stack, Container container) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return SocketHelper.getFirstEmptySocket(stack);
-    int sockets = ApotheosisCompatibility.INSTANCE.getSockets(stack, player.get());
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return SocketHelper.getFirstEmptySocket(stack);
+    int sockets = ApotheosisCompatibility.INSTANCE.getSockets(stack, player);
     return ApotheosisCompatibility.INSTANCE.getFirstEmptySocket(stack, sockets);
   }
 
@@ -68,9 +66,9 @@ public class SocketingRecipeMixin {
               target =
                   "Ldev/shadowsoffire/apotheosis/adventure/affix/socket/SocketHelper;getGems(Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;"))
   private List<ItemStack> applyPlayerSockets2(ItemStack stack, Container container) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return SocketHelper.getGems(stack);
-    int sockets = ApotheosisCompatibility.INSTANCE.getSockets(stack, player.get());
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return SocketHelper.getGems(stack);
+    int sockets = ApotheosisCompatibility.INSTANCE.getSockets(stack, player);
     return ApotheosisCompatibility.INSTANCE.getGems(stack, sockets);
   }
 }

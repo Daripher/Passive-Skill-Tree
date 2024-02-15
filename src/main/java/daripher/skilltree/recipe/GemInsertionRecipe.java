@@ -7,7 +7,7 @@ import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemItem;
-import java.util.Optional;
+import java.util.Objects;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -43,19 +43,19 @@ public class GemInsertionRecipe extends SmithingTransformRecipe {
     ItemStack ingredient = container.getItem(2);
     ItemStack result = base.copy();
     result.setCount(1);
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    assert player.isPresent();
-    GemItem.insertGem(player.get(), result, ingredient);
+    Player player = ContainerHelper.getViewingPlayer(container);
+    Objects.requireNonNull(player);
+    GemItem.insertGem(player, result, ingredient);
     return result;
   }
 
   private boolean canCraftIn(@NotNull Container container) {
-    Optional<Player> player = ContainerHelper.getViewingPlayer(container);
-    if (player.isEmpty()) return false;
+    Player player = ContainerHelper.getViewingPlayer(container);
+    if (player == null) return false;
     ItemStack base = container.getItem(1);
     ItemStack ingredient = container.getItem(2);
     if (ingredient.getItem() != PSTItems.GEM.get()) return false;
-    return GemItem.canInsertGem(player.get(), base, ingredient);
+    return GemItem.canInsertGem(player, base, ingredient);
   }
 
   @Override

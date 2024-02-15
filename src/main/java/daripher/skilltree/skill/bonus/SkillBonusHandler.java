@@ -582,11 +582,11 @@ public class SkillBonusHandler {
     return new EnchantmentInstance(enchantment.enchantment, enchantmentLevel);
   }
 
-  public static int adjustEnchantmentCost(int cost, Player player) {
+  public static int adjustEnchantmentCost(int cost, @Nonnull Player player) {
     return (int) Math.max(1, cost * getEnchantmentCostMultiplier(player));
   }
 
-  public static float getFreeEnchantmentChance(Player player) {
+  public static float getFreeEnchantmentChance(@Nonnull Player player) {
     float chance = 0f;
     for (FreeEnchantmentBonus bonus :
         SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class)) {
@@ -595,7 +595,7 @@ public class SkillBonusHandler {
     return chance;
   }
 
-  private static double getEnchantmentCostMultiplier(Player player) {
+  private static double getEnchantmentCostMultiplier(@Nonnull Player player) {
     float multiplier = 1f;
     for (EnchantmentRequirementBonus bonus :
         SkillBonusHandler.getSkillBonuses(player, EnchantmentRequirementBonus.class)) {
