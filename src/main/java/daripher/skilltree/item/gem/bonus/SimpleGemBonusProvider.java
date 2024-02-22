@@ -3,7 +3,7 @@ package daripher.skilltree.item.gem.bonus;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTGemBonuses;
 import daripher.skilltree.item.ItemHelper;
 import daripher.skilltree.item.gem.GemItem;

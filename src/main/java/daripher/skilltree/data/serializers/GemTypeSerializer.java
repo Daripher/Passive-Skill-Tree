@@ -1,7 +1,6 @@
 package daripher.skilltree.data.serializers;
 
 import com.google.gson.*;
-import daripher.skilltree.data.SerializationHelper;
 import daripher.skilltree.item.gem.GemType;
 import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;

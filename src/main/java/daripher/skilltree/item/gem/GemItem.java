@@ -2,7 +2,7 @@ package daripher.skilltree.item.gem;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.data.reloader.GemTypesReloader;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTItems;

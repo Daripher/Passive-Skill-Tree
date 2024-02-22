@@ -1,4 +1,4 @@
-package daripher.skilltree.data;
+package daripher.skilltree.data.serializers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -13,6 +13,7 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -118,6 +119,7 @@ public class SerializationHelper {
 
   public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
       JsonObject json, String name) {
+    if (!json.has(name)) return NoneLivingMultiplier.INSTANCE;
     JsonObject multiplierJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(multiplierJson.get("type").getAsString());
     LivingMultiplier.Serializer serializer =
@@ -352,6 +354,7 @@ public class SerializationHelper {
 
   public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
       CompoundTag tag, String name) {
+    if (!tag.contains(name)) return NoneLivingMultiplier.INSTANCE;
     CompoundTag multiplierTag = tag.getCompound(name);
     ResourceLocation serializerId = new ResourceLocation(multiplierTag.getString("type"));
     LivingMultiplier.Serializer serializer =

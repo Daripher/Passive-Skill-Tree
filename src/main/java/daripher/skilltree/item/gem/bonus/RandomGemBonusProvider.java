@@ -2,7 +2,7 @@ package daripher.skilltree.item.gem.bonus;
 
 import com.google.gson.*;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.entity.player.PlayerExtension;
 import daripher.skilltree.init.PSTGemBonuses;
 import daripher.skilltree.item.ItemHelper;

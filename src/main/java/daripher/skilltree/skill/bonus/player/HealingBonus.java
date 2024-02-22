@@ -3,7 +3,7 @@ package daripher.skilltree.skill.bonus.player;
 import com.google.gson.*;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;

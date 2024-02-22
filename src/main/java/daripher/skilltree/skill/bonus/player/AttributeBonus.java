@@ -4,7 +4,7 @@ import com.google.gson.*;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTLivingMultipliers;
 import daripher.skilltree.init.PSTSkillBonuses;

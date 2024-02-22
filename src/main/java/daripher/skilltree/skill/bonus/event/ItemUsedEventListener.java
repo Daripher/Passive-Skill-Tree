@@ -3,7 +3,7 @@ package daripher.skilltree.skill.bonus.event;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
-import daripher.skilltree.data.SerializationHelper;
+import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTLivingConditions;
