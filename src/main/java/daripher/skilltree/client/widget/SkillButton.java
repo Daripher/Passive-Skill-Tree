@@ -35,6 +35,7 @@ public class SkillButton extends Button {
   public float y;
   public boolean highlighted;
   public boolean animated;
+  public boolean searched;
 
   public SkillButton(
       Supplier<Float> animationFunc,
@@ -55,6 +56,7 @@ public class SkillButton extends Button {
     this.y = y;
     this.skill = skill;
     this.animationFunction = animationFunc;
+    this.active = false;
   }
 
   public SkillButton(
@@ -78,19 +80,20 @@ public class SkillButton extends Button {
     poseStack.popPose();
     RenderSystem.setShaderTexture(0, skill.getBackgroundTexture());
     float animation = (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
-    if (animated) {
-      RenderSystem.setShaderColor(1F, 1F, 1F, 1 - animation);
+    float rb = searched ? 0.1f : 1f;
+    if (animated || searched) {
+      RenderSystem.setShaderColor(rb, 1F, rb, 1 - animation);
     }
     if (!highlighted) {
       renderDarkening(poseStack);
     }
-    if (animated) {
-      RenderSystem.setShaderColor(1F, 1F, 1F, animation);
+    if (animated || searched) {
+      RenderSystem.setShaderColor(rb, 1F, rb, animation);
     }
-    if (highlighted || animated) {
+    if (highlighted || animated || searched) {
       renderFrame(poseStack);
     }
-    if (animated) {
+    if (animated || searched) {
       RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
     }
     poseStack.popPose();
@@ -233,8 +236,12 @@ public class SkillButton extends Button {
     return component.withStyle(DESCRIPTION_STYLE);
   }
 
-  public void animate() {
+  public void setAnimated() {
     animated = true;
+  }
+
+  public void setActive() {
+    active = true;
   }
 
   private String getSkillId() {

@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -41,6 +42,7 @@ public class SkillTreeScreen extends Screen {
   public final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
   private final List<SkillButton> startingPoints = new ArrayList<>();
   private final PassiveSkillTree skillTree;
+  private String search = "";
   public float renderAnimation;
   public int skillPoints;
   protected double scrollSpeedX;
@@ -79,7 +81,7 @@ public class SkillTreeScreen extends Screen {
             });
     progressBar.showProgressInNumbers = showProgressInNumbers;
     addRenderableWidget(progressBar);
-    addTopButtons();
+    addTopWidgets();
     if (!SkillTreeClientData.enable_exp_exchange) {
       progressBar.visible = false;
       buyButton.visible = false;
@@ -95,14 +97,15 @@ public class SkillTreeScreen extends Screen {
     if (maxScrollY < 0) maxScrollY = 0;
     addSkillConnections();
     highlightSkillsThatCanBeLearned();
+    updateSearch();
   }
 
-  private void addTopButtons() {
-    MutableComponent buyButtonText = Component.translatable("widget.buy_skill_button");
-    MutableComponent pointsInfoText = Component.translatable("widget.skill_points_left", 100);
-    MutableComponent confirmButtonText = Component.translatable("widget.confirm_button");
-    MutableComponent cancelButtonText = Component.translatable("widget.cancel_button");
-    MutableComponent showStatsButtonText = Component.translatable("widget.show_stats");
+  private void addTopWidgets() {
+    Component buyButtonText = Component.translatable("widget.buy_skill_button");
+    Component pointsInfoText = Component.translatable("widget.skill_points_left", 100);
+    Component confirmButtonText = Component.translatable("widget.confirm_button");
+    Component cancelButtonText = Component.translatable("widget.cancel_button");
+    Component showStatsButtonText = Component.translatable("widget.show_stats");
     int buttonWidth = Math.max(font.width(buyButtonText), font.width(pointsInfoText));
     buttonWidth = Math.max(buttonWidth, font.width(confirmButtonText));
     buttonWidth = Math.max(buttonWidth, font.width(cancelButtonText));
@@ -112,6 +115,13 @@ public class SkillTreeScreen extends Screen {
         new Button(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
     showStatsButton.setPressFunc(b -> showStats ^= true);
     addRenderableWidget(showStatsButton);
+    addRenderableWidget(new TextField(font, 8, buttonsY, buttonWidth, 14, search))
+        .setHint("Search...")
+        .setResponder(
+            s -> {
+              search = s;
+              updateSearch();
+            });
     buyButton = new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText);
     buyButton.setPressFunc(b -> buySkillPoint());
     addRenderableWidget(buyButton);
@@ -129,6 +139,25 @@ public class SkillTreeScreen extends Screen {
     cancelButton.setPressFunc(b -> cancelLearnSkills());
     addRenderableWidget(cancelButton);
     confirmButton.active = cancelButton.active = !newlyLearnedSkills.isEmpty();
+  }
+
+  private void updateSearch() {
+    if (search.isEmpty()) {
+      for (SkillButton button : skillButtons.values()) {
+        button.searched = false;
+      }
+      return;
+    }
+    outerLoop:
+    for (SkillButton button : skillButtons.values()) {
+      for (MutableComponent component : button.getTooltip()) {
+        if (component.getString().toLowerCase().contains(search.toLowerCase())) {
+          button.searched = true;
+          continue outerLoop;
+        }
+      }
+      button.searched = false;
+    }
   }
 
   @Override
@@ -199,6 +228,43 @@ public class SkillTreeScreen extends Screen {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public void tick() {
+    textFields().forEach(EditBox::tick);
+  }
+
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    if (keyPressedOnTextField(keyCode, scanCode, modifiers)) {
+      return true;
+    }
+    return super.keyPressed(keyCode, scanCode, modifiers);
+  }
+
+  @Override
+  public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    textFields().toList().forEach(b -> b.keyReleased(keyCode, scanCode, modifiers));
+    return super.keyPressed(keyCode, scanCode, modifiers);
+  }
+
+  @Override
+  public boolean charTyped(char character, int keyCode) {
+    for (EditBox textField : textFields().toList()) {
+      if (textField.charTyped(character, keyCode)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean keyPressedOnTextField(int keyCode, int scanCode, int modifiers) {
+    return textFields().toList().stream().anyMatch(b -> b.keyPressed(keyCode, scanCode, modifiers));
+  }
+
+  private Stream<EditBox> textFields() {
+    return children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast);
   }
 
   public Optional<GuiEventListener> getWidgetAt(double mouseX, double mouseY) {
@@ -320,12 +386,12 @@ public class SkillTreeScreen extends Screen {
   private void highlightSkillsThatCanBeLearned() {
     if (skillPoints == 0) return;
     if (learnedSkills.isEmpty() && newlyLearnedSkills.isEmpty()) {
-      startingPoints.forEach(SkillButton::animate);
+      startingPoints.forEach(SkillButton::setAnimated);
       return;
     }
     if (learnedSkills.size() + newlyLearnedSkills.size() >= SkillTreeClientData.max_skill_points)
       return;
-    skillConnections.forEach(SkillConnection::updateAnimation);
+    skillConnections.forEach(SkillConnection::setActive);
   }
 
   public void buttonPressed(net.minecraft.client.gui.components.Button button) {
