@@ -35,6 +35,7 @@ public class SkillButton extends Button {
   public float y;
   public boolean highlighted;
   public boolean animated;
+  public boolean searched;
 
   public SkillButton(
       Supplier<Float> animationFunc, float x, float y, PassiveSkill skill, OnPress pressFunc) {
@@ -50,6 +51,7 @@ public class SkillButton extends Button {
     this.y = y;
     this.skill = skill;
     this.animationFunction = animationFunc;
+    this.active = false;
   }
 
   @Override
@@ -67,19 +69,20 @@ public class SkillButton extends Button {
     renderIcon(graphics);
     graphics.pose().popPose();
     float animation = (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
-    if (animated) {
-      graphics.setColor(1F, 1F, 1F, 1 - animation);
+    float rb = searched ? 0.1f : 1f;
+    if (animated || searched) {
+      graphics.setColor(rb, 1F, rb, 1 - animation);
     }
     if (!highlighted) {
       renderDarkening(graphics);
     }
-    if (animated) {
-      graphics.setColor(1F, 1F, 1F, animation);
+    if (animated || searched) {
+      graphics.setColor(rb, 1F, rb, animation);
     }
-    if (highlighted || animated) {
+    if (highlighted || animated || searched) {
       renderFrame(graphics);
     }
-    if (animated) {
+    if (animated || searched) {
       graphics.setColor(1F, 1F, 1F, 1F);
     }
     graphics.pose().popPose();
@@ -226,8 +229,12 @@ public class SkillButton extends Button {
     return component.withStyle(DESCRIPTION_STYLE);
   }
 
-  public void animate() {
+  public void setAnimated() {
     animated = true;
+  }
+
+  public void setActive() {
+    active = true;
   }
 
   private String getSkillId() {

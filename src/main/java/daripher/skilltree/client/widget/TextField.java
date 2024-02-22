@@ -16,8 +16,11 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 public class TextField extends EditBox {
+  public static final int INVALID_TEXT_COLOR = 0xD80000;
+  private static final int HINT_COLOR = 0x575757;
   private Predicate<String> softFilter = Objects::nonNull;
   private Function<String, @Nullable String> suggestionProvider = s -> null;
+  private String hint = null;
 
   public TextField(Font font, int x, int y, int width, int height, String defaultText) {
     super(font, x, y, width, height, Component.empty());
@@ -72,7 +75,7 @@ public class TextField extends EditBox {
     int v = isHoveredOrFocused() ? 42 : 56;
     graphics.blit(texture, getX(), getY(), 0, v, width / 2, height);
     graphics.blit(texture, getX() + width / 2, getY(), -width / 2, v, width / 2, height);
-    int textColor = isValueValid() ? DEFAULT_TEXT_COLOR : 0xD80000;
+    int textColor = getTextColor();
     int cursorVisiblePosition = getCursorPosition() - accessor.getDisplayPos();
     int highlightWidth = accessor.getHighlightPos() - accessor.getDisplayPos();
     Minecraft minecraft = Minecraft.getInstance();
@@ -83,6 +86,9 @@ public class TextField extends EditBox {
         cursorVisiblePosition >= 0 && cursorVisiblePosition <= visibleText.length();
     boolean isCursorVisible =
         isFocused() && accessor.getFrame() / 6 % 2 == 0 && isTextSplitByCursor;
+    if (visibleText.isEmpty() && hint != null && !isFocused()) {
+      visibleText = hint;
+    }
     int textX = getX() + 5;
     int textStartX = textX;
     int textY = getY() + 3;
@@ -136,5 +142,16 @@ public class TextField extends EditBox {
 
   public boolean isValueValid() {
     return softFilter.test(getValue());
+  }
+
+  public TextField setHint(@Nullable String hint) {
+    this.hint = hint;
+    return this;
+  }
+
+  private int getTextColor() {
+    return getValue().isEmpty()
+        ? HINT_COLOR
+        : isValueValid() ? DEFAULT_TEXT_COLOR : INVALID_TEXT_COLOR;
   }
 }
