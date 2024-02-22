@@ -2,8 +2,10 @@ package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.SkillButton;
 import daripher.skilltree.client.widget.SkillConnection;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -59,9 +61,17 @@ public class ScreenHelper {
 
   public static void renderSkillTooltip(
       SkillButton button, GuiGraphics graphics, float x, float y, int width, int height) {
-    List<MutableComponent> tooltip = button.getSkillTooltip();
-    if (tooltip.isEmpty()) return;
     Font font = Minecraft.getInstance().font;
+    int maxWidth = (int) (width * 0.65);
+    List<MutableComponent> tooltip = new ArrayList<>();
+    for (MutableComponent component : button.getSkillTooltip()) {
+      if (font.width(component) > maxWidth) {
+        tooltip.addAll(TooltipHelper.split(component, font, maxWidth));
+      } else {
+        tooltip.add(component);
+      }
+    }
+    if (tooltip.isEmpty()) return;
     int tooltipWidth = 0;
     int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
     for (MutableComponent component : tooltip) {
