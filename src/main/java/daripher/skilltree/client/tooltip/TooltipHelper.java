@@ -1,8 +1,11 @@
 package daripher.skilltree.client.tooltip;
 
 import daripher.skilltree.effect.SkillBonusEffect;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -126,5 +129,25 @@ public class TooltipHelper {
               name.append(w);
             });
     return name.substring(1);
+  }
+
+  public static List<MutableComponent> split(MutableComponent component, Font font, int maxWidth) {
+    String[] split = component.getString().split(" ");
+    if (split.length < 2) {
+      return List.of(component);
+    }
+    String line = split[0];
+    List<MutableComponent> components = new ArrayList<>();
+    for (int i = 1; i < split.length; i++) {
+      String next = line + " " + split[i];
+      if (font.width(next) > maxWidth) {
+        components.add(Component.translatable(line).withStyle(component.getStyle()));
+        line = "  " + split[i];
+        continue;
+      }
+      line = next;
+    }
+    components.add(Component.translatable(line).withStyle(component.getStyle()));
+    return components;
   }
 }
