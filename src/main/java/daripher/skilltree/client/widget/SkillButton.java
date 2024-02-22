@@ -37,31 +37,20 @@ public class SkillButton extends Button {
   public boolean animated;
   public boolean searched;
 
-  public SkillButton(
-      Supplier<Float> animationFunc,
-      float x,
-      float y,
-      PassiveSkill skill,
-      OnPress pressFunc,
-      OnTooltip tooltipFunc) {
+  public SkillButton(Supplier<Float> animationFunc, float x, float y, PassiveSkill skill) {
     super(
         (int) x,
         (int) y,
         skill.getButtonSize(),
         skill.getButtonSize(),
         Component.empty(),
-        pressFunc,
-        tooltipFunc);
+        b -> {},
+        (b, s, tx, ty) -> {});
     this.x = x;
     this.y = y;
     this.skill = skill;
     this.animationFunction = animationFunc;
     this.active = false;
-  }
-
-  public SkillButton(
-      Supplier<Float> animationFunc, float x, float y, PassiveSkill skill, OnPress pressFunc) {
-    this(animationFunc, x, y, skill, pressFunc, (b, s, mx, my) -> {});
   }
 
   @Override

@@ -219,15 +219,21 @@ public class SkillTreeScreen extends Screen {
     SkillButton skill = getSkillAt(mouseX, mouseY);
     if (skill == null) return false;
     if (button == 0) {
-      return skill.mouseClicked(skill.x + 1, skill.y + 1, button);
+      playButtonSound();
+      skillButtonPressed(skill);
+      return true;
     } else if (button == 1) {
       ClientConfig.toggleFavoriteSkill(skill.skill);
-      getMinecraft()
-          .getSoundManager()
-          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1f));
+      playButtonSound();
       return true;
     }
     return false;
+  }
+
+  private void playButtonSound() {
+    getMinecraft()
+        .getSoundManager()
+        .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1f));
   }
 
   @Override
@@ -330,7 +336,7 @@ public class SkillTreeScreen extends Screen {
     float buttonX = getSkillButtonX(skill);
     float buttonY = getSkillButtonY(skill);
     SkillButton button =
-        new SkillButton(this::getAnimation, buttonX, buttonY, skill, this::buttonPressed);
+        new SkillButton(this::getAnimation, buttonX, buttonY, skill);
     addRenderableWidget(button);
     skillButtons.put(skillId, button);
     if (skill.isStartingPoint()) startingPoints.add(button);
@@ -392,10 +398,6 @@ public class SkillTreeScreen extends Screen {
     if (learnedSkills.size() + newlyLearnedSkills.size() >= SkillTreeClientData.max_skill_points)
       return;
     skillConnections.forEach(SkillConnection::setActive);
-  }
-
-  public void buttonPressed(net.minecraft.client.gui.components.Button button) {
-    if (button instanceof SkillButton skillButton) skillButtonPressed(skillButton);
   }
 
   private void confirmLearnSkills() {
