@@ -82,7 +82,7 @@ public class ScreenHelper {
       int height,
       ItemRenderer itemRenderer) {
     Font font = Minecraft.getInstance().font;
-    int maxWidth = (int) (width * 0.65);
+    int maxWidth = width - 10;
     List<MutableComponent> tooltip = new ArrayList<>();
     for (MutableComponent component : button.getTooltip()) {
       if (font.width(component) > maxWidth) {
@@ -108,6 +108,8 @@ public class ScreenHelper {
     if (tooltipY + tooltipHeight + 6 > height) {
       tooltipY = height - tooltipHeight - 6;
     }
+    if (tooltipX < 5) tooltipX = 5;
+    if (tooltipY < 5) tooltipY = 5;
     poseStack.pushPose();
     poseStack.translate(tooltipX, tooltipY, 0);
     float zOffset = itemRenderer.blitOffset;
