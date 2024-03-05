@@ -11,8 +11,11 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,6 +44,10 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
     add(PSTTags.QUIVERS, QuiverItem.class);
     add(PSTTags.NUGGETS_COPPER, PSTItems.COPPER_NUGGET.get());
     tag(PSTTags.JEWELRY).addTags(PSTTags.RINGS, PSTTags.NECKLACES);
+    tag(Tags.Items.TOOLS).addTags(PSTTags.TOOLS_MELEE_WEAPONS, PSTTags.TOOLS_DIGGERS);
+    tag(PSTTags.TOOLS_MELEE_WEAPONS).addTags(ItemTags.SWORDS, ItemTags.AXES, Tags.Items.TOOLS_TRIDENTS);
+	tag(PSTTags.TOOLS_DIGGERS).addTags(ItemTags.AXES, ItemTags.HOES, ItemTags.PICKAXES, ItemTags.SHOVELS)
+			.addOptionalTag(new ResourceLocation("forge", "tools/knives"));
   }
 
   private void add(TagKey<Item> itemTag, Class<? extends Item> itemClass) {

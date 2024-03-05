@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#minecraft:axes",
+    "#minecraft:hoes",
+    "#minecraft:pickaxes",
+    "#minecraft:shovels",
+    {
+      "id": "#forge:tools/knives",
+      "required": false
+    }
+  ]
+}

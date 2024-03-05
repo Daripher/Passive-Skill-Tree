@@ -7,6 +7,8 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import daripher.skilltree.init.PSTTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -59,7 +61,7 @@ public class EquipmentCondition implements ItemCondition {
   }
 
   public static boolean isMeleeWeapon(ItemStack stack) {
-    return isSword(stack) || isAxe(stack) || isTrident(stack);
+    return isSword(stack) || isAxe(stack) || isTrident(stack) || stack.is(PSTTags.TOOLS_MELEE_WEAPONS);
   }
 
   public static boolean isLeggings(ItemStack stack) {
@@ -117,7 +119,7 @@ public class EquipmentCondition implements ItemCondition {
   }
 
   public static boolean isTool(ItemStack stack) {
-    return stack.getItem() instanceof DiggerItem;
+    return stack.getItem() instanceof DiggerItem || stack.is(PSTTags.TOOLS_DIGGERS);
   }
 
   public static boolean isHoe(ItemStack stack) {

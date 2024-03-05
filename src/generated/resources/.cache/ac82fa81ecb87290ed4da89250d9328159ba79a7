@@ -1,7 +1,10 @@
-// 1.20.1	2024-02-12T07:14:04.6511079	Tags for minecraft:item mod id skilltree
+// 1.20.1	2024-03-05T11:03:46.433311	Tags for minecraft:item mod id skilltree
 912807fae1f5d4fb0cd2645e952105207b245f35 data/curios/tags/items/necklace.json
 b0448e1e3142f31d11b1998a19dca53dfcab0a31 data/curios/tags/items/quiver.json
 66bb644ad4f941567a9624ab40ffcf18a197606b data/curios/tags/items/ring.json
 f9fb803cf86084b22047f5e6424e656d385660a2 data/forge/tags/items/curios/jewelry.json
 e3a08329a8faa4e76467f3cc10cb6daa98b57c64 data/forge/tags/items/nuggets/copper.json
+2325d584d37caa7fa0df5146c3cb3f9b3994bc38 data/forge/tags/items/tools.json
+4e278d6316375b25562152478e972abf60621094 data/forge/tags/items/tools/diggers.json
+01d06e1c3cd6ee881097875b179c1f9f014e3457 data/forge/tags/items/tools/melee_weapons.json
 6478354481ddac4828aa398c5c2bde4b997511f3 data/skilltree/tags/items/gems.json
