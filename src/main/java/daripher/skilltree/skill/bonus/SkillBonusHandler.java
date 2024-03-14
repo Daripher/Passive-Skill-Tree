@@ -440,15 +440,30 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyHealthReservationEffect(TickEvent.PlayerTickEvent event) {
     if (event.phase == TickEvent.Phase.END || event.side == LogicalSide.CLIENT) return;
-    float reservation = 0f;
-    for (HealthReservationBonus bonus :
-        getSkillBonuses(event.player, HealthReservationBonus.class)) {
-      reservation += bonus.getAmount(event.player);
-    }
+    float reservation = getHealthReservation(event.player);
     if (reservation == 0) return;
     if (event.player.getHealth() / event.player.getMaxHealth() > 1 - reservation) {
       event.player.setHealth(event.player.getMaxHealth() * (1 - reservation));
     }
+  }
+
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void applyHealthReservationEffect(LivingHealEvent event) {
+    if (!(event.getEntity() instanceof Player player)) return;
+    float reservation = getHealthReservation(player);
+    if (reservation == 0) return;
+    float healthAfterHealing = player.getHealth() + event.getAmount();
+    if (healthAfterHealing / player.getMaxHealth() > 1 - reservation) {
+      event.setCanceled(true);
+    }
+  }
+
+  private static float getHealthReservation(Player player) {
+    float reservation = 0f;
+    for (HealthReservationBonus bonus : getSkillBonuses(player, HealthReservationBonus.class)) {
+      reservation += bonus.getAmount(player);
+    }
+    return reservation;
   }
 
   @SubscribeEvent
