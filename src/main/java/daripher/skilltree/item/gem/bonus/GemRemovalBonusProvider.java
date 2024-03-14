@@ -19,12 +19,12 @@ public class GemRemovalBonusProvider implements GemBonusProvider {
 
   @Nullable
   @Override
-  public ItemBonus<?> getBonus(Player player, ItemStack stack) {
+  public ItemBonus<?> getBonus(Player player, ItemStack itemStack, ItemStack gemStack) {
     return null;
   }
 
   @Override
-  public boolean canApply(Player player, ItemStack itemStack) {
+  public boolean canApply(Player player, ItemStack itemStack, ItemStack gemStack) {
     return GemItem.hasGem(itemStack, 0);
   }
 
@@ -34,7 +34,7 @@ public class GemRemovalBonusProvider implements GemBonusProvider {
   }
 
   @Override
-  public MutableComponent getTooltip() {
+  public MutableComponent getTooltip(ItemStack gemStack) {
     MutableComponent tooltip = Component.translatable("gem_bonus.removal");
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(true));
   }

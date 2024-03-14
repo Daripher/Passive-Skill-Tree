@@ -25,19 +25,19 @@ public class SimpleGemBonusProvider implements GemBonusProvider {
 
   @Nullable
   @Override
-  public ItemBonus<?> getBonus(Player player, ItemStack stack) {
+  public ItemBonus<?> getBonus(Player player, ItemStack itemStack, ItemStack gemStack) {
     return bonus;
   }
 
   @Override
-  public boolean canApply(Player player, ItemStack itemStack) {
+  public boolean canApply(Player player, ItemStack itemStack, ItemStack gemStack) {
     int socket = ItemHelper.getFirstEmptySocket(itemStack, player);
     if (GemItem.hasGem(itemStack, socket)) return false;
-    return getBonus(player, itemStack) != null;
+    return getBonus(player, itemStack, gemStack) != null;
   }
 
   @Override
-  public MutableComponent getTooltip() {
+  public MutableComponent getTooltip(ItemStack gemStack) {
     return bonus.getTooltip().withStyle(TooltipHelper.getSkillBonusStyle(bonus.isPositive()));
   }
 

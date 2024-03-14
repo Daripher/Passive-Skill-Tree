@@ -9,18 +9,18 @@ import net.minecraft.world.item.ItemStack;
 
 public interface GemBonusProvider {
   @Nullable
-  ItemBonus<?> getBonus(Player player, ItemStack stack);
+  ItemBonus<?> getBonus(Player player, ItemStack itemStack, ItemStack gemStack);
 
-  boolean canApply(Player player, ItemStack itemStack);
+  boolean canApply(Player player, ItemStack itemStack, ItemStack gemStack);
 
   default void addGemBonus(Player player, ItemStack itemStack, ItemStack gemStack) {
-    ItemBonus<?> bonus = getBonus(player, itemStack);
+    ItemBonus<?> bonus = getBonus(player, itemStack, gemStack);
     if (bonus != null) {
       GemItem.addGemBonus(player, itemStack, gemStack, bonus);
     }
   }
 
-  MutableComponent getTooltip();
+  MutableComponent getTooltip(ItemStack gemStack);
 
   Serializer getSerializer();
 

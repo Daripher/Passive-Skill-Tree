@@ -86,7 +86,7 @@ public class GemItem extends Item {
         .forEach(
             (c, b) -> {
               Component itemDescription = c.getTooltip();
-              Component bonusDescription = b.getTooltip();
+              Component bonusDescription = b.getTooltip(stack);
               Component tooltip =
                   Component.translatable("gem_class_format", itemDescription, bonusDescription)
                       .withStyle(ChatFormatting.GRAY);
@@ -104,7 +104,7 @@ public class GemItem extends Item {
     if (!ItemHelper.canInsertGem(itemStack)) return false;
     GemBonusProvider bonusProvider = getGemType(gemStack).getBonusProvider(itemStack);
     if (bonusProvider == null) return false;
-    return bonusProvider.canApply(player, itemStack);
+    return bonusProvider.canApply(player, itemStack, gemStack);
   }
 
   public static void insertGem(Player player, ItemStack itemStack, ItemStack gemStack) {
