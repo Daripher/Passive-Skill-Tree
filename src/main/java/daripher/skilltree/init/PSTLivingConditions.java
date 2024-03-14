@@ -41,6 +41,8 @@ public class PSTLivingConditions {
       REGISTRY.register("dual_wielding", DualWieldingCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> HAS_ITEM_IN_HAND =
       REGISTRY.register("has_item_in_hand", HasItemInHandCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> CROUCHING =
+      REGISTRY.register("crouching", CrouchingCondition.Serializer::new);
 
   public static List<LivingCondition> conditionsList() {
     return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()

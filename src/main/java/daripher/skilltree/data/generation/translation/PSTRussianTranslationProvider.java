@@ -377,6 +377,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "Вас");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Цели");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s если у %s в руке %s");
+    add(PSTLivingConditions.CROUCHING.get(), "target.you", "Вы крадётесь");
+    add(PSTLivingConditions.CROUCHING.get(), "target.target", "Цель крадется");
+    add(PSTLivingConditions.CROUCHING.get(), "%s если %s");
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s когда вы наносите %s");
     add(PSTEventListeners.BLOCK.get(), "%s когда вы блокируете %s");

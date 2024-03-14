@@ -375,6 +375,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "You have");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "Target has");
     add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s if %s %s in hand");
+    add(PSTLivingConditions.CROUCHING.get(), "target.you", "You are");
+    add(PSTLivingConditions.CROUCHING.get(), "target.target", "Target is");
+    add(PSTLivingConditions.CROUCHING.get(), "%s if %s crouching");
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s when you deal %s");
     add(PSTEventListeners.BLOCK.get(), "%s when you block %s");
