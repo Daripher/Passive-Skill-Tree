@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-31T03:23:36.916299	Item Models: skilltree
+// 1.20.1	2024-11-29T10:03:34.5940404	Item Models: skilltree
 dcdc7c3496eee0556ca7020556201b091ab8684b assets/apotheosis/models/item/gems/citrine_0.json
 2d2caa24d5c066e97d9bec93eb47b9d276febe31 assets/apotheosis/models/item/gems/citrine_1.json
 f21343c673f274a2a973ba1043b721f04c769fb2 assets/apotheosis/models/item/gems/citrine_2.json
@@ -39,6 +39,7 @@ e23d7e73aec0680ce0b7d109b3974c8f14ad1792 assets/skilltree/models/item/ancient_al
 ec3197d2ab64ccffa73afb1e76be2b9d9aad9de0 assets/skilltree/models/item/ancient_alloy_lightweight.json
 763a45bc19193fdbd9c9810d4424d4b367a8d442 assets/skilltree/models/item/ancient_alloy_spatial.json
 b2c89bf9c293bf45ba0300d68d0a8e614ec96c0b assets/skilltree/models/item/ancient_alloy_toxic.json
+8b0fa497543310227a0e0f903c2f5c8780253110 assets/skilltree/models/item/ancient_book.json
 fe9c855469e5ebbd37bd8a8df22f01aeaf2acae9 assets/skilltree/models/item/arsonist_necklace.json
 2f8b19d5040230bb290e93743907c9ffbc6cc590 assets/skilltree/models/item/assassin_necklace.json
 4edc69c003ad38c47b6b629c466a870d7b578304 assets/skilltree/models/item/copper_nugget.json

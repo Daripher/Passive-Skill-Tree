@@ -28,7 +28,8 @@
     "ShapedRecipeAccessor",
     "ShapelessRecipeAccessor",
     "SmithingMenuAccessor",
-    "MobEffectInstanceAccessor"
+    "MobEffectInstanceAccessor",
+    "SmithingTransformRecipeAccessor"
   ],
   "client": [
     "minecraft/RecipeBookComponentMixin",

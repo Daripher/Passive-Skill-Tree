@@ -1,0 +1,15 @@
+{
+  "type": "skilltree:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "skilltree:ancient_book"
+    },
+    {
+      "item": "skilltree:ancient_alloy_durable"
+    }
+  ],
+  "result": {
+    "item": "minecraft:enchanted_book",
+    "nbt": "{StoredEnchantments:[{id:\"skilltree:steel_mind\",lvl:1s}]}"
+  }
+}

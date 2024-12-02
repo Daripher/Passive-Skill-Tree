@@ -1,0 +1,17 @@
+{
+  "type": "skilltree:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{id:\"skilltree:fire_wall\",lvl:2s}]}"
+    },
+    {
+      "item": "skilltree:ancient_alloy_hot"
+    }
+  ],
+  "result": {
+    "item": "minecraft:enchanted_book",
+    "nbt": "{StoredEnchantments:[{id:\"skilltree:fire_wall\",lvl:3s}]}"
+  }
+}

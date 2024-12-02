@@ -1,0 +1,18 @@
+{
+  "type": "skilltree:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/stray"
+    },
+    {
+      "chance": 0.05,
+      "condition": "minecraft:random_chance_with_looting",
+      "looting_multiplier": 0.05
+    }
+  ],
+  "item": {
+    "Count": 1,
+    "id": "skilltree:ancient_book"
+  }
+}

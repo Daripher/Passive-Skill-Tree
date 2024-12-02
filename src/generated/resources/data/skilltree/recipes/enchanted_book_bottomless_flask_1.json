@@ -2,13 +2,10 @@
   "type": "skilltree:crafting_shapeless",
   "ingredients": [
     {
+      "item": "skilltree:ancient_book"
+    },
+    {
       "item": "skilltree:ancient_alloy_spatial"
-    },
-    {
-      "item": "skilltree:ancient_alloy_enchanted"
-    },
-    {
-      "item": "minecraft:book"
     }
   ],
   "result": {

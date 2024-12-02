@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 0.02,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "59c3735f-9c5b-4b1a-b57d-2f981021277d",
+            "id": "eeec8ddc-78ac-4b51-b0d9-5a4f48164730",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -24,11 +24,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },

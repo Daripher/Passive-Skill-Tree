@@ -7,7 +7,8 @@
     "skilltree:entities_endermanancient_alloy_spatial",
     "skilltree:entities_pillagerancient_alloy_durable",
     "skilltree:entities_spiderancient_alloy_toxic",
-    "skilltree:entities_phantomancient_alloy_lightweight"
+    "skilltree:entities_phantomancient_alloy_lightweight",
+    "skilltree:entities_strayancient_book"
   ],
   "replace": false
 }

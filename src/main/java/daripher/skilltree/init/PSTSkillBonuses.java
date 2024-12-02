@@ -4,10 +4,12 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+
 import java.util.List;
 import java.util.Objects;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.*;
 
 public class PSTSkillBonuses {
   public static final ResourceLocation REGISTRY_ID =
@@ -73,6 +75,12 @@ public class PSTSkillBonuses {
       REGISTRY.register("grant_item", GrantItemBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> EFFECT_DURATION =
       REGISTRY.register("effect_duration", EffectDurationBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> PROJECTILE_DUPLICATION =
+      REGISTRY.register("projectile_duplication", ProjectileDuplicationBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> SELF_SPLASH_IMMUNE =
+      REGISTRY.register("self_splash_immune", SelfSplashImmuneBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> PROJECTILE_SPEED =
+      REGISTRY.register("projectile_speed", ProjectileSpeedBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {

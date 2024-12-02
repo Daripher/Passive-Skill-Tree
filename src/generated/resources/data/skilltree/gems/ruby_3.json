@@ -34,11 +34,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
+          "crossbow",
           "bow",
           "sword",
           "heavy_weapon",
-          "trident",
-          "crossbow"
+          "trident"
         ]
       }
     },
@@ -75,7 +75,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04,
             "attribute": "minecraft:generic.max_health",
-            "id": "e95dbd0c-9c77-4611-8d93-8a0e4ee1d3c2",
+            "id": "ae0ff4c7-56bd-417c-b5e5-07881d1dcd9b",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -103,7 +103,7 @@
             "type": "skilltree:attribute",
             "amount": 0.4,
             "attribute": "skilltree:regeneration",
-            "id": "48b0f09a-c6ea-42c3-8352-d90636b24af4",
+            "id": "0a47f613-608f-46a7-a7b5-d5c8bbe6e6b0",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {

@@ -29,32 +29,30 @@ public class PSTGlobalLootModifierProvider extends GlobalLootModifierProvider {
     upgradeMaterial("entities/enderman", PSTItems.ANCIENT_ALLOY_SPATIAL);
     upgradeMaterial("entities/pillager", PSTItems.ANCIENT_ALLOY_DURABLE);
     upgradeMaterial("entities/blaze", PSTItems.ANCIENT_ALLOY_HOT);
+    upgradeMaterial("entities/stray", PSTItems.ANCIENT_BOOK);
   }
 
   private void upgradeMaterial(String lootTablePath, RegistryObject<Item> item) {
     addItem(lootTablePath, item, 0.05f, 0.05f);
   }
 
-  private void addItem(
-      String lootTablePath, RegistryObject<Item> item, float chance, float lootingMultiplier) {
-    String modifierName = lootTablePath.replaceAll("/", "_") + item.getId().getPath();
-    add(
-        modifierName,
-        new AddItemModifier(
-            new ItemStack(item.get()),
-            lootTableCondition(lootTablePath),
-            randomChanceCondition(chance, lootingMultiplier)));
+  private void addItem(String lootTablePath, RegistryObject<Item> item, float chance, float lootingMultiplier) {
+    ResourceLocation itemId = item.getId();
+    String modifierName = lootTablePath.replaceAll("/", "_") + itemId.getPath();
+    ItemStack itemStack = new ItemStack(item.get());
+    AddItemModifier modifier = new AddItemModifier(itemStack, lootTableCondition(lootTablePath), randomChanceCondition(chance, lootingMultiplier));
+    add(modifierName, modifier);
   }
 
   private static LootItemCondition lootTableCondition(String lootTablePath) {
     ResourceLocation lootTableId = new ResourceLocation(lootTablePath);
-    return LootTableIdCondition.builder(lootTableId).build();
+    LootTableIdCondition.Builder builder = LootTableIdCondition.builder(lootTableId);
+    return builder.build();
   }
 
   @NotNull
   private static LootItemCondition randomChanceCondition(float chance, float lootingMultiplier) {
-    return LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(
-            chance, lootingMultiplier)
-        .build();
+    LootItemCondition.Builder builder = LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, lootingMultiplier);
+    return builder.build();
   }
 }

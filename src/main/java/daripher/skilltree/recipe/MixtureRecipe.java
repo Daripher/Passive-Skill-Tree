@@ -22,7 +22,7 @@ public class MixtureRecipe extends CustomRecipe implements SkillRequiringRecipe 
 
   @Override
   public boolean matches(@NotNull CraftingContainer container, @NotNull Level level) {
-    if (isUncraftable(container, this)) return false;
+    if (!canUseRecipe(container, this)) return false;
     ItemStack potionStack1 = ItemStack.EMPTY;
     ItemStack potionStack2 = ItemStack.EMPTY;
     int potionsCount = 0;
@@ -48,7 +48,7 @@ public class MixtureRecipe extends CustomRecipe implements SkillRequiringRecipe 
   @Override
   public @NotNull ItemStack assemble(
       @NotNull CraftingContainer container, @NotNull RegistryAccess access) {
-    if (isUncraftable(container, this)) return ItemStack.EMPTY;
+    if (!canUseRecipe(container, this)) return ItemStack.EMPTY;
     ItemStack potionStack1 = ItemStack.EMPTY;
     ItemStack potionStack2 = ItemStack.EMPTY;
     for (int slot = 0; slot < container.getContainerSize(); slot++) {

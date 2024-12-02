@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -92,9 +93,14 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    MutableComponent tooltip =
-        TooltipHelper.getSkillBonusTooltip(
-            getDescriptionId(), amount, AttributeModifier.Operation.MULTIPLY_BASE);
+    AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
+    MutableComponent tooltip;
+    if (damageCondition == NoneDamageCondition.INSTANCE) {
+      tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, operation);
+    } else {
+      tooltip = Component.translatable(getDescriptionId() + ".damage", damageCondition.getTooltip("type"));
+      tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, amount, operation);
+    }
     tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     tooltip = targetMultiplier.getTooltip(tooltip, Target.ENEMY);
     tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);

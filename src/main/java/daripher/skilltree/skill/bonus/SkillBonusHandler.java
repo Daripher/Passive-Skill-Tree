@@ -38,12 +38,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -52,8 +55,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderTooltipEvent;
@@ -61,6 +66,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
@@ -83,19 +89,16 @@ import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandler {
-
   public static final int UPGRADE_STYLE = 0xDFB759;
 
   @SubscribeEvent
   public static void applyBreakSpeedMultiplier(PlayerEvent.BreakSpeed event) {
     Player player = event.getEntity();
     float multiplier = 1f;
-    for (BlockBreakSpeedBonus bonus : getSkillBonuses(player, BlockBreakSpeedBonus.class)) {
-      if (bonus.getPlayerCondition()
-          .met(player)) {
-        multiplier += bonus.getMultiplier();
-      }
-    }
+    multiplier += getSkillBonuses(player, BlockBreakSpeedBonus.class).stream()
+        .map(b -> b.getMultiplier(player))
+        .reduce(Float::sum)
+        .orElse(0f);
     event.setNewSpeed(event.getNewSpeed() * multiplier);
   }
 
@@ -133,7 +136,7 @@ public class SkillBonusHandler {
     if (event.getName() != null && !StringUtils.isBlank(event.getName())) {
       if (!event.getName()
           .equals(stack.getHoverName()
-              .getString())) {
+                      .getString())) {
         cost++;
         result.setHoverName(Component.literal(event.getName()));
       }
@@ -227,7 +230,7 @@ public class SkillBonusHandler {
         .playerAttack(player);
     float critChance = getCritChance(player, damageSource, event.getEntity());
     if (player.getRandom()
-        .nextFloat() >= critChance) {
+            .nextFloat() >= critChance) {
       return;
     }
     float critMultiplier = event.getDamageModifier();
@@ -252,7 +255,7 @@ public class SkillBonusHandler {
     }
     float critChance = getCritChance(player, event.getSource(), event.getEntity());
     if (player.getRandom()
-        .nextFloat() >= critChance) {
+            .nextFloat() >= critChance) {
       return;
     }
     float critMultiplier = 1.5f;
@@ -303,7 +306,7 @@ public class SkillBonusHandler {
     if (itemBonus instanceof ItemSocketsBonus) return;
     MutableComponent tooltip = itemBonus.getTooltip();
     MutableComponent finalTooltip = tooltip.withStyle(tooltip.getStyle()
-        .withColor(UPGRADE_STYLE));
+                                                          .withColor(UPGRADE_STYLE));
     // removes duplicate tooltip in attribute modifiers description
     if (itemBonus instanceof ItemSkillBonus bonus && bonus.getBonus() instanceof AttributeBonus) {
       components.removeIf(component -> component.getString()
@@ -364,7 +367,7 @@ public class SkillBonusHandler {
       multiplier--;
     }
     if (player.getRandom()
-        .nextFloat() < multiplier) {
+            .nextFloat() < multiplier) {
       event.getDrops()
           .addAll(getDrops(event));
     }
@@ -396,7 +399,7 @@ public class SkillBonusHandler {
     float multiplier = getExperienceMultiplier(player, GainedExperienceBonus.ExperienceSource.FISHING);
     if (multiplier == 0) return;
     int exp = (int) ((player.getRandom()
-        .nextInt(6) + 1) * multiplier);
+                          .nextInt(6) + 1) * multiplier);
     if (exp == 0) return;
     ExperienceOrb expOrb = new ExperienceOrb(player.level(), player.getX(), player.getY() + 0.5D, player.getZ() + 0.5D, exp);
     player.level()
@@ -489,7 +492,7 @@ public class SkillBonusHandler {
       retrievalChance += bonus.getChance();
     }
     if (player.getRandom()
-        .nextFloat() >= retrievalChance) {
+            .nextFloat() >= retrievalChance) {
       return;
     }
     LivingEntity target = event.getEntity();
@@ -545,7 +548,7 @@ public class SkillBonusHandler {
     for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
       if (bonus.getItemCondition()
           .met(event.getEntity()
-              .getMainHandItem())) {
+                   .getMainHandItem())) {
         event.setCanceled(true);
         return;
       }
@@ -595,10 +598,11 @@ public class SkillBonusHandler {
     }
   }
 
-  @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+  @SubscribeEvent(priority = EventPriority.LOWEST,
+                  receiveCanceled = true)
   public static void inflictPoisonForcefully(MobEffectEvent.Applicable event) {
     if (event.getEffectInstance()
-        .getEffect() != MobEffects.POISON) {
+            .getEffect() != MobEffects.POISON) {
       return;
     }
     if (!(event.getEntity()
@@ -615,11 +619,11 @@ public class SkillBonusHandler {
     if (!ItemHelper.hasPoisons(weapon)) return;
     List<Component> tooltips = event.getToolTip();
     tooltips.add(Component.translatable("weapon.poisoned")
-        .withStyle(ChatFormatting.DARK_PURPLE));
+                     .withStyle(ChatFormatting.DARK_PURPLE));
     for (MobEffectInstance poison : ItemHelper.getPoisons(weapon)) {
       Component tooltip = TooltipHelper.getEffectTooltipWithTime(poison);
       tooltips.add(Component.literal(" ")
-          .append(tooltip));
+                       .append(tooltip));
     }
   }
 
@@ -683,7 +687,7 @@ public class SkillBonusHandler {
         .reduce(Float::sum)
         .orElse(0f);
     if (player.getRandom()
-        .nextFloat() < avoidance) {
+            .nextFloat() < avoidance) {
       event.setCanceled(true);
     }
   }
@@ -737,6 +741,101 @@ public class SkillBonusHandler {
     ((MobEffectInstanceAccessor) effectInstance).setDuration(newDuration);
   }
 
+  @SubscribeEvent
+  public static void applyProjectileDuplicationBonuses(EntityJoinLevelEvent event) {
+    if (!(event.getEntity() instanceof Projectile projectile)) return;
+    if (!(event.getLevel() instanceof ServerLevel level)) return;
+    if (!(projectile.getOwner() instanceof Player player)) return;
+    CompoundTag projectileTag = projectile.getPersistentData();
+    if (projectileTag.getBoolean("duplicated")) return;
+    float duplicationChance = getPlayerBonuses(player, ProjectileDuplicationBonus.class).stream()
+        .map(b -> b.getChance(player))
+        .reduce(Float::sum)
+        .orElse(0f);
+    if (duplicationChance == 0) return;
+    projectileTag.putBoolean("duplicated", true);
+    int projectileAmount = (int) duplicationChance;
+    duplicationChance -= projectileAmount;
+    RandomSource random = player.getRandom();
+    if (random.nextFloat() < duplicationChance) {
+      projectileAmount++;
+    }
+    fireDuplicateProjectiles(projectile, level, player, projectileAmount);
+  }
+
+  @SubscribeEvent(priority = EventPriority.HIGH)
+  public static void forcefullyInflictDuplicatedProjectileDamage(LivingAttackEvent event) {
+    DamageSource damageSource = event.getSource();
+    if (!(damageSource.getDirectEntity() instanceof Projectile projectile && projectile.getOwner() instanceof Player)) return;
+    CompoundTag projectileTag = projectile.getPersistentData();
+    if (!(projectileTag.getBoolean("duplicated"))) return;
+    LivingEntity target = event.getEntity();
+    target.invulnerableTime = 0;
+    target.setInvulnerable(false);
+  }
+
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
+  public static void applyProjectileSpeedBonus(EntityJoinLevelEvent event) {
+    if (!(event.getEntity() instanceof Projectile projectile)) return;
+    if (!(event.getLevel() instanceof ServerLevel)) return;
+    if (!(projectile.getOwner() instanceof Player player)) return;
+    CompoundTag projectileTag = projectile.getPersistentData();
+    if (projectileTag.getBoolean("speed_applied")) return;
+    float speedBonus = 1f;
+    speedBonus += getPlayerBonuses(player, ProjectileSpeedBonus.class).stream()
+        .map(b -> b.getMultiplier(player))
+        .reduce(Float::sum)
+        .orElse(0f);
+    if (speedBonus == 1) return;
+    projectileTag.putBoolean("speed_applied", true);
+    Vec3 speedBonusVec = new Vec3(speedBonus, speedBonus, speedBonus);
+    Vec3 projectileMovement = projectile.getDeltaMovement();
+    projectile.setDeltaMovement(projectileMovement.multiply(speedBonusVec));
+  }
+
+  private static void fireDuplicateProjectiles(Projectile projectile, ServerLevel level, Player player, int projectileAmount) {
+    float spreadAngle = 5f;
+    for (int i = 0; i < projectileAmount; i++) {
+      int side = (i % 2 == 0 ? 1 : -1);
+      int projectileNumber = i / 2 + 1;
+      float angleOffset = projectileNumber * side * spreadAngle;
+      duplicateProjectileWithOffset(projectile, player, level, angleOffset);
+    }
+  }
+
+  private static void duplicateProjectileWithOffset(Projectile projectile, Player player, ServerLevel level, float angleOffset) {
+    EntityType<?> projectileType = projectile.getType();
+    Projectile duplicate = (Projectile) projectileType.create(level);
+    if (duplicate == null) return;
+    Vec3 movementVector = projectile.getDeltaMovement();
+    Vec3 rotatedDirection = rotateVector(movementVector, angleOffset);
+    Vec3 originalPos = projectile.position();
+    Vec3 duplicatePos = originalPos.add(rotatedDirection.normalize());
+    duplicate.setPos(duplicatePos.x, duplicatePos.y, duplicatePos.z);
+    duplicate.setDeltaMovement(rotatedDirection);
+    duplicate.setOwner(player);
+    CompoundTag projectileTag = duplicate.getPersistentData();
+    projectileTag.putBoolean("duplicated", true);
+    if (duplicate instanceof AbstractArrow arrow) {
+      arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
+      float velocity = (float) movementVector.length();
+      arrow.setEnchantmentEffectsFromEntity(player, velocity);
+    }
+    else if (projectile instanceof ThrownPotion originalPotion && duplicate instanceof ThrownPotion potion) {
+      potion.setItem(originalPotion.getItem());
+    }
+    level.addFreshEntity(duplicate);
+  }
+
+  private static Vec3 rotateVector(Vec3 vector, double angleDegrees) {
+    double angleRadians = Math.toRadians(angleDegrees);
+    double cos = Math.cos(angleRadians);
+    double sin = Math.sin(angleRadians);
+    double x = vector.x * cos - vector.z * sin;
+    double z = vector.x * sin + vector.z * cos;
+    return new Vec3(x, vector.y, z);
+  }
+
   private static float getConvertedDamagePercentage(Player player, DamageSource originalDamageSource, LivingEntity target) {
     return getDamageConversionBonuses(player, originalDamageSource).map(b -> b.getConversionRate(originalDamageSource, player, target))
         .reduce(Float::sum)
@@ -748,8 +847,8 @@ public class SkillBonusHandler {
     Map<DamageCondition, Float> conversions = new HashMap<>();
     getDamageConversionBonuses(player, originalDamageSource).forEach(bonus -> {
       DamageCondition resultDamageSource = bonus.getResultDamageCondition();
-      conversions.put(resultDamageSource, conversions.getOrDefault(resultDamageSource, 0f) + bonus.getConversionRate(originalDamageSource, player,
-          event.getEntity()));
+      conversions.put(resultDamageSource,
+                      conversions.getOrDefault(resultDamageSource, 0f) + bonus.getConversionRate(originalDamageSource, player, event.getEntity()));
     });
     return conversions;
   }
@@ -790,7 +889,7 @@ public class SkillBonusHandler {
         chance--;
       }
       if (player.getRandom()
-          .nextFloat() < chance) {
+              .nextFloat() < chance) {
         multiplier += entry.getKey();
       }
     }
@@ -888,12 +987,18 @@ public class SkillBonusHandler {
 
   private static List<SkillBonus<?>> getAttributeBonuses() {
     List<SkillBonus<?>> list = new ArrayList<>();
-    list.add(new DamageBonus(0.01f, AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(PSTAttributes.INTELLIGENCE.get()), 1))
-        .setDamageCondition(new MagicDamageCondition()));
-    list.add(new DamageBonus(0.01f, AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(PSTAttributes.STRENGTH.get()), 1))
-        .setDamageCondition(new MeleeDamageCondition()));
-    list.add(new DamageBonus(0.01f, AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(PSTAttributes.DEXTERITY.get()), 1))
-        .setDamageCondition(new ProjectileDamageCondition()));
+    list.add(new DamageBonus(0.01f,
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
+            PSTAttributes.INTELLIGENCE.get()), 1))
+                 .setDamageCondition(new MagicDamageCondition()));
+    list.add(new DamageBonus(0.01f,
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
+            PSTAttributes.STRENGTH.get()), 1))
+                 .setDamageCondition(new MeleeDamageCondition()));
+    list.add(new DamageBonus(0.01f,
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
+            PSTAttributes.DEXTERITY.get()), 1))
+                 .setDamageCondition(new ProjectileDamageCondition()));
     return list;
   }
 

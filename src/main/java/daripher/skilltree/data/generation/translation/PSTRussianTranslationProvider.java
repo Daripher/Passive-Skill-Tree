@@ -19,8 +19,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
   protected void addTranslations() {
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Урон");
-    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Критический урон");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Множитель критического урона");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "damage", "Множитель критического урона %s");
     add(PSTSkillBonuses.CRIT_CHANCE.get(), "Шанс критического удара");
+    add(PSTSkillBonuses.CRIT_CHANCE.get(), "damage", "Шанс критического удара %s");
     add(PSTSkillBonuses.BLOCK_BREAK_SPEED.get(), "Скорость добычи блоков");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Ремонтируем%s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Прочности восстановлено");
@@ -65,6 +67,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GRANT_ITEM.get(), "amount", "Дарует %sx %s при изучении");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Duration of %s on you");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Duration of inflicted %s");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Шанс удвоить выпущенный снаряд");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Вы выпускаете дополнительный снаряд");
+    add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Ваши взрывные зелья не действуют на вас");
+    add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Скорость снарядов");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
     add(PSTItemBonuses.DURABILITY.get(), "Прочность");
@@ -355,6 +361,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Пространственный древний сплав");
     add(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "Прочный древний сплав");
     add(PSTItems.ANCIENT_ALLOY_HOT.get(), "Горячий древний сплав");
+    add(PSTItems.ANCIENT_BOOK.get(), "Древняя книга");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
@@ -366,6 +373,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Искревляет пространство вокруг себя");
     addTooltip(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "На слитке ни царапины");
     addTooltip(PSTItems.ANCIENT_ALLOY_HOT.get(), "Обжигает ладони");
+    addTooltip(PSTItems.ANCIENT_BOOK.get(), "Магия этого предмета была исчерпана");
     add("ancient_material.tooltip", "Требует определенных знаний для использования");
     // slots
     addCurioSlot("ring", "Слот кольца");
@@ -431,10 +439,11 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/healthy", "Здоровое");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
     // enchantments
-    add(PSTEnchantments.DEEP_THOUGHTS.get(), "Глубокие раздумья");
+    add(PSTEnchantments.STEEL_MIND.get(), "Стальной разум");
     add(PSTEnchantments.MAGIC_FLOW.get(), "Магический поток");
-    add(PSTEnchantments.MAGMA_TOUCH.get(), "Быстрое восстановление");
+    add(PSTEnchantments.DRAGON_BLOOD.get(), "Кровь дракона");
     add(PSTEnchantments.BOTTOMLESS_FLASK.get(), "Бездонный флакон");
+    add(PSTEnchantments.FIRE_WALL.get(), "Стена огня");
   }
 
   protected void addMixture(String name, MobEffect... effects) {

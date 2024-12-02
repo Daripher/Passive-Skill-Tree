@@ -34,13 +34,8 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
   private final int maxUpgrades;
   private final float[] upgradeChances;
 
-  public ItemUpgradeRecipe(
-      ResourceLocation id,
-      ItemCondition baseCondition,
-      Ingredient addition,
-      ItemBonus<?> itemBonus,
-      int maxUpgrades,
-      float[] upgradeChances) {
+  public ItemUpgradeRecipe(ResourceLocation id, ItemCondition baseCondition, Ingredient addition, ItemBonus<?> itemBonus, int maxUpgrades,
+                           float[] upgradeChances) {
     super(id, Ingredient.EMPTY, Ingredient.EMPTY, addition, ItemStack.EMPTY);
     this.baseCondition = baseCondition;
     this.addition = addition;
@@ -51,19 +46,17 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
 
   @Override
   public boolean matches(@NotNull Container container, @NotNull Level level) {
-    if (isUncraftable(container, this)) return false;
+    if (!canUseRecipe(container, this)) return false;
     ItemStack baseItem = container.getItem(SmithingMenu.BASE_SLOT);
     ItemStack additionItem = container.getItem(SmithingMenu.ADDITIONAL_SLOT);
-    return baseCondition.met(baseItem)
-        && addition.test(additionItem)
-        && getUpgradeLevel(baseItem) < maxUpgrades;
+    return baseCondition.met(baseItem) && addition.test(additionItem) && getUpgradeLevel(baseItem) < maxUpgrades;
   }
 
   @Override
-  public @NotNull ItemStack assemble(
-      @NotNull Container container, @NotNull RegistryAccess registryAccess) {
-    if (isUncraftable(container, this)) return ItemStack.EMPTY;
-    if (!addition.test(container.getItem(SmithingMenu.ADDITIONAL_SLOT))) return ItemStack.EMPTY;
+  public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess registryAccess) {
+    if (!canUseRecipe(container, this)) return ItemStack.EMPTY;
+    ItemStack additionItem = container.getItem(SmithingMenu.ADDITIONAL_SLOT);
+    if (!addition.test(additionItem)) return ItemStack.EMPTY;
     ItemStack baseItem = container.getItem(SmithingMenu.BASE_SLOT);
     if (!baseCondition.met(baseItem)) return ItemStack.EMPTY;
     int upgradeLevel = getUpgradeLevel(baseItem);
@@ -72,11 +65,13 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
     CompoundTag upgradesTag = new CompoundTag();
     upgradeLevel++;
     upgradesTag.putInt(getId().toString(), upgradeLevel);
-    ItemBonus<?> finalBonus = itemBonus.copy().multiply(upgradeLevel);
+    ItemBonus<?> itemBonusCopy = itemBonus.copy();
+    ItemBonus<?> finalBonus = itemBonusCopy.multiply(upgradeLevel);
     CompoundTag bonusTag = new CompoundTag();
     SerializationHelper.serializeItemBonus(bonusTag, finalBonus);
     upgradesTag.put("Upgrade", bonusTag);
-    result.getOrCreateTag().put(UPGRADES_TAG, upgradesTag);
+    CompoundTag resultTag = result.getOrCreateTag();
+    resultTag.put(UPGRADES_TAG, upgradesTag);
     ItemHelper.refreshDurabilityBonuses(result);
     return result;
   }
@@ -88,7 +83,8 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
 
   @Override
   public float getUpgradeChance(SmithingMenu menu) {
-    ItemStack baseItem = menu.getSlot(SmithingMenu.BASE_SLOT).getItem();
+    Slot baseSlot = menu.getSlot(SmithingMenu.BASE_SLOT);
+    ItemStack baseItem = baseSlot.getItem();
     int upgradeLevel = getUpgradeLevel(baseItem);
     return upgradeChances[Math.min(upgradeLevel, upgradeChances.length - 1)];
   }
@@ -106,7 +102,8 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
   @Override
   public void craftingFailed(SmithingMenu menu, Player player) {
     consumeIngredient(menu);
-    player.level().playSound(null, player, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
+    player.level()
+        .playSound(null, player, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
   }
 
   private static void consumeIngredient(SmithingMenu menu) {
@@ -132,24 +129,24 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
 
   public static class Serializer implements RecipeSerializer<ItemUpgradeRecipe> {
     @Override
-    public @NotNull ItemUpgradeRecipe fromJson(
-        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
+    public @NotNull ItemUpgradeRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
       ItemCondition baseCondition = SerializationHelper.deserializeItemCondition(jsonObject);
       Ingredient addition = Ingredient.fromJson(jsonObject.get("addition"));
       ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
-      int maxUpgrades = jsonObject.get("max_upgrades").getAsInt();
-      JsonArray upgradeChancesJson = jsonObject.get("upgrade_chances").getAsJsonArray();
+      int maxUpgrades = jsonObject.get("max_upgrades")
+          .getAsInt();
+      JsonArray upgradeChancesJson = jsonObject.get("upgrade_chances")
+          .getAsJsonArray();
       float[] upgradeChances = new float[upgradeChancesJson.size()];
       for (int i = 0; i < upgradeChancesJson.size(); i++) {
-        upgradeChances[i] = upgradeChancesJson.get(i).getAsFloat();
+        upgradeChances[i] = upgradeChancesJson.get(i)
+            .getAsFloat();
       }
-      return new ItemUpgradeRecipe(
-          id, baseCondition, addition, itemBonus, maxUpgrades, upgradeChances);
+      return new ItemUpgradeRecipe(id, baseCondition, addition, itemBonus, maxUpgrades, upgradeChances);
     }
 
     @Override
-    public ItemUpgradeRecipe fromNetwork(
-        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
+    public ItemUpgradeRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
       ItemCondition baseCondition = NetworkHelper.readItemCondition(buf);
       Ingredient addition = Ingredient.fromNetwork(buf);
       ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
@@ -159,8 +156,7 @@ public class ItemUpgradeRecipe extends ChancedUpgradeRecipe implements SkillRequ
       for (int i = 0; i < upgradeChancesSize; i++) {
         upgradeChances[i] = buf.readFloat();
       }
-      return new ItemUpgradeRecipe(
-          id, baseCondition, addition, itemBonus, maxUpgrades, upgradeChances);
+      return new ItemUpgradeRecipe(id, baseCondition, addition, itemBonus, maxUpgrades, upgradeChances);
     }
 
     @Override

@@ -5,7 +5,6 @@ import daripher.skilltree.init.PSTEnchantments;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTTags;
 import daripher.skilltree.recipe.builder.ItemUpgradeRecipeBuilder;
-import daripher.skilltree.recipe.builder.StackResultShapedRecipeBuilder;
 import daripher.skilltree.recipe.builder.StackResultShapelessRecipeBuilder;
 import daripher.skilltree.skill.bonus.condition.damage.MagicDamageCondition;
 import daripher.skilltree.skill.bonus.condition.damage.PoisonDamageCondition;
@@ -22,14 +21,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -57,62 +59,11 @@ public class PSTRecipesProvider extends RecipeProvider {
     necklace(PSTItems.ARSONIST_NECKLACE, Items.FIRE_CHARGE, consumer);
     necklace(PSTItems.FISHERMAN_NECKLACE, Items.TROPICAL_FISH, consumer);
     // books
-    StackResultShapedRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.DEEP_THOUGHTS.get(), 1)))
-        .define('o', Items.ENDER_PEARL)
-        .define('#', Items.BOOK)
-        .pattern("ooo")
-        .pattern("o#o")
-        .pattern("ooo")
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_deep_thoughts_1"));
-    StackResultShapedRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.DEEP_THOUGHTS.get(), 2)))
-        .define('o', Items.ENDER_PEARL)
-        .define('#', StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.DEEP_THOUGHTS.get(), 1))))
-        .pattern("ooo")
-        .pattern("o#o")
-        .pattern("ooo")
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_deep_thoughts_2"));
-    StackResultShapedRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.DEEP_THOUGHTS.get(), 3)))
-        .define('o', Items.ENDER_PEARL)
-        .define('#', StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.DEEP_THOUGHTS.get(), 2))))
-        .pattern("ooo")
-        .pattern("o#o")
-        .pattern("ooo")
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_deep_thoughts_3"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGIC_FLOW.get(), 1)))
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(Items.BOOK)
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magic_flow_1"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGIC_FLOW.get(), 2)))
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGIC_FLOW.get(), 1))))
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magic_flow_2"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGIC_FLOW.get(), 3)))
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGIC_FLOW.get(), 2))))
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magic_flow_3"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGMA_TOUCH.get(), 1)))
-        .requires(PSTItems.ANCIENT_ALLOY_HOT.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(Items.BOOK)
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magma_touch_1"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGMA_TOUCH.get(), 2)))
-        .requires(PSTItems.ANCIENT_ALLOY_HOT.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGMA_TOUCH.get(), 1))))
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magma_touch_2"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGMA_TOUCH.get(), 3)))
-        .requires(PSTItems.ANCIENT_ALLOY_HOT.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(StrictNBTIngredient.of(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.MAGMA_TOUCH.get(), 2))))
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_magma_touch_3"));
-    StackResultShapelessRecipeBuilder.create(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(PSTEnchantments.BOTTOMLESS_FLASK.get(), 1)))
-        .requires(PSTItems.ANCIENT_ALLOY_SPATIAL.get())
-        .requires(PSTItems.ANCIENT_ALLOY_ENCHANTED.get())
-        .requires(Items.BOOK)
-        .save(consumer, new ResourceLocation(SkillTreeMod.MOD_ID, "enchanted_book_bottomless_flask"));
+    enchantmentBooks(PSTItems.ANCIENT_ALLOY_ENCHANTED, PSTEnchantments.MAGIC_FLOW, 3, consumer);
+    enchantmentBooks(PSTItems.ANCIENT_ALLOY_CURATIVE, PSTEnchantments.DRAGON_BLOOD, 3, consumer);
+    enchantmentBooks(PSTItems.ANCIENT_ALLOY_DURABLE, PSTEnchantments.STEEL_MIND, 3, consumer);
+    enchantmentBooks(PSTItems.ANCIENT_ALLOY_HOT, PSTEnchantments.FIRE_WALL, 3, consumer);
+    enchantmentBooks(PSTItems.ANCIENT_ALLOY_SPATIAL, PSTEnchantments.BOTTOMLESS_FLASK, consumer);
     // upgrades
     ItemUpgradeRecipeBuilder.create()
         .baseCondition(new EquipmentCondition(EquipmentCondition.Type.WEAPON))
@@ -132,12 +83,14 @@ public class PSTRecipesProvider extends RecipeProvider {
     ItemUpgradeRecipeBuilder.create()
         .baseCondition(new EquipmentCondition(EquipmentCondition.Type.WEAPON))
         .additionalItem(Ingredient.of(PSTItems.ANCIENT_ALLOY_TOXIC.get()))
-        .itemBonus(new ItemSkillBonus(new DamageBonus(0.02f, AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new PoisonDamageCondition())))
+        .itemBonus(new ItemSkillBonus(new DamageBonus(0.02f,
+                                                      AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new PoisonDamageCondition())))
         .save(consumer, getRecipeId("upgrades/weapons_poison_damage"));
     ItemUpgradeRecipeBuilder.create()
         .baseCondition(new EquipmentCondition(EquipmentCondition.Type.WEAPON))
         .additionalItem(Ingredient.of(PSTItems.ANCIENT_ALLOY_ENCHANTED.get()))
-        .itemBonus(new ItemSkillBonus(new DamageBonus(0.02f, AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new MagicDamageCondition())))
+        .itemBonus(new ItemSkillBonus(new DamageBonus(0.02f,
+                                                      AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new MagicDamageCondition())))
         .save(consumer, getRecipeId("upgrades/weapons_magic_damage"));
     ItemUpgradeRecipeBuilder.create()
         .baseCondition(new EquipmentCondition(EquipmentCondition.Type.PICKAXE))
@@ -186,6 +139,33 @@ public class PSTRecipesProvider extends RecipeProvider {
         .additionalItem(Ingredient.of(PSTItems.ANCIENT_ALLOY_DURABLE.get()))
         .itemBonus(new ItemDurabilityBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE))
         .save(consumer, getRecipeId("upgrades/equipment_durability"));
+  }
+
+  protected void enchantmentBooks(RegistryObject<Item> ingredient, RegistryObject<Enchantment> enchantment, Consumer<FinishedRecipe> consumer) {
+    enchantmentBooks(ingredient, enchantment, 1, consumer);
+  }
+
+  protected void enchantmentBooks(RegistryObject<Item> ingredient,
+                                  RegistryObject<Enchantment> enchantment,
+                                  int maxLevel,
+                                  Consumer<FinishedRecipe> consumer) {
+    Ingredient base = Ingredient.of(PSTItems.ANCIENT_BOOK.get());
+    Ingredient addition = Ingredient.of(ingredient.get());
+    ItemStack result = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment.get(), 1));
+    @Nullable ResourceLocation enchantmentId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment.get());
+    Objects.requireNonNull(enchantmentId);
+    StackResultShapelessRecipeBuilder recipeBuilder = StackResultShapelessRecipeBuilder.create(result)
+        .requires(base)
+        .requires(addition);
+    recipeBuilder.save(consumer, getRecipeId("enchanted_book_" + enchantmentId.getPath() + "_1"));
+    for (int level = 2; level <= maxLevel; level++) {
+      base = PartialNBTIngredient.of(Objects.requireNonNull(result.getTag()), Items.ENCHANTED_BOOK);
+      result = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment.get(), level));
+      recipeBuilder = StackResultShapelessRecipeBuilder.create(result)
+          .requires(base)
+          .requires(addition);
+      recipeBuilder.save(consumer, getRecipeId("enchanted_book_" + enchantmentId.getPath() + "_" + level));
+    }
   }
 
   protected void necklace(RegistryObject<Item> result, Item material, Consumer<FinishedRecipe> consumer) {
@@ -242,15 +222,17 @@ public class PSTRecipesProvider extends RecipeProvider {
   }
 
   protected String getHasName(TagKey<Item> material) {
-    return "has_" + material.location()
-        .getPath()
-        .replaceAll("/", "_");
+    return "has_" +
+           material.location()
+               .getPath()
+               .replaceAll("/", "_");
   }
 
   private ResourceLocation getRecipeId(Item item) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-    return new ResourceLocation(SkillTreeMod.MOD_ID, Objects.requireNonNull(id)
-        .getPath());
+    return new ResourceLocation(SkillTreeMod.MOD_ID,
+                                Objects.requireNonNull(id)
+                                    .getPath());
   }
 
   private ResourceLocation getRecipeId(String path) {

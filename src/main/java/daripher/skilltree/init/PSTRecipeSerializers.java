@@ -26,4 +26,6 @@ public class PSTRecipeSerializers {
       REGISTRY.register("gem_upgrade", GemUpgradeRecipe.Serializer::new);
   public static final RegistryObject<RecipeSerializer<?>> ITEM_UPGRADE =
       REGISTRY.register("item_upgrade", ItemUpgradeRecipe.Serializer::new);
+  public static final RegistryObject<RecipeSerializer<?>> SMITHING_TRANSFORM =
+      REGISTRY.register("smithing_transform", SmithingSkillRequiringRecipe.Serializer::new);
 }

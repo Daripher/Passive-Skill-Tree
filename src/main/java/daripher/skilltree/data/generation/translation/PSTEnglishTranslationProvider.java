@@ -27,8 +27,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addSkill(103, "Alchemist");
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Damage");
-    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Critical Hit Damage");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Critical Damage Multiplier");
+    add(PSTSkillBonuses.CRIT_DAMAGE.get(), "damage", "Critical %s Damage Multiplier");
     add(PSTSkillBonuses.CRIT_CHANCE.get(), "Critical Hit Chance");
+    add(PSTSkillBonuses.CRIT_CHANCE.get(), "damage", "%s Critical Hit Chance");
     add(PSTSkillBonuses.BLOCK_BREAK_SPEED.get(), "Block break speed");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Repaired %s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Durability restored");
@@ -73,6 +75,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GRANT_ITEM.get(), "amount", "Grants %sx %s when learned");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Duration of %s on you");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Duration of inflicted %s");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Chance to fire additional projecile");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Fire an additional projecile");
+    add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Your splash potions do not affect you");
+    add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Projectile Speed");
     // item bonuses
     add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
     add(PSTItemBonuses.DURABILITY.get(), "Durability");
@@ -423,6 +429,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Spatial Ancient Alloy");
     add(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "Durable Ancient Alloy");
     add(PSTItems.ANCIENT_ALLOY_HOT.get(), "Hot Ancient Alloy");
+    add(PSTItems.ANCIENT_BOOK.get(), "Ancient Book");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
@@ -434,6 +441,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Distorts the space around itself");
     addTooltip(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "There is not a scratch on the ingot");
     addTooltip(PSTItems.ANCIENT_ALLOY_HOT.get(), "Burns your palms");
+    addTooltip(PSTItems.ANCIENT_BOOK.get(), "This item's magic has been depleted");
     add("ancient_material.tooltip", "Requires certain knowledge to be used");
     // slots
     addCurioSlot("ring", "Ring Slot");
@@ -497,10 +505,11 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
     // enchantments
-    add(PSTEnchantments.DEEP_THOUGHTS.get(), "Deep Thoughts");
+    add(PSTEnchantments.STEEL_MIND.get(), "Steel Mind");
     add(PSTEnchantments.MAGIC_FLOW.get(), "Magic Flow");
-    add(PSTEnchantments.MAGMA_TOUCH.get(), "Rapid Recovery");
+    add(PSTEnchantments.DRAGON_BLOOD.get(), "Dragon Blood");
     add(PSTEnchantments.BOTTOMLESS_FLASK.get(), "Bottomless Flask");
+    add(PSTEnchantments.FIRE_WALL.get(), "Fire Wall");
   }
 
   protected void addMixture(String name, MobEffect... effects) {

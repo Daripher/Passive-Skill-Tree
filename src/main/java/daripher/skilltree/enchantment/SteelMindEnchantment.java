@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class DeepThoughtsEnchantment extends CraftableEnchantment {
-  public DeepThoughtsEnchantment() {
+public class SteelMindEnchantment extends CraftableEnchantment {
+  public SteelMindEnchantment() {
     super(3, EnchantmentCategory.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
   }
 
@@ -31,7 +31,7 @@ public class DeepThoughtsEnchantment extends CraftableEnchantment {
     Player player = event.player;
     Level level = player.level();
     if (level.isClientSide) return;
-    int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(PSTEnchantments.DEEP_THOUGHTS.get(), player);
+    int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(PSTEnchantments.STEEL_MIND.get(), player);
     if (enchantmentLevel == 0) return;
     // 5 exp per minute (per level)
     int frequency = 1200 / (5 * enchantmentLevel);

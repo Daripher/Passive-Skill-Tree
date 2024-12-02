@@ -2,16 +2,12 @@
   "type": "skilltree:crafting_shapeless",
   "ingredients": [
     {
-      "item": "skilltree:ancient_alloy_enchanted"
-    },
-    {
-      "item": "skilltree:ancient_alloy_enchanted"
-    },
-    {
-      "type": "forge:nbt",
-      "count": 1,
+      "type": "forge:partial_nbt",
       "item": "minecraft:enchanted_book",
       "nbt": "{StoredEnchantments:[{id:\"skilltree:magic_flow\",lvl:1s}]}"
+    },
+    {
+      "item": "skilltree:ancient_alloy_enchanted"
     }
   ],
   "result": {

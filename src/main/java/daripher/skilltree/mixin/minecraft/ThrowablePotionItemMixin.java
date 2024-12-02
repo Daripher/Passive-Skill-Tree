@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ThrowablePotionItem;
 import net.minecraft.world.level.Level;
@@ -22,12 +23,14 @@ public class ThrowablePotionItemMixin extends Item {
   }
 
   @Inject(method = "use", at = @At("HEAD"))
-  private void setBottomlessFlaskCooldown(Level level, Player player, InteractionHand hand,
-                                          CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callbackInfo) {
+  private void setBottomlessFlaskCooldown(Level level,
+      Player player,
+      InteractionHand hand,
+      CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callbackInfo) {
     ItemStack itemStack = player.getItemInHand(hand);
     if (itemStack.getEnchantmentLevel(PSTEnchantments.BOTTOMLESS_FLASK.get()) > 0) {
-      player.getCooldowns()
-          .addCooldown(this, 60);
+      ItemCooldowns playerCooldowns = player.getCooldowns();
+      playerCooldowns.addCooldown(this, 60);
     }
   }
 

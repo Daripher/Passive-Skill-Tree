@@ -19,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 
 public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBonus> {
   private float multiplier;
@@ -27,6 +28,11 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   public BlockBreakSpeedBonus(float multiplier) {
     this.multiplier = multiplier;
+  }
+
+  public float getMultiplier(Player player) {
+    if (!playerCondition.met(player)) return 0f;
+    return multiplier * playerMultiplier.getValue(player);
   }
 
   @Override
@@ -163,10 +169,6 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   @Nonnull
   public LivingCondition getPlayerCondition() {
     return playerCondition;
-  }
-
-  public float getMultiplier() {
-    return multiplier;
   }
 
   @Override
