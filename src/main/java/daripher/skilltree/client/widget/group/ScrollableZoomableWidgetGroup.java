@@ -8,8 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends WidgetGroup<T> {
-  protected float scrollSpeedX;
-  protected float scrollSpeedY;
   protected float scrollX;
   protected float scrollY;
   protected int maxScrollX;
@@ -23,7 +21,6 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
   @Override
   protected void renderWidget(
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-    updateScroll(partialTick);
     graphics.enableScissor(getX(), getY(), getX() + getWidth(), getY() + getHeight());
     graphics.pose().pushPose();
     graphics.pose().translate(scrollX, scrollY, 0);
@@ -50,8 +47,8 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
   public boolean mouseDragged(
       double mouseX, double mouseY, int button, double dragX, double dragY) {
     if (button != GLFW.GLFW_MOUSE_BUTTON_MIDDLE) return false;
-    if (maxScrollX > 0) scrollSpeedX += (float) (dragX * 0.25f);
-    if (maxScrollY > 0) scrollSpeedY += (float) (dragY * 0.25f);
+    if (maxScrollX > 0) scrollX += (float) (dragX);
+    if (maxScrollY > 0) scrollY += (float) (dragY);
     return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
   }
 
@@ -88,15 +85,6 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
     double x = widget.getX() + widget.getWidth() / 2d - width / 2;
     double y = widget.getY() + widget.getHeight() / 2d - height / 2;
     return new Rectangle2D.Double(x, y, width, height);
-  }
-
-  private void updateScroll(float partialTick) {
-    scrollX += scrollSpeedX * partialTick;
-    scrollX = Math.max(-maxScrollX * zoom, Math.min(maxScrollX * zoom, scrollX));
-    scrollSpeedX *= 0.8f;
-    scrollY += scrollSpeedY * partialTick;
-    scrollY = Math.max(-maxScrollY * zoom, Math.min(maxScrollY * zoom, scrollY));
-    scrollSpeedY *= 0.8f;
   }
 
   public void setMaxScrollX(int maxScrollX) {
