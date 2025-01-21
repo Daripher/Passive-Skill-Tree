@@ -46,7 +46,7 @@
             },
             "chance": 0.02,
             "damage_condition": {
-              "type": "skilltree:melee"
+              "type": "skilltree:projectile"
             },
             "player_condition": {
               "type": "skilltree:none"
@@ -59,7 +59,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "shield"
+        "equipment_type": "helmet"
       }
     },
     {
@@ -71,7 +71,7 @@
             "type": "skilltree:attribute",
             "amount": 0.019999999552965164,
             "attribute": "minecraft:generic.attack_speed",
-            "id": "82d047ae-b2fa-42de-837e-783bcaf83764",
+            "id": "c7bbd8d9-a10f-45e7-aa9e-ef4196a4297a",
             "name": "Jade",
             "operation": 1,
             "player_condition": {
@@ -125,26 +125,6 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:gained_experience",
-            "experience_source": "mobs",
-            "multiplier": 0.1,
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:curios/jewelry"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
             "type": "skilltree:damage_avoidance",
             "attacker_condition": {
               "type": "skilltree:none"
@@ -154,7 +134,7 @@
             },
             "chance": 0.02,
             "damage_condition": {
-              "type": "skilltree:projectile"
+              "type": "skilltree:melee"
             },
             "player_condition": {
               "type": "skilltree:none"
@@ -167,7 +147,27 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "helmet"
+        "equipment_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:gained_experience",
+            "experience_source": "mobs",
+            "multiplier": 0.1,
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:tag",
+        "tag_id": "forge:curios/jewelry"
       }
     }
   ],

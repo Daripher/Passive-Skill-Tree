@@ -17,14 +17,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
   @Override
   protected void addTranslations() {
-    // skills
-    addSkill(1, "Adventurer");
-    addSkill(98, "Hunter");
-    addSkill(99, "Miner");
-    addSkill(100, "Blacksmith");
-    addSkill(101, "Cook");
-    addSkill(102, "Enchanter");
-    addSkill(103, "Alchemist");
     // skill bonuses
     add(PSTSkillBonuses.DAMAGE.get(), "Damage");
     add(PSTSkillBonuses.CRIT_DAMAGE.get(), "Critical Damage Multiplier");

@@ -9,7 +9,7 @@
             "type": "skilltree:attribute",
             "amount": 1.5,
             "attribute": "minecraft:generic.luck",
-            "id": "3c0afa1a-a3a2-4f47-8869-fde99588ca3f",
+            "id": "4b5f6224-28f2-4edf-b556-f47acda7390e",
             "name": "Citrine",
             "operation": 0,
             "player_condition": {
@@ -32,24 +32,16 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.07500000111758709,
-            "attribute": "minecraft:generic.luck",
-            "id": "d4c36a8d-a87b-4c40-a5d3-b96cfe440a4d",
-            "name": "Citrine",
-            "operation": 1,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
+            "type": "skilltree:loot_duplication",
+            "chance": 0.03,
+            "loot_type": "gems",
+            "multiplier": 2.0
           }
         }
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "shield"
+        "equipment_type": "helmet"
       }
     },
     {
@@ -108,16 +100,24 @@
         "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
-            "type": "skilltree:loot_duplication",
-            "chance": 0.03,
-            "loot_type": "mobs",
-            "multiplier": 1.0
+            "type": "skilltree:attribute",
+            "amount": 0.07500000111758709,
+            "attribute": "minecraft:generic.luck",
+            "id": "6024838e-79b2-48b8-b3bb-b9be14d600ce",
+            "name": "Citrine",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:tag",
-        "tag_id": "forge:curios/jewelry"
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
       }
     },
     {
@@ -128,14 +128,14 @@
           "skill_bonus": {
             "type": "skilltree:loot_duplication",
             "chance": 0.03,
-            "loot_type": "gems",
-            "multiplier": 2.0
+            "loot_type": "mobs",
+            "multiplier": 1.0
           }
         }
       },
       "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "helmet"
+        "type": "skilltree:tag",
+        "tag_id": "forge:curios/jewelry"
       }
     }
   ],
