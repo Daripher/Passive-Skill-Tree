@@ -4,6 +4,20 @@
       "bonus_provider": {
         "type": "skilltree:simple",
         "item_bonus": {
+          "type": "skilltree:durability",
+          "amount": 100.0,
+          "operation": 0
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "shield"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
           "type": "skilltree:skill_bonus",
           "skill_bonus": {
             "type": "skilltree:damage_taken",
@@ -40,10 +54,10 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
-            "attribute": "minecraft:generic.armor",
-            "id": "9df5cc3e-821c-4991-8a4f-34d92c82183c",
+            "attribute": "minecraft:generic.knockback_resistance",
+            "id": "07cf2978-0481-4f8e-b1d9-ab9c1d2d01ac",
             "name": "Sapphire",
-            "operation": 1,
+            "operation": 0,
             "player_condition": {
               "type": "skilltree:none"
             },
@@ -55,7 +69,7 @@
       },
       "item_condition": {
         "type": "skilltree:equipment_type",
-        "equipment_type": "helmet"
+        "equipment_type": "boots"
       }
     },
     {
@@ -98,48 +112,8 @@
           "skill_bonus": {
             "type": "skilltree:attribute",
             "amount": 0.09999999776482582,
-            "attribute": "minecraft:generic.knockback_resistance",
-            "id": "ce4674af-75a2-407a-9a05-228c83a6cbe8",
-            "name": "Sapphire",
-            "operation": 0,
-            "player_condition": {
-              "type": "skilltree:none"
-            },
-            "player_multiplier": {
-              "type": "skilltree:none"
-            }
-          }
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "boots"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:durability",
-          "amount": 100.0,
-          "operation": 0
-        }
-      },
-      "item_condition": {
-        "type": "skilltree:equipment_type",
-        "equipment_type": "shield"
-      }
-    },
-    {
-      "bonus_provider": {
-        "type": "skilltree:simple",
-        "item_bonus": {
-          "type": "skilltree:skill_bonus",
-          "skill_bonus": {
-            "type": "skilltree:attribute",
-            "amount": 0.09999999776482582,
             "attribute": "minecraft:generic.armor_toughness",
-            "id": "12d30b5d-4560-40be-9f25-5827fe779867",
+            "id": "4f538afc-fff8-45ee-a0cc-623395e0f608",
             "name": "Sapphire",
             "operation": 1,
             "player_condition": {
@@ -154,6 +128,32 @@
       "item_condition": {
         "type": "skilltree:tag",
         "tag_id": "forge:curios/jewelry"
+      }
+    },
+    {
+      "bonus_provider": {
+        "type": "skilltree:simple",
+        "item_bonus": {
+          "type": "skilltree:skill_bonus",
+          "skill_bonus": {
+            "type": "skilltree:attribute",
+            "amount": 0.09999999776482582,
+            "attribute": "minecraft:generic.armor",
+            "id": "528c54eb-69cb-455c-a0bb-7557002ce996",
+            "name": "Sapphire",
+            "operation": 1,
+            "player_condition": {
+              "type": "skilltree:none"
+            },
+            "player_multiplier": {
+              "type": "skilltree:none"
+            }
+          }
+        }
+      },
+      "item_condition": {
+        "type": "skilltree:equipment_type",
+        "equipment_type": "helmet"
       }
     }
   ],

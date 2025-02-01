@@ -34,11 +34,11 @@
       "gem_class": {
         "key": "weapon",
         "types": [
-          "trident",
           "crossbow",
-          "bow",
+          "trident",
+          "heavy_weapon",
           "sword",
-          "heavy_weapon"
+          "bow"
         ]
       }
     },
@@ -75,7 +75,7 @@
             "type": "skilltree:attribute",
             "amount": 0.04999999888241291,
             "attribute": "minecraft:generic.max_health",
-            "id": "24f72f55-12b9-45bd-97c4-c17c2d5c67b2",
+            "id": "92015dca-0783-40ae-b36f-483a53b78dd1",
             "name": "Ruby",
             "operation": 1,
             "player_condition": {
@@ -103,7 +103,7 @@
             "type": "skilltree:attribute",
             "amount": 0.5000000074505806,
             "attribute": "skilltree:regeneration",
-            "id": "6d04a450-4404-4116-b30e-29b85eac8c9c",
+            "id": "9d44323b-4d3d-4dbf-b308-86da8308d377",
             "name": "Ruby",
             "operation": 0,
             "player_condition": {
@@ -180,8 +180,8 @@
       "gem_class": {
         "key": "jewelry",
         "types": [
-          "curios:ring",
-          "curios:necklace"
+          "curios:necklace",
+          "curios:ring"
         ]
       }
     }

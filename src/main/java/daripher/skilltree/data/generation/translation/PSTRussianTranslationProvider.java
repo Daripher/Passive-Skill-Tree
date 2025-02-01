@@ -68,6 +68,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Duration of %s on you");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Duration of inflicted %s");
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Шанс удвоить выпущенный снаряд");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "amount", "Вы выпускаете %s дополнительных снарядов");
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Вы выпускаете дополнительный снаряд");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Ваши взрывные зелья не действуют на вас");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Скорость снарядов");

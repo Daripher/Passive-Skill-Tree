@@ -480,6 +480,7 @@
   "skill_bonus.skilltree.loot_duplication.multiplier": "+%s%%",
   "skill_bonus.skilltree.loot_duplication.triple": "тройные",
   "skill_bonus.skilltree.projectile_duplication": "Вы выпускаете дополнительный снаряд",
+  "skill_bonus.skilltree.projectile_duplication.amount": "Вы выпускаете %s дополнительных снарядов",
   "skill_bonus.skilltree.projectile_duplication.chance": "Шанс удвоить выпущенный снаряд",
   "skill_bonus.skilltree.projectile_speed": "Скорость снарядов",
   "skill_bonus.skilltree.recipe_unlock": "Открывает рецепт: %s",

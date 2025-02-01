@@ -67,8 +67,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GRANT_ITEM.get(), "amount", "Grants %sx %s when learned");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Duration of %s on you");
     add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Duration of inflicted %s");
-    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Chance to fire additional projecile");
-    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Fire an additional projecile");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Chance to fire additional projectile");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "amount", "Fire %s additional projectiles");
+    add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Fire an additional projectile");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Your splash potions do not affect you");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Projectile Speed");
     // item bonuses
