@@ -48,6 +48,7 @@ public class AttributeEvents {
     event.setXp((int) (event.getXp() * ServerConfig.grindstone_exp_multiplier));
   }
 
+  // TODO: replace with separate bonus
   @SubscribeEvent
   public static void applyRangedWeaponAttackSpeedBonus(LivingEntityUseItemEvent.Tick event) {
     if (!EquipmentCondition.isRangedWeapon(event.getItem())) return;

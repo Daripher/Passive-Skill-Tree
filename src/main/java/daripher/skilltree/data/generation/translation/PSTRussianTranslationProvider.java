@@ -89,6 +89,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "награды с существ");
     add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "награды с рыбалки");
     add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "самоцветы из руды");
+    add(LootDuplicationBonus.LootType.CHESTS.getDescriptionId(), "награды в сундуках");
+    add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "награды из руды");
+    add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "награды от археологии");
     // living conditions
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.you", "вас");
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.target", "цели");

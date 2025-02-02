@@ -2,9 +2,7 @@ package daripher.skilltree.item.gem.loot;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.config.ServerConfig;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
-import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
-import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class GemLootHandler {
   @SubscribeEvent
@@ -32,27 +32,18 @@ public class GemLootHandler {
     ServerLevel level = (ServerLevel) player.level();
     LootTable lootTable = getGemsLootTable(level);
     LootParams lootParams = createGemsLootParams(event, level, player);
-    float multiplier = getGemLootMultiplier(player);
-    if (player.getRandom().nextFloat() < multiplier % 1) {
-      multiplier++;
-    }
     List<ItemStack> foundGems = lootTable.getRandomItems(lootParams);
-    for (int i = 0; i < (int) multiplier; i++) {
-      foundGems.stream()
-          .map(ItemStack::copy)
-          .forEach(s -> Block.popResource(level, event.getPos(), s));
-    }
-  }
-
-  private static float getGemLootMultiplier(Player player) {
-    return 1f + SkillBonusHandler.getLootMultiplier(player, LootDuplicationBonus.LootType.GEMS);
+    foundGems.forEach(gem -> Block.popResource(level, event.getPos(), gem));
   }
 
   public static int getGemLootWeight(ResourceLocation gemId) {
-    if (gemId.getPath().contains("vacucite")) {
+    if (gemId.getPath()
+        .contains("vacucite")) {
       return 200;
     }
-    int tier = Integer.parseInt(gemId.getPath().substring(gemId.getPath().length() - 1));
+    int tier = Integer.parseInt(gemId.getPath()
+                                    .substring(gemId.getPath()
+                                                   .length() - 1));
     return switch (tier) {
       case 0 -> 1000;
       case 1 -> 350;
@@ -63,10 +54,13 @@ public class GemLootHandler {
   }
 
   public static int getGemLootQuality(ResourceLocation gemId) {
-    if (gemId.getPath().contains("vacucite")) {
+    if (gemId.getPath()
+        .contains("vacucite")) {
       return 1;
     }
-    int tier = Integer.parseInt(gemId.getPath().substring(gemId.getPath().length() - 1));
+    int tier = Integer.parseInt(gemId.getPath()
+                                    .substring(gemId.getPath()
+                                                   .length() - 1));
     return switch (tier) {
       case 0 -> -50;
       case 1 -> -10;
@@ -81,28 +75,35 @@ public class GemLootHandler {
     if (player.isCreative()) return false;
     if (player.level().isClientSide) return false;
     if (ServerConfig.gem_drop_chance == 0) return false;
-    if (!player.level().getBlockState(event.getPos()).is(Tags.Blocks.ORES)) return false;
-    if (player.getRandom().nextFloat() >= ServerConfig.gem_drop_chance) return false;
+    if (!player.level()
+        .getBlockState(event.getPos())
+        .is(Tags.Blocks.ORES)) {
+      return false;
+    }
+    if (player.getRandom()
+            .nextFloat() >= ServerConfig.gem_drop_chance) {
+      return false;
+    }
     if (!ForgeHooks.isCorrectToolForDrops(event.getState(), player)) return false;
-    return player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0;
+    return player.getMainHandItem()
+               .getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0;
   }
 
   @NotNull
   private static LootTable getGemsLootTable(ServerLevel serverLevel) {
     String name = SkillTreeMod.apotheosisEnabled() ? "apotheosis_gems" : "gems";
     ResourceLocation id = new ResourceLocation(SkillTreeMod.MOD_ID, name);
-    return serverLevel.getServer().getLootData().getLootTable(id);
+    return serverLevel.getServer()
+        .getLootData()
+        .getLootTable(id);
   }
 
   @NotNull
-  private static LootParams createGemsLootParams(
-      BlockEvent.BreakEvent event, ServerLevel serverLevel, Player player) {
-    return new LootParams.Builder(serverLevel)
-        .withParameter(LootContextParams.BLOCK_STATE, event.getState())
+  private static LootParams createGemsLootParams(BlockEvent.BreakEvent event, ServerLevel serverLevel, Player player) {
+    BlockPos pos = event.getPos();
+    return new LootParams.Builder(serverLevel).withParameter(LootContextParams.BLOCK_STATE, event.getState())
         .withParameter(LootContextParams.THIS_ENTITY, player)
-        .withParameter(
-            LootContextParams.ORIGIN,
-            new Vec3(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ()))
+        .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
         .withParameter(LootContextParams.TOOL, player.getMainHandItem())
         .withLuck(player.getLuck())
         .create(LootContextParamSets.BLOCK);

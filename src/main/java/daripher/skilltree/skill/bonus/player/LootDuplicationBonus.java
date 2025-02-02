@@ -1,21 +1,29 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.SelectionList;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBonus> {
   private LootType lootType;
@@ -66,24 +74,21 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     MutableComponent multiplierDescription;
     if (multiplier == 1) {
       multiplierDescription = Component.translatable(descriptionId + ".double");
-    } else if (multiplier == 2) {
+    }
+    else if (multiplier == 2) {
       multiplierDescription = Component.translatable(descriptionId + ".triple");
-    } else {
+    }
+    else {
       String formattedMultiplier = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(multiplier * 100);
-      multiplierDescription =
-          Component.translatable(descriptionId + ".multiplier", formattedMultiplier);
+      multiplierDescription = Component.translatable(descriptionId + ".multiplier", formattedMultiplier);
     }
     MutableComponent bonusDescription;
     if (chance < 1) {
-      bonusDescription =
-          Component.translatable(descriptionId, multiplierDescription, lootDescription);
-      bonusDescription =
-          TooltipHelper.getSkillBonusTooltip(
-              bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE);
-    } else {
-      bonusDescription =
-          Component.translatable(
-              descriptionId + ".guaranteed", multiplierDescription, lootDescription);
+      bonusDescription = Component.translatable(descriptionId, multiplierDescription, lootDescription);
+      bonusDescription = TooltipHelper.getSkillBonusTooltip(bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+    }
+    else {
+      bonusDescription = Component.translatable(descriptionId + ".guaranteed", multiplierDescription, lootDescription);
     }
     return bonusDescription.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
@@ -94,25 +99,20 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
   }
 
   @Override
-  public void addEditorWidgets(
-      SkillTreeEditor editor, int row, Consumer<LootDuplicationBonus> consumer) {
+  public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<LootDuplicationBonus> consumer) {
     editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
     editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor
-        .addNumericTextField(0, 0, 90, 14, chance)
+    editor.addNumericTextField(0, 0, 90, 14, chance)
         .setNumericResponder(value -> selectChance(consumer, value));
-    editor
-        .addNumericTextField(110, 0, 90, 14, multiplier)
+    editor.addNumericTextField(110, 0, 90, 14, multiplier)
         .setNumericResponder(value -> selectMultiplier(consumer, value));
     editor.increaseHeight(19);
     editor.addLabel(0, 0, "Loot Type", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    SelectionList<LootType> lootTypeSelection =
-        editor
-            .addSelection(0, 0, 200, 3, lootType)
-            .setNameGetter(LootType::getFormattedName)
-            .setResponder(lootType -> selectLootType(consumer, lootType));
+    SelectionList<LootType> lootTypeSelection = editor.addSelection(0, 0, 200, 3, lootType)
+        .setNameGetter(LootType::getFormattedName)
+        .setResponder(lootType -> selectLootType(consumer, lootType));
     editor.increaseHeight(lootTypeSelection.getMaxDisplayed() * 14 + 5);
   }
 
@@ -173,7 +173,33 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
   public enum LootType {
     MOBS("mobs"),
     FISHING("fishing"),
-    GEMS("gems");
+    GEMS("gems"),
+    CHESTS("chests"),
+    ORE("ore"),
+    ARCHAEOLOGY("archaeology");
+
+    public boolean canAffect(LootContext lootContext) {
+      LootContextParam<Entity> playerLootContextParam = getPlayerLootContextParam();
+      if (!lootContext.hasParam(playerLootContextParam)) return false;
+      if (!(lootContext.getParam(playerLootContextParam) instanceof Player)) return false;
+      ResourceLocation lootTableId = lootContext.getQueriedLootTableId();
+      String lootTableName = lootTableId.toString();
+      return switch (this) {
+        case MOBS -> lootTableName.contains("entities/");
+        case FISHING -> lootTableName.contains("fishing");
+        case GEMS -> lootTableName.contains("gems");
+        case CHESTS -> lootTableName.contains("chests/");
+        case ORE -> lootTableName.contains("blocks/") && lootTableName.contains("_ore");
+        case ARCHAEOLOGY -> lootTableName.contains("archaeology/");
+      };
+    }
+
+    public LootContextParam<Entity> getPlayerLootContextParam() {
+      return switch (this) {
+        case MOBS, FISHING -> LootContextParams.KILLER_ENTITY;
+        case GEMS, CHESTS, ORE, ARCHAEOLOGY -> LootContextParams.THIS_ENTITY;
+      };
+    }
 
     final String name;
 
@@ -186,7 +212,8 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     }
 
     public Component getFormattedName() {
-      return Component.literal(getName().substring(0, 1).toUpperCase() + getName().substring(1));
+      String firstLetter = getName().substring(0, 1);
+      return Component.literal(firstLetter.toUpperCase() + getName().substring(1));
     }
 
     public static LootType byName(String name) {
@@ -204,9 +231,12 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public LootDuplicationBonus deserialize(JsonObject json) throws JsonParseException {
-      float chance = SerializationHelper.getElement(json, "chance").getAsFloat();
-      float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
-      LootType lootType = LootType.byName(json.get("loot_type").getAsString());
+      float chance = SerializationHelper.getElement(json, "chance")
+          .getAsFloat();
+      float multiplier = SerializationHelper.getElement(json, "multiplier")
+          .getAsFloat();
+      LootType lootType = LootType.byName(json.get("loot_type")
+                                              .getAsString());
       return new LootDuplicationBonus(chance, multiplier, lootType);
     }
 
@@ -242,8 +272,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
     @Override
     public LootDuplicationBonus deserialize(FriendlyByteBuf buf) {
-      return new LootDuplicationBonus(
-          buf.readFloat(), buf.readFloat(), LootType.byName(buf.readUtf()));
+      return new LootDuplicationBonus(buf.readFloat(), buf.readFloat(), LootType.byName(buf.readUtf()));
     }
 
     @Override

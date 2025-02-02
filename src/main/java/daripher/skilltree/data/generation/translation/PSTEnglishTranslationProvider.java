@@ -89,6 +89,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "mobs loot");
     add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "fishing loot");
     add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "gems from ore");
+    add(LootDuplicationBonus.LootType.CHESTS.getDescriptionId(), "loot in chests");
+    add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "loot from ore");
+    add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "loot from archaeology");
     // living conditions
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.player", "with");
     add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.enemy", "if enemy has");

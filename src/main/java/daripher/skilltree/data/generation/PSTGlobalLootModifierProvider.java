@@ -3,6 +3,7 @@ package daripher.skilltree.data.generation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.loot.modifier.AddItemModifier;
+import daripher.skilltree.loot.modifier.SkillBonusesModifier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -30,6 +31,7 @@ public class PSTGlobalLootModifierProvider extends GlobalLootModifierProvider {
     upgradeMaterial("entities/pillager", PSTItems.ANCIENT_ALLOY_DURABLE);
     upgradeMaterial("entities/blaze", PSTItems.ANCIENT_ALLOY_HOT);
     upgradeMaterial("entities/stray", PSTItems.ANCIENT_BOOK);
+    add("skill_bonuses", new SkillBonusesModifier());
   }
 
   private void upgradeMaterial(String lootTablePath, RegistryObject<Item> item) {
@@ -38,7 +40,7 @@ public class PSTGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
   private void addItem(String lootTablePath, RegistryObject<Item> item, float chance, float lootingMultiplier) {
     ResourceLocation itemId = item.getId();
-    String modifierName = lootTablePath.replaceAll("/", "_") + itemId.getPath();
+    String modifierName = lootTablePath.replaceAll("/", "_") + "_" + itemId.getPath();
     ItemStack itemStack = new ItemStack(item.get());
     AddItemModifier modifier = new AddItemModifier(itemStack, lootTableCondition(lootTablePath), randomChanceCondition(chance, lootingMultiplier));
     add(modifierName, modifier);

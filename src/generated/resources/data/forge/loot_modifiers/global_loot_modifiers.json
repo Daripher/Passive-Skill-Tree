@@ -1,14 +1,15 @@
 {
   "entries": [
-    "skilltree:entities_blazeancient_alloy_hot",
-    "skilltree:entities_creeperancient_alloy_curative",
-    "skilltree:entities_wither_skeletonancient_alloy_enchanted",
-    "skilltree:entities_zombified_piglinancient_alloy_gilded",
-    "skilltree:entities_endermanancient_alloy_spatial",
-    "skilltree:entities_pillagerancient_alloy_durable",
-    "skilltree:entities_spiderancient_alloy_toxic",
-    "skilltree:entities_phantomancient_alloy_lightweight",
-    "skilltree:entities_strayancient_book"
+    "skilltree:entities_enderman_ancient_alloy_spatial",
+    "skilltree:entities_wither_skeleton_ancient_alloy_enchanted",
+    "skilltree:entities_stray_ancient_book",
+    "skilltree:entities_creeper_ancient_alloy_curative",
+    "skilltree:skill_bonuses",
+    "skilltree:entities_phantom_ancient_alloy_lightweight",
+    "skilltree:entities_zombified_piglin_ancient_alloy_gilded",
+    "skilltree:entities_spider_ancient_alloy_toxic",
+    "skilltree:entities_pillager_ancient_alloy_durable",
+    "skilltree:entities_blaze_ancient_alloy_hot"
   ],
   "replace": false
 }

@@ -6,7 +6,6 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.effect.SkillBonusEffect;
 import daripher.skilltree.enchantment.SkillBonusEnchantment;
-import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTDamageTypes;
@@ -51,7 +50,6 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -350,27 +348,6 @@ public class SkillBonusHandler {
       multiplier += bonus.getHealingMultiplier(player);
     }
     event.setAmount(event.getAmount() * multiplier);
-  }
-
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void applyLootDuplicationChanceBonus(LivingDropsEvent event) {
-    // shouldn't multiply player's loot
-    if (event.getEntity() instanceof Player) return;
-    if (!(event.getSource()
-        .getEntity() instanceof Player player)) {
-      return;
-    }
-    float multiplier = getLootMultiplier(player, LootDuplicationBonus.LootType.MOBS);
-    while (multiplier > 1) {
-      event.getDrops()
-          .addAll(getDrops(event));
-      multiplier--;
-    }
-    if (player.getRandom()
-            .nextFloat() < multiplier) {
-      event.getDrops()
-          .addAll(getDrops(event));
-    }
   }
 
   @SubscribeEvent
@@ -879,44 +856,6 @@ public class SkillBonusHandler {
         .orElse(0f);
   }
 
-  public static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
-    Map<Float, Float> multipliers = getLootMultipliers(player, lootType);
-    float multiplier = 0f;
-    for (Map.Entry<Float, Float> entry : multipliers.entrySet()) {
-      float chance = entry.getValue();
-      while (chance > 1) {
-        multiplier += entry.getKey();
-        chance--;
-      }
-      if (player.getRandom()
-              .nextFloat() < chance) {
-        multiplier += entry.getKey();
-      }
-    }
-    return multiplier;
-  }
-
-  @Nonnull
-  private static Map<Float, Float> getLootMultipliers(Player player, LootDuplicationBonus.LootType lootType) {
-    Map<Float, Float> multipliers = new HashMap<>();
-    for (LootDuplicationBonus b : getSkillBonuses(player, LootDuplicationBonus.class)) {
-      if (b.getLootType() != lootType) continue;
-      float chance = b.getChance() + multipliers.getOrDefault(b.getMultiplier(), 0f);
-      multipliers.put(b.getMultiplier(), chance);
-    }
-    return multipliers;
-  }
-
-  protected static List<ItemEntity> getDrops(LivingDropsEvent event) {
-    List<ItemEntity> drops = new ArrayList<>();
-    for (ItemEntity itemEntity : event.getDrops()) {
-      ItemEntity copy = itemEntity.copy();
-      drops.add(copy);
-    }
-    if (event.getEntity() instanceof EquippedEntity entity) drops.removeIf(entity::hasItemEquipped);
-    return drops;
-  }
-
   private static void addAttributeModifiers(BiConsumer<Attribute, AttributeModifier> addFunction, ItemStack stack) {
     for (ItemBonus<?> itemBonus : ItemHelper.getItemBonuses(stack)) {
       if (itemBonus instanceof ItemSkillBonus itemSkillBonus) {
@@ -988,16 +927,19 @@ public class SkillBonusHandler {
   private static List<SkillBonus<?>> getAttributeBonuses() {
     List<SkillBonus<?>> list = new ArrayList<>();
     list.add(new DamageBonus(0.01f,
-                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
-            PSTAttributes.INTELLIGENCE.get()), 1))
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(
+            new AttributeValueProvider(PSTAttributes.INTELLIGENCE.get()),
+            1))
                  .setDamageCondition(new MagicDamageCondition()));
     list.add(new DamageBonus(0.01f,
-                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
-            PSTAttributes.STRENGTH.get()), 1))
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(
+            new AttributeValueProvider(PSTAttributes.STRENGTH.get()),
+            1))
                  .setDamageCondition(new MeleeDamageCondition()));
     list.add(new DamageBonus(0.01f,
-                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(new AttributeValueProvider(
-            PSTAttributes.DEXTERITY.get()), 1))
+                             AttributeModifier.Operation.MULTIPLY_BASE).setPlayerMultiplier(new NumericValueMultiplier(
+            new AttributeValueProvider(PSTAttributes.DEXTERITY.get()),
+            1))
                  .setDamageCondition(new ProjectileDamageCondition()));
     return list;
   }

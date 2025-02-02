@@ -13,7 +13,6 @@
     "minecraft/ItemMixin",
     "minecraft/LivingEntityMixin",
     "minecraft/AbstractArrowMixin",
-    "minecraft/FishingHookMixin",
     "minecraft/PotionUtilsMixin",
     "minecraft/AnvilMenuMixin",
     "minecraft/AbstractContainerMenuMixin",
