@@ -10,7 +10,9 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
+import javax.annotation.Nullable;
+
+public abstract class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
   protected final Set<T> widgets = new HashSet<>();
   protected Runnable rebuildFunc = () -> {};
 
@@ -148,5 +150,21 @@ public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implem
 
   public Rectangle2D.Float getArea() {
     return new Rectangle2D.Float(getX(), getY(), width, height);
+  }
+
+  public @Nullable T getWidgetAt(double mouseX, double mouseY) {
+    for (T widget : widgets) {
+      Rectangle2D.Double widgetArea = getWidgetArea(widget);
+      if (widgetArea.contains(mouseX, mouseY)) return widget;
+    }
+    return null;
+  }
+
+  protected @NotNull Rectangle2D.Double getWidgetArea(T widget) {
+    double width = widget.getWidth();
+    double height = widget.getHeight();
+    double x = widget.getX() + width / 2d - width / 2;
+    double y = widget.getY() + height / 2d - height / 2;
+    return new Rectangle2D.Double(x, y, width, height);
   }
 }

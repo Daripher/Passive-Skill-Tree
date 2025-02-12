@@ -68,6 +68,7 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
     return true;
   }
 
+  @Override
   public @Nullable T getWidgetAt(double mouseX, double mouseY) {
     mouseX -= scrollX;
     mouseY -= scrollY;
@@ -78,8 +79,8 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
     return null;
   }
 
-  @NotNull
-  protected Rectangle2D.Double getWidgetArea(T widget) {
+  @Override
+  protected @NotNull Rectangle2D.Double getWidgetArea(T widget) {
     double width = widget.getWidth() * zoom;
     double height = widget.getHeight() * zoom;
     double x = widget.getX() + widget.getWidth() / 2d - width / 2;

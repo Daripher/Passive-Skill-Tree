@@ -30,6 +30,10 @@ public class TextField extends EditBox implements TickingWidget {
 
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    if (canConsumeInput() && keyCode == GLFW.GLFW_KEY_ESCAPE) {
+      setFocused(false);
+      return true;
+    }
     EditBoxAccessor accessor = (EditBoxAccessor) this;
     if (keyCode == GLFW.GLFW_KEY_TAB && accessor.getSuggestion() != null) {
       setValue(getValue() + accessor.getSuggestion());

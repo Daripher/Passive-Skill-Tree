@@ -1,6 +1,7 @@
 package daripher.skilltree.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
@@ -50,7 +51,8 @@ public class SkillTreeEditorScreen extends Screen {
     editorWidgets.setRebuildFunc(this::rebuildWidgets);
     skillButtons.setRebuildFunc(this::rebuildWidgets);
     skillButtons.clearWidgets();
-    editorWidgets.getSkills().forEach(editorWidgets::addSkillButton);
+    editorWidgets.getSkills()
+        .forEach(editorWidgets::addSkillButton);
     skillButtons.updateSkillConnections();
     calculateMaxScroll();
     addRenderableWidget(skillButtons);
@@ -65,17 +67,15 @@ public class SkillTreeEditorScreen extends Screen {
   private void calculateMaxScroll() {
     skillButtons.setMaxScrollX(Math.min(0, width / 2 - 350));
     skillButtons.setMaxScrollY(Math.min(0, height / 2 - 350));
-    skillButtons
-        .getWidgets()
-        .forEach(
-            button -> {
-              float skillX = button.skill.getPositionX();
-              float skillY = button.skill.getPositionY();
-              int maxScrollX = (int) Math.max(skillButtons.getMaxScrollX(), Mth.abs(skillX));
-              int maxScrollY = (int) Math.max(skillButtons.getMaxScrollY(), Mth.abs(skillY));
-              skillButtons.setMaxScrollX(maxScrollX);
-              skillButtons.setMaxScrollY(maxScrollY);
-            });
+    skillButtons.getWidgets()
+        .forEach(button -> {
+          float skillX = button.skill.getPositionX();
+          float skillY = button.skill.getPositionY();
+          int maxScrollX = (int) Math.max(skillButtons.getMaxScrollX(), Mth.abs(skillX));
+          int maxScrollY = (int) Math.max(skillButtons.getMaxScrollY(), Mth.abs(skillY));
+          skillButtons.setMaxScrollX(maxScrollX);
+          skillButtons.setMaxScrollY(maxScrollY);
+        });
   }
 
   @Override
@@ -94,17 +94,17 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private void createBlankSkill() {
-    ResourceLocation background =
-        new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
+    ResourceLocation background = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
     ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
-    ResourceLocation border =
-        new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
+    ResourceLocation border = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
     ResourceLocation skillId = SkillNodeEditor.createNewSkillId();
     PassiveSkill skill = new PassiveSkill(skillId, 16, background, icon, border, false);
     skill.setPosition(0, 0);
     SkillTreeClientData.saveEditorSkill(skill);
     SkillTreeClientData.loadEditorSkill(skill.getId());
-    editorWidgets.getSkillTree().getSkillIds().add(skill.getId());
+    editorWidgets.getSkillTree()
+        .getSkillIds()
+        .add(skill.getId());
     SkillTreeClientData.saveEditorSkillTree(editorWidgets.getSkillTree());
   }
 
@@ -123,8 +123,7 @@ public class SkillTreeEditorScreen extends Screen {
   }
 
   private void renderOverlay(GuiGraphics graphics) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png");
+    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png");
     RenderSystem.enableBlend();
     graphics.blit(texture, 0, 0, 0, 0F, 0F, width, height, width, height);
     RenderSystem.disableBlend();
@@ -132,14 +131,13 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public void renderBackground(GuiGraphics graphics) {
-    ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
-    graphics.pose().pushPose();
-    graphics.pose().translate(skillButtons.getScrollX() / 3F, skillButtons.getScrollY() / 3F, 0);
+    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
+    PoseStack poseStack = graphics.pose();
+    poseStack.pushPose();
+    poseStack.translate(skillButtons.getScrollX() / 3F, skillButtons.getScrollY() / 3F, 0);
     int size = SkillTreeScreen.BACKGROUND_SIZE;
-    graphics.blit(
-        texture, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
-    graphics.pose().popPose();
+    graphics.blit(texture, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
+    poseStack.popPose();
   }
 
   @Override
@@ -154,15 +152,12 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-    return editorWidgets.mouseScrolled(mouseX, mouseY, amount)
-        || skillButtons.mouseScrolled(mouseX, mouseY, amount);
+    return editorWidgets.mouseScrolled(mouseX, mouseY, amount) || skillButtons.mouseScrolled(mouseX, mouseY, amount);
   }
 
   @Override
-  public boolean mouseDragged(
-      double mouseX, double mouseY, int button, double dragX, double dragY) {
-    return editorWidgets.mouseDragged(mouseX, mouseY, button, dragX, dragY)
-        | skillButtons.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+  public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+    return editorWidgets.mouseDragged(mouseX, mouseY, button, dragX, dragY) | skillButtons.mouseDragged(mouseX, mouseY, button, dragX, dragY);
   }
 
   @Override

@@ -61,7 +61,7 @@ public class SyncPlayerSkillsMessage {
         .forEach(capability.getPlayerSkills()::add);
     capability.setSkillPoints(message.skillPoints);
     if (minecraft.screen instanceof SkillTreeScreen screen) {
-      screen.skillPoints = capability.getSkillPoints() - screen.newlyLearnedSkills.size();
+      screen.updateSkillPoints(capability.getSkillPoints());
       screen.init();
     }
   }

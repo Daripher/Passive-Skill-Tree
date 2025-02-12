@@ -1,18 +1,18 @@
 package daripher.skilltree.client.widget.skill;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.client.widget.group.ScrollableZoomableWidgetGroup;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 
 public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
   private final PassiveSkillTree skillTree;
@@ -39,8 +39,7 @@ public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
   }
 
   @Override
-  protected void renderBackground(
-      @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+  protected void renderBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     renderConnections(graphics, mouseX, mouseY);
   }
 
@@ -57,24 +56,19 @@ public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
   }
 
   private void renderDirectConnection(GuiGraphics graphics, SkillConnection connection) {
-    ScreenHelper.renderConnection(
-        graphics, connection, getZoom(), animationFunc.get());
+    ScreenHelper.renderConnection(graphics, connection, getZoom(), animationFunc.get());
   }
 
-  private void renderLongConnection(
-      GuiGraphics graphics, SkillConnection connection, int mouseX, int mouseY) {
+  private void renderLongConnection(GuiGraphics graphics, SkillConnection connection, int mouseX, int mouseY) {
     SkillButton hoveredSkill = getWidgetAt(mouseX, mouseY);
-    if (hoveredSkill != connection.getFirstButton()
-        && hoveredSkill != connection.getSecondButton()) {
+    if (hoveredSkill != connection.getFirstButton() && hoveredSkill != connection.getSecondButton()) {
       return;
     }
-    ScreenHelper.renderGatewayConnection(
-        graphics, connection, true, getZoom(), animationFunc.get());
+    ScreenHelper.renderGatewayConnection(graphics, connection, true, getZoom(), animationFunc.get());
   }
 
   private void renderOneWayConnection(GuiGraphics graphics, SkillConnection connection) {
-    ScreenHelper.renderOneWayConnection(
-        graphics, connection, true, getZoom(), animationFunc.get());
+    ScreenHelper.renderOneWayConnection(graphics, connection, true, getZoom(), animationFunc.get());
   }
 
   public void renderTooltip(GuiGraphics graphics, float tooltipX, float tooltipY) {
@@ -109,20 +103,17 @@ public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
     readSkillConnections(skill, SkillConnection.Type.ONE_WAY, skill.getOneWayConnections());
   }
 
-  private void readSkillConnections(
-      PassiveSkill skill, SkillConnection.Type type, List<ResourceLocation> connections) {
+  private void readSkillConnections(PassiveSkill skill, SkillConnection.Type type, List<ResourceLocation> connections) {
     for (ResourceLocation connectedSkillId : new ArrayList<>(connections)) {
-      if (SkillTreeClientData.getEditorSkill(connectedSkillId) == null) {
+      if (idToWidget.get(connectedSkillId) == null) {
         connections.remove(connectedSkillId);
-        SkillTreeClientData.saveEditorSkill(skill);
         continue;
       }
       connectSkills(type, skill.getId(), connectedSkillId);
     }
   }
 
-  protected void connectSkills(
-      SkillConnection.Type type, ResourceLocation skillId1, ResourceLocation skillId2) {
+  protected void connectSkills(SkillConnection.Type type, ResourceLocation skillId1, ResourceLocation skillId2) {
     SkillButton button1 = idToWidget.get(skillId1);
     SkillButton button2 = idToWidget.get(skillId2);
     skillConnections.add(new SkillConnection(type, button1, button2));
@@ -130,5 +121,9 @@ public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
 
   public SkillButton getWidgetById(ResourceLocation id) {
     return idToWidget.get(id);
+  }
+
+  public List<SkillConnection> getSkillConnections() {
+    return skillConnections;
   }
 }
