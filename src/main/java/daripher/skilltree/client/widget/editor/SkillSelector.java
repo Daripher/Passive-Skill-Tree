@@ -4,10 +4,6 @@ import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.client.widget.skill.SkillButtons;
 import daripher.skilltree.skill.PassiveSkill;
-import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -17,9 +13,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import java.awt.geom.Rectangle2D;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 public class SkillSelector extends AbstractWidget {
   private static final int SELECTION_COLOR = 0xEE95EB34;
-  private final Set<PassiveSkill> selectedSkills = new HashSet<>();
+  private final Set<PassiveSkill> selectedSkills = new LinkedHashSet<>();
   private final SkillButtons skillButtons;
   private final SkillTreeEditor editor;
   private int selectionStartX;
@@ -33,8 +34,7 @@ public class SkillSelector extends AbstractWidget {
   }
 
   @Override
-  protected void renderWidget(
-      @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+  protected void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     if (active) {
       renderSelectionArea(graphics, mouseX, mouseY);
     }
@@ -42,37 +42,40 @@ public class SkillSelector extends AbstractWidget {
   }
 
   private void renderSelectedSkillsHighlight(@NotNull GuiGraphics graphics) {
-    graphics.pose().pushPose();
-    graphics.pose().translate(skillButtons.getScrollX(), skillButtons.getScrollY(), 0);
+    graphics.pose()
+        .pushPose();
+    graphics.pose()
+        .translate(skillButtons.getScrollX(), skillButtons.getScrollY(), 0);
     float zoom = skillButtons.getZoom();
     for (SkillButton widget : getSelectedButtons()) {
       renderSkillSelection(graphics, widget, zoom);
     }
-    graphics.pose().popPose();
+    graphics.pose()
+        .popPose();
   }
 
   private void renderSkillSelection(@NotNull GuiGraphics graphics, SkillButton widget, float zoom) {
-    graphics.pose().pushPose();
+    graphics.pose()
+        .pushPose();
     double widgetCenterX = widget.getX() + widget.getWidth() / 2f;
     double widgetCenterY = widget.getY() + widget.getHeight() / 2f;
-    graphics.pose().translate(widgetCenterX, widgetCenterY, 0F);
-    graphics.pose().scale(zoom, zoom, 1F);
-    graphics.pose().translate(-widgetCenterX, -widgetCenterY, 0F);
+    graphics.pose()
+        .translate(widgetCenterX, widgetCenterY, 0F);
+    graphics.pose()
+        .scale(zoom, zoom, 1F);
+    graphics.pose()
+        .translate(-widgetCenterX, -widgetCenterY, 0F);
     int x = widget.getX() - 1;
     int y = widget.getY() - 1;
     int width = widget.getWidth() + 2;
     int height = widget.getHeight() + 2;
     ScreenHelper.drawRectangle(graphics, x, y, width, height, SELECTION_COLOR);
-    graphics.pose().popPose();
+    graphics.pose()
+        .popPose();
   }
 
   private void renderSelectionArea(@NotNull GuiGraphics graphics, int mouseX, int mouseY) {
-    ScreenHelper.drawRectangle(
-        graphics,
-        selectionStartX,
-        selectionStartY,
-        mouseX - selectionStartX,
-        mouseY - selectionStartY, SELECTION_COLOR);
+    ScreenHelper.drawRectangle(graphics, selectionStartX, selectionStartY, mouseX - selectionStartX, mouseY - selectionStartY, SELECTION_COLOR);
   }
 
   @Override
@@ -80,7 +83,8 @@ public class SkillSelector extends AbstractWidget {
     if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) {
       return false;
     }
-    if (editor.getArea().contains(mouseX, mouseY)) {
+    if (editor.getArea()
+        .contains(mouseX, mouseY)) {
       return false;
     }
     if (Screen.hasControlDown()) {
@@ -90,7 +94,8 @@ public class SkillSelector extends AbstractWidget {
       active = true;
       selectionStartX = (int) mouseX;
       selectionStartY = (int) mouseY;
-    } else {
+    }
+    else {
       if (!selectedSkills.isEmpty()) {
         clearSelection();
       }
@@ -101,7 +106,8 @@ public class SkillSelector extends AbstractWidget {
       PassiveSkill clickedSkill = clickedWidget.skill;
       if (selectedSkills.contains(clickedSkill)) {
         selectedSkills.remove(clickedSkill);
-      } else {
+      }
+      else {
         selectedSkills.add(clickedSkill);
       }
       editor.rebuildWidgets();
@@ -171,5 +177,6 @@ public class SkillSelector extends AbstractWidget {
   }
 
   @Override
-  protected void updateWidgetNarration(@NotNull NarrationElementOutput output) {}
+  protected void updateWidgetNarration(@NotNull NarrationElementOutput output) {
+  }
 }
