@@ -373,7 +373,7 @@ public class NetworkHelper {
     buf.writeUtf(Objects.requireNonNull(effectId).toString());
   }
 
-  public static MobEffect readEffect(FriendlyByteBuf buf) {
+  public static @Nullable MobEffect readEffect(FriendlyByteBuf buf) {
     ResourceLocation effectId = new ResourceLocation(buf.readUtf());
     return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
   }
@@ -418,7 +418,9 @@ public class NetworkHelper {
 
   @NotNull
   public static MobEffectInstance readEffectInstance(FriendlyByteBuf buf) {
-    return new MobEffectInstance(readEffect(buf), buf.readInt(), buf.readInt());
+    MobEffect effect = readEffect(buf);
+    Objects.requireNonNull(effect);
+    return new MobEffectInstance(effect, buf.readInt(), buf.readInt());
   }
 
   public static void writeGemBonusProvider(FriendlyByteBuf buf, GemBonusProvider provider) {

@@ -20,15 +20,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
+import javax.annotation.Nonnull;
+
 public final class HasEffectCondition implements LivingCondition {
   private MobEffect effect;
   private int amplifier;
 
-  public HasEffectCondition(MobEffect effect) {
+  public HasEffectCondition(@Nonnull MobEffect effect) {
     this(effect, 0);
   }
 
-  public HasEffectCondition(MobEffect effect, int amplifier) {
+  public HasEffectCondition(@Nonnull MobEffect effect, int amplifier) {
     this.effect = effect;
     this.amplifier = amplifier;
   }
@@ -111,6 +113,7 @@ public final class HasEffectCondition implements LivingCondition {
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
       MobEffect effect = SerializationHelper.deserializeEffect(json);
       int amplifier = !json.has("amplifier") ? 0 : json.get("amplifier").getAsInt();
+      Objects.requireNonNull(effect);
       return new HasEffectCondition(effect, amplifier);
     }
 
@@ -127,6 +130,7 @@ public final class HasEffectCondition implements LivingCondition {
     public LivingCondition deserialize(CompoundTag tag) {
       MobEffect effect = SerializationHelper.deserializeEffect(tag);
       int amplifier = !tag.contains("amplifier") ? 0 : tag.getInt("amplifier");
+      Objects.requireNonNull(effect);
       return new HasEffectCondition(effect, amplifier);
     }
 
@@ -143,7 +147,9 @@ public final class HasEffectCondition implements LivingCondition {
 
     @Override
     public LivingCondition deserialize(FriendlyByteBuf buf) {
-      return new HasEffectCondition(NetworkHelper.readEffect(buf), buf.readInt());
+      MobEffect effect = NetworkHelper.readEffect(buf);
+      Objects.requireNonNull(effect);
+      return new HasEffectCondition(effect, buf.readInt());
     }
 
     @Override
