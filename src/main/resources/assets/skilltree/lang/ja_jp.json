@@ -41,7 +41,7 @@
   "event_listener.skilltree.attack.damage": "%s命中時に%s",
   "event_listener.skilltree.block": "ブロッキング時に%s",
   "event_listener.skilltree.block.damage": "%sブロッキング時に%s",
-  "event_listener.skilltree.damage_taken": "%s ダメージを受けた時",
+  "event_listener.skilltree.damage_taken": "ダメージを受けた時に%s",
   "event_listener.skilltree.evasion": "%s 回避時",
   "event_listener.skilltree.item_used": "%s 使用時",
   "event_listener.skilltree.on_kill": "%s 撃破時",
