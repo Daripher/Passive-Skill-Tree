@@ -97,7 +97,7 @@ public class SkillTreeEditorScreen extends Screen {
     ResourceLocation background = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
     ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
     ResourceLocation border = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
-    ResourceLocation skillId = SkillNodeEditor.createNewSkillId();
+    ResourceLocation skillId = SkillNodeEditor.createNewSkillId(skillTree.getId());
     PassiveSkill skill = new PassiveSkill(skillId, 16, background, icon, border, false);
     skill.setPosition(0, 0);
     SkillTreeClientData.saveEditorSkill(skill);

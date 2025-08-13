@@ -22,7 +22,6 @@ public class SkillNodeEditor extends EditorMenu {
     super(editor, previousMenu);
   }
 
-
   @Override
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
@@ -64,9 +63,10 @@ public class SkillNodeEditor extends EditorMenu {
   }
 
   private void createSkillCopy(float x, float y, PassiveSkill original) {
+    ResourceLocation skillTreeId = editor.getSkillTree().getId();
     PassiveSkill skill =
         new PassiveSkill(
-            createNewSkillId(),
+            createNewSkillId(skillTreeId),
             original.getSkillSize(),
             original.getFrameTexture(),
             original.getIconTexture(),
@@ -93,7 +93,9 @@ public class SkillNodeEditor extends EditorMenu {
     ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
     ResourceLocation border =
         new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
-    PassiveSkill skill = new PassiveSkill(createNewSkillId(), 16, background, icon, border, false);
+    ResourceLocation skillTreeId = editor.getSkillTree().getId();
+    PassiveSkill skill =
+        new PassiveSkill(createNewSkillId(skillTreeId), 16, background, icon, border, false);
     skill.setPosition(x, y);
     if (original != null) skill.connect(original);
     SkillTreeClientData.saveEditorSkill(skill);
@@ -102,11 +104,11 @@ public class SkillNodeEditor extends EditorMenu {
     SkillTreeClientData.saveEditorSkillTree(editor.getSkillTree());
   }
 
-  public static ResourceLocation createNewSkillId() {
+  public static ResourceLocation createNewSkillId(ResourceLocation skillTreeId) {
     ResourceLocation id;
     int counter = 1;
     do {
-      id = new ResourceLocation("skilltree", "new_skill_" + counter++);
+      id = new ResourceLocation("skilltree", skillTreeId.getPath() + "_" + counter++);
     } while (SkillTreeClientData.getEditorSkill(id) != null);
     return id;
   }
