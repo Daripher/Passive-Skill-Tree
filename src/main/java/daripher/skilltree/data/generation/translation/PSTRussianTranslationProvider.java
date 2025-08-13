@@ -27,7 +27,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Ремонтируем%s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Прочности восстановлено");
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Шанс зачаровать предмет бесплатно");
-    add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Открывает рецепт: %s");
     add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Высота прыжка");
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Получаемое лечение");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Шанс получить %s %s");
@@ -72,15 +71,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Вы выпускаете дополнительный снаряд");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Ваши взрывные зелья не действуют на вас");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Скорость снарядов");
-    // item bonuses
-    add(PSTItemBonuses.SOCKETS.get(), "+%d Гнезда для Самоцветов");
-    add(PSTItemBonuses.DURABILITY.get(), "Прочность");
-    add(PSTItemBonuses.QUIVER_CAPACITY.get(), "Вместимость");
-    add(PSTItemBonuses.POTION_AMPLIFICATION.get(), "Шанс Усиления");
-    add(PSTItemBonuses.POTION_DURATION.get(), "Длительность");
-    add(PSTItemBonuses.FOOD_EFFECT.get(), "%s на %s");
-    add(PSTItemBonuses.FOOD_SATURATION.get(), "Насыщение");
-    add(PSTItemBonuses.FOOD_HEALING.get(), "Восстанавливает %s Здоровья");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -346,38 +336,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addGem("vacucite", "вакуцит");
     add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
     add(PSTItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
-    add(PSTItems.COPPER_RING.get(), "Медное кольцо");
-    add(PSTItems.IRON_RING.get(), "Железное кольцо");
-    add(PSTItems.GOLDEN_RING.get(), "Золотое кольцо");
-    add(PSTItems.COPPER_NUGGET.get(), "Кусочек меди");
-    add(PSTItems.ASSASSIN_NECKLACE.get(), "Ожерелье убийцы");
-    add(PSTItems.HEALER_NECKLACE.get(), "Ожерелье целителя");
-    add(PSTItems.TRAVELER_NECKLACE.get(), "Ожерелье путешественника");
-    add(PSTItems.SIMPLE_NECKLACE.get(), "Ожерелье простоты");
-    add(PSTItems.SCHOLAR_NECKLACE.get(), "Ожерелье учёного");
-    add(PSTItems.ARSONIST_NECKLACE.get(), "Ожерелье поджигателя");
-    add(PSTItems.FISHERMAN_NECKLACE.get(), "Ожерелье рыбака");
-    add(PSTItems.ANCIENT_ALLOY_GILDED.get(), "Позолоченный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_LIGHTWEIGHT.get(), "Облегченный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_CURATIVE.get(), "Целебный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_TOXIC.get(), "Токсичный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_ENCHANTED.get(), "Зачарованный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Пространственный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "Прочный древний сплав");
-    add(PSTItems.ANCIENT_ALLOY_HOT.get(), "Горячий древний сплав");
-    add(PSTItems.ANCIENT_BOOK.get(), "Древняя книга");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
-    addTooltip(PSTItems.ANCIENT_ALLOY_GILDED.get(), "Невозможно налюбоваться");
-    addTooltip(PSTItems.ANCIENT_ALLOY_LIGHTWEIGHT.get(), "Гораздо легче чем кажется");
-    addTooltip(PSTItems.ANCIENT_ALLOY_CURATIVE.get(), "Вы успокаиваетесь держа его в руках");
-    addTooltip(PSTItems.ANCIENT_ALLOY_TOXIC.get(), "Крайне опасен");
-    addTooltip(PSTItems.ANCIENT_ALLOY_ENCHANTED.get(), "Излучает магическую энергию");
-    addTooltip(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Искревляет пространство вокруг себя");
-    addTooltip(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "На слитке ни царапины");
-    addTooltip(PSTItems.ANCIENT_ALLOY_HOT.get(), "Обжигает ладони");
-    addTooltip(PSTItems.ANCIENT_BOOK.get(), "Магия этого предмета была исчерпана");
     add("ancient_material.tooltip", "Требует определенных знаний для использования");
     // slots
     addCurioSlot("ring", "Слот кольца");
@@ -387,12 +348,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
-    add(PSTAttributes.DEXTERITY.get(), "Ловкость");
-    addInfo(PSTAttributes.DEXTERITY.get(), "По умолчанию, 1 ловкость дарует +1% к урону снарядами");
-    add(PSTAttributes.STRENGTH.get(), "Сила");
-    addInfo(PSTAttributes.STRENGTH.get(), "По умолчанию, 1 сила дарует +1% к урону в ближнем бою");
-    add(PSTAttributes.INTELLIGENCE.get(), "Интеллект");
-    addInfo(PSTAttributes.INTELLIGENCE.get(), "По умолчанию, 1 интеллект дарует +1% к урону магией");
     // effects
     add(PSTMobEffects.LIQUID_FIRE.get(), "Жидкий огонь");
     // potions
@@ -442,12 +397,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/hidden.suffix", "Скрытности");
     add("affix.skilltree:jewelry/attribute/healthy", "Здоровое");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
-    // enchantments
-    add(PSTEnchantments.STEEL_MIND.get(), "Стальной разум");
-    add(PSTEnchantments.MAGIC_FLOW.get(), "Магический поток");
-    add(PSTEnchantments.DRAGON_BLOOD.get(), "Кровь дракона");
-    add(PSTEnchantments.BOTTOMLESS_FLASK.get(), "Бездонный флакон");
-    add(PSTEnchantments.FIRE_WALL.get(), "Стена огня");
   }
 
   protected void addMixture(String name, MobEffect... effects) {

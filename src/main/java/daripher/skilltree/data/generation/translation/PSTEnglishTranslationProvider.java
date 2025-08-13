@@ -27,7 +27,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Repaired %s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Durability restored");
     add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Chance to enchant item for free");
-    add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
     add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Jump Height");
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Incoming Healing");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Chance to get %s %s");
@@ -72,15 +71,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Fire an additional projectile");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Your splash potions do not affect you");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Projectile Speed");
-    // item bonuses
-    add(PSTItemBonuses.SOCKETS.get(), "+%d Gem Sockets");
-    add(PSTItemBonuses.DURABILITY.get(), "Durability");
-    add(PSTItemBonuses.QUIVER_CAPACITY.get(), "Capacity");
-    add(PSTItemBonuses.POTION_AMPLIFICATION.get(), "Amplification Chance");
-    add(PSTItemBonuses.POTION_DURATION.get(), "Duration");
-    add(PSTItemBonuses.FOOD_EFFECT.get(), "%s for %s");
-    add(PSTItemBonuses.FOOD_SATURATION.get(), "Saturation");
-    add(PSTItemBonuses.FOOD_HEALING.get(), "Restores %s Health");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -313,21 +303,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
 
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "gem", "gem");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "gem.plural", "gems");
-
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "multiplier.player.plural", "%s per %s gems in your %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "multiplier.player", "%s per gem in your %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s gems in enemy's %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "multiplier.enemy", "%s per gem in enemy's %s");
-
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.player", "%s if you have %s %s in %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.player.any", "%s if you have a gem in %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.player.none", "%s if you don't have gems in %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.enemy", "%s if enemy has %s %s in %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.enemy.any", "%s if enemy has a gem in %s");
-    add(PSTNumericValueProviders.GEM_AMOUNT.get(), "condition.enemy.none", "%s if enemy doesn't have gems in %s");
-
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.gem_amount", "exactly %s");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "health point");
@@ -406,38 +381,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addGem("vacucite", "Vacucite");
     add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
     add(PSTItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
-    add(PSTItems.COPPER_RING.get(), "Copper Ring");
-    add(PSTItems.IRON_RING.get(), "Iron Ring");
-    add(PSTItems.GOLDEN_RING.get(), "Golden Ring");
-    add(PSTItems.COPPER_NUGGET.get(), "Copper Nugget");
-    add(PSTItems.ASSASSIN_NECKLACE.get(), "Assassin's Necklace");
-    add(PSTItems.HEALER_NECKLACE.get(), "Healer's Necklace");
-    add(PSTItems.TRAVELER_NECKLACE.get(), "Traveler's Necklace");
-    add(PSTItems.SIMPLE_NECKLACE.get(), "Simple Necklace");
-    add(PSTItems.SCHOLAR_NECKLACE.get(), "Scholar's Necklace");
-    add(PSTItems.ARSONIST_NECKLACE.get(), "Arsonist's Necklace");
-    add(PSTItems.FISHERMAN_NECKLACE.get(), "Fisherman's Necklace");
-    add(PSTItems.ANCIENT_ALLOY_GILDED.get(), "Gilded Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_LIGHTWEIGHT.get(), "Lightweight Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_CURATIVE.get(), "Curative Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_TOXIC.get(), "Toxic Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_ENCHANTED.get(), "Enchanted Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Spatial Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "Durable Ancient Alloy");
-    add(PSTItems.ANCIENT_ALLOY_HOT.get(), "Hot Ancient Alloy");
-    add(PSTItems.ANCIENT_BOOK.get(), "Ancient Book");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
-    addTooltip(PSTItems.ANCIENT_ALLOY_GILDED.get(), "It's impossible to stop admiring it");
-    addTooltip(PSTItems.ANCIENT_ALLOY_LIGHTWEIGHT.get(), "Much lighter than it seems");
-    addTooltip(PSTItems.ANCIENT_ALLOY_CURATIVE.get(), "You calm down holding it in your hands");
-    addTooltip(PSTItems.ANCIENT_ALLOY_TOXIC.get(), "Extremely dangerous");
-    addTooltip(PSTItems.ANCIENT_ALLOY_ENCHANTED.get(), "Emits magical energy");
-    addTooltip(PSTItems.ANCIENT_ALLOY_SPATIAL.get(), "Distorts the space around itself");
-    addTooltip(PSTItems.ANCIENT_ALLOY_DURABLE.get(), "There is not a scratch on the ingot");
-    addTooltip(PSTItems.ANCIENT_ALLOY_HOT.get(), "Burns your palms");
-    addTooltip(PSTItems.ANCIENT_BOOK.get(), "This item's magic has been depleted");
     add("ancient_material.tooltip", "Requires certain knowledge to be used");
     // slots
     addCurioSlot("ring", "Ring Slot");
@@ -447,12 +393,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
-    add(PSTAttributes.DEXTERITY.get(), "Dexterity");
-    addInfo(PSTAttributes.DEXTERITY.get(), "By default, 1 Dexterity grants +1% Projectile Damage");
-    add(PSTAttributes.STRENGTH.get(), "Strength");
-    addInfo(PSTAttributes.STRENGTH.get(), "By default, 1 Strength grants +1% Melee Damage");
-    add(PSTAttributes.INTELLIGENCE.get(), "Intelligence");
-    addInfo(PSTAttributes.INTELLIGENCE.get(), "By default, 1 Intelligence grants +1% Magic Damage");
     // effects
     add(PSTMobEffects.LIQUID_FIRE.get(), "Liquid Fire");
     // potions
@@ -500,12 +440,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("affix.skilltree:jewelry/attribute/hidden.suffix", "of Hiding");
     add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
     add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
-    // enchantments
-    add(PSTEnchantments.STEEL_MIND.get(), "Steel Mind");
-    add(PSTEnchantments.MAGIC_FLOW.get(), "Magic Flow");
-    add(PSTEnchantments.DRAGON_BLOOD.get(), "Dragon Blood");
-    add(PSTEnchantments.BOTTOMLESS_FLASK.get(), "Bottomless Flask");
-    add(PSTEnchantments.FIRE_WALL.get(), "Fire Wall");
   }
 
   protected void addMixture(String name, MobEffect... effects) {

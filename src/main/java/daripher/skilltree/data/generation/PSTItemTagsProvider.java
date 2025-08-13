@@ -1,11 +1,8 @@
 package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.init.PSTTags;
-import daripher.skilltree.item.gem.GemItem;
-import daripher.skilltree.item.necklace.NecklaceItem;
-import daripher.skilltree.item.ring.RingItem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -40,12 +37,10 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
   @Override
   protected void addTags(HolderLookup.@NotNull Provider provider) {
     add(PSTTags.Items.GEMS, GemItem.class);
-    add(PSTTags.Items.RINGS, RingItem.class);
-    add(PSTTags.Items.NECKLACES, NecklaceItem.class);
-    add(PSTTags.Items.NUGGETS_COPPER, PSTItems.COPPER_NUGGET.get());
     tag(PSTTags.Items.JEWELRY).addTags(PSTTags.Items.RINGS, PSTTags.Items.NECKLACES);
     tag(Tags.Items.TOOLS).addOptionalTag(KNIVES);
-    tag(PSTTags.Items.MELEE_WEAPON).addTags(ItemTags.SWORDS, ItemTags.AXES, Tags.Items.TOOLS_TRIDENTS);
+    tag(PSTTags.Items.MELEE_WEAPON)
+        .addTags(ItemTags.SWORDS, ItemTags.AXES, Tags.Items.TOOLS_TRIDENTS);
     tag(PSTTags.Items.RANGED_WEAPON).addTags(Tags.Items.TOOLS_BOWS, Tags.Items.TOOLS_CROSSBOWS);
   }
 
@@ -53,9 +48,5 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
     ForgeRegistries.ITEMS.getValues().stream()
         .filter(itemClass::isInstance)
         .forEach(tag(itemTag)::add);
-  }
-
-  private void add(TagKey<Item> itemTag, Item item) {
-    tag(itemTag).add(item);
   }
 }

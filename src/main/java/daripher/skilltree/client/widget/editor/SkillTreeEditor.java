@@ -19,7 +19,6 @@ import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.Collection;
 import java.util.List;
@@ -154,15 +153,6 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
         .setElementNameGetter(p -> Component.literal(PSTNumericValueProviders.getName(p)));
-  }
-
-  @SuppressWarnings("rawtypes")
-  public SelectionMenuButton<ItemBonus> addSelectionMenu(
-      int x, int y, int width, ItemBonus defaultValue) {
-    Collection<ItemBonus> values = PSTItemBonuses.bonusList();
-    return addSelectionMenu(x, y, width, values)
-        .setValue(defaultValue)
-        .setElementNameGetter(b -> Component.literal(PSTItemBonuses.getName(b)));
   }
 
   public SelectionMenuButton<Attribute> addSelectionMenu(

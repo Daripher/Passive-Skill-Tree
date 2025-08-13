@@ -1,6 +1,5 @@
 package daripher.skilltree.network.message;
 
-import daripher.skilltree.data.reloader.GemTypesReloader;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkHelper;
@@ -12,7 +11,6 @@ public class SyncServerDataMessage {
   public static SyncServerDataMessage decode(FriendlyByteBuf buf) {
     SkillsReloader.loadFromByteBuf(buf);
     SkillTreesReloader.loadFromByteBuf(buf);
-    GemTypesReloader.loadFromByteBuf(buf);
     return new SyncServerDataMessage();
   }
 
@@ -24,6 +22,5 @@ public class SyncServerDataMessage {
   public void encode(FriendlyByteBuf buf) {
     NetworkHelper.writePassiveSkills(buf, SkillsReloader.getSkills().values());
     NetworkHelper.writePassiveSkillTrees(buf, SkillTreesReloader.getSkillTrees().values());
-    NetworkHelper.writeGemTypes(buf, GemTypesReloader.getGemTypes().values());
   }
 }

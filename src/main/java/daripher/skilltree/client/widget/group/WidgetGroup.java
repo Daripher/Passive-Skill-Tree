@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public abstract class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
+public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
   protected final Set<T> widgets = new HashSet<>();
   protected Runnable rebuildFunc = () -> {};
 

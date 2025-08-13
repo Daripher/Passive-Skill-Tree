@@ -1,7 +1,6 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
@@ -9,7 +8,6 @@ import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.function.Supplier;
 import net.minecraft.resources.ResourceLocation;
@@ -31,12 +29,8 @@ public class PSTRegistries {
       PSTDamageConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
   public static final Supplier<IForgeRegistry<ItemCondition.Serializer>> ITEM_CONDITIONS =
       PSTItemConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<ItemBonus.Serializer>> ITEM_BONUSES =
-      PSTItemBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
   public static final Supplier<IForgeRegistry<EnchantmentCondition.Serializer>>
       ENCHANTMENT_CONDITIONS = PSTEnchantmentConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<GemBonusProvider.Serializer>> GEM_BONUSES =
-      PSTGemBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
   public static final Supplier<IForgeRegistry<SkillEventListener.Serializer>> EVENT_LISTENERS =
       PSTEventListeners.REGISTRY.makeRegistry(RegistryBuilder::new);
   public static final Supplier<IForgeRegistry<NumericValueProvider.Serializer>>
@@ -50,9 +44,7 @@ public class PSTRegistries {
     createRegistry(event, PSTLivingConditions.REGISTRY_ID);
     createRegistry(event, PSTDamageConditions.REGISTRY_ID);
     createRegistry(event, PSTItemConditions.REGISTRY_ID);
-    createRegistry(event, PSTItemBonuses.REGISTRY_ID);
     createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);
-    createRegistry(event, PSTGemBonuses.REGISTRY_ID);
     createRegistry(event, PSTEventListeners.REGISTRY_ID);
     createRegistry(event, PSTNumericValueProviders.REGISTRY_ID);
   }

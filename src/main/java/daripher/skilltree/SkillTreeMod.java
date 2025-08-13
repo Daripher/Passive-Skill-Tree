@@ -1,6 +1,5 @@
 package daripher.skilltree;
 
-import daripher.skilltree.compat.apotheosis.ApotheosisCompatibility;
 import daripher.skilltree.compat.attributeslib.AttributesLibCompatibility;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
@@ -23,21 +22,16 @@ public class SkillTreeMod {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
     PSTItems.REGISTRY.register(eventBus);
     PSTAttributes.REGISTRY.register(eventBus);
-    PSTRecipeSerializers.REGISTRY.register(eventBus);
     PSTMobEffects.REGISTRY.register(eventBus);
     PSTCreativeTabs.REGISTRY.register(eventBus);
     PSTSkillBonuses.REGISTRY.register(eventBus);
     PSTLivingConditions.REGISTRY.register(eventBus);
     PSTLivingMultipliers.REGISTRY.register(eventBus);
     PSTDamageConditions.REGISTRY.register(eventBus);
-    PSTItemBonuses.REGISTRY.register(eventBus);
     PSTItemConditions.REGISTRY.register(eventBus);
     PSTEnchantmentConditions.REGISTRY.register(eventBus);
-    PSTLootPoolEntries.REGISTRY.register(eventBus);
-    PSTGemBonuses.REGISTRY.register(eventBus);
     PSTEventListeners.REGISTRY.register(eventBus);
     PSTLootModifiers.REGISTRY.register(eventBus);
-    PSTEnchantments.REGISTRY.register(eventBus);
     PSTNumericValueProviders.REGISTRY.register(eventBus);
     PSTPotions.REGISTRY.register(eventBus);
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
@@ -45,13 +39,7 @@ public class SkillTreeMod {
     addCompatibilities();
   }
 
-  public static boolean apotheosisEnabled() {
-    return ModList.get().isLoaded("apotheosis")
-        && ApotheosisCompatibility.INSTANCE.adventureModuleEnabled();
-  }
-
   protected void addCompatibilities() {
-    if (ModList.get().isLoaded("apotheosis")) ApotheosisCompatibility.INSTANCE.register();
     if (ModList.get().isLoaded("attributeslib")) AttributesLibCompatibility.INSTANCE.register();
   }
 }

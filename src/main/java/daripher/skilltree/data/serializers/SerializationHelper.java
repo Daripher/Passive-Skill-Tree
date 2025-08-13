@@ -1,34 +1,23 @@
 package daripher.skilltree.data.serializers;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
-import daripher.skilltree.item.gem.bonus.GemBonusProvider;
-import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.*;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.stream.StreamSupport;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -38,38 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class SerializationHelper {
-  public static SkillBonus<?> deserializeSkillBonus(JsonObject json) {
-    JsonObject bonusJson = json.getAsJsonObject("skill_bonus");
-    String type = bonusJson.get("type").getAsString();
-    ResourceLocation serializerId = new ResourceLocation(type);
-    SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(bonusJson);
-  }
-
-  public static void serializeSkillBonus(JsonObject json, SkillBonus<?> bonus) {
-    ResourceLocation serializerId = PSTRegistries.SKILL_BONUSES.get().getKey(bonus.getSerializer());
-    JsonObject bonusJson = new JsonObject();
-    bonus.getSerializer().serialize(bonusJson, bonus);
-    bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
-    json.add("skill_bonus", bonusJson);
-  }
-
-  public static ItemBonus<?> deserializeItemBonus(JsonObject json) {
-    JsonObject bonusJson = json.getAsJsonObject("item_bonus");
-    String type = bonusJson.get("type").getAsString();
-    ResourceLocation serializerId = new ResourceLocation(type);
-    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(bonusJson);
-  }
-
-  public static void serializeItemBonus(JsonObject json, ItemBonus<?> bonus) {
-    ResourceLocation serializerId = PSTRegistries.ITEM_BONUSES.get().getKey(bonus.getSerializer());
-    JsonObject bonusJson = new JsonObject();
-    bonus.getSerializer().serialize(bonusJson, bonus);
-    bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
-    json.add("item_bonus", bonusJson);
-  }
-
   @NotNull
   public static Attribute deserializeAttribute(JsonObject json) {
     ResourceLocation attributeId = new ResourceLocation(json.get("attribute").getAsString());
@@ -257,66 +214,6 @@ public class SerializationHelper {
     json.addProperty("amplifier", effect.getAmplifier());
   }
 
-  @Nonnull
-  public static EnchantmentCondition deserializeEnchantmentCondition(JsonObject json) {
-    String name = "enchantment_condition";
-    if (!json.has(name)) return NoneEnchantmentCondition.INSTANCE;
-    JsonObject conditionJson = json.getAsJsonObject(name);
-    ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
-    EnchantmentCondition.Serializer serializer =
-        PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValue(serializerId);
-    String errorMessage = "Unknown enchantment condition: " + serializerId;
-    return deserializeObject(serializer, conditionJson, errorMessage);
-  }
-
-  public static void serializeEnchantmentCondition(
-      JsonObject json, @Nonnull EnchantmentCondition condition) {
-    JsonObject conditionJson = new JsonObject();
-    EnchantmentCondition.Serializer serializer = condition.getSerializer();
-    serializer.serialize(conditionJson, condition);
-    ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
-    conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
-    json.add("enchantment_condition", conditionJson);
-  }
-
-  @Nonnull
-  public static <T> List<T> deserializeObjects(
-      JsonObject json, String elementName, Function<JsonObject, T> deserializer) {
-    return StreamSupport.stream(json.getAsJsonArray(elementName).spliterator(), true)
-        .map(JsonObject.class::cast)
-        .map(deserializer)
-        .toList();
-  }
-
-  public static <T> void serializeObjects(
-      JsonObject json, String elementName, List<T> objects, BiConsumer<JsonObject, T> serializer) {
-    JsonArray objectsJson = new JsonArray();
-    objects.forEach(
-        object -> {
-          JsonObject objectJson = new JsonObject();
-          serializer.accept(objectJson, object);
-          objectsJson.add(objectJson);
-        });
-    json.add(elementName, objectsJson);
-  }
-
-  public static GemBonusProvider deserializeGemBonusProvider(JsonObject json) {
-    JsonObject providerJson = json.getAsJsonObject("bonus_provider");
-    String type = providerJson.get("type").getAsString();
-    ResourceLocation serializerId = new ResourceLocation(type);
-    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(providerJson);
-  }
-
-  public static void serializeGemBonusProvider(JsonObject json, GemBonusProvider provider) {
-    ResourceLocation serializerId =
-        PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
-    JsonObject bonusJson = new JsonObject();
-    provider.getSerializer().serialize(bonusJson, provider);
-    bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
-    json.add("bonus_provider", bonusJson);
-  }
-
   public static NumericValueProvider<?> deserializeValueProvider(JsonObject json) {
     JsonObject providerJson = json.getAsJsonObject("value_provider");
     String type = providerJson.get("type").getAsString();
@@ -484,36 +381,6 @@ public class SerializationHelper {
     tag.putString("effect", Objects.requireNonNull(effectId).toString());
   }
 
-  public static SkillBonus<?> deserializeSkillBonus(CompoundTag tag) {
-    CompoundTag bonusTag = tag.getCompound("skill_bonus");
-    String type = bonusTag.getString("type");
-    ResourceLocation serializerId = new ResourceLocation(type);
-    SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(bonusTag);
-  }
-
-  public static void serializeSkillBonus(CompoundTag tag, SkillBonus<?> bonus) {
-    ResourceLocation serializerId = PSTRegistries.SKILL_BONUSES.get().getKey(bonus.getSerializer());
-    CompoundTag bonusTag = bonus.getSerializer().serialize(bonus);
-    bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
-    tag.put("skill_bonus", bonusTag);
-  }
-
-  public static ItemBonus<?> deserializeItemBonus(CompoundTag tag) {
-    CompoundTag bonusTag = tag.getCompound("item_bonus");
-    String type = bonusTag.getString("type");
-    ResourceLocation serializerId = new ResourceLocation(type);
-    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(bonusTag);
-  }
-
-  public static void serializeItemBonus(CompoundTag tag, ItemBonus<?> bonus) {
-    ResourceLocation serializerId = PSTRegistries.ITEM_BONUSES.get().getKey(bonus.getSerializer());
-    CompoundTag bonusTag = bonus.getSerializer().serialize(bonus);
-    bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
-    tag.put("item_bonus", bonusTag);
-  }
-
   public static PotionCondition.Type deserializePotionType(CompoundTag tag) {
     return PotionCondition.Type.byName(tag.getString("potion_type"));
   }
@@ -533,60 +400,6 @@ public class SerializationHelper {
     serializeEffect(tag, effect.getEffect());
     tag.putInt("duration", effect.getDuration());
     tag.putInt("amplifier", effect.getAmplifier());
-  }
-
-  public static @Nonnull EnchantmentCondition deserializeEnchantmentCondition(CompoundTag tag) {
-    CompoundTag conditionTag = tag.getCompound("enchantment_condition");
-    ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
-    EnchantmentCondition.Serializer serializer =
-        PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(conditionTag);
-  }
-
-  public static void serializeEnchantmentCondition(
-      CompoundTag tag, @Nonnull EnchantmentCondition condition) {
-    EnchantmentCondition.Serializer serializer = condition.getSerializer();
-    CompoundTag conditionTag = serializer.serialize(condition);
-    ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
-    conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
-    tag.put("enchantment_condition", conditionTag);
-  }
-
-  @Nonnull
-  public static <T> List<T> deserializeObjects(
-      CompoundTag tag, String elementName, Function<CompoundTag, T> deserializer) {
-    return tag.getList(elementName, CompoundTag.TAG_COMPOUND).stream()
-        .map(CompoundTag.class::cast)
-        .map(deserializer)
-        .toList();
-  }
-
-  public static <T> void serializeObjects(
-      CompoundTag tag, String elementName, List<T> objects, BiConsumer<CompoundTag, T> serializer) {
-    ListTag objectsTag = new ListTag();
-    objects.forEach(
-        o -> {
-          CompoundTag objectTag = new CompoundTag();
-          serializer.accept(objectTag, o);
-          objectsTag.add(objectTag);
-        });
-    tag.put(elementName, objectsTag);
-  }
-
-  public static GemBonusProvider deserializeGemBonusProvider(CompoundTag tag) {
-    CompoundTag bonusTag = tag.getCompound("bonus_provider");
-    String type = bonusTag.getString("type");
-    ResourceLocation serializerId = new ResourceLocation(type);
-    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(bonusTag);
-  }
-
-  public static void serializeGemBonusProvider(CompoundTag tag, GemBonusProvider provider) {
-    ResourceLocation serializerId =
-        PSTRegistries.GEM_BONUSES.get().getKey(provider.getSerializer());
-    CompoundTag bonusTag = provider.getSerializer().serialize(provider);
-    bonusTag.putString("type", Objects.requireNonNull(serializerId).toString());
-    tag.put("bonus_provider", bonusTag);
   }
 
   public static NumericValueProvider<?> deserializeValueProvider(CompoundTag tag) {

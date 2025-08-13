@@ -1,11 +1,10 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.data.reloader.GemTypesReloader;
-import daripher.skilltree.item.gem.GemItem;
-import java.util.function.Predicate;
+import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,25 +13,22 @@ import net.minecraftforge.registries.RegistryObject;
 public class PSTCreativeTabs {
   public static final DeferredRegister<CreativeModeTab> REGISTRY =
       DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SkillTreeMod.MOD_ID);
+  public static final MutableComponent TAB_TITLE = Component.translatable("itemGroup.skilltree");
+  public static final Supplier<ItemStack> TAB_ICON_STACK =
+      () -> new ItemStack(PSTItems.AMNESIA_SCROLL.get());
 
   static {
     REGISTRY.register(
         "skilltree",
         () ->
             CreativeModeTab.builder()
-                .title(Component.translatable("itemGroup.skilltree"))
-                .icon(() -> new ItemStack(PSTItems.AMNESIA_SCROLL.get()))
-                .displayItems(
-                    (params, output) -> {
-                      GemTypesReloader.getGemTypes().values().stream()
-                          .sorted()
-                          .map(GemItem::getDefaultGemStack)
-                          .forEach(output::accept);
-                      PSTItems.REGISTRY.getEntries().stream()
-                          .map(RegistryObject::get)
-                          .filter(Predicate.not(PSTItems.GEM.get()::equals))
-                          .forEach(output::accept);
-                    })
+                .title(TAB_TITLE)
+                .icon(TAB_ICON_STACK)
+                .displayItems((params, output) -> collectModItems(output))
                 .build());
+  }
+
+  private static void collectModItems(CreativeModeTab.Output output) {
+    PSTItems.REGISTRY.getEntries().stream().map(RegistryObject::get).forEach(output::accept);
   }
 }

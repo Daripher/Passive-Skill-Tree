@@ -17,6 +17,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
@@ -32,7 +33,7 @@ public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
   }
 
   @SubscribeEvent
-  public static void reloadSkillTrees(AddReloadListenerEvent event) {
+  public static void addReloadListener(AddReloadListenerEvent event) {
     event.addListener(new SkillTreesReloader());
   }
 
@@ -42,6 +43,10 @@ public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
 
   public static PassiveSkillTree getSkillTreeById(ResourceLocation id) {
     return SKILL_TREES.getOrDefault(id, new PassiveSkillTree(id));
+  }
+
+  public static @Nullable ResourceLocation getDefaultSkillTreeId() {
+    return getSkillTrees().keySet().stream().findAny().orElse(null);
   }
 
   public static void loadFromByteBuf(FriendlyByteBuf buf) {

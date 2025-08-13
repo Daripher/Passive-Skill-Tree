@@ -26,8 +26,6 @@ public class PSTNumericValueProviders {
       REGISTRY.register("health_level", HealthLevelProvider.Serializer::new);
   public static final RegistryObject<NumericValueProvider.Serializer> EQUIPMENT_DURABILITY =
       REGISTRY.register("equipment_durability", EquipmentDurabilityProvider.Serializer::new);
-  public static final RegistryObject<NumericValueProvider.Serializer> GEM_AMOUNT =
-      REGISTRY.register("gem_amount", GemAmountProvider.Serializer::new);
   public static final RegistryObject<NumericValueProvider.Serializer> ENCHANTMENT_AMOUNT =
       REGISTRY.register("enchantment_amount", EnchantmentAmountProvider.Serializer::new);
   public static final RegistryObject<NumericValueProvider.Serializer> ENCHANTMENT_LEVELS =

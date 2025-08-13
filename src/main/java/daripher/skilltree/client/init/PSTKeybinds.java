@@ -3,6 +3,7 @@ package daripher.skilltree.client.init;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
+import daripher.skilltree.client.screen.SkillTreeSelectionScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkillTree;
@@ -36,17 +37,25 @@ public class PSTKeybinds {
       if (minecraft.screen != null) return;
       if (minecraft.player == null) return;
       if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
-        ResourceLocation treeId = new ResourceLocation(SkillTreeMod.MOD_ID, "main_tree");
-        PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(treeId);
-        for (ResourceLocation skillId : skillTree.getSkillIds()) {
-          if (SkillsReloader.getSkillById(skillId) == null) {
-            SkillTreeClientData.printMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
-            SkillTreeClientData.printMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
-            return;
-          }
+        ResourceLocation defaultTreeId = SkillTreesReloader.getDefaultSkillTreeId();
+        if (defaultTreeId == null) {
+          SkillTreeClientData.printMessage("No skill trees found.", ChatFormatting.DARK_RED);
+          return;
         }
-        SkillTreeScreen screen = new SkillTreeScreen(treeId);
-        minecraft.setScreen(screen);
+        if (SkillTreesReloader.getSkillTrees().size() == 1) {
+          PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(defaultTreeId);
+          for (ResourceLocation skillId : skillTree.getSkillIds()) {
+            if (SkillsReloader.getSkillById(skillId) == null) {
+              SkillTreeClientData.printMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
+              SkillTreeClientData.printMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
+              return;
+            }
+          }
+          SkillTreeScreen screen = new SkillTreeScreen(defaultTreeId);
+          minecraft.setScreen(screen);
+        } else {
+          minecraft.setScreen(new SkillTreeSelectionScreen());
+        }
       }
     }
   }

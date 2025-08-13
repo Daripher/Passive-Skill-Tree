@@ -23,9 +23,6 @@ public class PSTAttributes {
 
   public static final RegistryObject<Attribute> EXP_PER_MINUTE = create("exp_per_minute", 1000d);
   public static final RegistryObject<Attribute> REGENERATION = create("regeneration", 1000d);
-  public static final RegistryObject<Attribute> STRENGTH = create("strength", 0d, 1000d);
-  public static final RegistryObject<Attribute> DEXTERITY = create("dexterity", 0d, 1000d);
-  public static final RegistryObject<Attribute> INTELLIGENCE = create("intelligence", 0d, 1000d);
 
   private static RegistryObject<Attribute> create(String name, double maxValue) {
     return create(name, 0, maxValue);

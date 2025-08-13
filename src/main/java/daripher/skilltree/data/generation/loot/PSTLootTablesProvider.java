@@ -3,8 +3,6 @@ package daripher.skilltree.data.generation.loot;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import daripher.skilltree.data.generation.PSTGemTypesProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -14,14 +12,13 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
 
 public class PSTLootTablesProvider extends LootTableProvider {
+  public static final Set<ResourceLocation> REQUIRED_TABLES = Set.of();
 
-  public PSTLootTablesProvider(DataGenerator generator, PSTGemTypesProvider gemTypesProvider) {
+  public PSTLootTablesProvider(DataGenerator generator) {
     super(
         generator.getPackOutput(),
-        Set.of(),
-        List.of(
-            new SubProviderEntry(
-                () -> new PSTBlockLoot(gemTypesProvider), LootContextParamSets.BLOCK)));
+        REQUIRED_TABLES,
+        List.of(new SubProviderEntry(PSTBlockLoot::new, LootContextParamSets.BLOCK)));
   }
 
   @Override

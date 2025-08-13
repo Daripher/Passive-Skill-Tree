@@ -31,8 +31,6 @@ public class PSTSkillBonuses {
       REGISTRY.register("repair_efficiency", RepairEfficiencyBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> BLOCK_BREAK_SPEED =
       REGISTRY.register("block_break_speed", BlockBreakSpeedBonus.Serializer::new);
-  public static final RegistryObject<SkillBonus.Serializer> RECIPE_UNLOCK =
-      REGISTRY.register("recipe_unlock", RecipeUnlockBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> FREE_ENCHANTMENT =
       REGISTRY.register("free_enchantment", FreeEnchantmentBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> JUMP_HEIGHT =

@@ -2,18 +2,14 @@ package daripher.skilltree.network;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
-import daripher.skilltree.item.gem.GemType;
-import daripher.skilltree.item.gem.bonus.GemBonusProvider;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.*;
 import javax.annotation.Nonnull;
@@ -353,21 +349,6 @@ public class NetworkHelper {
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
 
-  public static void writeEnchantmentCondition(
-      FriendlyByteBuf buf, @Nonnull EnchantmentCondition condition) {
-    EnchantmentCondition.Serializer serializer = condition.getSerializer();
-    ResourceLocation serializerId = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(serializer);
-    buf.writeUtf(Objects.requireNonNull(serializerId).toString());
-    serializer.serialize(buf, condition);
-  }
-
-  public static @Nonnull EnchantmentCondition readEnchantmentCondition(FriendlyByteBuf buf) {
-    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    EnchantmentCondition.Serializer serializer =
-        PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValue(serializerId);
-    return Objects.requireNonNull(serializer).deserialize(buf);
-  }
-
   public static void writeEffect(FriendlyByteBuf buf, MobEffect effect) {
     ResourceLocation effectId = ForgeRegistries.MOB_EFFECTS.getKey(effect);
     buf.writeUtf(Objects.requireNonNull(effectId).toString());
@@ -384,21 +365,6 @@ public class NetworkHelper {
 
   public static <T extends Enum<T>> @Nullable T readEnum(FriendlyByteBuf buf, Class<T> type) {
     return type.getEnumConstants()[(buf.readInt())];
-  }
-
-  public static void writeItemBonus(FriendlyByteBuf buf, ItemBonus<?> bonus) {
-    ItemBonus.Serializer serializer = bonus.getSerializer();
-    ResourceLocation serializerId = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
-    Objects.requireNonNull(serializerId);
-    buf.writeUtf(serializerId.toString());
-    serializer.serialize(buf, bonus);
-  }
-
-  public static ItemBonus<?> readItemBonus(FriendlyByteBuf buf) {
-    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
-    Objects.requireNonNull(serializer);
-    return serializer.deserialize(buf);
   }
 
   public static void writeOperation(FriendlyByteBuf buf, AttributeModifier.Operation operation) {
@@ -423,21 +389,6 @@ public class NetworkHelper {
     return new MobEffectInstance(effect, buf.readInt(), buf.readInt());
   }
 
-  public static void writeGemBonusProvider(FriendlyByteBuf buf, GemBonusProvider provider) {
-    GemBonusProvider.Serializer serializer = provider.getSerializer();
-    ResourceLocation serializerId = PSTRegistries.GEM_BONUSES.get().getKey(serializer);
-    Objects.requireNonNull(serializerId);
-    buf.writeUtf(serializerId.toString());
-    serializer.serialize(buf, provider);
-  }
-
-  public static GemBonusProvider readGemBonusProvider(FriendlyByteBuf buf) {
-    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    GemBonusProvider.Serializer serializer = PSTRegistries.GEM_BONUSES.get().getValue(serializerId);
-    Objects.requireNonNull(serializer);
-    return serializer.deserialize(buf);
-  }
-
   public static void writeValueProvider(FriendlyByteBuf buf, NumericValueProvider<?> provider) {
     NumericValueProvider.Serializer serializer = provider.getSerializer();
     ResourceLocation serializerId = PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(serializer);
@@ -452,40 +403,5 @@ public class NetworkHelper {
         PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
-  }
-
-  public static void writeGemTypes(FriendlyByteBuf buf, Collection<GemType> types) {
-    buf.writeInt(types.size());
-    types.forEach(t -> writeGemType(buf, t));
-  }
-
-  public static List<GemType> readGemTypes(FriendlyByteBuf buf) {
-    int size = buf.readInt();
-    List<GemType> list = new ArrayList<>();
-    for (int i = 0; i < size; i++) {
-      list.add(readGemType(buf));
-    }
-    return list;
-  }
-
-  private static void writeGemType(FriendlyByteBuf buf, GemType type) {
-    buf.writeInt(type.bonuses().size());
-    type.bonuses()
-        .forEach(
-            (c, p) -> {
-              writeItemCondition(buf, c);
-              writeGemBonusProvider(buf, p);
-            });
-    buf.writeUtf(type.id().toString());
-  }
-
-  public static GemType readGemType(FriendlyByteBuf buf) {
-    int bonuses = buf.readInt();
-    Map<ItemCondition, GemBonusProvider> bonusProviders = new HashMap<>();
-    for (int i = 0; i < bonuses; i++) {
-      bonusProviders.put(readItemCondition(buf), readGemBonusProvider(buf));
-    }
-    ResourceLocation id = new ResourceLocation(buf.readUtf());
-    return new GemType(id, bonusProviders);
   }
 }

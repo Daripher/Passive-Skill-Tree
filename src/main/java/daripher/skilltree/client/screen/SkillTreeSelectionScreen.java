@@ -1,0 +1,54 @@
+package daripher.skilltree.client.screen;
+
+import daripher.skilltree.client.widget.SkillTreeSelectionButton;
+import daripher.skilltree.data.reloader.SkillTreesReloader;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+
+public class SkillTreeSelectionScreen extends Screen {
+  public static final int BUTTONS_SIZE = 19;
+  public static final int BUTTONS_SPACING = 5;
+
+  public SkillTreeSelectionScreen() {
+    super(Component.empty());
+  }
+
+  @Override
+  protected void init() {
+    clearWidgets();
+    int buttonCount = SkillTreesReloader.getSkillTrees().size();
+    int buttonRowWidth = buttonCount * BUTTONS_SIZE - (buttonCount - 1) * BUTTONS_SPACING;
+    int buttonX = width / 2 - buttonRowWidth / 2;
+    int buttonY = height / 2 - BUTTONS_SIZE / 2;
+    for (ResourceLocation skillTreeId : SkillTreesReloader.getSkillTrees().keySet()) {
+      SkillTreeSelectionButton button =
+          new SkillTreeSelectionButton(buttonX, buttonY, BUTTONS_SIZE, BUTTONS_SIZE, skillTreeId);
+      buttonX += BUTTONS_SIZE + BUTTONS_SPACING;
+      addRenderableWidget(button);
+    }
+  }
+
+  @Override
+  public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    renderBackground(guiGraphics);
+    super.render(guiGraphics, mouseX, mouseY, partialTick);
+    for (Renderable widget : renderables) {
+      if (!(widget instanceof SkillTreeSelectionButton button)) continue;
+      if (!button.isMouseOver(mouseX, mouseY)) continue;
+      guiGraphics.renderTooltip(font, button.getMessage(), mouseX, mouseY);
+    }
+  }
+
+  @Override
+  public void renderBackground(GuiGraphics guiGraphics) {
+    ResourceLocation texture =
+        new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
+    int size = SkillTreeScreen.BACKGROUND_SIZE;
+    guiGraphics.blit(
+        texture, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
+  }
+}

@@ -28,11 +28,8 @@ public class PSTDataGenerator {
     dataGenerator.addProvider(
         includeServer,
         new PSTItemTagsProvider(dataGenerator, lookupProvider, blockTagsProvider, fileHelper));
-    PSTGemTypesProvider gemTypesProvider = new PSTGemTypesProvider(dataGenerator);
-    dataGenerator.addProvider(includeServer, gemTypesProvider);
     dataGenerator.addProvider(
-        includeServer, new PSTLootTablesProvider(dataGenerator, gemTypesProvider));
-    dataGenerator.addProvider(includeServer, new PSTRecipesProvider(dataGenerator));
+        includeServer, new PSTLootTablesProvider(dataGenerator));
     dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator));
     dataGenerator.addProvider(
         includeServer, new PSTDamageTagsProvider(dataGenerator, lookupProvider, fileHelper));
@@ -40,7 +37,5 @@ public class PSTDataGenerator {
     boolean includeClient = event.includeClient();
     dataGenerator.addProvider(includeClient, new PSTEnglishTranslationProvider(dataGenerator));
     dataGenerator.addProvider(includeClient, new PSTRussianTranslationProvider(dataGenerator));
-    dataGenerator.addProvider(
-        includeClient, new PSTItemModelsProvider(dataGenerator, fileHelper, gemTypesProvider));
   }
 }

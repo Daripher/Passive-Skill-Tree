@@ -8,7 +8,6 @@ import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -146,13 +145,6 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(serializer);
     assert id != null;
     String key = "skill_bonus.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
-    add(key, value);
-  }
-
-  protected void add(ItemBonus.Serializer serializer, String value) {
-    ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
-    assert id != null;
-    String key = "item_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
     add(key, value);
   }
 
