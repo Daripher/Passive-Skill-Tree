@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import daripher.skilltree.skill.bonus.condition.item.PotionCondition;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -61,7 +62,8 @@ public class PlayerHelper {
     ItemStack stack = living.getItemBySlot(slot);
     if (slot == EquipmentSlot.MAINHAND
         && !EquipmentCondition.isWeapon(stack)
-        && !EquipmentCondition.isTool(stack)) {
+        && !EquipmentCondition.isTool(stack)
+        && !EquipmentCondition.isPotion(stack)) {
       return ItemStack.EMPTY;
     }
     return stack;

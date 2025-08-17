@@ -89,6 +89,10 @@ public class EquipmentCondition implements ItemCondition {
     return isMeleeWeapon(stack) || isRangedWeapon(stack);
   }
 
+  public static boolean isPotion(ItemStack stack) {
+    return stack.getItem() instanceof PotionItem;
+  }
+
   public static boolean isChestplate(ItemStack stack) {
     return stack.getItem() instanceof ArmorItem armor
             && armor.getEquipmentSlot() == EquipmentSlot.CHEST
