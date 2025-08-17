@@ -18,11 +18,11 @@ public class SkillBonusesEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (!canEditBonuses(editor)) return;
+    if (!editor.canEditSkillBonuses()) return;
     SkillBonus<?> defaultBonus = PSTSkillBonuses.ATTRIBUTE.get().createDefaultInstance();
     editor
         .addSelectionMenu(110, -29, 90, defaultBonus)
-        .setResponder(skillBonus -> addSkillBonuses(editor, skillBonus))
+        .setResponder(skillBonus -> addSkillBonus(editor, skillBonus))
         .setMessage(Component.literal("Add"));
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
     if (selectedSkill == null) return;
@@ -39,24 +39,9 @@ public class SkillBonusesEditor extends EditorMenu {
     }
   }
 
-  private void addSkillBonuses(SkillTreeEditor editor, SkillBonus<?> skillBonus) {
+  private void addSkillBonus(SkillTreeEditor editor, SkillBonus<?> skillBonus) {
     editor.getSelectedSkills().forEach(s -> s.getBonuses().add(skillBonus.copy()));
     editor.saveSelectedSkills();
     editor.selectMenu(editor.getSelectedMenu().previousMenu);
-  }
-
-  private boolean canEditBonuses(SkillTreeEditor editor) {
-    PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return false;
-    for (PassiveSkill otherSkill : editor.getSelectedSkills()) {
-      if (otherSkill == selectedSkill) continue;
-      List<SkillBonus<?>> bonuses = otherSkill.getBonuses();
-      List<SkillBonus<?>> otherBonuses = selectedSkill.getBonuses();
-      if (bonuses.size() != otherBonuses.size()) return false;
-      for (int i = 0; i < bonuses.size(); i++) {
-        if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) return false;
-      }
-    }
-    return true;
   }
 }

@@ -14,6 +14,8 @@ import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import daripher.skilltree.skill.requirement.SkillStatRequirement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -42,6 +44,7 @@ public class NetworkHelper {
     writeResourceLocations(buf, skill.getDirectConnections());
     writeNullableResourceLocation(buf, skill.getConnectedTreeId());
     writeSkillBonuses(buf, skill.getBonuses());
+    writeSkillRequirements(buf, skill.getRequirements());
     writeResourceLocations(buf, skill.getLongConnections());
     writeResourceLocations(buf, skill.getOneWayConnections());
     writeTags(buf, skill.getTags());
@@ -62,6 +65,7 @@ public class NetworkHelper {
     skill.getDirectConnections().addAll(readResourceLocations(buf));
     skill.setConnectedTree(readNullableResourceLocation(buf));
     skill.getBonuses().addAll(readSkillBonuses(buf));
+    skill.getRequirements().addAll(readSkillRequirements(buf));
     skill.getLongConnections().addAll(readResourceLocations(buf));
     skill.getOneWayConnections().addAll(readResourceLocations(buf));
     skill.getTags().addAll(readTags(buf));
@@ -153,6 +157,20 @@ public class NetworkHelper {
     return bonuses;
   }
 
+  public static void writeSkillRequirements(FriendlyByteBuf buf, List<SkillStatRequirement> requirements) {
+    buf.writeInt(requirements.size());
+    requirements.forEach(requirement -> writeSkillRequirement(buf, requirement));
+  }
+
+  public static List<SkillStatRequirement> readSkillRequirements(FriendlyByteBuf buf) {
+    int count = buf.readInt();
+    List<SkillStatRequirement> requirements = new ArrayList<>();
+    for (int i = 0; i < count; i++) {
+      requirements.add(readSkillRequirement(buf));
+    }
+    return requirements;
+  }
+
   public static void writePassiveSkills(FriendlyByteBuf buf, Collection<PassiveSkill> skills) {
     buf.writeInt(skills.size());
     skills.forEach(skill -> writePassiveSkill(buf, skill));
@@ -180,6 +198,19 @@ public class NetworkHelper {
     SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
+  }
+
+  public static void writeSkillRequirement(FriendlyByteBuf buf, SkillStatRequirement requirement) {
+    buf.writeUtf(requirement.statTypeId().toString());
+    buf.writeUtf(requirement.statId().toString());
+    buf.writeInt(requirement.minValue());
+  }
+
+  public static SkillStatRequirement readSkillRequirement(FriendlyByteBuf buf) {
+    ResourceLocation statTypeId = new ResourceLocation(buf.readUtf());
+    ResourceLocation statId = new ResourceLocation(buf.readUtf());
+    int minValue = buf.readInt();
+    return new SkillStatRequirement(statTypeId, statId, minValue);
   }
 
   public static void writeDescription(

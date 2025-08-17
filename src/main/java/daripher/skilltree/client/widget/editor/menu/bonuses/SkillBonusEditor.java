@@ -22,7 +22,7 @@ public class SkillBonusEditor extends EditorMenu {
         .addConfirmationButton(110, 0, 90, 14, "Remove", "Confirm")
         .setPressFunc(b -> deleteSelectedSkillBonuses(editor));
     editor.increaseHeight(29);
-    if (!canEditBonuses(editor)) return;
+    if (!editor.canEditSkillBonuses()) return;
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
     if (selectedSkill == null) return;
     List<SkillBonus<?>> bonuses = selectedSkill.getBonuses();
@@ -39,21 +39,6 @@ public class SkillBonusEditor extends EditorMenu {
   private void setSkillBonuses(SkillTreeEditor editor, SkillBonus<?> b) {
     editor.getSelectedSkills().forEach(s -> s.getBonuses().set(selectedBonus, b.copy()));
     editor.saveSelectedSkills();
-  }
-
-  private boolean canEditBonuses(SkillTreeEditor editor) {
-    PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return false;
-    for (PassiveSkill otherSkill : editor.getSelectedSkills()) {
-      if (otherSkill == selectedSkill) continue;
-      List<SkillBonus<?>> bonuses = otherSkill.getBonuses();
-      List<SkillBonus<?>> otherBonuses = selectedSkill.getBonuses();
-      if (bonuses.size() != otherBonuses.size()) return false;
-      for (int i = 0; i < bonuses.size(); i++) {
-        if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) return false;
-      }
-    }
-    return true;
   }
 
   private void deleteSelectedSkillBonuses(SkillTreeEditor editor) {

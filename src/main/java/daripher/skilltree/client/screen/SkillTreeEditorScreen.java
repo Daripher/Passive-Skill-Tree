@@ -12,19 +12,25 @@ import daripher.skilltree.skill.PassiveSkillTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-public class SkillTreeEditorScreen extends Screen {
+import java.util.Objects;
+
+public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener {
   private final PassiveSkillTree skillTree;
   private final SkillButtons skillButtons;
   private final SkillTreeEditor editorWidgets;
   private boolean shouldCloseOnEsc = true;
   private int prevMouseX;
   private int prevMouseY;
+  private boolean statsUpdated;
 
   public SkillTreeEditorScreen(ResourceLocation skillTreeId) {
     super(Component.empty());
@@ -36,6 +42,11 @@ public class SkillTreeEditorScreen extends Screen {
 
   @Override
   public void init() {
+    if (!statsUpdated) {
+      ClientPacketListener connection = getMinecraft().getConnection();
+      Objects.requireNonNull(connection);
+      connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+    }
     if (skillTree == null) {
       getMinecraft().setScreen(null);
       return;
@@ -185,5 +196,11 @@ public class SkillTreeEditorScreen extends Screen {
   @Override
   public boolean charTyped(char codePoint, int modifiers) {
     return editorWidgets.charTyped(codePoint, modifiers);
+  }
+
+  @Override
+  public void onStatsUpdated() {
+    statsUpdated = true;
+    init();
   }
 }

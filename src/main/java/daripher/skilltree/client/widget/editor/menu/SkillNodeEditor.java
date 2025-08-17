@@ -8,6 +8,8 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import javax.annotation.Nullable;
+
+import daripher.skilltree.skill.requirement.SkillStatRequirement;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -76,6 +78,7 @@ public class SkillNodeEditor extends EditorMenu {
     skill.setConnectedTree(original.getConnectedTreeId());
     skill.setStartingPoint(original.isStartingPoint());
     original.getBonuses().stream().map(SkillBonus::copy).forEach(skill::addSkillBonus);
+    original.getRequirements().stream().map(SkillStatRequirement::copy).forEach(skill::addSkillRequirement);
     original.getTags().forEach(skill.getTags()::add);
     skill.setTitle(original.getTitle());
     skill.setTitleColor(original.getTitleColor());

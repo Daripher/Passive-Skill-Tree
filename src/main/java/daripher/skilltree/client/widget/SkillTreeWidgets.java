@@ -17,6 +17,9 @@ import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.requirement.SkillStatRequirement;
+import java.util.*;
+import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,9 +33,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
-import java.util.function.Supplier;
 
 public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private final SkillButtons skills;
@@ -60,7 +60,8 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   public void init() {
-    progressBar = new ProgressBar(width / 2 - 235 / 2, height - 17, b -> toggleProgressDisplayMode());
+    progressBar =
+        new ProgressBar(width / 2 - 235 / 2, height - 17, b -> toggleProgressDisplayMode());
     progressBar.showProgressInNumbers = showProgressInNumbers;
     addWidget(progressBar);
     addTopWidgets();
@@ -72,8 +73,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     statsInfo.setComponents(getMergedSkillBonusesTooltips());
     addWidget(statsInfo);
     startingPoints.clear();
-    skills.getWidgets()
-        .stream()
+    skills.getWidgets().stream()
         .filter(button -> button.skill.isStartingPoint())
         .forEach(startingPoints::add);
     highlightSkills();
@@ -81,11 +81,11 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   @Override
-  protected void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+  protected void renderWidget(
+      @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     updateBuyPointButton();
     Style pointsStyle = Style.EMPTY.withColor(0xFCE266);
-    Component pointsLeft = Component.literal("" + skillPoints)
-        .withStyle(pointsStyle);
+    Component pointsLeft = Component.literal("" + skillPoints).withStyle(pointsStyle);
     pointsInfo.setMessage(Component.translatable("widget.skill_points_left", pointsLeft));
     statsInfo.setX(width - statsInfo.getWidth() - 10);
     statsInfo.visible = showStats;
@@ -105,8 +105,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
       playButtonSound();
       skillButtonPressed(skill);
       return true;
-    }
-    else if (button == 1) {
+    } else if (button == 1) {
       ClientConfig.toggleFavoriteSkill(skill.skill);
       playButtonSound();
       return true;
@@ -124,9 +123,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     outerLoop:
     for (SkillButton button : skills.getWidgets()) {
       for (MutableComponent component : button.getSkillTooltip(skillTree)) {
-        if (component.getString()
-            .toLowerCase()
-            .contains(search.toLowerCase())) {
+        if (component.getString().toLowerCase().contains(search.toLowerCase())) {
           button.searched = true;
           continue outerLoop;
         }
@@ -136,8 +133,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   private void playButtonSound() {
-    SoundManager soundManager = Minecraft.getInstance()
-        .getSoundManager();
+    SoundManager soundManager = Minecraft.getInstance().getSoundManager();
     SimpleSoundInstance sound = SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1f);
     soundManager.play(sound);
   }
@@ -145,26 +141,30 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private void highlightSkills() {
     if (skillPoints == 0) return;
     if (learnedSkills.isEmpty() && newlyLearnedSkills.isEmpty()) {
-      startingPoints.forEach(SkillButton::setCanLearn);
+      startingPoints.stream()
+          .filter(button -> canLearnSkill(button.skill))
+          .forEach(SkillButton::setCanLearn);
       return;
     }
     if (learnedSkills.size() + newlyLearnedSkills.size() >= ServerConfig.max_skill_points) return;
-    skills.getSkillConnections()
-        .forEach(connection -> {
-          SkillButton button1 = connection.getFirstButton();
-          SkillButton button2 = connection.getSecondButton();
-          if (button1.skillLearned == button2.skillLearned) return;
-          if (connection.getType() != SkillConnection.Type.ONE_WAY) {
-            if (!button1.skillLearned && canLearnSkill(button1.skill)) {
-              button1.setCanLearn();
-              button1.setActive();
-            }
-          }
-          if (!button2.skillLearned && canLearnSkill(button2.skill)) {
-            button2.setCanLearn();
-            button2.setActive();
-          }
-        });
+    skills
+        .getSkillConnections()
+        .forEach(
+            connection -> {
+              SkillButton button1 = connection.getFirstButton();
+              SkillButton button2 = connection.getSecondButton();
+              if (button1.skillLearned == button2.skillLearned) return;
+              if (connection.getType() != SkillConnection.Type.ONE_WAY) {
+                if (!button1.skillLearned && canLearnSkill(button1.skill)) {
+                  button1.setCanLearn();
+                  button1.setActive();
+                }
+              }
+              if (!button2.skillLearned && canLearnSkill(button2.skill)) {
+                button2.setCanLearn();
+                button2.setActive();
+              }
+            });
   }
 
   private void addTopWidgets() {
@@ -179,15 +179,18 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     buttonWidth = Math.max(buttonWidth, font.width(cancelButtonText));
     buttonWidth += 20;
     int buttonsY = 8;
-    Button showStatsButton = new Button(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
+    Button showStatsButton =
+        new Button(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
     showStatsButton.setPressFunc(b -> showStats ^= true);
     addWidget(showStatsButton);
     searchField = new TextField(8, buttonsY, buttonWidth, 14, search);
-    addWidget(searchField).setHint("Search...")
-        .setResponder(s -> {
-          search = s;
-          updateSearch();
-        });
+    addWidget(searchField)
+        .setHint("Search...")
+        .setResponder(
+            s -> {
+              search = s;
+              updateSearch();
+            });
     buyButton = new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, buyButtonText);
     buyButton.setPressFunc(b -> buySkillPoint());
     addWidget(buyButton);
@@ -197,7 +200,8 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     }
     addWidget(pointsInfo);
     buttonsY += 20;
-    Button confirmButton = new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText);
+    Button confirmButton =
+        new Button(width / 2 - 8 - buttonWidth, buttonsY, buttonWidth, 14, confirmButtonText);
     confirmButton.setPressFunc(b -> confirmLearnSkills());
     addWidget(confirmButton);
     Button cancelButton = new Button(width / 2 + 8, buttonsY, buttonWidth, 14, cancelButtonText);
@@ -207,21 +211,19 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   private static void addToMergeList(SkillBonus<?> b, List<SkillBonus<?>> bonuses) {
-    Optional<SkillBonus<?>> same = bonuses.stream()
-        .filter(b::canMerge)
-        .findAny();
+    Optional<SkillBonus<?>> same = bonuses.stream().filter(b::canMerge).findAny();
     if (same.isPresent()) {
       bonuses.remove(same.get());
-      bonuses.add(same.get()
-                      .copy()
-                      .merge(b));
-    }
-    else {
+      bonuses.add(same.get().copy().merge(b));
+    } else {
       bonuses.add(b);
     }
   }
 
   private boolean canLearnSkill(PassiveSkill skill) {
+    for (SkillStatRequirement requirement : skill.getRequirements()) {
+      if (!requirement.isRequirementMet(player)) return false;
+    }
     Map<String, Integer> limitations = skillTree.getSkillLimitations();
     for (String tag : skill.getTags()) {
       int limit = limitations.getOrDefault(tag, 0);
@@ -234,8 +236,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     return Streams.concat(learnedSkills.stream(), newlyLearnedSkills.stream())
         .map(SkillsReloader::getSkillById)
         .filter(Objects::nonNull)
-        .filter(skill -> skill.getTags()
-            .contains(tag))
+        .filter(skill -> skill.getTags().contains(tag))
         .count();
   }
 
@@ -271,8 +272,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
 
   private int getCurrentLevel() {
     IPlayerSkills capability = PlayerSkillsProvider.get(player);
-    int learnedSkills = capability.getPlayerSkills()
-        .size();
+    int learnedSkills = capability.getPlayerSkills().size();
     int skillPoints = capability.getSkillPoints();
     return learnedSkills + skillPoints;
   }
@@ -281,8 +281,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     PassiveSkill skill = button.skill;
     if (!newlyLearnedSkills.isEmpty()) {
       int lastLearned = newlyLearnedSkills.size() - 1;
-      if (newlyLearnedSkills.get(lastLearned)
-          .equals(skill.getId())) {
+      if (newlyLearnedSkills.get(lastLearned).equals(skill.getId())) {
         skillPoints++;
         newlyLearnedSkills.remove(lastLearned);
         rebuildWidgets();
@@ -297,8 +296,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     }
     ResourceLocation connectedTree = skill.getConnectedTreeId();
     if (connectedTree != null) {
-      Minecraft.getInstance()
-          .setScreen(new SkillTreeScreen(connectedTree));
+      Minecraft.getInstance().setScreen(new SkillTreeScreen(connectedTree));
     }
   }
 
@@ -316,7 +314,6 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     buyButton.active = player.totalExperience >= pointCost;
   }
 
-
   private void toggleProgressDisplayMode() {
     progressBar.showProgressInNumbers ^= true;
     showProgressInNumbers ^= true;
@@ -325,9 +322,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private void readPlayerData(LocalPlayer player) {
     IPlayerSkills capability = PlayerSkillsProvider.get(player);
     List<PassiveSkill> skills = capability.getPlayerSkills();
-    skills.stream()
-        .map(PassiveSkill::getId)
-        .forEach(learnedSkills::add);
+    skills.stream().map(PassiveSkill::getId).forEach(learnedSkills::add);
     skillPoints = capability.getSkillPoints();
   }
 

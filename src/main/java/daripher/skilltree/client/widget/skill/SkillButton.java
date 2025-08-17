@@ -7,6 +7,12 @@ import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,14 +23,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 public class SkillButton extends Button {
   private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
@@ -44,8 +44,14 @@ public class SkillButton extends Button {
   public boolean selected;
 
   public SkillButton(Supplier<Float> animationFunc, float x, float y, PassiveSkill skill) {
-    super((int) x, (int) y, skill.getSkillSize(), skill.getSkillSize(), Component.empty(), b -> {
-    }, Supplier::get);
+    super(
+        (int) x,
+        (int) y,
+        skill.getSkillSize(),
+        skill.getSkillSize(),
+        Component.empty(),
+        b -> {},
+        Supplier::get);
     this.x = x;
     this.y = y;
     this.skill = skill;
@@ -54,29 +60,22 @@ public class SkillButton extends Button {
   }
 
   @Override
-  public void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+  public void renderWidget(
+      @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     RenderSystem.enableBlend();
-    graphics.pose()
-        .pushPose();
-    graphics.pose()
-        .translate(x, y, 0);
+    graphics.pose().pushPose();
+    graphics.pose().translate(x, y, 0);
     renderFavoriteSkillHighlight(graphics);
     renderBackground(graphics);
-    graphics.pose()
-        .pushPose();
-    graphics.pose()
-        .translate(width / 2d, height / 2d, 0);
-    graphics.pose()
-        .scale(0.5F, 0.5F, 1);
+    graphics.pose().pushPose();
+    graphics.pose().translate(width / 2d, height / 2d, 0);
+    graphics.pose().scale(0.5F, 0.5F, 1);
     if (width == 32) {
-      graphics.pose()
-          .scale(0.75F, 0.75F, 1);
+      graphics.pose().scale(0.75F, 0.75F, 1);
     }
-    graphics.pose()
-        .translate(-width / 2d, -height / 2d, 0);
+    graphics.pose().translate(-width / 2d, -height / 2d, 0);
     renderIcon(graphics);
-    graphics.pose()
-        .popPose();
+    graphics.pose().popPose();
     float animation = (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
     float rb = searched ? 0.1f : 1f;
     if (canLearn || searched) {
@@ -94,8 +93,7 @@ public class SkillButton extends Button {
     if (canLearn || searched || selected) {
       graphics.setColor(1F, 1F, 1F, 1F);
     }
-    graphics.pose()
-        .popPose();
+    graphics.pose().popPose();
     RenderSystem.disableBlend();
   }
 
@@ -104,10 +102,8 @@ public class SkillButton extends Button {
     ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/favorite_skill.png");
     int color;
     if (ClientConfig.favorite_color_is_rainbow) {
-      color = Color.getHSBColor(animationFunction.get() / 240f, 1f, 1f)
-          .getRGB();
-    }
-    else {
+      color = Color.getHSBColor(animationFunction.get() / 240f, 1f, 1f).getRGB();
+    } else {
       color = ClientConfig.favorite_color;
     }
     float r = ((color >> 16) & 0xFF) / 255f;
@@ -115,20 +111,14 @@ public class SkillButton extends Button {
     float b = ((color) & 0xFF) / 255f;
     graphics.setColor(r, g, b, 1f);
     int size = (int) (width * 1.4);
-    graphics.pose()
-        .pushPose();
-    graphics.pose()
-        .translate(width / 2f, height / 2f, 0f);
+    graphics.pose().pushPose();
+    graphics.pose().translate(width / 2f, height / 2f, 0f);
     float animation = 1 + 0.3f * (Mth.sin(animationFunction.get() / 3F) + 1) / 2;
-    graphics.pose()
-        .scale(animation, animation, 1);
-    graphics.pose()
-        .mulPose(Axis.ZP.rotationDegrees(animationFunction.get()));
-    graphics.pose()
-        .translate(-size / 2f, -size / 2f, 0f);
+    graphics.pose().scale(animation, animation, 1);
+    graphics.pose().mulPose(Axis.ZP.rotationDegrees(animationFunction.get()));
+    graphics.pose().translate(-size / 2f, -size / 2f, 0f);
     graphics.blit(texture, 0, 0, size, size, 0, 0, 80, 80, 80, 80);
-    graphics.pose()
-        .popPose();
+    graphics.pose().popPose();
     graphics.setColor(1f, 1f, 1f, 1f);
   }
 
@@ -163,12 +153,30 @@ public class SkillButton extends Button {
     List<MutableComponent> description = skill.getDescription();
     if (description != null) {
       tooltip.addAll(description);
-    }
-    else {
+    } else {
       addSkillBonusTooltip(tooltip);
     }
+    addRequirementsTooltip(tooltip);
     addAdvancedTooltip(tooltip);
     return tooltip;
+  }
+
+  public void addRequirementsTooltip(ArrayList<MutableComponent> tooltip) {
+    if (skill.getRequirements().isEmpty()) return;
+    if (tooltip.size() > 1) {
+      tooltip.add(Component.empty());
+    }
+    tooltip.add(Component.literal("Requirements:").withStyle(TooltipHelper.getSkillBonusStyle(true)));
+    skill
+        .getRequirements()
+        .forEach(
+            requirement -> {
+              MutableComponent requirementTooltip = requirement.getTooltip();
+              Player localPlayer = Minecraft.getInstance().player;
+              Style style = TooltipHelper.getSkillRequirementStyle(requirement.isRequirementMet(localPlayer));
+              requirementTooltip = requirementTooltip.withStyle(style);
+              tooltip.add(Component.literal("  ").append(requirementTooltip));
+            });
   }
 
   public void addSkillBonusTooltip(List<MutableComponent> tooltip) {
@@ -180,10 +188,11 @@ public class SkillButton extends Button {
     if (!Screen.hasAltDown()) return;
     List<MutableComponent> info = new ArrayList<>();
     for (SkillBonus<?> skillBonus : skill.getBonuses()) {
-      skillBonus.gatherInfo(component -> {
-        component = component.withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
-        info.add(component);
-      });
+      skillBonus.gatherInfo(
+          component -> {
+            component = component.withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+            info.add(component);
+          });
     }
     if (!info.isEmpty()) {
       tooltip.add(Component.empty());
@@ -198,13 +207,9 @@ public class SkillButton extends Button {
   }
 
   protected void addDescriptionTooltip(List<MutableComponent> tooltip) {
-    skill.getBonuses()
-        .stream()
-        .map(SkillBonus::getTooltip)
-        .forEach(tooltip::add);
+    skill.getBonuses().stream().map(SkillBonus::getTooltip).forEach(tooltip::add);
     String descriptionId = getSkillId() + ".description";
-    String description = Component.translatable(descriptionId)
-        .getString();
+    String description = Component.translatable(descriptionId).getString();
     if (!description.equals(descriptionId)) {
       List<String> descriptionStrings = Arrays.asList(description.split("/n"));
       descriptionStrings.stream()
@@ -214,19 +219,17 @@ public class SkillButton extends Button {
     }
   }
 
-  private void addLimitationsTooltip(PassiveSkillTree skillTree, ArrayList<MutableComponent> tooltips) {
+  private void addLimitationsTooltip(
+      PassiveSkillTree skillTree, ArrayList<MutableComponent> tooltips) {
     boolean addedLimitTooltip = false;
     for (String tag : skill.getTags()) {
-      int limit = skillTree.getSkillLimitations()
-          .getOrDefault(tag, 0);
+      int limit = skillTree.getSkillLimitations().getOrDefault(tag, 0);
       if (limit <= 0) continue;
       addedLimitTooltip = true;
       AtomicReference<MutableComponent> tagTooltip = new AtomicReference<>(Component.literal(tag));
       TooltipHelper.consumeTranslated("skill.tag.%s.name".formatted(tag), tagTooltip::set);
-      tagTooltip.set(Component.literal(limit + " " + tagTooltip.get()
-          .getString()));
-      tagTooltip.set(tagTooltip.get()
-          .withStyle(TooltipHelper.getItemBonusStyle(true)));
+      tagTooltip.set(Component.literal(limit + " " + tagTooltip.get().getString()));
+      tagTooltip.set(tagTooltip.get().withStyle(TooltipHelper.getItemBonusStyle(true)));
       MutableComponent tooltip = Component.translatable("skill.limitation", tagTooltip.get());
       tooltip = tooltip.withStyle(TooltipHelper.getSkillBonusStyle(true));
       tooltips.add(tooltip);
@@ -238,11 +241,9 @@ public class SkillButton extends Button {
 
   protected void addTitleTooltip(List<MutableComponent> tooltip) {
     MutableComponent title;
-    if (skill.getTitle()
-        .isEmpty()) {
+    if (skill.getTitle().isEmpty()) {
       title = Component.translatable(getSkillId() + ".name");
-    }
-    else {
+    } else {
       title = Component.literal(skill.getTitle());
     }
     tooltip.add(title.withStyle(getTitleStyle()));
@@ -251,10 +252,14 @@ public class SkillButton extends Button {
   private Style getTitleStyle() {
     String titleColor = skill.getTitleColor();
     if (titleColor.isEmpty()) {
-      return width == 30 ? GATEWAY_TITLE_STYLE : width == 24 ? CLASS_TITLE_STYLE : width == 20 ? NOTABLE_TITLE_STYLE : width == 32 ?
-          KEYSTONE_TITLE_STYLE : LESSER_TITLE_STYLE;
-    }
-    else {
+      return width == 30
+          ? GATEWAY_TITLE_STYLE
+          : width == 24
+              ? CLASS_TITLE_STYLE
+              : width == 20
+                  ? NOTABLE_TITLE_STYLE
+                  : width == 32 ? KEYSTONE_TITLE_STYLE : LESSER_TITLE_STYLE;
+    } else {
       try {
         return Style.EMPTY.withColor(Integer.parseInt(titleColor, 16));
       } catch (NumberFormatException e) {
@@ -264,9 +269,7 @@ public class SkillButton extends Button {
   }
 
   protected void addIdTooltip(List<MutableComponent> tooltip) {
-    MutableComponent idComponent = Component.literal(skill.getId()
-            .toString())
-        .withStyle(ID_STYLE);
+    MutableComponent idComponent = Component.literal(skill.getId().toString()).withStyle(ID_STYLE);
     tooltip.add(idComponent);
   }
 
@@ -283,8 +286,6 @@ public class SkillButton extends Button {
   }
 
   private String getSkillId() {
-    return "skill." + skill.getId()
-        .getNamespace() + "." + skill.getId()
-        .getPath();
+    return "skill." + skill.getId().getNamespace() + "." + skill.getId().getPath();
   }
 }

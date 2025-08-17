@@ -11,6 +11,9 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.event.SkillLearnedEventListener;
+import java.util.Objects;
+import java.util.function.Consumer;
+import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -25,16 +28,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import java.util.Objects;
-import java.util.function.Consumer;
-
 public class CommandBonus implements EventListenerBonus<CommandBonus> {
   private @Nonnull String command;
   private @Nonnull String description;
   private @Nonnull SkillEventListener eventListener;
 
-  public CommandBonus(@Nonnull String command, @Nonnull String description, @Nonnull SkillEventListener eventListener) {
+  public CommandBonus(
+      @Nonnull String command,
+      @Nonnull String description,
+      @Nonnull SkillEventListener eventListener) {
     this.command = command;
     this.description = description;
     this.eventListener = eventListener;
@@ -46,7 +48,8 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     if (command.isEmpty()) return;
     MinecraftServer server = player.getServer();
     if (server == null) return;
-    CommandSourceStack commandSourceStack = createCommandSourceStack(player, (ServerLevel) player.level());
+    CommandSourceStack commandSourceStack =
+        createCommandSourceStack(player, (ServerLevel) player.level());
     Commands commands = server.getCommands();
     commands.performPrefixedCommand(commandSourceStack, command);
   }
@@ -86,8 +89,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
   @Override
   public MutableComponent getTooltip() {
     Style style = TooltipHelper.getSkillBonusStyle(isPositive());
-    return Component.translatable(description)
-        .withStyle(style);
+    return Component.translatable(description).withStyle(style);
   }
 
   @Override
@@ -101,20 +103,22 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
   }
 
   @Override
-  public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<EventListenerBonus<CommandBonus>> consumer) {
+  public void addEditorWidgets(
+      SkillTreeEditor editor, int index, Consumer<EventListenerBonus<CommandBonus>> consumer) {
     editor.addLabel(0, 0, "Command", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addTextArea(0, 0, 200, 70, command)
-        .setResponder(v -> selectCommand(consumer, v));
+    editor.addTextArea(0, 0, 200, 70, command).setResponder(v -> selectCommand(consumer, v));
     editor.increaseHeight(75);
     editor.addLabel(0, 0, "Description", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addTextArea(0, 0, 200, 70, description)
+    editor
+        .addTextArea(0, 0, 200, 70, description)
         .setResponder(text -> selectDescription(consumer, text));
     editor.increaseHeight(75);
     editor.addLabel(0, 0, "Event", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addSelectionMenu(0, 0, 200, eventListener)
+    editor
+        .addSelectionMenu(0, 0, 200, eventListener)
         .setResponder(eventListener -> selectEventListener(editor, consumer, eventListener))
         .setMenuInitFunc(() -> addEventListenerWidgets(editor, consumer));
     editor.increaseHeight(19);
@@ -130,17 +134,23 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     consumer.accept(this.copy());
   }
 
-  private void selectEventListener(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer, SkillEventListener eventListener) {
+  private void selectEventListener(
+      SkillTreeEditor editor,
+      Consumer<EventListenerBonus<CommandBonus>> consumer,
+      SkillEventListener eventListener) {
     setEventListener(eventListener);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
   }
 
-  private void addEventListenerWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer) {
-    eventListener.addEditorWidgets(editor, e -> {
-      setEventListener(e);
-      consumer.accept(this.copy());
-    });
+  private void addEventListenerWidgets(
+      SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer) {
+    eventListener.addEditorWidgets(
+        editor,
+        e -> {
+          setEventListener(e);
+          consumer.accept(this.copy());
+        });
   }
 
   public void setCommand(@Nonnull String command) {
@@ -162,8 +172,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
         player.getRotationVector(),
         level,
         4,
-        player.getName()
-            .getString(),
+        player.getName().getString(),
         player.getDisplayName(),
         level.getServer(),
         player);
@@ -172,10 +181,8 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public CommandBonus deserialize(JsonObject json) throws JsonParseException {
-      String command = json.get("command")
-          .getAsString();
-      String description = json.has("description") ? json.get("description")
-          .getAsString() : "";
+      String command = json.get("command").getAsString();
+      String description = json.has("description") ? json.get("description").getAsString() : "";
       SkillEventListener eventListener = SerializationHelper.deserializeEventListener(json);
       return new CommandBonus(command, description, eventListener);
     }
@@ -197,8 +204,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
       SkillEventListener eventListener;
       if (!tag.contains("event_listener")) {
         eventListener = new SkillLearnedEventListener();
-      }
-      else {
+      } else {
         eventListener = SerializationHelper.deserializeEventListener(tag);
       }
       return new CommandBonus(command, description, eventListener);
@@ -236,7 +242,10 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new CommandBonus("give @p minecraft:apple", "Grants an apple when learned", new SkillLearnedEventListener());
+      return new CommandBonus(
+          "give @p minecraft:apple",
+          "Grants an apple when learned",
+          new SkillLearnedEventListener());
     }
   }
 }

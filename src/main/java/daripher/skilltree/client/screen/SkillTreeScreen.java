@@ -12,14 +12,17 @@ import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
-public class SkillTreeScreen extends Screen {
+public class SkillTreeScreen extends Screen implements StatsUpdateListener {
   public static final int BACKGROUND_SIZE = 2048;
   private final PassiveSkillTree skillTree;
   private final SkillButtons skillButtons;
@@ -27,6 +30,7 @@ public class SkillTreeScreen extends Screen {
   public float renderAnimation;
   private int prevMouseX;
   private int prevMouseY;
+  private boolean statsUpdated;
 
   public SkillTreeScreen(ResourceLocation skillTreeId) {
     super(Component.empty());
@@ -40,6 +44,11 @@ public class SkillTreeScreen extends Screen {
 
   @Override
   public void init() {
+    if (!statsUpdated) {
+      ClientPacketListener connection = getMinecraft().getConnection();
+      Objects.requireNonNull(connection);
+      connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+    }
     clearWidgets();
     skillTreeWidgets.clearWidgets();
     skillTreeWidgets.setWidth(width);
@@ -173,5 +182,11 @@ public class SkillTreeScreen extends Screen {
 
   public void updateSkillPoints(int skillPoints) {
     skillTreeWidgets.updateSkillPoints(skillPoints);
+  }
+
+  @Override
+  public void onStatsUpdated() {
+    statsUpdated = true;
+    init();
   }
 }

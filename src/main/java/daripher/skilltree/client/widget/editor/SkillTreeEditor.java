@@ -20,16 +20,20 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.requirement.SkillStatRequirement;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.StatType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -144,6 +148,31 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
         .setElementNameGetter(b -> Component.literal(PSTSkillBonuses.getName(b)));
+  }
+
+  public SelectionMenuButton<SkillStatRequirement> addSelectionMenu(
+      int x, int y, int width, SkillStatRequirement defaultValue) {
+    Collection<SkillStatRequirement> values = getDefaultRequirementInstances();
+    return addSelectionMenu(x, y, width, values)
+        .setValue(defaultValue)
+        .setElementNameGetter(r -> Component.literal(r.statTypeId().getPath()));
+  }
+
+  private Collection<SkillStatRequirement> getDefaultRequirementInstances() {
+    return ForgeRegistries.STAT_TYPES.getValues().stream()
+        .map(SkillTreeEditor::createDefaultRequirement)
+        .filter(Objects::nonNull)
+        .toList();
+  }
+
+  private static @Nullable SkillStatRequirement createDefaultRequirement(StatType<?> statType) {
+    ResourceLocation statId = ForgeRegistries.STAT_TYPES.getKey(statType);
+    Registry<Object> statRegistry = (Registry<Object>) statType.getRegistry();
+    Object stat = statRegistry.byId(0);
+    if (stat == null) {
+      return null;
+    }
+    return new SkillStatRequirement(statId, statRegistry.getKey(stat), 1);
   }
 
   @SuppressWarnings("rawtypes")
@@ -353,5 +382,35 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
   public @NotNull EditorMenu getSelectedMenu() {
     return selectedMenu;
+  }
+
+  public boolean canEditSkillBonuses() {
+    PassiveSkill selectedSkill = getFirstSelectedSkill();
+    if (selectedSkill == null) return false;
+    for (PassiveSkill otherSkill : getSelectedSkills()) {
+      if (otherSkill == selectedSkill) continue;
+      List<SkillBonus<?>> bonuses = otherSkill.getBonuses();
+      List<SkillBonus<?>> otherBonuses = selectedSkill.getBonuses();
+      if (bonuses.size() != otherBonuses.size()) return false;
+      for (int i = 0; i < bonuses.size(); i++) {
+        if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean canEditSkillRequirements() {
+    PassiveSkill selectedSkill = getFirstSelectedSkill();
+    if (selectedSkill == null) return false;
+    for (PassiveSkill otherSkill : getSelectedSkills()) {
+      if (otherSkill == selectedSkill) continue;
+      List<SkillStatRequirement> requirements = otherSkill.getRequirements();
+      List<SkillStatRequirement> otherRequirements = selectedSkill.getRequirements();
+      if (requirements.size() != otherRequirements.size()) return false;
+      for (int i = 0; i < requirements.size(); i++) {
+        if (!requirements.get(i).equals(otherRequirements.get(i))) return false;
+      }
+    }
+    return true;
   }
 }

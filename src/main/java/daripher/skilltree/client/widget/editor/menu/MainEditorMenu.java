@@ -4,6 +4,7 @@ import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.bonuses.SkillBonusesEditor;
 import daripher.skilltree.client.widget.editor.menu.description.SkillDescriptionEditor;
+import daripher.skilltree.client.widget.editor.menu.requirements.SkillRequirementsEditor;
 import daripher.skilltree.client.widget.editor.menu.tags.SkillTagsEditor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
@@ -20,6 +21,7 @@ public class MainEditorMenu extends EditorMenu {
       return;
     }
     addMenuSelectionButton(editor, "Bonuses", SkillBonusesEditor::new);
+    addMenuSelectionButton(editor, "Requirements", SkillRequirementsEditor::new);
     addMenuSelectionButton(editor, "Textures", SkillTexturesEditor::new);
     addMenuSelectionButton(editor, "Button", SkillButtonEditor::new);
     addMenuSelectionButton(editor, "New Skill", SkillNodeEditor::new);
