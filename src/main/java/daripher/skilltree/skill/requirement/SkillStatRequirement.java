@@ -84,7 +84,11 @@ public final class SkillStatRequirement {
     StatsCounter playerStats = getPlayerStats(player);
     int statValue;
     if (statType == Stats.CUSTOM) {
-      statValue = playerStats.getValue(Stats.CUSTOM, statId);
+      ResourceLocation originalStatId = Stats.CUSTOM.getRegistry().get(statId);
+      if (originalStatId == null) {
+        return 0;
+      }
+      statValue = playerStats.getValue(Stats.CUSTOM, originalStatId);
     } else {
       T stat = statType.getRegistry().get(statId);
       Objects.requireNonNull(stat);
@@ -136,20 +140,8 @@ public final class SkillStatRequirement {
     consumer.accept(this);
   }
 
-  public ResourceLocation getStatTypeId() {
-    return statTypeId;
-  }
-
-  public ResourceLocation getStatId() {
-    return statId;
-  }
-
   public void setStatId(ResourceLocation statId) {
     this.statId = statId;
-  }
-
-  public int getMinValue() {
-    return minValue;
   }
 
   public void setMinValue(int minValue) {

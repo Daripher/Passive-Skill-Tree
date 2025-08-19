@@ -49,7 +49,6 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private boolean showProgressInNumbers;
   private String search = "";
   private final LocalPlayer player;
-  private TextField searchField;
 
   public SkillTreeWidgets(LocalPlayer player, SkillButtons skills, PassiveSkillTree skillTree) {
     super(0, 0, 0, 0);
@@ -187,7 +186,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
         new Button(width - buttonWidth - 8, buttonsY, buttonWidth, 14, showStatsButtonText);
     showStatsButton.setPressFunc(b -> showStats ^= true);
     addWidget(showStatsButton);
-    searchField = new TextField(8, buttonsY, buttonWidth, 14, search);
+    TextField searchField = new TextField(8, buttonsY, buttonWidth, 14, search);
     addWidget(searchField)
         .setHint("Search...")
         .setResponder(
