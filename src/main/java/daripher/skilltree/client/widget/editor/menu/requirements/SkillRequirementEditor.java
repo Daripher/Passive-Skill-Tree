@@ -50,7 +50,9 @@ public class SkillRequirementEditor extends EditorMenu {
   }
 
   private void removeRequirement(PassiveSkill skill, int index) {
-    skill.getRequirements().remove(index);
-    SkillTreeClientData.saveEditorSkill(skill);
+    if (skill.getRequirements().size() > index) {
+      skill.getRequirements().remove(index);
+      SkillTreeClientData.saveEditorSkill(skill);
+    }
   }
 }

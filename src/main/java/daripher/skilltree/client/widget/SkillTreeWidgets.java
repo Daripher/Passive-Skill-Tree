@@ -140,7 +140,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
 
   private void highlightSkills() {
     if (skillPoints == 0) return;
-    if (learnedSkills.isEmpty() && newlyLearnedSkills.isEmpty()) {
+    if (getLearnedSkillsOnTree().isEmpty() && newlyLearnedSkills.isEmpty()) {
       startingPoints.stream()
           .filter(button -> canLearnSkill(button.skill))
           .forEach(SkillButton::setCanLearn);
@@ -165,6 +165,10 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
                 button2.setActive();
               }
             });
+  }
+
+  private List<ResourceLocation> getLearnedSkillsOnTree() {
+    return learnedSkills.stream().filter(skillTree.getSkillIds()::contains).toList();
   }
 
   private void addTopWidgets() {
@@ -330,6 +334,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     List<SkillBonus<?>> bonuses = new ArrayList<>();
     learnedSkills.stream()
         .map(skills::getWidgetById)
+        .filter(Objects::nonNull)
         .map(button -> button.skill)
         .map(PassiveSkill::getBonuses)
         .flatMap(List::stream)

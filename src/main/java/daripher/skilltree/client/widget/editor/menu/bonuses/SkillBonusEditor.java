@@ -49,7 +49,9 @@ public class SkillBonusEditor extends EditorMenu {
   }
 
   private void removeSkillBonus(PassiveSkill skill, int index) {
-    skill.getBonuses().remove(index);
-    SkillTreeClientData.saveEditorSkill(skill);
+    if (skill.getBonuses().size() > index) {
+      skill.getBonuses().remove(index);
+      SkillTreeClientData.saveEditorSkill(skill);
+    }
   }
 }

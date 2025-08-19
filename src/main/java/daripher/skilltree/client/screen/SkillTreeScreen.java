@@ -6,8 +6,10 @@ import daripher.skilltree.client.widget.SkillTreeWidgets;
 import daripher.skilltree.client.widget.skill.SkillButtons;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
+import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import java.util.Objects;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -47,7 +49,8 @@ public class SkillTreeScreen extends Screen implements StatsUpdateListener {
     if (!statsUpdated) {
       ClientPacketListener connection = getMinecraft().getConnection();
       Objects.requireNonNull(connection);
-      connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+      connection.send(
+          new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
     }
     clearWidgets();
     skillTreeWidgets.clearWidgets();
@@ -64,9 +67,9 @@ public class SkillTreeScreen extends Screen implements StatsUpdateListener {
   }
 
   private void addSkillButtons() {
-    skillTree.getSkillIds().stream()
-        .map(SkillsReloader::getSkillById)
-        .forEach(skill -> skillTreeWidgets.addSkillButton(skill, () -> renderAnimation));
+    Stream<PassiveSkill> passiveSkills =
+        skillTree.getSkillIds().stream().map(SkillsReloader::getSkillById).filter(Objects::nonNull);
+    passiveSkills.forEach(skill -> skillTreeWidgets.addSkillButton(skill, () -> renderAnimation));
     skillButtons.updateSkillConnections();
   }
 
