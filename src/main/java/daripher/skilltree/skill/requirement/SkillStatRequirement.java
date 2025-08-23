@@ -53,7 +53,8 @@ public final class SkillStatRequirement {
       String statIdString = originalStatId.toString().replace(':', '.');
       Component statName = Component.translatable("stat." + statIdString);
       Stat<ResourceLocation> stat = Stats.CUSTOM.get(originalStatId);
-      return Component.literal(statName.getString() + ": " + stat.format(minValue));
+      String formattedMinValue = stat.format(minValue).replace(".00", "");
+      return Component.literal(statName.getString() + ": " + formattedMinValue);
     }
     if (statType == Stats.ENTITY_KILLED) {
       EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(statId);
@@ -76,7 +77,8 @@ public final class SkillStatRequirement {
         return Component.literal("Unknown item: " + statId).withStyle(ChatFormatting.RED);
       }
       Component itemName = item.getDescription();
-      return Component.literal(statType.getDisplayName().getString() + " " + itemName.getString() + ": " + minValue);
+      return Component.literal(
+          statType.getDisplayName().getString() + " " + itemName.getString() + ": " + minValue);
     }
   }
 
