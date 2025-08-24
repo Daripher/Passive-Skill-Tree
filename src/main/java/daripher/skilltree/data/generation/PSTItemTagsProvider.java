@@ -2,7 +2,6 @@ package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTTags;
-import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -36,7 +35,6 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
 
   @Override
   protected void addTags(HolderLookup.@NotNull Provider provider) {
-    add(PSTTags.Items.GEMS, GemItem.class);
     tag(PSTTags.Items.JEWELRY).addTags(PSTTags.Items.RINGS, PSTTags.Items.NECKLACES);
     tag(Tags.Items.TOOLS).addOptionalTag(KNIVES);
     tag(PSTTags.Items.MELEE_WEAPON)

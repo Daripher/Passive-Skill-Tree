@@ -24,13 +24,6 @@ license="${mod_license}"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
-    modId="itemproductionlib"
-    mandatory=true
-    versionRange="[1.0.0,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.${mod_id}]]
     modId="attributefix"
     mandatory=true
     versionRange="[21.0.1,)"
@@ -44,9 +37,3 @@ license="${mod_license}"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.${mod_id}]]
-    modId="apothiccurios"
-    mandatory=false
-    versionRange="[1.0.3,)"
-    ordering="NONE"
-    side="BOTH"

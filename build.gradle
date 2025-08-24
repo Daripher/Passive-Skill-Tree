@@ -128,21 +128,13 @@ dependencies {
     // dummy target
 	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
 	implementation fg.deobf("curse.maven:selene-499980:4656567")
-    // easy magic
-	implementation fg.deobf("curse.maven:easy-magic-456239:4658750")
-	implementation fg.deobf("curse.maven:puzzles-lib-495476:4673053")
     // jei
 	implementation fg.deobf("curse.maven:jei-238222:4644453")
     // apple skin
 	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
     // apotheosis
-    implementation fg.deobf("curse.maven:apotheosis-313970:5486368")
     implementation fg.deobf("curse.maven:placebo-283644:5414631")
     implementation fg.deobf("curse.maven:apothic-attributes-898963:5529789")
-    // item production lib
-    implementation fg.deobf("curse.maven:item-production-lib-950401:5097458")
-    // apothic curios
-    implementation fg.deobf("curse.maven:apothic-curios-950712:5497444")
 }
 
 mixin {

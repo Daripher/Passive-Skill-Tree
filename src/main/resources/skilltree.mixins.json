@@ -5,7 +5,6 @@
   "package": "daripher.skilltree.mixin",
   "mixins": [
     "minecraft/PlayerMixin",
-    "minecraft/SimpleContainerMixin",
     "minecraft/LivingEntityMixin",
     "minecraft/ArmorSlotMixin",
     "minecraft/MobEffectMixin",
