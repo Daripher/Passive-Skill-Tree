@@ -1,6 +1,5 @@
 package daripher.skilltree.init;
 
-import daripher.skilltree.SkillTreeMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -15,8 +14,6 @@ public class PSTTags {
   }
 
   public static class Items {
-    public static final TagKey<Item> GEMS =
-        ItemTags.create(new ResourceLocation(SkillTreeMod.MOD_ID, "gems"));
     public static final TagKey<Item> RINGS =
         ItemTags.create(new ResourceLocation("curios", "ring"));
     public static final TagKey<Item> NECKLACES =
@@ -25,11 +22,11 @@ public class PSTTags {
         ItemTags.create(new ResourceLocation("curios", "quiver"));
     public static final TagKey<Item> JEWELRY =
         ItemTags.create(new ResourceLocation("forge", "curios/jewelry"));
-    public static final TagKey<Item> NUGGETS_COPPER =
-        ItemTags.create(new ResourceLocation("forge", "nuggets/copper"));
     public static final TagKey<Item> MELEE_WEAPON =
         ItemTags.create(new ResourceLocation("skilltree", "melee_weapon"));
     public static final TagKey<Item> RANGED_WEAPON =
         ItemTags.create(new ResourceLocation("skilltree", "ranged_weapon"));
+    public static final TagKey<Item> LEATHER_ARMOR =
+        ItemTags.create(new ResourceLocation("skilltree", "armors/leather"));
   }
 }

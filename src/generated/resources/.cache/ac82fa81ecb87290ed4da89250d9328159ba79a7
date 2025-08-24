@@ -1,9 +1,5 @@
-// 1.20.1	2024-09-26T20:44:03.5085005	Tags for minecraft:item mod id skilltree
-912807fae1f5d4fb0cd2645e952105207b245f35 data/curios/tags/items/necklace.json
-66bb644ad4f941567a9624ab40ffcf18a197606b data/curios/tags/items/ring.json
-f9fb803cf86084b22047f5e6424e656d385660a2 data/forge/tags/items/curios/jewelry.json
-e3a08329a8faa4e76467f3cc10cb6daa98b57c64 data/forge/tags/items/nuggets/copper.json
+// 1.20.1	2025-08-25T03:33:27.7000921	Tags for minecraft:item mod id skilltree
 62a08dbba8d31146be8d8adf446c9ba6f0544444 data/forge/tags/items/tools.json
-6478354481ddac4828aa398c5c2bde4b997511f3 data/skilltree/tags/items/gems.json
+15b6f1d5f024363e32df922ee8a739705b8420a9 data/skilltree/tags/items/armors/leather.json
 01d06e1c3cd6ee881097875b179c1f9f014e3457 data/skilltree/tags/items/melee_weapon.json
 b66e5136e9f0246d08fbf8e91dc9e7d6d2217e00 data/skilltree/tags/items/ranged_weapon.json

@@ -71,6 +71,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Fire an additional projectile");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Your splash potions do not affect you");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Projectile Speed");
+    add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "chance", "Chance to prevent %s durability loss");
+    add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "Prevent %s durability loss");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -170,6 +172,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTTags.Items.NECKLACES, "plural", "Necklaces");
     add(PSTTags.Items.QUIVERS, "Quiver");
     add(PSTTags.Items.QUIVERS, "plural", "Quivers");
+    add(PSTTags.Items.LEATHER_ARMOR, "Leather Armor");
+    add(PSTTags.Items.LEATHER_ARMOR, "plural", "Leather Armor");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Armor");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "helmet", "Helmet");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "helmet.plural", "Helmets");

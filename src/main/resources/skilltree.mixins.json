@@ -9,6 +9,7 @@
     "minecraft/ArmorSlotMixin",
     "minecraft/MobEffectMixin",
     "minecraft/ThrownPotionMixin",
+    "minecraft/ItemStackMixin",
     "AbstractArrowAccessor",
     "ShapedRecipeAccessor",
     "ShapelessRecipeAccessor",

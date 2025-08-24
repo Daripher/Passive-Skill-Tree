@@ -71,6 +71,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Вы выпускаете дополнительный снаряд");
     add(PSTSkillBonuses.SELF_SPLASH_IMMUNE.get(), "Ваши взрывные зелья не действуют на вас");
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Скорость снарядов");
+    add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "chance", "Шанс что %s не потеряет прочность при использовании");
+    add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "%s не теряет прочности при использовании");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -195,6 +197,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTTags.Items.QUIVERS, "type", "ый Колчан");
     add(PSTTags.Items.QUIVERS, "plural.adjective", "ые Колчаны");
     add(PSTTags.Items.QUIVERS, "plural", "Колчаны");
+    add(PSTTags.Items.LEATHER_ARMOR, "Кожаная броня");
+    add(PSTTags.Items.LEATHER_ARMOR, "plural", "Кожаная броня");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Броня");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor.prepositional", "Броне");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor.adjective", "ая Броня");

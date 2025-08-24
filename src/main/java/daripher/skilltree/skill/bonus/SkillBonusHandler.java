@@ -753,12 +753,17 @@ public class SkillBonusHandler {
     return chance;
   }
 
-  @SuppressWarnings("rawtypes")
   public static <T> List<T> getSkillBonuses(@Nonnull Player player, Class<T> type) {
     if (!PlayerSkillsProvider.hasSkills(player)) return List.of();
     List<T> bonuses = new ArrayList<>();
     bonuses.addAll(getPlayerBonuses(player, type));
     bonuses.addAll(getEffectBonuses(player, type));
+    return mergeSkillBonuses(bonuses);
+  }
+
+  @NotNull
+  @SuppressWarnings("rawtypes")
+  private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
     List<T> mergedBonuses = new ArrayList<>();
     for (T bonus : bonuses) {
       SkillBonus skillBonus = (SkillBonus) bonus;

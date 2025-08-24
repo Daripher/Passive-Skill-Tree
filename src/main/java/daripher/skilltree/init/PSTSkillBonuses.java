@@ -79,6 +79,8 @@ public class PSTSkillBonuses {
       REGISTRY.register("self_splash_immune", SelfSplashImmuneBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> PROJECTILE_SPEED =
       REGISTRY.register("projectile_speed", ProjectileSpeedBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> ITEM_DURABILITY_LOSS_AVOIDANCE =
+      REGISTRY.register("item_durability_loss_avoidance", ItemDurabilityLossAvoidanceBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {
