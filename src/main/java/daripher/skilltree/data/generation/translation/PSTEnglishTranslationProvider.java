@@ -73,6 +73,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Projectile Speed");
     add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "chance", "Chance to prevent %s durability loss");
     add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "Prevent %s durability loss");
+    add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "positive", "You use %s %s%% faster");
+    add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "negative",  "You use %s %s%% slower");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -116,6 +118,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "more than %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "less than %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "equal to %s");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "if all your armor is");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "if all target's armor is");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s on hit");
     add(PSTEventListeners.ATTACK.get(), "damage", "%s on %s hit");

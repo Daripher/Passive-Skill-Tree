@@ -39,6 +39,8 @@ public class PSTLivingConditions {
       REGISTRY.register("unarmed", UnarmedCondition.Serializer::new);
   public static final RegistryObject<LivingCondition.Serializer> NUMERIC_VALUE =
       REGISTRY.register("numeric_value", NumericValueCondition.Serializer::new);
+  public static final RegistryObject<LivingCondition.Serializer> ALL_ARMOR =
+      REGISTRY.register("all_armor", AllArmorCondition.Serializer::new);
 
   public static List<LivingCondition> conditionsList() {
     return PSTRegistries.LIVING_CONDITIONS.get().getValues().stream()

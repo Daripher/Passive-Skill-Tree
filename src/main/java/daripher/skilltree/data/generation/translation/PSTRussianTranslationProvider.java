@@ -73,6 +73,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.PROJECTILE_SPEED.get(), "Скорость снарядов");
     add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "chance", "Шанс что %s не потеряет прочность при использовании");
     add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "%s не теряет прочности при использовании");
+    add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "positive", "Вы используете %s %s%% быстрее");
+    add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "negative",  "Вы используете %s %s%% медленнее");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -113,6 +115,12 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.UNARMED.get(), "target.you", "без оружия");
     add(PSTLivingConditions.UNARMED.get(), "target.target", "если цель безоружна");
     add(PSTLivingConditions.UNARMED.get(), "%s %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "больше чем %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "меньше чем %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "равно %s");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "если вся ваша броня - ");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "если вся броня цели - ");
+    add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
     // event listeners
     add(PSTEventListeners.ATTACK.get(), "%s при атаке");
     add(PSTEventListeners.ATTACK.get(), "damage", "%s при атаке %s");

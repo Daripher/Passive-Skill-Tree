@@ -635,6 +635,40 @@ public class SkillBonusHandler {
     projectile.setDeltaMovement(projectileMovement.multiply(speedBonusVec));
   }
 
+  @SubscribeEvent
+  public static void applyItemUsageSpeed(LivingEntityUseItemEvent.Tick event) {
+    if (!(event.getEntity() instanceof Player player)) {
+      return;
+    }
+    float additionalSpeed =
+        getSkillBonuses(player, ItemUsageSpeedBonus.class).stream()
+            .map(bonus -> bonus.getMultiplier(player, event.getItem()))
+            .reduce(Float::sum)
+            .orElse(0f);
+    if (additionalSpeed == 0) {
+      return;
+    }
+    int useTimeOffset = -1;
+    if (additionalSpeed < 0) {
+      useTimeOffset = 1;
+      additionalSpeed *= -1;
+    }
+    while (additionalSpeed > 1) {
+      event.setDuration(event.getDuration() + useTimeOffset);
+      additionalSpeed--;
+    }
+    if (additionalSpeed > 0.5F) {
+      if (event.getEntity().tickCount % 2 == 0) {
+        event.setDuration(event.getDuration() + useTimeOffset);
+      }
+      additionalSpeed -= 0.5F;
+    }
+    int mod = (int) Math.floor(1 / Math.min(1, additionalSpeed));
+    if (event.getEntity().tickCount % mod == 0) {
+      event.setDuration(event.getDuration() + useTimeOffset);
+    }
+  }
+
   private static void fireDuplicateProjectiles(
       Projectile projectile, ServerLevel level, Player player, int projectileAmount) {
     float spreadAngle = 5f;
