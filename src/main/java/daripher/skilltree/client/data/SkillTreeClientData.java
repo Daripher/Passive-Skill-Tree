@@ -202,4 +202,8 @@ public class SkillTreeClientData {
       player.sendSystemMessage(component);
     }
   }
+
+  public static Map<ResourceLocation, PassiveSkillTree> getEditorTrees() {
+    return EDITOR_TREES;
+  }
 }

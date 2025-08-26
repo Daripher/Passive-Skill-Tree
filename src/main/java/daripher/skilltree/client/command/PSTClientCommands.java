@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import net.minecraft.client.Minecraft;
@@ -18,12 +19,15 @@ import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import java.util.stream.Stream;
+
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {
   public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER =
       (ctx, builder) ->
           SharedSuggestionProvider.suggest(
-              SkillTreesReloader.getSkillTrees().keySet().stream().map(ResourceLocation::toString),
+              Stream.concat(SkillTreesReloader.getSkillTrees().keySet().stream(),
+                            SkillTreeClientData.getEditorTrees().keySet().stream()).map(ResourceLocation::toString),
               builder);
   private static ResourceLocation tree_to_display;
   private static int timer;
