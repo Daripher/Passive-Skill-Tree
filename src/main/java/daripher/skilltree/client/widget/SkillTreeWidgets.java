@@ -224,13 +224,19 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   private boolean canLearnSkill(PassiveSkill skill) {
-    for (SkillStatRequirement requirement : skill.getRequirements()) {
-      if (!requirement.isRequirementMet(player)) return false;
+    if (!player.isCreative()) {
+      for (SkillStatRequirement requirement : skill.getRequirements()) {
+        if (!requirement.isRequirementMet(player)) {
+          return false;
+        }
+      }
     }
     Map<String, Integer> limitations = skillTree.getSkillLimitations();
     for (String tag : skill.getTags()) {
       int limit = limitations.getOrDefault(tag, 0);
-      if (limit > 0 && getLearnedSkillsWithTag(tag) >= limit) return false;
+      if (limit > 0 && getLearnedSkillsWithTag(tag) >= limit) {
+        return false;
+      }
     }
     return true;
   }
