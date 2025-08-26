@@ -75,6 +75,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_DURABILITY_LOSS_AVOIDANCE.get(), "Prevent %s durability loss");
     add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "positive", "You use %s %s%% faster");
     add(PSTSkillBonuses.ITEM_USAGE_SPEED.get(), "negative",  "You use %s %s%% slower");
+    add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "positive", "Reduces movement speed penalty from using %s by %s%%");
+    add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove",  "Removes movement speed penalty from using %s");
+    add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Increases movement speed penalty from using %s by %s%%");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -222,7 +225,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player.plural", "%s per %s blocks between you and enemy");
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s per block between you and enemy");
 
-    add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "condition.player", "if distance to target is %s");
+    add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "condition.player", "%s if distance to target is %s");
 
     add("effect_type.beneficial", "beneficial effect");
     add("effect_type.beneficial.plural", "beneficial effects");
@@ -235,22 +238,22 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.player.plural", "%s per %s %s on you");
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.player", "%s per %s on you");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s %s on enemy");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy", "%s per %s on enemy");
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s %s on target");
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy", "%s per %s on target");
 
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player", "%s while affected by %s %s");
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player.any", "%s while affected by any %s");
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player.none", "%s while not affected by any %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy", "%s if enemy is affected by %s %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s if enemy is affected by any %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s if enemy is not affected by any %s");
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy", "%s if target is affected by %s %s");
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s if target is affected by any %s");
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s if target is not affected by any %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "exactly %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s per %s enchantments on your %s");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player", "%s per enchantment on your %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s enchantments on enemy's %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy", "%s per enchantment on enemy's %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s enchantments on target's %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy", "%s per enchantment on target's %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "enchantment", "enchantment");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "enchantment.plural", "enchantments");
@@ -258,16 +261,16 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player", "%s if you have %s %s on %s");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player.any", "%s if your %s is enchanted");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player.none", "%s if your %s is not enchanted");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s if enemy has %s %s on %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s if enemy's %s is enchanted");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s if enemy's %s is not enchanted");
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s if target has %s %s on %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s if target's %s is enchanted");
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s if target's %s is not enchanted");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "exactly %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.player.plural", "%s per %s enchantment levels on your %s");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.player", "%s per enchantment level on your %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy.plural", "%s per %s enchantment levels on enemy's %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy", "%s per enchantment level on enemy's %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy.plural", "%s per %s enchantment levels on target's %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy", "%s per enchantment level on target's %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "level", "level");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "level.plural", "levels");
@@ -275,17 +278,17 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player", "%s if you have %s enchantment %s on %s");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player.any", "%s if your %s is enchanted");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player.none", "%s if your %s is not enchanted");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy", "%s if enemy has %s enchantment %s on %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s if enemy's %s is enchanted");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s if enemy's %s is not enchanted");
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy", "%s if target has %s enchantment %s on %s");
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s if target's %s is enchanted");
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s if target's %s is not enchanted");
 
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player.plural", "%s per %s durability of your %s");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player", "%s per durability of your %s");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s per %s durability of enemy's %s");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy", "%s per durability of enemy's %s");
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s per %s durability of target's %s");
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy", "%s per durability of target's %s");
 
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s if your %s has %s durability");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s if enemy's has %s %s durability");
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s if target's has %s %s durability");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "exactly %s");
 
@@ -296,23 +299,21 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.plural", "%s per %s current %s");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.missing", "%s per missing %s");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.plural.missing", "%s per %s missing %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy", "%s per enemy's current %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s per %s enemy's current %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s per enemy's missing %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s enemy's missing %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy", "%s per target's current %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s per %s target's current %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s per target's missing %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s target's missing %s");
 
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player", "%s if you have %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy", "%s if enemy has %s %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy", "%s if target has %s %s");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.missing", "%s if you are missing %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.missing", "%s if enemy is missing %s %s");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.missing", "%s if target is missing %s %s");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.full", "%s if you are not hungry");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.full", "%s if enemy is not hungry");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.full", "%s if target is not hungry");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.not_full", "%s if you are hungry");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s if enemy is hungry");
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s if target is hungry");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
-
-    add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.gem_amount", "exactly %s");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "health point");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point.plural", "health points");
@@ -321,19 +322,19 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s per %s current %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.missing", "%s per missing %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural.missing", "%s per %s missing %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy", "%s per enemy's current %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s per %s enemy's current %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s per enemy's missing %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s enemy's missing %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy", "%s per target's current %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s per %s target's current %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s per target's missing %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s target's missing %s");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player", "%s if you have %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy", "%s if enemy has %s %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy", "%s if target has %s %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.missing", "%s if you are missing %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.missing", "%s if enemy is missing %s %s");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.missing", "%s if target is missing %s %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.full", "%s while at full health");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.full", "%s if enemy is at full health");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.full", "%s if target is at full health");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.not_full", "%s while injured");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s if enemy is injured");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s if target is injured");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
 

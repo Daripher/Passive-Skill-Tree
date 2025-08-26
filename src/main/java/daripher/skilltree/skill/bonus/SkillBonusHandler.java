@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.Input;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -41,6 +42,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -666,6 +668,27 @@ public class SkillBonusHandler {
     int mod = (int) Math.floor(1 / Math.min(1, additionalSpeed));
     if (event.getEntity().tickCount % mod == 0) {
       event.setDuration(event.getDuration() + useTimeOffset);
+    }
+  }
+
+  @SubscribeEvent
+  public static void applyItemUseMovementSpeedBonus(MovementInputUpdateEvent event) {
+    Player player = event.getEntity();
+    Input input = event.getInput();
+    if (player.isUsingItem() && !player.isPassenger()) {
+      float defaultPenalty = 0.8f;
+      float penaltyReduction =
+          getSkillBonuses(player, ItemUseMovementSpeedBonus.class).stream()
+              .map(bonus -> bonus.getMultiplier(player, player.getUseItem()))
+              .reduce(Float::sum)
+              .orElse(0f);
+      defaultPenalty += defaultPenalty * penaltyReduction;
+      float reductionFactor = 1 - defaultPenalty;
+      input.leftImpulse *= reductionFactor;
+      input.forwardImpulse *= reductionFactor;
+      // counteracts default slow
+      input.leftImpulse *= 5;
+      input.forwardImpulse *= 5;
     }
   }
 
