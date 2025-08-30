@@ -444,6 +444,7 @@
   "skill_bonus.skilltree.inflict_effect.player": "Вы получаете %s%s",
   "skill_bonus.skilltree.inflict_effect.player.chance": "Шанс получить %s%s",
   "skill_bonus.skilltree.inflict_effect.seconds": " на %s секунд",
+  "skill_bonus.skilltree.inflict_effect.stacks": "%s, суммируется до %s раз",
   "skill_bonus.skilltree.inflict_ignite.enemy": "Вы поджигаете врагов на %s",
   "skill_bonus.skilltree.inflict_ignite.enemy.chance": "Шанс поджечь врагов на %s",
   "skill_bonus.skilltree.inflict_ignite.player": "Вы загораетесь на %s",

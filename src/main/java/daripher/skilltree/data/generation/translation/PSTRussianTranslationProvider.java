@@ -48,6 +48,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "enemy.chance", "Шанс наложить %s%s");
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "seconds", " на %s секунд");
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "minutes", " на %s минут");
+    add(PSTSkillBonuses.INFLICT_EFFECT.get(), "stacks", "%s, суммируется до %s раз");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Нельзя использовать %s");
     add(PSTSkillBonuses.HEALING.get(), "player", "Вы восстанавливаете %s здоровья");
     add(PSTSkillBonuses.HEALING.get(), "player.chance", "Шанс восстановить %s здоровья");

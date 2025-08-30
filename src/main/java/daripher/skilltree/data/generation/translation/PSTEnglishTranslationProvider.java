@@ -48,6 +48,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "enemy.chance", "Chance to inflict %s%s");
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "seconds", " for %s seconds");
     add(PSTSkillBonuses.INFLICT_EFFECT.get(), "minutes", " for %s minutes");
+    add(PSTSkillBonuses.INFLICT_EFFECT.get(), "stacks", "%s, stacks up to %s times");
     add(PSTSkillBonuses.CANT_USE_ITEM.get(), "Can not use %s");
     add(PSTSkillBonuses.HEALING.get(), "player", "Recover %s life");
     add(PSTSkillBonuses.HEALING.get(), "player.chance", "Chance to recover %s life");
