@@ -56,10 +56,6 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
     return as.compareTo(bs);
   }
 
-  interface Ticking {
-    void tick(ServerPlayer player);
-  }
-
   enum Target {
     PLAYER,
     ENEMY;

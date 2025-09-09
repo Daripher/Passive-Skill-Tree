@@ -8,6 +8,7 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.TickingSkillBonus;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
@@ -26,7 +27,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
-public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBonus.Ticking {
+public final class AttributeBonus implements SkillBonus<AttributeBonus>, TickingSkillBonus {
   private Attribute attribute;
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
@@ -35,12 +36,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
     this.attribute = attribute;
     this.modifier = modifier;
-  }
-
-  public AttributeBonus(
-      Attribute attribute, String name, float amount, AttributeModifier.Operation operation) {
-    this.attribute = attribute;
-    this.modifier = new AttributeModifier(UUID.randomUUID(), name, amount, operation);
   }
 
   @Override
@@ -304,12 +299,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
             modifier.getId(), modifier.getName(), amount, modifier.getOperation());
   }
 
-  public void setUUID(UUID id) {
-    this.modifier =
-        new AttributeModifier(
-            id, modifier.getName(), modifier.getAmount(), modifier.getOperation());
-  }
-
   public void setOperation(AttributeModifier.Operation operation) {
     this.modifier =
         new AttributeModifier(
@@ -324,14 +313,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, SkillBo
   public SkillBonus<?> setMultiplier(LivingMultiplier multiplier) {
     this.playerMultiplier = multiplier;
     return this;
-  }
-
-  public boolean hasCondition() {
-    return playerCondition != NoneLivingCondition.INSTANCE;
-  }
-
-  public boolean hasMultiplier() {
-    return playerMultiplier != NoneLivingMultiplier.INSTANCE;
   }
 
   public static class Serializer implements SkillBonus.Serializer {

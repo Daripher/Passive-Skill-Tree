@@ -1,6 +1,7 @@
 package daripher.skilltree.effect;
 
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.TickingSkillBonus;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -36,12 +37,12 @@ public abstract class SkillBonusEffect extends MobEffect {
 
   @Override
   public boolean isDurationEffectTick(int duration, int amplifier) {
-    return bonus instanceof SkillBonus.Ticking;
+    return bonus instanceof TickingSkillBonus;
   }
 
   @Override
   public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-    if (entity instanceof ServerPlayer player && bonus instanceof SkillBonus.Ticking ticking) {
+    if (entity instanceof ServerPlayer player && bonus instanceof TickingSkillBonus ticking) {
       ticking.tick(player);
     }
   }

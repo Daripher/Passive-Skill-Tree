@@ -134,7 +134,7 @@ public class SkillBonusHandler {
     if (event.player.isDeadOrDying()) return;
     if (!(event.player instanceof ServerPlayer player)) return;
     if (event.phase == TickEvent.Phase.END) return;
-    getSkillBonuses(player, SkillBonus.Ticking.class).forEach(bonus -> bonus.tick(player));
+    getSkillBonuses(player, TickingSkillBonus.class).forEach(bonus -> bonus.tick(player));
   }
 
   @SubscribeEvent(priority = EventPriority.HIGH)
