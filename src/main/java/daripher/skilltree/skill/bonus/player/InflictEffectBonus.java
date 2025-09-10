@@ -13,6 +13,8 @@ import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import daripher.skilltree.skill.bonus.event.TickingEventListener;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -136,7 +138,9 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
       bonusDescription += ".chance";
     }
     MutableComponent tooltip;
-    if (duration > 0) {
+    boolean isInstantEffect = duration == 0;
+    boolean showDuration = !isInstantEffect && !(getEventListener() instanceof TickingEventListener && duration <= 20);
+    if (showDuration) {
       Component durationDescription = getDurationDescription();
       tooltip = Component.translatable(bonusDescription, effectDescription, durationDescription);
     } else {
