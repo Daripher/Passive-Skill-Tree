@@ -31,6 +31,8 @@ public class PSTEventListeners {
       REGISTRY.register("skill_learned", SkillLearnedEventListener.Serializer::new);
   public static final RegistryObject<SkillEventListener.Serializer> SKILL_REMOVED =
       REGISTRY.register("skill_removed", SkillRemovedEventListener.Serializer::new);
+  public static final RegistryObject<SkillEventListener.Serializer> TICKING =
+      REGISTRY.register("ticking", TickingEventListener.Serializer::new);
 
   public static List<SkillEventListener> eventsList() {
     return PSTRegistries.EVENT_LISTENERS.get().getValues().stream()

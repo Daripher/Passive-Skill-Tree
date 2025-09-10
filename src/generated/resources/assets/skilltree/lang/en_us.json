@@ -58,6 +58,7 @@
   "event_listener.skilltree.on_kill.damage": "%s on %s kill",
   "event_listener.skilltree.skill_learned": "%s when you learn this",
   "event_listener.skilltree.skill_removed": "%s when this skill is removed",
+  "event_listener.skilltree.ticking": "%s every second",
   "experience.source.fishing": "Fishing",
   "experience.source.mobs": "Mobs",
   "experience.source.ore": "Ores",

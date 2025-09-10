@@ -58,6 +58,7 @@
   "event_listener.skilltree.on_kill.damage": "%s при убийстве %s",
   "event_listener.skilltree.skill_learned": "%s при изучении этого умения",
   "event_listener.skilltree.skill_removed": "%s когда вы забудете это умение",
+  "event_listener.skilltree.ticking": "%s каждую секунду",
   "experience.source.fishing": "за Рыбалку",
   "experience.source.mobs": "с Существ",
   "experience.source.ore": "из Руды",

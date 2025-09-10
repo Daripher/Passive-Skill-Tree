@@ -137,6 +137,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.ON_KILL.get(), "damage", "%s при убийстве %s");
     add(PSTEventListeners.SKILL_LEARNED.get(), "%s при изучении этого умения");
     add(PSTEventListeners.SKILL_REMOVED.get(), "%s когда вы забудете это умение");
+    add(PSTEventListeners.TICKING.get(), "%s каждую секунду");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Урон снарядами");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "снарядами");

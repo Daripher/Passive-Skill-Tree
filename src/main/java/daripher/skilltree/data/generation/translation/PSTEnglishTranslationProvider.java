@@ -137,6 +137,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.ON_KILL.get(), "damage", "%s on %s kill");
     add(PSTEventListeners.SKILL_LEARNED.get(), "%s when you learn this");
     add(PSTEventListeners.SKILL_REMOVED.get(), "%s when this skill is removed");
+    add(PSTEventListeners.TICKING.get(), "%s every second");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "Projectile");
