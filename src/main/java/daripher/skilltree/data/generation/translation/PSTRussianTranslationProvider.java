@@ -122,6 +122,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "больше чем %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "меньше чем %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "равно %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_least", "минимум %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_most", "максимум %s");
     add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "если вся ваша броня - ");
     add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "если вся броня цели - ");
     add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
@@ -310,6 +312,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.player", "%s если %s %s");
     add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.enemy", "%s если %s цели %s");
 
+    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "requirement", "Достигните %s %s");
+
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player.plural", "%s за каждые %s блока между вами и целью");
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s за каждый блок между вами и целью");
 
@@ -336,6 +340,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s если на цель действует любой %s");
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s если на цель не действуют %s");
 
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "requirement", "На вас %s %s");
+
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "ровно %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s за каждое %s зачарования на %s");
@@ -352,6 +358,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s если у цели есть %s %s на %s");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s если %s цели не имеет зачарования");
+
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "requirement", "На вашем %3$s %1$s %2$s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "ровно %s");
 
@@ -370,6 +378,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s если %s цели не имеет зачарований");
 
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "requirement", "На вашем %3$s %1$s %2$s");
+
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player.plural", "%s за каждые %s прочности вашего %s");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player", "%s за единицу прочности вашего %s");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s за каждые %s прочности %s цели");
@@ -377,6 +387,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s если ваш %s имеет %s прочности");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s если %s цели имеет %s durability");
+
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %3$s имеет %s прочности");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "ровно %s");
 
@@ -401,6 +413,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.not_full", "%s если вы голодны");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s если цель голодна");
 
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "requirement", "У вас %s %s");
+
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "ровно %s");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "очко здоровья");
@@ -423,6 +437,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.full", "%s если у цели полное здоровье");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.not_full", "%s если вы ранены");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s если цель ранена");
+
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
     // recipes

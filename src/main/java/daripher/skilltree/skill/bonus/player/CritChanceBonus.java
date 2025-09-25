@@ -42,8 +42,8 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
 
   public float getChanceBonus(DamageSource source, Player attacker, LivingEntity target) {
     if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.met(attacker)) return 0f;
-    if (!targetCondition.met(target)) return 0f;
+    if (!playerCondition.isConditionMet(attacker)) return 0f;
+    if (!targetCondition.isConditionMet(target)) return 0f;
     return chance * playerMultiplier.getValue(attacker);
   }
 

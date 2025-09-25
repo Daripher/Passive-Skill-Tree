@@ -31,7 +31,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
   }
 
   public float getAmount(Player player) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     return amount * playerMultiplier.getValue(player);
   }
 

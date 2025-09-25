@@ -9,6 +9,7 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.function.Supplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,6 +37,8 @@ public class PSTRegistries {
   public static final Supplier<IForgeRegistry<NumericValueProvider.Serializer>>
       NUMERIC_VALUE_PROVIDERS =
           PSTNumericValueProviders.REGISTRY.makeRegistry(RegistryBuilder::new);
+  public static final Supplier<IForgeRegistry<SkillRequirement.Serializer>> SKILL_REQUIREMENTS =
+      PSTSkillRequirements.REGISTRY.makeRegistry(RegistryBuilder::new);
 
   @SubscribeEvent
   public static void registerRegistries(NewRegistryEvent event) {
@@ -47,6 +50,7 @@ public class PSTRegistries {
     createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);
     createRegistry(event, PSTEventListeners.REGISTRY_ID);
     createRegistry(event, PSTNumericValueProviders.REGISTRY_ID);
+    createRegistry(event, PSTSkillRequirements.REGISTRY_ID);
   }
 
   private static <T> void createRegistry(NewRegistryEvent event, ResourceLocation id) {

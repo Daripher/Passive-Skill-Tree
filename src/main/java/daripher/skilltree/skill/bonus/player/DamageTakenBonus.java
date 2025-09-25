@@ -48,8 +48,8 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
       LivingEntity attacker) {
     if (this.operation != operation) return 0f;
     if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.met(player)) return 0f;
-    if (!attackerCondition.met(attacker)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!attackerCondition.isConditionMet(attacker)) return 0f;
     return amount * playerMultiplier.getValue(player) * attackerMultiplier.getValue(attacker);
   }
 

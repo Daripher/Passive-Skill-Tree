@@ -36,7 +36,7 @@ public final class HasEffectCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     if (amplifier == 0) return living.hasEffect(this.effect);
     MobEffectInstance effect = living.getEffect(this.effect);
     return effect != null && effect.getAmplifier() >= this.amplifier;

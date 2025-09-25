@@ -15,7 +15,7 @@ import net.minecraft.world.level.material.Fluids;
 
 public record UnderwaterCondition() implements LivingCondition {
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return living.getEyeInFluidType() == Fluids.WATER.getFluidType();
   }
 

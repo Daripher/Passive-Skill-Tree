@@ -14,7 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public record BurningCondition() implements LivingCondition {
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return living.getRemainingFireTicks() > 0;
   }
 

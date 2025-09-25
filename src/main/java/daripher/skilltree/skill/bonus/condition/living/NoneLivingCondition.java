@@ -13,7 +13,7 @@ public enum NoneLivingCondition implements LivingCondition {
   INSTANCE;
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return true;
   }
 

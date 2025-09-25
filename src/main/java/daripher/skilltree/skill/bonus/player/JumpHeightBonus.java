@@ -33,7 +33,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
   }
 
   public float getJumpHeightMultiplier(Player player) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     return multiplier;
   }
 

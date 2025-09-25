@@ -7,6 +7,7 @@ import daripher.skilltree.init.PSTNumericValueProviders;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -49,6 +50,11 @@ public class DistanceToTargetProvider implements NumericValueProvider<DistanceTo
     String valueDescription = formatNumber(requiredValue);
     Component logicDescription = logic.getTooltip("distance_to_target", valueDescription);
     return Component.translatable(key, bonusTooltip, logicDescription);
+  }
+
+  @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    return Component.literal("Unsupported").withStyle(ChatFormatting.RED);
   }
 
   @Override

@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 
 public record FishingCondition() implements LivingCondition {
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return living instanceof Player player && player.fishing != null;
   }
 

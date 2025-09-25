@@ -38,7 +38,7 @@ public final class ItemDurabilityLossAvoidanceBonus
   }
 
   public float getChance(Player player, ItemStack itemStack) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     if (!itemCondition.met(itemStack)) return 0f;
     return chance * playerMultiplier.getValue(player);
   }

@@ -40,8 +40,8 @@ public class AttackEventListener implements SkillEventListener {
       @Nonnull LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.met(player)) return;
-    if (!enemyCondition.met(enemy)) return;
+    if (!playerCondition.isConditionMet(player)) return;
+    if (!enemyCondition.isConditionMet(enemy)) return;
     if (!damageCondition.met(damage)) return;
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     skill

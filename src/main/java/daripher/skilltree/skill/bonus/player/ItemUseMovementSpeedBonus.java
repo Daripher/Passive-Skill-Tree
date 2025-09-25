@@ -38,7 +38,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
   }
 
   public float getMultiplier(Player player, ItemStack itemStack) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     if (!itemCondition.met(itemStack)) return 0f;
     return multiplier * playerMultiplier.getValue(player);
   }

@@ -34,6 +34,7 @@ public class SkillTreeMod {
     PSTLootModifiers.REGISTRY.register(eventBus);
     PSTNumericValueProviders.REGISTRY.register(eventBus);
     PSTPotions.REGISTRY.register(eventBus);
+    PSTSkillRequirements.REGISTRY.register(eventBus);
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     addCompatibilities();

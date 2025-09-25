@@ -2,15 +2,13 @@ package daripher.skilltree.skill.bonus.condition.living.numeric;
 
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-
-import java.util.function.Consumer;
 
 public interface NumericValueProvider<T> {
   float getValue(LivingEntity entity);
@@ -28,6 +26,8 @@ public interface NumericValueProvider<T> {
   MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip);
 
   MutableComponent getConditionTooltip(SkillBonus.Target target, NumericValueCondition.Logic logic, Component bonusTooltip, float requiredValue);
+
+  MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue);
 
   Serializer getSerializer();
 

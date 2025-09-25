@@ -38,8 +38,8 @@ public class KillEventListener implements SkillEventListener {
       @Nonnull LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.met(player)) return;
-    if (!enemyCondition.met(enemy)) return;
+    if (!playerCondition.isConditionMet(player)) return;
+    if (!enemyCondition.isConditionMet(enemy)) return;
     if (!damageCondition.met(damage)) return;
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))

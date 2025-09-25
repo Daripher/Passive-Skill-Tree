@@ -42,8 +42,8 @@ public class DamageTakenEventListener implements SkillEventListener {
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
     if (enemyCondition != NoneLivingCondition.INSTANCE && enemy == null) return;
-    if (!playerCondition.met(player)) return;
-    if (!enemyCondition.met(enemy)) return;
+    if (!playerCondition.isConditionMet(player)) return;
+    if (!enemyCondition.isConditionMet(enemy)) return;
     if (!damageCondition.met(damage)) return;
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     if (target == null) return;

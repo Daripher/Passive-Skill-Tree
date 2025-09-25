@@ -79,6 +79,28 @@ public class HealthLevelProvider implements NumericValueProvider<HealthLevelProv
   }
 
   @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    String pointsKey = key + ".point";
+    if (requiredValue != 1) {
+      pointsKey += ".plural";
+    }
+    Component pointsDescription = Component.translatable(pointsKey);
+    if (logic == NumericValueCondition.Logic.EQUAL && percentage && requiredValue == 1) {
+      return Component.translatable(key + ".full");
+    }
+    if (logic == NumericValueCondition.Logic.LESS && percentage && requiredValue == 1) {
+      return Component.translatable(key + ".not_full");
+    }
+    if (missing) {
+      key += ".missing";
+    }
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("health_level", valueDescription);
+    return Component.translatable(key, logicDescription, pointsDescription);
+  }
+
+  @Override
   public String formatNumber(float number) {
     if (percentage) {
       return NumericValueProvider.super.formatNumber(number * 100) + "%";

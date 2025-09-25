@@ -77,6 +77,27 @@ public class EffectAmountProvider implements NumericValueProvider<EffectAmountPr
   }
 
   @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    String effectTypeKey = effectType.getDescriptionId();
+    if (!(requiredValue == 0 && logic == NumericValueCondition.Logic.MORE)) {
+      if (requiredValue != 1) {
+        effectTypeKey += ".plural";
+      }
+    }
+    Component effectDescription = Component.translatable(effectTypeKey);
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.EQUAL) {
+      return Component.translatable(key + ".none", effectDescription);
+    }
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.MORE) {
+      return Component.translatable(key + ".any", effectDescription);
+    }
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("effect_amount", valueDescription);
+    return Component.translatable(key, logicDescription, effectDescription);
+  }
+
+  @Override
   public NumericValueProvider.Serializer getSerializer() {
     return PSTNumericValueProviders.EFFECT_AMOUNT.get();
   }

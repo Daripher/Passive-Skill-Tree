@@ -4,7 +4,7 @@ import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.List;
 
 public class SkillRequirementEditor extends EditorMenu {
@@ -26,16 +26,16 @@ public class SkillRequirementEditor extends EditorMenu {
     if (!editor.canEditSkillRequirements()) return;
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
     if (selectedSkill == null) return;
-    List<SkillStatRequirement> requirements = selectedSkill.getRequirements();
+    List<SkillRequirement<?>> requirements = selectedSkill.getRequirements();
     if (selectedRequirement >= requirements.size()) {
       editor.selectMenu(previousMenu);
       return;
     }
-    SkillStatRequirement requirement = selectedSkill.getRequirements().get(selectedRequirement);
-    requirement.addEditorWidgets(editor, b -> setSkillBonuses(editor, b));
+    SkillRequirement<?> requirement = selectedSkill.getRequirements().get(selectedRequirement);
+    requirement.addEditorWidgets(editor, b -> setSkillRequirements(editor, b));
   }
 
-  private void setSkillBonuses(SkillTreeEditor editor, SkillStatRequirement requirement) {
+  private void setSkillRequirements(SkillTreeEditor editor, SkillRequirement<?> requirement) {
     editor
         .getSelectedSkills()
         .forEach(s -> s.getRequirements().set(selectedRequirement, requirement.copy()));

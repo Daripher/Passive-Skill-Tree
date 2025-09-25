@@ -32,12 +32,14 @@ public class NumericValueCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     float value = valueProvider.getValue(living);
     return switch (logic) {
       case EQUAL -> value == requiredValue;
       case MORE -> value > requiredValue;
       case LESS -> value < requiredValue;
+      case AT_LEAST -> value >= requiredValue;
+      case AT_MOST -> value <= requiredValue;
     };
   }
 
@@ -120,6 +122,18 @@ public class NumericValueCondition implements LivingCondition {
     this.logic = logic;
   }
 
+  public NumericValueProvider<?> getValueProvider() {
+    return valueProvider;
+  }
+
+  public Logic getLogic() {
+    return logic;
+  }
+
+  public float getRequiredValue() {
+    return requiredValue;
+  }
+
   public static class Serializer implements LivingCondition.Serializer {
     @Override
     public LivingCondition deserialize(JsonObject json) throws JsonParseException {
@@ -184,7 +198,7 @@ public class NumericValueCondition implements LivingCondition {
   }
 
   public enum Logic {
-    MORE, LESS, EQUAL;
+    MORE, LESS, EQUAL, AT_LEAST, AT_MOST;
 
     public String getName() {
       return name().toLowerCase();

@@ -76,6 +76,26 @@ public class EnchantmentLevelsProvider implements NumericValueProvider<Enchantme
   }
 
   @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    String levelsKey = key + ".level";
+    if (requiredValue != 1) {
+      levelsKey += ".plural";
+    }
+    Component levelsDescription = Component.translatable(levelsKey);
+    Component itemDescription = itemCondition.getTooltip();
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.EQUAL) {
+      return Component.translatable(key + ".none", itemDescription);
+    }
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.MORE) {
+      return Component.translatable(key + ".any", itemDescription);
+    }
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("enchantment_amount", valueDescription);
+    return Component.translatable(key, logicDescription, levelsDescription, itemDescription);
+  }
+
+  @Override
   public NumericValueProvider.Serializer getSerializer() {
     return PSTNumericValueProviders.ENCHANTMENT_LEVELS.get();
   }

@@ -31,7 +31,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   }
 
   public float getMultiplier(Player player) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     return multiplier * playerMultiplier.getValue(player);
   }
 

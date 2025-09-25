@@ -28,7 +28,7 @@ public final class AllArmorCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return PlayerHelper.getArmor(living).allMatch(itemCondition::met);
   }
 

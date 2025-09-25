@@ -17,7 +17,7 @@ import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.*;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
@@ -225,7 +225,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
 
   private boolean canLearnSkill(PassiveSkill skill) {
     if (!player.isCreative()) {
-      for (SkillStatRequirement requirement : skill.getRequirements()) {
+      for (SkillRequirement<?> requirement : skill.getRequirements()) {
         if (!requirement.isRequirementMet(player)) {
           return false;
         }

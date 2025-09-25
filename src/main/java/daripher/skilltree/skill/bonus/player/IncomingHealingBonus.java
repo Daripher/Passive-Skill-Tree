@@ -31,7 +31,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
   }
 
   public float getHealingMultiplier(Player player) {
-    if (!playerCondition.met(player)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
     return this.multiplier * playerMultiplier.getValue(player);
   }
 

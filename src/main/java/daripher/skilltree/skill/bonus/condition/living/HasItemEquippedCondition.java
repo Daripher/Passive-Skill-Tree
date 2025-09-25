@@ -28,7 +28,7 @@ public final class HasItemEquippedCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return PlayerHelper.getAllEquipment(living).anyMatch(itemCondition::met);
   }
 

@@ -36,7 +36,7 @@ public class ItemUsedEventListener implements SkillEventListener {
 
   public void onEvent(
       @Nonnull Player player, @Nonnull ItemStack stack, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.met(player)) return;
+    if (!playerCondition.isConditionMet(player)) return;
     if (!itemCondition.met(stack)) return;
     skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
   }

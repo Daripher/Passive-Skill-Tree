@@ -5,12 +5,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.serializers.SkillBonusSerializer;
+import daripher.skilltree.data.serializers.SkillRequirementSerializer;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
+
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -29,6 +32,7 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
       new GsonBuilder()
           .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
           .registerTypeAdapter(SkillBonus.class, new SkillBonusSerializer())
+          .registerTypeAdapter(SkillRequirement.class, new SkillRequirementSerializer())
           .registerTypeAdapter(MutableComponent.class, new Component.Serializer())
           .setPrettyPrinting()
           .create();

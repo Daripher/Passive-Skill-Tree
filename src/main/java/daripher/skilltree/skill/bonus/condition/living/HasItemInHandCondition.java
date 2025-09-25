@@ -27,7 +27,7 @@ public final class HasItemInHandCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return itemCondition.met(living.getMainHandItem())
         || itemCondition.met(living.getOffhandItem());
   }

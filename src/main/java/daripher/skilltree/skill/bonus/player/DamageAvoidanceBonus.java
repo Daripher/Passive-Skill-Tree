@@ -43,8 +43,8 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
   public float getAvoidanceChance(
       DamageSource source, Player player, @Nullable LivingEntity attacker) {
     if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.met(player)) return 0f;
-    if (!attackerCondition.met(attacker)) return 0f;
+    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!attackerCondition.isConditionMet(attacker)) return 0f;
     float result = chance * playerMultiplier.getValue(player);
     if (attacker != null) {
       result *= attackerMultiplier.getValue(attacker);

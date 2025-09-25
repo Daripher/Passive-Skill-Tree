@@ -72,7 +72,7 @@ public final class AllAttributesBonus
       return;
     }
     if (playerCondition != NoneLivingCondition.INSTANCE) {
-      if (!playerCondition.met(player)) {
+      if (!playerCondition.isConditionMet(player)) {
         onSkillRemoved(player);
         return;
       }

@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class EnchantmentAmountProvider implements NumericValueProvider<EnchantmentAmountProvider> {
+public class  EnchantmentAmountProvider implements NumericValueProvider<EnchantmentAmountProvider> {
   private @Nonnull ItemCondition itemCondition;
 
   public EnchantmentAmountProvider(@Nonnull ItemCondition itemCondition) {
@@ -73,6 +73,26 @@ public class EnchantmentAmountProvider implements NumericValueProvider<Enchantme
     String valueDescription = formatNumber(requiredValue);
     Component logicDescription = logic.getTooltip("enchantment_amount", valueDescription);
     return Component.translatable(key, bonusTooltip, logicDescription, enchantmentsDescription, itemDescription);
+  }
+
+  @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    String enchantmentsKey = getDescriptionId() + ".enchantment";
+    if (requiredValue != 1) {
+      enchantmentsKey += ".plural";
+    }
+    Component enchantmentsDescription = Component.translatable(enchantmentsKey);
+    Component itemDescription = itemCondition.getTooltip();
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.EQUAL) {
+      return Component.translatable(key + ".none", itemDescription);
+    }
+    if (requiredValue == 0 && logic == NumericValueCondition.Logic.MORE) {
+      return Component.translatable(key + ".any", itemDescription);
+    }
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("enchantment_amount", valueDescription);
+    return Component.translatable(key, logicDescription, enchantmentsDescription, itemDescription);
   }
 
   @Override

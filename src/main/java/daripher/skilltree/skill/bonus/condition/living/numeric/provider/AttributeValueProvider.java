@@ -57,6 +57,15 @@ public class AttributeValueProvider implements NumericValueProvider<AttributeVal
   }
 
   @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    Component attributeDescription = Component.translatable(attribute.getDescriptionId());
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
+    return Component.translatable(key, attributeDescription, logicDescription);
+  }
+
+  @Override
   public NumericValueProvider.Serializer getSerializer() {
     return PSTNumericValueProviders.ATTRIBUTE_VALUE.get();
   }

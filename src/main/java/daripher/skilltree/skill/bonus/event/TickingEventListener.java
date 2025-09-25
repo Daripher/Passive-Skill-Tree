@@ -27,7 +27,7 @@ public class TickingEventListener implements SkillEventListener {
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
   public void onEvent(@Nonnull Player player, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.met(player)) return;
+    if (!playerCondition.isConditionMet(player)) return;
     skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
   }
 

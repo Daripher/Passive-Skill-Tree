@@ -3,12 +3,11 @@ package daripher.skilltree.client.widget.editor.menu.requirements;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
+import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.List;
 import net.minecraft.network.chat.Component;
-import net.minecraft.stats.Stats;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class SkillRequirementsEditor extends EditorMenu {
   public SkillRequirementsEditor(SkillTreeEditor editor, EditorMenu previousMenu) {
@@ -20,20 +19,19 @@ public class SkillRequirementsEditor extends EditorMenu {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
     if (!editor.canEditSkillRequirements()) return;
-    SkillStatRequirement defaultRequirement =
-        new SkillStatRequirement(
-            ForgeRegistries.STAT_TYPES.getKey(Stats.CUSTOM), Stats.INTERACT_WITH_FURNACE, 1);
+    SkillRequirement<?> defaultRequirement =
+        PSTSkillRequirements.STAT_VALUE.get().createDefaultInstance();
     editor
         .addSelectionMenu(110, -29, 90, defaultRequirement)
-        .setResponder(skillBonus -> addSkillRequirements(editor, skillBonus))
+        .setResponder(requirement -> addSkillRequirement(editor, requirement))
         .setMessage(Component.literal("Add"));
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
     if (selectedSkill == null) return;
-    List<SkillStatRequirement> requirements = selectedSkill.getRequirements();
+    List<SkillRequirement<?>> requirements = selectedSkill.getRequirements();
     for (int i = 0; i < requirements.size(); i++) {
       final int requirementIndex = i;
-      SkillStatRequirement bonus = requirements.get(i);
-      String message = bonus.getTooltip().getString();
+      SkillRequirement<?> requirement = requirements.get(i);
+      String message = requirement.getTooltip().getString();
       message = TooltipHelper.getTrimmedString(message, 190);
       editor
           .addButton(0, 0, 200, 14, message)
@@ -43,7 +41,7 @@ public class SkillRequirementsEditor extends EditorMenu {
     }
   }
 
-  private void addSkillRequirements(SkillTreeEditor editor, SkillStatRequirement requirement) {
+  private void addSkillRequirement(SkillTreeEditor editor, SkillRequirement<?> requirement) {
     editor.getSelectedSkills().forEach(s -> s.getRequirements().add(requirement.copy()));
     editor.saveSelectedSkills();
     editor.selectMenu(editor.getSelectedMenu().previousMenu);

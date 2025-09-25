@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface LivingCondition {
-  boolean met(LivingEntity living);
+  boolean isConditionMet(LivingEntity living);
 
   default String getDescriptionId() {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(getSerializer());

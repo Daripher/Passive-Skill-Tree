@@ -1,12 +1,11 @@
 package daripher.skilltree.skill;
 
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 public class PassiveSkill {
   private final ResourceLocation id;
   private final List<SkillBonus<?>> bonuses = new ArrayList<>();
-  private @Nullable List<SkillStatRequirement> requirements;
+  private @Nullable List<SkillRequirement<?>> requirements;
   private @Nullable List<ResourceLocation> directConnections = new ArrayList<>();
   private @Nullable List<ResourceLocation> longConnections = new ArrayList<>();
   private @Nullable List<ResourceLocation> oneWayConnections = new ArrayList<>();
@@ -101,7 +100,7 @@ public class PassiveSkill {
     return bonuses;
   }
 
-  public @Nonnull List<SkillStatRequirement> getRequirements() {
+  public @Nonnull List<SkillRequirement<?>> getRequirements() {
     if (requirements == null) return requirements = new ArrayList<>();
     return requirements;
   }
@@ -110,7 +109,7 @@ public class PassiveSkill {
     bonuses.add(bonus);
   }
 
-  public void addSkillRequirement(SkillStatRequirement requirement) {
+  public void addSkillRequirement(SkillRequirement<?> requirement) {
     getRequirements().add(requirement);
   }
 

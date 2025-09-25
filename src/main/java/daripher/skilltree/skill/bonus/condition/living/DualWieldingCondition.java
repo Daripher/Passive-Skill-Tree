@@ -27,7 +27,7 @@ public final class DualWieldingCondition implements LivingCondition {
   }
 
   @Override
-  public boolean met(LivingEntity living) {
+  public boolean isConditionMet(LivingEntity living) {
     return PlayerHelper.getItemsInHands(living).allMatch(weaponCondition::met);
   }
 

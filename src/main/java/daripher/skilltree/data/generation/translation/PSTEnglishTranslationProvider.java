@@ -122,6 +122,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "more than %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "less than %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "equal to %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_least", "at least %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_most", "at most %s");
     add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "if all your armor is");
     add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "if all target's armor is");
     add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
@@ -224,6 +226,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.player", "%s if %s is %s");
     add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.enemy", "%s if enemy's %s is %s");
 
+    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "requirement", "Reach %s %s");
+
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player.plural", "%s per %s blocks between you and enemy");
     add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s per block between you and enemy");
 
@@ -250,6 +254,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s if target is affected by any %s");
     add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s if target is not affected by any %s");
 
+    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "requirement", "Have %s %s on you");
+
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "exactly %s");
 
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s per %s enchantments on your %s");
@@ -266,6 +272,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s if target has %s %s on %s");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s if target's %s is enchanted");
     add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s if target's %s is not enchanted");
+
+    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "requirement", "Have %s %s on your %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "exactly %s");
 
@@ -284,6 +292,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s if target's %s is enchanted");
     add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s if target's %s is not enchanted");
 
+    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "requirement", "Have %s enchantment %s on your %s");
+
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player.plural", "%s per %s durability of your %s");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player", "%s per durability of your %s");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s per %s durability of target's %s");
@@ -291,6 +301,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s if your %s has %s durability");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s if target's has %s %s durability");
+
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Have %s %s on your %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "exactly %s");
 
@@ -315,6 +327,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.not_full", "%s if you are hungry");
     add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s if target is hungry");
 
+    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "requirement", "Have %s %s");
+
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "health point");
@@ -337,6 +351,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.full", "%s if target is at full health");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.not_full", "%s while injured");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s if target is injured");
+
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "Have %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
 

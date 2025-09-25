@@ -20,7 +20,8 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
+import daripher.skilltree.skill.requirement.SkillRequirement;
+import daripher.skilltree.skill.requirement.StatRequirement;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -150,29 +151,38 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         .setElementNameGetter(b -> Component.literal(PSTSkillBonuses.getName(b)));
   }
 
-  public SelectionMenuButton<SkillStatRequirement> addSelectionMenu(
-      int x, int y, int width, SkillStatRequirement defaultValue) {
-    Collection<SkillStatRequirement> values = getDefaultRequirementInstances();
+  @SuppressWarnings("rawtypes")
+  public SelectionMenuButton<SkillRequirement> addSelectionMenu(
+      int x, int y, int width, SkillRequirement defaultValue) {
+    Collection<SkillRequirement> values = PSTSkillRequirements.requirementList();
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
-        .setElementNameGetter(r -> Component.literal(r.statTypeId().getPath()));
+        .setElementNameGetter(b -> Component.literal(PSTSkillRequirements.getName(b)));
   }
 
-  private Collection<SkillStatRequirement> getDefaultRequirementInstances() {
+  public SelectionMenuButton<StatRequirement> addSelectionMenu(
+      int x, int y, int width, StatRequirement defaultValue) {
+    Collection<StatRequirement> values = getDefaultRequirementInstances();
+    return addSelectionMenu(x, y, width, values)
+        .setValue(defaultValue)
+        .setElementNameGetter(r -> Component.literal(r.getStatTypeId().getPath()));
+  }
+
+  private Collection<StatRequirement> getDefaultRequirementInstances() {
     return ForgeRegistries.STAT_TYPES.getValues().stream()
         .map(SkillTreeEditor::createDefaultRequirement)
         .filter(Objects::nonNull)
         .toList();
   }
 
-  private static @Nullable SkillStatRequirement createDefaultRequirement(StatType<?> statType) {
+  private static @Nullable StatRequirement createDefaultRequirement(StatType<?> statType) {
     ResourceLocation statId = ForgeRegistries.STAT_TYPES.getKey(statType);
     Registry<Object> statRegistry = (Registry<Object>) statType.getRegistry();
     Object stat = statRegistry.byId(0);
     if (stat == null) {
       return null;
     }
-    return new SkillStatRequirement(statId, statRegistry.getKey(stat), 1);
+    return new StatRequirement(statId, statRegistry.getKey(stat), 1);
   }
 
   @SuppressWarnings("rawtypes")
@@ -404,8 +414,8 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     if (selectedSkill == null) return false;
     for (PassiveSkill otherSkill : getSelectedSkills()) {
       if (otherSkill == selectedSkill) continue;
-      List<SkillStatRequirement> requirements = otherSkill.getRequirements();
-      List<SkillStatRequirement> otherRequirements = selectedSkill.getRequirements();
+      List<SkillRequirement<?>> requirements = otherSkill.getRequirements();
+      List<SkillRequirement<?>> otherRequirements = selectedSkill.getRequirements();
       if (requirements.size() != otherRequirements.size()) return false;
       for (int i = 0; i < requirements.size(); i++) {
         if (!requirements.get(i).equals(otherRequirements.get(i))) return false;

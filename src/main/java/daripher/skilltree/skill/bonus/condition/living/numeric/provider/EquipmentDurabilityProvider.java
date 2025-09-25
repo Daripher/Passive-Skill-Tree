@@ -58,6 +58,15 @@ public class EquipmentDurabilityProvider implements NumericValueProvider<Equipme
   }
 
   @Override
+  public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
+    String key = "%s.requirement".formatted(getDescriptionId());
+    Component itemDescription = itemCondition.getTooltip();
+    String valueDescription = formatNumber(requiredValue);
+    Component logicDescription = logic.getTooltip("equipment_durability", valueDescription);
+    return Component.translatable(key, logicDescription, itemDescription);
+  }
+
+  @Override
   public NumericValueProvider.Serializer getSerializer() {
     return PSTNumericValueProviders.EQUIPMENT_DURABILITY.get();
   }

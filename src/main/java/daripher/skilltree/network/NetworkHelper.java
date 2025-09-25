@@ -11,11 +11,10 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import daripher.skilltree.skill.requirement.SkillStatRequirement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -157,14 +156,14 @@ public class NetworkHelper {
     return bonuses;
   }
 
-  public static void writeSkillRequirements(FriendlyByteBuf buf, List<SkillStatRequirement> requirements) {
+  public static void writeSkillRequirements(FriendlyByteBuf buf, List<SkillRequirement<?>> requirements) {
     buf.writeInt(requirements.size());
     requirements.forEach(requirement -> writeSkillRequirement(buf, requirement));
   }
 
-  public static List<SkillStatRequirement> readSkillRequirements(FriendlyByteBuf buf) {
+  public static List<SkillRequirement<?>> readSkillRequirements(FriendlyByteBuf buf) {
     int count = buf.readInt();
-    List<SkillStatRequirement> requirements = new ArrayList<>();
+    List<SkillRequirement<?>> requirements = new ArrayList<>();
     for (int i = 0; i < count; i++) {
       requirements.add(readSkillRequirement(buf));
     }
@@ -200,17 +199,19 @@ public class NetworkHelper {
     return serializer.deserialize(buf);
   }
 
-  public static void writeSkillRequirement(FriendlyByteBuf buf, SkillStatRequirement requirement) {
-    buf.writeUtf(requirement.statTypeId().toString());
-    buf.writeUtf(requirement.statId().toString());
-    buf.writeInt(requirement.minValue());
+  public static void writeSkillRequirement(FriendlyByteBuf buf, SkillRequirement<?> requirement) {
+    SkillRequirement.Serializer serializer = requirement.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(serializer);
+    Objects.requireNonNull(serializerId);
+    buf.writeUtf(serializerId.toString());
+    serializer.serialize(buf, requirement);
   }
 
-  public static SkillStatRequirement readSkillRequirement(FriendlyByteBuf buf) {
-    ResourceLocation statTypeId = new ResourceLocation(buf.readUtf());
-    ResourceLocation statId = new ResourceLocation(buf.readUtf());
-    int minValue = buf.readInt();
-    return new SkillStatRequirement(statTypeId, statId, minValue);
+  public static SkillRequirement<?> readSkillRequirement(FriendlyByteBuf buf) {
+    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
+    SkillRequirement.Serializer serializer = PSTRegistries.SKILL_REQUIREMENTS.get().getValue(serializerId);
+    Objects.requireNonNull(serializer);
+    return serializer.deserialize(buf);
   }
 
   public static void writeDescription(

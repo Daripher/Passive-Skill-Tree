@@ -43,12 +43,12 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
 
   public float getDuration(@Nullable Player effectSource, LivingEntity entity) {
     if (target == Target.PLAYER) {
-      if (!playerCondition.met(entity)) return 0f;
+      if (!playerCondition.isConditionMet(entity)) return 0f;
       return duration * playerMultiplier.getValue(entity);
     }
-    if (!enemyCondition.met(entity)) return 0f;
+    if (!enemyCondition.isConditionMet(entity)) return 0f;
     float duration = this.duration;
-    if (effectSource != null && !playerCondition.met(effectSource)) return 0f;
+    if (effectSource != null && !playerCondition.isConditionMet(effectSource)) return 0f;
     return duration * playerMultiplier.getValue(entity) * enemyMultiplier.getValue(entity);
   }
 
