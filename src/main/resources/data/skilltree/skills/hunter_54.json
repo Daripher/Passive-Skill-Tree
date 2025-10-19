@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:hunter_54",
+  "bonuses": [
+    {
+      "type": "skilltree:item_usage_speed",
+      "multiplier": 0.06,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "equipment_type": "bow",
+        "type": "skilltree:equipment_type"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_51"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/bow_diamond.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": -90.003,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

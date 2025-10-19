@@ -1,0 +1,40 @@
+{
+  "id": "skilltree:alchemist_15",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "skilltree:regeneration",
+      "id": "cce3ffd0-820c-4368-96ee-0e7269fec0b6",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:custom",
+      "statId": "minecraft:deaths",
+      "minValue": 5
+    }
+  ],
+  "directConnections": [
+    "skilltree:alchemist_12"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/heart_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": -18.002996,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

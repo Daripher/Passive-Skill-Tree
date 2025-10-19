@@ -1,0 +1,29 @@
+{
+  "id": "skilltree:alchemist_32",
+  "bonuses": [
+    {
+      "type": "skilltree:can_poison_anyone"
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:killed",
+      "statId": "minecraft:cave_spider",
+      "minValue": 100
+    }
+  ],
+  "directConnections": [
+    "skilltree:alchemist_29"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/potion_green_big.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 124.70306,
+  "positionY": 72.00797,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

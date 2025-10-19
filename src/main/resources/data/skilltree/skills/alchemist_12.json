@@ -1,0 +1,36 @@
+{
+  "id": "skilltree:alchemist_12",
+  "bonuses": [
+    {
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:custom",
+      "statId": "minecraft:deaths",
+      "minValue": 3
+    }
+  ],
+  "directConnections": [
+    "skilltree:alchemist_9"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/heart_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -62.35153,
+  "positionY": -36.002,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

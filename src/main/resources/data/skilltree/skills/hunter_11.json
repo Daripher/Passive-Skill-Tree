@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:hunter_11",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.armor",
+      "id": "d4fbc376-8a58-48e7-b9de-97bf47bcbccc",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "item_condition": {
+          "tag_id": "skilltree:armors/leather",
+          "type": "skilltree:tag"
+        },
+        "type": "skilltree:all_armor"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_8"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/chestplate_leather.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 0.0,
+  "positionY": 72.00199,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

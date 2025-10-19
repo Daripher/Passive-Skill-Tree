@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:cook_8",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.attack_damage",
+      "id": "7295742b-4feb-4a81-9d45-68810599e355",
+      "name": "Skill",
+      "amount": 0.03,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_5"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/sword_bronze.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -31.175764,
+  "positionY": 54.0,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

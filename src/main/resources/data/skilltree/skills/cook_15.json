@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:cook_15",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.luck",
+      "id": "6e34fde8-f406-41ba-bfde-924394c7fd9a",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:fishing"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_12"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/fishing_rod_emerald.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": -18.002996,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

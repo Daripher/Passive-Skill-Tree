@@ -1,0 +1,23 @@
+{
+  "id": "skilltree:hunter_1",
+  "bonuses": [],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:crafted",
+      "statId": "minecraft:bow",
+      "minValue": 1
+    }
+  ],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "iconTexture": "skilltree:textures/icons/bow_gold.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 0.0,
+  "positionY": 0.0,
+  "buttonSize": 24,
+  "isStartingPoint": true
+}

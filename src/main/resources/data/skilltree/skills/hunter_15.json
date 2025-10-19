@@ -1,0 +1,23 @@
+{
+  "id": "skilltree:hunter_15",
+  "bonuses": [
+    {
+      "type": "skilltree:arrow_retrieval",
+      "chance": 0.8
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_12"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/arrow_bronze.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": -18.002996,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

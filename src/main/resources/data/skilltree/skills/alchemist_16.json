@@ -1,0 +1,22 @@
+{
+  "id": "skilltree:alchemist_16",
+  "bonuses": [
+    {
+      "type": "skilltree:self_splash_immune"
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_13"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/potion_indigo.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354977,
+  "positionY": -72.002,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

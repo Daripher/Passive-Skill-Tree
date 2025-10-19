@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:hunter_10",
+  "bonuses": [
+    {
+      "type": "skilltree:item_use_movement_speed",
+      "multiplier": -0.03,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "equipment_type": "bow",
+        "type": "skilltree:equipment_type"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_7"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/bow_emerald.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354977,
+  "positionY": -0.0019950867,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

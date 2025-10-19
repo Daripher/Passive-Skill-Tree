@@ -1,0 +1,18 @@
+{
+  "id": "skilltree:enchanter_13",
+  "bonuses": [],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:enchanter_10"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354977,
+  "positionY": -36.001995,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:alchemist_59",
+  "bonuses": [
+    {
+      "type": "skilltree:damage",
+      "amount": 0.15,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "target_condition": {
+        "type": "skilltree:burning"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/torch.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": -36.003998,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

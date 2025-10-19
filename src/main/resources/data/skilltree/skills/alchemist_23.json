@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:alchemist_23",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.max_health",
+      "id": "404a4087-e1f2-4367-a281-f26c9ef362dc",
+      "name": "Skill",
+      "amount": 2.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_20"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/cross_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": 17.997007,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

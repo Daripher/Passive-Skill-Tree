@@ -1,0 +1,32 @@
+{
+  "id": "skilltree:cook_50",
+  "bonuses": [
+    {
+      "type": "skilltree:item_usage_speed",
+      "multiplier": 0.08,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_47"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/apple_green.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -62.351524,
+  "positionY": 107.99999,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

@@ -1,0 +1,22 @@
+{
+  "id": "skilltree:blacksmith_1",
+  "bonuses": [],
+  "requirements": [
+    {
+      "statTypeId": "minecraft:crafted",
+      "statId": "minecraft:anvil",
+      "minValue": 1
+    }
+  ],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/class.png",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 0.0,
+  "positionY": 0.0,
+  "buttonSize": 24,
+  "isStartingPoint": true
+}

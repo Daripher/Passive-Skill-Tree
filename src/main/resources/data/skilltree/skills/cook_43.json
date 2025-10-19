@@ -1,0 +1,39 @@
+{
+  "id": "skilltree:cook_43",
+  "bonuses": [
+    {
+      "type": "skilltree:inflict_effect",
+      "chance": 0.05,
+      "max_stacks": 1,
+      "effect": "minecraft:saturation",
+      "duration": 600,
+      "amplifier": 0,
+      "event_listener": {
+        "item_condition": {
+          "type": "skilltree:food"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "type": "skilltree:item_used"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_40"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/soup_yellow.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -62.35153,
+  "positionY": -72.002,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

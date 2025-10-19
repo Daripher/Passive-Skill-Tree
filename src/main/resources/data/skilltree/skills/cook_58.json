@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:cook_58",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.attack_knockback",
+      "id": "40820e81-7e19-4e6b-8370-8a1f033d72d8",
+      "name": "Skill",
+      "amount": 5.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:unarmed"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_55"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/glove_steel.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 124.70306,
+  "positionY": -71.99203,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

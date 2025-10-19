@@ -1,0 +1,27 @@
+{
+  "id": "skilltree:hunter_28",
+  "bonuses": [
+    {
+      "type": "skilltree:gained_experience",
+      "multiplier": 0.05,
+      "experience_source": "mobs",
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_23"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/eye_green.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": 35.99601,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

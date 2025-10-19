@@ -1,0 +1,16 @@
+{
+  "id": "skilltree:blacksmith_60",
+  "bonuses": [],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 93.525566,
+  "positionY": -89.99103,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

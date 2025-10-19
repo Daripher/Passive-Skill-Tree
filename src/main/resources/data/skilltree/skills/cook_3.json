@@ -1,0 +1,39 @@
+{
+  "id": "skilltree:cook_3",
+  "bonuses": [
+    {
+      "type": "skilltree:item_use_movement_speed",
+      "multiplier": -0.1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "type": "skilltree:food"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:crafted",
+      "statId": "minecraft:cooked_cod",
+      "minValue": 5
+    }
+  ],
+  "directConnections": [
+    "skilltree:cook_1"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/cookie.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -31.175764,
+  "positionY": 17.999002,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

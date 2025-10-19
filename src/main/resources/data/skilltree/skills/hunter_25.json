@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:hunter_25",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "id": "ab443dfa-57b8-48f6-9eef-5386284d527b",
+      "name": "Skill",
+      "amount": 0.04,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "item_condition": {
+          "tag_id": "skilltree:armors/leather",
+          "type": "skilltree:tag"
+        },
+        "type": "skilltree:all_armor"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_22"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/boots_leather.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.353252,
+  "positionY": 72.00199,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

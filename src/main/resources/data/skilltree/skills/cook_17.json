@@ -1,0 +1,41 @@
+{
+  "id": "skilltree:cook_17",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.max_health",
+      "id": "edbef8a5-3e93-48ac-9565-bd65db8045dc",
+      "name": "Skill",
+      "amount": 2.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:crafted",
+      "statId": "minecraft:bread",
+      "minValue": 15
+    }
+  ],
+  "directConnections": [
+    "skilltree:cook_4"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/cross_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "titleColor": "",
+  "positionX": 8.817457E-15,
+  "positionY": -72.0,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

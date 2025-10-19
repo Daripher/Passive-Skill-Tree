@@ -1,0 +1,41 @@
+{
+  "id": "skilltree:hunter_29",
+  "bonuses": [
+    {
+      "type": "skilltree:item_durability_loss_avoidance",
+      "chance": 0.15,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "tag_id": "skilltree:armors/leather",
+        "type": "skilltree:tag"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:broken",
+      "statId": "minecraft:leather_chestplate",
+      "minValue": 3
+    }
+  ],
+  "directConnections": [
+    "skilltree:hunter_26"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/helmet_leather.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "titleColor": "",
+  "positionX": 93.52729,
+  "positionY": 54.00598,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

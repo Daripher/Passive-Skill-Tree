@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:alchemist_37",
+  "bonuses": [
+    {
+      "type": "skilltree:effect_duration",
+      "effect_type": "harmful",
+      "duration": 0.5,
+      "target": "enemy",
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "enemy_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_34"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/potion_black_big.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354973,
+  "positionY": 107.99999,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

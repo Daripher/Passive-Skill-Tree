@@ -1,0 +1,29 @@
+{
+  "id": "skilltree:alchemist_36",
+  "bonuses": [
+    {
+      "type": "skilltree:projectile_speed",
+      "multiplier": 0.21,
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_31"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/arrow_emerald.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.35153,
+  "positionY": -107.99602,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

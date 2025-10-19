@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:alchemist_53",
+  "bonuses": [
+    {
+      "type": "skilltree:healing",
+      "chance": 1.0,
+      "amount": 1.0,
+      "event_listener": {
+        "item_condition": {
+          "potion_type": "any",
+          "type": "skilltree:potion"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "type": "skilltree:item_used"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_50"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/potion_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -31.17576,
+  "positionY": 126.00198,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

@@ -1,0 +1,54 @@
+{
+  "id": "skilltree:cook_32",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.attack_damage",
+      "id": "c73cd2ce-54fe-4c1c-969f-f66bf6e14f70",
+      "name": "Skill",
+      "amount": 5.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:unarmed"
+      }
+    },
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.attack_speed",
+      "id": "e17f45d7-8092-4ce8-bfbf-296423695199",
+      "name": "Skill",
+      "amount": -0.75,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:unarmed"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:crafted",
+      "statId": "minecraft:cooked_beef",
+      "minValue": 150
+    }
+  ],
+  "directConnections": [
+    "skilltree:cook_29"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/glove_iron.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 124.70306,
+  "positionY": 72.00797,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

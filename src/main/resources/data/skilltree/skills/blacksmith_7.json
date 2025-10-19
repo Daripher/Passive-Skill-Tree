@@ -1,0 +1,18 @@
+{
+  "id": "skilltree:blacksmith_7",
+  "bonuses": [],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:blacksmith_4"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 31.177488,
+  "positionY": -18.000998,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

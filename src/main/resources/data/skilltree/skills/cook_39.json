@@ -1,0 +1,39 @@
+{
+  "id": "skilltree:cook_39",
+  "bonuses": [
+    {
+      "type": "skilltree:damage_taken",
+      "amount": -0.05,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "attacker_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:fishing"
+      },
+      "damage_condition": {
+        "type": "skilltree:none"
+      },
+      "attacker_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_30"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/fishing_rod_steel.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -62.351524,
+  "positionY": 71.999,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

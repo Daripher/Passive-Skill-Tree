@@ -1,0 +1,53 @@
+{
+  "id": "skilltree:alchemist_2",
+  "bonuses": [
+    {
+      "type": "skilltree:inflict_effect",
+      "chance": 0.05,
+      "max_stacks": 0,
+      "effect": "minecraft:poison",
+      "duration": 100,
+      "amplifier": 0,
+      "event_listener": {
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "target": "enemy",
+        "type": "skilltree:attack"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:killed",
+      "statId": "minecraft:cave_spider",
+      "minValue": 1
+    }
+  ],
+  "directConnections": [
+    "skilltree:alchemist_1"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/potion_green_small.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 31.175764,
+  "positionY": 18.001993,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

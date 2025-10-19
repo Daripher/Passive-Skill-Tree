@@ -1,0 +1,27 @@
+{
+  "id": "skilltree:cook_23",
+  "bonuses": [
+    {
+      "type": "skilltree:gained_experience",
+      "multiplier": 0.05,
+      "experience_source": "fishing",
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_20"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/fishing_rod_emerald.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": 17.997007,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

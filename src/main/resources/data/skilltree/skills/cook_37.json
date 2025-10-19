@@ -1,0 +1,44 @@
+{
+  "id": "skilltree:cook_37",
+  "bonuses": [
+    {
+      "type": "skilltree:damage",
+      "amount": 0.01,
+      "operation": 1,
+      "player_multiplier": {
+        "value_provider": {
+          "attribute": "minecraft:generic.max_health",
+          "type": "skilltree:attribute_value"
+        },
+        "divisor": 2.0,
+        "type": "skilltree:numeric_value"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "damage_condition": {
+        "type": "skilltree:melee"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_34"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/pie.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354973,
+  "positionY": 107.99999,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

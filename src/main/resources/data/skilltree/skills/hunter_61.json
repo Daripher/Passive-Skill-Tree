@@ -1,0 +1,31 @@
+{
+  "id": "skilltree:hunter_61",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.luck",
+      "id": "97a0ac09-e5eb-40e6-bf89-f21cb5442872",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/cross_green.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 31.175768,
+  "positionY": 126.00199,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

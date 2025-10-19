@@ -1,0 +1,40 @@
+{
+  "id": "skilltree:cook_16",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "skilltree:regeneration",
+      "id": "c000446e-8345-4b19-b83d-8c0704f51d4b",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "value_provider": {
+          "percentage": true,
+          "missing": false,
+          "type": "skilltree:food_level"
+        },
+        "required_value": 1.0,
+        "logic": "EQUAL",
+        "type": "skilltree:numeric_value"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_13"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/heart_violet.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354977,
+  "positionY": -72.002,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

@@ -1,0 +1,39 @@
+{
+  "id": "skilltree:cook_57",
+  "bonuses": [
+    {
+      "type": "skilltree:inflict_effect",
+      "chance": 1.0,
+      "max_stacks": 3,
+      "effect": "minecraft:health_boost",
+      "duration": 3600,
+      "amplifier": 0,
+      "event_listener": {
+        "item_condition": {
+          "type": "skilltree:food"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "type": "skilltree:item_used"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_54"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/chicken.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": -72.004,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

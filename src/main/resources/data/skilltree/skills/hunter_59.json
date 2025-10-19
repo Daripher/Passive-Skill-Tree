@@ -1,0 +1,41 @@
+{
+  "id": "skilltree:hunter_59",
+  "bonuses": [
+    {
+      "type": "skilltree:damage",
+      "amount": 0.01,
+      "operation": 1,
+      "player_multiplier": {
+        "value_provider": {
+          "type": "skilltree:distance_to_target"
+        },
+        "divisor": 1.0,
+        "type": "skilltree:numeric_value"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "damage_condition": {
+        "type": "skilltree:projectile"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/arrow.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": -36.003998,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

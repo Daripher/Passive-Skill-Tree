@@ -1,0 +1,36 @@
+{
+  "id": "skilltree:cook_54",
+  "bonuses": [
+    {
+      "type": "skilltree:healing",
+      "chance": 1.0,
+      "amount": 1.0,
+      "event_listener": {
+        "item_condition": {
+          "type": "skilltree:food"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "type": "skilltree:item_used"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_51"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/chicken_leg.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -93.52729,
+  "positionY": -90.003,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

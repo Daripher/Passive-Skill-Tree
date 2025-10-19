@@ -1,0 +1,42 @@
+{
+  "id": "skilltree:cook_36",
+  "bonuses": [
+    {
+      "type": "skilltree:healing",
+      "chance": 1.0,
+      "amount": 5.0,
+      "event_listener": {
+        "damage_condition": {
+          "type": "skilltree:melee"
+        },
+        "enemy_condition": {
+          "type": "skilltree:none"
+        },
+        "player_condition": {
+          "type": "skilltree:none"
+        },
+        "enemy_multiplier": {
+          "type": "skilltree:none"
+        },
+        "player_multiplier": {
+          "type": "skilltree:none"
+        },
+        "type": "skilltree:on_kill"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:cook_31"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/sword_gold.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.35153,
+  "positionY": -107.99602,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

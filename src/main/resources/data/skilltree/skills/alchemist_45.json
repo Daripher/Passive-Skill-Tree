@@ -1,0 +1,40 @@
+{
+  "id": "skilltree:alchemist_45",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "id": "121e397b-c00e-4423-9a26-b75225415c22",
+      "name": "Skill",
+      "amount": 0.06,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "value_provider": {
+          "effect_type": "any",
+          "type": "skilltree:effect_amount"
+        },
+        "required_value": 0.0,
+        "logic": "MORE",
+        "type": "skilltree:numeric_value"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:alchemist_42",
+    "skilltree:alchemist_61"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/lesser.png",
+  "iconTexture": "skilltree:textures/icons/potion_white_small.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 3.8146973E-6,
+  "positionY": 108.00298,
+  "buttonSize": 16,
+  "isStartingPoint": false
+}

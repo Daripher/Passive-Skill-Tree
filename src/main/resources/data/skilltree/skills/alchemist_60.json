@@ -1,0 +1,37 @@
+{
+  "id": "skilltree:alchemist_60",
+  "bonuses": [
+    {
+      "type": "skilltree:damage",
+      "amount": 0.7,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "damage_condition": {
+        "type": "skilltree:poison"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/potion_green_big.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 93.525566,
+  "positionY": -89.99103,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

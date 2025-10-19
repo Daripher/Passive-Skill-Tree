@@ -1,0 +1,58 @@
+{
+  "id": "skilltree:alchemist_33",
+  "bonuses": [
+    {
+      "type": "skilltree:effect_duration",
+      "effect_type": "beneficial",
+      "duration": 1.0,
+      "target": "player",
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "enemy_condition": {
+        "type": "skilltree:none"
+      }
+    },
+    {
+      "type": "skilltree:item_usage_speed",
+      "multiplier": -0.5,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "item_condition": {
+        "potion_type": "any",
+        "type": "skilltree:potion"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:used",
+      "statId": "minecraft:potion",
+      "minValue": 90
+    }
+  ],
+  "directConnections": [
+    "skilltree:alchemist_30"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/potion_cyan_big.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": 71.99601,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

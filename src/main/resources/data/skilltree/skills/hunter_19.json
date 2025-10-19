@@ -1,0 +1,61 @@
+{
+  "id": "skilltree:hunter_19",
+  "bonuses": [
+    {
+      "type": "skilltree:projectile_speed",
+      "multiplier": 0.25,
+      "player_condition": {
+        "item_condition": {
+          "equipment_type": "bow",
+          "type": "skilltree:equipment_type"
+        },
+        "type": "skilltree:has_item_equipped"
+      },
+      "player_multiplier": {
+        "type": "skilltree:none"
+      }
+    },
+    {
+      "type": "skilltree:damage",
+      "amount": -0.05,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "enemy_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:none"
+      },
+      "damage_condition": {
+        "type": "skilltree:projectile"
+      },
+      "target_condition": {
+        "type": "skilltree:none"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "type": "skilltree:stat_value",
+      "statTypeId": "minecraft:used",
+      "statId": "minecraft:bow",
+      "minValue": 250
+    }
+  ],
+  "directConnections": [
+    "skilltree:hunter_18"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/arrow_emerald.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "titleColor": "",
+  "positionX": 1.7634914E-14,
+  "positionY": -144.0,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}

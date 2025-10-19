@@ -1,0 +1,29 @@
+{
+  "id": "skilltree:cook_59",
+  "bonuses": [
+    {
+      "type": "skilltree:incoming_healing",
+      "multiplier": 0.2,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "effect": "minecraft:saturation",
+        "amplifier": 0,
+        "type": "skilltree:has_effect"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/soup_red.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": -36.003998,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

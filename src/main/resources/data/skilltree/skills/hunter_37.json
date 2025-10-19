@@ -1,0 +1,33 @@
+{
+  "id": "skilltree:hunter_37",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "id": "ecdf1cc0-612c-4c74-90bb-4d67db0b5b1a",
+      "name": "Skill",
+      "amount": 0.5,
+      "operation": 2,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "type": "skilltree:crouching"
+      }
+    }
+  ],
+  "requirements": [],
+  "directConnections": [
+    "skilltree:hunter_34"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/notable.png",
+  "iconTexture": "skilltree:textures/icons/boots_gold.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": 62.354973,
+  "positionY": 107.99999,
+  "buttonSize": 20,
+  "isStartingPoint": false
+}

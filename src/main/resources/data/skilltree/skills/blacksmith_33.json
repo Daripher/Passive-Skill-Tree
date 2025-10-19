@@ -1,0 +1,61 @@
+{
+  "id": "skilltree:blacksmith_33",
+  "bonuses": [
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.armor_toughness",
+      "id": "a1e5f2e5-1ddb-4476-8554-f325c91c02ca",
+      "name": "Skill",
+      "amount": 1.0,
+      "operation": 0,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "item_condition": {
+          "equipment_type": "shield",
+          "type": "skilltree:equipment_type"
+        },
+        "type": "skilltree:has_item_equipped"
+      }
+    },
+    {
+      "type": "skilltree:attribute",
+      "attribute": "minecraft:generic.movement_speed",
+      "id": "975bee95-f0b2-4a43-9d8a-131b17d26248",
+      "name": "Skill",
+      "amount": -0.05,
+      "operation": 1,
+      "player_multiplier": {
+        "type": "skilltree:none"
+      },
+      "player_condition": {
+        "item_condition": {
+          "equipment_type": "shield",
+          "type": "skilltree:equipment_type"
+        },
+        "type": "skilltree:has_item_equipped"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "statTypeId": "minecraft:custom",
+      "statId": "minecraft:damage_blocked_by_shield",
+      "minValue": 5000
+    }
+  ],
+  "directConnections": [
+    "skilltree:blacksmith_30"
+  ],
+  "longConnections": [],
+  "oneWayConnections": [],
+  "tags": [],
+  "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
+  "iconTexture": "skilltree:textures/icons/void.png",
+  "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "positionX": -124.70306,
+  "positionY": 71.99601,
+  "buttonSize": 32,
+  "isStartingPoint": false
+}
