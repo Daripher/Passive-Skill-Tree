@@ -36,10 +36,6 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add(attribute.getDescriptionId(), name);
   }
 
-  protected void addInfo(Attribute attribute, String name) {
-    add(attribute.getDescriptionId() + ".info", "(%s)".formatted(name));
-  }
-
   protected void addCurioSlot(String slotName, String name) {
     add("curio.slot.%s".formatted(slotName), name);
   }
@@ -48,14 +44,14 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add("curio.slot.%s.%s".formatted(slotName, type), name);
   }
 
-  protected void addSkill(int skillId, String name) {
-    add("skill.skilltree.new_skill_%d.name".formatted(skillId), name);
+  protected void addSkill(String skillTree, int skillId, String name) {
+    add("skill.skilltree.%s_%d.name".formatted(skillTree, skillId), name);
   }
 
-  protected void addSkillBranch(String name, int from, int to) {
-    for (int i = from; i <= to; i++) {
-      addSkill(i, name);
-    }
+  protected void addSkills(String skillTree, int skillId1, int skillId2, int skillId3, String name) {
+    addSkill(skillTree, skillId1, name);
+    addSkill(skillTree, skillId2, name);
+    addSkill(skillTree, skillId3, name);
   }
 
   protected void addMixture(String name, String potionType, MobEffect... effects) {
