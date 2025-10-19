@@ -17,6 +17,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
   @Override
   protected void addTranslations() {
+    // skill trees
+    add("skilltree:hunter", "Hunter");
+    add("skilltree:alchemist", "Alchemist");
+    add("skilltree:cook", "Cook");
     // skills
     addSkill("alchemist", 1, "Alchemist");
     addSkills("alchemist", 2, 26, 29, "Poison Chance");

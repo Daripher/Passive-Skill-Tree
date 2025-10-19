@@ -17,6 +17,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
   @Override
   protected void addTranslations() {
+    // skill trees
+    add("skilltree:hunter", "Охотник");
+    add("skilltree:alchemist", "Алхимик");
+    add("skilltree:cook", "Повар");
     // skills
     addSkill("alchemist", 1, "Алхимик");
     addSkills("alchemist", 2, 26, 29, "Шанс отравления");
