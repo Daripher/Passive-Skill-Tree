@@ -12,7 +12,7 @@ public class SkillTreeSelectionButton extends Button {
 
   public SkillTreeSelectionButton(
       int x, int y, int width, int height, ResourceLocation skillTreeId) {
-    super(x, y, width, height, Component.literal(skillTreeId.toString()));
+    super(x, y, width, height, Component.translatable(skillTreeId.toString()));
     setPressFunc(b -> onPress(skillTreeId));
     this.skillTreeId = skillTreeId;
   }
