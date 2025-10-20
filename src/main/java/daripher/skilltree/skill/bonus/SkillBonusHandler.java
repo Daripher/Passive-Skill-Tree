@@ -671,6 +671,7 @@ public class SkillBonusHandler {
     }
   }
 
+  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void applyItemUseMovementSpeedBonus(MovementInputUpdateEvent event) {
     Player player = event.getEntity();
