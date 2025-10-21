@@ -145,8 +145,9 @@ public class SkillTreeClientData {
     try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
       SkillsReloader.GSON.toJson(skill, writer);
     } catch (JsonIOException | IOException exception) {
-      exception.printStackTrace();
-      throw new RuntimeException("Can't save editor skill " + skill.getId());
+      Minecraft.getInstance().setScreen(null);
+      printMessage("Can't save editor skill " + skill.getId(), ChatFormatting.DARK_RED);
+      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
     }
   }
 
@@ -155,9 +156,9 @@ public class SkillTreeClientData {
     try {
       skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
     } catch (IOException exception) {
-      exception.printStackTrace();
       printMessage("Can't load editor skill " + skillId, ChatFormatting.DARK_RED);
-      throw new RuntimeException("Can't load editor skill " + skillId);
+      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
+      return;
     }
     EDITOR_PASSIVE_SKILLS.put(skillId, skill);
   }
