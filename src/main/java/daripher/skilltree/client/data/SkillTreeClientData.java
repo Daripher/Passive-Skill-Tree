@@ -30,10 +30,7 @@ public class SkillTreeClientData {
 
   public static @Nullable PassiveSkillTree getOrCreateEditorTree(ResourceLocation treeId) {
     try {
-      File folder = getSkillTreeSavesFolder(treeId);
-      if (!folder.exists()) {
-        folder.mkdirs();
-      }
+      createSkillTreesSaveFolders(treeId);
       File mcmetaFile = new File(getEditorFolder(), "pack.mcmeta");
       if (!mcmetaFile.exists()) {
         generatePackMcmetaFile(mcmetaFile);
@@ -80,6 +77,13 @@ public class SkillTreeClientData {
     }
   }
 
+  private static void createSkillTreesSaveFolders(ResourceLocation treeId) {
+    File folder = getSkillTreeSavesFolder(treeId);
+    if (!folder.exists()) {
+      folder.mkdirs();
+    }
+  }
+
   private static void generatePackMcmetaFile(File file) {
     try {
       BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -103,10 +107,7 @@ public class SkillTreeClientData {
   }
 
   private static void loadOrCreateEditorSkill(ResourceLocation skillId) {
-    File skillSavesFolder = getSkillSavesFolder(skillId);
-    if (!skillSavesFolder.exists()) {
-      skillSavesFolder.mkdirs();
-    }
+    createSkillsSaveFolder(skillId);
     if (!getSkillSaveFile(skillId).exists()) {
       PassiveSkill skill = SkillsReloader.getSkillById(skillId);
       if (skill != null) saveEditorSkill(skill);
@@ -116,13 +117,22 @@ public class SkillTreeClientData {
     }
   }
 
+  private static void createSkillsSaveFolder(ResourceLocation skillId) {
+    File skillSavesFolder = getSkillSavesFolder(skillId);
+    if (!skillSavesFolder.exists()) {
+      skillSavesFolder.mkdirs();
+    }
+  }
+
   public static void saveEditorSkillTree(PassiveSkillTree skillTree) {
+    createSkillTreesSaveFolders(skillTree.getId());
     File file = getSkillTreeSaveFile(skillTree.getId());
     try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
       SkillTreesReloader.GSON.toJson(skillTree, writer);
     } catch (JsonIOException | IOException exception) {
-      exception.printStackTrace();
-      throw new RuntimeException("Can't save editor skill tree " + skillTree.getId());
+      Minecraft.getInstance().setScreen(null);
+      printMessage("Can't save editor skill tree " + skillTree.getId(), ChatFormatting.DARK_RED);
+      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
     }
   }
 
@@ -141,6 +151,7 @@ public class SkillTreeClientData {
   }
 
   public static void saveEditorSkill(PassiveSkill skill) {
+    createSkillsSaveFolder(skill.getId());
     File file = getSkillSaveFile(skill.getId());
     try (FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8)) {
       SkillsReloader.GSON.toJson(skill, writer);
@@ -154,7 +165,11 @@ public class SkillTreeClientData {
   public static void loadEditorSkill(ResourceLocation skillId) {
     PassiveSkill skill;
     try {
-      skill = readFromFile(PassiveSkill.class, getSkillSaveFile(skillId));
+      File saveFile = getSkillSaveFile(skillId);
+      if (!saveFile.exists()) {
+        return;
+      }
+      skill = readFromFile(PassiveSkill.class, saveFile);
     } catch (IOException exception) {
       printMessage("Can't load editor skill " + skillId, ChatFormatting.DARK_RED);
       printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
@@ -210,7 +225,7 @@ public class SkillTreeClientData {
   }
 
   public static Set<ResourceLocation> getEditorTreesIDs() {
-    if(loadedIDs) {
+    if (loadedIDs) {
       return EDITOR_TREES_IDS;
     }
     File dataFolder = getEditorDataFolder();
@@ -218,7 +233,7 @@ public class SkillTreeClientData {
     if (!dataFolder.exists() || dataFiles == null) {
       return EDITOR_TREES_IDS;
     }
-    for(File namespaceDirectory : dataFiles) {
+    for (File namespaceDirectory : dataFiles) {
       if (!namespaceDirectory.isDirectory()) continue;
       File skillTreesDirectory = new File(namespaceDirectory, "skill_trees");
       if (!skillTreesDirectory.exists()) continue;
