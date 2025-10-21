@@ -21,6 +21,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class SkillTreeClientData {
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkillTree> EDITOR_TREES = new HashMap<>();
+  private static final Set<ResourceLocation> EDITOR_TREES_IDS = new HashSet<>();
+  private static boolean loadedIDs = false;
 
   public static PassiveSkill getEditorSkill(ResourceLocation id) {
     return EDITOR_PASSIVE_SKILLS.get(id);
@@ -42,6 +44,9 @@ public class SkillTreeClientData {
       }
       if (!EDITOR_TREES.containsKey(treeId)) {
         loadEditorSkillTree(treeId);
+      }
+      if (!EDITOR_TREES.containsKey(treeId)) {
+        EDITOR_TREES_IDS.add(treeId);
       }
       PassiveSkillTree skillTree = EDITOR_TREES.getOrDefault(treeId, new PassiveSkillTree(treeId));
       for (ResourceLocation skillId : skillTree.getSkillIds()) {
@@ -69,7 +74,7 @@ public class SkillTreeClientData {
       printMessage("");
       printMessage("Try removing files from folder", ChatFormatting.DARK_RED);
       printMessage("");
-      printMessage(getSavesFolder().getPath(), ChatFormatting.RED);
+      printMessage(getEditorDataFolder().getPath(), ChatFormatting.RED);
       exception.printStackTrace();
       return null;
     }
@@ -162,7 +167,7 @@ public class SkillTreeClientData {
     EDITOR_PASSIVE_SKILLS.remove(skill.getId());
   }
 
-  private static File getSavesFolder() {
+  private static File getEditorDataFolder() {
     return new File(getEditorFolder(), "data");
   }
 
@@ -171,11 +176,11 @@ public class SkillTreeClientData {
   }
 
   private static File getSkillSavesFolder(ResourceLocation skillId) {
-    return new File(getSavesFolder(), skillId.getNamespace() + "/skills");
+    return new File(getEditorDataFolder(), skillId.getNamespace() + "/skills");
   }
 
   private static File getSkillTreeSavesFolder(ResourceLocation skillTreeId) {
-    return new File(getSavesFolder(), skillTreeId.getNamespace() + "/skill_trees");
+    return new File(getEditorDataFolder(), skillTreeId.getNamespace() + "/skill_trees");
   }
 
   private static File getSkillSaveFile(ResourceLocation skillId) {
@@ -203,7 +208,30 @@ public class SkillTreeClientData {
     }
   }
 
-  public static Map<ResourceLocation, PassiveSkillTree> getEditorTrees() {
-    return EDITOR_TREES;
+  public static Set<ResourceLocation> getEditorTreesIDs() {
+    if(loadedIDs) {
+      return EDITOR_TREES_IDS;
+    }
+    File dataFolder = getEditorDataFolder();
+    File[] dataFiles = dataFolder.listFiles();
+    if (!dataFolder.exists() || dataFiles == null) {
+      return EDITOR_TREES_IDS;
+    }
+    for(File namespaceDirectory : dataFiles) {
+      if (!namespaceDirectory.isDirectory()) continue;
+      File skillTreesDirectory = new File(namespaceDirectory, "skill_trees");
+      if (!skillTreesDirectory.exists()) continue;
+      File[] skillTreeFiles = skillTreesDirectory.listFiles();
+      if (skillTreeFiles == null) continue;
+      String namespace = namespaceDirectory.getName();
+      for (File skillTreeFile : skillTreeFiles) {
+        String skillTreeFileName = skillTreeFile.getName();
+        if (!skillTreeFileName.endsWith(".json")) continue;
+        String skillTreeName = skillTreeFileName.substring(0, skillTreeFileName.lastIndexOf('.'));
+        EDITOR_TREES_IDS.add(new ResourceLocation(namespace, skillTreeName));
+      }
+    }
+    loadedIDs = true;
+    return EDITOR_TREES_IDS;
   }
 }

@@ -8,6 +8,7 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
+import java.util.stream.Stream;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -18,17 +19,21 @@ import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
-import java.util.stream.Stream;
+import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {
   public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER =
-      (ctx, builder) ->
-          SharedSuggestionProvider.suggest(
-              Stream.concat(SkillTreesReloader.getSkillTrees().keySet().stream(),
-                            SkillTreeClientData.getEditorTrees().keySet().stream()).map(ResourceLocation::toString),
-              builder);
+      (ctx, builder) -> SharedSuggestionProvider.suggest(gatherSkillTreesPaths(), builder);
+
+  @NotNull
+  private static Stream<String> gatherSkillTreesPaths() {
+    return Stream.concat(
+            SkillTreesReloader.getSkillTrees().keySet().stream(),
+            SkillTreeClientData.getEditorTreesIDs().stream())
+        .map(ResourceLocation::toString);
+  }
+
   private static ResourceLocation tree_to_display;
   private static int timer;
 
