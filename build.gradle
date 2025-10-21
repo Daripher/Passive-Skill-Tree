@@ -132,9 +132,6 @@ dependencies {
 	implementation fg.deobf("curse.maven:jei-238222:4644453")
     // apple skin
 	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
-    // apotheosis
-    implementation fg.deobf("curse.maven:placebo-283644:5414631")
-    implementation fg.deobf("curse.maven:apothic-attributes-898963:5529789")
 }
 
 mixin {
