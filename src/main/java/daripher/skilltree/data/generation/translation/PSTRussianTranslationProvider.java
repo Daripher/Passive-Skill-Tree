@@ -490,7 +490,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s если ваш %s имеет %s прочности");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s если %s цели имеет %s durability");
 
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %3$s имеет %s прочности");
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %2$s имеет %1$s прочности");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "ровно %s");
 

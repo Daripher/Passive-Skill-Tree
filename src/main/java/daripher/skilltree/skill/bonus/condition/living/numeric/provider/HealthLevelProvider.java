@@ -81,7 +81,7 @@ public class HealthLevelProvider implements NumericValueProvider<HealthLevelProv
   @Override
   public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
     String key = "%s.requirement".formatted(getDescriptionId());
-    String pointsKey = key + ".point";
+    String pointsKey = getDescriptionId() + ".point";
     if (requiredValue != 1) {
       pointsKey += ".plural";
     }

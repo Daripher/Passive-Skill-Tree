@@ -78,7 +78,7 @@ public class EnchantmentLevelsProvider implements NumericValueProvider<Enchantme
   @Override
   public MutableComponent getRequirementTooltip(NumericValueCondition.Logic logic, float requiredValue) {
     String key = "%s.requirement".formatted(getDescriptionId());
-    String levelsKey = key + ".level";
+    String levelsKey = getDescriptionId() + ".level";
     if (requiredValue != 1) {
       levelsKey += ".plural";
     }

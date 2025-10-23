@@ -635,7 +635,7 @@
   "value_provider.skilltree.equipment_durability.multiplier.enemy.plural": "%s per %s durability of target's %s",
   "value_provider.skilltree.equipment_durability.multiplier.player": "%s per durability of your %s",
   "value_provider.skilltree.equipment_durability.multiplier.player.plural": "%s per %s durability of your %s",
-  "value_provider.skilltree.equipment_durability.requirement": "Have %s %s on your %s",
+  "value_provider.skilltree.equipment_durability.requirement": "Have %s durability on your %s",
   "value_provider.skilltree.food_level.condition.enemy": "%s if target has %s %s",
   "value_provider.skilltree.food_level.condition.enemy.full": "%s if target is not hungry",
   "value_provider.skilltree.food_level.condition.enemy.missing": "%s if target is missing %s %s",

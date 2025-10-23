@@ -404,7 +404,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s if your %s has %s durability");
     add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s if target's has %s %s durability");
 
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Have %s %s on your %s");
+    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Have %s durability on your %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "exactly %s");
 

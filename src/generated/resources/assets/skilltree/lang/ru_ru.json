@@ -721,7 +721,7 @@
   "value_provider.skilltree.equipment_durability.multiplier.enemy.plural": "%s за каждые %s прочности %s цели",
   "value_provider.skilltree.equipment_durability.multiplier.player": "%s за единицу прочности вашего %s",
   "value_provider.skilltree.equipment_durability.multiplier.player.plural": "%s за каждые %s прочности вашего %s",
-  "value_provider.skilltree.equipment_durability.requirement": "Ваш %3$s имеет %s прочности",
+  "value_provider.skilltree.equipment_durability.requirement": "Ваш %2$s имеет %1$s прочности",
   "value_provider.skilltree.food_level.condition.enemy": "%s если у цели %s %s",
   "value_provider.skilltree.food_level.condition.enemy.full": "%s если цель не голодна",
   "value_provider.skilltree.food_level.condition.enemy.missing": "%s если у цели недостает %s %s",

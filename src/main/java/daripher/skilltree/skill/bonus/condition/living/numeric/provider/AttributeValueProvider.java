@@ -62,7 +62,7 @@ public class AttributeValueProvider implements NumericValueProvider<AttributeVal
     Component attributeDescription = Component.translatable(attribute.getDescriptionId());
     String valueDescription = formatNumber(requiredValue);
     Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
-    return Component.translatable(key, attributeDescription, logicDescription);
+    return Component.translatable(key, logicDescription, attributeDescription);
   }
 
   @Override
