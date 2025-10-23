@@ -36,11 +36,13 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
   @Override
   public void addEditorWidgets(SkillTreeEditor editor, Consumer<NumericValueRequirement> consumer) {
     condition.addEditorWidgets(
-        editor, condition -> setCondition((NumericValueCondition) condition));
+        editor, condition -> setCondition((NumericValueCondition) condition, consumer));
   }
 
-  public void setCondition(NumericValueCondition condition) {
+  public void setCondition(
+      NumericValueCondition condition, Consumer<NumericValueRequirement> consumer) {
     this.condition = condition;
+    consumer.accept(this);
   }
 
   @Override

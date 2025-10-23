@@ -26,7 +26,7 @@ public class SkillRequirementSerializer
     ResourceLocation serializerId = new ResourceLocation(type);
     SkillRequirement.Serializer serializer =
         PSTRegistries.SKILL_REQUIREMENTS.get().getValue(serializerId);
-    Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
+    Objects.requireNonNull(serializer, "Unknown skill requirement: " + serializerId);
     return serializer.deserialize(jsonObj);
   }
 
