@@ -229,7 +229,7 @@ public class SkillButton extends Button {
       AtomicReference<MutableComponent> tagTooltip = new AtomicReference<>(Component.literal(tag));
       TooltipHelper.consumeTranslated("skill.tag.%s.name".formatted(tag), tagTooltip::set);
       tagTooltip.set(Component.literal(limit + " " + tagTooltip.get().getString()));
-      tagTooltip.set(tagTooltip.get().withStyle(TooltipHelper.getItemBonusStyle(true)));
+      tagTooltip.set(tagTooltip.get().withStyle(TooltipHelper.getSkillBonusSecondStyle(true)));
       MutableComponent tooltip = Component.translatable("skill.limitation", tagTooltip.get());
       tooltip = tooltip.withStyle(TooltipHelper.getSkillBonusStyle(true));
       tooltips.add(tooltip);

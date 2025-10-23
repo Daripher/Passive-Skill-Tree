@@ -64,7 +64,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     Component bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
     bonusDescription =
         TooltipHelper.getSkillBonusTooltip(bonusDescription, multiplier, operation)
-            .withStyle(TooltipHelper.getItemBonusStyle(isPositive()));
+            .withStyle(TooltipHelper.getSkillBonusSecondStyle(isPositive()));
     return Component.translatable(getDescriptionId(), itemDescription, bonusDescription)
         .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }

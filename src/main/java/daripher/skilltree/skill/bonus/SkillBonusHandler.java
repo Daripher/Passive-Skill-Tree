@@ -4,11 +4,15 @@ import com.mojang.datafixers.util.Either;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.effect.SkillBonusEffect;
+import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.MobEffectInstanceAccessor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.event.*;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import java.util.*;
 import java.util.stream.Stream;
@@ -816,6 +820,7 @@ public class SkillBonusHandler {
     List<T> bonuses = new ArrayList<>();
     bonuses.addAll(getPlayerBonuses(player, type));
     bonuses.addAll(getEffectBonuses(player, type));
+    bonuses.addAll(getEquipmentBonuses(player, type));
     return mergeSkillBonuses(bonuses);
   }
 
@@ -859,6 +864,27 @@ public class SkillBonusHandler {
         if (type.isInstance(bonus)) {
           bonus = bonus.copy().multiply(e.getAmplifier());
           bonuses.add(type.cast(bonus));
+        }
+      }
+    }
+    return bonuses;
+  }
+
+  private static <T> List<T> getEquipmentBonuses(Player player, Class<T> type) {
+    return PlayerHelper.getAllEquipment(player)
+        .map(s -> getItemBonuses(s, type))
+        .flatMap(List::stream)
+        .toList();
+  }
+
+  private static <T> List<T> getItemBonuses(ItemStack stack, Class<T> type) {
+    List<ItemBonus<?>> itemBonuses = new ArrayList<>(ItemBonusHandler.getItemBonuses(stack));
+    List<T> bonuses = new ArrayList<>();
+    for (ItemBonus<?> itemBonus : itemBonuses) {
+      if (itemBonus instanceof ItemSkillBonus itemSkillBonus) {
+        SkillBonus<?> skillBonus = itemSkillBonus.skillBonus();
+        if (type.isInstance(skillBonus)) {
+          bonuses.add(type.cast(skillBonus));
         }
       }
     }

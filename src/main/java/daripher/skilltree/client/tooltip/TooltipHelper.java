@@ -22,10 +22,11 @@ import org.jetbrains.annotations.NotNull;
 public class TooltipHelper {
   private static final Style SKILL_BONUS_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style SKILL_BONUS_STYLE_NEGATIVE = Style.EMPTY.withColor(0xE25A5A);
-  private static final Style ITEM_BONUS_STYLE = Style.EMPTY.withColor(0x7AB3E2);
-  private static final Style ITEM_BONUS_STYLE_NEGATIVE = Style.EMPTY.withColor(0xDB9792);
+  private static final Style SKILL_BONUS_SECOND_STYLE = Style.EMPTY.withColor(0x7AB3E2);
+  private static final Style SKILL_BONUS_SECOND_STYLE_NEGATIVE = Style.EMPTY.withColor(0xDB9792);
   private static final Style SKILL_REQUIREMENT_STYLE = Style.EMPTY.withColor(0x83E27A);
   private static final Style SKILL_REQUIREMENT_STYLE_UNFINISHED = Style.EMPTY.withColor(0xE25A5A);
+  private static final Style ITEM_UPGRADE_STYLE = Style.EMPTY.withColor(0xD8CA49);
 
   public static Component getEffectTooltip(MobEffectInstance effect) {
     Component effectDescription;
@@ -115,8 +116,12 @@ public class TooltipHelper {
     return finished ? SKILL_REQUIREMENT_STYLE : SKILL_REQUIREMENT_STYLE_UNFINISHED;
   }
 
-  public static Style getItemBonusStyle(boolean positive) {
-    return positive ? ITEM_BONUS_STYLE : ITEM_BONUS_STYLE_NEGATIVE;
+  public static Style getSkillBonusSecondStyle(boolean positive) {
+    return positive ? SKILL_BONUS_SECOND_STYLE : SKILL_BONUS_SECOND_STYLE_NEGATIVE;
+  }
+
+  public static Style getItemUpgradeStyle() {
+    return ITEM_UPGRADE_STYLE;
   }
 
   public static MutableComponent getTextureName(ResourceLocation location) {
