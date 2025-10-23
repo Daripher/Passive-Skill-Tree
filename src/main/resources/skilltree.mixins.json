@@ -11,15 +11,10 @@
     "minecraft/ThrownPotionMixin",
     "minecraft/ItemStackMixin",
     "AbstractArrowAccessor",
-    "ShapedRecipeAccessor",
-    "ShapelessRecipeAccessor",
-    "SmithingMenuAccessor",
-    "MobEffectInstanceAccessor",
-    "SmithingTransformRecipeAccessor"
+    "MobEffectInstanceAccessor"
   ],
   "client": [
-    "EditBoxAccessor",
-    "RecipeCollectionAccessor"
+    "EditBoxAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
