@@ -821,26 +821,7 @@ public class SkillBonusHandler {
     bonuses.addAll(getPlayerBonuses(player, type));
     bonuses.addAll(getEffectBonuses(player, type));
     bonuses.addAll(getEquipmentBonuses(player, type));
-    return mergeSkillBonuses(bonuses);
-  }
-
-  @NotNull
-  @SuppressWarnings("rawtypes")
-  private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
-    List<T> mergedBonuses = new ArrayList<>();
-    for (T bonus : bonuses) {
-      SkillBonus skillBonus = (SkillBonus) bonus;
-      Optional<SkillBonus> mergeTarget =
-          mergedBonuses.stream().map(SkillBonus.class::cast).filter(skillBonus::canMerge).findAny();
-      if (mergeTarget.isPresent()) {
-        //noinspection SuspiciousMethodCalls
-        mergedBonuses.remove(mergeTarget.get());
-        mergedBonuses.add((T) mergeTarget.get().copy().merge(skillBonus));
-      } else {
-        mergedBonuses.add((T) skillBonus);
-      }
-    }
-    return mergedBonuses;
+    return bonuses;
   }
 
   private static <T> List<T> getPlayerBonuses(Player player, Class<T> type) {
