@@ -69,7 +69,10 @@ public class ItemBonusHandler {
       if (attributeInstance == null) {
         continue;
       }
-      attributeInstance.addPermanentModifier(attributeBonus.getModifier());
+      if (attributeInstance.hasModifier(attributeBonus.getModifier())) {
+        continue;
+      }
+      attributeInstance.addTransientModifier(attributeBonus.getModifier());
     }
   }
 
