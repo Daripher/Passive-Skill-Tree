@@ -10,6 +10,7 @@ import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.*;
@@ -156,7 +157,8 @@ public class NetworkHelper {
     return bonuses;
   }
 
-  public static void writeSkillRequirements(FriendlyByteBuf buf, List<SkillRequirement<?>> requirements) {
+  public static void writeSkillRequirements(
+      FriendlyByteBuf buf, List<SkillRequirement<?>> requirements) {
     buf.writeInt(requirements.size());
     requirements.forEach(requirement -> writeSkillRequirement(buf, requirement));
   }
@@ -209,7 +211,8 @@ public class NetworkHelper {
 
   public static SkillRequirement<?> readSkillRequirement(FriendlyByteBuf buf) {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    SkillRequirement.Serializer serializer = PSTRegistries.SKILL_REQUIREMENTS.get().getValue(serializerId);
+    SkillRequirement.Serializer serializer =
+        PSTRegistries.SKILL_REQUIREMENTS.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
   }
@@ -433,6 +436,21 @@ public class NetworkHelper {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
     NumericValueProvider.Serializer serializer =
         PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getValue(serializerId);
+    Objects.requireNonNull(serializer);
+    return serializer.deserialize(buf);
+  }
+
+  public static void writeItemBonus(FriendlyByteBuf buf, ItemBonus<?> itemBonus) {
+    ItemBonus.Serializer serializer = itemBonus.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
+    Objects.requireNonNull(serializerId);
+    buf.writeUtf(serializerId.toString());
+    serializer.serialize(buf, itemBonus);
+  }
+
+  public static ItemBonus<?> readItemBonus(FriendlyByteBuf buf) {
+    ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
+    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
   }

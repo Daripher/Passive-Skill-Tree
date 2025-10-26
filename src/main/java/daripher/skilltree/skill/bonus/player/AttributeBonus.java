@@ -70,8 +70,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   @Override
   public void tick(ServerPlayer player) {
-    if (playerCondition == NoneLivingCondition.INSTANCE
-        && playerMultiplier == NoneLivingMultiplier.INSTANCE) {
+    if (!isDynamic()) {
       return;
     }
     if (playerCondition != NoneLivingCondition.INSTANCE) {
@@ -86,6 +85,11 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
       return;
     }
     applyDynamicAttributeBonus(player);
+  }
+
+  public boolean isDynamic() {
+    return playerCondition != NoneLivingCondition.INSTANCE
+        || playerMultiplier != NoneLivingMultiplier.INSTANCE;
   }
 
   private void applyDynamicAttributeBonus(ServerPlayer player) {

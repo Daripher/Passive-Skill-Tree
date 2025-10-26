@@ -10,7 +10,6 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.DamageBonus;
 import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -78,15 +77,19 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
       if (!(bonus instanceof ItemSkillBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      json.add("skill_bonus", SkillsReloader.GSON.toJsonTree(aBonus.skillBonus));
+      JsonObject skillBonusJson = new JsonObject();
+      SkillBonus<?> skillBonus = aBonus.skillBonus;
+      ResourceLocation serializerId = PSTRegistries.SKILL_BONUSES.get().getKey(skillBonus.getSerializer());
+      Objects.requireNonNull(serializerId);
+      skillBonusJson.addProperty("type", serializerId.toString());
+      skillBonus.getSerializer().serialize(skillBonusJson, skillBonus);
+      json.add("skill_bonus", skillBonusJson);
     }
 
     @Override
     public ItemBonus<?> deserialize(CompoundTag tag) {
       CompoundTag skillBonusTag = tag.getCompound("skill_bonus");
-      Tag typeTag = skillBonusTag.get("type");
-      Objects.requireNonNull(typeTag, "Missing skill type!");
-      String type = typeTag.getAsString();
+      String type = skillBonusTag.getString("type");
       ResourceLocation serializerId = new ResourceLocation(type);
       SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
       Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
@@ -106,6 +109,7 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
       Objects.requireNonNull(serializerId);
       CompoundTag skillBonusTag = serializer.serialize(skillBonus);
       skillBonusTag.putString("type", serializerId.toString());
+      tag.put("skill_bonus", skillBonusTag);
       return tag;
     }
 

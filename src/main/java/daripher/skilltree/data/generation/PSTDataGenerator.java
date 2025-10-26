@@ -33,10 +33,13 @@ public class PSTDataGenerator {
     dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator));
     dataGenerator.addProvider(
         includeServer, new PSTDamageTagsProvider(dataGenerator, lookupProvider, existingFileHelper));
+    dataGenerator.addProvider(includeServer, new PSTRecipesProvider(dataGenerator));
 
     boolean includeClient = event.includeClient();
     dataGenerator.addProvider(includeClient, new PSTEnglishTranslationProvider(dataGenerator));
     dataGenerator.addProvider(includeClient, new PSTRussianTranslationProvider(dataGenerator));
+    dataGenerator.addProvider(
+        includeClient, new PSTBlockStatesProvider(dataGenerator, existingFileHelper));
     dataGenerator.addProvider(includeClient, new PSTItemModelsProvider(dataGenerator, existingFileHelper));
   }
 }

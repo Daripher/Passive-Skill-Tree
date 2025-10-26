@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "skilltree:block/workbench_bottom",
+    "front": "skilltree:block/workbench_front",
+    "side": "skilltree:block/workbench_side",
+    "top": "skilltree:block/workbench_top"
+  }
+}

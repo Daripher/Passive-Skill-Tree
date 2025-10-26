@@ -181,6 +181,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "positive", "Reduces movement speed penalty from using %s by %s%%");
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove",  "Removes movement speed penalty from using %s");
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Increases movement speed penalty from using %s by %s%%");
+    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "You can upgrade %s an additional time using workbench");
+    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using workbench");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -284,8 +286,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTTags.Items.RINGS, "plural", "Rings");
     add(PSTTags.Items.NECKLACES, "Necklace");
     add(PSTTags.Items.NECKLACES, "plural", "Necklaces");
-    add(PSTTags.Items.QUIVERS, "Quiver");
-    add(PSTTags.Items.QUIVERS, "plural", "Quivers");
     add(PSTTags.Items.LEATHER_ARMOR, "Leather Armor");
     add(PSTTags.Items.LEATHER_ARMOR, "plural", "Leather Armor");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Armor");
@@ -503,18 +503,12 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("quiver.contents", "• Contents: %s");
     // items
     add("item.cant_use.info", "You can not use this");
-    addGem("citrine", "Citrine");
-    addGem("ruby", "Ruby");
-    addGem("sapphire", "Sapphire");
-    addGem("jade", "Jade");
-    addGem("iriscite", "Iriscite");
-    addGem("vacucite", "Vacucite");
     add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
     add(PSTItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
+    add(PSTItems.WORKBENCH.get(), "Workbench");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
-    add("ancient_material.tooltip", "Requires certain knowledge to be used");
     // slots
     addCurioSlot("ring", "Ring Slot");
     addCurioSlot("ring", "plural", "Ring Slots");
@@ -583,9 +577,5 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(potion.getName(Items.POTION.getDescriptionId() + ".effect."), "Potion of " + name);
     add(potion.getName(Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Splash Potion of " + name);
     add(potion.getName(Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Lingering Potion of " + name);
-  }
-
-  protected void addGem(String type, String name) {
-    super.addGem(type, name, "Crumbled", "Broken", "Low-Quality", "Big", "Rare", "Exceptional");
   }
 }

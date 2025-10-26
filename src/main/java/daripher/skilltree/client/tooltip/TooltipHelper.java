@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +24,7 @@ public class TooltipHelper {
   private static final Style SKILL_BONUS_SECOND_STYLE_NEGATIVE = Style.EMPTY.withColor(0xDB9792);
   private static final Style SKILL_REQUIREMENT_STYLE = Style.EMPTY.withColor(0x83E27A);
   private static final Style SKILL_REQUIREMENT_STYLE_UNFINISHED = Style.EMPTY.withColor(0xE25A5A);
-  private static final Style ITEM_UPGRADE_STYLE = Style.EMPTY.withColor(0xD8CA49);
+  private static final Style ITEM_BONUS_STYLE = Style.EMPTY.withColor(0xECBE46);
 
   public static Component getEffectTooltip(MobEffectInstance effect) {
     Component effectDescription;
@@ -46,14 +44,6 @@ public class TooltipHelper {
           Component.translatable("potion.withAmplifier", effectDescription, amplifier);
     }
     return effectDescription;
-  }
-
-  public static Component getEffectTooltipWithTime(MobEffectInstance effect) {
-    Component effectDescription = getEffectTooltip(effect);
-    Component durationDescription = MobEffectUtil.formatDuration(effect, 1f);
-    ChatFormatting style = effect.getEffect().getCategory().getTooltipFormatting();
-    return Component.translatable("potion.withDuration", effectDescription, durationDescription)
-        .withStyle(style);
   }
 
   public static Component getOperationName(AttributeModifier.Operation operation) {
@@ -120,8 +110,8 @@ public class TooltipHelper {
     return positive ? SKILL_BONUS_SECOND_STYLE : SKILL_BONUS_SECOND_STYLE_NEGATIVE;
   }
 
-  public static Style getItemUpgradeStyle() {
-    return ITEM_UPGRADE_STYLE;
+  public static Style getItemBonusStyle() {
+    return ITEM_BONUS_STYLE;
   }
 
   public static MutableComponent getTextureName(ResourceLocation location) {

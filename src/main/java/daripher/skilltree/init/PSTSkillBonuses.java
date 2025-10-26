@@ -85,6 +85,10 @@ public class PSTSkillBonuses {
       REGISTRY.register("item_usage_speed", ItemUsageSpeedBonus.Serializer::new);
   public static final RegistryObject<SkillBonus.Serializer> ITEM_USE_MOVEMENT_SPEED =
       REGISTRY.register("item_use_movement_speed", ItemUseMovementSpeedBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> RECIPE_UNLOCK =
+      REGISTRY.register("recipe_unlock", RecipeUnlockBonus.Serializer::new);
+  public static final RegistryObject<SkillBonus.Serializer> MORE_ITEM_BONUSES =
+      REGISTRY.register("more_item_bonuses", MoreItemBonusesBonus.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillBonus> bonusList() {

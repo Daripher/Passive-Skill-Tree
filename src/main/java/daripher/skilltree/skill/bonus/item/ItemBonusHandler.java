@@ -2,8 +2,12 @@ package daripher.skilltree.skill.bonus.item;
 
 import com.google.common.collect.ImmutableList;
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.player.AttributeBonus;
+import daripher.skilltree.skill.bonus.player.MoreItemBonusesBonus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,25 +15,65 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {
   @SubscribeEvent
   public static void addCraftedItemSkillBonusTooltips(ItemTooltipEvent event) {
     List<Component> components = event.getToolTip();
-    for (ItemBonus<?> itemBonus : getItemBonuses(event.getItemStack())) {
+    List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
+    if (!itemBonuses.isEmpty()) {
+      components.add(Component.empty());
+    }
+    for (ItemBonus<?> itemBonus : itemBonuses) {
       if (!(itemBonus instanceof ItemSkillBonus itemSkillBonus)) continue;
       SkillBonus<?> bonus = itemSkillBonus.skillBonus();
-      MutableComponent tooltip = bonus.getTooltip();
+      MutableComponent tooltip = bonus.getTooltip().withStyle(TooltipHelper.getItemBonusStyle());
       components.add(tooltip);
     }
   }
 
-  public static List<? extends ItemBonus<?>> getItemBonuses(ItemStack stack) {
+  @SubscribeEvent
+  public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
+    LivingEntity entity = event.getEntity();
+    if (!(entity instanceof Player)) return;
+    for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), ItemSkillBonus.class)) {
+      ItemSkillBonus itemSkillBonus = (ItemSkillBonus) itemBonus;
+      if (!(itemSkillBonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+        continue;
+      }
+      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+      if (attributeInstance == null) {
+        continue;
+      }
+      attributeInstance.removeModifier(attributeBonus.getModifier().getId());
+    }
+    for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), ItemSkillBonus.class)) {
+      ItemSkillBonus itemSkillBonus = (ItemSkillBonus) itemBonus;
+      if (!(itemSkillBonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+        continue;
+      }
+      if (attributeBonus.isDynamic()) {
+        continue;
+      }
+      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+      if (attributeInstance == null) {
+        continue;
+      }
+      attributeInstance.addPermanentModifier(attributeBonus.getModifier());
+    }
+  }
+
+  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
     if (!stack.hasTag()) return ImmutableList.of();
     List<ItemBonus<?>> list = new ArrayList<>();
     CompoundTag stackTag = stack.getOrCreateTag();
@@ -41,6 +85,10 @@ public class ItemBonusHandler {
       CompoundTag itemBonusTag = bonusesTag.getCompound("" + i);
       list.add(deserializeBonus(itemBonusTag));
     }
+  }
+
+  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
+    return getItemBonuses(stack).stream().filter(type::isInstance).toList();
   }
 
   public static void setItemBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
@@ -78,5 +126,18 @@ public class ItemBonusHandler {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public static int getCraftedBonusLimit(ItemStack itemStack, @Nullable Player player) {
+    int limit = 1;
+    if (player != null) {
+      limit +=
+          SkillBonusHandler.getSkillBonuses(player, MoreItemBonusesBonus.class).stream()
+              .filter(bonus -> bonus.getItemCondition().met(itemStack))
+              .map(MoreItemBonusesBonus::getAmount)
+              .reduce(Integer::sum)
+              .orElse(0);
+    }
+    return limit;
   }
 }

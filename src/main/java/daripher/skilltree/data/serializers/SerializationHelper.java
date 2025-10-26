@@ -11,6 +11,7 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -83,6 +84,7 @@ public class SerializationHelper {
 
   public static void serializeLivingMultiplier(
       JsonObject json, @Nonnull LivingMultiplier multiplier, String name) {
+    if (multiplier == NoneLivingMultiplier.INSTANCE) return;
     JsonObject multiplierJson = new JsonObject();
     LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     serializer.serialize(multiplierJson, multiplier);
@@ -104,6 +106,7 @@ public class SerializationHelper {
 
   public static void serializeLivingCondition(
       JsonObject json, @Nonnull LivingCondition condition, String name) {
+    if (condition == NoneLivingCondition.INSTANCE) return;
     JsonObject conditionJson = new JsonObject();
     LivingCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
@@ -144,7 +147,10 @@ public class SerializationHelper {
   }
 
   public static @Nonnull ItemCondition deserializeItemCondition(JsonObject json) {
-    String name = "item_condition";
+    return deserializeItemCondition(json, "item_condition");
+  }
+
+  public static @Nonnull ItemCondition deserializeItemCondition(JsonObject json, String name) {
     if (!json.has(name)) return NoneItemCondition.INSTANCE;
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
@@ -155,12 +161,17 @@ public class SerializationHelper {
   }
 
   public static void serializeItemCondition(JsonObject json, @Nonnull ItemCondition condition) {
+    serializeItemCondition(json, condition, "item_condition");
+  }
+
+  public static void serializeItemCondition(JsonObject json, @Nonnull ItemCondition condition, String name) {
+    if (condition == NoneItemCondition.INSTANCE) return;
     JsonObject conditionJson = new JsonObject();
     ItemCondition.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
-    json.add("item_condition", conditionJson);
+    json.add(name, conditionJson);
   }
 
   public static @Nonnull SkillEventListener deserializeEventListener(JsonObject json) {
@@ -427,5 +438,23 @@ public class SerializationHelper {
   public static JsonElement getElement(JsonObject json, String name) {
     JsonElement element = json.get(name);
     return Objects.requireNonNull(element, "Element not found: " + name);
+  }
+
+  public static void serializeItemBonus(JsonObject jsonObject, ItemBonus<?> itemBonus) {
+    JsonObject itemBonusJson = new JsonObject();
+    ItemBonus.Serializer itemBonusSerializer = itemBonus.getSerializer();
+    ResourceLocation itemBonusId = PSTRegistries.ITEM_BONUSES.get().getKey(itemBonusSerializer);
+    Objects.requireNonNull(itemBonusId);
+    itemBonusJson.addProperty("type", itemBonusId.toString());
+    itemBonusSerializer.serialize(itemBonusJson, itemBonus);
+    jsonObject.add("item_bonus", itemBonusJson);
+  }
+
+  public static ItemBonus<?> deserializeItemBonus(JsonObject jsonObject) {
+    JsonObject itemBonusJson = jsonObject.get("item_bonus").getAsJsonObject();
+    ResourceLocation serializerId = new ResourceLocation(itemBonusJson.get("type").getAsString());
+    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
+    Objects.requireNonNull(serializer);
+    return serializer.deserialize(itemBonusJson);
   }
 }

@@ -181,6 +181,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "positive", "Используя %s вы замедляетесь на %s%% слабее");
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove",  "Используя %s вы не замедляетесь");
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Используя %s вы замедляетесь на %s%% сильнее");
+    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "Вы можете улучшить %s дополнительный раз используя рабочий стол");
+    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %ы дополнительных раза используя рабочий стол");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -309,11 +311,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTTags.Items.NECKLACES, "type", "ое Ожерелье");
     add(PSTTags.Items.NECKLACES, "plural.adjective", "ые Ожерелья");
     add(PSTTags.Items.NECKLACES, "plural", "Ожерелья");
-    add(PSTTags.Items.QUIVERS, "Колчан");
-    add(PSTTags.Items.QUIVERS, "where", "Колчане");
-    add(PSTTags.Items.QUIVERS, "type", "ый Колчан");
-    add(PSTTags.Items.QUIVERS, "plural.adjective", "ые Колчаны");
-    add(PSTTags.Items.QUIVERS, "plural", "Колчаны");
     add(PSTTags.Items.LEATHER_ARMOR, "Кожаная броня");
     add(PSTTags.Items.LEATHER_ARMOR, "plural", "Кожаная броня");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Броня");
@@ -585,18 +582,12 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("weapon.poisoned", "Отравлено:");
     // items
     add("item.cant_use.info", "Вы не можете это использовать");
-    addGem("citrine", "цитрин");
-    addGem("ruby", "рубин");
-    addGem("sapphire", "сапфир");
-    addGem("jade", "нефрит");
-    addGem("iriscite", "ирисцит");
-    addGem("vacucite", "вакуцит");
     add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
     add(PSTItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
+    add(PSTItems.WORKBENCH.get(), "Рабочий стол");
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
-    add("ancient_material.tooltip", "Требует определенных знаний для использования");
     // slots
     addCurioSlot("ring", "Слот кольца");
     addCurioSlot("ring", "plural", "Слоты колец");
@@ -666,9 +657,5 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(potion.getName(Items.POTION.getDescriptionId() + ".effect."), "Зелье " + name);
     add(potion.getName(Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Взрывное зелье " + name);
     add(potion.getName(Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Туманное зелье " + name);
-  }
-
-  protected void addGem(String type, String name) {
-    super.addGem(type, name, "Раскрошенный", "Сломанный", "Некачественный", "Большой", "Редкий", "Исключительный");
   }
 }

@@ -18,8 +18,6 @@ public class PSTTags {
         ItemTags.create(new ResourceLocation("curios", "ring"));
     public static final TagKey<Item> NECKLACES =
         ItemTags.create(new ResourceLocation("curios", "necklace"));
-    public static final TagKey<Item> QUIVERS =
-        ItemTags.create(new ResourceLocation("curios", "quiver"));
     public static final TagKey<Item> JEWELRY =
         ItemTags.create(new ResourceLocation("forge", "curios/jewelry"));
     public static final TagKey<Item> MELEE_WEAPON =
