@@ -30,6 +30,8 @@ public class PSTDamageConditions {
       REGISTRY.register("fire", FireDamageCondition.Serializer::new);
   public static final RegistryObject<DamageCondition.Serializer> POISON =
       REGISTRY.register("poison", PoisonDamageCondition.Serializer::new);
+  public static final RegistryObject<DamageCondition.Serializer> THORNS =
+      REGISTRY.register("thorns", ThornsDamageCondition.Serializer::new);
 
   public static List<DamageCondition> conditionsList() {
     return PSTRegistries.DAMAGE_CONDITIONS.get().getValues().stream()

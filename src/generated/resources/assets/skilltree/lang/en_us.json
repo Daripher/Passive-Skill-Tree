@@ -15,6 +15,8 @@
   "damage_condition.skilltree.poison.type": "Poison",
   "damage_condition.skilltree.projectile": "Projectile Damage",
   "damage_condition.skilltree.projectile.type": "Projectile",
+  "damage_condition.skilltree.thorns": "Thorns Damage",
+  "damage_condition.skilltree.thorns.type": "Thorns",
   "death.attack.poison": "%1$s died from poison",
   "death.attack.poison.player": "%1$s was poisoned by %2$s",
   "effect.skilltree.liquid_fire": "Liquid Fire",

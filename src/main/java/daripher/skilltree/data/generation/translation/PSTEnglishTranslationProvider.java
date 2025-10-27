@@ -257,6 +257,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTDamageConditions.FIRE.get(), "type", "Fire");
     add(PSTDamageConditions.POISON.get(), "Poison Damage");
     add(PSTDamageConditions.POISON.get(), "type", "Poison");
+    add(PSTDamageConditions.THORNS.get(), "Thorns Damage");
+    add(PSTDamageConditions.THORNS.get(), "type", "Thorns");
     // death messages
     deathMessage("poison", "%1$s died from poison");
     deathMessage("poison.player", "%1$s was poisoned by %2$s");

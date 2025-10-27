@@ -257,6 +257,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTDamageConditions.FALL.get(), "type", "от падения");
     add(PSTDamageConditions.FIRE.get(), "Урон огнём");
     add(PSTDamageConditions.FIRE.get(), "type", "огнём");
+    add(PSTDamageConditions.THORNS.get(), "Урон шипами");
+    add(PSTDamageConditions.THORNS.get(), "type", "шипами");
     // enchantment conditions
     add(PSTEnchantmentConditions.WEAPON.get(), "Зачарование оружия");
     add(PSTEnchantmentConditions.ARMOR.get(), "Зачарование брони");
