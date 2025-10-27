@@ -1,5 +1,6 @@
 package daripher.skilltree.data.generation.translation;
 
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
@@ -12,12 +13,9 @@ import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
-
-import java.util.Arrays;
 
 public abstract class PSTTranslationProvider extends LanguageProvider {
   public PSTTranslationProvider(DataGenerator dataGenerator, String modId, String locale) {
@@ -48,16 +46,11 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add("skill.skilltree.%s_%d.name".formatted(skillTree, skillId), name);
   }
 
-  protected void addSkills(String skillTree, int skillId1, int skillId2, int skillId3, String name) {
+  protected void addSkills(
+      String skillTree, int skillId1, int skillId2, int skillId3, String name) {
     addSkill(skillTree, skillId1, name);
     addSkill(skillTree, skillId2, name);
     addSkill(skillTree, skillId3, name);
-  }
-
-  protected void addMixture(String name, String potionType, MobEffect... effects) {
-    StringBuilder potionName = new StringBuilder("item.minecraft." + potionType + ".mixture");
-    Arrays.stream(effects).map(MobEffect::getDescriptionId).map(id -> id.replaceAll("effect.", "")).forEach(id -> potionName.append(".").append(id));
-    add(potionName.toString(), name);
   }
 
   protected void add(LivingCondition.Serializer condition, String value) {
@@ -179,5 +172,9 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
 
   protected void deathMessage(String damageType, String deathMessage) {
     add("death.attack." + damageType, deathMessage);
+  }
+
+  protected void addRecipe(String recipePath, String translation) {
+    add("recipe.%s.%s".formatted(SkillTreeMod.MOD_ID, recipePath), translation);
   }
 }

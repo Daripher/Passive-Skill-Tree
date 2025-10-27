@@ -182,6 +182,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "You can upgrade %s an additional time using workbench");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using workbench");
     add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Regenerate %s%% of Life per second");
+    add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -436,6 +437,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "health point");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point.plural", "health points");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage", "health");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage.plural", "health");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player", "%s per current %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s per %s current %s");
@@ -489,8 +492,11 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("key.categories.skilltree", "Passive Skill Tree");
     add("key.display_skill_tree", "Open Skill Tree");
     add("skill.limitation", "Limited to: %s");
+    add("skill.requirements", "Requirements:");
     // tabs
     add("itemGroup.skilltree", "Passive Skill Tree");
+    // recipes
+    addRecipe("armor_thorns_bonus", "Armor Upgrade - Thorns Damage");
   }
 
   protected void add(Potion potion, String name) {

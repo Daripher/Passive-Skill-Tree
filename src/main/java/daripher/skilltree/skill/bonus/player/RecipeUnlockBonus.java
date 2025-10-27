@@ -57,10 +57,11 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    Component recipeDescription =
-        Component.translatable(TooltipHelper.getRecipeDescriptionId(recipeId));
-    return Component.translatable(getDescriptionId(), recipeDescription)
-        .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+    String recipeDescriptionId = TooltipHelper.getRecipeDescriptionId(recipeId);
+    MutableComponent recipeTooltip = Component.translatable(recipeDescriptionId);
+    recipeTooltip = recipeTooltip.withStyle(TooltipHelper.getSkillBonusSecondStyle(true));
+    MutableComponent tooltip = Component.translatable(getDescriptionId(), recipeTooltip);
+    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
 
   @Override

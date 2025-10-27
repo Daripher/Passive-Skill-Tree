@@ -165,8 +165,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.DAMAGE_CONVERSION.get(), "%s%% всего %s конвертируется в %s");
     add(PSTSkillBonuses.GRANT_ITEM.get(), "Дарует %s при изучении");
     add(PSTSkillBonuses.GRANT_ITEM.get(), "amount", "Дарует %sx %s при изучении");
-    add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Duration of %s on you");
-    add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Duration of inflicted %s");
+    add(PSTSkillBonuses.EFFECT_DURATION.get(), "player", "Длительность %s на вас");
+    add(PSTSkillBonuses.EFFECT_DURATION.get(), "enemy", "Длительность накладываемых %s");
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "chance", "Шанс удвоить выпущенный снаряд");
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "amount", "Вы выпускаете %s дополнительных снарядов");
     add(PSTSkillBonuses.PROJECTILE_DUPLICATION.get(), "Вы выпускаете дополнительный снаряд");
@@ -182,6 +182,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "Вы можете улучшить %s дополнительный раз используя рабочий стол");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %ы дополнительных раза используя рабочий стол");
     add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Регенерация %s%% здоровья в секунду");
+    add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Открывает рецепт: %s");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -204,7 +205,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingConditions.BURNING.get(), "target.you", "вы горите");
     add(PSTLivingConditions.BURNING.get(), "target.target", "цель горит");
     add(PSTLivingConditions.BURNING.get(), "%s если %s");
-    add(PSTLivingConditions.FISHING.get(), "target.you", "вы рыбачите");
+    add(PSTLivingConditions.FISHING.get(), "target.player", "вы рыбачите");
     add(PSTLivingConditions.FISHING.get(), "target.target", "цель рыбачит");
     add(PSTLivingConditions.FISHING.get(), "%s если %s");
     add(PSTLivingConditions.UNDERWATER.get(), "target.you", "вы");
@@ -422,7 +423,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("effect_type.beneficial", "положительный эффект");
     add("effect_type.beneficial.plural", "положительные эффекты");
     add("effect_type.harmful", "негативный эффект");
-    add("effect_type.harmful.plural", "негативные эффект");
+    add("effect_type.harmful.plural", "негативные эффекты");
     add("effect_type.neutral", "нейтральный эффект");
     add("effect_type.neutral.plural", "нейтральные эффект");
     add("effect_type.any", "эффект");
@@ -519,6 +520,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "очко здоровья");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point.plural", "очка здоровья");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage", "здоровья");
+    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage.plural", "здоровья");
 
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
@@ -572,11 +575,11 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("key.categories.skilltree", "Древо пассивных умений");
     add("key.display_skill_tree", "Открыть древо пассивных умений");
     add("skill.limitation", "Ограничение: %s");
-    // jei info
-    add("skilltree.jei.gem_info", "Самоцветы можно вставлять в предметы с гнёздами на кузнечном столе. Выпадают из любой руды с небольшим шансом " +
-        "(требуется инструмент без шёлкового касания).");
+    add("skill.requirements", "Требования:");
     // tabs
     add("itemGroup.skilltree", "Passive Skill Tree");
+    // recipes
+    addRecipe("armor_thorns_bonus", "Улучшение брони - урон шипами");
   }
 
   protected void add(Potion potion, String name) {

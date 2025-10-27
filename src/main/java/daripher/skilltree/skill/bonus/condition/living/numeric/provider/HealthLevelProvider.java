@@ -40,7 +40,8 @@ public class HealthLevelProvider implements NumericValueProvider<HealthLevelProv
   @Override
   public MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip) {
     String key = "%s.multiplier.%s".formatted(getDescriptionId(), target.getName());
-    String pointsKey = getDescriptionId() + ".point";
+    String pointsKey = getDescriptionId();
+    pointsKey += percentage ? ".percentage" : ".point";
     if (divisor != 1) {
       key += ".plural";
       pointsKey += ".plural";
@@ -59,7 +60,8 @@ public class HealthLevelProvider implements NumericValueProvider<HealthLevelProv
   @Override
   public MutableComponent getConditionTooltip(SkillBonus.Target target, NumericValueCondition.Logic logic, Component bonusTooltip, float requiredValue) {
     String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
-    String pointsKey = key + ".point";
+    String pointsKey = getDescriptionId();
+    pointsKey += percentage ? ".percentage" : ".point";
     if (requiredValue != 1) {
       pointsKey += ".plural";
     }

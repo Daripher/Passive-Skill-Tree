@@ -7,6 +7,7 @@ import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,17 +167,19 @@ public class SkillButton extends Button {
     if (tooltip.size() > 1) {
       tooltip.add(Component.empty());
     }
-    tooltip.add(Component.literal("Requirements:").withStyle(TooltipHelper.getSkillBonusStyle(true)));
-    skill
-        .getRequirements()
-        .forEach(
-            requirement -> {
-              MutableComponent requirementTooltip = requirement.getTooltip();
-              Player localPlayer = Minecraft.getInstance().player;
-              Style style = TooltipHelper.getSkillRequirementStyle(requirement.isRequirementMet(localPlayer));
-              requirementTooltip = requirementTooltip.withStyle(style);
-              tooltip.add(Component.literal("  ").append(requirementTooltip));
-            });
+    MutableComponent requirementsComponent = Component.translatable("skill.requirements");
+    requirementsComponent = requirementsComponent.withStyle(TooltipHelper.getSkillBonusStyle(true));
+    tooltip.add(requirementsComponent);
+    skill.getRequirements().forEach(requirement -> addRequirementTooltip(tooltip, requirement));
+  }
+
+  private void addRequirementTooltip(
+      ArrayList<MutableComponent> tooltip, SkillRequirement<?> requirement) {
+    MutableComponent requirementTooltip = requirement.getTooltip();
+    Player localPlayer = Minecraft.getInstance().player;
+    Style style = TooltipHelper.getSkillRequirementStyle(requirement.isRequirementMet(localPlayer));
+    requirementTooltip = requirementTooltip.withStyle(style);
+    tooltip.add(Component.literal("  ").append(requirementTooltip));
   }
 
   public void addSkillBonusTooltip(List<MutableComponent> tooltip) {
