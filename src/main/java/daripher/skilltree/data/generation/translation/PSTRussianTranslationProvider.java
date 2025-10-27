@@ -5,8 +5,6 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 
@@ -183,6 +181,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Используя %s вы замедляетесь на %s%% сильнее");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "Вы можете улучшить %s дополнительный раз используя рабочий стол");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %ы дополнительных раза используя рабочий стол");
+    add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Регенерация %s%% здоровья в секунду");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
@@ -540,46 +539,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
-    // recipes
-    add("recipe.skilltree.weapon_poisoning", "Отравление Оружия");
-    add("recipe.skilltree.weapon_poisoning.info", "(Объедините оружие ближнего боя и вредящее зелье на верстаке, чтобы отравить оружие)");
-    add("recipe.skilltree.potion_mixing", "Смешивание Зелий");
-    add("recipe.skilltree.potion_mixing.info", "(Объедините два разных зелья на верстаке, чтобы создать микстуру)");
-    add("upgrade_recipe.chance", "Шанс: %s%%");
-    // potions info
-    add("potion.superior", "Качественное %s");
-    add("item.minecraft.potion.mixture", "Микстура");
-    add("item.minecraft.splash_potion.mixture", "Взрывная микстура");
-    add("item.minecraft.lingering_potion.mixture", "Туманная микстура");
-    addMixture("ныряния", MobEffects.NIGHT_VISION, MobEffects.WATER_BREATHING);
-    addMixture("вечной молодости", MobEffects.HEAL, MobEffects.REGENERATION);
-    addMixture("болезни", MobEffects.POISON, MobEffects.WEAKNESS);
-    addMixture("филина", MobEffects.INVISIBILITY, MobEffects.NIGHT_VISION);
-    addMixture("труса", MobEffects.INVISIBILITY, MobEffects.MOVEMENT_SPEED);
-    addMixture("драконьей крови", MobEffects.FIRE_RESISTANCE, MobEffects.REGENERATION);
-    addMixture("демона", MobEffects.FIRE_RESISTANCE, MobEffects.DAMAGE_BOOST);
-    addMixture("убийцы", MobEffects.HARM, MobEffects.POISON);
-    addMixture("антигравитации", MobEffects.JUMP, MobEffects.SLOW_FALLING);
-    addMixture("старения", MobEffects.MOVEMENT_SLOWDOWN, MobEffects.WEAKNESS);
-    addMixture("атлета", MobEffects.JUMP, MobEffects.MOVEMENT_SPEED);
-    addMixture("вора", MobEffects.INVISIBILITY, MobEffects.LUCK);
-    addMixture("охотника за сокровищами", MobEffects.LUCK, MobEffects.WATER_BREATHING);
-    addMixture("рыцаря", MobEffects.REGENERATION, MobEffects.DAMAGE_BOOST);
-    addMixture("замедленного времени", MobEffects.SLOW_FALLING, MobEffects.MOVEMENT_SLOWDOWN);
-    addMixture("солдата", MobEffects.HEAL, MobEffects.DAMAGE_BOOST);
-    addMixture("ниндзя", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
-    addMixture("благословения", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
-    addMixture("чумы", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
-    // gems info
-    add("gem.socket", "Пустое гнездо");
-    add("gem.additional_socket_1", "• Имеет дополнительное гнездо");
-    add("gem.disabled", "Отключено с модулем приключений Apotheosis");
-    add("gem_class_format", "• %s: %s");
-    add("gem.tooltip", "• Можно вставить в предметы с гнёздами");
-    add("gem_bonus.removal", "Уничтожает Самоцветы в предмете");
-    add("gem_bonus.random", "Результат непредсказуем");
-    // weapon info
-    add("weapon.poisoned", "Отравлено:");
     // items
     add("item.cant_use.info", "Вы не можете это использовать");
     add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
@@ -588,11 +547,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
-    // slots
-    addCurioSlot("ring", "Слот кольца");
-    addCurioSlot("ring", "plural", "Слоты колец");
-    addCurioSlot("necklace", "Слот ожерелья");
-    addCurioSlot("necklace", "plural", "Слоты ожерелий");
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
@@ -619,38 +573,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     // jei info
     add("skilltree.jei.gem_info", "Самоцветы можно вставлять в предметы с гнёздами на кузнечном столе. Выпадают из любой руды с небольшим шансом " +
         "(требуется инструмент без шёлкового касания).");
-    // curios info
-    add("curios.identifier.quiver", "Колчан");
-    add("curios.modifiers.quiver", "Когда надет:");
     // tabs
     add("itemGroup.skilltree", "Passive Skill Tree");
-    // misc
-    add("item.modifiers.both_hands", "Когда в руке:");
-    // apotheosis compatibility
-    add("text.apotheosis.category.curios:ring.plural", "Кольца");
-    add("text.apotheosis.category.curios:necklace.plural", "Ожерелья");
-    add("gem_class.jewelry", "Бижутерия");
-    // affix names
-    add("affix.skilltree:jewelry/dmg_reduction/tempered", "Закалённое");
-    add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "Закалки");
-    add("affix.skilltree:jewelry/attribute/immortal", "Бессмертное");
-    add("affix.skilltree:jewelry/attribute/immortal.suffix", "Бессмертия");
-    add("affix.skilltree:jewelry/attribute/experienced", "Опытное");
-    add("affix.skilltree:jewelry/attribute/experienced.suffix", "Опыта");
-    add("affix.skilltree:jewelry/attribute/lucky", "Удачливое");
-    add("affix.skilltree:jewelry/attribute/lucky.suffix", "Удачи");
-    add("affix.skilltree:jewelry/attribute/hasty", "Спешащее");
-    add("affix.skilltree:jewelry/attribute/hasty.suffix", "Спешки");
-    add("affix.skilltree:jewelry/attribute/hidden", "Сокрытое");
-    add("affix.skilltree:jewelry/attribute/hidden.suffix", "Скрытности");
-    add("affix.skilltree:jewelry/attribute/healthy", "Здоровое");
-    add("affix.skilltree:jewelry/attribute/healthy.suffix", "Здоровья");
-  }
-
-  protected void addMixture(String name, MobEffect... effects) {
-    addMixture("Микстура " + name, "potion", effects);
-    addMixture("Взрывная микстура" + name, "splash_potion", effects);
-    addMixture("Туманная микстура " + name, "lingering_potion", effects);
   }
 
   protected void add(Potion potion, String name) {

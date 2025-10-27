@@ -87,6 +87,10 @@ public class AttributeValueProvider implements NumericValueProvider<AttributeVal
     this.attribute = attribute;
   }
 
+  public Attribute getAttribute() {
+    return attribute;
+  }
+
   public static class Serializer implements NumericValueProvider.Serializer {
     @Override
     public NumericValueProvider<?> deserialize(JsonObject json) throws JsonParseException {

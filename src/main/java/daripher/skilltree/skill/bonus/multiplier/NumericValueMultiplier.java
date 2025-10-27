@@ -69,6 +69,10 @@ public final class NumericValueMultiplier implements LivingMultiplier {
     consumer.accept(this);
   }
 
+  public float getDivisor() {
+    return divisor;
+  }
+
   @Override
   public LivingMultiplier.Serializer getSerializer() {
     return PSTLivingMultipliers.NUMERIC_VALUE.get();
@@ -100,6 +104,10 @@ public final class NumericValueMultiplier implements LivingMultiplier {
 
   public void setDivisor(float divisor) {
     this.divisor = divisor;
+  }
+
+  public NumericValueProvider<?> getValueProvider() {
+    return valueProvider;
   }
 
   public static class Serializer implements LivingMultiplier.Serializer {

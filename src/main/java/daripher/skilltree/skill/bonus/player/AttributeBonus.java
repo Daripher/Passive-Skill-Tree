@@ -5,20 +5,24 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
+import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
 import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.condition.living.numeric.provider.AttributeValueProvider;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NumericValueMultiplier;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -177,16 +181,38 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   @Override
   public MutableComponent getTooltip() {
     float visibleAmount = (float) modifier.getAmount();
-    if (modifier.getOperation() == AttributeModifier.Operation.ADDITION
-        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
-      visibleAmount *= 10;
+    String descriptionId = attribute.getDescriptionId();
+    MutableComponent tooltip;
+    if (isPercentageRegeneration()) {
+      visibleAmount *= 100;
+      String amountDescription = TooltipHelper.formatNumber(visibleAmount);
+      descriptionId = getDescriptionId() + ".percentage_regeneration";
+      tooltip = Component.translatable(descriptionId, amountDescription);
+    } else {
+      if (isKnockbackResistanceAddition()) {
+        visibleAmount *= 10;
+      }
+      AttributeModifier.Operation operation = modifier.getOperation();
+      tooltip = TooltipHelper.getSkillBonusTooltip(descriptionId, visibleAmount, operation);
+      tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     }
-    MutableComponent tooltip =
-        TooltipHelper.getSkillBonusTooltip(
-            attribute.getDescriptionId(), visibleAmount, modifier.getOperation());
-    tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+  }
+
+  private boolean isKnockbackResistanceAddition() {
+    return modifier.getOperation() == AttributeModifier.Operation.ADDITION
+        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE);
+  }
+
+  private boolean isPercentageRegeneration() {
+    return modifier.getOperation() == AttributeModifier.Operation.ADDITION
+        && attribute == PSTAttributes.REGENERATION.get()
+        && playerMultiplier instanceof NumericValueMultiplier numericValueMultiplier
+        && numericValueMultiplier.getValueProvider()
+            instanceof AttributeValueProvider attributeValueProvider
+        && attributeValueProvider.getAttribute() == Attributes.MAX_HEALTH
+        && numericValueMultiplier.getDivisor() == 1;
   }
 
   @Override

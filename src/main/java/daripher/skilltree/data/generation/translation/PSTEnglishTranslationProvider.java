@@ -5,8 +5,6 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 
@@ -183,6 +181,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Increases movement speed penalty from using %s by %s%%");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "You can upgrade %s an additional time using workbench");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using workbench");
+    add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Regenerate %s%% of Life per second");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
@@ -457,50 +456,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "Have %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
-
-    // recipes
-    add("recipe.skilltree.weapon_poisoning", "Weapon Poisoning");
-    add("recipe.skilltree.weapon_poisoning.info", "(Combine a melee weapon and a harmful potion on a crafting bench to poison a weapon)");
-    add("recipe.skilltree.potion_mixing", "Potion Mixing");
-    add("recipe.skilltree.potion_mixing.info", "(Combine two different potions on a crafting bench to create a mixture)");
-    add("upgrade_recipe.chance", "Chance: %s%%");
-    // potions info
-    add("potion.superior", "Superior %s");
-    add("item.minecraft.potion.mixture", "Mixture");
-    add("item.minecraft.splash_potion.mixture", "Splash Mixture");
-    add("item.minecraft.lingering_potion.mixture", "Lingering Mixture");
-    addMixture("Diving", MobEffects.NIGHT_VISION, MobEffects.WATER_BREATHING);
-    addMixture("Eternal Youth", MobEffects.HEAL, MobEffects.REGENERATION);
-    addMixture("Sickness", MobEffects.POISON, MobEffects.WEAKNESS);
-    addMixture("Owl", MobEffects.INVISIBILITY, MobEffects.NIGHT_VISION);
-    addMixture("Coward", MobEffects.INVISIBILITY, MobEffects.MOVEMENT_SPEED);
-    addMixture("Dragon Blood", MobEffects.FIRE_RESISTANCE, MobEffects.REGENERATION);
-    addMixture("Demon", MobEffects.FIRE_RESISTANCE, MobEffects.DAMAGE_BOOST);
-    addMixture("Assasin", MobEffects.HARM, MobEffects.POISON);
-    addMixture("Antigravity", MobEffects.JUMP, MobEffects.SLOW_FALLING);
-    addMixture("Aging", MobEffects.MOVEMENT_SLOWDOWN, MobEffects.WEAKNESS);
-    addMixture("Athlete", MobEffects.JUMP, MobEffects.MOVEMENT_SPEED);
-    addMixture("Thief", MobEffects.INVISIBILITY, MobEffects.LUCK);
-    addMixture("Treasure Hunter", MobEffects.LUCK, MobEffects.WATER_BREATHING);
-    addMixture("Knight", MobEffects.REGENERATION, MobEffects.DAMAGE_BOOST);
-    addMixture("Slow Motion", MobEffects.SLOW_FALLING, MobEffects.MOVEMENT_SLOWDOWN);
-    addMixture("Soldier", MobEffects.HEAL, MobEffects.DAMAGE_BOOST);
-    addMixture("Ninja", MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED);
-    addMixture("Blessing", MobEffects.LUCK, MobEffects.DAMAGE_BOOST);
-    addMixture("Plague", MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN);
-    // gems info
-    add("gem.socket", "Empty Socket");
-    add("gem.additional_socket_1", "• Has an additional socket");
-    add("gem.disabled", "Disabled with Apotheosis adventure module enabled");
-    add("gem_class_format", "• %s: %s");
-    add("gem.tooltip", "• Can be inserted into items with sockets");
-    add("gem_bonus.removal", "Destroys gems in the item");
-    add("gem_bonus.random", "Outcome unpredictable");
-    // weapon info
-    add("weapon.poisoned", "Poisoned:");
-    // quiver info
-    add("quiver.capacity", "• Can hold up to %s arrows");
-    add("quiver.contents", "• Contents: %s");
     // items
     add("item.cant_use.info", "You can not use this");
     add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
@@ -509,11 +464,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
-    // slots
-    addCurioSlot("ring", "Ring Slot");
-    addCurioSlot("ring", "plural", "Ring Slots");
-    addCurioSlot("necklace", "Necklace Slot");
-    addCurioSlot("necklace", "plural", "Necklace Slots");
     // attributes
     add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
     add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
@@ -537,40 +487,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add("key.categories.skilltree", "Passive Skill Tree");
     add("key.display_skill_tree", "Open Skill Tree");
     add("skill.limitation", "Limited to: %s");
-    // jei info
-    add("skilltree.jei.gem_info",
-        "Gems can be inserted into items with sockets on a smithing table. Drop from any ore with" + " a small chance " + "(requires no silk touch " +
-            "tool).");
     // tabs
     add("itemGroup.skilltree", "Passive Skill Tree");
-    // misc
-    add("item.modifiers.both_hands", "When Held:");
-    // apotheosis compatibility
-    add("text.apotheosis.category.curios:ring.plural", "Rings");
-    add("text.apotheosis.category.curios:necklace.plural", "Necklaces");
-    add("gem_class.jewelry", "Jewelry");
-    // affix names
-    add("affix.skilltree:jewelry/dmg_reduction/tempered", "Tempered");
-    add("affix.skilltree:jewelry/dmg_reduction/tempered.suffix", "of Hardening");
-    add("affix.skilltree:jewelry/attribute/immortal", "Immortal");
-    add("affix.skilltree:jewelry/attribute/immortal.suffix", "of Immortality");
-    add("affix.skilltree:jewelry/attribute/experienced", "Experienced");
-    add("affix.skilltree:jewelry/attribute/experienced.suffix", "of Experience");
-    add("affix.skilltree:jewelry/attribute/lucky", "Lucky");
-    add("affix.skilltree:jewelry/attribute/lucky.suffix", "of Luck");
-    add("affix.skilltree:jewelry/attribute/hasty", "Hasty");
-    add("affix.skilltree:jewelry/attribute/hasty.suffix", "of Haste");
-    add("affix.skilltree:jewelry/attribute/hidden", "Hidden");
-    add("affix.skilltree:jewelry/attribute/hidden.suffix", "of Hiding");
-    add("affix.skilltree:jewelry/attribute/healthy", "Healthy");
-    add("affix.skilltree:jewelry/attribute/healthy.suffix", "of Health");
-  }
-
-  protected void addMixture(String name, MobEffect... effects) {
-    name = "Mixture of " + name;
-    addMixture(name, "potion", effects);
-    addMixture("Splash " + name, "splash_potion", effects);
-    addMixture("Lingering " + name, "lingering_potion", effects);
   }
 
   protected void add(Potion potion, String name) {
