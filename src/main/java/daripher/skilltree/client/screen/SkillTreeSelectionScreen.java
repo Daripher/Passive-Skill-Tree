@@ -2,7 +2,10 @@ package daripher.skilltree.client.screen;
 
 import daripher.skilltree.client.widget.SkillTreeSelectionButton;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
+import daripher.skilltree.skill.PassiveSkillTree;
+import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -20,16 +23,28 @@ public class SkillTreeSelectionScreen extends Screen {
   @Override
   protected void init() {
     clearWidgets();
-    int buttonCount = SkillTreesReloader.getSkillTrees().size();
+    addSkillTreeButtons();
+  }
+
+  private void addSkillTreeButtons() {
+    List<PassiveSkillTree> skillTrees = getNonEmptySkillTrees();
+    int buttonCount = skillTrees.size();
     int buttonRowWidth = buttonCount * BUTTONS_SIZE - (buttonCount - 1) * BUTTONS_SPACING;
-    int buttonX = width / 2 - buttonRowWidth / 2;
-    int buttonY = height / 2 - BUTTONS_SIZE / 2;
-    for (ResourceLocation skillTreeId : SkillTreesReloader.getSkillTrees().keySet()) {
-      SkillTreeSelectionButton button =
-          new SkillTreeSelectionButton(buttonX, buttonY, BUTTONS_SIZE, BUTTONS_SIZE, skillTreeId);
-      buttonX += BUTTONS_SIZE + BUTTONS_SPACING;
+    int x = width / 2 - buttonRowWidth / 2;
+    int y = height / 2 - BUTTONS_SIZE / 2;
+    for (PassiveSkillTree skillTree : skillTrees) {
+      Button button =
+          new SkillTreeSelectionButton(x, y, BUTTONS_SIZE, BUTTONS_SIZE, skillTree.getId());
+      x += BUTTONS_SIZE + BUTTONS_SPACING;
       addRenderableWidget(button);
     }
+  }
+
+  @NotNull
+  private static List<PassiveSkillTree> getNonEmptySkillTrees() {
+    return SkillTreesReloader.getSkillTrees().values().stream()
+        .filter(skillTree -> !skillTree.getSkillIds().isEmpty())
+        .toList();
   }
 
   @Override
