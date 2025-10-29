@@ -8,17 +8,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class WorkbenchContainer extends TransientCraftingContainer {
-  private final Player player;
   public final WorkbenchMenu menu;
 
   public WorkbenchContainer(WorkbenchMenu menu) {
     super(menu, 7, 1);
-    this.player = menu.getPlayer();
     this.menu = menu;
   }
 
   public Player getPlayer(){
-    return player;
+    return menu.getPlayer();
   }
 
   public ItemStack getBaseItem() {

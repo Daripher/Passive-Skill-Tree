@@ -97,7 +97,7 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     String targetDescription = eventListener.getTarget().getName();
     String key = getDescriptionId() + "." + targetDescription;
     String damageDescription = TooltipHelper.formatNumber(damage);
-    Component damageTypeDescription = damageType.getTooltip();
+    Component damageTypeDescription = damageType.getTooltip("type");
     if (chance < 1) {
       key += ".chance";
     }

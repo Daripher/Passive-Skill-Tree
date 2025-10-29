@@ -156,8 +156,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.HEALING.get(), "enemy.chance", "Chance for enemies to recover %s life");
     add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "player", "Take %s %s");
     add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "player.chance", "Chance to take %s %s");
-    add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy", "Inflict %s %s");
-    add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy.chance", "Chance to inflict %s %s");
+    add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy", "Inflict %s %s Damage");
+    add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy.chance", "Chance to inflict %s %s Damage");
     add(PSTSkillBonuses.CAN_POISON_ANYONE.get(), "Your poisons can affect any enemies");
     add(PSTSkillBonuses.LETHAL_POISON.get(), "Your poisons are lethal");
     add(PSTSkillBonuses.DAMAGE_TAKEN.get(), "%s taken");
