@@ -35,10 +35,14 @@ public abstract class AbstractWorkbenchRecipe
     if (!isValidBaseItem(container.getBaseItem())) {
       return false;
     }
-    if (requiresPassiveSkill && !hasRecipeLearned(container.getPlayer())) {
+    if (!canBeUsedBy(container.getPlayer())) {
       return false;
     }
     return hasIngredients(container, additionalIngredients);
+  }
+
+  public boolean canBeUsedBy(@NotNull Player player) {
+    return !requiresPassiveSkill || hasRecipeLearned(player);
   }
 
   public abstract boolean isValidBaseItem(ItemStack itemStack);
@@ -53,7 +57,7 @@ public abstract class AbstractWorkbenchRecipe
     return additionalIngredients;
   }
 
-  protected final boolean hasRecipeLearned(Player player) {
+  protected final boolean hasRecipeLearned(@NotNull Player player) {
     return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream()
         .map(RecipeUnlockBonus::getRecipeId)
         .anyMatch(getId()::equals);

@@ -192,12 +192,15 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     resultSlots.setItem(0, ItemStack.EMPTY);
     selectedRecipes =
         level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.ARTISAN_WORKBENCH).stream()
-            .filter(this::canApplyRecipe)
+            .filter(this::shouldDisplayRecipe)
             .sorted(Comparator.comparing(AbstractWorkbenchRecipe::getId))
             .toList();
   }
 
-  private boolean canApplyRecipe(AbstractWorkbenchRecipe recipe) {
+  private boolean shouldDisplayRecipe(AbstractWorkbenchRecipe recipe) {
+    if (recipe.requiresPassiveSkill() && !recipe.canBeUsedBy(player)) {
+      return false;
+    }
     return recipe.isValidBaseItem(workbenchContainer.getBaseItem());
   }
 
