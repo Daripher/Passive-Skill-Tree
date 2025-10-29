@@ -594,7 +594,7 @@ public class SkillBonusHandler {
     CompoundTag projectileTag = projectile.getPersistentData();
     if (projectileTag.getBoolean("duplicated")) return;
     float duplicationChance =
-        getPlayerBonuses(player, ProjectileDuplicationBonus.class).stream()
+        getSkillBonuses(player, ProjectileDuplicationBonus.class).stream()
             .map(b -> b.getChance(player))
             .reduce(Float::sum)
             .orElse(0f);
@@ -630,7 +630,7 @@ public class SkillBonusHandler {
     if (projectileTag.getBoolean("speed_applied")) return;
     float speedBonus = 1f;
     speedBonus +=
-        getPlayerBonuses(player, ProjectileSpeedBonus.class).stream()
+        getSkillBonuses(player, ProjectileSpeedBonus.class).stream()
             .map(b -> b.getMultiplier(player))
             .reduce(Float::sum)
             .orElse(0f);
@@ -709,25 +709,27 @@ public class SkillBonusHandler {
   }
 
   private static void duplicateProjectileWithOffset(
-      Projectile projectile, Player player, ServerLevel level, float angleOffset) {
-    EntityType<?> projectileType = projectile.getType();
+      Projectile original, Player player, ServerLevel level, float angleOffset) {
+    EntityType<?> projectileType = original.getType();
     Projectile duplicate = (Projectile) projectileType.create(level);
     if (duplicate == null) return;
-    Vec3 movementVector = projectile.getDeltaMovement();
+    Vec3 movementVector = original.getDeltaMovement();
     Vec3 rotatedDirection = rotateVector(movementVector, angleOffset);
-    Vec3 originalPos = projectile.position();
+    Vec3 originalPos = original.position();
     Vec3 duplicatePos = originalPos.add(rotatedDirection.normalize());
     duplicate.setPos(duplicatePos.x, duplicatePos.y, duplicatePos.z);
     duplicate.setDeltaMovement(rotatedDirection);
     duplicate.setOwner(player);
     CompoundTag projectileTag = duplicate.getPersistentData();
     projectileTag.putBoolean("duplicated", true);
-    if (duplicate instanceof AbstractArrow arrow) {
-      arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
+    if (duplicate instanceof AbstractArrow duplicateArrow) {
+      AbstractArrow originalArrow = (AbstractArrow) original;
+      duplicateArrow.pickup = AbstractArrow.Pickup.DISALLOWED;
       float velocity = (float) movementVector.length();
-      arrow.setEnchantmentEffectsFromEntity(player, velocity);
-    } else if (projectile instanceof ThrownPotion originalPotion
-        && duplicate instanceof ThrownPotion potion) {
+      duplicateArrow.setEnchantmentEffectsFromEntity(player, velocity);
+      duplicateArrow.setBaseDamage(originalArrow.getBaseDamage());
+    } else if (duplicate instanceof ThrownPotion potion) {
+      ThrownPotion originalPotion = (ThrownPotion) original;
       potion.setItem(originalPotion.getItem());
     }
     level.addFreshEntity(duplicate);
