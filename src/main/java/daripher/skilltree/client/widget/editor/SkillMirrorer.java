@@ -27,8 +27,8 @@ public class SkillMirrorer extends AbstractWidget {
   }
 
   public void init() {
-    editor.addLabel(0, 0, "Mirror", ChatFormatting.GOLD);
-    editor.addCheckBox(186, 0, active).setResponder(v -> setActive(editor, v));
+    editor.addLabel(19, 0, "Mirror", ChatFormatting.GOLD);
+    editor.addCheckBox(0, 0, active).setResponder(v -> setActive(editor, v));
     editor.increaseHeight(19);
     if (!active) return;
     editor.addLabel(0, 0, "Sectors", ChatFormatting.GOLD);

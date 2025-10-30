@@ -18,6 +18,7 @@ public class SkillNodeEditor extends EditorMenu {
   private NumericTextField angleEditor;
   private static double lastUsedDistance = 10;
   private static double lastUsedAngle = 0;
+  private boolean shouldConnect = true;
 
   public SkillNodeEditor(SkillTreeEditor editor, EditorMenu previousMenu) {
     super(editor, previousMenu);
@@ -38,6 +39,9 @@ public class SkillNodeEditor extends EditorMenu {
     editor.increaseHeight(19);
     editor.addButton(0, 0, 60, 14, "Add").setPressFunc(b -> createSkills(this::createNewSkill));
     editor.addButton(65, 0, 60, 14, "Copy").setPressFunc(b -> createSkills(this::createSkillCopy));
+    editor.increaseHeight(28);
+    editor.addLabel(19, 0, "Connect", ChatFormatting.GOLD);
+    editor.addCheckBox(0, 0, shouldConnect).setResponder(v -> setConnect(editor, v));
     editor.increaseHeight(19);
     editor.addMirrorerWidgets();
   }
@@ -81,7 +85,9 @@ public class SkillNodeEditor extends EditorMenu {
     skill.setTitle(original.getTitle());
     skill.setTitleColor(original.getTitleColor());
     skill.setDescription(original.getDescription());
-    skill.connect(original);
+    if (shouldConnect) {
+      skill.connect(original);
+    }
     SkillTreeClientData.saveEditorSkill(skill);
     SkillTreeClientData.loadEditorSkill(skill.getId());
     editor.getSkillTree().getSkillIds().add(skill.getId());
@@ -98,7 +104,9 @@ public class SkillNodeEditor extends EditorMenu {
     PassiveSkill skill =
         new PassiveSkill(createNewSkillId(skillTreeId), 16, background, icon, border, false);
     skill.setPosition(x, y);
-    if (original != null) skill.connect(original);
+    if (original != null && shouldConnect) {
+      skill.connect(original);
+    }
     SkillTreeClientData.saveEditorSkill(skill);
     SkillTreeClientData.loadEditorSkill(skill.getId());
     editor.getSkillTree().getSkillIds().add(skill.getId());
@@ -112,5 +120,10 @@ public class SkillNodeEditor extends EditorMenu {
       id = new ResourceLocation("skilltree", skillTreeId.getPath() + "_" + counter++);
     } while (SkillTreeClientData.getEditorSkill(id) != null);
     return id;
+  }
+
+  public void setConnect(SkillTreeEditor editor, boolean connect) {
+    this.shouldConnect = connect;
+    editor.rebuildWidgets();
   }
 }
