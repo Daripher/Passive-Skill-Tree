@@ -21,7 +21,6 @@ public class PassiveSkill {
   private ResourceLocation backgroundTexture;
   private ResourceLocation iconTexture;
   private ResourceLocation borderTexture;
-  private @Nullable ResourceLocation connectedTreeId;
   private @Nullable String title;
   private @Nullable String titleColor;
   private float positionX, positionY;
@@ -78,14 +77,6 @@ public class PassiveSkill {
 
   public void setBorderTexture(ResourceLocation texture) {
     this.borderTexture = texture;
-  }
-
-  public @Nullable ResourceLocation getConnectedTreeId() {
-    return connectedTreeId;
-  }
-
-  public void setConnectedTree(@Nullable ResourceLocation treeId) {
-    this.connectedTreeId = treeId;
   }
 
   public boolean isStartingPoint() {

@@ -3,7 +3,6 @@ package daripher.skilltree.client.widget;
 import com.google.common.collect.Streams;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.client.widget.group.WidgetGroup;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.client.widget.skill.SkillButtons;
@@ -145,7 +144,9 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
           .forEach(SkillButton::setCanLearn);
       return;
     }
-    if (learnedSkills.size() + newlyLearnedSkills.size() >= ServerConfig.max_skill_points) return;
+    if (learnedSkills.size() + newlyLearnedSkills.size() >= ServerConfig.max_skill_points) {
+      return;
+    }
     skills
         .getSkillConnections()
         .forEach(
@@ -301,11 +302,6 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
       skillPoints--;
       newlyLearnedSkills.add(skill.getId());
       rebuildWidgets();
-      return;
-    }
-    ResourceLocation connectedTree = skill.getConnectedTreeId();
-    if (connectedTree != null) {
-      Minecraft.getInstance().setScreen(new SkillTreeScreen(connectedTree));
     }
   }
 

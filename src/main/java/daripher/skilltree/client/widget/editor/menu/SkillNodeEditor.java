@@ -74,7 +74,6 @@ public class SkillNodeEditor extends EditorMenu {
             original.getTooltipFrameTexture(),
             original.isStartingPoint());
     skill.setPosition(x, y);
-    skill.setConnectedTree(original.getConnectedTreeId());
     skill.setStartingPoint(original.isStartingPoint());
     original.getBonuses().stream().map(SkillBonus::copy).forEach(skill::addSkillBonus);
     original.getRequirements().stream().map(SkillRequirement::copy).forEach(skill::addSkillRequirement);

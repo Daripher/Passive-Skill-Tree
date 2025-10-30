@@ -42,7 +42,6 @@ public class NetworkHelper {
     buf.writeUtf(skill.getTitle());
     buf.writeUtf(skill.getTitleColor());
     writeResourceLocations(buf, skill.getDirectConnections());
-    writeNullableResourceLocation(buf, skill.getConnectedTreeId());
     writeSkillBonuses(buf, skill.getBonuses());
     writeSkillRequirements(buf, skill.getRequirements());
     writeResourceLocations(buf, skill.getLongConnections());
@@ -63,7 +62,6 @@ public class NetworkHelper {
     skill.setTitle(buf.readUtf());
     skill.setTitleColor(buf.readUtf());
     skill.getDirectConnections().addAll(readResourceLocations(buf));
-    skill.setConnectedTree(readNullableResourceLocation(buf));
     skill.getBonuses().addAll(readSkillBonuses(buf));
     skill.getRequirements().addAll(readSkillRequirements(buf));
     skill.getLongConnections().addAll(readResourceLocations(buf));
@@ -103,16 +101,6 @@ public class NetworkHelper {
     double amount = buf.readDouble();
     AttributeModifier.Operation operation = readOperation(buf);
     return new AttributeModifier(id, name, amount, operation);
-  }
-
-  public static void writeNullableResourceLocation(
-      FriendlyByteBuf buf, @Nullable ResourceLocation location) {
-    buf.writeBoolean(location != null);
-    if (location != null) buf.writeUtf(location.toString());
-  }
-
-  public static @Nullable ResourceLocation readNullableResourceLocation(FriendlyByteBuf buf) {
-    return buf.readBoolean() ? new ResourceLocation(buf.readUtf()) : null;
   }
 
   public static void writeResourceLocations(FriendlyByteBuf buf, List<ResourceLocation> locations) {
