@@ -4,15 +4,17 @@
     {
       "type": "skilltree:attribute",
       "attribute": "skilltree:regeneration",
-      "id": "cce3ffd0-820c-4368-96ee-0e7269fec0b6",
+      "id": "5d9813c3-6791-4397-8263-786ee4c23af0",
       "name": "Skill",
-      "amount": 1.0,
+      "amount": 0.02,
       "operation": 0,
       "player_multiplier": {
-        "type": "skilltree:none"
-      },
-      "player_condition": {
-        "type": "skilltree:none"
+        "value_provider": {
+          "attribute": "minecraft:generic.max_health",
+          "type": "skilltree:attribute_value"
+        },
+        "divisor": 1.0,
+        "type": "skilltree:numeric_value"
       }
     }
   ],
@@ -20,8 +22,8 @@
     {
       "type": "skilltree:stat_value",
       "statTypeId": "minecraft:custom",
-      "statId": "minecraft:deaths",
-      "minValue": 5
+      "statId": "minecraft:damage_taken",
+      "minValue": 1000
     }
   ],
   "directConnections": [

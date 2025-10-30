@@ -4,7 +4,7 @@
     {
       "type": "skilltree:attribute",
       "attribute": "skilltree:regeneration",
-      "id": "56bd3cfd-24e3-4a5b-9dc3-6a8fea240da5",
+      "id": "4ddbdb9d-5b46-41a8-8acc-4ad1a0679624",
       "name": "Skill",
       "amount": 1.0,
       "operation": 0,
@@ -13,11 +13,8 @@
           "effect_type": "beneficial",
           "type": "skilltree:effect_amount"
         },
-        "divisor": 1.0,
+        "divisor": 3.0,
         "type": "skilltree:numeric_value"
-      },
-      "player_condition": {
-        "type": "skilltree:none"
       }
     }
   ],
@@ -28,8 +25,8 @@
         "effect_type": "beneficial",
         "type": "skilltree:effect_amount"
       },
-      "required_value": 5.0,
-      "logic": "MORE"
+      "required_value": 3.0,
+      "logic": "AT_LEAST"
     }
   ],
   "directConnections": [

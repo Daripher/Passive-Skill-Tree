@@ -3,21 +3,15 @@
   "bonuses": [
     {
       "type": "skilltree:incoming_healing",
-      "multiplier": 0.1,
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
-      "player_condition": {
-        "type": "skilltree:none"
-      }
+      "multiplier": 0.1
     }
   ],
   "requirements": [
     {
       "type": "skilltree:stat_value",
       "statTypeId": "minecraft:custom",
-      "statId": "minecraft:deaths",
-      "minValue": 3
+      "statId": "minecraft:damage_taken",
+      "minValue": 600
     }
   ],
   "directConnections": [

@@ -4,9 +4,6 @@
     {
       "type": "skilltree:projectile_duplication",
       "chance": 1.0,
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
       "player_condition": {
         "item_condition": {
           "potion_type": "any",
@@ -19,20 +16,8 @@
       "type": "skilltree:damage",
       "amount": -0.2,
       "operation": 1,
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
-      "enemy_multiplier": {
-        "type": "skilltree:none"
-      },
-      "player_condition": {
-        "type": "skilltree:none"
-      },
       "damage_condition": {
         "type": "skilltree:projectile"
-      },
-      "target_condition": {
-        "type": "skilltree:none"
       }
     }
   ],

@@ -12,18 +12,6 @@
         "damage_condition": {
           "type": "skilltree:none"
         },
-        "enemy_condition": {
-          "type": "skilltree:none"
-        },
-        "player_condition": {
-          "type": "skilltree:none"
-        },
-        "enemy_multiplier": {
-          "type": "skilltree:none"
-        },
-        "player_multiplier": {
-          "type": "skilltree:none"
-        },
         "target": "enemy",
         "type": "skilltree:attack"
       }
@@ -33,8 +21,8 @@
     {
       "type": "skilltree:stat_value",
       "statTypeId": "minecraft:killed",
-      "statId": "minecraft:cave_spider",
-      "minValue": 10
+      "statId": "minecraft:spider",
+      "minValue": 3
     }
   ],
   "directConnections": [
