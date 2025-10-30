@@ -7,6 +7,8 @@ import daripher.skilltree.network.NetworkDispatcher;
 
 import java.util.Objects;
 import java.util.function.Supplier;
+
+import daripher.skilltree.util.PSTUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -27,9 +29,13 @@ public class GainSkillPointMessage {
     int skills = capability.getPlayerSkills().size();
     int points = capability.getSkillPoints();
     int level = skills + points;
-    if (level >= ServerConfig.max_skill_points) return;
+    if (level >= ServerConfig.max_skill_points) {
+      return;
+    }
     int cost = ServerConfig.getSkillPointCost(level);
-    if (player.totalExperience < cost) return;
+    if (PSTUtils.getPlayerExp(player) < cost) {
+      return;
+    }
     player.giveExperiencePoints(-cost);
     capability.grantSkillPoints(1);
     NetworkDispatcher.network_channel.send(

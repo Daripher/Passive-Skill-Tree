@@ -19,6 +19,8 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.*;
 import java.util.function.Supplier;
+
+import daripher.skilltree.util.PSTUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -273,7 +275,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     if (!ServerConfig.enable_exp_exchange) return false;
     if (isMaxLevel(currentLevel)) return false;
     int cost = ServerConfig.getSkillPointCost(currentLevel);
-    return player.totalExperience >= cost;
+    return PSTUtils.getPlayerExp(player) >= cost;
   }
 
   private boolean isMaxLevel(int currentLevel) {
@@ -316,7 +318,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     buyButton.active = false;
     if (isMaxLevel(currentLevel)) return;
     int pointCost = ServerConfig.getSkillPointCost(currentLevel);
-    buyButton.active = player.totalExperience >= pointCost;
+    buyButton.active = PSTUtils.getPlayerExp(player) >= pointCost;
   }
 
   private void toggleProgressDisplayMode() {

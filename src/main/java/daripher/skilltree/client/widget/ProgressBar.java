@@ -4,6 +4,7 @@ import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.config.ServerConfig;
+import daripher.skilltree.util.PSTUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -12,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ProgressBar extends Button {
@@ -22,7 +24,9 @@ public class ProgressBar extends Button {
   }
 
   private static int getCurrentLevel() {
-    IPlayerSkills capability = PlayerSkillsProvider.get(getLocalPlayer());
+    LocalPlayer player = Minecraft.getInstance().player;
+    Objects.requireNonNull(player);
+    IPlayerSkills capability = PlayerSkillsProvider.get(player);
     int skills = capability.getPlayerSkills().size();
     int points = capability.getSkillPoints();
     return skills + points;
@@ -54,7 +58,9 @@ public class ProgressBar extends Button {
   protected void renderProgress(GuiGraphics graphics) {
     if (showProgressInNumbers) {
       int cost = ServerConfig.getSkillPointCost(getCurrentLevel());
-      int exp = getLocalPlayer().totalExperience;
+      LocalPlayer player = Minecraft.getInstance().player;
+      Objects.requireNonNull(player);
+      long exp = PSTUtils.getPlayerExp(player);
       String text = exp + "/" + cost;
       ScreenHelper.drawCenteredOutlinedText(graphics, text, getX() + width / 2, getTextY(), 0xFCE266);
     } else {
@@ -90,13 +96,11 @@ public class ProgressBar extends Button {
     float progress = 1F;
     if (level < ServerConfig.max_skill_points) {
       int levelupCost = ServerConfig.getSkillPointCost(level);
-      progress = (float) getLocalPlayer().totalExperience / levelupCost;
+      LocalPlayer player = Minecraft.getInstance().player;
+      Objects.requireNonNull(player);
+      progress = (float) PSTUtils.getPlayerExp(player) / levelupCost;
       progress = Math.min(1F, progress);
     }
     return progress;
-  }
-
-  private static LocalPlayer getLocalPlayer() {
-    return Minecraft.getInstance().player;
   }
 }
