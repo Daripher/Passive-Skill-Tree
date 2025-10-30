@@ -461,6 +461,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "Have %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
+    // skill requirements
+    add(PSTSkillRequirements.ADVANCEMENT.get(), "Get the '%s' advancement");
     // items
     add("item.cant_use.info", "You can not use this");
     add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");

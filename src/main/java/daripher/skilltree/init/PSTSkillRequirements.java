@@ -6,6 +6,7 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import java.util.List;
 import java.util.Objects;
 
+import daripher.skilltree.skill.requirement.AdvancementRequirement;
 import daripher.skilltree.skill.requirement.NumericValueRequirement;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import daripher.skilltree.skill.requirement.StatRequirement;
@@ -23,6 +24,8 @@ public class PSTSkillRequirements {
       REGISTRY.register("stat_value", StatRequirement.Serializer::new);
   public static final RegistryObject<SkillRequirement.Serializer> NUMERIC_VALUE =
       REGISTRY.register("numeric_value", NumericValueRequirement.Serializer::new);
+  public static final RegistryObject<SkillRequirement.Serializer> ADVANCEMENT =
+      REGISTRY.register("advancement", AdvancementRequirement.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<SkillRequirement> requirementList() {

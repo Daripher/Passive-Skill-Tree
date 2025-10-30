@@ -10,6 +10,7 @@ import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
 import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.requirement.SkillRequirement;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -64,6 +65,13 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition);
     assert id != null;
     String key = "living_condition.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
+    add(key, value);
+  }
+
+  protected void add(SkillRequirement.Serializer requirement, String value) {
+    ResourceLocation id = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(requirement);
+    assert id != null;
+    String key = "skill_requirements.%s.%s".formatted(id.getNamespace(), id.getPath());
     add(key, value);
   }
 

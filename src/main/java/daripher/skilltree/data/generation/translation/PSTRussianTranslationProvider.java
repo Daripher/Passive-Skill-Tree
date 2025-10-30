@@ -544,6 +544,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
+    // skill requirements
+    add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение '%s'");
     // items
     add("item.cant_use.info", "Вы не можете это использовать");
     add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");

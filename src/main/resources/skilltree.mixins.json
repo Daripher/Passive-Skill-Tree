@@ -14,7 +14,8 @@
     "MobEffectInstanceAccessor"
   ],
   "client": [
-    "EditBoxAccessor"
+    "EditBoxAccessor",
+    "ClientAdvancementsAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
