@@ -4,13 +4,10 @@
     {
       "type": "skilltree:attribute",
       "attribute": "minecraft:generic.armor",
-      "id": "0d5d9209-5f50-4041-871a-885325ccc61e",
+      "id": "8d075428-e081-4c0a-b35c-7fa0cc8db988",
       "name": "Skill",
-      "amount": 1.0,
+      "amount": 4.0,
       "operation": 0,
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
       "player_condition": {
         "item_condition": {
           "tag_id": "skilltree:armors/leather",
