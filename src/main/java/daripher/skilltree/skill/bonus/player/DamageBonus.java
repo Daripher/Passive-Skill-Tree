@@ -7,11 +7,11 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.MeleeDamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.MeleeDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -31,8 +31,8 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   private AttributeModifier.Operation operation;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingMultiplier targetMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull LivingCondition targetCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private @Nonnull LivingEntityPredicate targetCondition = NoneLivingEntityPredicate.INSTANCE;
   private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
 
   public DamageBonus(float amount, AttributeModifier.Operation operation) {
@@ -47,8 +47,8 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
       LivingEntity target) {
     if (this.operation != operation) return 0f;
     if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.isConditionMet(player)) return 0f;
-    if (!targetCondition.isConditionMet(target)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
+    if (!targetCondition.test(target)) return 0f;
     return amount * playerMultiplier.getValue(player) * targetMultiplier.getValue(target);
   }
 
@@ -220,7 +220,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   }
 
   private void selectTargetCondition(
-      SkillTreeEditor editor, Consumer<DamageBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<DamageBonus> consumer, LivingEntityPredicate condition) {
     setTargetCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -237,7 +237,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<DamageBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<DamageBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -249,7 +249,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
     consumer.accept(this.copy());
   }
 
-  public DamageBonus setPlayerCondition(LivingCondition condition) {
+  public DamageBonus setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
@@ -259,7 +259,7 @@ public final class DamageBonus implements SkillBonus<DamageBonus> {
     return this;
   }
 
-  public DamageBonus setTargetCondition(LivingCondition condition) {
+  public DamageBonus setTargetCondition(LivingEntityPredicate condition) {
     this.targetCondition = condition;
     return this;
   }

@@ -32,7 +32,7 @@ public class SkillTreeMod {
     PSTEnchantmentConditions.REGISTRY.register(eventBus);
     PSTEventListeners.REGISTRY.register(eventBus);
     PSTLootModifiers.REGISTRY.register(eventBus);
-    PSTNumericValueProviders.REGISTRY.register(eventBus);
+    PSTFloatFunctions.REGISTRY.register(eventBus);
     PSTPotions.REGISTRY.register(eventBus);
     PSTSkillRequirements.REGISTRY.register(eventBus);
     PSTBlocks.REGISTRY.register(eventBus);

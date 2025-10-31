@@ -1,7 +1,7 @@
 package daripher.skilltree.entity.player;
 
 import com.google.common.collect.Streams;
-import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
+import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,12 +36,12 @@ public class PlayerHelper {
   private static ItemStack getEquipmentInSlot(LivingEntity living, EquipmentSlot slot) {
     ItemStack stack = living.getItemBySlot(slot);
     if (slot == EquipmentSlot.MAINHAND
-        && !EquipmentCondition.isWeapon(stack)
-        && !EquipmentCondition.isTool(stack)
-        && !EquipmentCondition.isPotion(stack)) {
+        && !EquipmentPredicate.isWeapon(stack)
+        && !EquipmentPredicate.isTool(stack)
+        && !EquipmentPredicate.isPotion(stack)) {
       return ItemStack.EMPTY;
     }
-    if (slot == EquipmentSlot.OFFHAND && EquipmentCondition.isPotion(stack)) {
+    if (slot == EquipmentSlot.OFFHAND && EquipmentPredicate.isPotion(stack)) {
       return ItemStack.EMPTY;
     }
     return stack;

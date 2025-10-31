@@ -405,20 +405,20 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTLivingMultipliers.NUMERIC_VALUE.get(), "plural", "%s per %s %s");
     add(PSTLivingMultipliers.NUMERIC_VALUE.get(), "%s per %s");
     // value providers
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "multiplier.player.plural", "%s за каждые %s %s");
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "multiplier.player", "%s за каждое очко %s");
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "multiplier.enemy.plural", "%s за каждые %s %s цели");
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "multiplier.enemy", "%s за каждое очко %s цели");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "multiplier.player.plural", "%s за каждые %s %s");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "multiplier.player", "%s за каждое очко %s");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "multiplier.enemy.plural", "%s за каждые %s %s цели");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "multiplier.enemy", "%s за каждое очко %s цели");
 
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.player", "%s если %s %s");
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "condition.enemy", "%s если %s цели %s");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "condition.player", "%s если %s %s");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "condition.enemy", "%s если %s цели %s");
 
-    add(PSTNumericValueProviders.ATTRIBUTE_VALUE.get(), "requirement", "Достигните %s %s");
+    add(PSTFloatFunctions.ATTRIBUTE_VALUE.get(), "requirement", "Достигните %s %s");
 
-    add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player.plural", "%s за каждые %s блока между вами и целью");
-    add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s за каждый блок между вами и целью");
+    add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "multiplier.player.plural", "%s за каждые %s блока между вами и целью");
+    add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s за каждый блок между вами и целью");
 
-    add(PSTNumericValueProviders.DISTANCE_TO_TARGET.get(), "condition.player", "%s если расстояние между вами и целью %s");
+    add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "condition.player", "%s если расстояние между вами и целью %s");
 
     add("effect_type.beneficial", "положительный эффект");
     add("effect_type.beneficial.plural", "положительные эффекты");
@@ -429,119 +429,119 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add("effect_type.any", "эффект");
     add("effect_type.any.plural", "эффекты");
 
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.player.plural", "%s за каждые %s %s на вас");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.player", "%s за каждый %s на вас");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy.plural", "%s за каждые %s %s цели");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "multiplier.enemy", "%s за каждый %s цели");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player.plural", "%s за каждые %s %s на вас");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player", "%s за каждый %s на вас");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.enemy.plural", "%s за каждые %s %s цели");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.enemy", "%s за каждый %s цели");
 
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player", "%s если на вас действуют %s %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player.any", "%s если на вас действует любой %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.player.none", "%s если на вас не действует %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy", "%s если на цель действуют %s %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s если на цель действует любой %s");
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s если на цель не действуют %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.player", "%s если на вас действуют %s %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.player.any", "%s если на вас действует любой %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.player.none", "%s если на вас не действует %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.enemy", "%s если на цель действуют %s %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.enemy.any", "%s если на цель действует любой %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "condition.enemy.none", "%s если на цель не действуют %s");
 
-    add(PSTNumericValueProviders.EFFECT_AMOUNT.get(), "requirement", "На вас %s %s");
+    add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "requirement", "На вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "ровно %s");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s за каждое %s зачарования на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.player", "%s за каждое зачарование на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy.plural", "%s за каждые %s зачарования на %s цели");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy", "%s за каждое зачарование на %s цели");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s за каждое %s зачарования на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player", "%s за каждое зачарование на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy.plural", "%s за каждые %s зачарования на %s цели");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.enemy", "%s за каждое зачарование на %s цели");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "enchantment", "зачарование");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "enchantment.plural", "зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "enchantment", "зачарование");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "enchantment.plural", "зачарования");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player", "%s если у вас %s %s на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player.any", "%s если ваш %s имеет зачарования");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.player.none", "%s если ваш %s не имеет зачарования");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s если у цели есть %s %s на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s если %s цели не имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.player", "%s если у вас %s %s на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.player.any", "%s если ваш %s имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.player.none", "%s если ваш %s не имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.enemy", "%s если у цели есть %s %s на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "condition.enemy.none", "%s если %s цели не имеет зачарования");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_AMOUNT.get(), "requirement", "На вашем %3$s %1$s %2$s");
+    add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "requirement", "На вашем %3$s %1$s %2$s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "ровно %s");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.player.plural", "%s за %s уровня зачарований на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.player", "%s за каждый уровень зачарований на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy.plural", "%s за %s уровня зачарований на %s цели");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "multiplier.enemy", "%s за каждый уровень зачарований на %s цели");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player.plural", "%s за %s уровня зачарований на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player", "%s за каждый уровень зачарований на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.enemy.plural", "%s за %s уровня зачарований на %s цели");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.enemy", "%s за каждый уровень зачарований на %s цели");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "level", "уровень");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "level.plural", "уровней");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "level", "уровень");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "level.plural", "уровней");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player", "%s если у вас %s %s зачарований на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player.any", "%s если ваш %s имеет зачарования");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.player.none", "%s если ваш %s не имеет зачарований");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy", "%s если у цели %s %s зачарований на %s");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s если %s цели не имеет зачарований");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.player", "%s если у вас %s %s зачарований на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.player.any", "%s если ваш %s имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.player.none", "%s если ваш %s не имеет зачарований");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.enemy", "%s если у цели %s %s зачарований на %s");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.enemy.any", "%s если %s цели имеет зачарования");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "condition.enemy.none", "%s если %s цели не имеет зачарований");
 
-    add(PSTNumericValueProviders.ENCHANTMENT_LEVELS.get(), "requirement", "На вашем %3$s %1$s %2$s");
+    add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "requirement", "На вашем %3$s %1$s %2$s");
 
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player.plural", "%s за каждые %s прочности вашего %s");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.player", "%s за единицу прочности вашего %s");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s за каждые %s прочности %s цели");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "multiplier.enemy", "%s за единицу прочности %s цели");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "multiplier.player.plural", "%s за каждые %s прочности вашего %s");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "multiplier.player", "%s за единицу прочности вашего %s");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "multiplier.enemy.plural", "%s за каждые %s прочности %s цели");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "multiplier.enemy", "%s за единицу прочности %s цели");
 
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.player", "%s если ваш %s имеет %s прочности");
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s если %s цели имеет %s durability");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "condition.player", "%s если ваш %s имеет %s прочности");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "condition.enemy", "%s если %s цели имеет %s durability");
 
-    add(PSTNumericValueProviders.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %2$s имеет %1$s прочности");
+    add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %2$s имеет %1$s прочности");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "ровно %s");
 
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "point", "очко сытости");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "point.plural", "очка сытости");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "point", "очко сытости");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "point.plural", "очка сытости");
 
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.player.plural.missing", "%s за каждые %s недостающие %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy", "%s за каждое текущее %s цели");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающие %s цели");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.plural.missing", "%s за каждые %s недостающие %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy", "%s за каждое текущее %s цели");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающие %s цели");
 
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player", "%s если у вас %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.missing", "%s если у цели недостает %s %s");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.full", "%s если вы не голодны");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.full", "%s если цель не голодна");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.player.not_full", "%s если вы голодны");
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s если цель голодна");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player", "%s если у вас %s %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.missing", "%s если у цели недостает %s %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.full", "%s если вы не голодны");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.full", "%s если цель не голодна");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.not_full", "%s если вы голодны");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s если цель голодна");
 
-    add(PSTNumericValueProviders.FOOD_LEVEL.get(), "requirement", "У вас %s %s");
+    add(PSTFloatFunctions.FOOD_LEVEL.get(), "requirement", "У вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "ровно %s");
 
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point", "очко здоровья");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "point.plural", "очка здоровья");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage", "здоровья");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "percentage.plural", "здоровья");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point", "очко здоровья");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point.plural", "очка здоровья");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage", "здоровья");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage.plural", "здоровья");
 
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.player.plural.missing", "%s за каждые %s недостающих %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy", "%s за каждое текущее %s цели");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающих %s цели");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.plural.missing", "%s за каждые %s недостающих %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy", "%s за каждое текущее %s цели");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающих %s цели");
 
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player", "%s если у вас %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.missing", "%s если у цели недостает %s %s");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.full", "%s если у вас полное здоровье");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.full", "%s если у цели полное здоровье");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.player.not_full", "%s если вы ранены");
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s если цель ранена");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player", "%s если у вас %s %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.missing", "%s если у цели недостает %s %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.full", "%s если у вас полное здоровье");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.full", "%s если у цели полное здоровье");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.not_full", "%s если вы ранены");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s если цель ранена");
 
-    add(PSTNumericValueProviders.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
+    add(PSTFloatFunctions.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
 
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
     // skill requirements

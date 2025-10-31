@@ -7,8 +7,8 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -20,11 +20,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyBonus> {
-  private @Nonnull ItemCondition itemCondition;
+  private @Nonnull ItemStackPredicate itemStackPredicate;
   private float multiplier;
 
-  public RepairEfficiencyBonus(@Nonnull ItemCondition itemCondition, float multiplier) {
-    this.itemCondition = itemCondition;
+  public RepairEfficiencyBonus(@Nonnull ItemStackPredicate itemStackPredicate, float multiplier) {
+    this.itemStackPredicate = itemStackPredicate;
     this.multiplier = multiplier;
   }
 
@@ -35,18 +35,18 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
 
   @Override
   public RepairEfficiencyBonus copy() {
-    return new RepairEfficiencyBonus(itemCondition, multiplier);
+    return new RepairEfficiencyBonus(itemStackPredicate, multiplier);
   }
 
   @Override
   public RepairEfficiencyBonus multiply(double multiplier) {
-    return new RepairEfficiencyBonus(itemCondition, (float) (multiplier * multiplier));
+    return new RepairEfficiencyBonus(itemStackPredicate, (float) (multiplier * multiplier));
   }
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof RepairEfficiencyBonus otherBonus)) return false;
-    return Objects.equals(otherBonus.itemCondition, this.itemCondition);
+    return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
   }
 
   @Override
@@ -54,12 +54,12 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     if (!(other instanceof RepairEfficiencyBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
-    return new RepairEfficiencyBonus(itemCondition, otherBonus.multiplier + this.multiplier);
+    return new RepairEfficiencyBonus(itemStackPredicate, otherBonus.multiplier + this.multiplier);
   }
 
   @Override
   public MutableComponent getTooltip() {
-    Component itemDescription = itemCondition.getTooltip("plural.type");
+    Component itemDescription = itemStackPredicate.getTooltip("plural.type");
     AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
     Component bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
     bonusDescription =
@@ -86,7 +86,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 200, itemCondition)
+        .addSelectionMenu(0, 0, 200, itemStackPredicate)
         .setResponder(condition -> selectItemCondition(editor, consumer, condition))
         .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
     editor.increaseHeight(19);
@@ -94,7 +94,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
 
   private void addItemConditionWidgets(
       SkillTreeEditor editor, Consumer<RepairEfficiencyBonus> consumer) {
-    itemCondition.addEditorWidgets(
+    itemStackPredicate.addEditorWidgets(
         editor,
         condition -> {
           setItemCondition(condition);
@@ -103,7 +103,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
   }
 
   private void selectItemCondition(
-      SkillTreeEditor editor, Consumer<RepairEfficiencyBonus> consumer, ItemCondition condition) {
+      SkillTreeEditor editor, Consumer<RepairEfficiencyBonus> consumer, ItemStackPredicate condition) {
     setItemCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -114,8 +114,8 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     consumer.accept(this.copy());
   }
 
-  public void setItemCondition(@Nonnull ItemCondition itemCondition) {
-    this.itemCondition = itemCondition;
+  public void setItemCondition(@Nonnull ItemStackPredicate itemStackPredicate) {
+    this.itemStackPredicate = itemStackPredicate;
   }
 
   public void setMultiplier(float multiplier) {
@@ -123,8 +123,8 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
   }
 
   @Nonnull
-  public ItemCondition getItemCondition() {
-    return itemCondition;
+  public ItemStackPredicate getItemCondition() {
+    return itemStackPredicate;
   }
 
   public float getMultiplier() {
@@ -136,19 +136,19 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     if (obj == this) return true;
     if (obj == null || obj.getClass() != this.getClass()) return false;
     RepairEfficiencyBonus that = (RepairEfficiencyBonus) obj;
-    if (!Objects.equals(this.itemCondition, that.itemCondition)) return false;
+    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) return false;
     return this.multiplier == that.multiplier;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(itemCondition, multiplier);
+    return Objects.hash(itemStackPredicate, multiplier);
   }
 
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public RepairEfficiencyBonus deserialize(JsonObject json) throws JsonParseException {
-      ItemCondition condition = SerializationHelper.deserializeItemCondition(json);
+      ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
       float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
       return new RepairEfficiencyBonus(condition, multiplier);
     }
@@ -158,13 +158,13 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
       if (!(bonus instanceof RepairEfficiencyBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      SerializationHelper.serializeItemCondition(json, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
       json.addProperty("multiplier", aBonus.multiplier);
     }
 
     @Override
     public RepairEfficiencyBonus deserialize(CompoundTag tag) {
-      ItemCondition condition = SerializationHelper.deserializeItemCondition(tag);
+      ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
       float multiplier = tag.getFloat("multiplier");
       return new RepairEfficiencyBonus(condition, multiplier);
     }
@@ -175,7 +175,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeItemCondition(tag, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
       tag.putFloat("multiplier", aBonus.multiplier);
       return tag;
     }
@@ -190,13 +190,13 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
       if (!(bonus instanceof RepairEfficiencyBonus aBonus)) {
         throw new IllegalArgumentException();
       }
-      NetworkHelper.writeItemCondition(buf, aBonus.itemCondition);
+      NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
       buf.writeFloat(aBonus.multiplier);
     }
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new RepairEfficiencyBonus(NoneItemCondition.INSTANCE, 0.1f);
+      return new RepairEfficiencyBonus(NoneItemStackPredicate.INSTANCE, 0.1f);
     }
   }
 }

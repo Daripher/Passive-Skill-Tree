@@ -177,7 +177,7 @@ public class SkillButton extends Button {
       ArrayList<MutableComponent> tooltip, SkillRequirement<?> requirement) {
     MutableComponent requirementTooltip = requirement.getTooltip();
     Player localPlayer = Minecraft.getInstance().player;
-    Style style = TooltipHelper.getSkillRequirementStyle(requirement.isRequirementMet(localPlayer));
+    Style style = TooltipHelper.getSkillRequirementStyle(requirement.test(localPlayer));
     requirementTooltip = requirementTooltip.withStyle(style);
     tooltip.add(Component.literal("  ").append(requirementTooltip));
   }

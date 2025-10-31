@@ -9,10 +9,10 @@ import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -29,8 +29,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class BlockEventListener implements SkillEventListener {
-  private LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private LivingCondition enemyCondition = NoneLivingCondition.INSTANCE;
+  private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
   private DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
@@ -41,9 +41,9 @@ public class BlockEventListener implements SkillEventListener {
       @Nullable LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (enemyCondition != NoneLivingCondition.INSTANCE && enemy == null) return;
-    if (!playerCondition.isConditionMet(player)) return;
-    if (!enemyCondition.isConditionMet(enemy)) return;
+    if (enemyCondition != NoneLivingEntityPredicate.INSTANCE && enemy == null) return;
+    if (!playerCondition.test(player)) return;
+    if (!enemyCondition.test(enemy)) return;
     if (!damageCondition.met(damage)) return;
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     if (target == null) return;
@@ -196,7 +196,7 @@ public class BlockEventListener implements SkillEventListener {
   }
 
   private void selectTargetCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setEnemyCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -213,7 +213,7 @@ public class BlockEventListener implements SkillEventListener {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -229,12 +229,12 @@ public class BlockEventListener implements SkillEventListener {
     return this;
   }
 
-  public BlockEventListener setEnemyCondition(LivingCondition enemyCondition) {
+  public BlockEventListener setEnemyCondition(LivingEntityPredicate enemyCondition) {
     this.enemyCondition = enemyCondition;
     return this;
   }
 
-  public BlockEventListener setPlayerCondition(LivingCondition playerCondition) {
+  public BlockEventListener setPlayerCondition(LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
     return this;
   }

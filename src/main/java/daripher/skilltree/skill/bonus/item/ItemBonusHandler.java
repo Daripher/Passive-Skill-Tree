@@ -136,7 +136,7 @@ public class ItemBonusHandler {
     if (player != null) {
       limit +=
           SkillBonusHandler.getSkillBonuses(player, MoreItemBonusesBonus.class).stream()
-              .filter(bonus -> bonus.getItemCondition().met(itemStack))
+              .filter(bonus -> bonus.getItemCondition().test(itemStack))
               .map(MoreItemBonusesBonus::getAmount)
               .reduce(Integer::sum)
               .orElse(0);

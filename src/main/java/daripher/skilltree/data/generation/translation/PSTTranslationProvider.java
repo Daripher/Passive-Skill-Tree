@@ -3,11 +3,11 @@ package daripher.skilltree.data.generation.translation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
@@ -54,14 +54,14 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     addSkill(skillTree, skillId3, name);
   }
 
-  protected void add(LivingCondition.Serializer condition, String value) {
+  protected void add(LivingEntityPredicate.Serializer condition, String value) {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition);
     assert id != null;
     String key = "living_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
     add(key, value);
   }
 
-  protected void add(LivingCondition.Serializer condition, String type, String value) {
+  protected void add(LivingEntityPredicate.Serializer condition, String type, String value) {
     ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition);
     assert id != null;
     String key = "living_condition.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
@@ -117,15 +117,15 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add(key, value);
   }
 
-  protected void add(NumericValueProvider.Serializer provider, String value) {
-    ResourceLocation id = PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(provider);
+  protected void add(FloatFunction.Serializer provider, String value) {
+    ResourceLocation id = PSTRegistries.FLOAT_FUNCTIONS.get().getKey(provider);
     assert id != null;
     String key = "value_provider.%s.%s".formatted(id.getNamespace(), id.getPath());
     add(key, value);
   }
 
-  protected void add(NumericValueProvider.Serializer provider, String type, String value) {
-    ResourceLocation id = PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(provider);
+  protected void add(FloatFunction.Serializer provider, String type, String value) {
+    ResourceLocation id = PSTRegistries.FLOAT_FUNCTIONS.get().getKey(provider);
     assert id != null;
     String key = "value_provider.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
     add(key, value);
@@ -145,14 +145,14 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add(key, value);
   }
 
-  protected void add(ItemCondition.Serializer serializer, String type, String value) {
+  protected void add(ItemStackPredicate.Serializer serializer, String type, String value) {
     ResourceLocation id = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     assert id != null;
     String key = "item_condition.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
     add(key, value);
   }
 
-  protected void add(ItemCondition.Serializer serializer, String value) {
+  protected void add(ItemStackPredicate.Serializer serializer, String value) {
     ResourceLocation id = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     assert id != null;
     String key = "item_condition.%s.%s".formatted(id.getNamespace(), id.getPath());

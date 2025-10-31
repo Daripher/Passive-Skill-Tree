@@ -9,8 +9,8 @@ import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -26,17 +26,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 public class EvasionEventListener implements SkillEventListener {
-  private LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private LivingCondition enemyCondition = NoneLivingCondition.INSTANCE;
+  private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
   private SkillBonus.Target target = SkillBonus.Target.ENEMY;
 
   public void onEvent(
       @Nonnull Player player, @Nullable LivingEntity enemy, @Nonnull EventListenerBonus<?> skill) {
-    if (enemyCondition != NoneLivingCondition.INSTANCE && enemy == null) return;
-    if (!playerCondition.isConditionMet(player)) return;
-    if (!enemyCondition.isConditionMet(enemy)) return;
+    if (enemyCondition != NoneLivingEntityPredicate.INSTANCE && enemy == null) return;
+    if (!playerCondition.test(player)) return;
+    if (!enemyCondition.test(enemy)) return;
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     if (target == null) return;
     skill
@@ -165,7 +165,7 @@ public class EvasionEventListener implements SkillEventListener {
   }
 
   private void selectTargetCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setEnemyCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -182,7 +182,7 @@ public class EvasionEventListener implements SkillEventListener {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -193,11 +193,11 @@ public class EvasionEventListener implements SkillEventListener {
     return target;
   }
 
-  public void setEnemyCondition(LivingCondition enemyCondition) {
+  public void setEnemyCondition(LivingEntityPredicate enemyCondition) {
     this.enemyCondition = enemyCondition;
   }
 
-  public void setPlayerCondition(LivingCondition playerCondition) {
+  public void setPlayerCondition(LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
   }
 

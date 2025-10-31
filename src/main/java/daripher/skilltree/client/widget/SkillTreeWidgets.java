@@ -229,7 +229,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private boolean canLearnSkill(PassiveSkill skill) {
     if (!player.isCreative()) {
       for (SkillRequirement<?> requirement : skill.getRequirements()) {
-        if (!requirement.isRequirementMet(player)) {
+        if (!requirement.test(player)) {
           return false;
         }
       }

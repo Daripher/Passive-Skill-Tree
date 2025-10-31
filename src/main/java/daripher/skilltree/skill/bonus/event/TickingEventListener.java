@@ -8,8 +8,8 @@ import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -23,11 +23,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 
 public class TickingEventListener implements SkillEventListener {
-  private LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
   public void onEvent(@Nonnull Player player, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.isConditionMet(player)) return;
+    if (!playerCondition.test(player)) return;
     skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
   }
 
@@ -104,7 +104,7 @@ public class TickingEventListener implements SkillEventListener {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -115,7 +115,7 @@ public class TickingEventListener implements SkillEventListener {
     return SkillBonus.Target.PLAYER;
   }
 
-  public void setPlayerCondition(LivingCondition playerCondition) {
+  public void setPlayerCondition(LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
   }
 

@@ -8,8 +8,8 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.HashSet;
@@ -37,7 +37,7 @@ public final class AllAttributesBonus
   private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
 
   public AllAttributesBonus(AttributeModifier modifier) {
     this.modifier = modifier;
@@ -45,7 +45,7 @@ public final class AllAttributesBonus
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (playerCondition != NoneLivingCondition.INSTANCE
+    if (playerCondition != NoneLivingEntityPredicate.INSTANCE
         || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
       return;
     }
@@ -67,12 +67,12 @@ public final class AllAttributesBonus
 
   @Override
   public void tick(ServerPlayer player) {
-    if (playerCondition == NoneLivingCondition.INSTANCE
+    if (playerCondition == NoneLivingEntityPredicate.INSTANCE
         && playerMultiplier == NoneLivingMultiplier.INSTANCE) {
       return;
     }
-    if (playerCondition != NoneLivingCondition.INSTANCE) {
-      if (!playerCondition.isConditionMet(player)) {
+    if (playerCondition != NoneLivingEntityPredicate.INSTANCE) {
+      if (!playerCondition.test(player)) {
         onSkillRemoved(player);
         return;
       }
@@ -224,7 +224,7 @@ public final class AllAttributesBonus
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<AllAttributesBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<AllAttributesBonus> consumer, LivingEntityPredicate condition) {
     setCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -273,7 +273,7 @@ public final class AllAttributesBonus
             modifier.getId(), modifier.getName(), modifier.getAmount(), operation);
   }
 
-  public SkillBonus<?> setCondition(LivingCondition condition) {
+  public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }

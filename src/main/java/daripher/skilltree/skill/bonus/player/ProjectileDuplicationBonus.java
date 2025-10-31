@@ -8,10 +8,10 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
-import daripher.skilltree.skill.bonus.condition.living.HasItemEquippedCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.HasItemEquippedEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import net.minecraft.ChatFormatting;
@@ -29,14 +29,14 @@ import java.util.function.Consumer;
 public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDuplicationBonus> {
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
 
   public ProjectileDuplicationBonus(float chance) {
     this.chance = chance;
   }
 
   public float getChance(Player player) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
     return chance * playerMultiplier.getValue(player);
   }
 
@@ -145,13 +145,13 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
     });
   }
 
-  private void selectPlayerCondition(SkillTreeEditor editor, Consumer<ProjectileDuplicationBonus> consumer, LivingCondition condition) {
+  private void selectPlayerCondition(SkillTreeEditor editor, Consumer<ProjectileDuplicationBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
   }
 
-  public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
+  public SkillBonus<?> setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
@@ -228,7 +228,8 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new ProjectileDuplicationBonus(0.1f).setPlayerCondition(new HasItemEquippedCondition(new EquipmentCondition(EquipmentCondition.Type.RANGED_WEAPON)));
+      return new ProjectileDuplicationBonus(0.1f).setPlayerCondition(new HasItemEquippedEntityPredicate(new EquipmentPredicate(
+          EquipmentPredicate.Type.RANGED_WEAPON)));
     }
   }
 }

@@ -8,8 +8,8 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import net.minecraft.ChatFormatting;
@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBonus> {
   private float multiplier;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
   public ProjectileSpeedBonus(float multiplier) {
@@ -33,7 +33,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
   }
 
   public float getMultiplier(Player player) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
     return multiplier * playerMultiplier.getValue(player);
   }
 
@@ -113,7 +113,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<ProjectileSpeedBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<ProjectileSpeedBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -153,7 +153,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
         });
   }
 
-  public ProjectileSpeedBonus setPlayerCondition(@Nonnull LivingCondition playerCondition) {
+  public ProjectileSpeedBonus setPlayerCondition(@Nonnull LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
     return this;
   }
@@ -169,7 +169,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
   }
 
   @Nonnull
-  public LivingCondition getPlayerCondition() {
+  public LivingEntityPredicate getPlayerCondition() {
     return playerCondition;
   }
 
@@ -192,7 +192,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
     @Override
     public ProjectileSpeedBonus deserialize(JsonObject json) throws JsonParseException {
       float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
-      LivingCondition playerCondition =
+      LivingEntityPredicate playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       LivingMultiplier playerMultiplier =
           SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
@@ -216,7 +216,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
     @Override
     public ProjectileSpeedBonus deserialize(CompoundTag tag) {
       float multiplier = tag.getFloat("multiplier");
-      LivingCondition playerCondition =
+      LivingEntityPredicate playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       LivingMultiplier playerMultiplier =
           SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
@@ -240,7 +240,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
 
     @Override
     public ProjectileSpeedBonus deserialize(FriendlyByteBuf buf) {
-      LivingCondition playerCondition = NetworkHelper.readLivingCondition(buf);
+      LivingEntityPredicate playerCondition = NetworkHelper.readLivingCondition(buf);
       LivingMultiplier playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       return new ProjectileSpeedBonus(buf.readFloat())
           .setPlayerCondition(playerCondition)

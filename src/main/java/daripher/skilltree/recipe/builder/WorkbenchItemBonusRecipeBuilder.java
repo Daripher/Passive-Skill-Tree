@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchItemBonusRecipeBuilder {
   private final ResourceLocation id;
-  private ItemCondition baseItemCondition;
+  private ItemStackPredicate baseItemStackPredicate;
   private final Map<Ingredient, Integer> ingredients = new HashMap<>();
   private boolean requiresPassiveSkill;
   private ItemBonus<?> itemBonus;
@@ -31,8 +31,8 @@ public class WorkbenchItemBonusRecipeBuilder {
     return new WorkbenchItemBonusRecipeBuilder(id);
   }
 
-  public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(ItemCondition baseItemCondition) {
-    this.baseItemCondition = baseItemCondition;
+  public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(ItemStackPredicate baseItemStackPredicate) {
+    this.baseItemStackPredicate = baseItemStackPredicate;
     return this;
   }
 
@@ -54,11 +54,11 @@ public class WorkbenchItemBonusRecipeBuilder {
   public void save(Consumer<FinishedRecipe> finishedRecipeConsumer) {
     validate();
     finishedRecipeConsumer.accept(
-        new Result(id, baseItemCondition, ingredients, requiresPassiveSkill, itemBonus));
+        new Result(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus));
   }
 
   private void validate() {
-    if (baseItemCondition == null) {
+    if (baseItemStackPredicate == null) {
       throw new IllegalStateException("No base item condition set for recipe " + id);
     }
     if (ingredients.isEmpty()) {
@@ -74,19 +74,19 @@ public class WorkbenchItemBonusRecipeBuilder {
 
   private static class Result implements FinishedRecipe {
     private final ResourceLocation id;
-    private final ItemCondition baseItemCondition;
+    private final ItemStackPredicate baseItemStackPredicate;
     private final Map<Ingredient, Integer> ingredients;
     private final boolean requiresPassiveSkill;
     private final ItemBonus<?> itemBonus;
 
     private Result(
         ResourceLocation id,
-        ItemCondition baseItemCondition,
+        ItemStackPredicate baseItemStackPredicate,
         Map<Ingredient, Integer> ingredients,
         boolean requiresPassiveSkill,
         ItemBonus<?> itemBonus) {
       this.id = id;
-      this.baseItemCondition = baseItemCondition;
+      this.baseItemStackPredicate = baseItemStackPredicate;
       this.ingredients = ingredients;
       this.requiresPassiveSkill = requiresPassiveSkill;
       this.itemBonus = itemBonus;
@@ -102,7 +102,7 @@ public class WorkbenchItemBonusRecipeBuilder {
             ingredientJson.addProperty("required_amount", requiredAmount);
             ingredientsJson.add(ingredientJson);
           }));
-      SerializationHelper.serializeItemCondition(jsonObject, baseItemCondition, "base_item_condition");
+      SerializationHelper.serializeItemCondition(jsonObject, baseItemStackPredicate, "base_item_condition");
       SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
       jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
       jsonObject.add("ingredients", ingredientsJson);

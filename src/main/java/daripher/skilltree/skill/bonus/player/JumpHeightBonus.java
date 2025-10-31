@@ -7,8 +7,8 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -20,20 +20,20 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
 public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
-  private @Nonnull LivingCondition playerCondition;
+  private @Nonnull LivingEntityPredicate playerCondition;
   private float multiplier;
 
-  public JumpHeightBonus(@Nonnull LivingCondition playerCondition, float multiplier) {
+  public JumpHeightBonus(@Nonnull LivingEntityPredicate playerCondition, float multiplier) {
     this.playerCondition = playerCondition;
     this.multiplier = multiplier;
   }
 
   public JumpHeightBonus(float multiplier) {
-    this(NoneLivingCondition.INSTANCE, multiplier);
+    this(NoneLivingEntityPredicate.INSTANCE, multiplier);
   }
 
   public float getJumpHeightMultiplier(Player player) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
     return multiplier;
   }
 
@@ -110,7 +110,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<JumpHeightBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<JumpHeightBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -121,7 +121,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
     consumer.accept(this.copy());
   }
 
-  public void setPlayerCondition(@Nonnull LivingCondition playerCondition) {
+  public void setPlayerCondition(@Nonnull LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
   }
 
@@ -150,7 +150,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public JumpHeightBonus deserialize(JsonObject json) throws JsonParseException {
-      LivingCondition condition =
+      LivingEntityPredicate condition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
       return new JumpHeightBonus(condition, multiplier);
@@ -168,7 +168,7 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
 
     @Override
     public JumpHeightBonus deserialize(CompoundTag tag) {
-      LivingCondition condition =
+      LivingEntityPredicate condition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       float multiplier = tag.getFloat("multiplier");
       return new JumpHeightBonus(condition, multiplier);

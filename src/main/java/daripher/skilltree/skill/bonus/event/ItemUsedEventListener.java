@@ -8,10 +8,10 @@ import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.PotionCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -26,24 +26,24 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class ItemUsedEventListener implements SkillEventListener {
-  private LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private ItemCondition itemCondition;
+  private ItemStackPredicate itemStackPredicate;
 
-  public ItemUsedEventListener(ItemCondition itemCondition) {
-    this.itemCondition = itemCondition;
+  public ItemUsedEventListener(ItemStackPredicate itemStackPredicate) {
+    this.itemStackPredicate = itemStackPredicate;
   }
 
   public void onEvent(
       @Nonnull Player player, @Nonnull ItemStack stack, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.isConditionMet(player)) return;
-    if (!itemCondition.met(stack)) return;
+    if (!playerCondition.test(player)) return;
+    if (!itemStackPredicate.test(stack)) return;
     skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
   }
 
   @Override
   public MutableComponent getTooltip(Component bonusTooltip) {
-    Component itemTooltip = itemCondition.getTooltip();
+    Component itemTooltip = itemStackPredicate.getTooltip();
     MutableComponent eventTooltip =
         Component.translatable(getDescriptionId(), bonusTooltip, itemTooltip);
     eventTooltip = playerCondition.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
@@ -63,12 +63,12 @@ public class ItemUsedEventListener implements SkillEventListener {
     ItemUsedEventListener listener = (ItemUsedEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(playerMultiplier, listener.playerMultiplier)
-        && Objects.equals(itemCondition, listener.itemCondition);
+        && Objects.equals(itemStackPredicate, listener.itemStackPredicate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(playerCondition, playerMultiplier, itemCondition);
+    return Objects.hash(playerCondition, playerMultiplier, itemStackPredicate);
   }
 
   @Override
@@ -90,7 +90,7 @@ public class ItemUsedEventListener implements SkillEventListener {
     editor.addLabel(0, 0, "Item Condition", ChatFormatting.GREEN);
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 200, itemCondition)
+        .addSelectionMenu(0, 0, 200, itemStackPredicate)
         .setResponder(condition -> selectItemCondition(editor, consumer, condition))
         .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
     editor.increaseHeight(19);
@@ -98,7 +98,7 @@ public class ItemUsedEventListener implements SkillEventListener {
 
   private void addItemConditionWidgets(
       SkillTreeEditor editor, Consumer<SkillEventListener> consumer) {
-    itemCondition.addEditorWidgets(
+    itemStackPredicate.addEditorWidgets(
         editor,
         condition -> {
           setItemCondition(condition);
@@ -107,7 +107,7 @@ public class ItemUsedEventListener implements SkillEventListener {
   }
 
   private void selectItemCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, ItemCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, ItemStackPredicate condition) {
     setItemCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -141,7 +141,7 @@ public class ItemUsedEventListener implements SkillEventListener {
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this);
     editor.rebuildWidgets();
@@ -152,7 +152,7 @@ public class ItemUsedEventListener implements SkillEventListener {
     return SkillBonus.Target.PLAYER;
   }
 
-  public void setPlayerCondition(LivingCondition playerCondition) {
+  public void setPlayerCondition(LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
   }
 
@@ -160,15 +160,15 @@ public class ItemUsedEventListener implements SkillEventListener {
     this.playerMultiplier = playerMultiplier;
   }
 
-  public void setItemCondition(ItemCondition itemCondition) {
-    this.itemCondition = itemCondition;
+  public void setItemCondition(ItemStackPredicate itemStackPredicate) {
+    this.itemStackPredicate = itemStackPredicate;
   }
 
   public static class Serializer implements SkillEventListener.Serializer {
     @Override
     public SkillEventListener deserialize(JsonObject json) throws JsonParseException {
-      ItemCondition itemCondition = SerializationHelper.deserializeItemCondition(json);
-      ItemUsedEventListener listener = new ItemUsedEventListener(itemCondition);
+      ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
+      ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
       listener.setPlayerCondition(
           SerializationHelper.deserializeLivingCondition(json, "player_condition"));
       listener.setPlayerMultiplier(
@@ -181,7 +181,7 @@ public class ItemUsedEventListener implements SkillEventListener {
       if (!(listener instanceof ItemUsedEventListener aListener)) {
         throw new IllegalArgumentException();
       }
-      SerializationHelper.serializeItemCondition(json, aListener.itemCondition);
+      SerializationHelper.serializeItemCondition(json, aListener.itemStackPredicate);
       SerializationHelper.serializeLivingCondition(
           json, aListener.playerCondition, "player_condition");
       SerializationHelper.serializeLivingMultiplier(
@@ -190,8 +190,8 @@ public class ItemUsedEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener deserialize(CompoundTag tag) {
-      ItemCondition itemCondition = SerializationHelper.deserializeItemCondition(tag);
-      ItemUsedEventListener listener = new ItemUsedEventListener(itemCondition);
+      ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
+      ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
       listener.setPlayerCondition(
           SerializationHelper.deserializeLivingCondition(tag, "player_condition"));
       listener.setPlayerMultiplier(
@@ -205,7 +205,7 @@ public class ItemUsedEventListener implements SkillEventListener {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeItemCondition(tag, aListener.itemCondition);
+      SerializationHelper.serializeItemCondition(tag, aListener.itemStackPredicate);
       SerializationHelper.serializeLivingCondition(
           tag, aListener.playerCondition, "player_condition");
       SerializationHelper.serializeLivingMultiplier(
@@ -215,8 +215,8 @@ public class ItemUsedEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener deserialize(FriendlyByteBuf buf) {
-      ItemCondition itemCondition = NetworkHelper.readItemCondition(buf);
-      ItemUsedEventListener listener = new ItemUsedEventListener(itemCondition);
+      ItemStackPredicate itemStackPredicate = NetworkHelper.readItemCondition(buf);
+      ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
       listener.setPlayerCondition(NetworkHelper.readLivingCondition(buf));
       listener.setPlayerMultiplier(NetworkHelper.readLivingMultiplier(buf));
       return listener;
@@ -227,14 +227,14 @@ public class ItemUsedEventListener implements SkillEventListener {
       if (!(listener instanceof ItemUsedEventListener aListener)) {
         throw new IllegalArgumentException();
       }
-      NetworkHelper.writeItemCondition(buf, aListener.itemCondition);
+      NetworkHelper.writeItemCondition(buf, aListener.itemStackPredicate);
       NetworkHelper.writeLivingCondition(buf, aListener.playerCondition);
       NetworkHelper.writeLivingMultiplier(buf, aListener.playerMultiplier);
     }
 
     @Override
     public SkillEventListener createDefaultInstance() {
-      return new ItemUsedEventListener(new PotionCondition(PotionCondition.Type.ANY));
+      return new ItemUsedEventListener(new PotionStackPredicate(PotionStackPredicate.Type.ANY));
     }
   }
 }

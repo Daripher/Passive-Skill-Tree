@@ -7,8 +7,8 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -24,14 +24,14 @@ import net.minecraft.world.entity.player.Player;
 public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBonus> {
   private float multiplier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
 
   public IncomingHealingBonus(float multiplier) {
     this.multiplier = multiplier;
   }
 
   public float getHealingMultiplier(Player player) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
     return this.multiplier * playerMultiplier.getValue(player);
   }
 
@@ -144,7 +144,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<IncomingHealingBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<IncomingHealingBonus> consumer, LivingEntityPredicate condition) {
     setCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -159,7 +159,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     this.multiplier = multiplier;
   }
 
-  public SkillBonus<?> setCondition(LivingCondition condition) {
+  public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }

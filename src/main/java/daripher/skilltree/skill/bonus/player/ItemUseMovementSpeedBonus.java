@@ -8,11 +8,11 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.EquipmentCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -30,16 +30,16 @@ import net.minecraft.world.item.ItemStack;
 public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMovementSpeedBonus> {
   private float multiplier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull ItemCondition itemCondition = NoneItemCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private @Nonnull ItemStackPredicate itemStackPredicate = NoneItemStackPredicate.INSTANCE;
 
   public ItemUseMovementSpeedBonus(float multiplier) {
     this.multiplier = multiplier;
   }
 
   public float getMultiplier(Player player, ItemStack itemStack) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
-    if (!itemCondition.met(itemStack)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
+    if (!itemStackPredicate.test(itemStack)) return 0f;
     return multiplier * playerMultiplier.getValue(player);
   }
 
@@ -53,7 +53,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     ItemUseMovementSpeedBonus bonus = new ItemUseMovementSpeedBonus(multiplier);
     bonus.playerMultiplier = this.playerMultiplier;
     bonus.playerCondition = this.playerCondition;
-    bonus.itemCondition = this.itemCondition;
+    bonus.itemStackPredicate = this.itemStackPredicate;
     return bonus;
   }
 
@@ -67,7 +67,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof ItemUseMovementSpeedBonus otherBonus)) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.itemCondition, this.itemCondition)) return false;
+    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) return false;
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 
@@ -80,7 +80,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     ItemUseMovementSpeedBonus mergedBonus = new ItemUseMovementSpeedBonus(mergedMultiplier);
     mergedBonus.playerMultiplier = this.playerMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
-    mergedBonus.itemCondition = this.itemCondition;
+    mergedBonus.itemStackPredicate = this.itemStackPredicate;
     return mergedBonus;
   }
 
@@ -90,7 +90,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     String keySuffix = isPositive() ? "positive" : "negative";
     String multiplierString = TooltipHelper.formatNumber(Mth.abs(multiplier) * 100);
     String descriptionKey = getDescriptionId() + "." + keySuffix;
-    Component itemConditionTooltip = itemCondition.getTooltip("plural");
+    Component itemConditionTooltip = itemStackPredicate.getTooltip("plural");
     if (isPositive() && multiplier == -1) {
       descriptionKey = getDescriptionId() + ".remove";
       tooltip = Component.translatable(descriptionKey, itemConditionTooltip);
@@ -119,7 +119,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 200, itemCondition)
+        .addSelectionMenu(0, 0, 200, itemStackPredicate)
         .setResponder(condition -> selectItemCondition(editor, consumer, condition))
         .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
     editor.increaseHeight(19);
@@ -176,7 +176,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
   private void selectPlayerCondition(
       SkillTreeEditor editor,
       Consumer<ItemUseMovementSpeedBonus> consumer,
-      LivingCondition condition) {
+      LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -184,7 +184,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
 
   private void addItemConditionWidgets(
       SkillTreeEditor editor, Consumer<ItemUseMovementSpeedBonus> consumer) {
-    itemCondition.addEditorWidgets(
+    itemStackPredicate.addEditorWidgets(
         editor,
         c -> {
           setItemCondition(c);
@@ -195,19 +195,19 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
   private void selectItemCondition(
       SkillTreeEditor editor,
       Consumer<ItemUseMovementSpeedBonus> consumer,
-      ItemCondition condition) {
+      ItemStackPredicate condition) {
     setItemCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
   }
 
-  public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
+  public SkillBonus<?> setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
 
-  public SkillBonus<?> setItemCondition(ItemCondition condition) {
-    this.itemCondition = condition;
+  public SkillBonus<?> setItemCondition(ItemStackPredicate condition) {
+    this.itemStackPredicate = condition;
     return this;
   }
 
@@ -229,7 +229,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
           SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
-      bonus.itemCondition = SerializationHelper.deserializeItemCondition(json);
+      bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
       return bonus;
     }
 
@@ -243,7 +243,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
           json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeItemCondition(json, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
     }
 
     @Override
@@ -254,7 +254,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
           SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
-      bonus.itemCondition = SerializationHelper.deserializeItemCondition(tag);
+      bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
       return bonus;
     }
 
@@ -268,7 +268,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
       SerializationHelper.serializeLivingMultiplier(
           tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeItemCondition(tag, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
       return tag;
     }
 
@@ -278,7 +278,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
       ItemUseMovementSpeedBonus bonus = new ItemUseMovementSpeedBonus(multiplier);
       bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
-      bonus.itemCondition = NetworkHelper.readItemCondition(buf);
+      bonus.itemStackPredicate = NetworkHelper.readItemCondition(buf);
       return bonus;
     }
 
@@ -290,13 +290,13 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
       buf.writeFloat(aBonus.multiplier);
       NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
-      NetworkHelper.writeItemCondition(buf, aBonus.itemCondition);
+      NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
     }
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
       return new ItemUseMovementSpeedBonus(-0.1f)
-          .setItemCondition(new EquipmentCondition(EquipmentCondition.Type.SHIELD));
+          .setItemCondition(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD));
     }
   }
 }

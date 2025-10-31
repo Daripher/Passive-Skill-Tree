@@ -5,9 +5,9 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTSkillRequirements;
-import daripher.skilltree.skill.bonus.condition.effect.EffectType;
-import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.provider.EffectAmountProvider;
+import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
+import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
+import daripher.skilltree.skill.bonus.function.EffectAmountFunction;
 import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,15 +15,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 
 public final class NumericValueRequirement implements SkillRequirement<NumericValueRequirement> {
-  private NumericValueCondition condition;
+  private FloatFunctionEntityPredicate condition;
 
-  public NumericValueRequirement(NumericValueCondition condition) {
+  public NumericValueRequirement(FloatFunctionEntityPredicate condition) {
     this.condition = condition;
   }
 
   @Override
-  public boolean isRequirementMet(Player player) {
-    return condition.isConditionMet(player);
+  public boolean test(Player player) {
+    return condition.test(player);
   }
 
   @Override
@@ -36,11 +36,11 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
   @Override
   public void addEditorWidgets(SkillTreeEditor editor, Consumer<NumericValueRequirement> consumer) {
     condition.addEditorWidgets(
-        editor, condition -> setCondition((NumericValueCondition) condition, consumer));
+        editor, condition -> setCondition((FloatFunctionEntityPredicate) condition, consumer));
   }
 
   public void setCondition(
-      NumericValueCondition condition, Consumer<NumericValueRequirement> consumer) {
+      FloatFunctionEntityPredicate condition, Consumer<NumericValueRequirement> consumer) {
     this.condition = condition;
     consumer.accept(this);
   }
@@ -58,8 +58,8 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
   public static class Serializer implements SkillRequirement.Serializer {
     @Override
     public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-      NumericValueCondition condition =
-          (NumericValueCondition) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(json);
+      FloatFunctionEntityPredicate condition =
+          (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(json);
       return new NumericValueRequirement(condition);
     }
 
@@ -72,8 +72,8 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
 
     @Override
     public SkillRequirement<?> deserialize(CompoundTag tag) {
-      NumericValueCondition condition =
-          (NumericValueCondition) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(tag);
+      FloatFunctionEntityPredicate condition =
+          (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(tag);
       return new NumericValueRequirement(condition);
     }
 
@@ -88,8 +88,8 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
 
     @Override
     public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-      NumericValueCondition condition =
-          (NumericValueCondition) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(buf);
+      FloatFunctionEntityPredicate condition =
+          (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get().deserialize(buf);
       return new NumericValueRequirement(condition);
     }
 
@@ -103,10 +103,10 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
     @Override
     public SkillRequirement<?> createDefaultInstance() {
       return new NumericValueRequirement(
-          new NumericValueCondition(
-              new EffectAmountProvider(EffectType.BENEFICIAL),
+          new FloatFunctionEntityPredicate(
+              new EffectAmountFunction(EffectType.BENEFICIAL),
               5,
-              NumericValueCondition.Logic.MORE));
+              FloatFunctionEntityPredicate.Logic.MORE));
     }
   }
 }

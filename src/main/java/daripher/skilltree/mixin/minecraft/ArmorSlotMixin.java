@@ -26,7 +26,7 @@ public abstract class ArmorSlotMixin extends Slot {
     if (!(container instanceof Inventory inventory)) return;
     for (CantUseItemBonus bonus :
         SkillBonusHandler.getSkillBonuses(inventory.player, CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().met(stack)) {
+      if (bonus.getItemCondition().test(stack)) {
         callbackInfo.setReturnValue(false);
         return;
       }

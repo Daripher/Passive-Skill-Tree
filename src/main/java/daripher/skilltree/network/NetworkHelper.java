@@ -5,10 +5,10 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
@@ -314,16 +314,16 @@ public class NetworkHelper {
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
 
-  public static void writeLivingCondition(FriendlyByteBuf buf, @Nonnull LivingCondition condition) {
-    LivingCondition.Serializer serializer = condition.getSerializer();
+  public static void writeLivingCondition(FriendlyByteBuf buf, @Nonnull LivingEntityPredicate condition) {
+    LivingEntityPredicate.Serializer serializer = condition.getSerializer();
     ResourceLocation serializerId = PSTRegistries.LIVING_CONDITIONS.get().getKey(serializer);
     buf.writeUtf(Objects.requireNonNull(serializerId).toString());
     serializer.serialize(buf, condition);
   }
 
-  public static @Nonnull LivingCondition readLivingCondition(FriendlyByteBuf buf) {
+  public static @Nonnull LivingEntityPredicate readLivingCondition(FriendlyByteBuf buf) {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    LivingCondition.Serializer serializer =
+    LivingEntityPredicate.Serializer serializer =
         PSTRegistries.LIVING_CONDITIONS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
@@ -343,16 +343,16 @@ public class NetworkHelper {
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
 
-  public static void writeItemCondition(FriendlyByteBuf buf, @Nonnull ItemCondition condition) {
-    ItemCondition.Serializer serializer = condition.getSerializer();
+  public static void writeItemCondition(FriendlyByteBuf buf, @Nonnull ItemStackPredicate condition) {
+    ItemStackPredicate.Serializer serializer = condition.getSerializer();
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     buf.writeUtf(Objects.requireNonNull(serializerId).toString());
     serializer.serialize(buf, condition);
   }
 
-  public static @Nonnull ItemCondition readItemCondition(FriendlyByteBuf buf) {
+  public static @Nonnull ItemStackPredicate readItemCondition(FriendlyByteBuf buf) {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    ItemCondition.Serializer serializer =
+    ItemStackPredicate.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(buf);
   }
@@ -412,18 +412,18 @@ public class NetworkHelper {
     return new MobEffectInstance(effect, buf.readInt(), buf.readInt());
   }
 
-  public static void writeValueProvider(FriendlyByteBuf buf, NumericValueProvider<?> provider) {
-    NumericValueProvider.Serializer serializer = provider.getSerializer();
-    ResourceLocation serializerId = PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(serializer);
+  public static void writeValueProvider(FriendlyByteBuf buf, FloatFunction<?> provider) {
+    FloatFunction.Serializer serializer = provider.getSerializer();
+    ResourceLocation serializerId = PSTRegistries.FLOAT_FUNCTIONS.get().getKey(serializer);
     Objects.requireNonNull(serializerId);
     buf.writeUtf(serializerId.toString());
     serializer.serialize(buf, provider);
   }
 
-  public static NumericValueProvider<?> readValueProvider(FriendlyByteBuf buf) {
+  public static FloatFunction<?> readValueProvider(FriendlyByteBuf buf) {
     ResourceLocation serializerId = new ResourceLocation(buf.readUtf());
-    NumericValueProvider.Serializer serializer =
-        PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getValue(serializerId);
+    FloatFunction.Serializer serializer =
+        PSTRegistries.FLOAT_FUNCTIONS.get().getValue(serializerId);
     Objects.requireNonNull(serializer);
     return serializer.deserialize(buf);
   }

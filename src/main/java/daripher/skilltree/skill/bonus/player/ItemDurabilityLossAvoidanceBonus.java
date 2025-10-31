@@ -8,10 +8,10 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.item.NoneItemCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -30,16 +30,16 @@ public final class ItemDurabilityLossAvoidanceBonus
     implements SkillBonus<ItemDurabilityLossAvoidanceBonus> {
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull ItemCondition itemCondition = NoneItemCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private @Nonnull ItemStackPredicate itemStackPredicate = NoneItemStackPredicate.INSTANCE;
 
   public ItemDurabilityLossAvoidanceBonus(float chance) {
     this.chance = chance;
   }
 
   public float getChance(Player player, ItemStack itemStack) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
-    if (!itemCondition.met(itemStack)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
+    if (!itemStackPredicate.test(itemStack)) return 0f;
     return chance * playerMultiplier.getValue(player);
   }
 
@@ -53,7 +53,7 @@ public final class ItemDurabilityLossAvoidanceBonus
     ItemDurabilityLossAvoidanceBonus bonus = new ItemDurabilityLossAvoidanceBonus(chance);
     bonus.playerMultiplier = this.playerMultiplier;
     bonus.playerCondition = this.playerCondition;
-    bonus.itemCondition = this.itemCondition;
+    bonus.itemStackPredicate = this.itemStackPredicate;
     return bonus;
   }
 
@@ -67,7 +67,7 @@ public final class ItemDurabilityLossAvoidanceBonus
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof ItemDurabilityLossAvoidanceBonus otherBonus)) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.itemCondition, this.itemCondition)) return false;
+    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) return false;
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 
@@ -81,7 +81,7 @@ public final class ItemDurabilityLossAvoidanceBonus
         new ItemDurabilityLossAvoidanceBonus(mergedChance);
     mergedBonus.playerMultiplier = this.playerMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
-    mergedBonus.itemCondition = this.itemCondition;
+    mergedBonus.itemStackPredicate = this.itemStackPredicate;
     return mergedBonus;
   }
 
@@ -89,12 +89,12 @@ public final class ItemDurabilityLossAvoidanceBonus
   public MutableComponent getTooltip() {
     MutableComponent tooltip;
     if (chance < 1f) {
-      tooltip = Component.translatable(getDescriptionId() + ".chance", itemCondition.getTooltip());
+      tooltip = Component.translatable(getDescriptionId() + ".chance", itemStackPredicate.getTooltip());
       tooltip =
           TooltipHelper.getSkillBonusTooltip(
               tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
     } else {
-      tooltip = Component.translatable(getDescriptionId(), itemCondition.getTooltip());
+      tooltip = Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip());
     }
     tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
@@ -118,7 +118,7 @@ public final class ItemDurabilityLossAvoidanceBonus
     editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 200, itemCondition)
+        .addSelectionMenu(0, 0, 200, itemStackPredicate)
         .setResponder(condition -> selectItemCondition(editor, consumer, condition))
         .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
     editor.increaseHeight(19);
@@ -175,7 +175,7 @@ public final class ItemDurabilityLossAvoidanceBonus
   private void selectPlayerCondition(
       SkillTreeEditor editor,
       Consumer<ItemDurabilityLossAvoidanceBonus> consumer,
-      LivingCondition condition) {
+      LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -183,7 +183,7 @@ public final class ItemDurabilityLossAvoidanceBonus
 
   private void addItemConditionWidgets(
       SkillTreeEditor editor, Consumer<ItemDurabilityLossAvoidanceBonus> consumer) {
-    itemCondition.addEditorWidgets(
+    itemStackPredicate.addEditorWidgets(
         editor,
         c -> {
           setItemCondition(c);
@@ -194,19 +194,19 @@ public final class ItemDurabilityLossAvoidanceBonus
   private void selectItemCondition(
       SkillTreeEditor editor,
       Consumer<ItemDurabilityLossAvoidanceBonus> consumer,
-      ItemCondition condition) {
+      ItemStackPredicate condition) {
     setItemCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
   }
 
-  public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
+  public SkillBonus<?> setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
 
-  public SkillBonus<?> setItemCondition(ItemCondition condition) {
-    this.itemCondition = condition;
+  public SkillBonus<?> setItemCondition(ItemStackPredicate condition) {
+    this.itemStackPredicate = condition;
     return this;
   }
 
@@ -228,7 +228,7 @@ public final class ItemDurabilityLossAvoidanceBonus
           SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
-      bonus.itemCondition = SerializationHelper.deserializeItemCondition(json);
+      bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
       return bonus;
     }
 
@@ -242,7 +242,7 @@ public final class ItemDurabilityLossAvoidanceBonus
           json, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(
           json, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeItemCondition(json, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
     }
 
     @Override
@@ -253,7 +253,7 @@ public final class ItemDurabilityLossAvoidanceBonus
           SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
       bonus.playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
-      bonus.itemCondition = SerializationHelper.deserializeItemCondition(tag);
+      bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
       return bonus;
     }
 
@@ -267,7 +267,7 @@ public final class ItemDurabilityLossAvoidanceBonus
       SerializationHelper.serializeLivingMultiplier(
           tag, aBonus.playerMultiplier, "player_multiplier");
       SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeItemCondition(tag, aBonus.itemCondition);
+      SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
       return tag;
     }
 
@@ -277,7 +277,7 @@ public final class ItemDurabilityLossAvoidanceBonus
       ItemDurabilityLossAvoidanceBonus bonus = new ItemDurabilityLossAvoidanceBonus(chance);
       bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
-      bonus.itemCondition = NetworkHelper.readItemCondition(buf);
+      bonus.itemStackPredicate = NetworkHelper.readItemCondition(buf);
       return bonus;
     }
 
@@ -289,7 +289,7 @@ public final class ItemDurabilityLossAvoidanceBonus
       buf.writeFloat(aBonus.chance);
       NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
-      NetworkHelper.writeItemCondition(buf, aBonus.itemCondition);
+      NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
     }
 
     @Override

@@ -7,8 +7,8 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
 
 public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBonus> {
   private float multiplier;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
   public BlockBreakSpeedBonus(float multiplier) {
@@ -31,7 +31,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   }
 
   public float getMultiplier(Player player) {
-    if (!playerCondition.isConditionMet(player)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
     return multiplier * playerMultiplier.getValue(player);
   }
 
@@ -111,7 +111,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -151,7 +151,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
         });
   }
 
-  public BlockBreakSpeedBonus setPlayerCondition(@Nonnull LivingCondition playerCondition) {
+  public BlockBreakSpeedBonus setPlayerCondition(@Nonnull LivingEntityPredicate playerCondition) {
     this.playerCondition = playerCondition;
     return this;
   }
@@ -167,7 +167,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   }
 
   @Nonnull
-  public LivingCondition getPlayerCondition() {
+  public LivingEntityPredicate getPlayerCondition() {
     return playerCondition;
   }
 
@@ -190,7 +190,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
     @Override
     public BlockBreakSpeedBonus deserialize(JsonObject json) throws JsonParseException {
       float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
-      LivingCondition playerCondition =
+      LivingEntityPredicate playerCondition =
           SerializationHelper.deserializeLivingCondition(json, "player_condition");
       LivingMultiplier playerMultiplier =
           SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
@@ -214,7 +214,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
     @Override
     public BlockBreakSpeedBonus deserialize(CompoundTag tag) {
       float multiplier = tag.getFloat("multiplier");
-      LivingCondition playerCondition =
+      LivingEntityPredicate playerCondition =
           SerializationHelper.deserializeLivingCondition(tag, "player_condition");
       LivingMultiplier playerMultiplier =
           SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
@@ -238,7 +238,7 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
     @Override
     public BlockBreakSpeedBonus deserialize(FriendlyByteBuf buf) {
-      LivingCondition playerCondition = NetworkHelper.readLivingCondition(buf);
+      LivingEntityPredicate playerCondition = NetworkHelper.readLivingCondition(buf);
       LivingMultiplier playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       return new BlockBreakSpeedBonus(buf.readFloat())
           .setPlayerCondition(playerCondition)

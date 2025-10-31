@@ -39,7 +39,7 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
   }
 
   @Override
-  public boolean isRequirementMet(Player player) {
+  public boolean test(Player player) {
     StatType<?> statType = ForgeRegistries.STAT_TYPES.getValue(statTypeId);
     Objects.requireNonNull(statType);
     int statValue = getStatValue(player, statType);

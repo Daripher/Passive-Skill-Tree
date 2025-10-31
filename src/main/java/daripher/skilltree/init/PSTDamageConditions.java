@@ -2,10 +2,11 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.skill.bonus.condition.damage.*;
 
 import java.util.List;
 import java.util.Objects;
+
+import daripher.skilltree.skill.bonus.predicate.damage.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

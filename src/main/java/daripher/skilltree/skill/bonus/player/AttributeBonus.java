@@ -10,12 +10,12 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.provider.AttributeValueProvider;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
+import daripher.skilltree.skill.bonus.function.AttributeValueFunction;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NumericValueMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -35,7 +35,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   private Attribute attribute;
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
 
   public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
     this.attribute = attribute;
@@ -44,7 +44,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   @Override
   public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (playerCondition != NoneLivingCondition.INSTANCE
+    if (playerCondition != NoneLivingEntityPredicate.INSTANCE
         || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
       return;
     }
@@ -77,8 +77,8 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     if (!isDynamic()) {
       return;
     }
-    if (playerCondition != NoneLivingCondition.INSTANCE) {
-      if (!playerCondition.isConditionMet(player)) {
+    if (playerCondition != NoneLivingEntityPredicate.INSTANCE) {
+      if (!playerCondition.test(player)) {
         onSkillRemoved(player);
         return;
       }
@@ -92,7 +92,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   }
 
   public boolean isDynamic() {
-    return playerCondition != NoneLivingCondition.INSTANCE
+    return playerCondition != NoneLivingEntityPredicate.INSTANCE
         || playerMultiplier != NoneLivingMultiplier.INSTANCE;
   }
 
@@ -207,12 +207,12 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   private boolean isPercentageRegeneration() {
     return modifier.getOperation() == AttributeModifier.Operation.ADDITION
-        && attribute == PSTAttributes.REGENERATION.get()
-        && playerMultiplier instanceof NumericValueMultiplier numericValueMultiplier
-        && numericValueMultiplier.getValueProvider()
-            instanceof AttributeValueProvider attributeValueProvider
-        && attributeValueProvider.getAttribute() == Attributes.MAX_HEALTH
-        && numericValueMultiplier.getDivisor() == 1;
+           && attribute == PSTAttributes.REGENERATION.get()
+           && playerMultiplier instanceof FloatFunctionMultiplier floatFunctionMultiplier
+           && floatFunctionMultiplier.getFloatFunction()
+            instanceof AttributeValueFunction attributeValueFunction
+           && attributeValueFunction.getAttribute() == Attributes.MAX_HEALTH
+           && floatFunctionMultiplier.getDivisor() == 1;
   }
 
   @Override
@@ -269,7 +269,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingEntityPredicate condition) {
     setCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -335,7 +335,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
             modifier.getId(), modifier.getName(), modifier.getAmount(), operation);
   }
 
-  public SkillBonus<?> setCondition(LivingCondition condition) {
+  public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }

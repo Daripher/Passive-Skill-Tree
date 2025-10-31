@@ -8,7 +8,7 @@ import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.MobEffectInstanceAccessor;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.event.*;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
@@ -126,7 +126,7 @@ public class SkillBonusHandler {
   private static float getRepairEfficiency(Player player, ItemStack stack) {
     float efficiency = 1f;
     for (RepairEfficiencyBonus bonus : getSkillBonuses(player, RepairEfficiencyBonus.class)) {
-      if (bonus.getItemCondition().met(stack)) {
+      if (bonus.getItemCondition().test(stack)) {
         efficiency += bonus.getMultiplier();
       }
     }
@@ -442,7 +442,7 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyCantUseItemBonus(AttackEntityEvent event) {
     for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().met(event.getEntity().getMainHandItem())) {
+      if (bonus.getItemCondition().test(event.getEntity().getMainHandItem())) {
         event.setCanceled(true);
         return;
       }
@@ -452,7 +452,7 @@ public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyCantUseItemBonus(PlayerInteractEvent event) {
     for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().met(event.getItemStack())) {
+      if (bonus.getItemCondition().test(event.getItemStack())) {
         event.setCancellationResult(InteractionResult.FAIL);
         if (event.isCancelable()) {
           event.setCanceled(true);
@@ -466,7 +466,7 @@ public class SkillBonusHandler {
   public static void applyCantUseItemBonus(CurioEquipEvent event) {
     if (!(event.getEntity() instanceof Player player)) return;
     for (CantUseItemBonus bonus : getSkillBonuses(player, CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().met(event.getStack())) {
+      if (bonus.getItemCondition().test(event.getStack())) {
         event.setResult(Event.Result.DENY);
         return;
       }
@@ -479,7 +479,7 @@ public class SkillBonusHandler {
     Player player = Minecraft.getInstance().player;
     if (player == null) return;
     for (CantUseItemBonus bonus : getSkillBonuses(player, CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().met(event.getItemStack())) {
+      if (bonus.getItemCondition().test(event.getItemStack())) {
         Component tooltip =
             Component.translatable("item.cant_use.info").withStyle(ChatFormatting.RED);
         event.getTooltipElements().add(Either.left(tooltip));

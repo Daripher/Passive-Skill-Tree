@@ -2,10 +2,10 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.skill.bonus.condition.enchantment.ArmorEnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.NoneEnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.WeaponEnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.ArmorEnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.NoneEnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.WeaponEnchantmentCondition;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;

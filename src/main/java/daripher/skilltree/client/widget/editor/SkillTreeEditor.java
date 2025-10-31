@@ -13,11 +13,11 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.enchantment.EnchantmentCondition;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
@@ -186,12 +186,12 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
   }
 
   @SuppressWarnings("rawtypes")
-  public SelectionMenuButton<NumericValueProvider> addSelectionMenu(
-      int x, int y, int width, NumericValueProvider defaultValue) {
-    Collection<NumericValueProvider> values = PSTNumericValueProviders.providerList();
+  public SelectionMenuButton<FloatFunction> addSelectionMenu(
+      int x, int y, int width, FloatFunction defaultValue) {
+    Collection<FloatFunction> values = PSTFloatFunctions.providerList();
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
-        .setElementNameGetter(p -> Component.literal(PSTNumericValueProviders.getName(p)));
+        .setElementNameGetter(p -> Component.literal(PSTFloatFunctions.getName(p)));
   }
 
   public SelectionMenuButton<Attribute> addSelectionMenu(
@@ -202,9 +202,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         .setElementNameGetter(a -> Component.literal(PSTAttributes.getName(a)));
   }
 
-  public SelectionMenuButton<LivingCondition> addSelectionMenu(
-      int x, int y, int width, LivingCondition defaultValue) {
-    Collection<LivingCondition> values = PSTLivingConditions.conditionsList();
+  public SelectionMenuButton<LivingEntityPredicate> addSelectionMenu(
+      int x, int y, int width, LivingEntityPredicate defaultValue) {
+    Collection<LivingEntityPredicate> values = PSTLivingConditions.conditionsList();
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
         .setElementNameGetter(c -> Component.literal(PSTLivingConditions.getName(c)));
@@ -218,9 +218,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         .setElementNameGetter(m -> Component.literal(PSTLivingMultipliers.getName(m)));
   }
 
-  public SelectionMenuButton<ItemCondition> addSelectionMenu(
-      int x, int y, int width, ItemCondition defaultValue) {
-    Collection<ItemCondition> values = PSTItemConditions.conditionsList();
+  public SelectionMenuButton<ItemStackPredicate> addSelectionMenu(
+      int x, int y, int width, ItemStackPredicate defaultValue) {
+    Collection<ItemStackPredicate> values = PSTItemConditions.conditionsList();
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
         .setElementNameGetter(c -> Component.literal(PSTItemConditions.getName(c)));

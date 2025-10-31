@@ -7,11 +7,11 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.MeleeDamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.MeleeDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import java.util.Objects;
@@ -32,8 +32,8 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
   private float chance;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingMultiplier attackerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
-  private @Nonnull LivingCondition attackerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+  private @Nonnull LivingEntityPredicate attackerCondition = NoneLivingEntityPredicate.INSTANCE;
   private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
 
   public DamageAvoidanceBonus(float chance) {
@@ -43,8 +43,8 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
   public float getAvoidanceChance(
       DamageSource source, Player player, @Nullable LivingEntity attacker) {
     if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.isConditionMet(player)) return 0f;
-    if (!attackerCondition.isConditionMet(attacker)) return 0f;
+    if (!playerCondition.test(player)) return 0f;
+    if (!attackerCondition.test(attacker)) return 0f;
     float result = chance * playerMultiplier.getValue(player);
     if (attacker != null) {
       result *= attackerMultiplier.getValue(attacker);
@@ -217,7 +217,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
   }
 
   private void selectTargetCondition(
-      SkillTreeEditor editor, Consumer<DamageAvoidanceBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<DamageAvoidanceBonus> consumer, LivingEntityPredicate condition) {
     setTargetCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -234,7 +234,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
   }
 
   private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<DamageAvoidanceBonus> consumer, LivingCondition condition) {
+      SkillTreeEditor editor, Consumer<DamageAvoidanceBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -246,7 +246,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
     consumer.accept(this.copy());
   }
 
-  public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
+  public SkillBonus<?> setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
@@ -256,7 +256,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
     return this;
   }
 
-  public SkillBonus<?> setTargetCondition(LivingCondition condition) {
+  public SkillBonus<?> setTargetCondition(LivingEntityPredicate condition) {
     this.attackerCondition = condition;
     return this;
   }

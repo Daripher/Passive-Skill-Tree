@@ -34,7 +34,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
   }
 
   @Override
-  public boolean isRequirementMet(Player player) {
+  public boolean test(Player player) {
     if (player.level().isClientSide) {
       LocalPlayer localPlayer = (LocalPlayer) player;
       ClientAdvancements advancements = localPlayer.connection.getAdvancements();

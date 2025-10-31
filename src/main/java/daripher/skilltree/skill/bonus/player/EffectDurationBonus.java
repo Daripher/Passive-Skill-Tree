@@ -8,9 +8,9 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.condition.effect.EffectType;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import net.minecraft.ChatFormatting;
@@ -30,10 +30,10 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
   private EffectType effectType;
   private float duration;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition playerCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
   private SkillBonus.Target target;
   private @Nonnull LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingCondition enemyCondition = NoneLivingCondition.INSTANCE;
+  private @Nonnull LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
 
   public EffectDurationBonus(EffectType effectType, float duration, SkillBonus.Target target) {
     this.effectType = effectType;
@@ -43,12 +43,12 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
 
   public float getDuration(@Nullable Player effectSource, LivingEntity entity) {
     if (target == Target.PLAYER) {
-      if (!playerCondition.isConditionMet(entity)) return 0f;
+      if (!playerCondition.test(entity)) return 0f;
       return duration * playerMultiplier.getValue(entity);
     }
-    if (!enemyCondition.isConditionMet(entity)) return 0f;
+    if (!enemyCondition.test(entity)) return 0f;
     float duration = this.duration;
-    if (effectSource != null && !playerCondition.isConditionMet(effectSource)) return 0f;
+    if (effectSource != null && !playerCondition.test(effectSource)) return 0f;
     return duration * playerMultiplier.getValue(entity) * enemyMultiplier.getValue(entity);
   }
 
@@ -167,7 +167,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
     editor.rebuildWidgets();
   }
 
-  private void selectPlayerCondition(SkillTreeEditor editor, Consumer<EffectDurationBonus> consumer, LivingCondition condition) {
+  private void selectPlayerCondition(SkillTreeEditor editor, Consumer<EffectDurationBonus> consumer, LivingEntityPredicate condition) {
     setPlayerCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -179,7 +179,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
     editor.rebuildWidgets();
   }
 
-  private void selectEnemyCondition(SkillTreeEditor editor, Consumer<EffectDurationBonus> consumer, LivingCondition condition) {
+  private void selectEnemyCondition(SkillTreeEditor editor, Consumer<EffectDurationBonus> consumer, LivingEntityPredicate condition) {
     setEnemyCondition(condition);
     consumer.accept(this.copy());
     editor.rebuildWidgets();
@@ -237,7 +237,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
     this.effectType = effectType;
   }
 
-  public SkillBonus<?> setPlayerCondition(LivingCondition condition) {
+  public SkillBonus<?> setPlayerCondition(LivingEntityPredicate condition) {
     this.playerCondition = condition;
     return this;
   }
@@ -251,7 +251,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
     this.target = target;
   }
 
-  public void setEnemyCondition(@Nonnull LivingCondition enemyCondition) {
+  public void setEnemyCondition(@Nonnull LivingEntityPredicate enemyCondition) {
     this.enemyCondition = enemyCondition;
   }
 

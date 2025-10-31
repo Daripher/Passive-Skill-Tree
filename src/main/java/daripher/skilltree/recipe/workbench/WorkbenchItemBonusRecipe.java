@@ -7,7 +7,7 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.network.NetworkHelper;
-import daripher.skilltree.skill.bonus.condition.item.ItemCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
 
@@ -27,17 +27,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
-  private final ItemCondition baseItemCondition;
+  private final ItemStackPredicate baseItemStackPredicate;
   private final ItemBonus<?> itemBonus;
 
   public WorkbenchItemBonusRecipe(
       ResourceLocation id,
-      ItemCondition baseItemCondition,
+      ItemStackPredicate baseItemStackPredicate,
       Map<Ingredient, Integer> ingredients,
       boolean requiresPassiveSkill,
       ItemBonus<?> itemBonus) {
     super(id, ingredients, requiresPassiveSkill);
-    this.baseItemCondition = baseItemCondition;
+    this.baseItemStackPredicate = baseItemStackPredicate;
     this.itemBonus = itemBonus;
   }
 
@@ -49,7 +49,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
 
   @Override
   public boolean isValidBaseItem(ItemStack itemStack) {
-    return baseItemCondition.met(itemStack);
+    return baseItemStackPredicate.test(itemStack);
   }
 
   @Override
@@ -88,7 +88,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
     @Override
     public @NotNull WorkbenchItemBonusRecipe fromJson(
         @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
-      ItemCondition baseItemCondition =
+      ItemStackPredicate baseItemStackPredicate =
           SerializationHelper.deserializeItemCondition(jsonObject, "base_item_condition");
       ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
       boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
@@ -101,13 +101,13 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
         ingredients.put(ingredient, requiredAmount);
       }
       return new WorkbenchItemBonusRecipe(
-          id, baseItemCondition, ingredients, requiresPassiveSkill, itemBonus);
+          id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
     }
 
     @Override
     public @Nullable WorkbenchItemBonusRecipe fromNetwork(
         @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
-      ItemCondition baseItemCondition = NetworkHelper.readItemCondition(buf);
+      ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemCondition(buf);
       ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
       boolean requiresPassiveSkill = buf.readBoolean();
       Map<Ingredient, Integer> ingredients = new HashMap<>();
@@ -116,12 +116,12 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
         ingredients.put(Ingredient.fromNetwork(buf), buf.readInt());
       }
       return new WorkbenchItemBonusRecipe(
-          id, baseItemCondition, ingredients, requiresPassiveSkill, itemBonus);
+          id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
     }
 
     @Override
     public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchItemBonusRecipe recipe) {
-      NetworkHelper.writeItemCondition(buf, recipe.baseItemCondition);
+      NetworkHelper.writeItemCondition(buf, recipe.baseItemStackPredicate);
       NetworkHelper.writeItemBonus(buf, recipe.itemBonus);
       buf.writeBoolean(recipe.requiresPassiveSkill());
       int ingredientsCount = recipe.getAdditionalIngredients().size();

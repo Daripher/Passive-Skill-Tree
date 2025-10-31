@@ -4,12 +4,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
-import daripher.skilltree.skill.bonus.condition.damage.DamageCondition;
-import daripher.skilltree.skill.bonus.condition.damage.NoneDamageCondition;
-import daripher.skilltree.skill.bonus.condition.item.*;
-import daripher.skilltree.skill.bonus.condition.living.LivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.NoneLivingCondition;
-import daripher.skilltree.skill.bonus.condition.living.numeric.NumericValueProvider;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
@@ -94,21 +96,21 @@ public class SerializationHelper {
     json.add(name, multiplierJson);
   }
 
-  public static @Nonnull LivingCondition deserializeLivingCondition(JsonObject json, String name) {
-    if (!json.has(name)) return NoneLivingCondition.INSTANCE;
+  public static @Nonnull LivingEntityPredicate deserializeLivingCondition(JsonObject json, String name) {
+    if (!json.has(name)) return NoneLivingEntityPredicate.INSTANCE;
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
-    LivingCondition.Serializer serializer =
+    LivingEntityPredicate.Serializer serializer =
         PSTRegistries.LIVING_CONDITIONS.get().getValue(serializerId);
     String errorMessage = "Unknown living condition: " + serializerId;
     return deserializeObject(serializer, conditionJson, errorMessage);
   }
 
   public static void serializeLivingCondition(
-      JsonObject json, @Nonnull LivingCondition condition, String name) {
-    if (condition == NoneLivingCondition.INSTANCE) return;
+      JsonObject json, @Nonnull LivingEntityPredicate condition, String name) {
+    if (condition == NoneLivingEntityPredicate.INSTANCE) return;
     JsonObject conditionJson = new JsonObject();
-    LivingCondition.Serializer serializer = condition.getSerializer();
+    LivingEntityPredicate.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.LIVING_CONDITIONS.get().getKey(serializer);
     Objects.requireNonNull(serializerId);
@@ -146,28 +148,28 @@ public class SerializationHelper {
     json.add(name, conditionJson);
   }
 
-  public static @Nonnull ItemCondition deserializeItemCondition(JsonObject json) {
+  public static @Nonnull ItemStackPredicate deserializeItemCondition(JsonObject json) {
     return deserializeItemCondition(json, "item_condition");
   }
 
-  public static @Nonnull ItemCondition deserializeItemCondition(JsonObject json, String name) {
-    if (!json.has(name)) return NoneItemCondition.INSTANCE;
+  public static @Nonnull ItemStackPredicate deserializeItemCondition(JsonObject json, String name) {
+    if (!json.has(name)) return NoneItemStackPredicate.INSTANCE;
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = new ResourceLocation(conditionJson.get("type").getAsString());
-    ItemCondition.Serializer serializer =
+    ItemStackPredicate.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
     String errorMessage = "Unknown item condition: " + serializerId;
     return deserializeObject(serializer, conditionJson, errorMessage);
   }
 
-  public static void serializeItemCondition(JsonObject json, @Nonnull ItemCondition condition) {
+  public static void serializeItemCondition(JsonObject json, @Nonnull ItemStackPredicate condition) {
     serializeItemCondition(json, condition, "item_condition");
   }
 
-  public static void serializeItemCondition(JsonObject json, @Nonnull ItemCondition condition, String name) {
-    if (condition == NoneItemCondition.INSTANCE) return;
+  public static void serializeItemCondition(JsonObject json, @Nonnull ItemStackPredicate condition, String name) {
+    if (condition == NoneItemStackPredicate.INSTANCE) return;
     JsonObject conditionJson = new JsonObject();
-    ItemCondition.Serializer serializer = condition.getSerializer();
+    ItemStackPredicate.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     conditionJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
@@ -204,11 +206,11 @@ public class SerializationHelper {
     json.addProperty("effect", Objects.requireNonNull(effectId).toString());
   }
 
-  public static @Nullable PotionCondition.Type deserializePotionType(JsonObject json) {
-    return PotionCondition.Type.byName(json.get("potion_type").getAsString());
+  public static @Nullable PotionStackPredicate.Type deserializePotionType(JsonObject json) {
+    return PotionStackPredicate.Type.byName(json.get("potion_type").getAsString());
   }
 
-  public static void serializePotionType(JsonObject json, PotionCondition.Type type) {
+  public static void serializePotionType(JsonObject json, PotionStackPredicate.Type type) {
     json.addProperty("potion_type", type.getName());
   }
 
@@ -225,19 +227,19 @@ public class SerializationHelper {
     json.addProperty("amplifier", effect.getAmplifier());
   }
 
-  public static NumericValueProvider<?> deserializeValueProvider(JsonObject json) {
+  public static FloatFunction<?> deserializeValueProvider(JsonObject json) {
     JsonObject providerJson = json.getAsJsonObject("value_provider");
     String type = providerJson.get("type").getAsString();
     ResourceLocation serializerId = new ResourceLocation(type);
-    NumericValueProvider.Serializer serializer =
-        PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getValue(serializerId);
+    FloatFunction.Serializer serializer =
+        PSTRegistries.FLOAT_FUNCTIONS.get().getValue(serializerId);
     String errorMessage = "Unknown value provider: " + serializerId;
     return deserializeObject(serializer, providerJson, errorMessage);
   }
 
-  public static void serializeValueProvider(JsonObject json, NumericValueProvider<?> provider) {
+  public static void serializeValueProvider(JsonObject json, FloatFunction<?> provider) {
     ResourceLocation serializerId =
-        PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(provider.getSerializer());
+        PSTRegistries.FLOAT_FUNCTIONS.get().getKey(provider.getSerializer());
     JsonObject bonusJson = new JsonObject();
     provider.getSerializer().serialize(bonusJson, provider);
     bonusJson.addProperty("type", Objects.requireNonNull(serializerId).toString());
@@ -304,17 +306,17 @@ public class SerializationHelper {
     tag.put(name, multiplierTag);
   }
 
-  public static @Nonnull LivingCondition deserializeLivingCondition(CompoundTag tag, String name) {
+  public static @Nonnull LivingEntityPredicate deserializeLivingCondition(CompoundTag tag, String name) {
     CompoundTag conditionTag = tag.getCompound(name);
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
-    LivingCondition.Serializer serializer =
+    LivingEntityPredicate.Serializer serializer =
         PSTRegistries.LIVING_CONDITIONS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
   public static void serializeLivingCondition(
-      CompoundTag tag, @Nonnull LivingCondition condition, String name) {
-    LivingCondition.Serializer serializer = condition.getSerializer();
+      CompoundTag tag, @Nonnull LivingEntityPredicate condition, String name) {
+    LivingEntityPredicate.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.LIVING_CONDITIONS.get().getKey(serializer);
     Objects.requireNonNull(serializerId);
@@ -347,16 +349,16 @@ public class SerializationHelper {
     tag.put(name, conditionTag);
   }
 
-  public static @Nonnull ItemCondition deserializeItemCondition(CompoundTag tag) {
+  public static @Nonnull ItemStackPredicate deserializeItemCondition(CompoundTag tag) {
     CompoundTag conditionTag = tag.getCompound("item_condition");
     ResourceLocation serializerId = new ResourceLocation(conditionTag.getString("type"));
-    ItemCondition.Serializer serializer =
+    ItemStackPredicate.Serializer serializer =
         PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(conditionTag);
   }
 
-  public static void serializeItemCondition(CompoundTag tag, @Nonnull ItemCondition condition) {
-    ItemCondition.Serializer serializer = condition.getSerializer();
+  public static void serializeItemCondition(CompoundTag tag, @Nonnull ItemStackPredicate condition) {
+    ItemStackPredicate.Serializer serializer = condition.getSerializer();
     CompoundTag conditionTag = serializer.serialize(condition);
     ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
     conditionTag.putString("type", Objects.requireNonNull(serializerId).toString());
@@ -392,11 +394,11 @@ public class SerializationHelper {
     tag.putString("effect", Objects.requireNonNull(effectId).toString());
   }
 
-  public static PotionCondition.Type deserializePotionType(CompoundTag tag) {
-    return PotionCondition.Type.byName(tag.getString("potion_type"));
+  public static PotionStackPredicate.Type deserializePotionType(CompoundTag tag) {
+    return PotionStackPredicate.Type.byName(tag.getString("potion_type"));
   }
 
-  public static void serializePotionType(CompoundTag tag, PotionCondition.Type type) {
+  public static void serializePotionType(CompoundTag tag, PotionStackPredicate.Type type) {
     tag.putString("category", type.getName());
   }
 
@@ -413,18 +415,18 @@ public class SerializationHelper {
     tag.putInt("amplifier", effect.getAmplifier());
   }
 
-  public static NumericValueProvider<?> deserializeValueProvider(CompoundTag tag) {
+  public static FloatFunction<?> deserializeValueProvider(CompoundTag tag) {
     CompoundTag providerTag = tag.getCompound("value_provider");
     String type = providerTag.getString("type");
     ResourceLocation serializerId = new ResourceLocation(type);
-    NumericValueProvider.Serializer serializer =
-        PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getValue(serializerId);
+    FloatFunction.Serializer serializer =
+        PSTRegistries.FLOAT_FUNCTIONS.get().getValue(serializerId);
     return Objects.requireNonNull(serializer).deserialize(providerTag);
   }
 
-  public static void serializeValueProvider(CompoundTag tag, NumericValueProvider<?> provider) {
+  public static void serializeValueProvider(CompoundTag tag, FloatFunction<?> provider) {
     ResourceLocation serializerId =
-        PSTRegistries.NUMERIC_VALUE_PROVIDERS.get().getKey(provider.getSerializer());
+        PSTRegistries.FLOAT_FUNCTIONS.get().getKey(provider.getSerializer());
     CompoundTag providerTag = provider.getSerializer().serialize(provider);
     providerTag.putString("type", Objects.requireNonNull(serializerId).toString());
     tag.put("value_provider", providerTag);
