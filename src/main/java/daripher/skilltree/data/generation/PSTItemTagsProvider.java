@@ -42,6 +42,6 @@ public class PSTItemTagsProvider extends ItemTagsProvider {
             Items.LEATHER_BOOTS,
             Items.LEATHER_CHESTPLATE,
             Items.LEATHER_HELMET,
-            Items.LEATHER_BOOTS);
+            Items.LEATHER_LEGGINGS);
   }
 }
