@@ -3,7 +3,6 @@ package daripher.skilltree.client.tooltip;
 import daripher.skilltree.effect.SkillBonusEffect;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
@@ -55,7 +54,8 @@ public class TooltipHelper {
         });
   }
 
-  public static MutableComponent getOptionalTooltip(String descriptionId, String subtype, Object... args) {
+  public static MutableComponent getOptionalTooltip(
+      String descriptionId, String subtype, Object... args) {
     String key = "%s.%s".formatted(descriptionId, subtype);
     MutableComponent tooltip = Component.translatable(key, args);
     if (!tooltip.getString().equals(key)) {
@@ -132,15 +132,21 @@ public class TooltipHelper {
 
   @NotNull
   public static String idToName(String path) {
+    if (path.isEmpty()) {
+      return path;
+    }
     String[] words = path.split("_");
     StringBuilder name = new StringBuilder();
-    Arrays.stream(words)
-        .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1))
-        .forEach(
-            w -> {
-              name.append(" ");
-              name.append(w);
-            });
+    for (String word : words) {
+      String string;
+      if (word.isEmpty()) {
+        string = word;
+      } else {
+        string = word.substring(0, 1).toUpperCase() + word.substring(1);
+      }
+      name.append(" ");
+      name.append(string);
+    }
     return name.substring(1);
   }
 
