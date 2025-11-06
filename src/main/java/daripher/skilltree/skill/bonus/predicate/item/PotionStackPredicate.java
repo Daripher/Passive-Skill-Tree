@@ -98,10 +98,10 @@ public final class PotionStackPredicate implements ItemStackPredicate {
     editor.addLabel(0, 0, "Type", ChatFormatting.GREEN);
     editor.increaseHeight(19);
     editor
-        .addSelection(0, 0, 200, 1, type)
+        .addSelection(0, 0, 190, 1, type)
         .setNameGetter(PotionStackPredicate.Type::getFormattedName)
         .setResponder(type -> selectPotionType(consumer, type));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
   }
 
   private void selectPotionType(Consumer<ItemStackPredicate> consumer, Type type) {

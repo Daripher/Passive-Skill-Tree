@@ -1,7 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.widget.Button;
-import daripher.skilltree.client.widget.SelectionList;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -9,14 +8,16 @@ import java.util.function.Function;
 import net.minecraft.network.chat.Component;
 
 public class SelectionMenuButton<T> extends Button {
-  private final SelectionList<T> selectionList;
-  private Runnable onMenuInit = () -> {};
-  private Consumer<T> responder = t -> {};
+  protected SelectionList<T> selectionList;
+  protected Runnable onMenuInit = () -> {};
+  protected Consumer<T> responder = t -> {};
+  protected int selectionListRows = 10;
+  protected int selectionListColumns = 10;
 
   public SelectionMenuButton(
       SkillTreeEditor editor, int x, int y, int width, String message, Collection<T> values) {
     super(x, y, width, 14, Component.literal(message));
-    this.selectionList = new SelectionList<>(0, 0, 200, values).setMaxDisplayed(8);
+    this.selectionList = new TextSelectionList<>(0, 0, 190, 14, values).setRows(8);
     setPressFunc(b -> selectMenu(editor));
   }
 
@@ -31,16 +32,27 @@ public class SelectionMenuButton<T> extends Button {
   }
 
   public SelectionMenuButton<T> setValue(T value) {
-    selectionList.setValue(value);
+    selectionList.selectElement(value);
     return this;
   }
 
   public SelectionMenuButton<T> setElementNameGetter(Function<T, Component> nameGetter) {
     selectionList.setNameGetter(nameGetter);
-    T value = selectionList.getValue();
-    if (getMessage().getString().isEmpty() && value != null) {
+    T value = selectionList.getSelectedElement();
+    if (value != null) {
       setMessage(selectionList.getNameGetter().apply(value));
     }
+    return this;
+  }
+
+  public SelectionMenuButton<T> setElementSize(int width, int height) {
+    selectionList.setElementSize(width, height);
+    return this;
+  }
+
+  public SelectionMenuButton<T> setSelectionListGridSize(int rows, int columns) {
+    this.selectionListRows = rows;
+    this.selectionListColumns = columns;
     return this;
   }
 
@@ -48,7 +60,7 @@ public class SelectionMenuButton<T> extends Button {
     this.onMenuInit = onMenuInit;
   }
 
-  private void selectMenu(SkillTreeEditor editor) {
+  protected void selectMenu(SkillTreeEditor editor) {
     SelectionMenu<T> menu =
         new SelectionMenu<>(editor, editor.getSelectedMenu(), selectionList, onMenuInit)
             .setResponder(responder);

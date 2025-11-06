@@ -1,6 +1,5 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
-import daripher.skilltree.client.widget.SelectionList;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import java.util.function.Consumer;
@@ -27,9 +26,13 @@ public class SelectionMenu<T> extends EditorMenu {
     clearWidgets();
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
+    editor.addTextField(0, 0, 200, 14, "")
+        .setHint("Search")
+        .setResponder(selectionList::setSearchString);
+    editor.increaseHeight(19);
     selectionList.setX(editor.getWidgetsX(0));
     selectionList.setY(editor.getWidgetsY(0));
-    editor.increaseHeight(selectionList.getMaxDisplayed() * 14 + 10);
+    editor.increaseHeight(selectionList.getHeight() + 10);
     selectionList.setResponder(responder);
     addWidget(selectionList);
     onInit.run();

@@ -83,15 +83,15 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
   @Override
   public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<GainedExperienceBonus> consumer) {
-    editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
-    editor.addLabel(110, 0, "Source", ChatFormatting.GOLD);
+    editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
+    editor.addLabel(0, 0, "Source", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addNumericTextField(0, 0, 90, 14, multiplier)
+    editor.addNumericTextField(110, 0, 90, 14, multiplier)
         .setNumericResponder(value -> selectMultiplier(consumer, value));
-    editor.addSelection(110, 0, 90, 1, experienceSource)
+    editor.addSelection(0, 0, 80, 1, experienceSource)
         .setNameGetter(ExperienceSource::getFormattedName)
         .setResponder(experienceSource -> selectExperienceSource(consumer, experienceSource));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
     editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor.addSelectionMenu(0, 0, 200, playerMultiplier)

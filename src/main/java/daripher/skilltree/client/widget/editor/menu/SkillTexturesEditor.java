@@ -4,6 +4,8 @@ import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.skill.PassiveSkill;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 
@@ -17,35 +19,64 @@ public class SkillTexturesEditor extends EditorMenu {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
-    if (editor.canEdit(PassiveSkill::getFrameTexture)) {
-      editor.addLabel(0, 0, "Frame Texture", ChatFormatting.GOLD);
-      editor.increaseHeight(19);
-      editor
-          .addSelectionMenu(0, 0, 200, SkillTexturesData.BORDERS)
-          .setValue(selectedSkill.getFrameTexture())
-          .setElementNameGetter(TooltipHelper::getTextureName)
-          .setResponder(this::setFrameTextures);
-      editor.increaseHeight(19);
+    if (selectedSkill == null) {
+      return;
     }
-    if (editor.canEdit(PassiveSkill::getTooltipFrameTexture)) {
-      editor.addLabel(0, 0, "Tooltip Frame", ChatFormatting.GOLD);
+    addTextureEditorButton(
+        "Frame Texture",
+        this::setFrameTextures,
+        PassiveSkill::getFrameTexture,
+        3,
+        2,
+        95,
+        19,
+        48,
+        16);
+    addTextureEditorButton(
+        "Tooltip Frame",
+        this::setTooltipFrameTextures,
+        PassiveSkill::getTooltipFrameTexture,
+        4,
+        1,
+        190,
+        19,
+        88,
+        16);
+    addTextureEditorButton(
+        "Icon Texture",
+        this::setIconTextures,
+        PassiveSkill::getIconTexture,
+        10,
+        10,
+        19,
+        19,
+        16,
+        16);
+  }
+
+  private void addTextureEditorButton(
+      String label,
+      Consumer<ResourceLocation> setTextureFunction,
+      Function<PassiveSkill, ResourceLocation> textureProvider,
+      int rows,
+      int columns,
+      int elementWidth,
+      int elementHeight,
+      int elementTextureWidth,
+      int elementTextureHeight) {
+    if (editor.canEdit(textureProvider)) {
+      PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
+      ResourceLocation texture = textureProvider.apply(selectedSkill);
+      editor.addLabel(0, 0, label, ChatFormatting.GOLD);
       editor.increaseHeight(19);
+      String textureFolder = SkillTexturesData.getTextureFolder(texture);
       editor
-          .addSelectionMenu(0, 0, 200, SkillTexturesData.TOOLTIP_BACKGROUNDS)
-          .setValue(selectedSkill.getTooltipFrameTexture())
-          .setResponder(this::setTooltipFrameTextures)
-          .setElementNameGetter(TooltipHelper::getTextureName);
-      editor.increaseHeight(19);
-    }
-    if (editor.canEdit(PassiveSkill::getIconTexture)) {
-      editor.addLabel(0, 0, "Icon Texture", ChatFormatting.GOLD);
-      editor.increaseHeight(19);
-      editor
-          .addSelectionMenu(0, 0, 200, SkillTexturesData.ICONS)
-          .setValue(selectedSkill.getIconTexture())
+          .addTextureSelectionMenu(0, 0, 200, texture, textureFolder)
+          .setElementTextureSize(elementTextureWidth, elementTextureHeight)
+          .setSelectionListGridSize(rows, columns)
           .setElementNameGetter(TooltipHelper::getTextureName)
-          .setResponder(this::setIconTextures);
+          .setElementSize(elementWidth, elementHeight)
+          .setResponder(setTextureFunction);
       editor.increaseHeight(19);
     }
   }

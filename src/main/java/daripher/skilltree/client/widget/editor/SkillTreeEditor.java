@@ -1,11 +1,15 @@
 package daripher.skilltree.client.widget.editor;
 
+import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.client.widget.editor.menu.MainEditorMenu;
+import daripher.skilltree.client.widget.editor.menu.selection.SelectionList;
 import daripher.skilltree.client.widget.editor.menu.selection.SelectionMenuButton;
+import daripher.skilltree.client.widget.editor.menu.selection.TextSelectionList;
+import daripher.skilltree.client.widget.editor.menu.selection.TextureSelectionMenuButton;
 import daripher.skilltree.client.widget.group.WidgetGroup;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.client.widget.skill.SkillButtons;
@@ -13,13 +17,13 @@ import daripher.skilltree.init.*;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.function.FloatFunction;
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import daripher.skilltree.skill.requirement.StatRequirement;
 import java.util.Collection;
@@ -140,6 +144,20 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
   public CheckBox addCheckBox(int x, int y, boolean value) {
     return addWidget(new CheckBox(getWidgetsX(x), getWidgetsY(y), value));
+  }
+
+  public TextureSelectionMenuButton addTextureSelectionMenu(
+      int x, int y, int width, ResourceLocation currentValue, String folder) {
+    Collection<ResourceLocation> values = SkillTexturesData.getTexturesInFolder(folder);
+    x = getWidgetsX(x);
+    y = getWidgetsY(y);
+    String message = currentValue.toString();
+    TextureSelectionMenuButton button =
+        (TextureSelectionMenuButton)
+            new TextureSelectionMenuButton(this, x, y, width, message, folder, values)
+                .setValue(currentValue)
+                .setElementNameGetter(TooltipHelper::getTextureName);
+    return addWidget(button);
   }
 
   @SuppressWarnings("rawtypes")
@@ -273,9 +291,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
   public <T> SelectionList<T> addSelection(
       int x, int y, int width, T defaultValue, Collection<T> values, int maxDisplayed) {
     SelectionList<T> widget =
-        new SelectionList<>(getWidgetsX(x), getWidgetsY(y), width, values)
-            .setMaxDisplayed(maxDisplayed)
-            .setValue(defaultValue);
+        new TextSelectionList<>(getWidgetsX(x), getWidgetsY(y), width, 14, values)
+            .setRows(maxDisplayed)
+            .selectElement(defaultValue);
     return addWidget(widget);
   }
 

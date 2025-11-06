@@ -107,12 +107,13 @@ public class EvasionEventListener implements SkillEventListener {
         .setResponder(multiplier -> selectTargetMultiplier(editor, consumer, multiplier))
         .setMenuInitFunc(() -> addTargetMultiplierWidgets(editor, consumer));
     editor.increaseHeight(19);
-    editor.addLabel(105, 0, "Target", ChatFormatting.GREEN);
+    editor.addLabel(0, 0, "Target", ChatFormatting.GREEN);
+    editor.increaseHeight(19);
     editor
-        .addSelection(105, 0, 95, 1, target)
+        .addSelection(0, 0, 80, 1, target)
         .setNameGetter(TooltipHelper::getTargetName)
         .setResponder(target -> selectTarget(consumer, target));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
   }
 
   private void selectTarget(Consumer<SkillEventListener> consumer, SkillBonus.Target target) {

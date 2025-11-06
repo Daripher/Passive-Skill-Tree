@@ -124,15 +124,15 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
         .setElementNameGetter(effectType -> Component.literal(effectType.name()))
         .setResponder(effectType -> selectEffectType(consumer, effectType));
     editor.increaseHeight(19);
-    editor.addLabel(0, 0, "Duration", ChatFormatting.GOLD);
-    editor.addLabel(65, 0, "Target", ChatFormatting.GOLD);
+    editor.addLabel(110, 0, "Duration", ChatFormatting.GOLD);
+    editor.addLabel(0, 0, "Target", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addNumericTextField(0, 0, 50, 14, duration)
+    editor.addNumericTextField(110, 0, 50, 14, duration)
         .setNumericResponder(value -> selectDuration(consumer, value));
-    editor.addSelection(65, 0, 50, 1, target)
+    editor.addSelection(0, 0, 80, 1, target)
         .setNameGetter(target -> Component.literal(target.toString()))
         .setResponder(target -> selectTarget(editor, consumer, target));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
     editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor.addSelectionMenu(0, 0, 200, playerCondition)

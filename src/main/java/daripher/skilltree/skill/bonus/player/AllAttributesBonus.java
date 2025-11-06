@@ -190,16 +190,16 @@ public final class AllAttributesBonus
   @Override
   public void addEditorWidgets(
       SkillTreeEditor editor, int index, Consumer<AllAttributesBonus> consumer) {
-    editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
-    editor.addLabel(55, 0, "Operation", ChatFormatting.GOLD);
+    editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
+    editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addNumericTextField(0, 0, 50, 14, modifier.getAmount())
+        .addNumericTextField(110, 0, 50, 14, modifier.getAmount())
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor
-        .addOperationSelection(55, 0, 145, modifier.getOperation())
+        .addOperationSelection(0, 0, 80, modifier.getOperation())
         .setResponder(operation -> selectOperation(consumer, operation));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
     editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor

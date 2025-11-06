@@ -121,16 +121,16 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
   @Override
   public void addEditorWidgets(
       SkillTreeEditor editor, int row, Consumer<DamageTakenBonus> consumer) {
-    editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
-    editor.addLabel(55, 0, "Operation", ChatFormatting.GOLD);
+    editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
+    editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addNumericTextField(0, 0, 50, 14, amount)
+        .addNumericTextField(110, 0, 50, 14, amount)
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor
-        .addOperationSelection(55, 0, 145, operation)
+        .addOperationSelection(0, 0, 80, operation)
         .setResponder(operation -> selectOperation(consumer, operation));
-    editor.increaseHeight(19);
+    editor.increaseHeight(29);
     editor.addLabel(0, 0, "Damage Condition", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
