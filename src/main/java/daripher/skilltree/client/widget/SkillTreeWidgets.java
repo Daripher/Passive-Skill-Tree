@@ -99,14 +99,16 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
       widget.setFocused(true);
       return widget.mouseClicked(mouseX, mouseY, button);
     }
-    SkillButton skill = skills.getWidgetAt(mouseX, mouseY);
-    if (skill == null) return false;
+    SkillButton skillButton = skills.getWidgetAt(mouseX, mouseY);
+    if (skillButton == null) {
+      return false;
+    }
     if (button == 0) {
       playButtonSound();
-      skillButtonPressed(skill);
+      skillButtonPressed(skillButton);
       return true;
     } else if (button == 1) {
-      ClientConfig.toggleFavoriteSkill(skill.skill);
+      ClientConfig.toggleFavoriteSkill(skillButton.skill);
       playButtonSound();
       return true;
     }
@@ -139,7 +141,9 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   }
 
   private void highlightSkills() {
-    if (skillPoints == 0) return;
+    if (skillPoints == 0) {
+      return;
+    }
     if (getLearnedSkillsOnTree().isEmpty() && newlyLearnedSkills.isEmpty()) {
       startingPoints.stream()
           .filter(button -> canLearnSkill(button.skill))
@@ -155,7 +159,9 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
             connection -> {
               SkillButton button1 = connection.getFirstButton();
               SkillButton button2 = connection.getSecondButton();
-              if (button1.skillLearned == button2.skillLearned) return;
+              if (button1.skillLearned == button2.skillLearned) {
+                return;
+              }
               if (connection.getType() != SkillConnection.Type.ONE_WAY) {
                 if (!button1.skillLearned && canLearnSkill(button1.skill)) {
                   button1.setCanLearn();

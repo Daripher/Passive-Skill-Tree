@@ -74,7 +74,9 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
     mouseY -= scrollY;
     for (T widget : widgets) {
       Rectangle2D.Double widgetArea = getWidgetArea(widget);
-      if (widgetArea.contains(mouseX, mouseY)) return widget;
+      if (widgetArea.contains(mouseX, mouseY)) {
+        return widget;
+      }
     }
     return null;
   }

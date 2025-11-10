@@ -4,13 +4,12 @@ import daripher.skilltree.client.widget.TickingWidget;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
 
 public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
   protected final Set<T> widgets = new HashSet<>();
@@ -154,8 +153,13 @@ public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implem
 
   public @Nullable T getWidgetAt(double mouseX, double mouseY) {
     for (T widget : widgets) {
+      if (!widget.visible) {
+        continue;
+      }
       Rectangle2D.Double widgetArea = getWidgetArea(widget);
-      if (widgetArea.contains(mouseX, mouseY)) return widget;
+      if (widgetArea.contains(mouseX, mouseY)) {
+        return widget;
+      }
     }
     return null;
   }
