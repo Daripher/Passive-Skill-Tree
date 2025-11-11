@@ -28,11 +28,6 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillButton extends Button {
-  private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
-  private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8);
-  private static final Style CLASS_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F);
-  private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xEB7530);
-  private static final Style GATEWAY_TITLE_STYLE = Style.EMPTY.withColor(0x849696);
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);
   private static final Style ID_STYLE = Style.EMPTY.withColor(0x545454);
   private final Supplier<Float> animationFunction;
@@ -243,32 +238,7 @@ public class SkillButton extends Button {
   }
 
   protected void addTitleTooltip(List<MutableComponent> tooltip) {
-    MutableComponent title;
-    if (skill.getTitle().isEmpty()) {
-      title = Component.translatable(getSkillId() + ".name");
-    } else {
-      title = Component.literal(skill.getTitle());
-    }
-    tooltip.add(title.withStyle(getTitleStyle()));
-  }
-
-  private Style getTitleStyle() {
-    String titleColor = skill.getTitleColor();
-    if (titleColor.isEmpty()) {
-      return width == 30
-          ? GATEWAY_TITLE_STYLE
-          : width == 24
-              ? CLASS_TITLE_STYLE
-              : width == 20
-                  ? NOTABLE_TITLE_STYLE
-                  : width == 32 ? KEYSTONE_TITLE_STYLE : LESSER_TITLE_STYLE;
-    } else {
-      try {
-        return Style.EMPTY.withColor(Integer.parseInt(titleColor, 16));
-      } catch (NumberFormatException e) {
-        return Style.EMPTY;
-      }
-    }
+    tooltip.add(TooltipHelper.getSkillTitle(skill));
   }
 
   protected void addIdTooltip(List<MutableComponent> tooltip) {

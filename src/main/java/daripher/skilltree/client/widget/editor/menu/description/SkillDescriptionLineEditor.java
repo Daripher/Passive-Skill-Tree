@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.description;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
@@ -161,8 +161,8 @@ public class SkillDescriptionLineEditor extends EditorMenu {
               MutableComponent component = description.get(selectedLine);
               Style style = styleFunc.apply(component.getStyle());
               description.set(selectedLine, component.withStyle(style));
-              SkillTreeClientData.saveEditorSkill(skill);
-              SkillTreeClientData.loadEditorSkill(skill.getId());
+              SkillTreeEditorData.saveEditorSkill(skill);
+              SkillTreeEditorData.loadEditorSkill(skill.getId());
             });
   }
 

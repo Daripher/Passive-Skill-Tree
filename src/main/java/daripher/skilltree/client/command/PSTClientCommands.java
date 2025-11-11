@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import java.util.stream.Stream;
@@ -30,7 +30,7 @@ public class PSTClientCommands {
   private static Stream<String> gatherSkillTreesPaths() {
     return Stream.concat(
             SkillTreesReloader.getSkillTrees().keySet().stream(),
-            SkillTreeClientData.getEditorTreesIDs().stream())
+            SkillTreeEditorData.getEditorTreesIDs().stream())
         .map(ResourceLocation::toString);
   }
 

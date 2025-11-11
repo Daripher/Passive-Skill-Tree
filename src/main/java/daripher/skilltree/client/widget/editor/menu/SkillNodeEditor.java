@@ -1,7 +1,7 @@
 package daripher.skilltree.client.widget.editor.menu;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.NumericTextField;
 import daripher.skilltree.client.widget.editor.SkillFactory;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
@@ -88,10 +88,10 @@ public class SkillNodeEditor extends EditorMenu {
     if (shouldConnect) {
       skill.connect(original);
     }
-    SkillTreeClientData.saveEditorSkill(skill);
-    SkillTreeClientData.loadEditorSkill(skill.getId());
+    SkillTreeEditorData.saveEditorSkill(skill);
+    SkillTreeEditorData.loadEditorSkill(skill.getId());
     editor.getSkillTree().getSkillIds().add(skill.getId());
-    SkillTreeClientData.saveEditorSkillTree(editor.getSkillTree());
+    SkillTreeEditorData.saveEditorSkillTree(editor.getSkillTree());
   }
 
   private void createNewSkill(float x, float y, @Nullable PassiveSkill original) {
@@ -107,10 +107,10 @@ public class SkillNodeEditor extends EditorMenu {
     if (original != null && shouldConnect) {
       skill.connect(original);
     }
-    SkillTreeClientData.saveEditorSkill(skill);
-    SkillTreeClientData.loadEditorSkill(skill.getId());
+    SkillTreeEditorData.saveEditorSkill(skill);
+    SkillTreeEditorData.loadEditorSkill(skill.getId());
     editor.getSkillTree().getSkillIds().add(skill.getId());
-    SkillTreeClientData.saveEditorSkillTree(editor.getSkillTree());
+    SkillTreeEditorData.saveEditorSkillTree(editor.getSkillTree());
   }
 
   public static ResourceLocation createNewSkillId(ResourceLocation skillTreeId) {
@@ -118,7 +118,7 @@ public class SkillNodeEditor extends EditorMenu {
     int counter = 1;
     do {
       id = new ResourceLocation("skilltree", skillTreeId.getPath() + "_" + counter++);
-    } while (SkillTreeClientData.getEditorSkill(id) != null);
+    } while (SkillTreeEditorData.getEditorSkill(id) != null);
     return id;
   }
 

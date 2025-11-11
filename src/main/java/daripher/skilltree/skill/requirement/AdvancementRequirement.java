@@ -3,7 +3,6 @@ package daripher.skilltree.skill.requirement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.mixin.ClientAdvancementsAccessor;
 import java.util.List;
@@ -66,10 +65,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
     String advancementPath = advancementId.getPath().replaceAll("/", ".");
     String advancamentDescriptionId = "advancements.%s.title".formatted(advancementPath);
     Component advancementTooltip = Component.translatable(advancamentDescriptionId);
-    ResourceLocation id = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(getSerializer());
-    Objects.requireNonNull(id);
-    String descriptionId = "skill_requirements.%s.%s".formatted(id.getNamespace(), id.getPath());
-    return Component.translatable(descriptionId, advancementTooltip);
+    return Component.translatable(getDescriptionId(), advancementTooltip);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.bonuses;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
@@ -51,7 +51,7 @@ public class SkillBonusEditor extends EditorMenu {
   private void removeSkillBonus(PassiveSkill skill, int index) {
     if (skill.getBonuses().size() > index) {
       skill.getBonuses().remove(index);
-      SkillTreeClientData.saveEditorSkill(skill);
+      SkillTreeEditorData.saveEditorSkill(skill);
     }
   }
 }

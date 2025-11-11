@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.tags;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.NumericTextField;
 import daripher.skilltree.client.widget.TextField;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
@@ -34,7 +34,7 @@ public class SkillTagLimitsEditor extends EditorMenu {
             String tag = pair.getKey().getValue();
             limitations.put(tag, limit);
           }
-          SkillTreeClientData.saveEditorSkillTree(skillTree);
+          SkillTreeEditorData.saveEditorSkillTree(skillTree);
         };
     for (int i = 0; i < limitations.size(); i++) {
       TextField tagEditor = editor.addTextField(0, 0, 155, 14, tags.get(i));

@@ -1,7 +1,7 @@
 package daripher.skilltree.client.widget.editor;
 
 import daripher.skilltree.client.data.SkillTexturesData;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
@@ -334,7 +334,7 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
   }
 
   public void saveSelectedSkills() {
-    skillSelector.getSelectedSkills().forEach(SkillTreeClientData::saveEditorSkill);
+    skillSelector.getSelectedSkills().forEach(SkillTreeEditorData::saveEditorSkill);
   }
 
   public int getWidgetsY(int y) {
@@ -366,7 +366,7 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
   }
 
   public List<PassiveSkill> getSkills() {
-    return getSkillTree().getSkillIds().stream().map(SkillTreeClientData::getEditorSkill).toList();
+    return getSkillTree().getSkillIds().stream().map(SkillTreeEditorData::getEditorSkill).toList();
   }
 
   public Collection<SkillButton> getSkillButtons() {

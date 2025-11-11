@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.requirements;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
@@ -52,7 +52,7 @@ public class SkillRequirementEditor extends EditorMenu {
   private void removeRequirement(PassiveSkill skill, int index) {
     if (skill.getRequirements().size() > index) {
       skill.getRequirements().remove(index);
-      SkillTreeClientData.saveEditorSkill(skill);
+      SkillTreeEditorData.saveEditorSkill(skill);
     }
   }
 }

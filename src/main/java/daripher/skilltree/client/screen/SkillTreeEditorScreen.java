@@ -3,7 +3,7 @@ package daripher.skilltree.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.SkillNodeEditor;
 import daripher.skilltree.client.widget.skill.SkillButtons;
@@ -35,7 +35,7 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
   public SkillTreeEditorScreen(ResourceLocation skillTreeId) {
     super(Component.empty());
     this.minecraft = Minecraft.getInstance();
-    this.skillTree = SkillTreeClientData.getOrCreateEditorTree(skillTreeId);
+    this.skillTree = SkillTreeEditorData.getOrCreateEditorTree(skillTreeId);
     this.skillButtons = new SkillButtons(skillTree, () -> 0f);
     this.editorWidgets = new SkillTreeEditor(skillButtons);
   }
@@ -111,12 +111,12 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
     ResourceLocation skillId = SkillNodeEditor.createNewSkillId(skillTree.getId());
     PassiveSkill skill = new PassiveSkill(skillId, 16, background, icon, border, false);
     skill.setPosition(0, 0);
-    SkillTreeClientData.saveEditorSkill(skill);
-    SkillTreeClientData.loadEditorSkill(skill.getId());
+    SkillTreeEditorData.saveEditorSkill(skill);
+    SkillTreeEditorData.loadEditorSkill(skill.getId());
     editorWidgets.getSkillTree()
         .getSkillIds()
         .add(skill.getId());
-    SkillTreeClientData.saveEditorSkillTree(editorWidgets.getSkillTree());
+    SkillTreeEditorData.saveEditorSkillTree(editorWidgets.getSkillTree());
   }
 
   @Override

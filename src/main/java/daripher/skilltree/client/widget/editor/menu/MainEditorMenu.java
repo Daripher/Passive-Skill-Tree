@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.bonuses.SkillBonusesEditor;
 import daripher.skilltree.client.widget.editor.menu.description.SkillDescriptionEditor;
@@ -42,8 +42,8 @@ public class MainEditorMenu extends EditorMenu {
     selectedSkills.forEach(
         skill -> {
           skillTree.getSkillIds().remove(skill.getId());
-          SkillTreeClientData.deleteEditorSkill(skill);
-          SkillTreeClientData.saveEditorSkillTree(skillTree);
+          SkillTreeEditorData.deleteEditorSkill(skill);
+          SkillTreeEditorData.saveEditorSkillTree(skillTree);
         });
     selectedSkills.clear();
     editor.rebuildWidgets();

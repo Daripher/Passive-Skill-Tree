@@ -1,7 +1,7 @@
 package daripher.skilltree.client.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.client.screen.SkillTreeSelectionScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
@@ -39,15 +39,15 @@ public class PSTKeybinds {
       if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
         ResourceLocation defaultTreeId = SkillTreesReloader.getDefaultSkillTreeId();
         if (defaultTreeId == null) {
-          SkillTreeClientData.printMessage("No skill trees found.", ChatFormatting.DARK_RED);
+          SkillTreeEditorData.printMessage("No skill trees found.", ChatFormatting.DARK_RED);
           return;
         }
         if (SkillTreesReloader.getSkillTrees().size() == 1) {
           PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(defaultTreeId);
           for (ResourceLocation skillId : skillTree.getSkillIds()) {
             if (SkillsReloader.getSkillById(skillId) == null) {
-              SkillTreeClientData.printMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
-              SkillTreeClientData.printMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
+              SkillTreeEditorData.printMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
+              SkillTreeEditorData.printMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
               return;
             }
           }

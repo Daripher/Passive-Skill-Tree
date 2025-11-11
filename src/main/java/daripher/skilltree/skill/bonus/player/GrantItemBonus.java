@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
@@ -41,7 +41,7 @@ public final class GrantItemBonus implements SkillBonus<GrantItemBonus> {
     if (firstTime) {
       Item item = ForgeRegistries.ITEMS.getValue(itemId);
       if (item == null) {
-        SkillTreeClientData.printMessage("Unknown item: " + itemId, ChatFormatting.DARK_RED);
+        SkillTreeEditorData.printMessage("Unknown item: " + itemId, ChatFormatting.DARK_RED);
         return;
       }
       int amountLeft = amount;

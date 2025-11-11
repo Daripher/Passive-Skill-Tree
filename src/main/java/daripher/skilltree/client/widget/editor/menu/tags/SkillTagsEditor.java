@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.tags;
 
-import daripher.skilltree.client.data.SkillTreeClientData;
+import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
@@ -78,7 +78,7 @@ public class SkillTagsEditor extends EditorMenu {
               }
               limitations.put(name, 1);
               editor.rebuildWidgets();
-              SkillTreeClientData.saveEditorSkillTree(skillTree);
+              SkillTreeEditorData.saveEditorSkillTree(skillTree);
             });
     editor.increaseHeight(19);
   }

@@ -18,7 +18,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 
-public class SkillTreeClientData {
+public class SkillTreeEditorData {
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();
   private static final Map<ResourceLocation, PassiveSkillTree> EDITOR_TREES = new HashMap<>();
   private static final Set<ResourceLocation> EDITOR_TREES_IDS = new HashSet<>();

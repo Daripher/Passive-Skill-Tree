@@ -1,10 +1,13 @@
 package daripher.skilltree.client.tooltip;
 
+import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.effect.SkillBonusEffect;
+import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
@@ -24,6 +27,11 @@ public class TooltipHelper {
   private static final Style SKILL_REQUIREMENT_STYLE = Style.EMPTY.withColor(0x83E27A);
   private static final Style SKILL_REQUIREMENT_STYLE_UNFINISHED = Style.EMPTY.withColor(0xE25A5A);
   private static final Style ITEM_BONUS_STYLE = Style.EMPTY.withColor(0xECBE46);
+  private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
+  private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8);
+  private static final Style CLASS_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F);
+  private static final Style KEYSTONE_TITLE_STYLE = Style.EMPTY.withColor(0xEB7530);
+  private static final Style GATEWAY_TITLE_STYLE = Style.EMPTY.withColor(0x849696);
 
   public static Component getEffectTooltip(MobEffectInstance effect) {
     Component effectDescription;
@@ -192,5 +200,45 @@ public class TooltipHelper {
 
   public static Component getSlotTooltip(String slotName) {
     return Component.translatable("curio.slot.%s".formatted(slotName));
+  }
+
+  public static MutableComponent getSkillTitle(@NotNull PassiveSkill skill) {
+    MutableComponent title;
+    if (skill.getTitle().isEmpty()) {
+      ResourceLocation skillId = skill.getId();
+      String descriptionId = "skill." + skillId.getNamespace() + "." + skillId.getPath() + ".name";
+      title = Component.translatable(descriptionId);
+    } else {
+      title = Component.literal(skill.getTitle());
+    }
+    return title.withStyle(getSkillTitleStyle(skill));
+  }
+
+  public static MutableComponent getSkillTitle(ResourceLocation skillId) {
+    PassiveSkill skill = SkillsReloader.getSkillById(skillId);
+    if (skill == null) {
+      return Component.literal("Unknown Skill: " + skillId.toString())
+          .withStyle(ChatFormatting.RED);
+    }
+    return getSkillTitle(skill);
+  }
+
+  public static Style getSkillTitleStyle(PassiveSkill skill) {
+    String titleColor = skill.getTitleColor();
+    if (titleColor.isEmpty()) {
+      return switch (skill.getSkillSize()) {
+        case 30 -> GATEWAY_TITLE_STYLE;
+        case 24 -> CLASS_TITLE_STYLE;
+        case 20 -> NOTABLE_TITLE_STYLE;
+        case 32 -> KEYSTONE_TITLE_STYLE;
+        default -> LESSER_TITLE_STYLE;
+      };
+    } else {
+      try {
+        return Style.EMPTY.withColor(Integer.parseInt(titleColor, 16));
+      } catch (NumberFormatException e) {
+        return Style.EMPTY;
+      }
+    }
   }
 }
