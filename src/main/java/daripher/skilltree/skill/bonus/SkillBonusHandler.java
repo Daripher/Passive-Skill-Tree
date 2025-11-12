@@ -520,9 +520,13 @@ public class SkillBonusHandler {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void applyDamageAvoidanceBonuses(LivingAttackEvent event) {
-    if (!(event.getEntity() instanceof Player player)) return;
+    if (!(event.getEntity() instanceof Player player)) {
+      return;
+    }
     DamageSource damageSource = event.getSource();
-    if (!(damageSource.getEntity() instanceof LivingEntity attacker)) return;
+    if (!(damageSource.getEntity() instanceof LivingEntity attacker)) {
+      return;
+    }
     float avoidance =
         getSkillBonuses(player, DamageAvoidanceBonus.class).stream()
             .map(b -> b.getAvoidanceChance(damageSource, player, attacker))
@@ -530,6 +534,13 @@ public class SkillBonusHandler {
             .orElse(0f);
     if (player.getRandom().nextFloat() < avoidance) {
       event.setCanceled(true);
+      for (EventListenerBonus<?> bonus : getSkillBonuses(player, EventListenerBonus.class)) {
+        if (!(bonus.getEventListener() instanceof EvasionEventListener listener)) {
+          continue;
+        }
+        SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+        listener.onEvent(player, attacker, (EventListenerBonus<?>) copy);
+      }
     }
   }
 
