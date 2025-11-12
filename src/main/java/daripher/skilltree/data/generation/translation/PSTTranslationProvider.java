@@ -16,7 +16,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public abstract class PSTTranslationProvider extends LanguageProvider {
   public PSTTranslationProvider(DataGenerator dataGenerator, String modId, String locale) {
@@ -33,14 +37,6 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
 
   protected void add(Attribute attribute, String name) {
     add(attribute.getDescriptionId(), name);
-  }
-
-  protected void addCurioSlot(String slotName, String name) {
-    add("curio.slot.%s".formatted(slotName), name);
-  }
-
-  protected void addCurioSlot(String slotName, String type, String name) {
-    add("curio.slot.%s.%s".formatted(slotName, type), name);
   }
 
   protected void addSkill(String skillTree, int skillId, String name) {
@@ -182,7 +178,9 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
     add("death.attack." + damageType, deathMessage);
   }
 
-  protected void addRecipe(String recipePath, String translation) {
-    add("recipe.%s.%s".formatted(SkillTreeMod.MOD_ID, recipePath), translation);
+  protected void add(RecipeSerializer<?> recipeSerializer, String translation) {
+    ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(recipeSerializer);
+    Objects.requireNonNull(id);
+    add("recipe.%s.%s".formatted(id.getNamespace(), id.getPath()), translation);
   }
 }

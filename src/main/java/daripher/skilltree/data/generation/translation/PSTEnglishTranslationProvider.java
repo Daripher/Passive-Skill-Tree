@@ -499,7 +499,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     // tabs
     add("itemGroup.skilltree", "Passive Skill Tree");
     // recipes
-    addRecipe("armor_thorns_bonus", "Armor Upgrade - Thorns Damage");
+    add(PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get(), "%s [%s]");
   }
 
   protected void add(Potion potion, String name) {

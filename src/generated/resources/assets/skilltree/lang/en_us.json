@@ -161,7 +161,7 @@
   "loot.type.gems": "gems from ore",
   "loot.type.mobs": "mobs loot",
   "loot.type.ore": "loot from ore",
-  "recipe.skilltree.armor_thorns_bonus": "Armor Upgrade - Thorns Damage",
+  "recipe.skilltree.workbench_item_bonus": "%s [%s]",
   "skill.limitation": "Limited to: %s",
   "skill.requirements": "Requirements:",
   "skill.skilltree.alchemist_1.name": "Alchemist",

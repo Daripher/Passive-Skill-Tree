@@ -18,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -57,9 +58,9 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    String recipeDescriptionId = TooltipHelper.getRecipeDescriptionId(recipeId);
-    MutableComponent recipeTooltip = Component.translatable(recipeDescriptionId);
-    recipeTooltip = recipeTooltip.withStyle(TooltipHelper.getSkillBonusSecondStyle(true));
+    Component recipeTooltip = TooltipHelper.getRecipeTooltip(recipeId);
+    Style recipeTooltipStyle = TooltipHelper.getItemBonusStyle();
+    recipeTooltip = Component.literal(recipeTooltip.getString()).withStyle(recipeTooltipStyle);
     MutableComponent tooltip = Component.translatable(getDescriptionId(), recipeTooltip);
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
@@ -78,7 +79,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
     Objects.requireNonNull(clientLevel);
     RecipeManager recipesManager = clientLevel.getRecipeManager();
     List<ResourceLocation> artisanRecipes =
-        recipesManager.getAllRecipesFor(PSTRecipeTypes.ARTISAN_WORKBENCH).stream()
+        recipesManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH).stream()
             .map(Recipe::getId)
             .toList();
     editor

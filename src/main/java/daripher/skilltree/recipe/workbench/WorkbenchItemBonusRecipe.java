@@ -7,10 +7,9 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.network.NetworkHelper;
-import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
-
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.Map;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +54,9 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
 
   @Override
   public Component getTooltip() {
-    return itemBonus.getTooltip();
+    MutableComponent itemBonusTooltip = itemBonus.getTooltip();
+    Component itemPredicateTooltip = baseItemStackPredicate.getTooltip("plural");
+    return Component.translatable(getDescriptionId(), itemBonusTooltip, itemPredicateTooltip);
   }
 
   @Override

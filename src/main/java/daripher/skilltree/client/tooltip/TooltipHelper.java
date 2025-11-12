@@ -2,14 +2,18 @@ package daripher.skilltree.client.tooltip;
 
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.effect.SkillBonusEffect;
+import daripher.skilltree.init.PSTRecipeTypes;
+import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -17,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
 public class TooltipHelper {
@@ -134,10 +139,6 @@ public class TooltipHelper {
     return Component.literal(TooltipHelper.idToName(target.name().toLowerCase()));
   }
 
-  public static String getRecipeDescriptionId(ResourceLocation recipeId) {
-    return "recipe.%s.%s".formatted(recipeId.getNamespace(), recipeId.getPath());
-  }
-
   @NotNull
   public static String idToName(String path) {
     if (path.isEmpty()) {
@@ -240,5 +241,24 @@ public class TooltipHelper {
         return Style.EMPTY;
       }
     }
+  }
+
+  public static Component getRecipeTooltip(@NotNull AbstractWorkbenchRecipe recipe) {
+    return recipe.getTooltip();
+  }
+
+  public static Component getRecipeTooltip(ResourceLocation recipeId) {
+    ClientLevel level = Minecraft.getInstance().level;
+    Objects.requireNonNull(level);
+    RecipeManager recipeManager = level.getRecipeManager();
+    List<AbstractWorkbenchRecipe> recipes =
+        recipeManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH);
+    AbstractWorkbenchRecipe recipe =
+        recipes.stream().filter(r -> r.getId().equals(recipeId)).findAny().orElse(null);
+    if (recipe == null) {
+      return Component.literal("Unknown Recipe: " + recipeId.toString())
+          .withStyle(ChatFormatting.RED);
+    }
+    return getRecipeTooltip(recipe);
   }
 }

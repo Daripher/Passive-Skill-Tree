@@ -6,6 +6,7 @@ import daripher.skilltree.recipe.SkillRequiringRecipe;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
 import java.util.Map;
+import java.util.Objects;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractWorkbenchRecipe
@@ -39,6 +41,12 @@ public abstract class AbstractWorkbenchRecipe
       return false;
     }
     return hasIngredients(container, additionalIngredients);
+  }
+
+  protected String getDescriptionId() {
+    ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
+    Objects.requireNonNull(id);
+    return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
   }
 
   public boolean canBeUsedBy(@NotNull Player player) {
@@ -86,7 +94,7 @@ public abstract class AbstractWorkbenchRecipe
 
   @Override
   public @NotNull RecipeType<?> getType() {
-    return PSTRecipeTypes.ARTISAN_WORKBENCH;
+    return PSTRecipeTypes.WORKBENCH;
   }
 
   @Override

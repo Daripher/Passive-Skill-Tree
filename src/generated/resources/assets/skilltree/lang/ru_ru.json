@@ -242,7 +242,7 @@
   "loot.type.gems": "самоцветы из руды",
   "loot.type.mobs": "награды с существ",
   "loot.type.ore": "награды из руды",
-  "recipe.skilltree.armor_thorns_bonus": "Улучшение брони - урон шипами",
+  "recipe.skilltree.workbench_item_bonus": "%s [%s]",
   "skill.limitation": "Ограничение: %s",
   "skill.requirements": "Требования:",
   "skill.skilltree.alchemist_1.name": "Алхимик",
