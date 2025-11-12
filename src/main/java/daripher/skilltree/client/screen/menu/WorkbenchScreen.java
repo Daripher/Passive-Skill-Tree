@@ -106,7 +106,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
       int recipeIndex = getRecipeInSlot(i).getValue();
       int y = topPos + RECIPES_Y + i * RECIPE_HEIGHT;
       int recipeTexture = getRecipeTexture(mouseX, mouseY, recipeIndex, i);
-      guiGraphics.blit(RECIPES_TEXTURE, x, y, 0, recipeTexture, RECIPE_WIDTH, RECIPE_HEIGHT);
+      int vOffset = recipeTexture * RECIPE_HEIGHT;
+      guiGraphics.blit(RECIPES_TEXTURE, x, y, 0, vOffset, RECIPE_WIDTH, RECIPE_HEIGHT);
       AbstractWorkbenchRecipe recipe = getRecipeInSlot(i).getKey();
       String tooltip = recipe.getTooltip().getString();
       tooltip = TooltipHelper.getTrimmedString(font, tooltip, RECIPE_WIDTH - 4);
@@ -116,10 +117,10 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
 
   private int getRecipeTexture(double mouseX, double mouseY, int recipeIndex, int recipeSlot) {
     if (menu.getSelectedRecipeIndex() == recipeIndex) {
-      return RECIPE_HEIGHT;
+      return 1;
     }
     if (isMouseOverRecipe(recipeSlot, mouseX, mouseY)) {
-      return RECIPE_HEIGHT * 2;
+      return 2;
     }
     return 0;
   }
@@ -171,13 +172,20 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     if (menu.getResultItem().isEmpty()) {
       ItemStack resultItem = selectedRecipe.getResult(menu.getWorkbenchContainer());
       guiGraphics.fill(leftPos + 134, topPos + 120, leftPos + 168, topPos + 154, 0x30ff0000);
-      renderMissingItem(guiGraphics, leftPos + 143, topPos + 129, resultItem);
+      if (!resultItem.isEmpty()) {
+        renderMissingItem(guiGraphics, leftPos + 143, topPos + 129, resultItem);
+      }
     }
   }
 
   @Override
-  protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int x, int y) {
-    super.renderTooltip(guiGraphics, x, y);
+  protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    super.renderTooltip(guiGraphics, mouseX, mouseY);
+    renderRecipesTooltip(guiGraphics, mouseX,mouseY);
+    renderGhostRecipeTooltip(guiGraphics, mouseX, mouseY);
+  }
+
+  private void renderGhostRecipeTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
     int selectedRecipeIndex = menu.getSelectedRecipeIndex();
     if (selectedRecipeIndex <= -1) {
       return;
@@ -195,19 +203,29 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
               if (menu.getWorkbenchContainer().getItem(slotIndex.get() + 1).isEmpty()) {
                 int itemX = leftPos + 8 + slotIndex.get() % 3 * 18;
                 int itemY = topPos + 120 + slotIndex.get() / 3 * 18;
-                if (isMouseOverArea(x, y, itemX, itemY, 16, 16)) {
+                if (isMouseOverArea(mouseX, mouseY, itemX, itemY, 16, 16)) {
                   ItemStack itemStack = ingredient.getItems()[0].copy();
                   itemStack.setCount(requiredAmount);
-                  renderItemTooltip(guiGraphics, x, y, itemStack);
+                  renderItemTooltip(guiGraphics, mouseX, mouseY, itemStack);
                 }
                 slotIndex.getAndIncrement();
               }
             });
     if (menu.getResultItem().isEmpty()
-        && isMouseOverArea(x, y, leftPos + 134, topPos + 120, 34, 34)) {
+        && isMouseOverArea(mouseX, mouseY, leftPos + 134, topPos + 120, 34, 34)) {
       Objects.requireNonNull(minecraft);
       ItemStack resultItem = selectedRecipe.getResult(menu.getWorkbenchContainer());
-      renderItemTooltip(guiGraphics, x, y, resultItem);
+      renderItemTooltip(guiGraphics, mouseX, mouseY, resultItem);
+    }
+  }
+
+  private void renderRecipesTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    for (int i = 0; i < Math.min(5, searchedRecipes.size()); i++) {
+      if (!isMouseOverRecipe(i, mouseX, mouseY)) {
+        continue;
+      }
+      AbstractWorkbenchRecipe recipe = getRecipeInSlot(i).getKey();
+      guiGraphics.renderTooltip(font, recipe.getTooltip(), mouseX, mouseY);
     }
   }
 
