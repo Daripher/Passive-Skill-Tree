@@ -1,16 +1,16 @@
 package daripher.skilltree.data.generation.translation;
 
-import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.function.FloatFunction;
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
+import java.util.Objects;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -19,8 +19,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.Objects;
 
 public abstract class PSTTranslationProvider extends LanguageProvider {
   public PSTTranslationProvider(DataGenerator dataGenerator, String modId, String locale) {

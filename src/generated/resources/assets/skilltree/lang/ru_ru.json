@@ -454,7 +454,7 @@
   "skill_bonus.skilltree.healing.player.chance": "Шанс восстановить %s здоровья",
   "skill_bonus.skilltree.health_reservation": "Удержание здоровья",
   "skill_bonus.skilltree.incoming_healing": "Получаемое лечение",
-  "skill_bonus.skilltree.inflict_damage.enemy": "Вы наносите %s урона %s",
+  "skill_bonus.skilltree.inflict_damage.enemy": "+%s урона наносится %s",
   "skill_bonus.skilltree.inflict_damage.enemy.chance": "Шанс нанести %s урона %s",
   "skill_bonus.skilltree.inflict_damage.player": "Вы получаете %s урона",
   "skill_bonus.skilltree.inflict_damage.player.chance": "Шанс получить %s урона",
