@@ -1,0 +1,33 @@
+{
+  "type": "skilltree:workbench_item_bonus",
+  "base_item_condition": {
+    "type": "skilltree:equipment_type",
+    "equipment_type": "boots"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:leather"
+      },
+      "required_amount": 4
+    },
+    {
+      "ingredient": {
+        "tag": "forge:nuggets/iron"
+      },
+      "required_amount": 3
+    }
+  ],
+  "item_bonus": {
+    "type": "skilltree:skill_bonus",
+    "skill_bonus": {
+      "type": "skilltree:attribute",
+      "amount": 0.15,
+      "attribute": "minecraft:generic.movement_speed",
+      "id": "ee885b21-b849-4dd8-b4fe-7b101b816d04",
+      "name": "Workbench Upgrade",
+      "operation": 1
+    }
+  },
+  "requires_passive_skill": true
+}

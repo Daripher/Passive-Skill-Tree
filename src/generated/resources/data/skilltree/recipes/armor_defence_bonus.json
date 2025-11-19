@@ -1,0 +1,27 @@
+{
+  "type": "skilltree:workbench_item_bonus",
+  "base_item_condition": {
+    "type": "skilltree:equipment_type",
+    "equipment_type": "armor"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/copper"
+      },
+      "required_amount": 2
+    }
+  ],
+  "item_bonus": {
+    "type": "skilltree:skill_bonus",
+    "skill_bonus": {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "minecraft:generic.armor",
+      "id": "6e043ee6-f155-4519-9c48-f1741e02356a",
+      "name": "Workbench Upgrade",
+      "operation": 0
+    }
+  },
+  "requires_passive_skill": true
+}

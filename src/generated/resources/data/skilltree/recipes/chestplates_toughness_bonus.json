@@ -1,0 +1,33 @@
+{
+  "type": "skilltree:workbench_item_bonus",
+  "base_item_condition": {
+    "type": "skilltree:equipment_type",
+    "equipment_type": "chestplate"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:gems/diamond"
+      },
+      "required_amount": 3
+    },
+    {
+      "ingredient": {
+        "tag": "forge:ores/netherite_scrap"
+      },
+      "required_amount": 2
+    }
+  ],
+  "item_bonus": {
+    "type": "skilltree:skill_bonus",
+    "skill_bonus": {
+      "type": "skilltree:attribute",
+      "amount": 1.0,
+      "attribute": "minecraft:generic.armor_toughness",
+      "id": "03924920-4fa5-4d73-ba52-73138be089e5",
+      "name": "Workbench Upgrade",
+      "operation": 0
+    }
+  },
+  "requires_passive_skill": true
+}

@@ -11,11 +11,9 @@ public class PSTRecipeTypes {
   public static final DeferredRegister<RecipeType<?>> REGISTRY =
       DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, SkillTreeMod.MOD_ID);
 
-  public static final RecipeType<AbstractWorkbenchRecipe> ARTISAN_WORKBENCH =
-      register("artisan_workbench");
+  public static final RecipeType<AbstractWorkbenchRecipe> WORKBENCH = register("workbench");
 
-  private static <T extends Recipe<?>> RecipeType<T> register(
-      final String identifier) {
+  private static <T extends Recipe<?>> RecipeType<T> register(final String identifier) {
     RecipeType<T> recipeType =
         new RecipeType<>() {
           public String toString() {

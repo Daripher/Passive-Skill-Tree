@@ -1,0 +1,27 @@
+{
+  "type": "skilltree:workbench_crafting",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/iron"
+      },
+      "required_amount": 1
+    },
+    {
+      "ingredient": {
+        "tag": "forge:nuggets/iron"
+      },
+      "required_amount": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:paper"
+      },
+      "required_amount": 8
+    }
+  ],
+  "requires_passive_skill": true,
+  "result": {
+    "item": "minecraft:name_tag"
+  }
+}

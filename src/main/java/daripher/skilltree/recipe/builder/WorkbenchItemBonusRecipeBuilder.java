@@ -4,8 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
-import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -31,7 +33,8 @@ public class WorkbenchItemBonusRecipeBuilder {
     return new WorkbenchItemBonusRecipeBuilder(id);
   }
 
-  public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(ItemStackPredicate baseItemStackPredicate) {
+  public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(
+      ItemStackPredicate baseItemStackPredicate) {
     this.baseItemStackPredicate = baseItemStackPredicate;
     return this;
   }
@@ -41,13 +44,18 @@ public class WorkbenchItemBonusRecipeBuilder {
     return this;
   }
 
-  public WorkbenchItemBonusRecipeBuilder setRequiresPassiveSkill(boolean requiresPassiveSkill) {
-    this.requiresPassiveSkill = requiresPassiveSkill;
+  public WorkbenchItemBonusRecipeBuilder setRequiresPassiveSkill() {
+    this.requiresPassiveSkill = true;
     return this;
   }
 
   public WorkbenchItemBonusRecipeBuilder setItemBonus(ItemBonus<?> itemBonus) {
     this.itemBonus = itemBonus;
+    return this;
+  }
+
+  public WorkbenchItemBonusRecipeBuilder setItemBonus(SkillBonus<?> skillBonus) {
+    this.itemBonus = new ItemSkillBonus(skillBonus);
     return this;
   }
 
@@ -102,7 +110,8 @@ public class WorkbenchItemBonusRecipeBuilder {
             ingredientJson.addProperty("required_amount", requiredAmount);
             ingredientsJson.add(ingredientJson);
           }));
-      SerializationHelper.serializeItemCondition(jsonObject, baseItemStackPredicate, "base_item_condition");
+      SerializationHelper.serializeItemCondition(
+          jsonObject, baseItemStackPredicate, "base_item_condition");
       SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
       jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
       jsonObject.add("ingredients", ingredientsJson);

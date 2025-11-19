@@ -43,8 +43,8 @@ public class WorkbenchCraftingRecipeBuilder {
     return this;
   }
 
-  public WorkbenchCraftingRecipeBuilder setRequiresPassiveSkill(boolean requiresPassiveSkill) {
-    this.requiresPassiveSkill = requiresPassiveSkill;
+  public WorkbenchCraftingRecipeBuilder setRequiresPassiveSkill() {
+    this.requiresPassiveSkill = true;
     return this;
   }
 

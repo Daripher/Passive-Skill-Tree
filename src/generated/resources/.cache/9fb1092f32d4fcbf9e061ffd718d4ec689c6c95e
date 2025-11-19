@@ -1,3 +1,12 @@
-// 1.20.1	2025-10-27T16:13:45.3377433	Recipes
+// 1.20.1	2025-11-12T10:48:22.5338695	Recipes
 258773ac1397798964811e76a2085e8330253224 data/skilltree/advancements/recipes/misc/workbench.json
+0a0cbf694c81725d11f6f09b290e75bfdd891994 data/skilltree/recipes/armor_defence_bonus.json
+ec60929d9b0b4b208aa95ef02effde9c6994ba4b data/skilltree/recipes/boots_movement_speed_bonus.json
+e214898d825c916783fd7562819f6a3bc48d86b0 data/skilltree/recipes/chestplates_toughness_bonus.json
+bd745930a01b473c022c4075cb97d0182ee234f7 data/skilltree/recipes/melee_weapon_attack_damage_bonus.json
+a15e564d9ed27983e640b3dbc7f33f6315ba87dd data/skilltree/recipes/melee_weapon_attack_speed_bonus.json
+721fc0124ba1da5dfe7f7bcc6e39954d926141e2 data/skilltree/recipes/name_tag_crafting.json
+16325dcab8cdec938e38d7981d87febe53084318 data/skilltree/recipes/saddle_crafting.json
+81e491e198c3023dcac72e36ba216509b2c9e113 data/skilltree/recipes/shields_defence_bonus.json
+c76b5fb59a859267103cfcafc6090a68f91d09e4 data/skilltree/recipes/shields_thorns_bonus.json
 74a0ea07a063f047e4ac913512e7e9b15d6d4b13 data/skilltree/recipes/workbench.json

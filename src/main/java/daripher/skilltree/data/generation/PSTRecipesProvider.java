@@ -52,7 +52,7 @@ public class PSTRecipesProvider extends RecipeProvider {
   private static void addUpgradeRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
     WorkbenchItemBonusRecipeBuilder.create(modRecipeId("shields_thorns_bonus"))
         .setBaseItemCondition(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD))
-        .addIngredients(Ingredient.of(Tags.Items.INGOTS_COPPER), 2)
+        .addIngredients(Ingredient.of(Tags.Items.INGOTS_IRON), 5)
         .addIngredients(Ingredient.of(Tags.Items.NUGGETS_IRON), 9)
         .setItemBonus(
             new InflictDamageBonus(1f, 4f, new BlockEventListener(), new ThornsDamageCondition()))

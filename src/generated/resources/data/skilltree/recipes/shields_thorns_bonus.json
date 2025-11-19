@@ -1,0 +1,40 @@
+{
+  "type": "skilltree:workbench_item_bonus",
+  "base_item_condition": {
+    "type": "skilltree:equipment_type",
+    "equipment_type": "shield"
+  },
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:ingots/copper"
+      },
+      "required_amount": 2
+    },
+    {
+      "ingredient": {
+        "tag": "forge:nuggets/iron"
+      },
+      "required_amount": 9
+    }
+  ],
+  "item_bonus": {
+    "type": "skilltree:skill_bonus",
+    "skill_bonus": {
+      "type": "skilltree:inflict_damage",
+      "chance": 1.0,
+      "damage": 4.0,
+      "damage_type": {
+        "type": "skilltree:thorns"
+      },
+      "event_listener": {
+        "type": "skilltree:block",
+        "damage_condition": {
+          "type": "skilltree:none"
+        },
+        "target": "enemy"
+      }
+    }
+  },
+  "requires_passive_skill": true
+}
