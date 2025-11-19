@@ -610,6 +610,7 @@ public class SkillBonusHandler {
     if (!(event.getEntity() instanceof Projectile projectile)) return;
     if (!(event.getLevel() instanceof ServerLevel level)) return;
     if (!(projectile.getOwner() instanceof Player player)) return;
+    if (event.loadedFromDisk()) return;
     CompoundTag projectileTag = projectile.getPersistentData();
     if (projectileTag.getBoolean("duplicated")) return;
     float duplicationChance =
