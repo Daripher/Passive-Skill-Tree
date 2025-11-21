@@ -5,6 +5,8 @@ import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import net.minecraft.core.RegistryAccess;
@@ -55,7 +57,11 @@ public abstract class AbstractWorkbenchRecipe
 
   public abstract boolean isValidBaseItem(ItemStack itemStack);
 
-  public abstract Component getTooltip();
+  public abstract Component getShortDescription();
+
+  public List<Component> getFullDescription() {
+    return List.of(getShortDescription());
+  }
 
   public abstract @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer);
 

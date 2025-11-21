@@ -3,6 +3,7 @@ package daripher.skilltree.recipe.workbench;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
@@ -18,6 +19,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,10 +55,22 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
   }
 
   @Override
-  public Component getTooltip() {
-    MutableComponent itemBonusTooltip = itemBonus.getTooltip();
-    Component itemPredicateTooltip = baseItemStackPredicate.getTooltip("plural");
-    return Component.translatable(getDescriptionId(), itemBonusTooltip, itemPredicateTooltip);
+  public Component getShortDescription() {
+    List<MutableComponent> bonusTooltip = new ArrayList<>();
+    itemBonus.addTooltip(bonusTooltip::add);
+    Component itemTooltip = baseItemStackPredicate.getTooltip("plural");
+    return Component.translatable(getDescriptionId(), bonusTooltip.get(0), itemTooltip);
+  }
+
+  @Override
+  public List<Component> getFullDescription() {
+    List<Component> fullDescription = new ArrayList<>();
+    Style style = TooltipHelper.getItemBonusStyle();
+    itemBonus.addTooltip(tooltip -> fullDescription.add(tooltip.withStyle(style)));
+    Component itemTooltip = baseItemStackPredicate.getTooltip("plural");
+    itemTooltip = Component.literal("[").append(itemTooltip).append("]");
+    fullDescription.add(itemTooltip);
+    return fullDescription;
   }
 
   @Override

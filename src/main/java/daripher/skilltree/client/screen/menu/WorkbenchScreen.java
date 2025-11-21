@@ -109,7 +109,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
       int vOffset = recipeTexture * RECIPE_HEIGHT;
       guiGraphics.blit(RECIPES_TEXTURE, x, y, 0, vOffset, RECIPE_WIDTH, RECIPE_HEIGHT);
       AbstractWorkbenchRecipe recipe = getRecipeInSlot(i).getKey();
-      String tooltip = recipe.getTooltip().getString();
+      String tooltip = recipe.getShortDescription().getString();
       tooltip = TooltipHelper.getTrimmedString(font, tooltip, RECIPE_WIDTH - 4);
       guiGraphics.drawString(font, tooltip, x + 2, y + 5, 0xffffff);
     }
@@ -225,7 +225,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         continue;
       }
       AbstractWorkbenchRecipe recipe = getRecipeInSlot(i).getKey();
-      guiGraphics.renderTooltip(font, recipe.getTooltip(), mouseX, mouseY);
+      guiGraphics.renderComponentTooltip(font, recipe.getFullDescription(), mouseX, mouseY);
     }
   }
 
@@ -329,7 +329,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     for (int i = 0; i < selectedRecipes.size(); i++) {
       AbstractWorkbenchRecipe recipe = selectedRecipes.get(i);
       String search = searchBox.getValue();
-      if (search.isEmpty() || recipe.getTooltip().toString().contains(search)) {
+      if (search.isEmpty() || recipe.getShortDescription().toString().contains(search)) {
         searchedRecipes.add(Pair.of(recipe, i));
       }
     }

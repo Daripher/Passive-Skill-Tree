@@ -6,7 +6,7 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class WorkbenchItemBonusRecipeBuilder {
   }
 
   public WorkbenchItemBonusRecipeBuilder setItemBonus(SkillBonus<?> skillBonus) {
-    this.itemBonus = new ItemSkillBonus(skillBonus);
+    this.itemBonus = new SkillBonusItemBonus(skillBonus);
     return this;
   }
 

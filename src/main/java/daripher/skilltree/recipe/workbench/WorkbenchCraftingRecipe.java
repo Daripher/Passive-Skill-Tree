@@ -51,7 +51,7 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
   }
 
   @Override
-  public Component getTooltip() {
+  public Component getShortDescription() {
     return result.getHoverName();
   }
 

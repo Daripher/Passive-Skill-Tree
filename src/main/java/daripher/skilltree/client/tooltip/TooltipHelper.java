@@ -244,7 +244,7 @@ public class TooltipHelper {
   }
 
   public static Component getRecipeTooltip(@NotNull AbstractWorkbenchRecipe recipe) {
-    return recipe.getTooltip();
+    return recipe.getShortDescription();
   }
 
   public static Component getRecipeTooltip(ResourceLocation recipeId) {

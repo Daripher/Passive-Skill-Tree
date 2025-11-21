@@ -7,9 +7,9 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:ingots/copper"
+        "tag": "forge:ingots/iron"
       },
-      "required_amount": 2
+      "required_amount": 5
     },
     {
       "ingredient": {

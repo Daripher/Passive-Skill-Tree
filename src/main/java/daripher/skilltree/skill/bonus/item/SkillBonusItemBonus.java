@@ -9,35 +9,37 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.DamageBonus;
 import java.util.Objects;
+import java.util.function.Consumer;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<ItemSkillBonus> {
-
+public record SkillBonusItemBonus(SkillBonus<?> skillBonus) implements ItemBonus<SkillBonusItemBonus> {
   @Override
   public boolean canMerge(ItemBonus<?> other) {
-    if (!(other instanceof ItemSkillBonus otherBonus)) return false;
+    if (!(other instanceof SkillBonusItemBonus otherBonus)) return false;
     return otherBonus.skillBonus.canMerge(this.skillBonus);
   }
 
   @Override
-  public ItemSkillBonus merge(ItemBonus<?> other) {
-    if (!(other instanceof ItemSkillBonus otherBonus)) {
+  public SkillBonusItemBonus merge(ItemBonus<?> other) {
+    if (!(other instanceof SkillBonusItemBonus otherBonus)) {
       throw new IllegalArgumentException();
     }
-    return new ItemSkillBonus(otherBonus.skillBonus.merge(this.skillBonus));
+    return new SkillBonusItemBonus(otherBonus.skillBonus.merge(this.skillBonus));
   }
 
   @Override
-  public ItemSkillBonus copy() {
-    return new ItemSkillBonus(skillBonus.copy());
+  public SkillBonusItemBonus copy() {
+    return new SkillBonusItemBonus(skillBonus.copy());
   }
 
   @Override
-  public ItemSkillBonus multiply(double multiplier) {
+  public SkillBonusItemBonus multiply(double multiplier) {
     skillBonus.multiply(multiplier);
     return this;
   }
@@ -48,8 +50,8 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
   }
 
   @Override
-  public MutableComponent getTooltip() {
-    return skillBonus.getTooltip();
+  public void addTooltip(Consumer<MutableComponent> consumer) {
+    consumer.accept(skillBonus.getTooltip());
   }
 
   @Override
@@ -61,25 +63,26 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
   public boolean equals(Object obj) {
     if (obj == this) return true;
     if (obj == null || obj.getClass() != this.getClass()) return false;
-    ItemSkillBonus that = (ItemSkillBonus) obj;
+    SkillBonusItemBonus that = (SkillBonusItemBonus) obj;
     return Objects.equals(this.skillBonus, that.skillBonus);
   }
 
   public static class Serializer implements ItemBonus.Serializer {
     @Override
     public ItemBonus<?> deserialize(JsonObject json) throws JsonParseException {
-      return new ItemSkillBonus(
+      return new SkillBonusItemBonus(
           SkillsReloader.GSON.fromJson(json.get("skill_bonus"), SkillBonus.class));
     }
 
     @Override
     public void serialize(JsonObject json, ItemBonus<?> bonus) {
-      if (!(bonus instanceof ItemSkillBonus aBonus)) {
+      if (!(bonus instanceof SkillBonusItemBonus aBonus)) {
         throw new IllegalArgumentException();
       }
       JsonObject skillBonusJson = new JsonObject();
       SkillBonus<?> skillBonus = aBonus.skillBonus;
-      ResourceLocation serializerId = PSTRegistries.SKILL_BONUSES.get().getKey(skillBonus.getSerializer());
+      ResourceLocation serializerId =
+          PSTRegistries.SKILL_BONUSES.get().getKey(skillBonus.getSerializer());
       Objects.requireNonNull(serializerId);
       skillBonusJson.addProperty("type", serializerId.toString());
       skillBonus.getSerializer().serialize(skillBonusJson, skillBonus);
@@ -94,12 +97,12 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
       SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
       Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
       SkillBonus<?> skillBonus = serializer.deserialize(skillBonusTag);
-      return new ItemSkillBonus(skillBonus);
+      return new SkillBonusItemBonus(skillBonus);
     }
 
     @Override
     public CompoundTag serialize(ItemBonus<?> bonus) {
-      if (!(bonus instanceof ItemSkillBonus aBonus)) {
+      if (!(bonus instanceof SkillBonusItemBonus aBonus)) {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
@@ -115,12 +118,12 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
 
     @Override
     public ItemBonus<?> deserialize(FriendlyByteBuf buf) {
-      return new ItemSkillBonus(NetworkHelper.readSkillBonus(buf));
+      return new SkillBonusItemBonus(NetworkHelper.readSkillBonus(buf));
     }
 
     @Override
     public void serialize(FriendlyByteBuf buf, ItemBonus<?> bonus) {
-      if (!(bonus instanceof ItemSkillBonus aBonus)) {
+      if (!(bonus instanceof SkillBonusItemBonus aBonus)) {
         throw new IllegalArgumentException();
       }
       NetworkHelper.writeSkillBonus(buf, aBonus.skillBonus);
@@ -128,7 +131,7 @@ public record ItemSkillBonus(SkillBonus<?> skillBonus) implements ItemBonus<Item
 
     @Override
     public ItemBonus<?> createDefaultInstance() {
-      return new ItemSkillBonus(new DamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
+      return new SkillBonusItemBonus(new DamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
     }
   }
 }

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
-import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.player.MoreItemBonusesBonus;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -28,17 +27,15 @@ import org.jetbrains.annotations.Nullable;
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {
   @SubscribeEvent
-  public static void addCraftedItemSkillBonusTooltips(ItemTooltipEvent event) {
+  public static void addItemBonusTooltips(ItemTooltipEvent event) {
     List<Component> components = event.getToolTip();
     List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
     if (!itemBonuses.isEmpty()) {
       components.add(Component.empty());
     }
     for (ItemBonus<?> itemBonus : itemBonuses) {
-      if (!(itemBonus instanceof ItemSkillBonus itemSkillBonus)) continue;
-      SkillBonus<?> bonus = itemSkillBonus.skillBonus();
-      MutableComponent tooltip = bonus.getTooltip().withStyle(TooltipHelper.getItemBonusStyle());
-      components.add(tooltip);
+      Style style = TooltipHelper.getItemBonusStyle();
+      itemBonus.addTooltip(tooltip -> components.add(tooltip.withStyle(style)));
     }
   }
 
@@ -46,9 +43,9 @@ public class ItemBonusHandler {
   public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
     LivingEntity entity = event.getEntity();
     if (!(entity instanceof Player)) return;
-    for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), ItemSkillBonus.class)) {
-      ItemSkillBonus itemSkillBonus = (ItemSkillBonus) itemBonus;
-      if (!(itemSkillBonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+    for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), SkillBonusItemBonus.class)) {
+      SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
+      if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
         continue;
       }
       AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
@@ -57,9 +54,9 @@ public class ItemBonusHandler {
       }
       attributeInstance.removeModifier(attributeBonus.getModifier().getId());
     }
-    for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), ItemSkillBonus.class)) {
-      ItemSkillBonus itemSkillBonus = (ItemSkillBonus) itemBonus;
-      if (!(itemSkillBonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+    for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), SkillBonusItemBonus.class)) {
+      SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
+      if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
         continue;
       }
       if (attributeBonus.isDynamic()) {
@@ -91,7 +88,15 @@ public class ItemBonusHandler {
   }
 
   public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
-    return getItemBonuses(stack).stream().filter(type::isInstance).toList();
+    List<ItemBonus<?>> bonuses = new ArrayList<>();
+    for (ItemBonus<?> bonus : getItemBonuses(stack)) {
+      if (bonus instanceof ItemBonusListItemBonus listBonus) {
+        bonuses.addAll(listBonus.innerBonuses());
+      } else {
+        bonuses.add(bonus);
+      }
+    }
+    return bonuses.stream().filter(type::isInstance).toList();
   }
 
   public static void setItemBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
@@ -106,7 +111,9 @@ public class ItemBonusHandler {
   }
 
   public static void removeItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) return;
+    if (!stack.hasTag()) {
+      return;
+    }
     stack.getOrCreateTag().remove("SkillBonuses");
   }
 

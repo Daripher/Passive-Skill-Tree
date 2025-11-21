@@ -12,7 +12,7 @@ import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.event.*;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
-import daripher.skilltree.skill.bonus.item.ItemSkillBonus;
+import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import java.util.*;
 import java.util.stream.Stream;
@@ -907,8 +907,8 @@ public class SkillBonusHandler {
     List<ItemBonus<?>> itemBonuses = new ArrayList<>(ItemBonusHandler.getItemBonuses(stack));
     List<T> bonuses = new ArrayList<>();
     for (ItemBonus<?> itemBonus : itemBonuses) {
-      if (itemBonus instanceof ItemSkillBonus itemSkillBonus) {
-        SkillBonus<?> skillBonus = itemSkillBonus.skillBonus();
+      if (itemBonus instanceof SkillBonusItemBonus bonus) {
+        SkillBonus<?> skillBonus = bonus.skillBonus();
         if (type.isInstance(skillBonus)) {
           bonuses.add(type.cast(skillBonus));
         }
