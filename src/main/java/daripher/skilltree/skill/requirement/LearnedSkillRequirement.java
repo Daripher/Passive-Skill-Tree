@@ -108,7 +108,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
     @Override
     public SkillRequirement<?> deserialize(CompoundTag tag) {
       ResourceLocation id = new ResourceLocation(tag.getString("skill_id"));
-      return new AdvancementRequirement(id);
+      return new LearnedSkillRequirement(id);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
     @Override
     public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
       ResourceLocation id = new ResourceLocation(buf.readUtf());
-      return new AdvancementRequirement(id);
+      return new LearnedSkillRequirement(id);
     }
 
     @Override
