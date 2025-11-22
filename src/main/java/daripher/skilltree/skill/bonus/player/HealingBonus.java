@@ -154,7 +154,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   }
 
   private void selectAmount(Consumer<EventListenerBonus<HealingBonus>> consumer, Double value) {
-    setAmount(value.intValue());
+    setAmount(value.floatValue());
     consumer.accept(this.copy());
   }
 
@@ -218,9 +218,9 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
 
     @Override
     public HealingBonus deserialize(FriendlyByteBuf buf) {
+      float chance = buf.readFloat();
       float amount = buf.readFloat();
-      float duration = buf.readFloat();
-      HealingBonus bonus = new HealingBonus(amount, duration);
+      HealingBonus bonus = new HealingBonus(chance, amount);
       bonus.eventListener = NetworkHelper.readEventListener(buf);
       return bonus;
     }
