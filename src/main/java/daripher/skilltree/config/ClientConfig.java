@@ -20,15 +20,19 @@ public class ClientConfig {
   private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   private static final ConfigValue<List<? extends String>> FAVORITE_SKILLS;
   private static final ConfigValue<? extends String> FAVORITE_COLOR_HEX;
+  private static final ConfigValue<Boolean> SKILL_TREE_BACKGROUND_PARALLAX;
   public static Set<ResourceLocation> favorite_skills;
   public static int favorite_color;
   public static boolean favorite_color_is_rainbow;
+  public static boolean skill_tree_background_parallax;
 
   static {
     FAVORITE_SKILLS =
         BUILDER.defineList("favorite_skills", new ArrayList<>(), ClientConfig::isValidSkillId);
     FAVORITE_COLOR_HEX =
         BUILDER.define("favorite_color_hex", "#42B0FF", ClientConfig::isValidHexColor);
+    SKILL_TREE_BACKGROUND_PARALLAX =
+        BUILDER.define("skill_tree_background_parallax", true);
     SPEC = BUILDER.build();
   }
 
@@ -54,6 +58,7 @@ public class ClientConfig {
     favorite_skills =
         FAVORITE_SKILLS.get().stream().map(ResourceLocation::new).collect(Collectors.toSet());
     favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");
+    skill_tree_background_parallax = SKILL_TREE_BACKGROUND_PARALLAX.get();
     if (!favorite_color_is_rainbow) {
       favorite_color = Integer.decode(FAVORITE_COLOR_HEX.get());
     }

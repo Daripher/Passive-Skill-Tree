@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.client.widget.SkillTreeWidgets;
 import daripher.skilltree.client.widget.skill.SkillButtons;
+import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
@@ -161,7 +162,13 @@ public class SkillTreeScreen extends Screen implements StatsUpdateListener {
         new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
     PoseStack poseStack = graphics.pose();
     poseStack.pushPose();
-    poseStack.translate(skillButtons.getScrollX() / 3F, skillButtons.getScrollY() / 3F, 0);
+    float x = skillButtons.getScrollX();
+    float y = skillButtons.getScrollY();
+    if (ClientConfig.skill_tree_background_parallax) {
+      x /= 3f;
+      y /= 3f;
+    }
+    poseStack.translate(x, y, 0);
     int size = BACKGROUND_SIZE;
     graphics.blit(
         texture, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);
