@@ -3,15 +3,15 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:ingots/iron"
-      },
-      "required_amount": 1
-    },
-    {
-      "ingredient": {
         "tag": "forge:nuggets/iron"
       },
       "required_amount": 2
+    },
+    {
+      "ingredient": {
+        "tag": "forge:ingots/iron"
+      },
+      "required_amount": 1
     },
     {
       "ingredient": {

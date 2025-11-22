@@ -1,6 +1,4 @@
 {
-  "attribute.name.skilltree.exp_per_minute": "Опыт в минуту",
-  "attribute.name.skilltree.regeneration": "Регенерация здоровья",
   "block.skilltree.workbench": "Рабочий стол",
   "damage_condition.skilltree.fall": "Урон от падения",
   "damage_condition.skilltree.fall.type": "от падения",
@@ -40,7 +38,10 @@
   "event_listener.skilltree.on_kill.damage": "%s при убийстве %s",
   "event_listener.skilltree.skill_learned": "%s при изучении этого умения",
   "event_listener.skilltree.skill_removed": "%s когда вы забудете это умение",
-  "event_listener.skilltree.ticking": "%s каждую секунду",
+  "event_listener.skilltree.ticking.minute": "%s каждую минуту",
+  "event_listener.skilltree.ticking.minutes": "%s каждые %s минуты",
+  "event_listener.skilltree.ticking.second": "%s каждую секунду",
+  "event_listener.skilltree.ticking.seconds": "%s каждые %s секунд",
   "experience.source.fishing": "за Рыбалку",
   "experience.source.mobs": "с Существ",
   "experience.source.ore": "из Руды",

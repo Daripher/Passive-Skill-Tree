@@ -1,6 +1,4 @@
 {
-  "attribute.name.skilltree.exp_per_minute": "Experience Per Minute",
-  "attribute.name.skilltree.regeneration": "Life Regeneration",
   "block.skilltree.workbench": "Workbench",
   "damage_condition.skilltree.fall": "Fall Damage",
   "damage_condition.skilltree.fall.type": "Fall",
@@ -42,7 +40,10 @@
   "event_listener.skilltree.on_kill.damage": "%s on %s kill",
   "event_listener.skilltree.skill_learned": "%s when you learn this",
   "event_listener.skilltree.skill_removed": "%s when this skill is removed",
-  "event_listener.skilltree.ticking": "%s every second",
+  "event_listener.skilltree.ticking.minute": "%s every minute",
+  "event_listener.skilltree.ticking.minutes": "%s every %s minutes",
+  "event_listener.skilltree.ticking.second": "%s every second",
+  "event_listener.skilltree.ticking.seconds": "%s every %s seconds",
   "experience.source.fishing": "Fishing",
   "experience.source.mobs": "Mobs",
   "experience.source.ore": "Ores",

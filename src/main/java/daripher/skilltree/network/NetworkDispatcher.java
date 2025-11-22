@@ -51,9 +51,9 @@ public class NetworkDispatcher {
     network_channel.registerMessage(
         4,
         GainSkillPointMessage.class,
-        GainSkillPointMessage::encode,
-        GainSkillPointMessage::decode,
-        GainSkillPointMessage::receive,
+        (msg, buf) -> {},
+        (buf) -> new GainSkillPointMessage(),
+        (msg, ctx) -> GainSkillPointMessage.receive(ctx),
         Optional.of(NetworkDirection.PLAY_TO_SERVER));
   }
 }

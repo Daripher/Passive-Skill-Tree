@@ -7,15 +7,15 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:ores/netherite_scrap"
-      },
-      "required_amount": 2
-    },
-    {
-      "ingredient": {
         "tag": "forge:gems/diamond"
       },
       "required_amount": 3
+    },
+    {
+      "ingredient": {
+        "tag": "forge:ores/netherite_scrap"
+      },
+      "required_amount": 2
     }
   ],
   "item_bonus": {
@@ -24,7 +24,7 @@
       "type": "skilltree:attribute",
       "amount": 1.0,
       "attribute": "minecraft:generic.armor_toughness",
-      "id": "4f312927-50aa-4d31-972a-2575595bca44",
+      "id": "718f7839-722d-4642-a3bd-3fe2d0ad9216",
       "name": "Workbench Upgrade",
       "operation": 0
     }

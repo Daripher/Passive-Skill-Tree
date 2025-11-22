@@ -5,7 +5,6 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTAttributes;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
@@ -207,7 +206,6 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   private boolean isPercentageRegeneration() {
     return modifier.getOperation() == AttributeModifier.Operation.ADDITION
-           && attribute == PSTAttributes.REGENERATION.get()
            && playerMultiplier instanceof FloatFunctionMultiplier floatFunctionMultiplier
            && floatFunctionMultiplier.getFloatFunction()
             instanceof AttributeValueFunction attributeValueFunction

@@ -7,15 +7,15 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:leather"
-      },
-      "required_amount": 4
-    },
-    {
-      "ingredient": {
         "tag": "forge:nuggets/iron"
       },
       "required_amount": 3
+    },
+    {
+      "ingredient": {
+        "tag": "forge:leather"
+      },
+      "required_amount": 4
     }
   ],
   "item_bonus": {
@@ -24,7 +24,7 @@
       "type": "skilltree:attribute",
       "amount": 0.15,
       "attribute": "minecraft:generic.movement_speed",
-      "id": "cea740b9-2fa9-44e6-aaee-36817ed8da6d",
+      "id": "eff87351-6eea-4e50-b756-85108691008b",
       "name": "Workbench Upgrade",
       "operation": 1
     }

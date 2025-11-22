@@ -3,25 +3,17 @@ package daripher.skilltree.network.message;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
+import daripher.skilltree.exp.ExpHelper;
 import daripher.skilltree.network.NetworkDispatcher;
-
 import java.util.Objects;
 import java.util.function.Supplier;
-
-import daripher.skilltree.util.PSTUtils;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
 
 public class GainSkillPointMessage {
-  public static GainSkillPointMessage decode(FriendlyByteBuf buf) {
-    return new GainSkillPointMessage();
-  }
-
-  public static void receive(
-      GainSkillPointMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
+  public static void receive(Supplier<NetworkEvent.Context> ctxSupplier) {
     Context ctx = ctxSupplier.get();
     ctx.setPacketHandled(true);
     ServerPlayer player = Objects.requireNonNull(ctx.getSender());
@@ -33,7 +25,7 @@ public class GainSkillPointMessage {
       return;
     }
     int cost = ServerConfig.getSkillPointCost(level);
-    if (PSTUtils.getPlayerExp(player) < cost) {
+    if (ExpHelper.getPlayerExp(player) < cost) {
       return;
     }
     player.giveExperiencePoints(-cost);
@@ -41,6 +33,4 @@ public class GainSkillPointMessage {
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
   }
-
-  public void encode(FriendlyByteBuf buf) {}
 }

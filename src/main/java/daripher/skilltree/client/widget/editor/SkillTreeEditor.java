@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+
+import daripher.skilltree.attribute.AttributesHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -214,10 +216,10 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
   public SelectionMenuButton<Attribute> addSelectionMenu(
       int x, int y, int width, Attribute defaultValue) {
-    Collection<Attribute> values = PSTAttributes.attributeList();
+    Collection<Attribute> values = AttributesHelper.attributeList();
     return addSelectionMenu(x, y, width, values)
         .setValue(defaultValue)
-        .setElementNameGetter(a -> Component.literal(PSTAttributes.getName(a)));
+        .setElementNameGetter(a -> Component.literal(AttributesHelper.getName(a)));
   }
 
   public SelectionMenuButton<LivingEntityPredicate> addSelectionMenu(

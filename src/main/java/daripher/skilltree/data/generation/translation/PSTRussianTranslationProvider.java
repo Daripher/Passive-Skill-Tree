@@ -243,7 +243,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.ON_KILL.get(), "damage", "%s при убийстве %s");
     add(PSTEventListeners.SKILL_LEARNED.get(), "%s при изучении этого умения");
     add(PSTEventListeners.SKILL_REMOVED.get(), "%s когда вы забудете это умение");
-    add(PSTEventListeners.TICKING.get(), "%s каждую секунду");
+    add(PSTEventListeners.TICKING.get(), "second", "%s каждую секунду");
+    add(PSTEventListeners.TICKING.get(), "seconds", "%s каждые %s секунд");
+    add(PSTEventListeners.TICKING.get(), "minute", "%s каждую минуту");
+    add(PSTEventListeners.TICKING.get(), "minutes", "%s каждые %s минуты");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Урон снарядами");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "снарядами");
@@ -555,9 +558,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
-    // attributes
-    add(PSTAttributes.REGENERATION.get(), "Регенерация здоровья");
-    add(PSTAttributes.EXP_PER_MINUTE.get(), "Опыт в минуту");
     // effects
     add(PSTMobEffects.LIQUID_FIRE.get(), "Жидкий огонь");
     // potions

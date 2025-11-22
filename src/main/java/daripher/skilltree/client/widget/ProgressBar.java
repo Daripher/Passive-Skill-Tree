@@ -4,7 +4,7 @@ import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.config.ServerConfig;
-import daripher.skilltree.util.PSTUtils;
+import daripher.skilltree.exp.ExpHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -60,7 +60,7 @@ public class ProgressBar extends Button {
       int cost = ServerConfig.getSkillPointCost(getCurrentLevel());
       LocalPlayer player = Minecraft.getInstance().player;
       Objects.requireNonNull(player);
-      long exp = PSTUtils.getPlayerExp(player);
+      long exp = ExpHelper.getPlayerExp(player);
       String text = exp + "/" + cost;
       ScreenHelper.drawCenteredOutlinedText(graphics, text, getX() + width / 2, getTextY(), 0xFCE266);
     } else {
@@ -98,7 +98,7 @@ public class ProgressBar extends Button {
       int levelupCost = ServerConfig.getSkillPointCost(level);
       LocalPlayer player = Minecraft.getInstance().player;
       Objects.requireNonNull(player);
-      progress = (float) PSTUtils.getPlayerExp(player) / levelupCost;
+      progress = (float) ExpHelper.getPlayerExp(player) / levelupCost;
       progress = Math.min(1F, progress);
     }
     return progress;

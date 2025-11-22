@@ -25,12 +25,10 @@ public interface EventListenerBonus<T>
 
   @Override
   default void tick(ServerPlayer player) {
-    // trigger every 0.5 seconds
-    if (player.tickCount % 10 != 0) {
-      return;
-    }
     if (getEventListener() instanceof TickingEventListener listener) {
-      listener.onEvent(player, this);
+      if (player.tickCount % listener.getCooldown() == 0) {
+        listener.onEvent(player, this);
+      }
     }
   }
 

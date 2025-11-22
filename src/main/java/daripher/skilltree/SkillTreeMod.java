@@ -21,7 +21,6 @@ public class SkillTreeMod {
   public SkillTreeMod() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
     PSTItems.REGISTRY.register(eventBus);
-    PSTAttributes.REGISTRY.register(eventBus);
     PSTMobEffects.REGISTRY.register(eventBus);
     PSTCreativeTabs.REGISTRY.register(eventBus);
     PSTSkillBonuses.REGISTRY.register(eventBus);

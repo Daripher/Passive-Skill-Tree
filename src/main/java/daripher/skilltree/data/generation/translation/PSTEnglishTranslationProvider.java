@@ -243,7 +243,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.ON_KILL.get(), "damage", "%s on %s kill");
     add(PSTEventListeners.SKILL_LEARNED.get(), "%s when you learn this");
     add(PSTEventListeners.SKILL_REMOVED.get(), "%s when this skill is removed");
-    add(PSTEventListeners.TICKING.get(), "%s every second");
+    add(PSTEventListeners.TICKING.get(), "second", "%s every second");
+    add(PSTEventListeners.TICKING.get(), "seconds", "%s every %s seconds");
+    add(PSTEventListeners.TICKING.get(), "minute", "%s every minute");
+    add(PSTEventListeners.TICKING.get(), "minutes", "%s every %s minutes");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "Projectile");
@@ -472,9 +475,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
     addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
     addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");
-    // attributes
-    add(PSTAttributes.REGENERATION.get(), "Life Regeneration");
-    add(PSTAttributes.EXP_PER_MINUTE.get(), "Experience Per Minute");
     // effects
     add(PSTMobEffects.LIQUID_FIRE.get(), "Liquid Fire");
     // potions
