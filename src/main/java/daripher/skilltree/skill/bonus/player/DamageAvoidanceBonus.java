@@ -44,7 +44,11 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
       DamageSource source, Player player, @Nullable LivingEntity attacker) {
     if (!damageCondition.met(source)) return 0f;
     if (!playerCondition.test(player)) return 0f;
-    if (!attackerCondition.test(attacker)) return 0f;
+    if (attackerCondition != NoneLivingEntityPredicate.INSTANCE) {
+      if (attacker == null || !attackerCondition.test(attacker)) {
+        return 0f;
+      }
+    }
     float result = chance * playerMultiplier.getValue(player);
     if (attacker != null) {
       result *= attackerMultiplier.getValue(attacker);

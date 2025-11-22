@@ -504,7 +504,9 @@ public class SkillBonusHandler {
     if (!(event.getEntity().getKillCredit() instanceof Player player)) {
       return;
     }
-    if (getSkillBonuses(player, CanPoisonAnyoneBonus.class).isEmpty()) return;
+    if (getSkillBonuses(player, CanPoisonAnyoneBonus.class).isEmpty()) {
+      return;
+    }
     event.setResult(Event.Result.ALLOW);
   }
 
@@ -532,9 +534,7 @@ public class SkillBonusHandler {
       return;
     }
     DamageSource damageSource = event.getSource();
-    if (!(damageSource.getEntity() instanceof LivingEntity attacker)) {
-      return;
-    }
+    LivingEntity attacker = getDamageSourceEntity(damageSource);
     float avoidance =
         getSkillBonuses(player, DamageAvoidanceBonus.class).stream()
             .map(b -> b.getAvoidanceChance(damageSource, player, attacker))
@@ -542,13 +542,26 @@ public class SkillBonusHandler {
             .orElse(0f);
     if (player.getRandom().nextFloat() < avoidance) {
       event.setCanceled(true);
-      for (EventListenerBonus<?> bonus : getMergedSkillBonuses(player, EventListenerBonus.class)) {
-        if (!(bonus.getEventListener() instanceof EvasionEventListener listener)) {
-          continue;
-        }
-        SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
-        listener.onEvent(player, attacker, (EventListenerBonus<?>) copy);
+      applyEventListenerEffect(player, attacker);
+    }
+  }
+
+  private static @Nullable LivingEntity getDamageSourceEntity(DamageSource damageSource) {
+    if (damageSource.getEntity() instanceof LivingEntity) {
+      return (LivingEntity) damageSource.getEntity();
+    } else if (damageSource.getEntity() instanceof Projectile projectile && projectile.getOwner() instanceof LivingEntity) {
+      return (LivingEntity) projectile.getOwner();
+    }
+    return null;
+  }
+
+  private static void applyEventListenerEffect(Player player, LivingEntity attacker) {
+    for (EventListenerBonus<?> bonus : getMergedSkillBonuses(player, EventListenerBonus.class)) {
+      if (!(bonus.getEventListener() instanceof EvasionEventListener listener)) {
+        continue;
       }
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      listener.onEvent(player, attacker, (EventListenerBonus<?>) copy);
     }
   }
 
