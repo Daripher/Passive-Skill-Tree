@@ -180,9 +180,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove",  "Используя %s вы не замедляетесь");
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Используя %s вы замедляетесь на %s%% сильнее");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "Вы можете улучшить %s дополнительный раз используя рабочий стол");
-    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %ы дополнительных раза используя рабочий стол");
-    add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Регенерация %s%% здоровья в секунду");
+    add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %s дополнительных раза используя рабочий стол");
     add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Открывает рецепт: %s");
+    add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Вы получаете %s опыта");
+    add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Шанс получить %s опыта");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");

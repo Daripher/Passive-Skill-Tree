@@ -181,8 +181,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative",  "Increases movement speed penalty from using %s by %s%%");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one",  "You can upgrade %s an additional time using workbench");
     add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using workbench");
-    add(PSTSkillBonuses.ATTRIBUTE.get(), "percentage_regeneration", "Regenerate %s%% of Life per second");
     add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
+    add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Gain %s experience");
+    add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Chance to gain %s experience");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
