@@ -25,24 +25,31 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   private float chance;
   private float amount;
   private SkillEventListener eventListener;
+  private boolean isPercentageHealing;
 
-  public HealingBonus(float chance, float amount, SkillEventListener eventListener) {
+  public HealingBonus(
+      float chance, float amount, SkillEventListener eventListener, boolean isPercentageHealing) {
     this.chance = chance;
     this.amount = amount;
     this.eventListener = eventListener;
+    this.isPercentageHealing = isPercentageHealing;
   }
 
   public HealingBonus(float chance, float amount) {
-    this(chance, amount, new AttackEventListener().setTarget(Target.PLAYER));
+    this(chance, amount, new AttackEventListener().setTarget(Target.PLAYER), false);
   }
 
   @Override
   public void applyEffect(LivingEntity target) {
     if (target.getRandom().nextFloat() < chance) {
-      if (target.getHealth() < target.getMaxHealth() && target instanceof Player player) {
-        player.getFoodData().addExhaustion(amount / 2);
+      float healAmount = amount;
+      if (isPercentageHealing) {
+        healAmount = amount * target.getMaxHealth();
       }
-      target.heal(amount);
+      if (target.getHealth() < target.getMaxHealth() && target instanceof Player player) {
+        player.getFoodData().addExhaustion(healAmount / 2);
+      }
+      target.heal(healAmount);
     }
   }
 
@@ -53,7 +60,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
 
   @Override
   public HealingBonus copy() {
-    return new HealingBonus(chance, amount, eventListener);
+    return new HealingBonus(chance, amount, eventListener, isPercentageHealing);
   }
 
   @Override
@@ -70,6 +77,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   public boolean canMerge(SkillBonus<?> other) {
     if (!(other instanceof HealingBonus otherBonus)) return false;
     if (otherBonus.amount != this.amount) return false;
+    if (otherBonus.isPercentageHealing != isPercentageHealing) return false;
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 
@@ -79,9 +87,11 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       throw new IllegalArgumentException();
     }
     if (otherBonus.chance == 1 && this.chance == 1) {
-      return new HealingBonus(chance, otherBonus.amount + this.amount, eventListener);
+      return new HealingBonus(
+          chance, otherBonus.amount + this.amount, eventListener, isPercentageHealing);
     }
-    return new HealingBonus(otherBonus.chance + this.chance, amount, eventListener);
+    return new HealingBonus(
+        otherBonus.chance + this.chance, amount, eventListener, isPercentageHealing);
   }
 
   @Override
@@ -91,7 +101,12 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
     if (chance < 1) {
       bonusDescription += ".chance";
     }
-    String amountDescription = TooltipHelper.formatNumber(amount);
+    String amountDescription;
+    if (isPercentageHealing) {
+      amountDescription = TooltipHelper.formatNumber(amount * 100) + "%";
+    } else {
+      amountDescription = TooltipHelper.formatNumber(amount);
+    }
     MutableComponent tooltip = Component.translatable(bonusDescription, amountDescription);
     if (chance < 1) {
       tooltip =
@@ -125,6 +140,12 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
         .addNumericTextField(110, 0, 90, 14, amount)
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor.increaseHeight(19);
+    editor.addLabel(0, 0, "Percentage Healing", ChatFormatting.GOLD);
+    editor.increaseHeight(19);
+    editor
+        .addCheckBox(0, 0, isPercentageHealing)
+        .setResponder(value -> selectPercentageHealing(editor, consumer, value));
+    editor.increaseHeight(19);
     editor.addLabel(0, 0, "Event", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
@@ -153,6 +174,15 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
     editor.rebuildWidgets();
   }
 
+  private void selectPercentageHealing(
+      SkillTreeEditor editor,
+      Consumer<EventListenerBonus<HealingBonus>> consumer,
+      boolean isPercentageHealing) {
+    setPercentageHealing(isPercentageHealing);
+    consumer.accept(this.copy());
+    editor.rebuildWidgets();
+  }
+
   private void selectAmount(Consumer<EventListenerBonus<HealingBonus>> consumer, Double value) {
     setAmount(value.floatValue());
     consumer.accept(this.copy());
@@ -161,6 +191,10 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   private void selectChance(Consumer<EventListenerBonus<HealingBonus>> consumer, Double value) {
     setChance(value.floatValue());
     consumer.accept(this.copy());
+  }
+
+  public void setPercentageHealing(boolean percentageHealing) {
+    isPercentageHealing = percentageHealing;
   }
 
   public void setEventListener(SkillEventListener eventListener) {
@@ -182,6 +216,9 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       float amount = SerializationHelper.getElement(json, "amount").getAsFloat();
       HealingBonus bonus = new HealingBonus(chance, amount);
       bonus.eventListener = SerializationHelper.deserializeEventListener(json);
+      if (json.has("percentage_healing")) {
+        bonus.setPercentageHealing(json.get("percentage_healing").getAsBoolean());
+      }
       return bonus;
     }
 
@@ -193,6 +230,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       json.addProperty("chance", aBonus.chance);
       json.addProperty("amount", aBonus.amount);
       SerializationHelper.serializeEventListener(json, aBonus.eventListener);
+      json.addProperty("percentage_healing", aBonus.isPercentageHealing);
     }
 
     @Override
@@ -201,6 +239,9 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       float amount = tag.getFloat("amount");
       HealingBonus bonus = new HealingBonus(chance, amount);
       bonus.eventListener = SerializationHelper.deserializeEventListener(tag);
+      if (tag.contains("percentage_healing")) {
+        bonus.setPercentageHealing(tag.getBoolean("percentage_healing"));
+      }
       return bonus;
     }
 
@@ -213,6 +254,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       tag.putFloat("chance", aBonus.chance);
       tag.putFloat("amount", aBonus.amount);
       SerializationHelper.serializeEventListener(tag, aBonus.eventListener);
+      tag.putBoolean("percentage_healing", aBonus.isPercentageHealing);
       return tag;
     }
 
@@ -222,6 +264,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       float amount = buf.readFloat();
       HealingBonus bonus = new HealingBonus(chance, amount);
       bonus.eventListener = NetworkHelper.readEventListener(buf);
+      bonus.isPercentageHealing = buf.readBoolean();
       return bonus;
     }
 
@@ -233,6 +276,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
       buf.writeFloat(aBonus.chance);
       buf.writeFloat(aBonus.amount);
       NetworkHelper.writeEventListener(buf, aBonus.eventListener);
+      buf.writeBoolean(aBonus.isPercentageHealing);
     }
 
     @Override
