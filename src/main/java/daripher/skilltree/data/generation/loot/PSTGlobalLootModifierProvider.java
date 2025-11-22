@@ -1,4 +1,4 @@
-package daripher.skilltree.data.generation;
+package daripher.skilltree.data.generation.loot;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.loot.modifier.SkillBonusesModifier;

@@ -15,10 +15,12 @@ public class PSTLootTablesProvider extends LootTableProvider {
   public static final Set<ResourceLocation> REQUIRED_TABLES = Set.of();
 
   public PSTLootTablesProvider(DataGenerator generator) {
-    super(
-        generator.getPackOutput(),
-        REQUIRED_TABLES,
-        List.of(new SubProviderEntry(PSTBlockLoot::new, LootContextParamSets.BLOCK)));
+    super(generator.getPackOutput(), REQUIRED_TABLES, List.of(createBlockLootProvider()));
+  }
+
+  @NotNull
+  private static SubProviderEntry createBlockLootProvider() {
+    return new SubProviderEntry(PSTBlockLoot::new, LootContextParamSets.BLOCK);
   }
 
   @Override

@@ -1,6 +1,7 @@
 package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.data.generation.loot.PSTGlobalLootModifierProvider;
 import daripher.skilltree.data.generation.loot.PSTLootTablesProvider;
 import daripher.skilltree.data.generation.translation.PSTEnglishTranslationProvider;
 import daripher.skilltree.data.generation.translation.PSTRussianTranslationProvider;

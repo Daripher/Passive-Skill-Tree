@@ -1,14 +1,25 @@
 package daripher.skilltree.data.generation.loot;
 
-import java.util.function.BiConsumer;
-import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.storage.loot.LootTable;
+import daripher.skilltree.init.PSTBlocks;
+import java.util.Collections;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-public class PSTBlockLoot implements LootTableSubProvider {
-  public PSTBlockLoot() {}
+public class PSTBlockLoot extends BlockLootSubProvider {
+  protected PSTBlockLoot() {
+    super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+  }
 
   @Override
-  public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> consumer) {}
+  protected void generate() {
+    dropSelf(PSTBlocks.WORKBENCH.get());
+  }
+
+  @Override
+  protected @NotNull Iterable<Block> getKnownBlocks() {
+    return PSTBlocks.REGISTRY.getEntries().stream().map(RegistryObject::get)::iterator;
+  }
 }
