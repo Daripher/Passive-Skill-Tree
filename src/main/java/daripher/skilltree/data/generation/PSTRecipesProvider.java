@@ -4,9 +4,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTItems;
 import daripher.skilltree.recipe.builder.WorkbenchCraftingRecipeBuilder;
 import daripher.skilltree.recipe.builder.WorkbenchItemBonusRecipeBuilder;
-import daripher.skilltree.skill.bonus.event.BlockEventListener;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
-import daripher.skilltree.skill.bonus.player.InflictDamageBonus;
+import daripher.skilltree.skill.bonus.player.DamageBonus;
 import daripher.skilltree.skill.bonus.predicate.damage.ThornsDamageCondition;
 import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
 import java.util.function.Consumer;
@@ -55,7 +54,8 @@ public class PSTRecipesProvider extends RecipeProvider {
         .addIngredients(Ingredient.of(Tags.Items.INGOTS_IRON), 5)
         .addIngredients(Ingredient.of(Tags.Items.NUGGETS_IRON), 9)
         .setItemBonus(
-            new InflictDamageBonus(1f, 4f, new BlockEventListener(), new ThornsDamageCondition()))
+            new DamageBonus(0.25f, AttributeModifier.Operation.MULTIPLY_BASE)
+                .setDamageCondition(new ThornsDamageCondition()))
         .setRequiresPassiveSkill()
         .save(consumer);
     WorkbenchItemBonusRecipeBuilder.create(modRecipeId("armor_defence_bonus"))

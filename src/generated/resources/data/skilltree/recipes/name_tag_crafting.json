@@ -3,9 +3,9 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:nuggets/iron"
+        "item": "minecraft:paper"
       },
-      "required_amount": 2
+      "required_amount": 8
     },
     {
       "ingredient": {
@@ -15,9 +15,9 @@
     },
     {
       "ingredient": {
-        "item": "minecraft:paper"
+        "tag": "forge:nuggets/iron"
       },
-      "required_amount": 8
+      "required_amount": 2
     }
   ],
   "requires_passive_skill": true,

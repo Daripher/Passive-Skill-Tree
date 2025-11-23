@@ -3,12 +3,6 @@
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:nuggets/iron"
-      },
-      "required_amount": 4
-    },
-    {
-      "ingredient": {
         "tag": "forge:ingots/iron"
       },
       "required_amount": 2
@@ -18,6 +12,12 @@
         "tag": "forge:leather"
       },
       "required_amount": 8
+    },
+    {
+      "ingredient": {
+        "tag": "forge:nuggets/iron"
+      },
+      "required_amount": 4
     }
   ],
   "requires_passive_skill": true,
