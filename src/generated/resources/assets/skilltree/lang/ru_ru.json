@@ -31,6 +31,7 @@
   "event_listener.skilltree.attack.damage": "%s при атаке %s",
   "event_listener.skilltree.block": "%s при блоке",
   "event_listener.skilltree.block.damage": "%s при блоке %s",
+  "event_listener.skilltree.critical_hit": "%s при критическом ударе",
   "event_listener.skilltree.damage_taken": "%s когда вы получаете %s",
   "event_listener.skilltree.evasion": "%s при уклонении",
   "event_listener.skilltree.item_used": "%s когда вы используете %s",

@@ -33,6 +33,7 @@
   "event_listener.skilltree.attack.damage": "%s on %s hit",
   "event_listener.skilltree.block": "%s on block",
   "event_listener.skilltree.block.damage": "%s on %s block",
+  "event_listener.skilltree.critical_hit": "%s on critical hit",
   "event_listener.skilltree.damage_taken": "%s when you take %s",
   "event_listener.skilltree.evasion": "%s on evasion",
   "event_listener.skilltree.item_used": "%s on %s use",

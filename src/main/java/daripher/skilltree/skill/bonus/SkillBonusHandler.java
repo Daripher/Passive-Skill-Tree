@@ -8,12 +8,12 @@ import daripher.skilltree.entity.player.PlayerHelper;
 import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.MobEffectInstanceAccessor;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.event.*;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
 import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.player.*;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import java.util.*;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -336,6 +336,19 @@ public class SkillBonusHandler {
     }
   }
 
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void applyEventListenerEffect(CriticalHitEvent event) {
+    if (!(event.getTarget() instanceof LivingEntity target)) {
+      return;
+    }
+    Player player = event.getEntity();
+    for (EventListenerBonus<?> bonus : getMergedSkillBonuses(player, EventListenerBonus.class)) {
+      if (!(bonus.getEventListener() instanceof CritEventListener listener)) continue;
+      SkillBonus<? extends EventListenerBonus<?>> copy = bonus.copy();
+      listener.onEvent(player, target, (EventListenerBonus<?>) copy);
+    }
+  }
+
   @SubscribeEvent
   public static void applyEventListenerEffect(ShieldBlockEvent event) {
     if (!(event.getEntity() instanceof Player player)) {
@@ -549,7 +562,8 @@ public class SkillBonusHandler {
   private static @Nullable LivingEntity getDamageSourceEntity(DamageSource damageSource) {
     if (damageSource.getEntity() instanceof LivingEntity) {
       return (LivingEntity) damageSource.getEntity();
-    } else if (damageSource.getEntity() instanceof Projectile projectile && projectile.getOwner() instanceof LivingEntity) {
+    } else if (damageSource.getEntity() instanceof Projectile projectile
+        && projectile.getOwner() instanceof LivingEntity) {
       return (LivingEntity) projectile.getOwner();
     }
     return null;

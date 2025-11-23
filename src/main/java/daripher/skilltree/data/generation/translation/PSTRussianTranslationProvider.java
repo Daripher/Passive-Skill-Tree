@@ -248,6 +248,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.TICKING.get(), "seconds", "%s каждые %s секунд");
     add(PSTEventListeners.TICKING.get(), "minute", "%s каждую минуту");
     add(PSTEventListeners.TICKING.get(), "minutes", "%s каждые %s минуты");
+    add(PSTEventListeners.CRITICAL_HIT.get(), "%s при критическом ударе");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Урон снарядами");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "снарядами");

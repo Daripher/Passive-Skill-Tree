@@ -248,6 +248,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTEventListeners.TICKING.get(), "seconds", "%s every %s seconds");
     add(PSTEventListeners.TICKING.get(), "minute", "%s every minute");
     add(PSTEventListeners.TICKING.get(), "minutes", "%s every %s minutes");
+    add(PSTEventListeners.CRITICAL_HIT.get(), "%s on critical hit");
     // damage conditions
     add(PSTDamageConditions.PROJECTILE.get(), "Projectile Damage");
     add(PSTDamageConditions.PROJECTILE.get(), "type", "Projectile");

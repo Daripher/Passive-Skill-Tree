@@ -33,6 +33,8 @@ public class PSTEventListeners {
       REGISTRY.register("skill_removed", SkillRemovedEventListener.Serializer::new);
   public static final RegistryObject<SkillEventListener.Serializer> TICKING =
       REGISTRY.register("ticking", TickingEventListener.Serializer::new);
+  public static final RegistryObject<SkillEventListener.Serializer> CRITICAL_HIT =
+      REGISTRY.register("critical_hit", CritEventListener.Serializer::new);
 
   public static List<SkillEventListener> eventsList() {
     return PSTRegistries.EVENT_LISTENERS.get().getValues().stream()
