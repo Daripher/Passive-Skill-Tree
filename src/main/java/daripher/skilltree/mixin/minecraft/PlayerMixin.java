@@ -22,7 +22,7 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerExtensio
   private void restoreEnchantmentExperience(
       ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
     Player player = (Player) (Object) this;
-    float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player);
+    float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player, itemStack);
     if (player.getRandom().nextFloat() < freeEnchantmentChance) {
       player.giveExperienceLevels(enchantmentCost);
     }

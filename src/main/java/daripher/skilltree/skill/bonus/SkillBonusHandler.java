@@ -855,13 +855,11 @@ public class SkillBonusHandler {
     return multiplier;
   }
 
-  public static float getFreeEnchantmentChance(@Nonnull Player player) {
-    float chance = 0f;
-    for (FreeEnchantmentBonus bonus :
-        SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class)) {
-      chance += bonus.getChance();
-    }
-    return chance;
+  public static float getFreeEnchantmentChance(@Nonnull Player player, ItemStack itemStack) {
+    return SkillBonusHandler.getSkillBonuses(player, FreeEnchantmentBonus.class).stream()
+        .map(bonus -> bonus.getChance(player, itemStack))
+        .reduce(Float::sum)
+        .orElse(0f);
   }
 
   public static <T> List<T> getSkillBonuses(@Nonnull Player player, Class<T> type) {

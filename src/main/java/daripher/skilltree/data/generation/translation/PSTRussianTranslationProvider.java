@@ -126,7 +126,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.BLOCK_BREAK_SPEED.get(), "Скорость добычи блоков");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Ремонтируем%s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Прочности восстановлено");
-    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Шанс зачаровать предмет бесплатно");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "chance", "Шанс зачаровать %s бесплатно");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Вы зачаровываете %s бесплатно");
     add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Высота прыжка");
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Получаемое лечение");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Шанс получить %s %s");

@@ -126,7 +126,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.BLOCK_BREAK_SPEED.get(), "Block break speed");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "Repaired %s: %s");
     add(PSTSkillBonuses.REPAIR_EFFICIENCY.get(), "bonus", "Durability restored");
-    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Chance to enchant item for free");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "chance", "Chance to enchant %s for free");
+    add(PSTSkillBonuses.FREE_ENCHANTMENT.get(), "Enchant %s for free");
     add(PSTSkillBonuses.JUMP_HEIGHT.get(), "Jump Height");
     add(PSTSkillBonuses.INCOMING_HEALING.get(), "Incoming Healing");
     add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Chance to get %s %s");
