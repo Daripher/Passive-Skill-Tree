@@ -6,12 +6,12 @@ import daripher.skilltree.init.PSTDamageConditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 
 public record MeleeDamageCondition() implements DamageCondition {
   @Override
   public boolean met(DamageSource source) {
-    return source.getDirectEntity() instanceof Player;
+    return source.getDirectEntity() instanceof LivingEntity;
   }
 
   @Override
