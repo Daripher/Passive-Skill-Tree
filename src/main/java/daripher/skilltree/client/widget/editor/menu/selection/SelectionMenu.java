@@ -28,6 +28,7 @@ public class SelectionMenu<T> extends EditorMenu {
     editor.increaseHeight(29);
     editor.addTextField(0, 0, 200, 14, "")
         .setHint("Search")
+        .setFocused()
         .setResponder(selectionList::setSearchString);
     editor.increaseHeight(19);
     selectionList.setX(editor.getWidgetsX(0));

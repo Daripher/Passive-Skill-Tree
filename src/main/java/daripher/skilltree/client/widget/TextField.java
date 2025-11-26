@@ -170,4 +170,9 @@ public class TextField extends EditBox implements TickingWidget {
   public void onWidgetTick() {
     this.tick();
   }
+
+  public TextField setFocused() {
+    setFocused(true);
+    return this;
+  }
 }
