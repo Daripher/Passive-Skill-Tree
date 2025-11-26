@@ -2,25 +2,24 @@
   "id": "skilltree:cook_16",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "attribute": "skilltree:regeneration",
-      "id": "c000446e-8345-4b19-b83d-8c0704f51d4b",
-      "name": "Skill",
+      "type": "skilltree:healing",
+      "chance": 1.0,
       "amount": 1.0,
-      "operation": 0,
-      "player_multiplier": {
-        "type": "skilltree:none"
-      },
-      "player_condition": {
-        "value_provider": {
-          "percentage": true,
-          "missing": false,
-          "type": "skilltree:food_level"
+      "event_listener": {
+        "player_condition": {
+          "value_provider": {
+            "percentage": true,
+            "missing": false,
+            "type": "skilltree:food_level"
+          },
+          "required_value": 0.5,
+          "logic": "MORE",
+          "type": "skilltree:numeric_value"
         },
-        "required_value": 1.0,
-        "logic": "EQUAL",
-        "type": "skilltree:numeric_value"
-      }
+        "cooldown": 20,
+        "type": "skilltree:ticking"
+      },
+      "percentage_healing": false
     }
   ],
   "requirements": [],
