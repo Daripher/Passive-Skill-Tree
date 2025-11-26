@@ -50,7 +50,10 @@ public class TextureSelectionMenu extends EditorMenu {
     editor.increaseHeight(19);
     editor.addLabel(0, 0, "Search", ChatFormatting.GOLD);
     editor.increaseHeight(19);
-    editor.addTextField(0, 0, 200, 14, "").setResponder(selectionList::setSearchString);
+    editor
+        .addTextField(0, 0, 200, 14, "")
+        .setFocused()
+        .setResponder(selectionList::setSearchString);
     editor.increaseHeight(29);
     selectionList.setX(editor.getWidgetsX(0));
     selectionList.setY(editor.getWidgetsY(0));
