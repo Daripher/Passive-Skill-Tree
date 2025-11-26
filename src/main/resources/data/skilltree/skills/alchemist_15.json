@@ -2,20 +2,14 @@
   "id": "skilltree:alchemist_15",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "attribute": "skilltree:regeneration",
-      "id": "5d9813c3-6791-4397-8263-786ee4c23af0",
-      "name": "Skill",
+      "type": "skilltree:healing",
+      "chance": 1.0,
       "amount": 0.02,
-      "operation": 0,
-      "player_multiplier": {
-        "value_provider": {
-          "attribute": "minecraft:generic.max_health",
-          "type": "skilltree:attribute_value"
-        },
-        "divisor": 1.0,
-        "type": "skilltree:numeric_value"
-      }
+      "event_listener": {
+        "cooldown": 20,
+        "type": "skilltree:ticking"
+      },
+      "percentage_healing": true
     }
   ],
   "requirements": [

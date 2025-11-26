@@ -2,20 +2,22 @@
   "id": "skilltree:alchemist_56",
   "bonuses": [
     {
-      "type": "skilltree:attribute",
-      "attribute": "skilltree:regeneration",
-      "id": "4ddbdb9d-5b46-41a8-8acc-4ad1a0679624",
-      "name": "Skill",
-      "amount": 1.0,
-      "operation": 0,
-      "player_multiplier": {
-        "value_provider": {
-          "effect_type": "beneficial",
-          "type": "skilltree:effect_amount"
+      "type": "skilltree:healing",
+      "chance": 1.0,
+      "amount": 10.0,
+      "event_listener": {
+        "player_multiplier": {
+          "value_provider": {
+            "effect_type": "beneficial",
+            "type": "skilltree:effect_amount"
+          },
+          "divisor": 3.0,
+          "type": "skilltree:numeric_value"
         },
-        "divisor": 3.0,
-        "type": "skilltree:numeric_value"
-      }
+        "cooldown": 200,
+        "type": "skilltree:ticking"
+      },
+      "percentage_healing": false
     }
   ],
   "requirements": [
