@@ -99,7 +99,7 @@ public class TickingEventListener implements SkillEventListener {
     editor.increaseHeight(19);
     editor.addNumericTextField(0,0,90,14,cooldown)
         .setNumericFilter(value -> value.intValue() >= 1 && value.intValue() == value)
-        .setNumericResponder(value -> selectCooldown(editor, consumer, value));
+        .setNumericResponder(value -> selectCooldown(consumer, value));
     editor.increaseHeight(19);
     editor.addLabel(0, 0, "Player Condition", ChatFormatting.GREEN);
     editor.increaseHeight(19);
@@ -118,10 +118,9 @@ public class TickingEventListener implements SkillEventListener {
   }
 
   private void selectCooldown(
-      SkillTreeEditor editor, Consumer<SkillEventListener> consumer, Double value) {
+      Consumer<SkillEventListener> consumer, Double value) {
     setCooldown(value.intValue());
     consumer.accept(this);
-    editor.rebuildWidgets();
   }
 
   private void addPlayerMultiplierWidgets(

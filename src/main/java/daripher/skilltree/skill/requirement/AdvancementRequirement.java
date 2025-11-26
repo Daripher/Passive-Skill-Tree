@@ -18,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerAdvancements;
@@ -64,7 +65,8 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
   public MutableComponent getTooltip() {
     String advancementPath = advancementId.getPath().replaceAll("/", ".");
     String advancamentDescriptionId = "advancements.%s.title".formatted(advancementPath);
-    Component advancementTooltip = Component.translatable(advancamentDescriptionId);
+    Component advancementTooltip =
+        Component.translatable(advancamentDescriptionId).withStyle(Style.EMPTY.withColor(0xFFD75F));
     return Component.translatable(getDescriptionId(), advancementTooltip);
   }
 
