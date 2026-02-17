@@ -99,9 +99,6 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-	maven {
-        url = "https://maven.theillusivec4.top/"
-    }
     maven {
         url "https://www.cursemaven.com"
         content {
@@ -119,8 +116,7 @@ dependencies {
         jarJar.ranged(it, "[0.3.2,)")
     }
     // curios
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.3.1+1.20.1")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.3.1+1.20.1")
+    implementation fg.deobf("curse.maven:curios-309927:6418456")
     // attribute fix
 	implementation fg.deobf("curse.maven:attributefix-280510:4648448")
     // max health fix
