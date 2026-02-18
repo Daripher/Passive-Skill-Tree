@@ -63,7 +63,6 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.theillusivec4.curios.api.event.CurioEquipEvent;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandler {
@@ -478,17 +477,6 @@ public class SkillBonusHandler {
         if (event.isCancelable()) {
           event.setCanceled(true);
         }
-        return;
-      }
-    }
-  }
-
-  @SubscribeEvent
-  public static void applyCantUseItemBonus(CurioEquipEvent event) {
-    if (!(event.getEntity() instanceof Player player)) return;
-    for (CantUseItemBonus bonus : getSkillBonuses(player, CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().test(event.getStack())) {
-        event.setResult(Event.Result.DENY);
         return;
       }
     }

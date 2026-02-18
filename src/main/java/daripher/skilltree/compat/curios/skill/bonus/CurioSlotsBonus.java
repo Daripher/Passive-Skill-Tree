@@ -1,14 +1,13 @@
-package daripher.skilltree.skill.bonus.player;
+package daripher.skilltree.compat.curios.skill.bonus;
 
 import com.google.common.collect.HashMultimap;
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
+import daripher.skilltree.compat.curios.CuriosCompatibility;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.UUID;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,6 +16,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
   private String slotName;
@@ -67,7 +69,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
 
   @Override
   public SkillBonus.Serializer getSerializer() {
-    return PSTSkillBonuses.CURIO_SLOTS.get();
+    return CuriosCompatibility.CURIO_SLOTS_BONUS.get();
   }
 
   @Override
@@ -119,7 +121,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 200, CuriosApi.getSlots().keySet())
+        .addSelectionMenu(0, 0, 200, CuriosApi.getSlots(true).keySet())
         .setValue(slotName)
         .setElementNameGetter(TooltipHelper::getSlotTooltip)
         .setResponder(value -> selectSlotName(consumer, value));
@@ -136,9 +138,8 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
     consumer.accept(this.copy());
   }
 
-  public SkillBonus<?> setSlotName(String slotName) {
+  public void setSlotName(String slotName) {
     this.slotName = slotName;
-    return this;
   }
 
   public void setAmount(int amount) {

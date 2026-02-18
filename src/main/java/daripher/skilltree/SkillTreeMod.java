@@ -1,6 +1,7 @@
 package daripher.skilltree;
 
 import daripher.skilltree.compat.attributeslib.AttributesLibCompatibility;
+import daripher.skilltree.compat.curios.CuriosCompatibility;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.init.*;
@@ -19,6 +20,12 @@ public class SkillTreeMod {
   public static final Logger LOGGER = LogManager.getLogger(SkillTreeMod.MOD_ID);
 
   public SkillTreeMod() {
+    registerModRegistries();
+    registerConfigs();
+    registerCompatibilities();
+  }
+
+  private static void registerModRegistries() {
     IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
     PSTItems.REGISTRY.register(eventBus);
     PSTMobEffects.REGISTRY.register(eventBus);
@@ -39,12 +46,19 @@ public class SkillTreeMod {
     PSTRecipeSerializers.REGISTRY.register(eventBus);
     PSTItemBonuses.REGISTRY.register(eventBus);
     PSTRecipeTypes.REGISTRY.register(eventBus);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
-    addCompatibilities();
   }
 
-  protected void addCompatibilities() {
-    if (ModList.get().isLoaded("attributeslib")) AttributesLibCompatibility.INSTANCE.register();
+  private static void registerConfigs() {
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+  }
+
+  private static void registerCompatibilities() {
+    if (ModList.get().isLoaded("attributeslib")) {
+      AttributesLibCompatibility.INSTANCE.register();
+    }
+    if (ModList.get().isLoaded("curios")) {
+      CuriosCompatibility.INSTANCE.register();
+    }
   }
 }
