@@ -131,6 +131,10 @@ dependencies {
     // apotheosis
     implementation fg.deobf("curse.maven:placebo-283644:5414631")
     implementation fg.deobf("curse.maven:apothic-attributes-898963:5529789")
+    // spells and spellbooks
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7605614")
+    implementation fg.deobf("curse.maven:geckolib-388172:7553267")
+    implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
 }
 
 mixin {
