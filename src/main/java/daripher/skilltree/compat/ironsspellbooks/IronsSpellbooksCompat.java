@@ -1,0 +1,52 @@
+package daripher.skilltree.compat.ironsspellbooks;
+
+import daripher.skilltree.compat.ironsspellbooks.skill.bonus.GrantSpellSkillBonus;
+import daripher.skilltree.init.PSTSkillBonuses;
+import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.*;
+
+public enum IronsSpellbooksCompat {
+    INSTANCE;
+
+    private static final Map<Player, List<UUID>> PLAYER_SPELLS_MAP = new HashMap<>();
+    public static final RegistryObject<SkillBonus.Serializer> GRANT_SPELL_BONUS =
+            PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
+
+    public void register() {
+        MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
+    }
+
+    public void addPlayerSpell(Player player, UUID uuid) {
+        List<UUID> playerSpells = PLAYER_SPELLS_MAP.getOrDefault(player, new ArrayList<>());
+        playerSpells.add(uuid);
+        PLAYER_SPELLS_MAP.put(player, playerSpells);
+    }
+
+    public void removePlayerSpell(Player player, UUID uuid) {
+        List<UUID> playerSpells = PLAYER_SPELLS_MAP.getOrDefault(player, new ArrayList<>());
+        playerSpells.remove(uuid);
+        PLAYER_SPELLS_MAP.put(player, playerSpells);
+    }
+
+    public boolean hasPlayerSpell(Player player, UUID uuid) {
+        return PLAYER_SPELLS_MAP.getOrDefault(player, List.of()).contains(uuid);
+    }
+
+    private void applyGrantSpellBonus(SpellSelectionManager.SpellSelectionEvent event) {
+        Player player = event.getEntity();
+        List<GrantSpellSkillBonus> skillBonuses = SkillBonusHandler.getSkillBonuses(player, GrantSpellSkillBonus.class);
+        for (GrantSpellSkillBonus bonus : skillBonuses) {
+            if (!bonus.getPlayerCondition().test(player)) {
+                continue;
+            }
+            int spellCount = event.getManager().getSpellCount();
+            event.addSelectionOption(bonus.getSpellData(), "pst_fake_slot", spellCount);
+        }
+    }
+}

@@ -2,6 +2,7 @@ package daripher.skilltree;
 
 import daripher.skilltree.compat.attributeslib.AttributesLibCompatibility;
 import daripher.skilltree.compat.curios.CuriosCompatibility;
+import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.init.*;
@@ -59,6 +60,9 @@ public class SkillTreeMod {
     }
     if (ModList.get().isLoaded("curios")) {
       CuriosCompatibility.INSTANCE.register();
+    }
+    if (ModList.get().isLoaded("irons_spellbooks")) {
+      IronsSpellbooksCompat.INSTANCE.register();
     }
   }
 }

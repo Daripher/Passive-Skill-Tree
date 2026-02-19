@@ -371,6 +371,7 @@
   "skill_bonus.skilltree.gained_experience": "Experience from %s",
   "skill_bonus.skilltree.grant_item": "Grants %s when learned",
   "skill_bonus.skilltree.grant_item.amount": "Grants %sx %s when learned",
+  "skill_bonus.skilltree.grant_spell": "Grants %s %s spell",
   "skill_bonus.skilltree.healing.enemy": "Enemies recover %s life",
   "skill_bonus.skilltree.healing.enemy.chance": "Chance for enemies to recover %s life",
   "skill_bonus.skilltree.healing.player": "Recover %s life",

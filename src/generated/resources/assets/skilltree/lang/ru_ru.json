@@ -452,6 +452,7 @@
   "skill_bonus.skilltree.gained_experience": "Опыт %s",
   "skill_bonus.skilltree.grant_item": "Дарует %s при изучении",
   "skill_bonus.skilltree.grant_item.amount": "Дарует %sx %s при изучении",
+  "skill_bonus.skilltree.grant_spell": "Дарует заклинание %s %s",
   "skill_bonus.skilltree.healing.enemy": "Враги восстанавливают %s здоровья",
   "skill_bonus.skilltree.healing.enemy.chance": "Шанс для врагов восстановить %s здоровья",
   "skill_bonus.skilltree.healing.player": "Вы восстанавливаете %s здоровья",

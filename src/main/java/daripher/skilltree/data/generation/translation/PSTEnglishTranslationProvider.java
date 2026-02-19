@@ -1,6 +1,7 @@
 package daripher.skilltree.data.generation.translation;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
@@ -185,6 +186,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
     add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Gain %s experience");
     add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Chance to gain %s experience");
+    add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Grants %s %s spell");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
