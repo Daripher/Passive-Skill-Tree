@@ -499,6 +499,7 @@
   "skill_bonus.skilltree.repair_efficiency": "Ремонтируем%s: %s",
   "skill_bonus.skilltree.repair_efficiency.bonus": "Прочности восстановлено",
   "skill_bonus.skilltree.self_splash_immune": "Ваши взрывные зелья не действуют на вас",
+  "skill_bonus.skilltree.spell_level": "к уровню заклинания %s",
   "skill_bonus_multiplier.skilltree.numeric_value": "%s per %s",
   "skill_bonus_multiplier.skilltree.numeric_value.plural": "%s per %s %s",
   "skill_requirements.skilltree.advancement": "Получите достижение %s",

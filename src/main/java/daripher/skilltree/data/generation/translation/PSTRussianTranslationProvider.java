@@ -187,6 +187,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Вы получаете %s опыта");
     add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Шанс получить %s опыта");
     add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Дарует заклинание %s %s");
+    add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "к уровню заклинания %s");
     // experience sources
     add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
     add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");

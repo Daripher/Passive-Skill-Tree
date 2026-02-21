@@ -1,12 +1,14 @@
 package daripher.skilltree.compat.ironsspellbooks;
 
 import daripher.skilltree.compat.ironsspellbooks.skill.bonus.GrantSpellSkillBonus;
+import daripher.skilltree.compat.ironsspellbooks.skill.bonus.SpellLevelSkillBonus;
 import daripher.skilltree.compat.ironsspellbooks.skill.bonus.function.ManaLevelFunction;
 import daripher.skilltree.init.PSTFloatFunctions;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
+import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,11 +22,14 @@ public enum IronsSpellbooksCompat {
     private static final Map<Player, List<UUID>> PLAYER_SPELLS_MAP = new HashMap<>();
     public static final RegistryObject<SkillBonus.Serializer> GRANT_SPELL_BONUS =
             PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> SPELL_LEVEL_BONUS =
+            PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
     public static final RegistryObject<FloatFunction.Serializer> MANA_LEVEL_FUNCTION =
             PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
 
     public void register() {
         MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
+        MinecraftForge.EVENT_BUS.addListener(INSTANCE::applySpellLevelBonus);
     }
 
     public void addPlayerSpell(Player player, UUID uuid) {
@@ -52,6 +57,19 @@ public enum IronsSpellbooksCompat {
             }
             int spellCount = event.getManager().getSpellCount();
             event.addSelectionOption(bonus.getSpellData(), "pst_fake_slot", spellCount);
+        }
+    }
+
+    private void applySpellLevelBonus(ModifySpellLevelEvent event) {
+        if (!(event.getEntity() instanceof Player player))  {
+            return;
+        }
+        List<SpellLevelSkillBonus> skillBonuses = SkillBonusHandler.getSkillBonuses(player, SpellLevelSkillBonus.class);
+        for (SpellLevelSkillBonus bonus : skillBonuses) {
+            if (!bonus.getSpellId().toString().equals(event.getSpell().getSpellId())) {
+                continue;
+            }
+            event.addLevels(bonus.getBonusLevels(player));
         }
     }
 }
