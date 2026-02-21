@@ -503,7 +503,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "point", "очко сытости");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "point.plural", "очка сытости");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
@@ -512,7 +511,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающие %s цели");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player", "%s если у вас %s %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
@@ -521,16 +519,13 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.full", "%s если цель не голодна");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.not_full", "%s если вы голодны");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s если цель голодна");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "requirement", "У вас %s %s");
-
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "ровно %s");
 
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point", "очко здоровья");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point.plural", "очка здоровья");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage", "здоровья");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage.plural", "здоровья");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player", "%s за каждое текущее %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
@@ -539,7 +534,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающих %s цели");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player", "%s если у вас %s %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy", "%s если у цели %s %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.missing", "%s если у вас недостает %s %s");
@@ -548,10 +542,32 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.full", "%s если у цели полное здоровье");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.not_full", "%s если вы ранены");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s если цель ранена");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
-
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
+
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point", "очко маны");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point.plural", "очка маны");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "percentage", "маны");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "percentage.plural", "маны");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player", "%s за каждое текущее %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.plural", "%s за каждые %s текущих %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.missing", "%s за каждое недостающее %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.plural.missing", "%s за каждые %s недостающих %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy", "%s за каждое текущее %s цели");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.plural", "%s за каждые %s текущих %s цели");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.missing", "%s за каждое недостающее %s цели");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.plural.missing", "%s за каждые %s недостающих %s цели");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player", "%s если у вас %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy", "%s если у цели %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.missing", "%s если у вас недостает %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.missing", "%s если у цели недостает %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.full", "%s если у вас полная мана");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.full", "%s если у цели полная мана");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.not_full", "%s если у вас неполная мана");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.not_full", "%s если у цели неполная мана");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "requirement", "У вас %s %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.mana_level", "ровно %s");
+
     // skill requirements
     add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение %s");
     add(PSTSkillRequirements.LEARNED_SKILL.get(), "Изучите умение %s");

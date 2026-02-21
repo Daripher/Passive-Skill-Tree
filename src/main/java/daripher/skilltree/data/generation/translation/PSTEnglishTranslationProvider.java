@@ -420,7 +420,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "point", "hunger point");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "point.plural", "hunger points");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player", "%s per current %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.plural", "%s per %s current %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.player.missing", "%s per missing %s");
@@ -429,7 +428,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural", "%s per %s target's current %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.missing", "%s per target's missing %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s target's missing %s");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player", "%s if you have %s %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy", "%s if target has %s %s");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.missing", "%s if you are missing %s %s");
@@ -438,16 +436,13 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.full", "%s if target is not hungry");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.not_full", "%s if you are hungry");
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s if target is hungry");
-
     add(PSTFloatFunctions.FOOD_LEVEL.get(), "requirement", "Have %s %s");
-
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
 
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point", "health point");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point.plural", "health points");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage", "health");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "percentage.plural", "health");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player", "%s per current %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.plural", "%s per %s current %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.player.missing", "%s per missing %s");
@@ -456,7 +451,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural", "%s per %s target's current %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.missing", "%s per target's missing %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "multiplier.enemy.plural.missing", "%s per %s target's missing %s");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player", "%s if you have %s %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy", "%s if target has %s %s");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.missing", "%s if you are missing %s %s");
@@ -465,10 +459,32 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.full", "%s if target is at full health");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.not_full", "%s while injured");
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s if target is injured");
-
     add(PSTFloatFunctions.HEALTH_LEVEL.get(), "requirement", "Have %s %s");
-
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
+
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point", "mana point");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point.plural", "mana points");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "percentage", "mana");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "percentage.plural", "mana");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player", "%s per current %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.plural", "%s per %s current %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.missing", "%s per missing %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.player.plural.missing", "%s per %s missing %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy", "%s per target's current %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.plural", "%s per %s target's current %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.missing", "%s per target's missing %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "multiplier.enemy.plural.missing", "%s per %s target's missing %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player", "%s if you have %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy", "%s if target has %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.missing", "%s if you are missing %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.missing", "%s if target is missing %s %s");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.full", "%s while at full mana");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.full", "%s if target is at full mana");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.not_full", "%s while injured");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.not_full", "%s if target is injured");
+    add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "requirement", "Have %s %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.mana_level", "exactly %s");
+
     // skill requirements
     add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");
     add(PSTSkillRequirements.LEARNED_SKILL.get(), "Learn %s skill");
