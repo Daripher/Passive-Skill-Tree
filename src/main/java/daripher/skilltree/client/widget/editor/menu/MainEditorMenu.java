@@ -17,6 +17,7 @@ public class MainEditorMenu extends EditorMenu {
 
   public void init() {
     clearWidgets();
+    addMenuSelectionButton(editor, "Grid", GridSettingsEditor::new);
     if (editor.getSelectedSkills().isEmpty()) {
       return;
     }

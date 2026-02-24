@@ -63,7 +63,7 @@ public class SkillMirrorer extends AbstractWidget {
     int height = editor.getScreenHeight();
     float mirrorX = width / 2f + mirrorCenterX * editor.getZoom() + editor.getScrollX();
     float mirrorY = height / 2f + mirrorCenterY * editor.getZoom() + editor.getScrollY();
-    graphics.pose().translate(mirrorX, mirrorY, 0);
+    graphics.pose().translate(mirrorX, mirrorY, -1);
     graphics.pose().mulPose(Axis.ZP.rotationDegrees(mirrorAngle));
     for (int i = 0; i < mirrorSides; i++) {
       graphics.pose().mulPose(Axis.ZP.rotationDegrees(360f / mirrorSides));
