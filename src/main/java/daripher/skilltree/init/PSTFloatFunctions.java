@@ -31,7 +31,9 @@ public class PSTFloatFunctions {
   public static final RegistryObject<FloatFunction.Serializer> ENCHANTMENT_LEVELS =
       REGISTRY.register("enchantment_levels", EnchantmentLevelsFunction.Serializer::new);
   public static final RegistryObject<FloatFunction.Serializer> DISTANCE_TO_TARGET =
-      REGISTRY.register("distance_to_target", DistanceToTargetFunction.Serializer::new);
+          REGISTRY.register("distance_to_target", DistanceToTargetFunction.Serializer::new);
+  public static final RegistryObject<FloatFunction.Serializer> LEARNED_SKILLS_AMOUNT =
+          REGISTRY.register("learned_skills_amount", LearnedSkillsNumberFunction.Serializer::new);
 
   @SuppressWarnings("rawtypes")
   public static List<FloatFunction> providerList() {

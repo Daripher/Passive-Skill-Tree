@@ -486,6 +486,17 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "requirement", "Have %s %s");
     add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.mana_level", "exactly %s");
 
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "point", "skill");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "point.plural", "skills");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "multiplier.player", "%s per learned skill");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "multiplier.player.plural", "%s per %s learned skills");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "multiplier.enemy", "%s per skill learned by target");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "multiplier.enemy.plural", "%s per %s skills learned by target");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "condition.player", "%s if you have learned %s %s");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "condition.enemy", "%s if target has learned %s %s");
+    add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "requirement", "Learn %s %s");
+    add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.learned_skills_amount", "exactly %s");
+
     // skill requirements
     add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");
     add(PSTSkillRequirements.LEARNED_SKILL.get(), "Learn %s skill");
