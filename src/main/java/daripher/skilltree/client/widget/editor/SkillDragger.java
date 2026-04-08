@@ -25,7 +25,7 @@ public class SkillDragger extends AbstractWidget {
     @Override
     protected void renderWidget(
             @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        if (gridSnapEnabled && showGrid) {
+        if (showGrid) {
             int width = editor.getScreenWidth();
             int height = editor.getScreenHeight();
             float gridSizeX = this.gridSizeX * editor.getZoom();
@@ -35,11 +35,11 @@ public class SkillDragger extends AbstractWidget {
             graphics.pose().pushPose();
             graphics.pose().translate(gridCenterX, gridCenterY, -1);
             for (int i = -width / 2 / (int) gridSizeX; i < width / gridSizeX; i++) {
-                float x = gridSizeY * i;
+                float x = gridSizeX * i;
                 graphics.fill((int) (-1 + x), -height, (int) (1 + x), height, 0x55CFCFCF);
             }
             for (int i = -height / 2 / (int) gridSizeY - 1; i < height / gridSizeY; i++) {
-                float y = gridSizeX * i;
+                float y = gridSizeY * i;
                 graphics.fill(-width, (int) (-1 + y), width, (int) (1 + y), 0x55CFCFCF);
             }
             graphics.pose().popPose();
@@ -110,7 +110,7 @@ public class SkillDragger extends AbstractWidget {
     }
 
     public void setGridSizeX(int gridSizeX) {
-        this.gridSizeX = gridSizeX;
+        this.gridSizeX = Math.max(gridSizeX, 1);
     }
 
     public int getGridSizeY() {
@@ -118,7 +118,7 @@ public class SkillDragger extends AbstractWidget {
     }
 
     public void setGridSizeY(int gridSizeY) {
-        this.gridSizeY = gridSizeY;
+        this.gridSizeY = Math.max(gridSizeY, 1);
     }
 
     public boolean isShowGrid() {
