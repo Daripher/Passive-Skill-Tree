@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -44,27 +45,28 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.*;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
+import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandler {
   @SubscribeEvent
   public static void applyBreakSpeedMultiplier(PlayerEvent.BreakSpeed event) {
@@ -111,11 +113,11 @@ public class SkillBonusHandler {
     if (event.getName() != null && !StringUtils.isBlank(event.getName())) {
       if (!event.getName().equals(stack.getHoverName().getString())) {
         cost++;
-        result.setHoverName(Component.literal(event.getName()));
+        result.set(DataComponents.CUSTOM_NAME, Component.literal(event.getName()));
       }
-    } else if (stack.hasCustomHoverName()) {
+    } else if (stack.has(DataComponents.CUSTOM_NAME)) {
       cost++;
-      result.resetHoverName();
+      result.remove(DataComponents.CUSTOM_NAME);
     }
     event.setMaterialCost(materialsUsed);
     event.setCost(cost);
@@ -133,21 +135,22 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void tickSkillBonuses(TickEvent.PlayerTickEvent event) {
-    if (event.player.isDeadOrDying()) return;
-    if (!(event.player instanceof ServerPlayer player)) return;
-    if (event.phase == TickEvent.Phase.END) return;
-    getSkillBonuses(player, TickingSkillBonus.class).forEach(bonus -> bonus.tick(player));
+  public static void tickSkillBonuses(PlayerTickEvent.Post event) {
+    Player player = event.getEntity();
+    if (player.level().isClientSide) return;
+    if (player.isDeadOrDying()) return;
+    if (!(player instanceof ServerPlayer serverPlayer)) return;
+    getSkillBonuses(serverPlayer, TickingSkillBonus.class).forEach(bonus -> bonus.tick(serverPlayer));
   }
 
   @SubscribeEvent(priority = EventPriority.HIGH)
-  public static void applyFlatDamageBonus(LivingHurtEvent event) {
+  public static void applyFlatDamageBonus(LivingIncomingDamageEvent event) {
     Player attacker = getPlayerAttacker(event);
     if (attacker == null) return;
     LivingEntity target = event.getEntity();
     setLastTarget(attacker, target);
     float bonus =
-        getDamageBonus(attacker, event.getSource(), target, AttributeModifier.Operation.ADDITION);
+        getDamageBonus(attacker, event.getSource(), target, AttributeModifier.Operation.ADD_VALUE);
     event.setAmount(event.getAmount() + bonus);
   }
 
@@ -157,7 +160,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyBaseDamageMultipliers(LivingHurtEvent event) {
+  public static void applyBaseDamageMultipliers(LivingIncomingDamageEvent event) {
     Player attacker = getPlayerAttacker(event);
     if (attacker == null) return;
     float bonus =
@@ -165,12 +168,12 @@ public class SkillBonusHandler {
             attacker,
             event.getSource(),
             event.getEntity(),
-            AttributeModifier.Operation.MULTIPLY_BASE);
+            AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     event.setAmount(event.getAmount() * (1 + bonus));
   }
 
   @SubscribeEvent(priority = EventPriority.LOW)
-  public static void applyTotalDamageMultipliers(LivingHurtEvent event) {
+  public static void applyTotalDamageMultipliers(LivingIncomingDamageEvent event) {
     Player attacker = getPlayerAttacker(event);
     if (attacker == null) return;
     float bonus =
@@ -178,11 +181,11 @@ public class SkillBonusHandler {
             attacker,
             event.getSource(),
             event.getEntity(),
-            AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     event.setAmount(event.getAmount() * (1 + bonus));
   }
 
-  private static @Nullable Player getPlayerAttacker(LivingHurtEvent event) {
+  private static @Nullable Player getPlayerAttacker(LivingIncomingDamageEvent event) {
     Player attacker = null;
     if (event.getSource().getEntity() instanceof Player player) {
       attacker = player;
@@ -213,17 +216,17 @@ public class SkillBonusHandler {
     if (player.getRandom().nextFloat() >= critChance) {
       return;
     }
-    float critMultiplier = event.getDamageModifier();
+    float critMultiplier = event.getDamageMultiplier();
     critMultiplier += getCritDamageMultiplier(player, damageSource, target);
     if (!event.isVanillaCritical()) {
       critMultiplier += 0.5f;
-      event.setResult(Event.Result.ALLOW);
+      event.setCriticalHit(true);
     }
-    event.setDamageModifier(critMultiplier);
+    event.setDamageMultiplier(critMultiplier);
   }
 
   @SubscribeEvent(priority = EventPriority.LOW)
-  public static void applyCritBonuses(LivingHurtEvent event) {
+  public static void applyCritBonuses(LivingIncomingDamageEvent event) {
     // direct damage, ignoring
     if (event.getSource().getDirectEntity() instanceof Player) {
       return;
@@ -278,14 +281,17 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyExperienceFromOreBonus(BlockEvent.BreakEvent event) {
+  public static void applyExperienceFromOreBonus(BlockDropsEvent event) {
     if (!event.getState().is(Tags.Blocks.ORES)) {
+      return;
+    }
+    if (!(event.getBreaker() instanceof Player player)) {
       return;
     }
     float multiplier = 1f;
     multiplier +=
-        getExperienceMultiplier(event.getPlayer(), GainedExperienceBonus.ExperienceSource.ORE);
-    event.setExpToDrop((int) (event.getExpToDrop() * multiplier));
+        getExperienceMultiplier(player, GainedExperienceBonus.ExperienceSource.ORE);
+    event.setDroppedExperience((int) (event.getDroppedExperience() * multiplier));
   }
 
   @SubscribeEvent
@@ -314,7 +320,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyEventListenerEffect(LivingHurtEvent event) {
+  public static void applyEventListenerEffect(LivingIncomingDamageEvent event) {
     Entity sourceEntity = event.getSource().getEntity();
     if (sourceEntity instanceof Player player) {
       for (EventListenerBonus<?> bonus : getMergedSkillBonuses(player, EventListenerBonus.class)) {
@@ -349,7 +355,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyEventListenerEffect(ShieldBlockEvent event) {
+  public static void applyEventListenerEffect(LivingShieldBlockEvent event) {
     if (!(event.getEntity() instanceof Player player)) {
       return;
     }
@@ -394,7 +400,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyArrowRetrievalBonus(LivingHurtEvent event) {
+  public static void applyArrowRetrievalBonus(LivingIncomingDamageEvent event) {
     if (!(event.getSource().getDirectEntity() instanceof AbstractArrow arrow)) {
       return;
     }
@@ -414,7 +420,7 @@ public class SkillBonusHandler {
     LivingEntity target = event.getEntity();
     CompoundTag targetData = target.getPersistentData();
     ListTag stuckArrowsTag = targetData.getList("StuckArrows", new CompoundTag().getId());
-    stuckArrowsTag.add(arrowStack.save(new CompoundTag()));
+    stuckArrowsTag.add(arrowStack.save(player.level().registryAccess()));
     targetData.put("StuckArrows", stuckArrowsTag);
   }
 
@@ -425,18 +431,20 @@ public class SkillBonusHandler {
         entity.getPersistentData().getList("StuckArrows", new CompoundTag().getId());
     if (arrowsTag.isEmpty()) return;
     for (Tag tag : arrowsTag) {
-      ItemStack arrowStack = ItemStack.of((CompoundTag) tag);
+      ItemStack arrowStack =
+          ItemStack.parseOptional(entity.level().registryAccess(), (CompoundTag) tag);
       entity.spawnAtLocation(arrowStack);
     }
   }
 
   @SubscribeEvent
-  public static void applyHealthReservationEffect(TickEvent.PlayerTickEvent event) {
-    if (event.phase == TickEvent.Phase.END || event.side == LogicalSide.CLIENT) return;
-    float reservation = getHealthReservation(event.player);
+  public static void applyHealthReservationEffect(PlayerTickEvent.Post event) {
+    Player player = event.getEntity();
+    if (player.level().isClientSide) return;
+    float reservation = getHealthReservation(player);
     if (reservation == 0) return;
-    if (event.player.getHealth() / event.player.getMaxHealth() > 1 - reservation) {
-      event.player.setHealth(event.player.getMaxHealth() * (1 - reservation));
+    if (player.getHealth() / player.getMaxHealth() > 1 - reservation) {
+      player.setHealth(player.getMaxHealth() * (1 - reservation));
     }
   }
 
@@ -470,15 +478,51 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent
-  public static void applyCantUseItemBonus(PlayerInteractEvent event) {
+  public static void applyCantUseItemBonus(PlayerInteractEvent.LeftClickBlock event) {
+    applyCantUseItemBonusToInteraction(event);
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(PlayerInteractEvent.RightClickItem event) {
+    applyCantUseItemBonusToInteraction(event);
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(PlayerInteractEvent.RightClickBlock event) {
+    applyCantUseItemBonusToInteraction(event);
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(PlayerInteractEvent.EntityInteract event) {
+    applyCantUseItemBonusToInteraction(event);
+  }
+
+  @SubscribeEvent
+  public static void applyCantUseItemBonus(PlayerInteractEvent.EntityInteractSpecific event) {
+    applyCantUseItemBonusToInteraction(event);
+  }
+
+  private static void applyCantUseItemBonusToInteraction(PlayerInteractEvent event) {
     for (CantUseItemBonus bonus : getSkillBonuses(event.getEntity(), CantUseItemBonus.class)) {
       if (bonus.getItemCondition().test(event.getItemStack())) {
-        event.setCancellationResult(InteractionResult.FAIL);
-        if (event.isCancelable()) {
-          event.setCanceled(true);
+        setCancellationResult(event, InteractionResult.FAIL);
+        if (event instanceof ICancellableEvent cancellableEvent) {
+          cancellableEvent.setCanceled(true);
         }
         return;
       }
+    }
+  }
+
+  private static void setCancellationResult(PlayerInteractEvent event, InteractionResult result) {
+    if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
+      rightClickItem.setCancellationResult(result);
+    } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
+      rightClickBlock.setCancellationResult(result);
+    } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
+      entityInteract.setCancellationResult(result);
+    } else if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
+      entityInteractSpecific.setCancellationResult(result);
     }
   }
 
@@ -508,29 +552,29 @@ public class SkillBonusHandler {
     if (getSkillBonuses(player, CanPoisonAnyoneBonus.class).isEmpty()) {
       return;
     }
-    event.setResult(Event.Result.ALLOW);
+    event.setResult(MobEffectEvent.Applicable.Result.APPLY);
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void applyDamageTakenBonuses(LivingHurtEvent event) {
+  public static void applyDamageTakenBonuses(LivingIncomingDamageEvent event) {
     if (!(event.getEntity() instanceof Player player)) return;
     DamageSource damageSource = event.getSource();
     if (!(damageSource.getEntity() instanceof LivingEntity attacker)) return;
     float damageTaken = event.getAmount();
     float addition =
-        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.ADDITION);
+        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.ADD_VALUE);
     damageTaken += addition;
     float multiplier =
-        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.MULTIPLY_BASE);
+        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     damageTaken *= 1 + multiplier;
     float multiplierTotal =
-        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        getDamageTaken(player, attacker, damageSource, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     damageTaken *= 1 + multiplierTotal;
     event.setAmount(damageTaken);
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void applyDamageAvoidanceBonuses(LivingAttackEvent event) {
+  public static void applyDamageAvoidanceBonuses(LivingIncomingDamageEvent event) {
     if (!(event.getEntity() instanceof Player player)) {
       return;
     }
@@ -568,7 +612,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void applyDamageConversionBonuses(LivingHurtEvent event) {
+  public static void applyDamageConversionBonuses(LivingIncomingDamageEvent event) {
     DamageSource originalDamageSource = event.getSource();
     if (!(originalDamageSource.getEntity() instanceof Player player)) return;
     if (getDamageConversionBonuses(player, originalDamageSource).findAny().isEmpty()) {
@@ -645,7 +689,7 @@ public class SkillBonusHandler {
   }
 
   @SubscribeEvent(priority = EventPriority.HIGH)
-  public static void forcefullyInflictDuplicatedProjectileDamage(LivingAttackEvent event) {
+  public static void forcefullyInflictDuplicatedProjectileDamage(LivingIncomingDamageEvent event) {
     DamageSource damageSource = event.getSource();
     if (!(damageSource.getDirectEntity() instanceof Projectile projectile
         && projectile.getOwner() instanceof Player)) return;
@@ -760,8 +804,6 @@ public class SkillBonusHandler {
     if (duplicate instanceof AbstractArrow duplicateArrow) {
       AbstractArrow originalArrow = (AbstractArrow) original;
       duplicateArrow.pickup = AbstractArrow.Pickup.DISALLOWED;
-      float velocity = (float) movementVector.length();
-      duplicateArrow.setEnchantmentEffectsFromEntity(player, velocity);
       duplicateArrow.setBaseDamage(originalArrow.getBaseDamage());
     } else if (duplicate instanceof ThrownPotion potion) {
       ThrownPotion originalPotion = (ThrownPotion) original;
@@ -789,7 +831,7 @@ public class SkillBonusHandler {
 
   @NotNull
   private static Map<DamageCondition, Float> getDamageConversionMap(
-      LivingHurtEvent event, Player player, DamageSource originalDamageSource) {
+      LivingIncomingDamageEvent event, Player player, DamageSource originalDamageSource) {
     Map<DamageCondition, Float> conversions = new HashMap<>();
     getDamageConversionBonuses(player, originalDamageSource)
         .forEach(
@@ -898,7 +940,7 @@ public class SkillBonusHandler {
   private static <T> List<T> getEffectBonuses(Player player, Class<T> type) {
     List<T> bonuses = new ArrayList<>();
     for (MobEffectInstance e : player.getActiveEffects()) {
-      if (e.getEffect() instanceof SkillBonusEffect skillEffect) {
+      if (e.getEffect().value() instanceof SkillBonusEffect skillEffect) {
         SkillBonus<?> bonus = skillEffect.getBonus().copy();
         if (type.isInstance(bonus)) {
           bonus = bonus.copy().multiply(e.getAmplifier());

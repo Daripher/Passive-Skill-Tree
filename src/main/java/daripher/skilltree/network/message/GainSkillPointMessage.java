@@ -4,33 +4,42 @@ import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.exp.ExpHelper;
-import daripher.skilltree.network.NetworkDispatcher;
-import java.util.Objects;
-import java.util.function.Supplier;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class GainSkillPointMessage {
-  public static void receive(Supplier<NetworkEvent.Context> ctxSupplier) {
-    Context ctx = ctxSupplier.get();
-    ctx.setPacketHandled(true);
-    ServerPlayer player = Objects.requireNonNull(ctx.getSender());
-    IPlayerSkills capability = PlayerSkillsProvider.get(player);
-    int skills = capability.getPlayerSkills().size();
-    int points = capability.getSkillPoints();
-    int level = skills + points;
-    if (level >= ServerConfig.max_skill_points) {
-      return;
-    }
-    int cost = ServerConfig.getSkillPointCost(level);
-    if (ExpHelper.getPlayerExp(player) < cost) {
-      return;
-    }
-    player.giveExperiencePoints(-cost);
-    capability.grantSkillPoints(1);
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+public record GainSkillPointMessage() implements CustomPacketPayload {
+  public static final Type<GainSkillPointMessage> TYPE =
+      new Type<>(ResourceLocation.fromNamespaceAndPath("skilltree", "gain_skill_point"));
+  public static final StreamCodec<ByteBuf, GainSkillPointMessage> STREAM_CODEC =
+      StreamCodec.unit(new GainSkillPointMessage());
+
+  @Override
+  public Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
+  public static void handle(GainSkillPointMessage message, IPayloadContext context) {
+    context.enqueueWork(
+        () -> {
+          ServerPlayer player = (ServerPlayer) context.player();
+          IPlayerSkills capability = PlayerSkillsProvider.get(player);
+          int skills = capability.getPlayerSkills().size();
+          int points = capability.getSkillPoints();
+          int level = skills + points;
+          if (level >= ServerConfig.max_skill_points) {
+            return;
+          }
+          int cost = ServerConfig.getSkillPointCost(level);
+          if (ExpHelper.getPlayerExp(player) < cost) {
+            return;
+          }
+          player.giveExperiencePoints(-cost);
+          capability.grantSkillPoints(1);
+          PlayerSkillsProvider.sendPlayerSkills(player);
+        });
   }
 }

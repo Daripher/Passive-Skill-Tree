@@ -5,6 +5,8 @@ import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
+import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -313,17 +315,17 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "trident.adjective", "ый Трезубец");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "trident.plural.adjective", "ые Трезубцы");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "trident.plural", "Трезубцы");
-    add(PSTTags.Items.RINGS, "Кольцо");
-    add(PSTTags.Items.RINGS, "where", "Кольцах");
-    add(PSTTags.Items.RINGS, "type", "ое Кольцо");
-    add(PSTTags.Items.RINGS, "plural.adjective", "ые Кольца");
-    add(PSTTags.Items.RINGS, "plural", "Кольца");
-    add(PSTTags.Items.NECKLACES, "Ожерелье");
-    add(PSTTags.Items.NECKLACES, "type", "ое Ожерелье");
-    add(PSTTags.Items.NECKLACES, "plural.adjective", "ые Ожерелья");
-    add(PSTTags.Items.NECKLACES, "plural", "Ожерелья");
-    add(PSTTags.Items.LEATHER_ARMOR, "Кожаная броня");
-    add(PSTTags.Items.LEATHER_ARMOR, "plural", "Кожаная броня");
+    addItemTag(PSTTags.Items.RINGS, "Кольцо");
+    addItemTag(PSTTags.Items.RINGS, "where", "Кольцах");
+    addItemTag(PSTTags.Items.RINGS, "type", "ое Кольцо");
+    addItemTag(PSTTags.Items.RINGS, "plural.adjective", "ые Кольца");
+    addItemTag(PSTTags.Items.RINGS, "plural", "Кольца");
+    addItemTag(PSTTags.Items.NECKLACES, "Ожерелье");
+    addItemTag(PSTTags.Items.NECKLACES, "type", "ое Ожерелье");
+    addItemTag(PSTTags.Items.NECKLACES, "plural.adjective", "ые Ожерелья");
+    addItemTag(PSTTags.Items.NECKLACES, "plural", "Ожерелья");
+    addItemTag(PSTTags.Items.LEATHER_ARMOR, "Кожаная броня");
+    addItemTag(PSTTags.Items.LEATHER_ARMOR, "plural", "Кожаная броня");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Броня");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor.prepositional", "Броне");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor.adjective", "ая Броня");
@@ -379,11 +381,11 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.FOOD.get(), "type", "ая Еда");
     add(PSTItemConditions.FOOD.get(), "plural.adjective", "ая Еда");
     add(PSTItemConditions.FOOD.get(), "plural", "Еда");
-    add(PSTTags.Items.JEWELRY, "Бижутерия");
-    add(PSTTags.Items.JEWELRY, "where", "Бижутерии");
-    add(PSTTags.Items.JEWELRY, "type", "ая Бижутерия");
-    add(PSTTags.Items.JEWELRY, "plural.adjective", "ая Бижутерия");
-    add(PSTTags.Items.JEWELRY, "plural", "Бижутерия");
+    addItemTag(PSTTags.Items.JEWELRY, "Бижутерия");
+    addItemTag(PSTTags.Items.JEWELRY, "where", "Бижутерии");
+    addItemTag(PSTTags.Items.JEWELRY, "type", "ая Бижутерия");
+    addItemTag(PSTTags.Items.JEWELRY, "plural.adjective", "ая Бижутерия");
+    addItemTag(PSTTags.Items.JEWELRY, "plural", "Бижутерия");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "tool", "Инструмент");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "tool.prepositional", "Инструменте");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "tool.adjective", "ый Инструмент");
@@ -608,8 +610,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
   }
 
   protected void add(Potion potion, String name) {
-    add(potion.getName(Items.POTION.getDescriptionId() + ".effect."), "Зелье " + name);
-    add(potion.getName(Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Взрывное зелье " + name);
-    add(potion.getName(Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Туманное зелье " + name);
+    var potionHolder = Optional.of(BuiltInRegistries.POTION.wrapAsHolder(potion));
+    add(Potion.getName(potionHolder, Items.POTION.getDescriptionId() + ".effect."), "Зелье " + name);
+    add(Potion.getName(potionHolder, Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Взрывное зелье " + name);
+    add(Potion.getName(potionHolder, Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Туманное зелье " + name);
   }
 }

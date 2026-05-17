@@ -25,7 +25,7 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
 
   @Override
   public boolean test(ItemStack stack) {
-    return !EnchantmentHelper.getEnchantments(stack).isEmpty() && itemStackPredicate.test(stack);
+    return !stack.getEnchantments().isEmpty() && itemStackPredicate.test(stack);
   }
 
   @Override

@@ -16,6 +16,8 @@ import java.util.function.Consumer;
 
 import daripher.skilltree.skill.bonus.event.TickingEventListener;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -56,7 +58,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
       return;
     }
     MobEffectInstance effectInstanceCopy = new MobEffectInstance(effectInstance);
-    MobEffect effect = effectInstance.getEffect();
+    Holder<MobEffect> effect = effectInstance.getEffect();
     if (maxStacks > 1) {
       effectInstanceCopy = getStackedEffectInstance(target, effect, effectInstanceCopy);
     }
@@ -64,7 +66,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
   }
 
   private MobEffectInstance getStackedEffectInstance(
-      LivingEntity target, MobEffect effect, MobEffectInstance effectInstanceCopy) {
+      LivingEntity target, Holder<MobEffect> effect, MobEffectInstance effectInstanceCopy) {
     MobEffectInstance activeEffectInstance = target.getEffect(effect);
     if (activeEffectInstance == null) {
       return effectInstanceCopy;
@@ -149,7 +151,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     if (chance < 1) {
       tooltip =
           TooltipHelper.getSkillBonusTooltip(
-              tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+              tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
     tooltip = eventListener.getTooltip(tooltip);
     if (maxStacks > 1) {
@@ -178,7 +180,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
   public boolean isPositive() {
     return chance > 0
         ^ eventListener.getTarget() == Target.PLAYER
-        ^ effectInstance.getEffect().getCategory() != MobEffectCategory.HARMFUL;
+        ^ effectInstance.getEffect().value().getCategory() != MobEffectCategory.HARMFUL;
   }
 
   @Override
@@ -193,7 +195,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     editor.addLabel(150, 0, "Chance", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addSelectionMenu(0, 0, 145, effectInstance.getEffect())
+        .addSelectionMenu(0, 0, 145, effectInstance.getEffect().value())
         .setResponder(effect -> selectEffect(consumer, effect));
     editor
         .addNumericTextField(150, 0, 50, 14, chance)
@@ -281,7 +283,9 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
   public void setEffectInstance(MobEffect effectInstance) {
     this.effectInstance =
         new MobEffectInstance(
-            effectInstance, this.effectInstance.getDuration(), this.effectInstance.getAmplifier());
+            BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effectInstance),
+            this.effectInstance.getDuration(),
+            this.effectInstance.getAmplifier());
   }
 
   public void setDuration(int duration) {

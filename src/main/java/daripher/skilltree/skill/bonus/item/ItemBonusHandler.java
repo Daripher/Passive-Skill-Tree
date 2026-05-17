@@ -14,18 +14,23 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import org.jetbrains.annotations.Nullable;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.GAME)
 public class ItemBonusHandler {
+  private static final String SKILL_BONUSES_TAG = "SkillBonuses";
+
   @SubscribeEvent
   public static void addItemBonusTooltips(ItemTooltipEvent event) {
     List<Component> components = event.getToolTip();
@@ -48,11 +53,11 @@ public class ItemBonusHandler {
       if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
         continue;
       }
-      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttributeHolder());
       if (attributeInstance == null) {
         continue;
       }
-      attributeInstance.removeModifier(attributeBonus.getModifier().getId());
+      attributeInstance.removeModifier(attributeBonus.getModifier().id());
     }
     for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), SkillBonusItemBonus.class)) {
       SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
@@ -62,11 +67,11 @@ public class ItemBonusHandler {
       if (attributeBonus.isDynamic()) {
         continue;
       }
-      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttributeHolder());
       if (attributeInstance == null) {
         continue;
       }
-      if (attributeInstance.hasModifier(attributeBonus.getModifier())) {
+      if (attributeInstance.hasModifier(attributeBonus.getModifier().id())) {
         continue;
       }
       attributeInstance.addTransientModifier(attributeBonus.getModifier());
@@ -74,10 +79,10 @@ public class ItemBonusHandler {
   }
 
   public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) return ImmutableList.of();
+    CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    if (!customData.contains(SKILL_BONUSES_TAG)) return ImmutableList.of();
     List<ItemBonus<?>> list = new ArrayList<>();
-    CompoundTag stackTag = stack.getOrCreateTag();
-    CompoundTag bonusesTag = stackTag.getCompound("SkillBonuses");
+    CompoundTag bonusesTag = customData.copyTag().getCompound(SKILL_BONUSES_TAG);
     for (int i = 0; true; i++) {
       if (!bonusesTag.contains("" + i)) {
         return list;
@@ -107,14 +112,11 @@ public class ItemBonusHandler {
       bonusesTag.put("" + i, bonusTag);
       i++;
     }
-    stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
+    CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.put(SKILL_BONUSES_TAG, bonusesTag));
   }
 
   public static void removeItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) {
-      return;
-    }
-    stack.getOrCreateTag().remove("SkillBonuses");
+    CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.remove(SKILL_BONUSES_TAG));
   }
 
   private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
@@ -127,7 +129,7 @@ public class ItemBonusHandler {
 
   private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
     if (!tag.contains("type")) return null;
-    ResourceLocation id = new ResourceLocation(tag.getString("type"));
+    ResourceLocation id = ResourceLocation.parse(tag.getString("type"));
     ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
     if (serializer == null) return null;
     try {

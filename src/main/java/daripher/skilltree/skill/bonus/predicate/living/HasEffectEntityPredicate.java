@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -37,8 +39,9 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
   @Override
   public boolean test(LivingEntity living) {
-    if (amplifier == 0) return living.hasEffect(this.effect);
-    MobEffectInstance effect = living.getEffect(this.effect);
+    Holder<MobEffect> effectHolder = getEffectHolder();
+    if (amplifier == 0) return living.hasEffect(effectHolder);
+    MobEffectInstance effect = living.getEffect(effectHolder);
     return effect != null && effect.getAmplifier() >= this.amplifier;
   }
 
@@ -108,6 +111,10 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
     this.amplifier = amplifier;
   }
 
+  private Holder<MobEffect> getEffectHolder() {
+    return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect);
+  }
+
   public static class Serializer implements LivingEntityPredicate.Serializer {
     @Override
     public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
@@ -163,7 +170,7 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate createDefaultInstance() {
-      return new HasEffectEntityPredicate(MobEffects.POISON);
+      return new HasEffectEntityPredicate(MobEffects.POISON.value());
     }
   }
 }

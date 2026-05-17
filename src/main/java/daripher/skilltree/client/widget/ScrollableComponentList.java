@@ -57,10 +57,10 @@ public class ScrollableComponentList extends AbstractWidget {
   }
 
   @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+  public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
     int maxScroll = components.size() - maxLines;
-    if (amount < 0 && scroll < maxScroll) scroll++;
-    if (amount > 0 && scroll > 0) scroll--;
+    if (scrollY < 0 && scroll < maxScroll) scroll++;
+    if (scrollY > 0 && scroll > 0) scroll--;
     return true;
   }
 

@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class ClientConfig {
-  public static final ForgeConfigSpec SPEC;
-  private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+  public static final ModConfigSpec SPEC;
+  private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
   private static final ConfigValue<List<? extends String>> FAVORITE_SKILLS;
   private static final ConfigValue<? extends String> FAVORITE_COLOR_HEX;
   private static final ConfigValue<Boolean> SKILL_TREE_BACKGROUND_PARALLAX;
@@ -37,7 +37,7 @@ public class ClientConfig {
   }
 
   private static boolean isValidSkillId(Object o) {
-    return o instanceof String s && ResourceLocation.isValidResourceLocation(s);
+    return o instanceof String s && ResourceLocation.tryParse(s) != null;
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -56,7 +56,7 @@ public class ClientConfig {
   static void load(ModConfigEvent.Loading event) {
     if (event.getConfig().getSpec() != SPEC) return;
     favorite_skills =
-        FAVORITE_SKILLS.get().stream().map(ResourceLocation::new).collect(Collectors.toSet());
+        FAVORITE_SKILLS.get().stream().map(ResourceLocation::parse).collect(Collectors.toSet());
     favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");
     skill_tree_background_parallax = SKILL_TREE_BACKGROUND_PARALLAX.get();
     if (!favorite_color_is_rainbow) {

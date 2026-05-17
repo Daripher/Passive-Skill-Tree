@@ -2,9 +2,9 @@ package daripher.skilltree.event;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.config.ServerConfig;
-import net.minecraftforge.event.GrindstoneEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.neoforge.event.GrindstoneEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PSTEvents {

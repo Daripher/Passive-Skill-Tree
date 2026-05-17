@@ -23,7 +23,7 @@ public class SkillRequirementSerializer
     } else {
       type = jsonObj.get("type").getAsString();
     }
-    ResourceLocation serializerId = new ResourceLocation(type);
+    ResourceLocation serializerId = ResourceLocation.parse(type);
     SkillRequirement.Serializer serializer =
         PSTRegistries.SKILL_REQUIREMENTS.get().getValue(serializerId);
     Objects.requireNonNull(serializer, "Unknown skill requirement: " + serializerId);

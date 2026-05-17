@@ -76,7 +76,7 @@ public class TextField extends EditBox implements TickingWidget {
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     EditBoxAccessor accessor = (EditBoxAccessor) this;
     if (!isVisible()) return;
-    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/widgets.png");
+    ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/widgets.png");
     int v = isHoveredOrFocused() ? 42 : 56;
     graphics.blit(texture, getX(), getY(), 0, v, width / 2, height);
     graphics.blit(texture, getX() + width / 2, getY(), -width / 2, v, width / 2, height);
@@ -90,7 +90,7 @@ public class TextField extends EditBox implements TickingWidget {
     boolean isTextSplitByCursor =
         cursorVisiblePosition >= 0 && cursorVisiblePosition <= visibleText.length();
     boolean isCursorVisible =
-        isFocused() && accessor.getFrame() / 6 % 2 == 0 && isTextSplitByCursor;
+        isFocused() && minecraft.gui.getGuiTicks() / 6 % 2 == 0 && isTextSplitByCursor;
     if (visibleText.isEmpty() && hint != null && !isFocused()) {
       visibleText = hint;
     }
@@ -167,9 +167,7 @@ public class TextField extends EditBox implements TickingWidget {
   }
 
   @Override
-  public void onWidgetTick() {
-    this.tick();
-  }
+  public void onWidgetTick() {}
 
   public TextField setFocused() {
     setFocused(true);

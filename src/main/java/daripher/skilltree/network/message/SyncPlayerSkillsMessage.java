@@ -2,73 +2,70 @@ package daripher.skilltree.network.message;
 
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.ArrayList;
+import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class SyncPlayerSkillsMessage {
-  private List<ResourceLocation> learnedSkills = new ArrayList<>();
-  private int skillPoints;
+public record SyncPlayerSkillsMessage(List<ResourceLocation> learnedSkills, int skillPoints)
+    implements CustomPacketPayload {
+  private static final String CLIENT_HANDLERS_CLASS =
+      "daripher.skilltree.client.network.ClientNetworkPayloadHandlers";
 
-  private SyncPlayerSkillsMessage() {}
+  public static final Type<SyncPlayerSkillsMessage> TYPE =
+      new Type<>(ResourceLocation.fromNamespaceAndPath("skilltree", "sync_player_skills"));
+  public static final StreamCodec<ByteBuf, SyncPlayerSkillsMessage> STREAM_CODEC =
+      StreamCodec.composite(
+          ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          SyncPlayerSkillsMessage::learnedSkills,
+          ByteBufCodecs.VAR_INT,
+          SyncPlayerSkillsMessage::skillPoints,
+          SyncPlayerSkillsMessage::new);
 
   public SyncPlayerSkillsMessage(Player player) {
-    IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
-    learnedSkills = skillsCapability.getPlayerSkills().stream().map(PassiveSkill::getId).toList();
-    skillPoints = skillsCapability.getSkillPoints();
+    this(
+        PlayerSkillsProvider.get(player).getPlayerSkills().stream().map(PassiveSkill::getId).toList(),
+        PlayerSkillsProvider.get(player).getSkillPoints());
   }
 
-  public static SyncPlayerSkillsMessage decode(FriendlyByteBuf buf) {
-    SyncPlayerSkillsMessage result = new SyncPlayerSkillsMessage();
-    int learnedSkillsCount = buf.readInt();
-    for (int i = 0; i < learnedSkillsCount; i++) {
-      result.learnedSkills.add(new ResourceLocation(buf.readUtf()));
+  @Override
+  public Type<? extends CustomPacketPayload> type() {
+    return TYPE;
+  }
+
+  public static void handle(SyncPlayerSkillsMessage message, IPayloadContext context) {
+    context.enqueueWork(
+        () -> {
+          Player player = context.player();
+          if (player == null) return;
+          IPlayerSkills capability = PlayerSkillsProvider.get(player);
+          capability.getPlayerSkills().clear();
+          message.learnedSkills().stream()
+              .map(SkillsReloader::getSkillById)
+              .filter(Objects::nonNull)
+              .forEach(capability.getPlayerSkills()::add);
+          capability.setSkillPoints(message.skillPoints());
+          refreshSkillTreeScreen(capability.getSkillPoints());
+        });
+  }
+
+  private static void refreshSkillTreeScreen(int skillPoints) {
+    if (FMLEnvironment.dist != Dist.CLIENT) return;
+    try {
+      Class.forName(CLIENT_HANDLERS_CLASS)
+          .getMethod("refreshSkillTreeScreen", int.class)
+          .invoke(null, skillPoints);
+    } catch (ReflectiveOperationException exception) {
+      throw new IllegalStateException("Failed to refresh skill tree screen", exception);
     }
-    result.skillPoints = buf.readInt();
-    return result;
-  }
-
-  public static void receive(
-      SyncPlayerSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
-    NetworkEvent.Context ctx = ctxSupplier.get();
-    ctx.setPacketHandled(true);
-    ctx.enqueueWork(
-        () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(message, ctx)));
-  }
-
-  @OnlyIn(value = Dist.CLIENT)
-  private static void handlePacket(SyncPlayerSkillsMessage message, NetworkEvent.Context ctx) {
-    ctx.setPacketHandled(true);
-    Minecraft minecraft = Minecraft.getInstance();
-    assert minecraft.player != null;
-    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
-    capability.getPlayerSkills().clear();
-    message.learnedSkills.stream()
-        .map(SkillsReloader::getSkillById)
-        .filter(Objects::nonNull)
-        .forEach(capability.getPlayerSkills()::add);
-    capability.setSkillPoints(message.skillPoints);
-    if (minecraft.screen instanceof SkillTreeScreen screen) {
-      screen.updateSkillPoints(capability.getSkillPoints());
-      screen.init();
-    }
-  }
-
-  public void encode(FriendlyByteBuf buf) {
-    buf.writeInt(learnedSkills.size());
-    learnedSkills.stream().map(ResourceLocation::toString).forEach(buf::writeUtf);
-    buf.writeInt(skillPoints);
   }
 }

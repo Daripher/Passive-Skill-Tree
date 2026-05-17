@@ -38,7 +38,12 @@ public class EnchantmentLevelsFunction implements FloatFunction<EnchantmentLevel
   }
 
   private int getEnchantLevels(Stream<ItemStack> items) {
-    return items.map(EnchantmentHelper::getEnchantments).mapToInt(m -> m.values().stream().reduce(Integer::sum).orElse(0)).reduce(Integer::sum).orElse(0);
+    return items
+        .map(ItemStack::getEnchantments)
+        .mapToInt(
+            enchantments ->
+                enchantments.entrySet().stream().mapToInt(entry -> entry.getIntValue()).sum())
+        .sum();
   }
 
   @Override

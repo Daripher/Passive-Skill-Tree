@@ -31,7 +31,7 @@ public class ManaLevelFunction implements FloatFunction<ManaLevelFunction> {
   @Override
   public float apply(LivingEntity entity) {
     MagicData magicData = MagicData.getPlayerMagicData(entity);
-    float maxMana = (float) entity.getAttributeValue(AttributeRegistry.MAX_MANA.get());
+    float maxMana = (float) entity.getAttributeValue(AttributeRegistry.MAX_MANA);
     float value = magicData.getMana();
     if (missing) {
       value = maxMana - value;

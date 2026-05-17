@@ -94,7 +94,7 @@ public final class GainExperienceBonus implements EventListenerBonus<GainExperie
     if (chance < 1) {
       tooltip =
           TooltipHelper.getSkillBonusTooltip(
-              tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+              tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
     tooltip = eventListener.getTooltip(tooltip);
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

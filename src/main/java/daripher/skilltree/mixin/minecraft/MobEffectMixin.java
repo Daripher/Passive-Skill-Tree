@@ -13,20 +13,24 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.extensions.IForgeMobEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MobEffect.class)
-public abstract class MobEffectMixin implements IForgeMobEffect {
-  @Inject(method = "applyEffectTick", at = @At("HEAD"), cancellable = true)
-  public void inflictPoisonDamage(LivingEntity livingEntity, int amplifier, CallbackInfo callbackInfo) {
+public abstract class MobEffectMixin {
+  @Inject(
+      method = "applyEffectTick(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+      at = @At("HEAD"),
+      cancellable = true,
+      remap = false)
+  public void inflictPoisonDamage(
+      LivingEntity livingEntity, int amplifier, CallbackInfoReturnable<Boolean> callbackInfo) {
     //noinspection ConstantValue
     if (((Object) this) != MobEffects.POISON) return;
     handlePoisonDamage(livingEntity);
-    callbackInfo.cancel();
+    callbackInfo.setReturnValue(true);
   }
 
   private static void handlePoisonDamage(LivingEntity livingEntity) {

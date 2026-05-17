@@ -24,7 +24,7 @@ public class CheckBox extends Button {
   @Override
   protected void renderBackground(@NotNull GuiGraphics graphics) {
     super.renderBackground(graphics);
-    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/widgets.png");
+    ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/widgets.png");
     if (value) {
       graphics.blit(texture, getX(), getY(), 0, 242, width, height);
     }

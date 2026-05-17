@@ -5,10 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -34,19 +36,37 @@ public class WorkbenchBlock extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
-  public @NotNull InteractionResult use(
+  protected @NotNull ItemInteractionResult useItemOn(
+      @NotNull ItemStack stack,
       @NotNull BlockState blockState,
       Level level,
       @NotNull BlockPos blockPos,
       @NotNull Player player,
       @NotNull InteractionHand interactionHand,
       @NotNull BlockHitResult blockHitResult) {
+    openWorkbench(blockState, level, blockPos, player);
+    return ItemInteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  protected @NotNull InteractionResult useWithoutItem(
+      @NotNull BlockState blockState,
+      Level level,
+      @NotNull BlockPos blockPos,
+      @NotNull Player player,
+      @NotNull BlockHitResult blockHitResult) {
+    openWorkbench(blockState, level, blockPos, player);
+    return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  private void openWorkbench(
+      BlockState blockState, Level level, BlockPos blockPos, Player player) {
     if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
+      return;
     } else {
       player.openMenu(blockState.getMenuProvider(level, blockPos));
       // add custom stat awarded for block usage?
-      return InteractionResult.CONSUME;
     }
   }
 

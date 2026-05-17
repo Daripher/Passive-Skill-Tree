@@ -24,13 +24,14 @@ public abstract class ThrownPotionMixin extends ThrowableItemProjectile implemen
     super(null, null);
   }
 
-  @Redirect(method = "applySplash",
+  @Redirect(method = "applySplash(Ljava/lang/Iterable;Lnet/minecraft/world/entity/Entity;)V",
             at = @At(value = "INVOKE",
                      target = "Lnet/minecraft/world/entity/LivingEntity;" +
                               "addEffect(" +
                               "Lnet/minecraft/world/effect/MobEffectInstance;" +
                               "Lnet/minecraft/world/entity/Entity;" +
-                              ")Z"))
+                              ")Z"),
+            remap = false)
   private boolean setAttackerOnHit(LivingEntity entity, MobEffectInstance effectInstance, Entity effectSource) {
     if (getOwner() instanceof Player player) {
       entity.setLastHurtByPlayer(player);
@@ -38,13 +39,14 @@ public abstract class ThrownPotionMixin extends ThrowableItemProjectile implemen
     return entity.addEffect(effectInstance, effectSource);
   }
 
-  @Redirect(method = "applySplash",
+  @Redirect(method = "applySplash(Ljava/lang/Iterable;Lnet/minecraft/world/entity/Entity;)V",
             at = @At(value = "INVOKE",
                      target = "Lnet/minecraft/world/level/Level;" +
                               "getEntitiesOfClass(" +
                               "Ljava/lang/Class;" +
                               "Lnet/minecraft/world/phys/AABB;" +
-                              ")Ljava/util/List;"))
+                              ")Ljava/util/List;"),
+            remap = false)
   private <T extends Entity> List<T> removePlayerTarget(Level level, Class<T> entityClass, AABB area) {
     List<T> targets = level.getEntitiesOfClass(entityClass, area);
     Entity owner = getOwner();
@@ -63,4 +65,3 @@ public abstract class ThrownPotionMixin extends ThrowableItemProjectile implemen
     return targets;
   }
 }
-

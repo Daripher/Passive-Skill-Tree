@@ -3,8 +3,6 @@ package daripher.skilltree.item;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
-import daripher.skilltree.network.NetworkDispatcher;
-import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 public class WisdomScrollItem extends Item {
@@ -54,9 +51,7 @@ public class WisdomScrollItem extends Item {
           0.4F,
           0.2F + player.getRandom().nextFloat() * 0.3F);
       skillsCapability.grantSkillPoints(1);
-      NetworkDispatcher.network_channel.send(
-          PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-          new SyncPlayerSkillsMessage(player));
+      PlayerSkillsProvider.sendPlayerSkills((ServerPlayer) player);
       if (ServerConfig.show_chat_messages) {
         player.sendSystemMessage(
             Component.translatable("skilltree.message.point_command")
@@ -69,7 +64,7 @@ public class WisdomScrollItem extends Item {
   @Override
   public void appendHoverText(
       @NotNull ItemStack itemStack,
-      Level level,
+      Item.TooltipContext context,
       List<Component> components,
       @NotNull TooltipFlag tooltipFlag) {
     components.add(

@@ -94,7 +94,7 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
     public MutableComponent getTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
-        AttributeModifier.Operation operation = AttributeModifier.Operation.ADDITION;
+        AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_VALUE;
         MutableComponent tooltip = Component.translatable(getDescriptionId(), spellName);
         tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, bonusLevels, operation);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);

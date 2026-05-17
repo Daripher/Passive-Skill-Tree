@@ -3,6 +3,7 @@ package daripher.skilltree.skill.bonus.item;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.network.NetworkHelper;
@@ -105,7 +106,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
       for (int i = 0; i < innerBonusesJson.size(); i++) {
         JsonObject innerBonusTag = innerBonusesJson.get(i).getAsJsonObject();
         String serializerIdString = innerBonusTag.get("type").getAsString();
-        ResourceLocation serializerId = new ResourceLocation(serializerIdString);
+        ResourceLocation serializerId = ResourceLocation.parse(serializerIdString);
         ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
         Objects.requireNonNull(serializer, "Unknown item bonus: " + serializerId);
         ItemBonus<?> innerBonus = serializer.deserialize(innerBonusTag);
@@ -140,7 +141,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
       for (Tag value : innerBonusesTag) {
         CompoundTag innerBonusTag = (CompoundTag) value;
         String type = innerBonusTag.getString("type");
-        ResourceLocation serializerId = new ResourceLocation(type);
+        ResourceLocation serializerId = ResourceLocation.parse(type);
         ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
         Objects.requireNonNull(serializer, "Unknown item bonus: " + serializerId);
         innerBonuses.add(serializer.deserialize(innerBonusTag));
@@ -192,11 +193,14 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
     @Override
     public ItemBonus<?> createDefaultInstance() {
       AttributeModifier defaultModifier =
-          new AttributeModifier("Default Modifier", 1, AttributeModifier.Operation.ADDITION);
+          new AttributeModifier(
+              ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "default_item_bonus"),
+              1,
+              AttributeModifier.Operation.ADD_VALUE);
       ItemBonus<?> bonus1 =
-          new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR, defaultModifier));
+          new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR.value(), defaultModifier));
       ItemBonus<?> bonus2 =
-          new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR_TOUGHNESS, defaultModifier));
+          new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR_TOUGHNESS.value(), defaultModifier));
       return new ItemBonusListItemBonus(List.of(bonus1, bonus2));
     }
   }

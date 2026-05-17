@@ -163,7 +163,7 @@ public final class FloatFunctionMultiplier implements LivingMultiplier {
 
     @Override
     public LivingMultiplier createDefaultInstance() {
-      return new FloatFunctionMultiplier(new AttributeValueFunction(Attributes.MAX_HEALTH), 5f);
+      return new FloatFunctionMultiplier(new AttributeValueFunction(Attributes.MAX_HEALTH.value()), 5f);
     }
   }
 }

@@ -6,11 +6,11 @@ import java.util.function.Function;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 public class PSTBlockStatesProvider extends BlockStateProvider {
@@ -25,7 +25,7 @@ public class PSTBlockStatesProvider extends BlockStateProvider {
   }
 
   private void simpleBlockState(
-      RegistryObject<Block> blockRegistryObject,
+      DeferredHolder<Block, ? extends Block> blockRegistryObject,
       Function<ResourceLocation, ModelFile> modelFileProvider) {
     ResourceLocation blockId = blockRegistryObject.getId();
     ModelFile modelFile = modelFileProvider.apply(blockId);

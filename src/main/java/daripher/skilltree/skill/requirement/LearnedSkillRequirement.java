@@ -95,7 +95,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
   public static class Serializer implements SkillRequirement.Serializer {
     @Override
     public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation id = new ResourceLocation(json.get("skill_id").getAsString());
+      ResourceLocation id = ResourceLocation.parse(json.get("skill_id").getAsString());
       return new LearnedSkillRequirement(id);
     }
 
@@ -108,7 +108,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
 
     @Override
     public SkillRequirement<?> deserialize(CompoundTag tag) {
-      ResourceLocation id = new ResourceLocation(tag.getString("skill_id"));
+      ResourceLocation id = ResourceLocation.parse(tag.getString("skill_id"));
       return new LearnedSkillRequirement(id);
     }
 
@@ -123,7 +123,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
 
     @Override
     public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-      ResourceLocation id = new ResourceLocation(buf.readUtf());
+      ResourceLocation id = ResourceLocation.parse(buf.readUtf());
       return new LearnedSkillRequirement(id);
     }
 
@@ -136,7 +136,7 @@ public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillReq
 
     @Override
     public SkillRequirement<?> createDefaultInstance() {
-      return new LearnedSkillRequirement(new ResourceLocation("skilltree:hunter_1"));
+      return new LearnedSkillRequirement(ResourceLocation.parse("skilltree:hunter_1"));
     }
   }
 }

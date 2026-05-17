@@ -82,7 +82,7 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
   public MutableComponent getTooltip() {
     MutableComponent tooltip;
     if (chance < 1f || chance % 1 != 0) {
-      tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId() + ".chance", chance, AttributeModifier.Operation.MULTIPLY_BASE);
+      tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId() + ".chance", chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
     else if (chance == 1f) {
       tooltip = Component.translatable(getDescriptionId());

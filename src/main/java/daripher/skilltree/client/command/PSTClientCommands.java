@@ -14,11 +14,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterClientCommandsEvent;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
@@ -51,7 +51,7 @@ public class PSTClientCommands {
   }
 
   @SubscribeEvent
-  public static void delayedCommandExecution(ClientTickEvent event) {
+  public static void delayedCommandExecution(ClientTickEvent.Post event) {
     if (timer > 0) {
       timer--;
       return;
@@ -64,7 +64,7 @@ public class PSTClientCommands {
 
   private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) {
     String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase();
-    PSTClientCommands.tree_to_display = new ResourceLocation(treeIdArg);
+    PSTClientCommands.tree_to_display = ResourceLocation.parse(treeIdArg);
     PSTClientCommands.timer = 1;
     return 1;
   }

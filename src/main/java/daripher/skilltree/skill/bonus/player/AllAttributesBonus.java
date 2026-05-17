@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.*;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
@@ -19,9 +20,12 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -29,12 +33,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 
 public final class AllAttributesBonus
     implements SkillBonus<AllAttributesBonus>, TickingSkillBonus {
-  private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
+  private static final Set<Holder<Attribute>> AFFECTED_ATTRIBUTES = new HashSet<>();
   private AttributeModifier modifier;
   private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
   private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
@@ -52,7 +55,7 @@ public final class AllAttributesBonus
     getAffectedAttributes().stream()
         .map(player::getAttribute)
         .filter(Objects::nonNull)
-        .filter(a -> !a.hasModifier(modifier))
+        .filter(a -> !a.hasModifier(modifier.id()))
         .forEach(a -> applyAttributeModifier(a, modifier, player));
   }
 
@@ -61,8 +64,8 @@ public final class AllAttributesBonus
     getAffectedAttributes().stream()
         .map(player::getAttribute)
         .filter(Objects::nonNull)
-        .filter(a -> !a.hasModifier(modifier))
-        .forEach(a -> a.removeModifier(modifier.getId()));
+        .filter(a -> !a.hasModifier(modifier.id()))
+        .forEach(a -> a.removeModifier(modifier.id()));
   }
 
   @Override
@@ -91,18 +94,18 @@ public final class AllAttributesBonus
         .filter(Objects::nonNull)
         .forEach(
             playerAttribute -> {
-              AttributeModifier oldModifier = playerAttribute.getModifier(modifier.getId());
-              double value = modifier.getAmount();
+              AttributeModifier oldModifier = playerAttribute.getModifier(modifier.id());
+              double value = modifier.amount();
               value *= playerMultiplier.getValue(player);
               if (oldModifier != null) {
-                if (oldModifier.getAmount() == value) return;
-                playerAttribute.removeModifier(modifier.getId());
+                if (oldModifier.amount() == value) return;
+                playerAttribute.removeModifier(modifier.id());
               }
               AttributeModifier dynamicModifier =
                   new AttributeModifier(
-                      modifier.getId(), "Dynamic", value, modifier.getOperation());
+                      modifier.id(), value, modifier.operation());
               applyAttributeModifier(playerAttribute, dynamicModifier, player);
-              if (playerAttribute.getAttribute() == Attributes.MAX_HEALTH) {
+              if (playerAttribute.getAttribute().is(Attributes.MAX_HEALTH)) {
                 player.setHealth(player.getHealth());
               }
             });
@@ -126,10 +129,10 @@ public final class AllAttributesBonus
   public AllAttributesBonus copy() {
     AttributeModifier modifier =
         new AttributeModifier(
-            UUID.randomUUID(),
-            this.modifier.getName(),
-            this.modifier.getAmount(),
-            this.modifier.getOperation());
+            ResourceLocation.fromNamespaceAndPath(
+                SkillTreeMod.MOD_ID, "all_attributes_bonus/" + UUID.randomUUID()),
+            this.modifier.amount(),
+            this.modifier.operation());
     AllAttributesBonus bonus = new AllAttributesBonus(modifier);
     bonus.playerMultiplier = this.playerMultiplier;
     bonus.playerCondition = this.playerCondition;
@@ -140,10 +143,9 @@ public final class AllAttributesBonus
   public AllAttributesBonus multiply(double multiplier) {
     modifier =
         new AttributeModifier(
-            modifier.getId(),
-            modifier.getName(),
-            modifier.getAmount() * multiplier,
-            modifier.getOperation());
+            modifier.id(),
+            modifier.amount() * multiplier,
+            modifier.operation());
     return this;
   }
 
@@ -152,7 +154,7 @@ public final class AllAttributesBonus
     if (!(other instanceof AllAttributesBonus otherBonus)) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
     if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    return otherBonus.modifier.getOperation() == this.modifier.getOperation();
+    return otherBonus.modifier.operation() == this.modifier.operation();
   }
 
   @Override
@@ -162,10 +164,9 @@ public final class AllAttributesBonus
     }
     AttributeModifier mergedModifier =
         new AttributeModifier(
-            this.modifier.getId(),
-            "Merged",
-            this.modifier.getAmount() + otherBonus.modifier.getAmount(),
-            this.modifier.getOperation());
+            this.modifier.id(),
+            this.modifier.amount() + otherBonus.modifier.amount(),
+            this.modifier.operation());
     AllAttributesBonus mergedBonus = new AllAttributesBonus(mergedModifier);
     mergedBonus.playerMultiplier = this.playerMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
@@ -176,7 +177,7 @@ public final class AllAttributesBonus
   public MutableComponent getTooltip() {
     MutableComponent tooltip =
         TooltipHelper.getSkillBonusTooltip(
-            getDescriptionId(), modifier.getAmount(), modifier.getOperation());
+            getDescriptionId(), modifier.amount(), modifier.operation());
     tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
@@ -184,7 +185,7 @@ public final class AllAttributesBonus
 
   @Override
   public boolean isPositive() {
-    return modifier.getAmount() > 0;
+    return modifier.amount() > 0;
   }
 
   @Override
@@ -194,10 +195,10 @@ public final class AllAttributesBonus
     editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addNumericTextField(110, 0, 50, 14, modifier.getAmount())
+        .addNumericTextField(110, 0, 50, 14, modifier.amount())
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor
-        .addOperationSelection(0, 0, 80, modifier.getOperation())
+        .addOperationSelection(0, 0, 80, modifier.operation())
         .setResponder(operation -> selectOperation(consumer, operation));
     editor.increaseHeight(29);
     editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
@@ -264,13 +265,13 @@ public final class AllAttributesBonus
   public void setAmount(double amount) {
     this.modifier =
         new AttributeModifier(
-            modifier.getId(), modifier.getName(), amount, modifier.getOperation());
+            modifier.id(), amount, modifier.operation());
   }
 
   public void setOperation(AttributeModifier.Operation operation) {
     this.modifier =
         new AttributeModifier(
-            modifier.getId(), modifier.getName(), modifier.getAmount(), operation);
+            modifier.id(), modifier.amount(), operation);
   }
 
   public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
@@ -284,10 +285,11 @@ public final class AllAttributesBonus
   }
 
   @SuppressWarnings("deprecation")
-  private static Set<Attribute> getAffectedAttributes() {
+  private static Set<Holder<Attribute>> getAffectedAttributes() {
     if (AFFECTED_ATTRIBUTES.isEmpty()) {
       ForgeRegistries.ATTRIBUTES.getValues().stream()
-          .filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute)
+          .map(BuiltInRegistries.ATTRIBUTE::wrapAsHolder)
+          .filter(Player.createAttributes().build()::hasAttribute)
           .forEach(AFFECTED_ATTRIBUTES::add);
     }
     return AFFECTED_ATTRIBUTES;
@@ -364,7 +366,10 @@ public final class AllAttributesBonus
     public SkillBonus<?> createDefaultInstance() {
       return new AllAttributesBonus(
           new AttributeModifier(
-              UUID.randomUUID(), "Skill", 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
+              ResourceLocation.fromNamespaceAndPath(
+                  SkillTreeMod.MOD_ID, "all_attributes_bonus/" + UUID.randomUUID()),
+              0.05,
+              AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
     }
   }
 }

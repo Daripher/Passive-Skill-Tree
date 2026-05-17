@@ -23,6 +23,12 @@ build
 # other
 eclipse
 run
+runs/
+.worktrees/
+resume.txt
+.agents
+.codex
+
 
 # Files from Forge MDK
 forge*changelog.txt

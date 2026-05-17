@@ -4,18 +4,19 @@
     "type": "skilltree:equipment_type",
     "equipment_type": "melee_weapon"
   },
+  "id": "skilltree:melee_weapon_attack_speed_bonus",
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:nuggets/iron"
+        "tag": "c:leathers"
       },
-      "required_amount": 5
+      "required_amount": 3
     },
     {
       "ingredient": {
-        "tag": "forge:leather"
+        "tag": "c:nuggets/iron"
       },
-      "required_amount": 3
+      "required_amount": 5
     }
   ],
   "item_bonus": {
@@ -24,8 +25,8 @@
       "type": "skilltree:attribute",
       "amount": 0.1,
       "attribute": "minecraft:generic.attack_speed",
-      "id": "1578f12c-1951-48ef-8d96-8ac08332036b",
-      "name": "Workbench Upgrade",
+      "id": "skilltree:melee_weapon_attack_speed_bonus",
+      "name": "skilltree:melee_weapon_attack_speed_bonus",
       "operation": 1
     }
   },

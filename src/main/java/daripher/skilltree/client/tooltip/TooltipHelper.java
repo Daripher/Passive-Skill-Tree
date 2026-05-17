@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +41,7 @@ public class TooltipHelper {
 
   public static Component getEffectTooltip(MobEffectInstance effect) {
     Component effectDescription;
-    if (effect.getEffect() instanceof SkillBonusEffect skillEffect) {
+    if (effect.getEffect().value() instanceof SkillBonusEffect skillEffect) {
       effectDescription =
           skillEffect
               .getBonus()
@@ -49,7 +50,7 @@ public class TooltipHelper {
               .getTooltip()
               .setStyle(Style.EMPTY);
     } else {
-      effectDescription = effect.getEffect().getDisplayName();
+      effectDescription = effect.getEffect().value().getDisplayName();
       if (effect.getAmplifier() == 0) return effectDescription;
       Component amplifier = Component.translatable("potion.potency." + effect.getAmplifier());
       effectDescription =
@@ -61,9 +62,9 @@ public class TooltipHelper {
   public static Component getOperationName(AttributeModifier.Operation operation) {
     return Component.literal(
         switch (operation) {
-          case ADDITION -> "Addition";
-          case MULTIPLY_BASE -> "Multiply Base";
-          case MULTIPLY_TOTAL -> "Multiply Total";
+          case ADD_VALUE -> "Addition";
+          case ADD_MULTIPLIED_BASE -> "Multiply Base";
+          case ADD_MULTIPLIED_TOTAL -> "Multiply Total";
         });
   }
 
@@ -87,7 +88,7 @@ public class TooltipHelper {
   public static MutableComponent getSkillBonusTooltip(
       Component bonusDescription, double amount, AttributeModifier.Operation operation) {
     float multiplier = 1;
-    if (operation != AttributeModifier.Operation.ADDITION) {
+    if (operation != AttributeModifier.Operation.ADD_VALUE) {
       multiplier = 100;
     }
     double visibleAmount = amount * multiplier;
@@ -99,7 +100,7 @@ public class TooltipHelper {
   }
 
   public static String formatNumber(double number) {
-    String formatted = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(number);
+    String formatted = ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(number);
     if (formatted.endsWith(".0")) {
       formatted = formatted.substring(0, formatted.length() - 2);
     }
@@ -251,10 +252,12 @@ public class TooltipHelper {
     ClientLevel level = Minecraft.getInstance().level;
     Objects.requireNonNull(level);
     RecipeManager recipeManager = level.getRecipeManager();
-    List<AbstractWorkbenchRecipe> recipes =
-        recipeManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH);
     AbstractWorkbenchRecipe recipe =
-        recipes.stream().filter(r -> r.getId().equals(recipeId)).findAny().orElse(null);
+        recipeManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH.get()).stream()
+            .filter(holder -> holder.id().equals(recipeId))
+            .map(holder -> (AbstractWorkbenchRecipe) holder.value())
+            .findAny()
+            .orElse(null);
     if (recipe == null) {
       return Component.literal("Unknown Recipe: " + recipeId.toString())
           .withStyle(ChatFormatting.RED);

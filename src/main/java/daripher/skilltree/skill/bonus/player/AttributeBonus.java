@@ -19,10 +19,13 @@ import java.util.*;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -47,28 +50,28 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
         || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
       return;
     }
-    AttributeInstance instance = player.getAttribute(attribute);
+    AttributeInstance instance = player.getAttribute(getAttributeHolder());
     if (instance == null) {
       SkillTreeMod.LOGGER.error(
           "Attempting to add attribute modifier to attribute {}, which is not present for player",
           attribute);
       return;
     }
-    if (!instance.hasModifier(modifier)) {
+    if (!instance.hasModifier(modifier.id())) {
       applyAttributeModifier(instance, modifier, player);
     }
   }
 
   @Override
   public void onSkillRemoved(ServerPlayer player) {
-    AttributeInstance instance = player.getAttribute(attribute);
+    AttributeInstance instance = player.getAttribute(getAttributeHolder());
     if (instance == null) {
       SkillTreeMod.LOGGER.error(
           "Attempting to remove attribute modifier from attribute {}, which is not present for player",
           attribute);
       return;
     }
-    instance.removeModifier(modifier.getId());
+    instance.removeModifier(modifier.id());
   }
 
   @Override
@@ -96,27 +99,27 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   }
 
   private void applyDynamicAttributeBonus(ServerPlayer player) {
-    AttributeInstance instance = player.getAttribute(attribute);
+    AttributeInstance instance = player.getAttribute(getAttributeHolder());
     if (instance == null) return;
-    AttributeModifier oldModifier = instance.getModifier(modifier.getId());
-    double value = modifier.getAmount();
+    AttributeModifier oldModifier = instance.getModifier(modifier.id());
+    double value = modifier.amount();
     value *= playerMultiplier.getValue(player);
     if (oldModifier != null) {
-      if (oldModifier.getAmount() == value) return;
+      if (oldModifier.amount() == value) return;
     }
     AttributeModifier dynamicModifier =
-        new AttributeModifier(modifier.getId(), "DynamicBonus", value, modifier.getOperation());
+        new AttributeModifier(modifier.id(), value, modifier.operation());
     applyAttributeModifier(instance, dynamicModifier, player);
   }
 
   private void applyAttributeModifier(
       AttributeInstance instance, AttributeModifier modifier, Player player) {
     float healthPercentage = player.getHealth() / player.getMaxHealth();
-    if (instance.getModifier(modifier.getId()) != null) {
-      instance.removeModifier(modifier.getId());
+    if (instance.getModifier(modifier.id()) != null) {
+      instance.removeModifier(modifier.id());
     }
     instance.addTransientModifier(modifier);
-    if (attribute == Attributes.MAX_HEALTH) {
+    if (attribute == Attributes.MAX_HEALTH.value()) {
       player.setHealth(player.getMaxHealth() * healthPercentage);
     }
   }
@@ -130,10 +133,10 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   public AttributeBonus copy() {
     AttributeModifier modifier =
         new AttributeModifier(
-            UUID.randomUUID(),
-            this.modifier.getName(),
-            this.modifier.getAmount(),
-            this.modifier.getOperation());
+            ResourceLocation.fromNamespaceAndPath(
+                SkillTreeMod.MOD_ID, "attribute_bonus/" + UUID.randomUUID()),
+            this.modifier.amount(),
+            this.modifier.operation());
     AttributeBonus bonus = new AttributeBonus(attribute, modifier);
     bonus.playerMultiplier = this.playerMultiplier;
     bonus.playerCondition = this.playerCondition;
@@ -144,10 +147,9 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   public AttributeBonus multiply(double multiplier) {
     modifier =
         new AttributeModifier(
-            modifier.getId(),
-            modifier.getName(),
-            modifier.getAmount() * multiplier,
-            modifier.getOperation());
+            modifier.id(),
+            modifier.amount() * multiplier,
+            modifier.operation());
     return this;
   }
 
@@ -157,7 +159,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     if (otherBonus.attribute != this.attribute) return false;
     if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
     if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    return otherBonus.modifier.getOperation() == this.modifier.getOperation();
+    return otherBonus.modifier.operation() == this.modifier.operation();
   }
 
   @Override
@@ -167,10 +169,9 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     }
     AttributeModifier mergedModifier =
         new AttributeModifier(
-            this.modifier.getId(),
-            "Merged",
-            this.modifier.getAmount() + otherBonus.modifier.getAmount(),
-            this.modifier.getOperation());
+            this.modifier.id(),
+            this.modifier.amount() + otherBonus.modifier.amount(),
+            this.modifier.operation());
     AttributeBonus mergedBonus = new AttributeBonus(this.attribute, mergedModifier);
     mergedBonus.playerMultiplier = this.playerMultiplier;
     mergedBonus.playerCondition = this.playerCondition;
@@ -179,7 +180,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   @Override
   public MutableComponent getTooltip() {
-    float visibleAmount = (float) modifier.getAmount();
+    float visibleAmount = (float) modifier.amount();
     String descriptionId = attribute.getDescriptionId();
     MutableComponent tooltip;
     if (isPercentageRegeneration()) {
@@ -191,7 +192,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
       if (isKnockbackResistanceAddition()) {
         visibleAmount *= 10;
       }
-      AttributeModifier.Operation operation = modifier.getOperation();
+      AttributeModifier.Operation operation = modifier.operation();
       tooltip = TooltipHelper.getSkillBonusTooltip(descriptionId, visibleAmount, operation);
       tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
     }
@@ -200,16 +201,16 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   }
 
   private boolean isKnockbackResistanceAddition() {
-    return modifier.getOperation() == AttributeModifier.Operation.ADDITION
-        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE);
+    return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
+        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE.value());
   }
 
   private boolean isPercentageRegeneration() {
-    return modifier.getOperation() == AttributeModifier.Operation.ADDITION
+    return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
            && playerMultiplier instanceof FloatFunctionMultiplier floatFunctionMultiplier
            && floatFunctionMultiplier.getFloatFunction()
             instanceof AttributeValueFunction attributeValueFunction
-           && attributeValueFunction.getAttribute() == Attributes.MAX_HEALTH
+           && attributeValueFunction.getAttribute() == Attributes.MAX_HEALTH.value()
            && floatFunctionMultiplier.getDivisor() == 1;
   }
 
@@ -221,7 +222,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   @Override
   public boolean isPositive() {
-    return modifier.getAmount() > 0;
+    return modifier.amount() > 0;
   }
 
   @Override
@@ -237,10 +238,10 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     editor
-        .addNumericTextField(110, 0, 50, 14, modifier.getAmount())
+        .addNumericTextField(110, 0, 50, 14, modifier.amount())
         .setNumericResponder(value -> selectAmount(consumer, value));
     editor
-        .addOperationSelection(0, 0, 80, modifier.getOperation())
+        .addOperationSelection(0, 0, 80, modifier.operation())
         .setResponder(operation -> selectOperation(consumer, operation));
     editor.increaseHeight(29);
     editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
@@ -313,6 +314,10 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     return attribute;
   }
 
+  public Holder<Attribute> getAttributeHolder() {
+    return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
+  }
+
   public AttributeModifier getModifier() {
     return modifier;
   }
@@ -324,13 +329,13 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
   public void setAmount(double amount) {
     this.modifier =
         new AttributeModifier(
-            modifier.getId(), modifier.getName(), amount, modifier.getOperation());
+            modifier.id(), amount, modifier.operation());
   }
 
   public void setOperation(AttributeModifier.Operation operation) {
     this.modifier =
         new AttributeModifier(
-            modifier.getId(), modifier.getName(), modifier.getAmount(), operation);
+            modifier.id(), modifier.amount(), operation);
   }
 
   public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
@@ -419,9 +424,12 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     @Override
     public SkillBonus<?> createDefaultInstance() {
       return new AttributeBonus(
-          Attributes.ARMOR,
+          Attributes.ARMOR.value(),
           new AttributeModifier(
-              UUID.randomUUID(), "Skill", 1, AttributeModifier.Operation.ADDITION));
+              ResourceLocation.fromNamespaceAndPath(
+                  SkillTreeMod.MOD_ID, "attribute_bonus/" + UUID.randomUUID()),
+              1,
+              AttributeModifier.Operation.ADD_VALUE));
     }
   }
 }

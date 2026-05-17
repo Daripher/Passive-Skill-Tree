@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -160,7 +161,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
       updateCraftingResult(selectedRecipe);
       return;
     }
-    if (!ItemStack.isSameItemSameTags(input, prevInput)) {
+    if (!ItemStack.isSameItemSameComponents(input, prevInput)) {
       setupRecipeList();
       prevInput = input.copy();
     }
@@ -181,7 +182,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     else {
       if (!level.isClientSide) {
         ItemStack craftResult = selectedRecipe.assemble(workbenchContainer, level.registryAccess());
-        resultSlots.setRecipeUsed(selectedRecipe);
+        resultSlots.setRecipeUsed(new RecipeHolder<>(selectedRecipe.getId(), selectedRecipe));
         resultSlots.setItem(0, craftResult);
       }
     }
@@ -191,7 +192,8 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     selectedRecipeIndex.set(-1);
     resultSlots.setItem(0, ItemStack.EMPTY);
     selectedRecipes =
-        level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.WORKBENCH).stream()
+        level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.WORKBENCH.get()).stream()
+            .map(RecipeHolder::value)
             .filter(this::shouldDisplayRecipe)
             .sorted(Comparator.comparing(AbstractWorkbenchRecipe::getId))
             .toList();

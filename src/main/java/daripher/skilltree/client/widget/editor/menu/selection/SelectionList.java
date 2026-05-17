@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class SelectionList<T> extends AbstractButton {
   public static final ResourceLocation WIDGETS_TEXTURE =
-      new ResourceLocation("skilltree:textures/screen/widgets.png");
+      ResourceLocation.parse("skilltree:textures/screen/widgets.png");
   private Function<T, Component> nameGetter = t -> Component.literal(t.toString());
   private Consumer<T> responder = t -> {};
   private List<T> elementsList;
@@ -159,9 +159,9 @@ public abstract class SelectionList<T> extends AbstractButton {
   }
 
   @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+  public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
     if (isMouseOver(mouseX, mouseY)) {
-      setScroll(scroll - Mth.sign(delta));
+      setScroll(scroll - Mth.sign(scrollY));
       return true;
     }
     return false;

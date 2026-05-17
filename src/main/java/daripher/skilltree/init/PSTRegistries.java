@@ -12,51 +12,36 @@ import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import java.util.function.Supplier;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraft.core.Registry;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import daripher.skilltree.util.ForgeRegistries.ForgeRegistry;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PSTRegistries {
-  public static final Supplier<IForgeRegistry<SkillBonus.Serializer>> SKILL_BONUSES =
-      PSTSkillBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<LivingMultiplier.Serializer>> LIVING_MULTIPLIERS =
-      PSTLivingMultipliers.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<LivingEntityPredicate.Serializer>> LIVING_CONDITIONS =
-      PSTLivingConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<DamageCondition.Serializer>> DAMAGE_CONDITIONS =
-      PSTDamageConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<ItemStackPredicate.Serializer>> ITEM_CONDITIONS =
-      PSTItemConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<EnchantmentCondition.Serializer>>
-      ENCHANTMENT_CONDITIONS = PSTEnchantmentConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<SkillEventListener.Serializer>> EVENT_LISTENERS =
-      PSTEventListeners.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<FloatFunction.Serializer>> FLOAT_FUNCTIONS =
-      PSTFloatFunctions.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<SkillRequirement.Serializer>> SKILL_REQUIREMENTS =
-      PSTSkillRequirements.REGISTRY.makeRegistry(RegistryBuilder::new);
-  public static final Supplier<IForgeRegistry<ItemBonus.Serializer>> ITEM_BONUSES =
-      PSTItemBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
+  public static final Supplier<ForgeRegistry<SkillBonus.Serializer>> SKILL_BONUSES =
+      createRegistry(PSTSkillBonuses.REGISTRY);
+  public static final Supplier<ForgeRegistry<LivingMultiplier.Serializer>> LIVING_MULTIPLIERS =
+      createRegistry(PSTLivingMultipliers.REGISTRY);
+  public static final Supplier<ForgeRegistry<LivingEntityPredicate.Serializer>> LIVING_CONDITIONS =
+      createRegistry(PSTLivingConditions.REGISTRY);
+  public static final Supplier<ForgeRegistry<DamageCondition.Serializer>> DAMAGE_CONDITIONS =
+      createRegistry(PSTDamageConditions.REGISTRY);
+  public static final Supplier<ForgeRegistry<ItemStackPredicate.Serializer>> ITEM_CONDITIONS =
+      createRegistry(PSTItemConditions.REGISTRY);
+  public static final Supplier<ForgeRegistry<EnchantmentCondition.Serializer>>
+      ENCHANTMENT_CONDITIONS = createRegistry(PSTEnchantmentConditions.REGISTRY);
+  public static final Supplier<ForgeRegistry<SkillEventListener.Serializer>> EVENT_LISTENERS =
+      createRegistry(PSTEventListeners.REGISTRY);
+  public static final Supplier<ForgeRegistry<FloatFunction.Serializer>> FLOAT_FUNCTIONS =
+      createRegistry(PSTFloatFunctions.REGISTRY);
+  public static final Supplier<ForgeRegistry<SkillRequirement.Serializer>> SKILL_REQUIREMENTS =
+      createRegistry(PSTSkillRequirements.REGISTRY);
+  public static final Supplier<ForgeRegistry<ItemBonus.Serializer>> ITEM_BONUSES =
+      createRegistry(PSTItemBonuses.REGISTRY);
 
-  @SubscribeEvent
-  public static void registerRegistries(NewRegistryEvent event) {
-    createRegistry(event, PSTSkillBonuses.REGISTRY_ID);
-    createRegistry(event, PSTLivingMultipliers.REGISTRY_ID);
-    createRegistry(event, PSTLivingConditions.REGISTRY_ID);
-    createRegistry(event, PSTDamageConditions.REGISTRY_ID);
-    createRegistry(event, PSTItemConditions.REGISTRY_ID);
-    createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);
-    createRegistry(event, PSTEventListeners.REGISTRY_ID);
-    createRegistry(event, PSTFloatFunctions.REGISTRY_ID);
-    createRegistry(event, PSTSkillRequirements.REGISTRY_ID);
-    createRegistry(event, PSTItemBonuses.REGISTRY_ID);
-  }
+  public static void bootstrap() {}
 
-  private static <T> void createRegistry(NewRegistryEvent event, ResourceLocation id) {
-    event.create(new RegistryBuilder<T>().setName(id));
+  private static <T> Supplier<ForgeRegistry<T>> createRegistry(DeferredRegister<T> deferredRegister) {
+    Registry<T> registry = deferredRegister.makeRegistry(builder -> {});
+    return () -> new ForgeRegistry<>(registry);
   }
 }

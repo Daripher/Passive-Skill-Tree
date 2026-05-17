@@ -3,8 +3,6 @@ package daripher.skilltree.item;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
-import daripher.skilltree.network.NetworkDispatcher;
-import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 public class AmnesiaScrollItem extends Item {
@@ -53,9 +50,7 @@ public class AmnesiaScrollItem extends Item {
       player.sendSystemMessage(
           Component.translatable("skilltree.message.reset_command")
               .withStyle(ChatFormatting.YELLOW));
-      NetworkDispatcher.network_channel.send(
-          PacketDistributor.PLAYER.with(() -> (ServerPlayer) player),
-          new SyncPlayerSkillsMessage(player));
+      PlayerSkillsProvider.sendPlayerSkills((ServerPlayer) player);
     }
     return InteractionResultHolder.sidedSuccess(scroll, level.isClientSide);
   }
@@ -63,7 +58,7 @@ public class AmnesiaScrollItem extends Item {
   @Override
   public void appendHoverText(
       @NotNull ItemStack itemStack,
-      Level level,
+      Item.TooltipContext context,
       List<Component> components,
       @NotNull TooltipFlag tooltipFlag) {
     components.add(

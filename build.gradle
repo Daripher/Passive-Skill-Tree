@@ -1,102 +1,17 @@
 plugins {
+    id 'java-library'
+    id 'maven-publish'
     id 'eclipse'
     id 'idea'
-    id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.gradle.userdev' version '7.1.26'
 }
 
 version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = "${mod_file_name}"
+    archivesName = mod_file_name
 }
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    mappings channel: mapping_channel, version: mapping_version
-
-    copyIdeResources = true
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            arg "-mixin.config=${mod_id}.mixins.json"
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', mod_id
-
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            arg "-mixin.config=${mod_id}.mixins.json"
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', mod_id
-
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-
-
-        }
-
-        gameTestServer {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', mod_id
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            arg "-mixin.config=${mod_id}.mixins.json"
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
@@ -105,55 +20,75 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    mavenCentral()
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+sourceSets.main.resources {
+    srcDir('src/generated/resources')
+}
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+runs {
+    configureEach {
+        workingDirectory project.layout.projectDirectory.dir('runs').dir(name)
+        modSource project.sourceSets.main
+    }
+
+    data {
+        arguments.addAll '--mod', mod_id, '--all',
+                '--output', file('src/generated/resources/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    // mixin
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
-    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.2"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.2")) {
-        jarJar.ranged(it, "[0.3.2,)")
-    }
-    // curios
-    implementation fg.deobf("curse.maven:curios-309927:6418456")
-    // attribute fix
-	implementation fg.deobf("curse.maven:attributefix-280510:4648448")
-    // max health fix
-	implementation fg.deobf("curse.maven:max-health-fix-492246:4648479")
-    // dummy target
-	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
-	implementation fg.deobf("curse.maven:selene-499980:4656567")
-    // jei
-	implementation fg.deobf("curse.maven:jei-238222:4644453")
-    // apple skin
-	implementation fg.deobf("curse.maven:appleskin-248787:4605078")
-    // apotheosis
-    implementation fg.deobf("curse.maven:placebo-283644:5414631")
-    implementation fg.deobf("curse.maven:apothic-attributes-898963:5529789")
-    // spells and spellbooks
-    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:7605614")
-    implementation fg.deobf("curse.maven:geckolib-388172:7553267")
-    implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
+    implementation "net.neoforged:neoforge:${neo_version}"
+    compileOnly "org.spongepowered:mixin:0.8.5"
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    compileOnly "io.github.llamalad7:mixinextras-common:0.5.3"
+    implementation "curse.maven:curios-309927:6529130"
+    implementation "curse.maven:attributefix-280510:7115922"
+    implementation "curse.maven:max-health-fix-492246:5824111"
+    runtimeOnly "curse.maven:bookshelf-228525:7606240"
+    runtimeOnly "curse.maven:prickle-1023259:6961457"
+    implementation "curse.maven:selene-499980:8065893"
+    implementation "curse.maven:jei-238222:7416540"
+    implementation "curse.maven:appleskin-248787:7854442"
+    implementation "curse.maven:placebo-283644:6926281"
+    implementation "curse.maven:apothic-attributes-898963:7445079"
+    implementation "curse.maven:irons-spells-n-spellbooks-855414:7907341"
+    runtimeOnly "curse.maven:irons-lib-1492763:7907336"
+    implementation "curse.maven:geckolib-388172:7707149"
+    implementation "curse.maven:playeranimator-658587:6024462"
 }
 
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-}
-
-def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta']
-def replaceProperties = [
-        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
-        forge_version: forge_version, forge_version_range: forge_version_range,
+tasks.withType(ProcessResources).configureEach {
+    def replaceProperties = [
+        minecraft_version: minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neo_version: neo_version,
         loader_version_range: loader_version_range,
-        mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-        mod_authors: mod_authors, mod_description: mod_description
-]
-processResources {
+        mod_id: mod_id,
+        mod_name: mod_name,
+        mod_license: mod_license,
+        mod_version: mod_version,
+        mod_authors: mod_authors,
+        mod_description: mod_description
+    ]
     inputs.properties replaceProperties
-    replaceProperties.put 'project', project
 
-    filesMatching(resourceTargets) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties
     }
 }
@@ -167,13 +102,10 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : mod_authors,
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "${mod_id}.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
-
-jar.finalizedBy('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'

@@ -29,7 +29,7 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
 
   @Override
   public float apply(LivingEntity entity) {
-    List<MobEffect> effects = entity.getActiveEffects().stream().map(MobEffectInstance::getEffect).toList();
+    List<MobEffect> effects = entity.getActiveEffects().stream().map(effect -> effect.getEffect().value()).toList();
     return switch (effectType) {
       case ANY -> effects.size();
       case NEUTRAL -> effects.stream().filter(e -> e.getCategory() == MobEffectCategory.NEUTRAL).count();

@@ -3,7 +3,7 @@ package daripher.skilltree.skill.bonus.predicate.enchantment;
 import daripher.skilltree.init.PSTRegistries;
 import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import daripher.skilltree.enchantment.EnchantmentCategory;
 
 public interface EnchantmentCondition {
   boolean met(EnchantmentCategory category);

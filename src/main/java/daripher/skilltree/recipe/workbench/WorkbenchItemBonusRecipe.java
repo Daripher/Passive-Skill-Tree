@@ -1,8 +1,10 @@
 package daripher.skilltree.recipe.workbench;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
@@ -12,11 +14,11 @@ import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -26,7 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
   private final ItemStackPredicate baseItemStackPredicate;
@@ -45,7 +46,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
 
   @Override
   public @NotNull ItemStack assemble(
-      @NotNull WorkbenchContainer container, @NotNull RegistryAccess registryAccess) {
+      @NotNull WorkbenchContainer container, @NotNull HolderLookup.Provider registryAccess) {
     return getResult(container);
   }
 
@@ -101,54 +102,101 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
   }
 
   public static class Serializer implements RecipeSerializer<WorkbenchItemBonusRecipe> {
+    private static final ResourceLocation UNKNOWN_ID =
+        ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "unknown");
+
+    private static final Codec<ItemStackPredicate> ITEM_CONDITION_CODEC =
+        WorkbenchRecipeCodecs.JSON_OBJECT.xmap(
+            Serializer::deserializeItemCondition, Serializer::serializeItemCondition);
+
+    private static final Codec<ItemBonus<?>> ITEM_BONUS_CODEC =
+        WorkbenchRecipeCodecs.JSON_OBJECT.xmap(
+            Serializer::deserializeItemBonus, Serializer::serializeItemBonus);
+
+    private static final MapCodec<WorkbenchItemBonusRecipe> CODEC =
+        RecordCodecBuilder.mapCodec(
+            instance ->
+                instance
+                    .group(
+                        ResourceLocation.CODEC
+                            .optionalFieldOf("id", UNKNOWN_ID)
+                            .forGetter(AbstractWorkbenchRecipe::getId),
+                        ITEM_CONDITION_CODEC
+                            .fieldOf("base_item_condition")
+                            .forGetter(recipe -> recipe.baseItemStackPredicate),
+                        ITEM_BONUS_CODEC.fieldOf("item_bonus").forGetter(recipe -> recipe.itemBonus),
+                        WorkbenchRecipeCodecs.IngredientEntry.CODEC
+                            .listOf()
+                            .fieldOf("ingredients")
+                            .xmap(WorkbenchRecipeCodecs::toMap, WorkbenchRecipeCodecs::toEntries)
+                            .forGetter(AbstractWorkbenchRecipe::getAdditionalIngredients),
+                        Codec.BOOL
+                            .optionalFieldOf("requires_passive_skill", false)
+                            .forGetter(AbstractWorkbenchRecipe::requiresPassiveSkill))
+                    .apply(
+                        instance,
+                        (id, baseItemStackPredicate, itemBonus, ingredients, requiresPassiveSkill) ->
+                            new WorkbenchItemBonusRecipe(
+                                id,
+                                baseItemStackPredicate,
+                                ingredients,
+                                requiresPassiveSkill,
+                                itemBonus)));
+
+    private static final StreamCodec<RegistryFriendlyByteBuf, WorkbenchItemBonusRecipe>
+        STREAM_CODEC = StreamCodec.of(Serializer::encode, Serializer::decode);
+
     @Override
-    public @NotNull WorkbenchItemBonusRecipe fromJson(
-        @NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
-      ItemStackPredicate baseItemStackPredicate =
-          SerializationHelper.deserializeItemCondition(jsonObject, "base_item_condition");
-      ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
-      boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
-      Map<Ingredient, Integer> ingredients = new HashMap<>();
-      JsonArray ingredientsJson = jsonObject.getAsJsonArray("ingredients");
-      for (JsonElement jsonElement : ingredientsJson) {
-        Ingredient ingredient =
-            Ingredient.fromJson(jsonElement.getAsJsonObject().get("ingredient"));
-        int requiredAmount = jsonElement.getAsJsonObject().get("required_amount").getAsInt();
-        ingredients.put(ingredient, requiredAmount);
-      }
-      return new WorkbenchItemBonusRecipe(
-          id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
+    public @NotNull MapCodec<WorkbenchItemBonusRecipe> codec() {
+      return CODEC;
     }
 
     @Override
-    public @Nullable WorkbenchItemBonusRecipe fromNetwork(
-        @NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
+    public @NotNull StreamCodec<RegistryFriendlyByteBuf, WorkbenchItemBonusRecipe> streamCodec() {
+      return STREAM_CODEC;
+    }
+
+    private static WorkbenchItemBonusRecipe decode(RegistryFriendlyByteBuf buf) {
+      ResourceLocation id = buf.readResourceLocation();
       ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemCondition(buf);
       ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
       boolean requiresPassiveSkill = buf.readBoolean();
-      Map<Ingredient, Integer> ingredients = new HashMap<>();
-      int ingredientsCount = buf.readInt();
-      for (int i = 0; i < ingredientsCount; i++) {
-        ingredients.put(Ingredient.fromNetwork(buf), buf.readInt());
-      }
+      Map<Ingredient, Integer> ingredients = WorkbenchRecipeCodecs.readIngredientMap(buf);
       return new WorkbenchItemBonusRecipe(
           id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
     }
 
-    @Override
-    public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchItemBonusRecipe recipe) {
+    private static void encode(RegistryFriendlyByteBuf buf, WorkbenchItemBonusRecipe recipe) {
+      buf.writeResourceLocation(recipe.getId());
       NetworkHelper.writeItemCondition(buf, recipe.baseItemStackPredicate);
       NetworkHelper.writeItemBonus(buf, recipe.itemBonus);
       buf.writeBoolean(recipe.requiresPassiveSkill());
-      int ingredientsCount = recipe.getAdditionalIngredients().size();
-      buf.writeInt(ingredientsCount);
-      recipe
-          .getAdditionalIngredients()
-          .forEach(
-              (ingredient, requiredAmount) -> {
-                ingredient.toNetwork(buf);
-                buf.writeInt(requiredAmount);
-              });
+      WorkbenchRecipeCodecs.writeIngredientMap(buf, recipe.getAdditionalIngredients());
+    }
+
+    private static ItemStackPredicate deserializeItemCondition(JsonObject conditionJson) {
+      JsonObject recipeJson = new JsonObject();
+      recipeJson.add("base_item_condition", conditionJson);
+      return SerializationHelper.deserializeItemCondition(recipeJson, "base_item_condition");
+    }
+
+    private static JsonObject serializeItemCondition(ItemStackPredicate itemStackPredicate) {
+      JsonObject recipeJson = new JsonObject();
+      SerializationHelper.serializeItemCondition(
+          recipeJson, itemStackPredicate, "base_item_condition");
+      return recipeJson.getAsJsonObject("base_item_condition");
+    }
+
+    private static ItemBonus<?> deserializeItemBonus(JsonObject itemBonusJson) {
+      JsonObject recipeJson = new JsonObject();
+      recipeJson.add("item_bonus", itemBonusJson);
+      return SerializationHelper.deserializeItemBonus(recipeJson);
+    }
+
+    private static JsonObject serializeItemBonus(ItemBonus<?> itemBonus) {
+      JsonObject recipeJson = new JsonObject();
+      SerializationHelper.serializeItemBonus(recipeJson, itemBonus);
+      return recipeJson.getAsJsonObject("item_bonus");
     }
   }
 }

@@ -95,7 +95,7 @@ public final class CritChanceBonus implements SkillBonus<CritChanceBonus> {
 
   @Override
   public MutableComponent getTooltip() {
-    AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
+    AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
     MutableComponent tooltip;
     if (damageCondition == NoneDamageCondition.INSTANCE) {
       tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), chance, operation);

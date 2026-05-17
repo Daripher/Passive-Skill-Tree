@@ -1,19 +1,12 @@
 package daripher.skilltree.recipe.builder;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import daripher.skilltree.init.PSTRecipeSerializers;
+import daripher.skilltree.recipe.workbench.WorkbenchCraftingRecipe;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.Consumer;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,10 +46,12 @@ public class WorkbenchCraftingRecipeBuilder {
     return this;
   }
 
-  public void save(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+  public void save(RecipeOutput output) {
     validate();
-    finishedRecipeConsumer.accept(
-        new Result(id, baseIngredient, ingredients, requiresPassiveSkill, result));
+    output.accept(
+        id,
+        new WorkbenchCraftingRecipe(id, baseIngredient, ingredients, requiresPassiveSkill, result),
+        null);
   }
 
   private void validate() {
@@ -71,77 +66,4 @@ public class WorkbenchCraftingRecipeBuilder {
     }
   }
 
-  private static class Result implements FinishedRecipe {
-    private final ResourceLocation id;
-    private final Map<Ingredient, Integer> ingredients;
-    private final @Nullable Pair<Ingredient, Integer> baseIngredient;
-    private final boolean requiresPassiveSkill;
-    private final ItemStack result;
-
-    private Result(
-        ResourceLocation id,
-        @Nullable Pair<Ingredient, Integer> baseIngredient,
-        Map<Ingredient, Integer> ingredients,
-        boolean requiresPassiveSkill,
-        ItemStack result) {
-      this.id = id;
-      this.baseIngredient = baseIngredient;
-      this.ingredients = ingredients;
-      this.requiresPassiveSkill = requiresPassiveSkill;
-      this.result = result;
-    }
-
-    @Override
-    public void serializeRecipeData(@NotNull JsonObject jsonObject) {
-      JsonArray ingredientsJson = new JsonArray();
-      ingredients.forEach(
-          ((ingredient, requiredAmount) -> {
-            JsonObject ingredientJson = new JsonObject();
-            ingredientJson.add("ingredient", ingredient.toJson());
-            ingredientJson.addProperty("required_amount", requiredAmount);
-            ingredientsJson.add(ingredientJson);
-          }));
-      jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
-      jsonObject.add("ingredients", ingredientsJson);
-      if (baseIngredient != null) {
-        JsonObject baseIngredientJson = new JsonObject();
-        baseIngredientJson.add("ingredient", baseIngredient.getLeft().toJson());
-        baseIngredientJson.addProperty("required_amount", baseIngredient.getRight());
-        jsonObject.add("base_ingredient", baseIngredientJson);
-      }
-      JsonObject resultJson = new JsonObject();
-      Item resultItem = this.result.getItem();
-      ResourceLocation itemId = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(resultItem));
-      resultJson.addProperty("item", itemId.toString());
-      if (result.getCount() > 1) {
-        resultJson.addProperty("count", result.getCount());
-      }
-      if (result.getTag() != null) {
-        resultJson.addProperty("nbt", result.getTag().toString());
-      }
-      jsonObject.add("result", resultJson);
-    }
-
-    @Override
-    public @NotNull ResourceLocation getId() {
-      return id;
-    }
-
-    @Override
-    public @NotNull RecipeSerializer<?> getType() {
-      return PSTRecipeSerializers.WORKBENCH_CRAFTING.get();
-    }
-
-    @Nullable
-    @Override
-    public JsonObject serializeAdvancement() {
-      return null;
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getAdvancementId() {
-      return null;
-    }
-  }
 }

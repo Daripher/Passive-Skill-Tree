@@ -92,7 +92,7 @@ public final class ItemDurabilityLossAvoidanceBonus
       tooltip = Component.translatable(getDescriptionId() + ".chance", itemStackPredicate.getTooltip());
       tooltip =
           TooltipHelper.getSkillBonusTooltip(
-              tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+              tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     } else {
       tooltip = Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip());
     }

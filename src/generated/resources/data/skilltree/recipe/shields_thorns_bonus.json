@@ -4,18 +4,19 @@
     "type": "skilltree:equipment_type",
     "equipment_type": "shield"
   },
+  "id": "skilltree:shields_thorns_bonus",
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:nuggets/iron"
+        "tag": "c:ingots/iron"
       },
-      "required_amount": 9
+      "required_amount": 5
     },
     {
       "ingredient": {
-        "tag": "forge:ingots/iron"
+        "tag": "c:nuggets/iron"
       },
-      "required_amount": 5
+      "required_amount": 9
     }
   ],
   "item_bonus": {

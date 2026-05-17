@@ -6,7 +6,7 @@ import daripher.skilltree.init.PSTEnchantmentConditions;
 import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import daripher.skilltree.enchantment.EnchantmentCategory;
 
 public class ArmorEnchantmentCondition implements EnchantmentCondition {
   @Override

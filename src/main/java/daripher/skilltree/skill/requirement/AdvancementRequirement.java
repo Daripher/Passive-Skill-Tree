@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientAdvancements;
@@ -39,7 +39,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
       LocalPlayer localPlayer = (LocalPlayer) player;
       ClientAdvancements advancements = localPlayer.connection.getAdvancements();
       ClientAdvancementsAccessor advancementsAccessor = (ClientAdvancementsAccessor) advancements;
-      Advancement advancement = advancements.getAdvancements().get(advancementId);
+      AdvancementHolder advancement = advancements.get(advancementId);
       AdvancementProgress progress = advancementsAccessor.getProgress().get(advancement);
       if (progress == null) {
         return false;
@@ -53,7 +53,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
       }
       ServerAdvancementManager advancementManager = server.getAdvancements();
       PlayerAdvancements advancements = serverPlayer.getAdvancements();
-      Advancement advancement = advancementManager.getAdvancement(advancementId);
+      AdvancementHolder advancement = advancementManager.get(advancementId);
       if (advancement == null) {
         return false;
       }
@@ -78,8 +78,8 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
     editor.addLabel(0, 0, "Advancement ID", ChatFormatting.GOLD);
     editor.increaseHeight(19);
     List<ResourceLocation> advancementIds =
-        advancements.getAdvancements().getAllAdvancements().stream()
-            .map(Advancement::getId)
+        advancements.getTree().nodes().stream()
+            .map(node -> node.holder().id())
             .toList();
     editor
         .addSelectionMenu(0, 0, 200, advancementIds)
@@ -128,7 +128,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
   public static class Serializer implements SkillRequirement.Serializer {
     @Override
     public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation id = new ResourceLocation(json.get("advancement").getAsString());
+      ResourceLocation id = ResourceLocation.parse(json.get("advancement").getAsString());
       return new AdvancementRequirement(id);
     }
 
@@ -141,7 +141,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
 
     @Override
     public SkillRequirement<?> deserialize(CompoundTag tag) {
-      ResourceLocation id = new ResourceLocation(tag.getString("advancement"));
+      ResourceLocation id = ResourceLocation.parse(tag.getString("advancement"));
       return new AdvancementRequirement(id);
     }
 
@@ -156,7 +156,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
 
     @Override
     public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-      ResourceLocation id = new ResourceLocation(buf.readUtf());
+      ResourceLocation id = ResourceLocation.parse(buf.readUtf());
       return new AdvancementRequirement(id);
     }
 
@@ -170,7 +170,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
     @Override
     public SkillRequirement<?> createDefaultInstance() {
       return new AdvancementRequirement(
-          new ResourceLocation("minecraft:adventure/hero_of_the_village"));
+          ResourceLocation.parse("minecraft:adventure/hero_of_the_village"));
     }
   }
 }

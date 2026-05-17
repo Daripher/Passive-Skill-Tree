@@ -8,11 +8,11 @@ import daripher.skilltree.data.generation.translation.PSTRussianTranslationProvi
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class PSTDataGenerator {
@@ -30,11 +30,12 @@ public class PSTDataGenerator {
         includeServer,
         new PSTItemTagsProvider(dataGenerator, lookupProvider, blockTagsProvider, existingFileHelper));
     dataGenerator.addProvider(
-        includeServer, new PSTLootTablesProvider(dataGenerator));
-    dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator));
+        includeServer, new PSTLootTablesProvider(dataGenerator, lookupProvider));
+    dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator, lookupProvider));
     dataGenerator.addProvider(
         includeServer, new PSTDamageTagsProvider(dataGenerator, lookupProvider, existingFileHelper));
-    dataGenerator.addProvider(includeServer, new PSTRecipesProvider(dataGenerator));
+    dataGenerator.addProvider(
+        includeServer, new PSTRecipesProvider(dataGenerator.getPackOutput(), lookupProvider));
 
     boolean includeClient = event.includeClient();
     dataGenerator.addProvider(includeClient, new PSTEnglishTranslationProvider(dataGenerator));

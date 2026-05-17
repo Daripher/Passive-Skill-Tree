@@ -5,6 +5,8 @@ import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.init.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
+import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -293,12 +295,12 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "sword.plural", "Swords");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "trident", "Trident");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "trident.plural", "Tridents");
-    add(PSTTags.Items.RINGS, "Ring");
-    add(PSTTags.Items.RINGS, "plural", "Rings");
-    add(PSTTags.Items.NECKLACES, "Necklace");
-    add(PSTTags.Items.NECKLACES, "plural", "Necklaces");
-    add(PSTTags.Items.LEATHER_ARMOR, "Leather Armor");
-    add(PSTTags.Items.LEATHER_ARMOR, "plural", "Leather Armor");
+    addItemTag(PSTTags.Items.RINGS, "Ring");
+    addItemTag(PSTTags.Items.RINGS, "plural", "Rings");
+    addItemTag(PSTTags.Items.NECKLACES, "Necklace");
+    addItemTag(PSTTags.Items.NECKLACES, "plural", "Necklaces");
+    addItemTag(PSTTags.Items.LEATHER_ARMOR, "Leather Armor");
+    addItemTag(PSTTags.Items.LEATHER_ARMOR, "plural", "Leather Armor");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "armor", "Armor");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "helmet", "Helmet");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "helmet.plural", "Helmets");
@@ -318,7 +320,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     add(PSTItemConditions.POTIONS.get(), "neutral", "Neutral Potion");
     add(PSTItemConditions.POTIONS.get(), "neutral.plural", "Neutral Potions");
     add(PSTItemConditions.FOOD.get(), "Food");
-    add(PSTTags.Items.JEWELRY, "Jewelry");
+    addItemTag(PSTTags.Items.JEWELRY, "Jewelry");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "tool", "Tool");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "tool.plural", "Tools");
     add(PSTItemConditions.EQUIPMENT_TYPE.get(), "axe", "Axe");
@@ -536,8 +538,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
   }
 
   protected void add(Potion potion, String name) {
-    add(potion.getName(Items.POTION.getDescriptionId() + ".effect."), "Potion of " + name);
-    add(potion.getName(Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Splash Potion of " + name);
-    add(potion.getName(Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Lingering Potion of " + name);
+    var potionHolder = Optional.of(BuiltInRegistries.POTION.wrapAsHolder(potion));
+    add(Potion.getName(potionHolder, Items.POTION.getDescriptionId() + ".effect."), "Potion of " + name);
+    add(Potion.getName(potionHolder, Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Splash Potion of " + name);
+    add(Potion.getName(potionHolder, Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Lingering Potion of " + name);
   }
 }

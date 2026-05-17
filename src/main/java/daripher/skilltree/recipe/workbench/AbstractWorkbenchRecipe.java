@@ -9,7 +9,7 @@ import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractWorkbenchRecipe
@@ -87,20 +87,19 @@ public abstract class AbstractWorkbenchRecipe
     return width == 7 && height == 1;
   }
 
-  @Override
   public @NotNull ResourceLocation getId() {
     return id;
   }
 
   @Deprecated
   @Override
-  public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registryAccess) {
+  public @NotNull ItemStack getResultItem(@NotNull HolderLookup.Provider registryAccess) {
     return ItemStack.EMPTY;
   }
 
   @Override
   public @NotNull RecipeType<?> getType() {
-    return PSTRecipeTypes.WORKBENCH;
+    return PSTRecipeTypes.WORKBENCH.get();
   }
 
   @Override

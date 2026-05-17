@@ -16,7 +16,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 
 public class SkillTreeEditorData {
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();
@@ -244,7 +244,7 @@ public class SkillTreeEditorData {
         String skillTreeFileName = skillTreeFile.getName();
         if (!skillTreeFileName.endsWith(".json")) continue;
         String skillTreeName = skillTreeFileName.substring(0, skillTreeFileName.lastIndexOf('.'));
-        EDITOR_TREES_IDS.add(new ResourceLocation(namespace, skillTreeName));
+        EDITOR_TREES_IDS.add(ResourceLocation.fromNamespaceAndPath(namespace, skillTreeName));
       }
     }
     loadedIDs = true;

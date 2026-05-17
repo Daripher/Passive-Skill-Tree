@@ -30,9 +30,9 @@ import org.lwjgl.glfw.GLFW;
 
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   private static final ResourceLocation BACKGROUND_TEXTURE =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "textures/gui/container/workbench.png");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/gui/container/workbench.png");
   private static final ResourceLocation RECIPES_TEXTURE =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "textures/gui/container/workbench_recipes.png");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/gui/container/workbench_recipes.png");
   private static final int SCROLLER_WIDTH = 12;
   private static final int SCROLLER_HEIGHT = 15;
   private static final int SCROLLER_FULL_HEIGHT = 90;
@@ -74,7 +74,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   @Override
   protected void renderBg(
       @NotNull GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    renderBackground(guiGraphics);
+    renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
     guiGraphics.blit(BACKGROUND_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     renderScroll(guiGraphics);
     renderRecipes(guiGraphics, mouseX, mouseY);
@@ -250,7 +250,6 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   @Override
   protected void containerTick() {
     super.containerTick();
-    searchBox.tick();
   }
 
   @Override
@@ -308,11 +307,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   }
 
   @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+  public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
     if (isScrollBarActive()) {
-      amountScrolled = (int) Mth.clamp(amountScrolled - delta, 0, getMaxScroll());
+      amountScrolled = (int) Mth.clamp(amountScrolled - scrollY, 0, getMaxScroll());
     }
-    return super.mouseScrolled(mouseX, mouseY, delta);
+    return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
   }
 
   private Pair<AbstractWorkbenchRecipe, Integer> getRecipeInSlot(int slot) {

@@ -4,10 +4,8 @@ import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
-@AutoRegisterCapability
 public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
   NonNullList<PassiveSkill> getPlayerSkills();
 

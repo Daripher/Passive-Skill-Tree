@@ -7,18 +7,15 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.capability.skill.IPlayerSkills;
 import daripher.skilltree.capability.skill.PlayerSkillsProvider;
-import daripher.skilltree.network.NetworkDispatcher;
-import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PSTCommands {
@@ -68,8 +65,7 @@ public class PSTCommands {
     skillsCapability.resetTree(player);
     player.sendSystemMessage(
         Component.translatable("skilltree.message.reset_command").withStyle(ChatFormatting.YELLOW));
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+    PlayerSkillsProvider.sendPlayerSkills(player);
     return 1;
   }
 
@@ -81,8 +77,7 @@ public class PSTCommands {
     skillsCapability.setSkillPoints(amount + skillsCapability.getSkillPoints());
     player.sendSystemMessage(
         Component.translatable("skilltree.message.point_command").withStyle(ChatFormatting.YELLOW));
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+    PlayerSkillsProvider.sendPlayerSkills(player);
     return 1;
   }
 
@@ -92,8 +87,7 @@ public class PSTCommands {
     int amount = IntegerArgumentType.getInteger(ctx, "amount");
     IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
     skillsCapability.setSkillPoints(amount);
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+    PlayerSkillsProvider.sendPlayerSkills(player);
     return 1;
   }
 

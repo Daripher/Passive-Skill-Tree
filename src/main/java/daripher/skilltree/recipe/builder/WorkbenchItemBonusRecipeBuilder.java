@@ -1,22 +1,15 @@
 package daripher.skilltree.recipe.builder;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTRecipeSerializers;
+import daripher.skilltree.recipe.workbench.WorkbenchItemBonusRecipe;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchItemBonusRecipeBuilder {
   private final ResourceLocation id;
@@ -59,10 +52,13 @@ public class WorkbenchItemBonusRecipeBuilder {
     return this;
   }
 
-  public void save(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+  public void save(RecipeOutput output) {
     validate();
-    finishedRecipeConsumer.accept(
-        new Result(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus));
+    output.accept(
+        id,
+        new WorkbenchItemBonusRecipe(
+            id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus),
+        null);
   }
 
   private void validate() {
@@ -80,63 +76,4 @@ public class WorkbenchItemBonusRecipeBuilder {
     }
   }
 
-  private static class Result implements FinishedRecipe {
-    private final ResourceLocation id;
-    private final ItemStackPredicate baseItemStackPredicate;
-    private final Map<Ingredient, Integer> ingredients;
-    private final boolean requiresPassiveSkill;
-    private final ItemBonus<?> itemBonus;
-
-    private Result(
-        ResourceLocation id,
-        ItemStackPredicate baseItemStackPredicate,
-        Map<Ingredient, Integer> ingredients,
-        boolean requiresPassiveSkill,
-        ItemBonus<?> itemBonus) {
-      this.id = id;
-      this.baseItemStackPredicate = baseItemStackPredicate;
-      this.ingredients = ingredients;
-      this.requiresPassiveSkill = requiresPassiveSkill;
-      this.itemBonus = itemBonus;
-    }
-
-    @Override
-    public void serializeRecipeData(@NotNull JsonObject jsonObject) {
-      JsonArray ingredientsJson = new JsonArray();
-      ingredients.forEach(
-          ((ingredient, requiredAmount) -> {
-            JsonObject ingredientJson = new JsonObject();
-            ingredientJson.add("ingredient", ingredient.toJson());
-            ingredientJson.addProperty("required_amount", requiredAmount);
-            ingredientsJson.add(ingredientJson);
-          }));
-      SerializationHelper.serializeItemCondition(
-          jsonObject, baseItemStackPredicate, "base_item_condition");
-      SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
-      jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
-      jsonObject.add("ingredients", ingredientsJson);
-    }
-
-    @Override
-    public @NotNull ResourceLocation getId() {
-      return id;
-    }
-
-    @Override
-    public @NotNull RecipeSerializer<?> getType() {
-      return PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get();
-    }
-
-    @Nullable
-    @Override
-    public JsonObject serializeAdvancement() {
-      return null;
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getAdvancementId() {
-      return null;
-    }
-  }
 }

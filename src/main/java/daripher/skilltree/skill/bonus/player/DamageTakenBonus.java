@@ -360,7 +360,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
     @Override
     public DamageTakenBonus deserialize(FriendlyByteBuf buf) {
       float amount = buf.readFloat();
-      AttributeModifier.Operation operation = AttributeModifier.Operation.fromValue(buf.readInt());
+      AttributeModifier.Operation operation = AttributeModifier.Operation.BY_ID.apply(buf.readInt());
       DamageTakenBonus bonus = new DamageTakenBonus(amount, operation);
       bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
       bonus.attackerMultiplier = NetworkHelper.readLivingMultiplier(buf);
@@ -376,7 +376,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         throw new IllegalArgumentException();
       }
       buf.writeFloat(aBonus.amount);
-      buf.writeInt(aBonus.operation.toValue());
+      buf.writeInt(aBonus.operation.id());
       NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
       NetworkHelper.writeLivingMultiplier(buf, aBonus.attackerMultiplier);
       NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
@@ -386,7 +386,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new DamageTakenBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE)
+      return new DamageTakenBonus(0.1f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
           .setDamageCondition(new MeleeDamageCondition());
     }
   }

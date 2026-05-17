@@ -1,27 +1,29 @@
 {
   "type": "skilltree:workbench_crafting",
+  "id": "skilltree:saddle_crafting",
   "ingredients": [
     {
       "ingredient": {
-        "item": "minecraft:paper"
+        "tag": "c:leathers"
       },
       "required_amount": 8
     },
     {
       "ingredient": {
-        "tag": "forge:ingots/iron"
+        "tag": "c:nuggets/iron"
       },
-      "required_amount": 1
+      "required_amount": 4
     },
     {
       "ingredient": {
-        "tag": "forge:nuggets/iron"
+        "tag": "c:ingots/iron"
       },
       "required_amount": 2
     }
   ],
   "requires_passive_skill": true,
   "result": {
-    "item": "minecraft:name_tag"
+    "count": 1,
+    "id": "minecraft:saddle"
   }
 }

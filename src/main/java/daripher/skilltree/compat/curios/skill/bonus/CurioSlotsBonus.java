@@ -3,6 +3,7 @@ package daripher.skilltree.compat.curios.skill.bonus;
 import com.google.common.collect.HashMultimap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.compat.curios.CuriosCompatibility;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -46,7 +48,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
                 HashMultimap<String, AttributeModifier> modifiers = HashMultimap.create();
                 AttributeModifier modifier =
                     new AttributeModifier(
-                        modifierId, "SkillBonus", amount, AttributeModifier.Operation.ADDITION);
+                        getModifierId(), amount, AttributeModifier.Operation.ADD_VALUE);
                 modifiers.put(slotName, modifier);
                 inv.addPermanentSlotModifiers(modifiers);
               });
@@ -61,7 +63,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
               HashMultimap<String, AttributeModifier> modifiers = HashMultimap.create();
               AttributeModifier modifier =
                   new AttributeModifier(
-                      modifierId, "SkillBonus", amount, AttributeModifier.Operation.ADDITION);
+                      getModifierId(), amount, AttributeModifier.Operation.ADD_VALUE);
               modifiers.put(slotName, modifier);
               inv.removeSlotModifiers(modifiers);
             });
@@ -70,6 +72,11 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
   @Override
   public SkillBonus.Serializer getSerializer() {
     return CuriosCompatibility.CURIO_SLOTS_BONUS.get();
+  }
+
+  private ResourceLocation getModifierId() {
+    return ResourceLocation.fromNamespaceAndPath(
+        SkillTreeMod.MOD_ID, "curio_slots/" + modifierId);
   }
 
   @Override
@@ -102,7 +109,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
     }
     MutableComponent tooltip =
         TooltipHelper.getSkillBonusTooltip(
-            slotDescription, amount, AttributeModifier.Operation.ADDITION);
+            slotDescription, amount, AttributeModifier.Operation.ADD_VALUE);
     return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
   }
 

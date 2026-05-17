@@ -4,6 +4,7 @@ import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 
 import java.util.UUID;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -66,7 +67,7 @@ public class PlayerSkills implements IPlayerSkills {
   }
 
   @Override
-  public CompoundTag serializeNBT() {
+  public CompoundTag serializeNBT(HolderLookup.Provider provider) {
     CompoundTag tag = new CompoundTag();
     tag.putUUID("TreeVersion", TREE_VERSION);
     tag.putInt("Points", skillPoints);
@@ -78,7 +79,7 @@ public class PlayerSkills implements IPlayerSkills {
   }
 
   @Override
-  public void deserializeNBT(CompoundTag tag) {
+  public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
     skills.clear();
     UUID treeVersion = tag.hasUUID("TreeVersion") ? tag.getUUID("TreeVersion") : null;
     skillPoints = tag.getInt("Points");
@@ -89,7 +90,7 @@ public class PlayerSkills implements IPlayerSkills {
       return;
     }
     for (Tag skillTag : skillsTag) {
-      ResourceLocation skillId = new ResourceLocation(skillTag.getAsString());
+      ResourceLocation skillId = ResourceLocation.parse(skillTag.getAsString());
       PassiveSkill passiveSkill = SkillsReloader.getSkillById(skillId);
       if (passiveSkill == null || passiveSkill.isInvalid()) {
         skills.clear();

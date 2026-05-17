@@ -53,16 +53,16 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
   }
 
   @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-    if (delta > 0 && zoom < 2F) {
+  public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+    if (scrollY > 0 && zoom < 2F) {
       zoom += 0.05f;
-      scrollX *= 1.05f;
-      scrollY *= 1.05f;
+      this.scrollX *= 1.05f;
+      this.scrollY *= 1.05f;
     }
-    if (delta < 0 && zoom > 0.25F) {
+    if (scrollY < 0 && zoom > 0.25F) {
       zoom -= 0.05f;
-      scrollX *= 0.95f;
-      scrollY *= 0.95f;
+      this.scrollX *= 0.95f;
+      this.scrollY *= 0.95f;
     }
     rebuildFunc.run();
     return true;

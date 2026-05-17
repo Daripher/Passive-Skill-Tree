@@ -2,12 +2,13 @@
   "type": "skilltree:workbench_item_bonus",
   "base_item_condition": {
     "type": "skilltree:equipment_type",
-    "equipment_type": "armor"
+    "equipment_type": "shield"
   },
+  "id": "skilltree:shields_defence_bonus",
   "ingredients": [
     {
       "ingredient": {
-        "tag": "forge:ingots/copper"
+        "tag": "c:ingots/copper"
       },
       "required_amount": 2
     }
@@ -16,10 +17,10 @@
     "type": "skilltree:skill_bonus",
     "skill_bonus": {
       "type": "skilltree:attribute",
-      "amount": 1.0,
+      "amount": 2,
       "attribute": "minecraft:generic.armor",
-      "id": "afbd1a0a-3000-432c-b0ad-e04adb044577",
-      "name": "Workbench Upgrade",
+      "id": "skilltree:shields_defence_bonus",
+      "name": "skilltree:shields_defence_bonus",
       "operation": 0
     }
   },

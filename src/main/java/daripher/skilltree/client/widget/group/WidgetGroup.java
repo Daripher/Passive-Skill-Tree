@@ -88,10 +88,10 @@ public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implem
   }
 
   @Override
-  public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+  public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
     boolean result = false;
     for (T widget : widgetsCopy()) {
-      if (widget.mouseScrolled(mouseX, mouseY, delta)) {
+      if (widget.mouseScrolled(mouseX, mouseY, scrollX, scrollY)) {
         result = true;
       }
     }

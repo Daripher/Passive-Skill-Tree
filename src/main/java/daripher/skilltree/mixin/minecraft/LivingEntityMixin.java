@@ -5,6 +5,7 @@ import daripher.skilltree.entity.EquippedEntity;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +22,12 @@ public abstract class LivingEntityMixin implements EquippedEntity {
   private final List<ItemStack> equippedItems = new ArrayList<>();
 
   @SuppressWarnings("unused")
-  @Inject(method = "dropAllDeathLoot", at = @At("HEAD"))
-  private void storeEquipmentBeforeDeath(DamageSource damageSource, CallbackInfo callbackInfo) {
+  @Inject(
+      method = "dropAllDeathLoot(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;)V",
+      at = @At("HEAD"),
+      remap = false)
+  private void storeEquipmentBeforeDeath(
+      ServerLevel level, DamageSource damageSource, CallbackInfo callbackInfo) {
     for (EquipmentSlot slot : EquipmentSlot.values()) {
       ItemStack itemInSlot = getItemBySlot(slot);
       if (itemInSlot.isEmpty()) continue;
@@ -31,7 +36,7 @@ public abstract class LivingEntityMixin implements EquippedEntity {
   }
 
   @SuppressWarnings({"ConstantValue", "unused"})
-  @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
+  @ModifyReturnValue(method = "getJumpPower()F", at = @At("RETURN"), remap = false)
   private float applyJumpHeightBonus(float original) {
     boolean isPlayer = (Object) this instanceof Player;
     if (!isPlayer) return original;

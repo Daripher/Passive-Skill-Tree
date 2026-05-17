@@ -8,7 +8,9 @@ import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.network.NetworkHelper;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -16,7 +18,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 public final class PotionStackPredicate implements ItemStackPredicate {
   private Type type;
@@ -37,9 +39,11 @@ public final class PotionStackPredicate implements ItemStackPredicate {
   }
 
   private boolean hasEffects(ItemStack stack, MobEffectCategory category) {
-    return PotionUtils.getAllEffects(stack.getOrCreateTag()).stream()
+    PotionContents contents =
+        stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+    return StreamSupport.stream(contents.getAllEffects().spliterator(), false)
         .map(MobEffectInstance::getEffect)
-        .anyMatch(effect -> effect.getCategory() == category);
+        .anyMatch(effect -> effect.value().getCategory() == category);
   }
 
   @Override

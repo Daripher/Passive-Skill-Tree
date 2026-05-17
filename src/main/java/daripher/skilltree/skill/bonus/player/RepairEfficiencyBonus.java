@@ -60,7 +60,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
   @Override
   public MutableComponent getTooltip() {
     Component itemDescription = itemStackPredicate.getTooltip("plural.type");
-    AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
+    AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_MULTIPLIED_BASE;
     Component bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
     bonusDescription =
         TooltipHelper.getSkillBonusTooltip(bonusDescription, multiplier, operation)

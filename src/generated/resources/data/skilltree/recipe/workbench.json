@@ -6,13 +6,13 @@
       "item": "minecraft:smithing_table"
     },
     "C": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     },
     "G": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [
@@ -21,7 +21,7 @@
     "CCC"
   ],
   "result": {
-    "item": "skilltree:workbench"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "skilltree:workbench"
+  }
 }
