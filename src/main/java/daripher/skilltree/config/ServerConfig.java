@@ -39,7 +39,7 @@ public class ServerConfig {
 
   static {
     BUILDER.push("Skill Points");
-    MAX_SKILL_POINTS = BUILDER.defineInRange("Maximum skill points", DEFAULT_MAX_SKILLS, 1, 1000);
+    MAX_SKILL_POINTS = BUILDER.defineInRange("Maximum skill points", DEFAULT_MAX_SKILLS, 1, Integer.MAX_VALUE);
     FIRST_SKILL_COST = BUILDER.defineInRange("First skill point cost", 15, 0, Integer.MAX_VALUE);
     LAST_SKILL_COST = BUILDER.defineInRange("Last skill point cost", 1400, 0, Integer.MAX_VALUE);
     BUILDER.comment("You can set cost for each skill point instead");
