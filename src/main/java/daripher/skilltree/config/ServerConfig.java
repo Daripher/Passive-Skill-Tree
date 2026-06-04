@@ -1,14 +1,15 @@
 package daripher.skilltree.config;
 
 import daripher.skilltree.SkillTreeMod;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class ServerConfig {

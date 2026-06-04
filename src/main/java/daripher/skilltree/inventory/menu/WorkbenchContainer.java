@@ -1,11 +1,12 @@
 package daripher.skilltree.inventory.menu;
 
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorkbenchContainer extends TransientCraftingContainer {
   public final WorkbenchMenu menu;

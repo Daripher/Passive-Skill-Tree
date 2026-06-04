@@ -9,9 +9,6 @@ import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.util.Objects;
-import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,6 +21,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class SkillTreeScreen extends Screen implements StatsUpdateListener {
   public static final int BACKGROUND_SIZE = 2048;

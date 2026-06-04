@@ -2,9 +2,10 @@ package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
-import java.util.function.Consumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class SelectionMenu<T> extends EditorMenu {
   private @NotNull Consumer<T> responder = v -> {};

@@ -7,10 +7,6 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRecipeTypes;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -22,6 +18,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
   private @Nonnull ResourceLocation recipeId;

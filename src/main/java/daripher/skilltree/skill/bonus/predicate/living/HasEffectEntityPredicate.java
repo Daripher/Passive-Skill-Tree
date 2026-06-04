@@ -6,9 +6,6 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.network.NetworkHelper;
-import java.util.Objects;
-import java.util.function.Consumer;
-
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +18,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class HasEffectEntityPredicate implements LivingEntityPredicate {
   private MobEffect effect;

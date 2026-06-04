@@ -8,9 +8,6 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
-
-import java.util.Locale;
-import java.util.stream.Stream;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -22,6 +19,9 @@ import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+import java.util.stream.Stream;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {

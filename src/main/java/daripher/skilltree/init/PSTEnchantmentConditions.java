@@ -6,11 +6,12 @@ import daripher.skilltree.skill.bonus.predicate.enchantment.ArmorEnchantmentCond
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.NoneEnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.WeaponEnchantmentCondition;
-import java.util.List;
-import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
+import java.util.Objects;
 
 public class PSTEnchantmentConditions {
   public static final ResourceLocation REGISTRY_ID =

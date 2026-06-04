@@ -8,7 +8,6 @@ import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.player.DamageBonus;
 import daripher.skilltree.skill.bonus.predicate.damage.ThornsDamageCondition;
 import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
-import java.util.function.Consumer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -22,6 +21,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 public class PSTRecipesProvider extends RecipeProvider {
   public PSTRecipesProvider(DataGenerator dataGenerator) {

@@ -2,8 +2,6 @@ package daripher.skilltree.capability.skill;
 
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
-
-import java.util.UUID;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 public class PlayerSkills implements IPlayerSkills {
   private static final UUID TREE_VERSION = UUID.fromString("fd21c2a9-7ab5-4a1e-b06d-ddb87b56047f");

@@ -7,12 +7,10 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTFloatFunctions;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 

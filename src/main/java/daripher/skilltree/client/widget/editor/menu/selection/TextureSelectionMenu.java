@@ -3,11 +3,12 @@ package daripher.skilltree.client.widget.editor.menu.selection;
 import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class TextureSelectionMenu extends EditorMenu {
   private @NotNull Consumer<ResourceLocation> responder = v -> {};

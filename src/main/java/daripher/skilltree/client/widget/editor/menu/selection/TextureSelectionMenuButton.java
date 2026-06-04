@@ -1,8 +1,9 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import java.util.Collection;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Collection;
 
 public class TextureSelectionMenuButton extends SelectionMenuButton<ResourceLocation> {
   private final String texturesFolder;

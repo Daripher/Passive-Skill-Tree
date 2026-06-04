@@ -2,7 +2,6 @@ package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTTags;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -14,6 +13,8 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 public class PSTItemTagsProvider extends ItemTagsProvider {
   public static final ResourceLocation KNIVES = ResourceLocation.fromNamespaceAndPath("forge", "tools/knives");

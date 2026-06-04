@@ -5,10 +5,11 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import dev.shadowsoffire.attributeslib.client.ModifierSource;
 import dev.shadowsoffire.attributeslib.client.ModifierSourceType;
-import java.util.function.BiConsumer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.function.BiConsumer;
 
 public class SkillModifierSourceType extends ModifierSourceType<PassiveSkill> {
   @Override

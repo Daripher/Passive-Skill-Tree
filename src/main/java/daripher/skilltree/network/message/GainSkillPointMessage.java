@@ -5,12 +5,13 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.exp.ExpHelper;
 import daripher.skilltree.network.NetworkDispatcher;
-import java.util.Objects;
-import java.util.function.Supplier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
+
+import java.util.Objects;
+import java.util.function.Supplier;
 
 public class GainSkillPointMessage {
   public static void receive(Supplier<NetworkEvent.Context> ctxSupplier) {

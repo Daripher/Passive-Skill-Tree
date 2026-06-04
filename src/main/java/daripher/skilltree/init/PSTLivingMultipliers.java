@@ -2,12 +2,15 @@ package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import daripher.skilltree.skill.bonus.multiplier.*;
-import java.util.List;
-import java.util.Objects;
+import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
+import java.util.Objects;
 
 public class PSTLivingMultipliers {
   public static final ResourceLocation REGISTRY_ID =

@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
@@ -8,16 +9,10 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
-import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -31,6 +26,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public final class AllAttributesBonus
     implements SkillBonus<AllAttributesBonus>, TickingSkillBonus {

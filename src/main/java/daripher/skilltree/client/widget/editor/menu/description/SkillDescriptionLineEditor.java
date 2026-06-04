@@ -4,14 +4,15 @@ import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Function;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
 
 public class SkillDescriptionLineEditor extends EditorMenu {
   private final int selectedLine;

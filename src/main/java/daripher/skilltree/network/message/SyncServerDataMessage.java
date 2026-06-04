@@ -3,9 +3,10 @@ package daripher.skilltree.network.message;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkHelper;
-import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class SyncServerDataMessage {
   public static SyncServerDataMessage decode(FriendlyByteBuf buf) {

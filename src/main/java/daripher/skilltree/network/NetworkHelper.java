@@ -5,17 +5,14 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.function.FloatFunction;
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.util.*;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -28,6 +25,10 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
 
 public class NetworkHelper {
   public static void writePassiveSkill(FriendlyByteBuf buf, PassiveSkill skill) {

@@ -10,15 +10,16 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class HasItemEquippedEntityPredicate implements LivingEntityPredicate {
   private @Nonnull ItemStackPredicate itemStackPredicate;

@@ -2,7 +2,6 @@ package daripher.skilltree.client.widget.editor.menu;
 
 import daripher.skilltree.client.widget.editor.SkillDragger;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.ChatFormatting;
 
 public class GridSettingsEditor extends EditorMenu {

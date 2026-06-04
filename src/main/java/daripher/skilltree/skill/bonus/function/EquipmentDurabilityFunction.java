@@ -11,9 +11,6 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,6 +18,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurabilityFunction> {
   private @Nonnull ItemStackPredicate itemStackPredicate;

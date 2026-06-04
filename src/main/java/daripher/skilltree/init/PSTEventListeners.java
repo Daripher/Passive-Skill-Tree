@@ -3,11 +3,12 @@ package daripher.skilltree.init;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.bonus.event.*;
-import java.util.List;
-import java.util.Objects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
+import java.util.Objects;
 
 public class PSTEventListeners {
   public static final ResourceLocation REGISTRY_ID =

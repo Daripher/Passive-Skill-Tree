@@ -5,14 +5,13 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
-
-import java.util.Objects;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
+
+import java.util.Objects;
 
 public record UnarmedEntityPredicate() implements LivingEntityPredicate {
   @Override

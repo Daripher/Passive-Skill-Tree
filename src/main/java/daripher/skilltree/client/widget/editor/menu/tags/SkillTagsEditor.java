@@ -5,9 +5,10 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+import net.minecraft.ChatFormatting;
+
 import java.util.List;
 import java.util.Map;
-import net.minecraft.ChatFormatting;
 
 public class SkillTagsEditor extends EditorMenu {
   public SkillTagsEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

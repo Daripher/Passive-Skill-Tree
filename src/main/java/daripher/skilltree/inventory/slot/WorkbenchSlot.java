@@ -2,12 +2,13 @@ package daripher.skilltree.inventory.slot;
 
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
 
 public class WorkbenchSlot extends Slot {
   private final WorkbenchContainer container;

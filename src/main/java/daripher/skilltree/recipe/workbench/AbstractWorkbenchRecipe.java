@@ -5,10 +5,6 @@ import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +16,10 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public abstract class AbstractWorkbenchRecipe
     implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {

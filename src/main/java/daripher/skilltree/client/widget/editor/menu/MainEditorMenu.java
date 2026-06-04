@@ -8,6 +8,7 @@ import daripher.skilltree.client.widget.editor.menu.requirements.SkillRequiremen
 import daripher.skilltree.client.widget.editor.menu.tags.SkillTagsEditor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
+
 import java.util.Set;
 
 public class MainEditorMenu extends EditorMenu {

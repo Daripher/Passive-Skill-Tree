@@ -1,7 +1,6 @@
 package daripher.skilltree.client.data;
 
 import daripher.skilltree.SkillTreeMod;
-import java.util.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -11,6 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
 
 @Mod.EventBusSubscriber(
     modid = SkillTreeMod.MOD_ID,

@@ -10,15 +10,16 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class SkillRemovedEventListener implements SkillEventListener {
   private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;

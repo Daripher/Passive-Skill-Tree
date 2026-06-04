@@ -5,14 +5,15 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.Objects;
-import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.network.PacketDistributor;
+
+import java.util.Objects;
+import java.util.function.Supplier;
 
 public class LearnSkillMessage {
   private ResourceLocation skillId;

@@ -1,13 +1,13 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.tooltip.TooltipHelper;
-import java.util.Collection;
-import java.util.Locale;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+import java.util.Locale;
 
 public class TextSelectionList<T> extends SelectionList<T> {
   public TextSelectionList(

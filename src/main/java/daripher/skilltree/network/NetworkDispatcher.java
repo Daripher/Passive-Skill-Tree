@@ -5,7 +5,6 @@ import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import daripher.skilltree.network.message.SyncServerDataMessage;
-import java.util.Optional;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -14,6 +13,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+
+import java.util.Optional;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = SkillTreeMod.MOD_ID)
 public class NetworkDispatcher {

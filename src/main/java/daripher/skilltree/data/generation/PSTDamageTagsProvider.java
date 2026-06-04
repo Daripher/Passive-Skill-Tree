@@ -3,7 +3,6 @@ package daripher.skilltree.data.generation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTDamageTypes;
 import daripher.skilltree.init.PSTTags;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
@@ -14,6 +13,8 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 public class PSTDamageTagsProvider extends DamageTypeTagsProvider {
   public PSTDamageTagsProvider(

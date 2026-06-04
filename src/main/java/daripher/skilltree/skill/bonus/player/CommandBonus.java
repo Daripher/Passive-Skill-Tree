@@ -11,9 +11,6 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.event.SkillLearnedEventListener;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -27,6 +24,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class CommandBonus implements EventListenerBonus<CommandBonus> {
   private @Nonnull String command;

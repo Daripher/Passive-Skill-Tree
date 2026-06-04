@@ -8,15 +8,14 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.DamageBonus;
-import java.util.Objects;
-import java.util.function.Consumer;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public record SkillBonusItemBonus(SkillBonus<?> skillBonus) implements ItemBonus<SkillBonusItemBonus> {
   @Override

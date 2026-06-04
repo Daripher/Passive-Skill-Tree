@@ -1,12 +1,11 @@
 package daripher.skilltree.skill.bonus.item;
 
 import daripher.skilltree.init.PSTRegistries;
-import java.util.Objects;
-import java.util.function.Consumer;
-
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public interface ItemBonus<T extends ItemBonus<T>> {
   boolean canMerge(ItemBonus<?> other);

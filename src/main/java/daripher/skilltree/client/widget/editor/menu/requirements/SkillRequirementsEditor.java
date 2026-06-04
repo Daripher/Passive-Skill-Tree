@@ -6,8 +6,9 @@ import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.util.List;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 public class SkillRequirementsEditor extends EditorMenu {
   public SkillRequirementsEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

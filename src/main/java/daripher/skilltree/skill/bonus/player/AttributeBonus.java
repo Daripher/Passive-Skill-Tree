@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
@@ -9,15 +10,12 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
-import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.function.AttributeValueFunction;
+import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
-import java.util.*;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,6 +27,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public final class AttributeBonus implements SkillBonus<AttributeBonus>, TickingSkillBonus {
   private Attribute attribute;

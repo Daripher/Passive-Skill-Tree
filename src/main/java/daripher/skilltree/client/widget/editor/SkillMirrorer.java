@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
 import daripher.skilltree.client.screen.ScreenHelper;
 import daripher.skilltree.skill.PassiveSkill;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -12,6 +11,8 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 public class SkillMirrorer extends AbstractWidget {
   private final SkillTreeEditor editor;

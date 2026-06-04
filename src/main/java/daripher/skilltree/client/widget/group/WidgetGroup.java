@@ -1,15 +1,16 @@
 package daripher.skilltree.client.widget.group;
 
 import daripher.skilltree.client.widget.TickingWidget;
-import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.Set;
-import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
+import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WidgetGroup<T extends AbstractWidget> extends AbstractWidget implements TickingWidget {
   protected final Set<T> widgets = new HashSet<>();

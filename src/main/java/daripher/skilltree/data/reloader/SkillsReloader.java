@@ -9,10 +9,6 @@ import daripher.skilltree.data.serializers.SkillRequirementSerializer;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.Nullable;
-
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -25,6 +21,10 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillsReloader extends SimpleJsonResourceReloadListener {

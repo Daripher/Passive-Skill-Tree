@@ -1,7 +1,9 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.skill.bonus.item.*;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.item.ItemBonusListItemBonus;
+import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

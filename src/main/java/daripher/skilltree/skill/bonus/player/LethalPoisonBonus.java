@@ -1,15 +1,17 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+
+import java.util.function.Consumer;
 
 public final class LethalPoisonBonus implements SkillBonus<LethalPoisonBonus> {
   @Override

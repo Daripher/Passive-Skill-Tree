@@ -6,8 +6,6 @@ import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -18,6 +16,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillTreesReloader extends SimpleJsonResourceReloadListener {

@@ -5,6 +5,7 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
+
 import java.util.List;
 
 public class SkillBonusEditor extends EditorMenu {

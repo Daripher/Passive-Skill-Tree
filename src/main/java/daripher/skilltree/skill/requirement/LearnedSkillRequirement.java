@@ -8,9 +8,6 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +17,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillRequirement> {
   private ResourceLocation skillId;

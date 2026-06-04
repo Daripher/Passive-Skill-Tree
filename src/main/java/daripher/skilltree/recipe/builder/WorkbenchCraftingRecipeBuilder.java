@@ -3,10 +3,6 @@ package daripher.skilltree.recipe.builder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import daripher.skilltree.init.PSTRecipeSerializers;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -17,6 +13,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class WorkbenchCraftingRecipeBuilder {
   private final ResourceLocation id;

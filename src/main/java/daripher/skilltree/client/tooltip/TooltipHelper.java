@@ -6,11 +6,6 @@ import daripher.skilltree.init.PSTRecipeTypes;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -24,6 +19,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class TooltipHelper {
   private static final Style SKILL_BONUS_STYLE = Style.EMPTY.withColor(0x7B7BE5);

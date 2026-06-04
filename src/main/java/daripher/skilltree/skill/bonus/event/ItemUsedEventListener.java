@@ -8,15 +8,12 @@ import daripher.skilltree.init.PSTEventListeners;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,6 +21,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class ItemUsedEventListener implements SkillEventListener {
   private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;

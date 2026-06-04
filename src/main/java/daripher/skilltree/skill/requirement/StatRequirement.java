@@ -4,10 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTSkillRequirements;
-import java.util.Objects;
-import java.util.Set;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +22,11 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public final class StatRequirement implements SkillRequirement<StatRequirement> {
   private ResourceLocation statTypeId;

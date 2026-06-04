@@ -6,10 +6,6 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.network.NetworkHelper;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -19,6 +15,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class PotionStackPredicate implements ItemStackPredicate {
   private Type type;

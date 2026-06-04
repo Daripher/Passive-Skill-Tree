@@ -3,9 +3,10 @@ package daripher.skilltree.compat.attributeslib;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.skill.PassiveSkill;
 import dev.shadowsoffire.attributeslib.client.ModifierSource;
-import java.util.Comparator;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+
+import java.util.Comparator;
 
 public class SkillModifierSource extends ModifierSource<PassiveSkill> {
   public SkillModifierSource(PassiveSkill skill) {

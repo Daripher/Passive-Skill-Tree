@@ -3,7 +3,6 @@ package daripher.skilltree.client.screen;
 import daripher.skilltree.client.widget.SkillTreeSelectionButton;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
@@ -11,6 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class SkillTreeSelectionScreen extends Screen {
   public static final int BUTTONS_SIZE = 19;

@@ -8,15 +8,16 @@ import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class WorkbenchItemBonusRecipeBuilder {
   private final ResourceLocation id;

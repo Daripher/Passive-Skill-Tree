@@ -13,11 +13,6 @@ import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,6 +20,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class CritEventListener implements SkillEventListener {
   private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;

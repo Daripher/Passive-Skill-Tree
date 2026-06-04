@@ -1,9 +1,10 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
-import java.util.Collection;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 public class TextureSelectionList extends SelectionList<ResourceLocation> {
   private int textureWidth;

@@ -8,12 +8,6 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,6 +20,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 public class SkillButton extends Button {
   private static final Style DESCRIPTION_STYLE = Style.EMPTY.withColor(0x7B7BE5);

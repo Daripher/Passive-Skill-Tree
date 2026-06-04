@@ -5,7 +5,6 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,6 +18,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class AmnesiaScrollItem extends Item {
   public AmnesiaScrollItem() {

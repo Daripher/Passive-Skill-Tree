@@ -10,6 +10,7 @@ import daripher.skilltree.client.widget.skill.SkillConnection;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.data.reloader.SkillsReloader;
+import daripher.skilltree.exp.ExpHelper;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
@@ -17,10 +18,6 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.util.*;
-import java.util.function.Supplier;
-
-import daripher.skilltree.exp.ExpHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -34,6 +31,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.function.Supplier;
 
 public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   private final SkillButtons skills;

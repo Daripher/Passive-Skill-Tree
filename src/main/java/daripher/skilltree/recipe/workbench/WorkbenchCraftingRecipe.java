@@ -5,9 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
-
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -19,6 +16,9 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
   private final @Nullable Pair<Ingredient, Integer> baseIngredient;

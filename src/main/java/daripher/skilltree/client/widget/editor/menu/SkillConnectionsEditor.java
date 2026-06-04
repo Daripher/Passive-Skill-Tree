@@ -3,8 +3,9 @@ package daripher.skilltree.client.widget.editor.menu;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.skill.SkillConnection;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.List;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.List;
 
 public class SkillConnectionsEditor extends EditorMenu {
   public SkillConnectionsEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

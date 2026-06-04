@@ -3,11 +3,12 @@ package daripher.skilltree.skill.bonus.multiplier;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public interface LivingMultiplier {
   float getValue(LivingEntity entity);

@@ -8,10 +8,11 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+
+import javax.annotation.Nullable;
 
 public class SkillNodeEditor extends EditorMenu {
   private NumericTextField distanceEditor;

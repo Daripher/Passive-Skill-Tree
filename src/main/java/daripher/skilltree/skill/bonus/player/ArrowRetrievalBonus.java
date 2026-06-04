@@ -1,18 +1,20 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus> {
   private float chance;

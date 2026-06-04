@@ -1,15 +1,14 @@
 package daripher.skilltree.skill.requirement;
 
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import daripher.skilltree.init.PSTRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public interface SkillRequirement<T extends SkillRequirement<T>> extends Predicate<Player> {
   MutableComponent getTooltip();

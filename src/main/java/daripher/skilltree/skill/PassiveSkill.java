@@ -2,13 +2,14 @@ package daripher.skilltree.skill;
 
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassiveSkill {
   private final ResourceLocation id;

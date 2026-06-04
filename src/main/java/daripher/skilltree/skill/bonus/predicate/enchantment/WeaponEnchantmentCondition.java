@@ -3,10 +3,11 @@ package daripher.skilltree.skill.bonus.predicate.enchantment;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTEnchantmentConditions;
-import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+
+import java.util.Objects;
 
 public class WeaponEnchantmentCondition implements EnchantmentCondition {
   @Override

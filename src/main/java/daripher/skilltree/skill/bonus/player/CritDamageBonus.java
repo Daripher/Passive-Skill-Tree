@@ -1,21 +1,19 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.Objects;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,6 +23,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
   private float amount;

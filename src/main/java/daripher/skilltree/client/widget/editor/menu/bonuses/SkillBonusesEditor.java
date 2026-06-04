@@ -6,8 +6,9 @@ import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import java.util.List;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 public class SkillBonusesEditor extends EditorMenu {
   public SkillBonusesEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

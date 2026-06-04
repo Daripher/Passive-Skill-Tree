@@ -3,14 +3,14 @@ package daripher.skilltree.skill.bonus;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBonus<?>> {
   default void onSkillLearned(ServerPlayer player, boolean firstTime) {}

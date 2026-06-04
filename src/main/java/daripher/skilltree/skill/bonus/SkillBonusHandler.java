@@ -14,9 +14,6 @@ import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
 import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
-import java.util.*;
-import java.util.stream.Stream;
-import javax.annotation.Nonnull;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
@@ -63,6 +60,10 @@ import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandler {

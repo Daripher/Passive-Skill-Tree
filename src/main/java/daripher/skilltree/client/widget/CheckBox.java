@@ -1,10 +1,11 @@
 package daripher.skilltree.client.widget;
 
-import java.util.function.Consumer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 public class CheckBox extends Button {
   private boolean value;

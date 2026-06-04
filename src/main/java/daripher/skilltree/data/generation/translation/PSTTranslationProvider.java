@@ -10,7 +10,6 @@ import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.requirement.SkillRequirement;
-import java.util.Objects;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -19,6 +18,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public abstract class PSTTranslationProvider extends LanguageProvider {
   public PSTTranslationProvider(DataGenerator dataGenerator, String modId, String locale) {

@@ -6,10 +6,6 @@ import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -17,6 +13,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import javax.annotation.Nullable;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SkillTreeEditorData {
   private static final Map<ResourceLocation, PassiveSkill> EDITOR_PASSIVE_SKILLS = new HashMap<>();

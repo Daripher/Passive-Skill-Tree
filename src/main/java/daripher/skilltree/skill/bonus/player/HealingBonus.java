@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
@@ -10,10 +11,6 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,6 +19,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class HealingBonus implements EventListenerBonus<HealingBonus> {
   private float chance;

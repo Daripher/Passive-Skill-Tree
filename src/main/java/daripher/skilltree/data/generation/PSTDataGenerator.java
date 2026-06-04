@@ -5,7 +5,6 @@ import daripher.skilltree.data.generation.loot.PSTGlobalLootModifierProvider;
 import daripher.skilltree.data.generation.loot.PSTLootTablesProvider;
 import daripher.skilltree.data.generation.translation.PSTEnglishTranslationProvider;
 import daripher.skilltree.data.generation.translation.PSTRussianTranslationProvider;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -13,6 +12,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+
+import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class PSTDataGenerator {

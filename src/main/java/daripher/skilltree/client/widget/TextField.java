@@ -1,10 +1,6 @@
 package daripher.skilltree.client.widget;
 
 import daripher.skilltree.mixin.EditBoxAccessor;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,6 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class TextField extends EditBox implements TickingWidget {
   public static final int INVALID_TEXT_COLOR = 0xD80000;

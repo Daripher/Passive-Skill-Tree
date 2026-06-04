@@ -5,6 +5,7 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.requirement.SkillRequirement;
+
 import java.util.List;
 
 public class SkillRequirementEditor extends EditorMenu {

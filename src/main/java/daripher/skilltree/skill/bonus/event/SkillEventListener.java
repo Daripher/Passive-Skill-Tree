@@ -2,13 +2,13 @@ package daripher.skilltree.skill.bonus.event;
 
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
-import java.util.Objects;
-import java.util.function.Consumer;
-
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public interface SkillEventListener {
   default String getDescriptionId() {

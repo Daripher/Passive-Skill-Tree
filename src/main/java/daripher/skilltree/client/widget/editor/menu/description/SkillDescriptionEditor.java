@@ -4,12 +4,13 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SkillDescriptionEditor extends EditorMenu {
   public SkillDescriptionEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

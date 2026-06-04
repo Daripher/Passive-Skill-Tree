@@ -5,14 +5,15 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTLivingConditions;
 import daripher.skilltree.init.PSTSkillRequirements;
+import daripher.skilltree.skill.bonus.function.EffectAmountFunction;
 import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
-import daripher.skilltree.skill.bonus.function.EffectAmountFunction;
-import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.function.Consumer;
 
 public final class NumericValueRequirement implements SkillRequirement<NumericValueRequirement> {
   private FloatFunctionEntityPredicate condition;

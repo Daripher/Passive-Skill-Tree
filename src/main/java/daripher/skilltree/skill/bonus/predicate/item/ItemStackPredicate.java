@@ -3,13 +3,13 @@ package daripher.skilltree.skill.bonus.predicate.item;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public interface ItemStackPredicate extends Predicate<ItemStack> {
   default String getDescriptionId() {

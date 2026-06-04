@@ -6,8 +6,6 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.client.widget.skill.SkillConnection;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,6 +13,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenHelper {
   public static void drawCenteredOutlinedText(

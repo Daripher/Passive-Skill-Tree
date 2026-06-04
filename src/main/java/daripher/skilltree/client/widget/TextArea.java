@@ -1,10 +1,11 @@
 package daripher.skilltree.client.widget;
 
-import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 public class TextArea extends MultiLineEditBox implements TickingWidget {
   public TextArea(int x, int y, int width, int height, String defaultValue) {

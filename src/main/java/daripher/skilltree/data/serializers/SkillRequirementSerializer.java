@@ -4,9 +4,10 @@ import com.google.gson.*;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.requirement.SkillRequirement;
+import net.minecraft.resources.ResourceLocation;
+
 import java.lang.reflect.Type;
 import java.util.Objects;
-import net.minecraft.resources.ResourceLocation;
 
 public class SkillRequirementSerializer
     implements JsonSerializer<SkillRequirement<?>>, JsonDeserializer<SkillRequirement<?>> {

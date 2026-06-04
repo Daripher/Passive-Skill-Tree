@@ -7,9 +7,6 @@ import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.player.MoreItemBonusesBonus;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -23,6 +20,10 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {

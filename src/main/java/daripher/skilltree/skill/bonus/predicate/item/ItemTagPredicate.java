@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTItemConditions;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,6 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.Tags;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class ItemTagPredicate implements ItemStackPredicate {
   private ResourceLocation tagId;

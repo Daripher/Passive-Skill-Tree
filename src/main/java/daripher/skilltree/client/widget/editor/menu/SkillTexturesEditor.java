@@ -4,10 +4,11 @@ import daripher.skilltree.client.data.SkillTexturesData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class SkillTexturesEditor extends EditorMenu {
   public SkillTexturesEditor(SkillTreeEditor editor, EditorMenu previousMenu) {

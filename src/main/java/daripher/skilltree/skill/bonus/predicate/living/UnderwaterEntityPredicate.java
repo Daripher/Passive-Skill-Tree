@@ -3,8 +3,6 @@ package daripher.skilltree.skill.bonus.predicate.living;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.init.PSTLivingConditions;
-import java.util.Objects;
-
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,6 +10,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.material.Fluids;
+
+import java.util.Objects;
 
 public record UnderwaterEntityPredicate() implements LivingEntityPredicate {
   @Override

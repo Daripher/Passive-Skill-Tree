@@ -2,7 +2,6 @@ package daripher.skilltree.data.generation;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTBlocks;
-import java.util.function.Function;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +11,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
 
 public class PSTBlockStatesProvider extends BlockStateProvider {
   public PSTBlockStatesProvider(

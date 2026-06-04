@@ -7,10 +7,6 @@ import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -19,6 +15,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
     implements ItemBonus<ItemBonusListItemBonus> {

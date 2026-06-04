@@ -2,10 +2,11 @@ package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.widget.Button;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
+import net.minecraft.network.chat.Component;
+
 import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.minecraft.network.chat.Component;
 
 public class SelectionMenuButton<T> extends Button {
   protected SelectionList<T> selectionList;

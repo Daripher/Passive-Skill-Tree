@@ -6,10 +6,6 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTTags;
-
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,6 +16,10 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class EquipmentPredicate implements ItemStackPredicate {
   public Type type;

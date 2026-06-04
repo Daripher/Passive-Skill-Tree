@@ -1,10 +1,11 @@
 package daripher.skilltree.client.widget;
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import javax.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 public class NumericTextField extends TextField {
   private static final Predicate<String> DEFAULT_FILTER = NumericTextField::isNumericString;

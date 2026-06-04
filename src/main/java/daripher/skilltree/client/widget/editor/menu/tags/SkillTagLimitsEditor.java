@@ -6,10 +6,11 @@ import daripher.skilltree.client.widget.TextField;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkillTree;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.tuple.Pair;
 
 public class SkillTagLimitsEditor extends EditorMenu {
   private final List<Pair<TextField, NumericTextField>> widgetPairs = new ArrayList<>();

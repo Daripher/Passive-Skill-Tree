@@ -11,9 +11,6 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import java.util.Objects;
-import java.util.function.Consumer;
-
 import daripher.skilltree.skill.bonus.event.TickingEventListener;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +24,9 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public final class InflictEffectBonus implements EventListenerBonus<InflictEffectBonus> {
   private MobEffectInstance effectInstance;

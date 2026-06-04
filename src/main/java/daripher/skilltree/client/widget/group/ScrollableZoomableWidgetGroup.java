@@ -1,11 +1,12 @@
 package daripher.skilltree.client.widget.group;
 
-import java.awt.geom.Rectangle2D;
-import javax.annotation.Nullable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+
+import javax.annotation.Nullable;
+import java.awt.geom.Rectangle2D;
 
 public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends WidgetGroup<T> {
   protected float scrollX;

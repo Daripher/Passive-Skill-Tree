@@ -4,6 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.skill.bonus.event.SkillEventListener;
+import daripher.skilltree.skill.bonus.function.FloatFunction;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
+import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
+import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
@@ -11,15 +16,6 @@ import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
-import daripher.skilltree.skill.bonus.function.FloatFunction;
-import daripher.skilltree.skill.bonus.event.SkillEventListener;
-import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import java.util.Objects;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -28,6 +24,11 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.UUID;
 
 public class SerializationHelper {
   @NotNull

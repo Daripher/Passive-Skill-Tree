@@ -11,10 +11,6 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -27,6 +23,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
   private final ItemStackPredicate baseItemStackPredicate;

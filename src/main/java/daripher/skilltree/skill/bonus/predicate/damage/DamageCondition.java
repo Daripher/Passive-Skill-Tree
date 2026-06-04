@@ -1,12 +1,13 @@
 package daripher.skilltree.skill.bonus.predicate.damage;
 
 import daripher.skilltree.init.PSTRegistries;
-import java.util.Objects;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+
+import java.util.Objects;
 
 public interface DamageCondition {
   boolean met(DamageSource source);

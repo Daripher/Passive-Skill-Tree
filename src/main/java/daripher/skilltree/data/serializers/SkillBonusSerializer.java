@@ -3,9 +3,10 @@ package daripher.skilltree.data.serializers;
 import com.google.gson.*;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import net.minecraft.resources.ResourceLocation;
+
 import java.lang.reflect.Type;
 import java.util.Objects;
-import net.minecraft.resources.ResourceLocation;
 
 public class SkillBonusSerializer
     implements JsonSerializer<SkillBonus<?>>, JsonDeserializer<SkillBonus<?>> {

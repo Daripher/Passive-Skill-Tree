@@ -1,8 +1,12 @@
 package daripher.skilltree.skill;
 
-import java.util.*;
-import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PassiveSkillTree {
   private final List<ResourceLocation> skillIds = new ArrayList<>();

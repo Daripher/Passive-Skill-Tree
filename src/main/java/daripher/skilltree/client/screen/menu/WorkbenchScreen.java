@@ -4,8 +4,6 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.inventory.menu.WorkbenchMenu;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,6 +25,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   private static final ResourceLocation BACKGROUND_TEXTURE =
