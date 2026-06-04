@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTLivingMultipliers {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "skill_bonus_multipliers");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "skill_bonus_multipliers");
   public static final DeferredRegister<LivingMultiplier.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

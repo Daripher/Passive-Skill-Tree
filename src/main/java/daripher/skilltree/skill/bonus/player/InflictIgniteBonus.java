@@ -10,6 +10,8 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.AttackEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
+
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
@@ -77,7 +79,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
   @Override
   public MutableComponent getTooltip() {
     String durationDescription = StringUtil.formatTickDuration(duration * 20);
-    String targetDescription = eventListener.getTarget().name().toLowerCase();
+    String targetDescription = eventListener.getTarget().name().toLowerCase(Locale.ROOT);
     String bonusDescription = getDescriptionId() + "." + targetDescription;
     if (chance < 1) {
       bonusDescription += ".chance";

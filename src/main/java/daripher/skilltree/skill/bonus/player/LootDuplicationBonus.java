@@ -22,6 +22,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -213,7 +214,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
     public Component getFormattedName() {
       String firstLetter = getName().substring(0, 1);
-      return Component.literal(firstLetter.toUpperCase() + getName().substring(1));
+      return Component.literal(firstLetter.toUpperCase(Locale.ROOT) + getName().substring(1));
     }
 
     public static LootType byName(String name) {

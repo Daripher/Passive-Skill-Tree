@@ -89,7 +89,7 @@ public class PlayerSkills implements IPlayerSkills {
       return;
     }
     for (Tag skillTag : skillsTag) {
-      ResourceLocation skillId = new ResourceLocation(skillTag.getAsString());
+      ResourceLocation skillId = ResourceLocation.parse(skillTag.getAsString());
       PassiveSkill passiveSkill = SkillsReloader.getSkillById(skillId);
       if (passiveSkill == null || passiveSkill.isInvalid()) {
         skills.clear();

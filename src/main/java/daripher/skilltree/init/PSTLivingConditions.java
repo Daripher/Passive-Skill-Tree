@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTLivingConditions {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "living_conditions");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "living_conditions");
   public static final DeferredRegister<LivingEntityPredicate.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

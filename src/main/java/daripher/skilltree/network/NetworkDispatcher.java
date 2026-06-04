@@ -23,7 +23,7 @@ public class NetworkDispatcher {
   public static void registerNetworkChannel(FMLCommonSetupEvent event) {
     network_channel =
         NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(SkillTreeMod.MOD_ID, "channel"),
+            ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "channel"),
             () -> "1.0",
             s -> true,
             s -> true);

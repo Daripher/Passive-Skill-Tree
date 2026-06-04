@@ -150,7 +150,7 @@ public class SkillTreeScreen extends Screen implements StatsUpdateListener {
 
   private void renderOverlay(GuiGraphics graphics) {
     ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png");
+        ResourceLocation.parse("skilltree:textures/screen/skill_tree_overlay.png");
     RenderSystem.enableBlend();
     graphics.blit(texture, 0, 0, 0, 0F, 0F, width, height, width, height);
     RenderSystem.disableBlend();
@@ -159,7 +159,7 @@ public class SkillTreeScreen extends Screen implements StatsUpdateListener {
   @Override
   public void renderBackground(GuiGraphics graphics) {
     ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
+        ResourceLocation.parse("skilltree:textures/screen/skill_tree_background.png");
     PoseStack poseStack = graphics.pose();
     poseStack.pushPose();
     float x = skillButtons.getScrollX();

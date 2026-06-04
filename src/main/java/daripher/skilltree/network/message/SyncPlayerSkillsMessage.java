@@ -34,7 +34,7 @@ public class SyncPlayerSkillsMessage {
     SyncPlayerSkillsMessage result = new SyncPlayerSkillsMessage();
     int learnedSkillsCount = buf.readInt();
     for (int i = 0; i < learnedSkillsCount; i++) {
-      result.learnedSkills.add(new ResourceLocation(buf.readUtf()));
+      result.learnedSkills.add(ResourceLocation.parse(buf.readUtf()));
     }
     result.skillPoints = buf.readInt();
     return result;

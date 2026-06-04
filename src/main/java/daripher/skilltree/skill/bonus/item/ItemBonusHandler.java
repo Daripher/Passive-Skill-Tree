@@ -127,7 +127,7 @@ public class ItemBonusHandler {
 
   private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
     if (!tag.contains("type")) return null;
-    ResourceLocation id = new ResourceLocation(tag.getString("type"));
+    ResourceLocation id = ResourceLocation.parse(tag.getString("type"));
     ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
     if (serializer == null) return null;
     try {

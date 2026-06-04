@@ -121,7 +121,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
   public static class Serializer implements SkillBonus.Serializer {
     @Override
     public RecipeUnlockBonus deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation recipeId = new ResourceLocation(json.get("recipe_id").getAsString());
+      ResourceLocation recipeId = ResourceLocation.parse(json.get("recipe_id").getAsString());
       return new RecipeUnlockBonus(recipeId);
     }
 
@@ -135,7 +135,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
     @Override
     public RecipeUnlockBonus deserialize(CompoundTag tag) {
-      ResourceLocation recipeId = new ResourceLocation(tag.getString("recipe_id"));
+      ResourceLocation recipeId = ResourceLocation.parse(tag.getString("recipe_id"));
       return new RecipeUnlockBonus(recipeId);
     }
 
@@ -151,7 +151,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
     @Override
     public RecipeUnlockBonus deserialize(FriendlyByteBuf buf) {
-      ResourceLocation recipeId = new ResourceLocation(buf.readUtf());
+      ResourceLocation recipeId = ResourceLocation.parse(buf.readUtf());
       return new RecipeUnlockBonus(recipeId);
     }
 
@@ -165,7 +165,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
     @Override
     public SkillBonus<?> createDefaultInstance() {
-      return new RecipeUnlockBonus(new ResourceLocation("unknown_recipe"));
+      return new RecipeUnlockBonus(ResourceLocation.parse("unknown_recipe"));
     }
   }
 }

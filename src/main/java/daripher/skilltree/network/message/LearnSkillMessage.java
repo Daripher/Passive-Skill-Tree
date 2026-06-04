@@ -25,7 +25,7 @@ public class LearnSkillMessage {
 
   public static LearnSkillMessage decode(FriendlyByteBuf buf) {
     LearnSkillMessage message = new LearnSkillMessage();
-    message.skillId = new ResourceLocation(buf.readUtf());
+    message.skillId = ResourceLocation.parse(buf.readUtf());
     return message;
   }
 

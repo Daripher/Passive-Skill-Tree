@@ -2,6 +2,8 @@ package daripher.skilltree.client.widget.editor.menu.selection;
 
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import java.util.Collection;
+import java.util.Locale;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,7 +23,7 @@ public class TextSelectionList<T> extends SelectionList<T> {
     int textColor = elementName.equals(selectedElementName) ? 0x55ff55 : 0xe0e0e0;
     elementName = TooltipHelper.getTrimmedString(elementName, width - 10);
     Font font = Minecraft.getInstance().font;
-    String lowerCase = elementName.toLowerCase();
+    String lowerCase = elementName.toLowerCase(Locale.ROOT);
     int textX = x + 4;
     int textY = y + 3;
     String search = getSearchString();

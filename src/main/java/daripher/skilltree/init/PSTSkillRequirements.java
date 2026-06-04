@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTSkillRequirements {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "skill_requirements");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "skill_requirements");
   public static final DeferredRegister<SkillRequirement.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

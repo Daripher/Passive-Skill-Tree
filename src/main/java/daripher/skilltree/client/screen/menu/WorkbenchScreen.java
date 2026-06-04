@@ -30,9 +30,9 @@ import org.lwjgl.glfw.GLFW;
 
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
   private static final ResourceLocation BACKGROUND_TEXTURE =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "textures/gui/container/workbench.png");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/gui/container/workbench.png");
   private static final ResourceLocation RECIPES_TEXTURE =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "textures/gui/container/workbench_recipes.png");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/gui/container/workbench_recipes.png");
   private static final int SCROLLER_WIDTH = 12;
   private static final int SCROLLER_HEIGHT = 15;
   private static final int SCROLLER_FULL_HEIGHT = 90;

@@ -141,6 +141,6 @@ public class PSTRecipesProvider extends RecipeProvider {
   }
 
   private static ResourceLocation modRecipeId(String path) {
-    return new ResourceLocation(SkillTreeMod.MOD_ID, path);
+    return ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, path);
   }
 }

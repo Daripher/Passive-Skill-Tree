@@ -216,8 +216,8 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
   public static class Serializer implements SkillRequirement.Serializer {
     @Override
     public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation statTypeId = new ResourceLocation(json.get("statTypeId").getAsString());
-      ResourceLocation statId = new ResourceLocation(json.get("statId").getAsString());
+      ResourceLocation statTypeId = ResourceLocation.parse(json.get("statTypeId").getAsString());
+      ResourceLocation statId = ResourceLocation.parse(json.get("statId").getAsString());
       int minValue = json.get("minValue").getAsInt();
       return new StatRequirement(statTypeId, statId, minValue);
     }
@@ -233,8 +233,8 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
 
     @Override
     public SkillRequirement<?> deserialize(CompoundTag tag) {
-      ResourceLocation statTypeId = new ResourceLocation(tag.getString("statTypeId"));
-      ResourceLocation statId = new ResourceLocation(tag.getString("statId"));
+      ResourceLocation statTypeId = ResourceLocation.parse(tag.getString("statTypeId"));
+      ResourceLocation statId = ResourceLocation.parse(tag.getString("statId"));
       int minValue = tag.getInt("minValue");
       return new StatRequirement(statTypeId, statId, minValue);
     }
@@ -252,8 +252,8 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
 
     @Override
     public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-      ResourceLocation statTypeId = new ResourceLocation(buf.readUtf());
-      ResourceLocation statId = new ResourceLocation(buf.readUtf());
+      ResourceLocation statTypeId = ResourceLocation.parse(buf.readUtf());
+      ResourceLocation statId = ResourceLocation.parse(buf.readUtf());
       int minValue = buf.readInt();
       return new StatRequirement(statTypeId, statId, minValue);
     }

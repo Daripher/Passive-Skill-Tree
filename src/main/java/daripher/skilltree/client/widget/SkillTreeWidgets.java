@@ -125,7 +125,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     outerLoop:
     for (SkillButton button : skills.getWidgets()) {
       for (MutableComponent component : button.getSkillTooltip(skillTree)) {
-        if (component.getString().toLowerCase().contains(search.toLowerCase())) {
+        if (component.getString().toLowerCase(Locale.ROOT).contains(search.toLowerCase(Locale.ROOT))) {
           button.searched = true;
           continue outerLoop;
         }

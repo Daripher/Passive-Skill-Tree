@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -239,7 +240,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
     public Component getFormattedName() {
       return Component.literal(getName().substring(0, 1)
-          .toUpperCase() + getName().substring(1));
+          .toUpperCase(Locale.ROOT) + getName().substring(1));
     }
 
     public static ExperienceSource byName(String name) {

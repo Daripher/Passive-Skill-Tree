@@ -3,6 +3,8 @@ package daripher.skilltree.skill.bonus;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
+
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.network.chat.MutableComponent;
@@ -61,11 +63,11 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
     ENEMY;
 
     public String getName() {
-      return name().toLowerCase();
+      return name().toLowerCase(Locale.ROOT);
     }
 
     public static Target fromName(String name) {
-      return valueOf(name.toUpperCase());
+      return valueOf(name.toUpperCase(Locale.ROOT));
     }
   }
 

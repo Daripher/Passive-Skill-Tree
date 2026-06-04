@@ -8,6 +8,7 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
@@ -136,7 +137,7 @@ public class TooltipHelper {
   }
 
   public static MutableComponent getTargetName(SkillBonus.Target target) {
-    return Component.literal(TooltipHelper.idToName(target.name().toLowerCase()));
+    return Component.literal(TooltipHelper.idToName(target.name().toLowerCase(Locale.ROOT)));
   }
 
   @NotNull
@@ -151,7 +152,7 @@ public class TooltipHelper {
       if (word.isEmpty()) {
         string = word;
       } else {
-        string = word.substring(0, 1).toUpperCase() + word.substring(1);
+        string = word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1);
       }
       name.append(" ");
       name.append(string);

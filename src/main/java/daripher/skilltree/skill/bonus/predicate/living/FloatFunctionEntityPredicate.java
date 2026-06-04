@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -201,7 +202,7 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
     MORE, LESS, EQUAL, AT_LEAST, AT_MOST;
 
     public String getName() {
-      return name().toLowerCase();
+      return name().toLowerCase(Locale.ROOT);
     }
 
     public Component getTooltip(String subtype, Object... args) {

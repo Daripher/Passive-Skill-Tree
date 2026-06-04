@@ -13,6 +13,8 @@ import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
+
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
@@ -237,7 +239,7 @@ public class CritEventListener implements SkillEventListener {
           SerializationHelper.deserializeLivingMultiplier(json, "enemy_multiplier"));
       listener.setPlayerMultiplier(
           SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier"));
-      listener.setTarget(SkillBonus.Target.valueOf(json.get("target").getAsString().toUpperCase()));
+      listener.setTarget(SkillBonus.Target.valueOf(json.get("target").getAsString().toUpperCase(Locale.ROOT)));
       return listener;
     }
 
@@ -254,7 +256,7 @@ public class CritEventListener implements SkillEventListener {
           json, aListener.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingMultiplier(
           json, aListener.playerMultiplier, "player_multiplier");
-      json.addProperty("target", aListener.target.name().toLowerCase());
+      json.addProperty("target", aListener.target.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
@@ -268,7 +270,7 @@ public class CritEventListener implements SkillEventListener {
           SerializationHelper.deserializeLivingMultiplier(tag, "enemy_multiplier"));
       listener.setPlayerMultiplier(
           SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier"));
-      listener.setTarget(SkillBonus.Target.valueOf(tag.getString("target").toUpperCase()));
+      listener.setTarget(SkillBonus.Target.valueOf(tag.getString("target").toUpperCase(Locale.ROOT)));
       return listener;
     }
 
@@ -286,7 +288,7 @@ public class CritEventListener implements SkillEventListener {
           tag, aListener.enemyMultiplier, "enemy_multiplier");
       SerializationHelper.serializeLivingMultiplier(
           tag, aListener.playerMultiplier, "player_multiplier");
-      tag.putString("target", aListener.target.name().toLowerCase());
+      tag.putString("target", aListener.target.name().toLowerCase(Locale.ROOT));
       return tag;
     }
 

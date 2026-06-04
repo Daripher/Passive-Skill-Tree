@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PSTItemTagsProvider extends ItemTagsProvider {
-  public static final ResourceLocation KNIVES = new ResourceLocation("forge", "tools/knives");
+  public static final ResourceLocation KNIVES = ResourceLocation.fromNamespaceAndPath("forge", "tools/knives");
 
   public PSTItemTagsProvider(
       DataGenerator dataGenerator,

@@ -8,6 +8,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.screen.SkillTreeEditorScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
+
+import java.util.Locale;
 import java.util.stream.Stream;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
@@ -63,8 +65,8 @@ public class PSTClientCommands {
   }
 
   private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) {
-    String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase();
-    PSTClientCommands.tree_to_display = new ResourceLocation(treeIdArg);
+    String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase(Locale.ROOT);
+    PSTClientCommands.tree_to_display = ResourceLocation.parse(treeIdArg);
     PSTClientCommands.timer = 1;
     return 1;
   }

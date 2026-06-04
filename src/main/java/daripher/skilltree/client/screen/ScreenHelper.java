@@ -122,7 +122,7 @@ public class ScreenHelper {
       float zoom,
       float animation) {
     ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/long_connection.png");
+        ResourceLocation.parse("skilltree:textures/screen/long_connection.png");
     graphics.pose().pushPose();
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();
@@ -145,7 +145,7 @@ public class ScreenHelper {
       float zoom,
       float animation) {
     ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/one_way_connection.png");
+        ResourceLocation.parse("skilltree:textures/screen/one_way_connection.png");
     graphics.pose().pushPose();
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();
@@ -163,7 +163,7 @@ public class ScreenHelper {
   public static void renderConnection(
       GuiGraphics graphics, SkillConnection connection, float zoom, float animation) {
     ResourceLocation texture =
-        new ResourceLocation("skilltree:textures/screen/direct_connection.png");
+        ResourceLocation.parse("skilltree:textures/screen/direct_connection.png");
     graphics.pose().pushPose();
     SkillButton button1 = connection.getFirstButton();
     SkillButton button2 = connection.getSecondButton();

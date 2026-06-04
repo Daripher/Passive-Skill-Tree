@@ -105,7 +105,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
       for (int i = 0; i < innerBonusesJson.size(); i++) {
         JsonObject innerBonusTag = innerBonusesJson.get(i).getAsJsonObject();
         String serializerIdString = innerBonusTag.get("type").getAsString();
-        ResourceLocation serializerId = new ResourceLocation(serializerIdString);
+        ResourceLocation serializerId = ResourceLocation.parse(serializerIdString);
         ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
         Objects.requireNonNull(serializer, "Unknown item bonus: " + serializerId);
         ItemBonus<?> innerBonus = serializer.deserialize(innerBonusTag);
@@ -140,7 +140,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses)
       for (Tag value : innerBonusesTag) {
         CompoundTag innerBonusTag = (CompoundTag) value;
         String type = innerBonusTag.getString("type");
-        ResourceLocation serializerId = new ResourceLocation(type);
+        ResourceLocation serializerId = ResourceLocation.parse(type);
         ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
         Objects.requireNonNull(serializer, "Unknown item bonus: " + serializerId);
         innerBonuses.add(serializer.deserialize(innerBonusTag));

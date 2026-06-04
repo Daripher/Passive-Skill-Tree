@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTEnchantmentConditions {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "enchantment_conditions");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "enchantment_conditions");
   public static final DeferredRegister<EnchantmentCondition.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

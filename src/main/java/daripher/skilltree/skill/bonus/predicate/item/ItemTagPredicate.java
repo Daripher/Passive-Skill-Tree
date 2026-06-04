@@ -61,7 +61,7 @@ public class ItemTagPredicate implements ItemStackPredicate {
   }
 
   private void selectTagId(Consumer<ItemStackPredicate> consumer, String text) {
-    setTagId(new ResourceLocation(text));
+    setTagId(ResourceLocation.parse(text));
     consumer.accept(this);
   }
 
@@ -72,7 +72,7 @@ public class ItemTagPredicate implements ItemStackPredicate {
   public static class Serializer implements ItemStackPredicate.Serializer {
     @Override
     public ItemStackPredicate deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation tagId = new ResourceLocation(json.get("tag_id").getAsString());
+      ResourceLocation tagId = ResourceLocation.parse(json.get("tag_id").getAsString());
       return new ItemTagPredicate(tagId);
     }
 
@@ -86,7 +86,7 @@ public class ItemTagPredicate implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate deserialize(CompoundTag tag) {
-      ResourceLocation tagId = new ResourceLocation(tag.getString("tag_id"));
+      ResourceLocation tagId = ResourceLocation.parse(tag.getString("tag_id"));
       return new ItemTagPredicate(tagId);
     }
 
@@ -102,7 +102,7 @@ public class ItemTagPredicate implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate deserialize(FriendlyByteBuf buf) {
-      ResourceLocation tagId = new ResourceLocation(buf.readUtf());
+      ResourceLocation tagId = ResourceLocation.parse(buf.readUtf());
       return new ItemTagPredicate(tagId);
     }
 

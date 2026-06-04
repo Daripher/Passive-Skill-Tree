@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTEventListeners {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "event_listeners");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "event_listeners");
   public static final DeferredRegister<SkillEventListener.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

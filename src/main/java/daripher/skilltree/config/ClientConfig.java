@@ -40,7 +40,6 @@ public class ClientConfig {
     return o instanceof String s && ResourceLocation.isValidResourceLocation(s);
   }
 
-  @SuppressWarnings("ResultOfMethodCallIgnored")
   private static boolean isValidHexColor(Object o) {
     if (!(o instanceof String s)) return false;
     if (s.equals("rainbow")) return true;
@@ -56,7 +55,7 @@ public class ClientConfig {
   static void load(ModConfigEvent.Loading event) {
     if (event.getConfig().getSpec() != SPEC) return;
     favorite_skills =
-        FAVORITE_SKILLS.get().stream().map(ResourceLocation::new).collect(Collectors.toSet());
+        FAVORITE_SKILLS.get().stream().map(ResourceLocation::parse).collect(Collectors.toSet());
     favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");
     skill_tree_background_parallax = SKILL_TREE_BACKGROUND_PARALLAX.get();
     if (!favorite_color_is_rainbow) {

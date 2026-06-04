@@ -6,6 +6,8 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.init.PSTTags;
+
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
@@ -151,7 +153,7 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   @Override
   public String getDescriptionId() {
-    return ItemStackPredicate.super.getDescriptionId() + "." + type.name().toLowerCase();
+    return ItemStackPredicate.super.getDescriptionId() + "." + type.name().toLowerCase(Locale.ROOT);
   }
 
   @Override
@@ -214,14 +216,14 @@ public class EquipmentPredicate implements ItemStackPredicate {
     TOOL;
 
     public Component getName() {
-      return Component.literal(TooltipHelper.idToName(name().toLowerCase()));
+      return Component.literal(TooltipHelper.idToName(name().toLowerCase(Locale.ROOT)));
     }
   }
 
   public static class Serializer implements ItemStackPredicate.Serializer {
     @Override
     public ItemStackPredicate deserialize(JsonObject json) throws JsonParseException {
-      Type type = Type.valueOf(json.get("equipment_type").getAsString().toUpperCase());
+      Type type = Type.valueOf(json.get("equipment_type").getAsString().toUpperCase(Locale.ROOT));
       return new EquipmentPredicate(type);
     }
 
@@ -230,12 +232,12 @@ public class EquipmentPredicate implements ItemStackPredicate {
       if (!(condition instanceof EquipmentPredicate aCondition)) {
         throw new IllegalArgumentException();
       }
-      json.addProperty("equipment_type", aCondition.type.name().toLowerCase());
+      json.addProperty("equipment_type", aCondition.type.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
     public ItemStackPredicate deserialize(CompoundTag tag) {
-      Type type = Type.valueOf(tag.getString("equipment_type").toUpperCase());
+      Type type = Type.valueOf(tag.getString("equipment_type").toUpperCase(Locale.ROOT));
       return new EquipmentPredicate(type);
     }
 
@@ -245,7 +247,7 @@ public class EquipmentPredicate implements ItemStackPredicate {
         throw new IllegalArgumentException();
       }
       CompoundTag tag = new CompoundTag();
-      tag.putString("equipment_type", aCondition.type.name().toLowerCase());
+      tag.putString("equipment_type", aCondition.type.name().toLowerCase(Locale.ROOT));
       return tag;
     }
 

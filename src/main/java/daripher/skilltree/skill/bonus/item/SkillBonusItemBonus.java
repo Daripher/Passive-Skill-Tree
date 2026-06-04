@@ -93,7 +93,7 @@ public record SkillBonusItemBonus(SkillBonus<?> skillBonus) implements ItemBonus
     public ItemBonus<?> deserialize(CompoundTag tag) {
       CompoundTag skillBonusTag = tag.getCompound("skill_bonus");
       String type = skillBonusTag.getString("type");
-      ResourceLocation serializerId = new ResourceLocation(type);
+      ResourceLocation serializerId = ResourceLocation.parse(type);
       SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
       Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
       SkillBonus<?> skillBonus = serializer.deserialize(skillBonusTag);

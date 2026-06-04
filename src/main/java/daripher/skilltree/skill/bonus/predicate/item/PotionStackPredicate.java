@@ -6,6 +6,8 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTItemConditions;
 import daripher.skilltree.network.NetworkHelper;
+
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
@@ -77,7 +79,7 @@ public final class PotionStackPredicate implements ItemStackPredicate {
     }
 
     public Component getFormattedName() {
-      return Component.literal(getName().substring(0, 1).toUpperCase() + getName().substring(1));
+      return Component.literal(getName().substring(0, 1).toUpperCase(Locale.ROOT) + getName().substring(1));
     }
 
     public static Type byName(String name) {

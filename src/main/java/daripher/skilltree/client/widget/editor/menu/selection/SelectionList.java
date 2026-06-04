@@ -1,10 +1,8 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class SelectionList<T> extends AbstractButton {
   public static final ResourceLocation WIDGETS_TEXTURE =
-      new ResourceLocation("skilltree:textures/screen/widgets.png");
+      ResourceLocation.parse("skilltree:textures/screen/widgets.png");
   private Function<T, Component> nameGetter = t -> Component.literal(t.toString());
   private Consumer<T> responder = t -> {};
   private List<T> elementsList;
@@ -120,7 +118,7 @@ public abstract class SelectionList<T> extends AbstractButton {
   }
 
   private boolean shouldDisplay(T value) {
-    return nameGetter.apply(value).getString().toLowerCase().contains(search);
+    return nameGetter.apply(value).getString().toLowerCase(Locale.ROOT).contains(search);
   }
 
   private void renderScroll(GuiGraphics graphics) {
@@ -234,7 +232,7 @@ public abstract class SelectionList<T> extends AbstractButton {
   }
 
   public void setSearchString(String search) {
-    this.search = search.toLowerCase();
+    this.search = search.toLowerCase(Locale.ROOT);
     setScrollToSelection();
   }
 

@@ -15,7 +15,7 @@ public class SkillBonusSerializer
       throws JsonParseException {
     JsonObject jsonObj = (JsonObject) json;
     String type = jsonObj.get("type").getAsString();
-    ResourceLocation serializerId = new ResourceLocation(type);
+    ResourceLocation serializerId = ResourceLocation.parse(type);
     SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
     Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
     return serializer.deserialize(jsonObj);

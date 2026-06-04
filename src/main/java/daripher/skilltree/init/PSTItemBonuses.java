@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTItemBonuses {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "item_bonuses");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "item_bonuses");
   public static final DeferredRegister<ItemBonus.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

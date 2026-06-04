@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTDamageConditions {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "damage_conditions");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "damage_conditions");
   public static final DeferredRegister<DamageCondition.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

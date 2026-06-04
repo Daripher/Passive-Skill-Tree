@@ -12,7 +12,7 @@ import net.minecraftforge.registries.*;
 
 public class PSTFloatFunctions {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "numeric_value_providers");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "numeric_value_providers");
   public static final DeferredRegister<FloatFunction.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

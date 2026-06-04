@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class PSTItemConditions {
   public static final ResourceLocation REGISTRY_ID =
-      new ResourceLocation(SkillTreeMod.MOD_ID, "item_conditions");
+      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "item_conditions");
   public static final DeferredRegister<ItemStackPredicate.Serializer> REGISTRY =
       DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

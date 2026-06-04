@@ -105,9 +105,9 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
   }
 
   private void createBlankSkill() {
-    ResourceLocation background = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
-    ResourceLocation icon = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/icons/void.png");
-    ResourceLocation border = new ResourceLocation(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
+    ResourceLocation background = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/icons/background/lesser.png");
+    ResourceLocation icon = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/icons/void.png");
+    ResourceLocation border = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "textures/tooltip/lesser.png");
     ResourceLocation skillId = SkillNodeEditor.createNewSkillId(skillTree.getId());
     PassiveSkill skill = new PassiveSkill(skillId, 16, background, icon, border, false);
     skill.setPosition(0, 0);
@@ -134,7 +134,7 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
   }
 
   private void renderOverlay(GuiGraphics graphics) {
-    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/skill_tree_overlay.png");
+    ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/skill_tree_overlay.png");
     RenderSystem.enableBlend();
     graphics.blit(texture, 0, 0, 0, 0F, 0F, width, height, width, height);
     RenderSystem.disableBlend();
@@ -142,7 +142,7 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
 
   @Override
   public void renderBackground(GuiGraphics graphics) {
-    ResourceLocation texture = new ResourceLocation("skilltree:textures/screen/skill_tree_background.png");
+    ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/skill_tree_background.png");
     PoseStack poseStack = graphics.pose();
     poseStack.pushPose();
     poseStack.translate(skillButtons.getScrollX() / 3F, skillButtons.getScrollY() / 3F, 0);
