@@ -198,7 +198,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
   }
 
   private boolean shouldDisplayRecipe(AbstractWorkbenchRecipe recipe) {
-    if (recipe.requiresPassiveSkill() && !recipe.canBeUsedBy(player)) {
+    if (recipe.hasPassiveSkillRequirement() && recipe.isLockedFor(player)) {
       return false;
     }
     return workbenchContainer.getBaseItem().isEmpty() || recipe.isValidBaseItem(workbenchContainer.getBaseItem());

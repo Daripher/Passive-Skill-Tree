@@ -39,7 +39,7 @@ public abstract class AbstractWorkbenchRecipe
     if (!isValidBaseItem(container.getBaseItem())) {
       return false;
     }
-    if (!canBeUsedBy(container.getPlayer())) {
+    if (isLockedFor(container.getPlayer())) {
       return false;
     }
     return hasIngredients(container, additionalIngredients);
@@ -51,8 +51,8 @@ public abstract class AbstractWorkbenchRecipe
     return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
   }
 
-  public boolean canBeUsedBy(@NotNull Player player) {
-    return !requiresPassiveSkill || hasRecipeLearned(player);
+  public boolean isLockedFor(@NotNull Player player) {
+    return requiresPassiveSkill && !hasRecipeLearned(player);
   }
 
   public abstract boolean isValidBaseItem(ItemStack itemStack);
@@ -104,7 +104,7 @@ public abstract class AbstractWorkbenchRecipe
   }
 
   @Override
-  public boolean requiresPassiveSkill() {
+  public boolean hasPassiveSkillRequirement() {
     return requiresPassiveSkill;
   }
 }

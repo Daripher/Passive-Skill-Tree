@@ -117,7 +117,7 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
 
     @Override
     public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchCraftingRecipe recipe) {
-      buf.writeBoolean(recipe.requiresPassiveSkill());
+      buf.writeBoolean(recipe.hasPassiveSkillRequirement());
       int ingredientsCount = recipe.getAdditionalIngredients().size();
       buf.writeInt(ingredientsCount);
       recipe

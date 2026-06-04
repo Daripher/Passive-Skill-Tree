@@ -139,7 +139,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
     public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchItemBonusRecipe recipe) {
       NetworkHelper.writeItemCondition(buf, recipe.baseItemStackPredicate);
       NetworkHelper.writeItemBonus(buf, recipe.itemBonus);
-      buf.writeBoolean(recipe.requiresPassiveSkill());
+      buf.writeBoolean(recipe.hasPassiveSkillRequirement());
       int ingredientsCount = recipe.getAdditionalIngredients().size();
       buf.writeInt(ingredientsCount);
       recipe
