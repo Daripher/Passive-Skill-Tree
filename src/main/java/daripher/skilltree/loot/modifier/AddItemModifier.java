@@ -14,38 +14,29 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class AddItemModifier extends LootModifier {
-  private final ItemStack itemStack;
+    private final ItemStack itemStack;
 
-  public AddItemModifier(ItemStack item, LootItemCondition... conditionsIn) {
-    super(conditionsIn);
-    this.itemStack = item;
-  }
-
-  public static final Supplier<Codec<AddItemModifier>> CODEC =
-      Suppliers.memoize(
-          () ->
-              RecordCodecBuilder.create(
-                  inst ->
-                      codecStart(inst)
-                          .and(ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack))
-                          .apply(
-                              inst,
-                              (conditionsIn, item) -> new AddItemModifier(item, conditionsIn))));
-
-  @Override
-  protected @NotNull ObjectArrayList<ItemStack> doApply(
-      ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-    for (LootItemCondition condition : this.conditions) {
-      if (!condition.test(lootContext)) {
-        return generatedLoot;
-      }
+    public AddItemModifier(ItemStack item, LootItemCondition... conditionsIn) {
+        super(conditionsIn);
+        this.itemStack = item;
     }
-    generatedLoot.add(this.itemStack);
-    return generatedLoot;
-  }
 
-  @Override
-  public Codec<? extends IGlobalLootModifier> codec() {
-    return CODEC.get();
-  }
+    public static final Supplier<Codec<AddItemModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ItemStack.CODEC.fieldOf("item")
+            .forGetter(m -> m.itemStack)).apply(inst, (conditionsIn, item) -> new AddItemModifier(item, conditionsIn))));
+
+    @Override
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
+        for (LootItemCondition condition : this.conditions) {
+            if (!condition.test(lootContext)) {
+                return generatedLoot;
+            }
+        }
+        generatedLoot.add(this.itemStack);
+        return generatedLoot;
+    }
+
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC.get();
+    }
 }

@@ -9,11 +9,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class PSTRecipeSerializers {
-  public static final DeferredRegister<RecipeSerializer<?>> REGISTRY =
-      DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, SkillTreeMod.MOD_ID);
 
-  public static final RegistryObject<WorkbenchItemBonusRecipe.Serializer> WORKBENCH_ITEM_BONUS =
-      REGISTRY.register("workbench_item_bonus", WorkbenchItemBonusRecipe.Serializer::new);
-  public static final RegistryObject<WorkbenchCraftingRecipe.Serializer> WORKBENCH_CRAFTING =
-      REGISTRY.register("workbench_crafting", WorkbenchCraftingRecipe.Serializer::new);
+    public static final RegistryObject<WorkbenchItemBonusRecipe.Serializer> WORKBENCH_ITEM_BONUS = REGISTRY.register("workbench_item_bonus", WorkbenchItemBonusRecipe.Serializer::new);
+    public static final RegistryObject<WorkbenchCraftingRecipe.Serializer> WORKBENCH_CRAFTING = REGISTRY.register("workbench_crafting", WorkbenchCraftingRecipe.Serializer::new);
 }

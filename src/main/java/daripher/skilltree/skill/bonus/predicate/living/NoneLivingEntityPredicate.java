@@ -10,64 +10,64 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
 public enum NoneLivingEntityPredicate implements LivingEntityPredicate {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public boolean test(LivingEntity living) {
-    return true;
-  }
-
-  @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
-    return bonusTooltip;
-  }
-
-  @Override
-  public LivingEntityPredicate.Serializer getSerializer() {
-    return PSTLivingConditions.NONE.get();
-  }
-
-  public static class Serializer implements LivingEntityPredicate.Serializer {
     @Override
-    public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
-      return NoneLivingEntityPredicate.INSTANCE;
+    public boolean test(LivingEntity living) {
+        return true;
     }
 
     @Override
-    public void serialize(JsonObject json, LivingEntityPredicate condition) {
-      if (condition != NoneLivingEntityPredicate.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
+    public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
+        return bonusTooltip;
     }
 
     @Override
-    public LivingEntityPredicate deserialize(CompoundTag tag) {
-      return NoneLivingEntityPredicate.INSTANCE;
+    public LivingEntityPredicate.Serializer getSerializer() {
+        return PSTLivingConditions.NONE.get();
     }
 
-    @Override
-    public CompoundTag serialize(LivingEntityPredicate condition) {
-      if (condition != NoneLivingEntityPredicate.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-      return new CompoundTag();
-    }
+    public static class Serializer implements LivingEntityPredicate.Serializer {
+        @Override
+        public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
+            return NoneLivingEntityPredicate.INSTANCE;
+        }
 
-    @Override
-    public LivingEntityPredicate deserialize(FriendlyByteBuf buf) {
-      return NoneLivingEntityPredicate.INSTANCE;
-    }
+        @Override
+        public void serialize(JsonObject json, LivingEntityPredicate condition) {
+            if (condition != NoneLivingEntityPredicate.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-      if (condition != NoneLivingEntityPredicate.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-    }
+        @Override
+        public LivingEntityPredicate deserialize(CompoundTag tag) {
+            return NoneLivingEntityPredicate.INSTANCE;
+        }
 
-    @Override
-    public LivingEntityPredicate createDefaultInstance() {
-      return NoneLivingEntityPredicate.INSTANCE;
+        @Override
+        public CompoundTag serialize(LivingEntityPredicate condition) {
+            if (condition != NoneLivingEntityPredicate.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+            return new CompoundTag();
+        }
+
+        @Override
+        public LivingEntityPredicate deserialize(FriendlyByteBuf buf) {
+            return NoneLivingEntityPredicate.INSTANCE;
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
+            if (condition != NoneLivingEntityPredicate.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        public LivingEntityPredicate createDefaultInstance() {
+            return NoneLivingEntityPredicate.INSTANCE;
+        }
     }
-  }
 }

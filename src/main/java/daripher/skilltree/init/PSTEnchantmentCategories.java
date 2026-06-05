@@ -6,6 +6,6 @@ import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class PSTEnchantmentCategories {
-  public static EnchantmentCategory SHIELD = EnchantmentCategory.create("shield", item -> EquipmentPredicate.isShield(new ItemStack(item)));
-  public static EnchantmentCategory POTION = EnchantmentCategory.create("potion", item -> item instanceof PotionItem);
+    public static EnchantmentCategory SHIELD = EnchantmentCategory.create("shield", item -> EquipmentPredicate.isShield(new ItemStack(item)));
+    public static EnchantmentCategory POTION = EnchantmentCategory.create("potion", item -> item instanceof PotionItem);
 }

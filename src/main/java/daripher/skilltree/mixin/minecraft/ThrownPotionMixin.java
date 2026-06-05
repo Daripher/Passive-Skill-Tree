@@ -19,48 +19,36 @@ import java.util.List;
 
 @Mixin(ThrownPotion.class)
 public abstract class ThrownPotionMixin extends ThrowableItemProjectile implements ItemSupplier {
-  @SuppressWarnings("DataFlowIssue")
-  private ThrownPotionMixin() {
-    super(null, null);
-  }
+    @SuppressWarnings("DataFlowIssue")
+    private ThrownPotionMixin() {
+        super(null, null);
+    }
 
-  @Redirect(method = "applySplash",
-            at = @At(value = "INVOKE",
-                     target = "Lnet/minecraft/world/entity/LivingEntity;" +
-                              "addEffect(" +
-                              "Lnet/minecraft/world/effect/MobEffectInstance;" +
-                              "Lnet/minecraft/world/entity/Entity;" +
-                              ")Z"))
-  private boolean setAttackerOnHit(LivingEntity entity, MobEffectInstance effectInstance, Entity effectSource) {
-    if (getOwner() instanceof Player player) {
-      entity.setLastHurtByPlayer(player);
+    @Redirect(method = "applySplash", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;" + "addEffect(" + "Lnet/minecraft/world/effect/MobEffectInstance;" + "Lnet/minecraft/world/entity/Entity;" + ")Z"))
+    private boolean setAttackerOnHit(LivingEntity entity, MobEffectInstance effectInstance, Entity effectSource) {
+        if (getOwner() instanceof Player player) {
+            entity.setLastHurtByPlayer(player);
+        }
+        return entity.addEffect(effectInstance, effectSource);
     }
-    return entity.addEffect(effectInstance, effectSource);
-  }
 
-  @Redirect(method = "applySplash",
-            at = @At(value = "INVOKE",
-                     target = "Lnet/minecraft/world/level/Level;" +
-                              "getEntitiesOfClass(" +
-                              "Ljava/lang/Class;" +
-                              "Lnet/minecraft/world/phys/AABB;" +
-                              ")Ljava/util/List;"))
-  private <T extends Entity> List<T> removePlayerTarget(Level level, Class<T> entityClass, AABB area) {
-    List<T> targets = level.getEntitiesOfClass(entityClass, area);
-    Entity owner = getOwner();
-    if (!(owner instanceof Player player)) {
-      return targets;
+    @Redirect(method = "applySplash", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;" + "getEntitiesOfClass(" + "Ljava/lang/Class;" + "Lnet/minecraft/world/phys/AABB;" + ")Ljava/util/List;"))
+    private <T extends Entity> List<T> removePlayerTarget(Level level, Class<T> entityClass, AABB area) {
+        List<T> targets = level.getEntitiesOfClass(entityClass, area);
+        Entity owner = getOwner();
+        if (!(owner instanceof Player player)) {
+            return targets;
+        }
+        //noinspection SuspiciousMethodCalls
+        if (!targets.contains(player)) {
+            return targets;
+        }
+        List<SelfSplashImmuneBonus> bonuses = SkillBonusHandler.getSkillBonuses(player, SelfSplashImmuneBonus.class);
+        if (bonuses.isEmpty()) {
+            return targets;
+        }
+        targets.removeIf(owner::equals);
+        return targets;
     }
-    //noinspection SuspiciousMethodCalls
-    if (!targets.contains(player)) {
-      return targets;
-    }
-    List<SelfSplashImmuneBonus> bonuses = SkillBonusHandler.getSkillBonuses(player, SelfSplashImmuneBonus.class);
-    if (bonuses.isEmpty()) {
-      return targets;
-    }
-    targets.removeIf(owner::equals);
-    return targets;
-  }
 }
 

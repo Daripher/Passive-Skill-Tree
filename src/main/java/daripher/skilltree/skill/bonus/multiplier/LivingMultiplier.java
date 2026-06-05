@@ -11,21 +11,22 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public interface LivingMultiplier {
-  float getValue(LivingEntity entity);
+    float getValue(LivingEntity entity);
 
-  Serializer getSerializer();
+    Serializer getSerializer();
 
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "skill_bonus_multiplier.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.LIVING_MULTIPLIERS.get().getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "skill_bonus_multiplier.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target);
+    MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target);
 
-  default void addEditorWidgets(SkillTreeEditor editor, Consumer<LivingMultiplier> consumer) {}
+    default void addEditorWidgets(SkillTreeEditor editor, Consumer<LivingMultiplier> consumer) {
+    }
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<LivingMultiplier> {
-    LivingMultiplier createDefaultInstance();
-  }
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<LivingMultiplier> {
+        LivingMultiplier createDefaultInstance();
+    }
 }

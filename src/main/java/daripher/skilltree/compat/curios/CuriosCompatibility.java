@@ -22,8 +22,7 @@ import java.util.stream.Stream;
 public enum CuriosCompatibility {
     INSTANCE;
 
-    public static final RegistryObject<SkillBonus.Serializer> CURIO_SLOTS_BONUS =
-            PSTSkillBonuses.REGISTRY.register("curio_slots", CurioSlotsBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> CURIO_SLOTS_BONUS = PSTSkillBonuses.REGISTRY.register("curio_slots", CurioSlotsBonus.Serializer::new);
 
     public void register() {
         MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyCantUseItemBonus);
@@ -31,14 +30,11 @@ public enum CuriosCompatibility {
 
     public Stream<ItemStack> getCurios(LivingEntity living) {
         List<ItemStack> curios = new ArrayList<>();
-        CuriosApi.getCuriosInventory(living)
-                .map(ICuriosItemHandler::getEquippedCurios)
-                .ifPresent(
-                        inv -> {
-                            for (int i = 0; i < inv.getSlots(); i++) {
-                                curios.add(inv.getStackInSlot(i));
-                            }
-                        });
+        CuriosApi.getCuriosInventory(living).map(ICuriosItemHandler::getEquippedCurios).ifPresent(inv -> {
+            for (int i = 0; i < inv.getSlots(); i++) {
+                curios.add(inv.getStackInSlot(i));
+            }
+        });
         return curios.stream();
     }
 

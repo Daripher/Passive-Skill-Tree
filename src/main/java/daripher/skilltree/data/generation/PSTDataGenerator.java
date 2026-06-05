@@ -17,31 +17,25 @@ import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class PSTDataGenerator {
-  @SubscribeEvent
-  public static void onGatherData(GatherDataEvent event) {
-    DataGenerator dataGenerator = event.getGenerator();
-    ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-    CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+    @SubscribeEvent
+    public static void onGatherData(GatherDataEvent event) {
+        DataGenerator dataGenerator = event.getGenerator();
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-    boolean includeServer = event.includeServer();
-    PSTBlockTagsProvider blockTagsProvider =
-        new PSTBlockTagsProvider(dataGenerator, lookupProvider, existingFileHelper);
-    dataGenerator.addProvider(includeServer, blockTagsProvider);
-    dataGenerator.addProvider(
-        includeServer,
-        new PSTItemTagsProvider(dataGenerator, lookupProvider, blockTagsProvider, existingFileHelper));
-    dataGenerator.addProvider(
-        includeServer, new PSTLootTablesProvider(dataGenerator));
-    dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator));
-    dataGenerator.addProvider(
-        includeServer, new PSTDamageTagsProvider(dataGenerator, lookupProvider, existingFileHelper));
-    dataGenerator.addProvider(includeServer, new PSTRecipesProvider(dataGenerator));
+        boolean includeServer = event.includeServer();
+        PSTBlockTagsProvider blockTagsProvider = new PSTBlockTagsProvider(dataGenerator, lookupProvider, existingFileHelper);
+        dataGenerator.addProvider(includeServer, blockTagsProvider);
+        dataGenerator.addProvider(includeServer, new PSTItemTagsProvider(dataGenerator, lookupProvider, blockTagsProvider, existingFileHelper));
+        dataGenerator.addProvider(includeServer, new PSTLootTablesProvider(dataGenerator));
+        dataGenerator.addProvider(includeServer, new PSTGlobalLootModifierProvider(dataGenerator));
+        dataGenerator.addProvider(includeServer, new PSTDamageTagsProvider(dataGenerator, lookupProvider, existingFileHelper));
+        dataGenerator.addProvider(includeServer, new PSTRecipesProvider(dataGenerator));
 
-    boolean includeClient = event.includeClient();
-    dataGenerator.addProvider(includeClient, new PSTEnglishTranslationProvider(dataGenerator));
-    dataGenerator.addProvider(includeClient, new PSTRussianTranslationProvider(dataGenerator));
-    dataGenerator.addProvider(
-        includeClient, new PSTBlockStatesProvider(dataGenerator, existingFileHelper));
-    dataGenerator.addProvider(includeClient, new PSTItemModelsProvider(dataGenerator, existingFileHelper));
-  }
+        boolean includeClient = event.includeClient();
+        dataGenerator.addProvider(includeClient, new PSTEnglishTranslationProvider(dataGenerator));
+        dataGenerator.addProvider(includeClient, new PSTRussianTranslationProvider(dataGenerator));
+        dataGenerator.addProvider(includeClient, new PSTBlockStatesProvider(dataGenerator, existingFileHelper));
+        dataGenerator.addProvider(includeClient, new PSTItemModelsProvider(dataGenerator, existingFileHelper));
+    }
 }

@@ -23,125 +23,122 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class LearnedSkillRequirement implements SkillRequirement<LearnedSkillRequirement> {
-  private ResourceLocation skillId;
+    private ResourceLocation skillId;
 
-  public LearnedSkillRequirement(ResourceLocation skillId) {
-    this.skillId = skillId;
-  }
-
-  @Override
-  public boolean test(Player player) {
-    if (!PlayerSkillsProvider.hasSkills(player)) {
-      return false;
-    }
-    NonNullList<PassiveSkill> skills = PlayerSkillsProvider.get(player).getPlayerSkills();
-    return skills.stream().map(PassiveSkill::getId).anyMatch(skillId::equals);
-  }
-
-  @Override
-  public MutableComponent getTooltip() {
-    Component skillTitle = TooltipHelper.getSkillTitle(skillId).withStyle(Style.EMPTY.withColor(0xFFD75F));
-    return Component.translatable(getDescriptionId(), skillTitle);
-  }
-
-  @Override
-  public void addEditorWidgets(SkillTreeEditor editor, Consumer<LearnedSkillRequirement> consumer) {
-    editor.addLabel(0, 0, "Skill ID", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    Set<ResourceLocation> skillIDs = SkillsReloader.getSkills().keySet();
-    editor
-        .addSelectionMenu(0, 0, 200, skillIDs)
-        .setValue(getSkillId())
-        .setElementNameGetter(v -> Component.literal(v.toString()))
-        .setResponder(v -> selectSkillId(consumer, v));
-    editor.increaseHeight(19);
-  }
-
-  private void selectSkillId(Consumer<LearnedSkillRequirement> consumer, ResourceLocation id) {
-    setSkillId(id);
-    consumer.accept(this);
-  }
-
-  public void setSkillId(ResourceLocation skillId) {
-    this.skillId = skillId;
-  }
-
-  @Override
-  public LearnedSkillRequirement copy() {
-    return new LearnedSkillRequirement(skillId);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-        return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
-    }
-    LearnedSkillRequirement that = (LearnedSkillRequirement) o;
-    return Objects.equals(skillId, that.skillId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(skillId);
-  }
-
-  public ResourceLocation getSkillId() {
-    return skillId;
-  }
-
-  @Override
-  public SkillRequirement.Serializer getSerializer() {
-    return PSTSkillRequirements.LEARNED_SKILL.get();
-  }
-
-  public static class Serializer implements SkillRequirement.Serializer {
-    @Override
-    public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-      ResourceLocation id = ResourceLocation.parse(json.get("skill_id").getAsString());
-      return new LearnedSkillRequirement(id);
+    public LearnedSkillRequirement(ResourceLocation skillId) {
+        this.skillId = skillId;
     }
 
     @Override
-    public void serialize(JsonObject json, SkillRequirement<?> requirement) {
-      if (requirement instanceof LearnedSkillRequirement aRequirement) {
-        json.addProperty("skill_id", aRequirement.skillId.toString());
-      }
+    public boolean test(Player player) {
+        if (!PlayerSkillsProvider.hasSkills(player)) {
+            return false;
+        }
+        NonNullList<PassiveSkill> skills = PlayerSkillsProvider.get(player).getPlayerSkills();
+        return skills.stream().map(PassiveSkill::getId).anyMatch(skillId::equals);
     }
 
     @Override
-    public SkillRequirement<?> deserialize(CompoundTag tag) {
-      ResourceLocation id = ResourceLocation.parse(tag.getString("skill_id"));
-      return new LearnedSkillRequirement(id);
+    public MutableComponent getTooltip() {
+        Component skillTitle = TooltipHelper.getSkillTitle(skillId).withStyle(Style.EMPTY.withColor(0xFFD75F));
+        return Component.translatable(getDescriptionId(), skillTitle);
     }
 
     @Override
-    public CompoundTag serialize(SkillRequirement<?> requirement) {
-      CompoundTag tag = new CompoundTag();
-      if (requirement instanceof LearnedSkillRequirement aRequirement) {
-        tag.putString("skill_id", aRequirement.skillId.toString());
-      }
-      return tag;
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LearnedSkillRequirement> consumer) {
+        editor.addLabel(0, 0, "Skill ID", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        Set<ResourceLocation> skillIDs = SkillsReloader.getSkills().keySet();
+        editor.addSelectionMenu(0, 0, 200, skillIDs).setValue(getSkillId()).setElementNameGetter(v -> Component.literal(v.toString()))
+                .setResponder(v -> selectSkillId(consumer, v));
+        editor.increaseHeight(19);
+    }
+
+    private void selectSkillId(Consumer<LearnedSkillRequirement> consumer, ResourceLocation id) {
+        setSkillId(id);
+        consumer.accept(this);
+    }
+
+    public void setSkillId(ResourceLocation skillId) {
+        this.skillId = skillId;
     }
 
     @Override
-    public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-      ResourceLocation id = ResourceLocation.parse(buf.readUtf());
-      return new LearnedSkillRequirement(id);
+    public LearnedSkillRequirement copy() {
+        return new LearnedSkillRequirement(skillId);
     }
 
     @Override
-    public void serialize(FriendlyByteBuf buf, SkillRequirement<?> requirement) {
-      if (requirement instanceof LearnedSkillRequirement aRequirement) {
-        buf.writeUtf(aRequirement.skillId.toString());
-      }
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        LearnedSkillRequirement that = (LearnedSkillRequirement) o;
+        return Objects.equals(skillId, that.skillId);
     }
 
     @Override
-    public SkillRequirement<?> createDefaultInstance() {
-      return new LearnedSkillRequirement(ResourceLocation.parse("skilltree:hunter_1"));
+    public int hashCode() {
+        return Objects.hash(skillId);
     }
-  }
+
+    public ResourceLocation getSkillId() {
+        return skillId;
+    }
+
+    @Override
+    public SkillRequirement.Serializer getSerializer() {
+        return PSTSkillRequirements.LEARNED_SKILL.get();
+    }
+
+    public static class Serializer implements SkillRequirement.Serializer {
+        @Override
+        public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
+            ResourceLocation id = ResourceLocation.parse(json.get("skill_id").getAsString());
+            return new LearnedSkillRequirement(id);
+        }
+
+        @Override
+        public void serialize(JsonObject json, SkillRequirement<?> requirement) {
+            if (requirement instanceof LearnedSkillRequirement aRequirement) {
+                json.addProperty("skill_id", aRequirement.skillId.toString());
+            }
+        }
+
+        @Override
+        public SkillRequirement<?> deserialize(CompoundTag tag) {
+            ResourceLocation id = ResourceLocation.parse(tag.getString("skill_id"));
+            return new LearnedSkillRequirement(id);
+        }
+
+        @Override
+        public CompoundTag serialize(SkillRequirement<?> requirement) {
+            CompoundTag tag = new CompoundTag();
+            if (requirement instanceof LearnedSkillRequirement aRequirement) {
+                tag.putString("skill_id", aRequirement.skillId.toString());
+            }
+            return tag;
+        }
+
+        @Override
+        public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
+            ResourceLocation id = ResourceLocation.parse(buf.readUtf());
+            return new LearnedSkillRequirement(id);
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, SkillRequirement<?> requirement) {
+            if (requirement instanceof LearnedSkillRequirement aRequirement) {
+                buf.writeUtf(aRequirement.skillId.toString());
+            }
+        }
+
+        @Override
+        public SkillRequirement<?> createDefaultInstance() {
+            return new LearnedSkillRequirement(ResourceLocation.parse("skilltree:hunter_1"));
+        }
+    }
 }

@@ -25,49 +25,41 @@ import java.util.stream.Stream;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {
-  public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER =
-      (ctx, builder) -> SharedSuggestionProvider.suggest(gatherSkillTreesPaths(), builder);
+    public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER = (ctx, builder) -> SharedSuggestionProvider.suggest(gatherSkillTreesPaths(), builder);
 
-  @NotNull
-  private static Stream<String> gatherSkillTreesPaths() {
-    return Stream.concat(
-            SkillTreesReloader.getSkillTrees().keySet().stream(),
-            SkillTreeEditorData.getEditorTreesIDs().stream())
-        .map(ResourceLocation::toString);
-  }
-
-  private static ResourceLocation tree_to_display;
-  private static int timer;
-
-  @SubscribeEvent
-  public static void registerCommands(RegisterClientCommandsEvent event) {
-    LiteralArgumentBuilder<CommandSourceStack> editorCommand =
-        Commands.literal("skilltree")
-            .then(
-                Commands.literal("editor")
-                    .then(
-                        Commands.argument("treeId", StringArgumentType.greedyString())
-                            .suggests(SKILL_TREE_ID_PROVIDER)
-                            .executes(PSTClientCommands::displaySkillTreeEditor)));
-    event.getDispatcher().register(editorCommand);
-  }
-
-  @SubscribeEvent
-  public static void delayedCommandExecution(ClientTickEvent event) {
-    if (timer > 0) {
-      timer--;
-      return;
+    @NotNull
+    private static Stream<String> gatherSkillTreesPaths() {
+        return Stream.concat(SkillTreesReloader.getSkillTrees().keySet().stream(), SkillTreeEditorData.getEditorTreesIDs().stream())
+                .map(ResourceLocation::toString);
     }
-    if (tree_to_display != null) {
-      Minecraft.getInstance().setScreen(new SkillTreeEditorScreen(tree_to_display));
-      tree_to_display = null;
-    }
-  }
 
-  private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) {
-    String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase(Locale.ROOT);
-    PSTClientCommands.tree_to_display = ResourceLocation.parse(treeIdArg);
-    PSTClientCommands.timer = 1;
-    return 1;
-  }
+    private static ResourceLocation tree_to_display;
+    private static int timer;
+
+    @SubscribeEvent
+    public static void registerCommands(RegisterClientCommandsEvent event) {
+        LiteralArgumentBuilder<CommandSourceStack> editorCommand = Commands.literal("skilltree").then(Commands.literal("editor")
+                .then(Commands.argument("treeId", StringArgumentType.greedyString()).suggests(SKILL_TREE_ID_PROVIDER)
+                        .executes(PSTClientCommands::displaySkillTreeEditor)));
+        event.getDispatcher().register(editorCommand);
+    }
+
+    @SubscribeEvent
+    public static void delayedCommandExecution(ClientTickEvent event) {
+        if (timer > 0) {
+            timer--;
+            return;
+        }
+        if (tree_to_display != null) {
+            Minecraft.getInstance().setScreen(new SkillTreeEditorScreen(tree_to_display));
+            tree_to_display = null;
+        }
+    }
+
+    private static int displaySkillTreeEditor(CommandContext<CommandSourceStack> ctx) {
+        String treeIdArg = ctx.getArgument("treeId", String.class).toLowerCase(Locale.ROOT);
+        PSTClientCommands.tree_to_display = ResourceLocation.parse(treeIdArg);
+        PSTClientCommands.timer = 1;
+        return 1;
+    }
 }

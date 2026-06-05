@@ -114,11 +114,8 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         return addWidget(new Button(getWidgetsX(x), getWidgetsY(y), width, height, message));
     }
 
-    public ConfirmationButton addConfirmationButton(
-            int x, int y, int width, int height, String message, String confirmationMessage) {
-        ConfirmationButton button =
-                new ConfirmationButton(
-                        getWidgetsX(x), getWidgetsY(y), width, height, Component.literal(message));
+    public ConfirmationButton addConfirmationButton(int x, int y, int width, int height, String message, String confirmationMessage) {
+        ConfirmationButton button = new ConfirmationButton(getWidgetsX(x), getWidgetsY(y), width, height, Component.literal(message));
         button.setConfirmationMessage(Component.literal(confirmationMessage));
         return addWidget(button);
     }
@@ -127,10 +124,8 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         return addWidget(new TextField(getWidgetsX(x), getWidgetsY(y), width, height, defaultValue));
     }
 
-    public NumericTextField addNumericTextField(
-            int x, int y, int width, int height, double defaultValue) {
-        return addWidget(
-                new NumericTextField(getWidgetsX(x), getWidgetsY(y), width, height, defaultValue));
+    public NumericTextField addNumericTextField(int x, int y, int width, int height, double defaultValue) {
+        return addWidget(new NumericTextField(getWidgetsX(x), getWidgetsY(y), width, height, defaultValue));
     }
 
     public TextArea addTextArea(int x, int y, int width, int height, String defaultValue) {
@@ -149,50 +144,38 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         return addWidget(new CheckBox(getWidgetsX(x), getWidgetsY(y), value));
     }
 
-    public TextureSelectionMenuButton addTextureSelectionMenu(
-            int x, int y, int width, ResourceLocation currentValue, String folder) {
+    public TextureSelectionMenuButton addTextureSelectionMenu(int x, int y, int width, ResourceLocation currentValue, String folder) {
         Collection<ResourceLocation> values = SkillTexturesData.getTexturesInFolder(folder);
         x = getWidgetsX(x);
         y = getWidgetsY(y);
         String message = currentValue.toString();
-        TextureSelectionMenuButton button =
-                (TextureSelectionMenuButton)
-                        new TextureSelectionMenuButton(this, x, y, width, message, folder, values)
-                                .setValue(currentValue)
-                                .setElementNameGetter(TooltipHelper::getTextureName);
+        TextureSelectionMenuButton button = (TextureSelectionMenuButton) new TextureSelectionMenuButton(this, x, y, width, message, folder, values).setValue(currentValue)
+                .setElementNameGetter(TooltipHelper::getTextureName);
         return addWidget(button);
     }
 
     @SuppressWarnings("rawtypes")
-    public SelectionMenuButton<SkillBonus> addSelectionMenu(
-            int x, int y, int width, SkillBonus defaultValue) {
+    public SelectionMenuButton<SkillBonus> addSelectionMenu(int x, int y, int width, SkillBonus defaultValue) {
         Collection<SkillBonus> values = PSTSkillBonuses.bonusList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(b -> Component.literal(PSTSkillBonuses.getName(b)));
     }
 
     @SuppressWarnings("rawtypes")
-    public SelectionMenuButton<SkillRequirement> addSelectionMenu(
-            int x, int y, int width, SkillRequirement defaultValue) {
+    public SelectionMenuButton<SkillRequirement> addSelectionMenu(int x, int y, int width, SkillRequirement defaultValue) {
         Collection<SkillRequirement> values = PSTSkillRequirements.requirementList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(b -> Component.literal(PSTSkillRequirements.getName(b)));
     }
 
-    public SelectionMenuButton<StatRequirement> addSelectionMenu(
-            int x, int y, int width, StatRequirement defaultValue) {
+    public SelectionMenuButton<StatRequirement> addSelectionMenu(int x, int y, int width, StatRequirement defaultValue) {
         Collection<StatRequirement> values = getDefaultRequirementInstances();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(r -> Component.literal(r.getStatTypeId().getPath()));
     }
 
     private Collection<StatRequirement> getDefaultRequirementInstances() {
-        return ForgeRegistries.STAT_TYPES.getValues().stream()
-                .map(SkillTreeEditor::createDefaultRequirement)
-                .filter(Objects::nonNull)
+        return ForgeRegistries.STAT_TYPES.getValues().stream().map(SkillTreeEditor::createDefaultRequirement).filter(Objects::nonNull)
                 .toList();
     }
 
@@ -207,108 +190,81 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     @SuppressWarnings("rawtypes")
-    public SelectionMenuButton<FloatFunction> addSelectionMenu(
-            int x, int y, int width, FloatFunction defaultValue) {
+    public SelectionMenuButton<FloatFunction> addSelectionMenu(int x, int y, int width, FloatFunction defaultValue) {
         Collection<FloatFunction> values = PSTFloatFunctions.providerList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(p -> Component.literal(PSTFloatFunctions.getName(p)));
     }
 
-    public SelectionMenuButton<Attribute> addSelectionMenu(
-            int x, int y, int width, Attribute defaultValue) {
+    public SelectionMenuButton<Attribute> addSelectionMenu(int x, int y, int width, Attribute defaultValue) {
         Collection<Attribute> values = AttributesHelper.attributeList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(a -> Component.literal(AttributesHelper.getName(a)));
     }
 
-    public SelectionMenuButton<LivingEntityPredicate> addSelectionMenu(
-            int x, int y, int width, LivingEntityPredicate defaultValue) {
+    public SelectionMenuButton<LivingEntityPredicate> addSelectionMenu(int x, int y, int width, LivingEntityPredicate defaultValue) {
         Collection<LivingEntityPredicate> values = PSTLivingConditions.conditionsList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.literal(PSTLivingConditions.getName(c)));
     }
 
-    public SelectionMenuButton<LivingMultiplier> addSelectionMenu(
-            int x, int y, int width, LivingMultiplier defaultValue) {
+    public SelectionMenuButton<LivingMultiplier> addSelectionMenu(int x, int y, int width, LivingMultiplier defaultValue) {
         Collection<LivingMultiplier> values = PSTLivingMultipliers.multiplierList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(m -> Component.literal(PSTLivingMultipliers.getName(m)));
     }
 
-    public SelectionMenuButton<ItemStackPredicate> addSelectionMenu(
-            int x, int y, int width, ItemStackPredicate defaultValue) {
+    public SelectionMenuButton<ItemStackPredicate> addSelectionMenu(int x, int y, int width, ItemStackPredicate defaultValue) {
         Collection<ItemStackPredicate> values = PSTItemConditions.conditionsList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.literal(PSTItemConditions.getName(c)));
     }
 
-    public SelectionMenuButton<MobEffect> addSelectionMenu(
-            int x, int y, int width, MobEffect defaultValue) {
+    public SelectionMenuButton<MobEffect> addSelectionMenu(int x, int y, int width, MobEffect defaultValue) {
         Collection<MobEffect> values = ForgeRegistries.MOB_EFFECTS.getValues();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(e -> Component.literal(e.getDescriptionId()));
     }
 
-    public SelectionMenuButton<DamageCondition> addSelectionMenu(
-            int x, int y, int width, DamageCondition defaultValue) {
+    public SelectionMenuButton<DamageCondition> addSelectionMenu(int x, int y, int width, DamageCondition defaultValue) {
         List<DamageCondition> values = PSTDamageConditions.conditionsList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.translatable(PSTDamageConditions.getName(c)));
     }
 
-    public SelectionMenuButton<SkillEventListener> addSelectionMenu(
-            int x, int y, int width, SkillEventListener defaultValue) {
+    public SelectionMenuButton<SkillEventListener> addSelectionMenu(int x, int y, int width, SkillEventListener defaultValue) {
         List<SkillEventListener> values = PSTEventListeners.eventsList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(e -> Component.translatable(PSTEventListeners.getName(e)));
     }
 
-    public SelectionMenuButton<EnchantmentCondition> addSelectionMenu(
-            int x, int y, int width, EnchantmentCondition defaultValue) {
+    public SelectionMenuButton<EnchantmentCondition> addSelectionMenu(int x, int y, int width, EnchantmentCondition defaultValue) {
         List<EnchantmentCondition> values = PSTEnchantmentConditions.conditionsList();
-        return addSelectionMenu(x, y, width, values)
-                .setValue(defaultValue)
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.translatable(PSTEnchantmentConditions.getName(c)));
     }
 
-    public <T extends Enum<T>> SelectionMenuButton<T> addSelectionMenu(
-            int x, int y, int width, T defaultValue) {
+    public <T extends Enum<T>> SelectionMenuButton<T> addSelectionMenu(int x, int y, int width, T defaultValue) {
         List<T> values = getEnumValues(defaultValue);
         return addSelectionMenu(x, y, width, values).setValue(defaultValue);
     }
 
-    public <T> SelectionMenuButton<T> addSelectionMenu(
-            int x, int y, int width, Collection<T> values) {
-        return addWidget(
-                new SelectionMenuButton<>(this, getWidgetsX(x), getWidgetsY(y), width, values));
+    public <T> SelectionMenuButton<T> addSelectionMenu(int x, int y, int width, Collection<T> values) {
+        return addWidget(new SelectionMenuButton<>(this, getWidgetsX(x), getWidgetsY(y), width, values));
     }
 
-    public <T> SelectionList<T> addSelection(
-            int x, int y, int width, T defaultValue, Collection<T> values, int maxDisplayed) {
-        SelectionList<T> widget =
-                new TextSelectionList<>(getWidgetsX(x), getWidgetsY(y), width, 14, values)
-                        .setRows(maxDisplayed)
-                        .selectElement(defaultValue);
+    public <T> SelectionList<T> addSelection(int x, int y, int width, T defaultValue, Collection<T> values, int maxDisplayed) {
+        SelectionList<T> widget = new TextSelectionList<>(getWidgetsX(x), getWidgetsY(y), width, 14, values).setRows(maxDisplayed)
+                .selectElement(defaultValue);
         return addWidget(widget);
     }
 
-    public SelectionList<AttributeModifier.Operation> addOperationSelection(
-            int x, int y, int width, AttributeModifier.Operation defaultValue) {
+    public SelectionList<AttributeModifier.Operation> addOperationSelection(int x, int y, int width, AttributeModifier.Operation defaultValue) {
         List<AttributeModifier.Operation> values = List.of(AttributeModifier.Operation.values());
-        return addSelection(x, y, width, defaultValue, values, 1)
-                .setNameGetter(TooltipHelper::getOperationName);
+        return addSelection(x, y, width, defaultValue, values, 1).setNameGetter(TooltipHelper::getOperationName);
     }
 
-    public <T extends Enum<T>> SelectionList<T> addSelection(
-            int x, int y, int width, int maxDisplayed, T defaultValue) {
+    public <T extends Enum<T>> SelectionList<T> addSelection(int x, int y, int width, int maxDisplayed, T defaultValue) {
         List<T> values = getEnumValues(defaultValue);
         return addSelection(x, y, width, defaultValue, values, maxDisplayed);
     }

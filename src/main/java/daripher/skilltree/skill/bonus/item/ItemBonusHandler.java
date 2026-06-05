@@ -27,136 +27,133 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {
-  @SubscribeEvent
-  public static void addItemBonusTooltips(ItemTooltipEvent event) {
-    List<Component> components = event.getToolTip();
-    List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
-    if (!itemBonuses.isEmpty()) {
-      components.add(Component.empty());
+    @SubscribeEvent
+    public static void addItemBonusTooltips(ItemTooltipEvent event) {
+        List<Component> components = event.getToolTip();
+        List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
+        if (!itemBonuses.isEmpty()) {
+            components.add(Component.empty());
+        }
+        for (ItemBonus<?> itemBonus : itemBonuses) {
+            Style style = TooltipHelper.getItemBonusStyle();
+            itemBonus.addTooltip(tooltip -> components.add(tooltip.withStyle(style)));
+        }
     }
-    for (ItemBonus<?> itemBonus : itemBonuses) {
-      Style style = TooltipHelper.getItemBonusStyle();
-      itemBonus.addTooltip(tooltip -> components.add(tooltip.withStyle(style)));
-    }
-  }
 
-  @SubscribeEvent
-  public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
-    LivingEntity entity = event.getEntity();
-    if (!(entity instanceof Player)) {
-        return;
+    @SubscribeEvent
+    public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (!(entity instanceof Player)) {
+            return;
+        }
+        for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), SkillBonusItemBonus.class)) {
+            SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
+            if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+                continue;
+            }
+            AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+            if (attributeInstance == null) {
+                continue;
+            }
+            attributeInstance.removeModifier(attributeBonus.getModifier().getId());
+        }
+        for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), SkillBonusItemBonus.class)) {
+            SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
+            if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+                continue;
+            }
+            if (attributeBonus.isDynamic()) {
+                continue;
+            }
+            AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
+            if (attributeInstance == null) {
+                continue;
+            }
+            if (attributeInstance.hasModifier(attributeBonus.getModifier())) {
+                continue;
+            }
+            attributeInstance.addTransientModifier(attributeBonus.getModifier());
+        }
     }
-    for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), SkillBonusItemBonus.class)) {
-      SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
-      if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
-        continue;
-      }
-      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
-      if (attributeInstance == null) {
-        continue;
-      }
-      attributeInstance.removeModifier(attributeBonus.getModifier().getId());
-    }
-    for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), SkillBonusItemBonus.class)) {
-      SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
-      if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
-        continue;
-      }
-      if (attributeBonus.isDynamic()) {
-        continue;
-      }
-      AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
-      if (attributeInstance == null) {
-        continue;
-      }
-      if (attributeInstance.hasModifier(attributeBonus.getModifier())) {
-        continue;
-      }
-      attributeInstance.addTransientModifier(attributeBonus.getModifier());
-    }
-  }
 
-  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) {
-        return ImmutableList.of();
+    public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
+        if (!stack.hasTag()) {
+            return ImmutableList.of();
+        }
+        List<ItemBonus<?>> list = new ArrayList<>();
+        CompoundTag stackTag = stack.getOrCreateTag();
+        CompoundTag bonusesTag = stackTag.getCompound("SkillBonuses");
+        for (int i = 0; true; i++) {
+            if (!bonusesTag.contains("" + i)) {
+                return list;
+            }
+            CompoundTag itemBonusTag = bonusesTag.getCompound("" + i);
+            list.add(deserializeBonus(itemBonusTag));
+        }
     }
-    List<ItemBonus<?>> list = new ArrayList<>();
-    CompoundTag stackTag = stack.getOrCreateTag();
-    CompoundTag bonusesTag = stackTag.getCompound("SkillBonuses");
-    for (int i = 0; true; i++) {
-      if (!bonusesTag.contains("" + i)) {
-        return list;
-      }
-      CompoundTag itemBonusTag = bonusesTag.getCompound("" + i);
-      list.add(deserializeBonus(itemBonusTag));
-    }
-  }
 
-  public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
-    List<ItemBonus<?>> bonuses = new ArrayList<>();
-    for (ItemBonus<?> bonus : getItemBonuses(stack)) {
-      if (bonus instanceof ItemBonusListItemBonus listBonus) {
-        bonuses.addAll(listBonus.innerBonuses());
-      } else {
-        bonuses.add(bonus);
-      }
+    public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
+        List<ItemBonus<?>> bonuses = new ArrayList<>();
+        for (ItemBonus<?> bonus : getItemBonuses(stack)) {
+            if (bonus instanceof ItemBonusListItemBonus listBonus) {
+                bonuses.addAll(listBonus.innerBonuses());
+            } else {
+                bonuses.add(bonus);
+            }
+        }
+        return bonuses.stream().filter(type::isInstance).toList();
     }
-    return bonuses.stream().filter(type::isInstance).toList();
-  }
 
-  public static void setItemBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
-    CompoundTag bonusesTag = new CompoundTag();
-    int i = 0;
-    for (ItemBonus<?> itemBonus : bonuses) {
-      CompoundTag bonusTag = serializeBonus(itemBonus);
-      bonusesTag.put("" + i, bonusTag);
-      i++;
+    public static void setItemBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
+        CompoundTag bonusesTag = new CompoundTag();
+        int i = 0;
+        for (ItemBonus<?> itemBonus : bonuses) {
+            CompoundTag bonusTag = serializeBonus(itemBonus);
+            bonusesTag.put("" + i, bonusTag);
+            i++;
+        }
+        stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
     }
-    stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
-  }
 
-  public static void removeItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) {
-      return;
+    public static void removeItemBonuses(ItemStack stack) {
+        if (!stack.hasTag()) {
+            return;
+        }
+        stack.getOrCreateTag().remove("SkillBonuses");
     }
-    stack.getOrCreateTag().remove("SkillBonuses");
-  }
 
-  private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
-    ItemBonus.Serializer serializer = bonus.getSerializer();
-    CompoundTag bonusTag = serializer.serialize(bonus);
-    ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
-    bonusTag.putString("type", Objects.requireNonNull(id).toString());
-    return bonusTag;
-  }
+    private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
+        ItemBonus.Serializer serializer = bonus.getSerializer();
+        CompoundTag bonusTag = serializer.serialize(bonus);
+        ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(serializer);
+        bonusTag.putString("type", Objects.requireNonNull(id).toString());
+        return bonusTag;
+    }
 
-  private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
-    if (!tag.contains("type")) {
-        return null;
+    private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
+        if (!tag.contains("type")) {
+            return null;
+        }
+        ResourceLocation id = ResourceLocation.parse(tag.getString("type"));
+        ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
+        if (serializer == null) {
+            return null;
+        }
+        try {
+            return serializer.deserialize(tag);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    ResourceLocation id = ResourceLocation.parse(tag.getString("type"));
-    ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
-    if (serializer == null) {
-        return null;
-    }
-    try {
-      return serializer.deserialize(tag);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
 
-  public static int getCraftedBonusLimit(ItemStack itemStack, @Nullable Player player) {
-    int limit = 1;
-    if (player != null) {
-      limit +=
-          SkillBonusHandler.getSkillBonuses(player, MoreItemBonusesBonus.class).stream()
-              .filter(bonus -> bonus.getItemCondition().test(itemStack))
-              .map(MoreItemBonusesBonus::getAmount)
-              .reduce(Integer::sum)
-              .orElse(0);
+    public static int getCraftedBonusLimit(ItemStack itemStack, @Nullable Player player) {
+        int limit = 1;
+        if (player != null) {
+            limit += SkillBonusHandler.getSkillBonuses(player, MoreItemBonusesBonus.class).stream()
+                    .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(MoreItemBonusesBonus::getAmount).reduce(Integer::sum)
+                    .orElse(0);
+        }
+        return limit;
     }
-    return limit;
-  }
 }

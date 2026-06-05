@@ -66,8 +66,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
     public MutableComponent getTooltip() {
         String advancementPath = advancementId.getPath().replaceAll("/", ".");
         String advancamentDescriptionId = "advancements.%s.title".formatted(advancementPath);
-        Component advancementTooltip =
-                Component.translatable(advancamentDescriptionId).withStyle(Style.EMPTY.withColor(0xFFD75F));
+        Component advancementTooltip = Component.translatable(advancamentDescriptionId).withStyle(Style.EMPTY.withColor(0xFFD75F));
         return Component.translatable(getDescriptionId(), advancementTooltip);
     }
 
@@ -78,15 +77,10 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
         ClientAdvancements advancements = localPlayer.connection.getAdvancements();
         editor.addLabel(0, 0, "Advancement ID", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        List<ResourceLocation> advancementIds =
-                advancements.getAdvancements().getAllAdvancements().stream()
-                        .map(Advancement::getId)
-                        .toList();
-        editor
-                .addSelectionMenu(0, 0, 200, advancementIds)
-                .setValue(getAdvancementId())
-                .setElementNameGetter(v -> Component.literal(v.toString()))
-                .setResponder(v -> selectAdvancementId(consumer, v));
+        List<ResourceLocation> advancementIds = advancements.getAdvancements().getAllAdvancements().stream().map(Advancement::getId)
+                .toList();
+        editor.addSelectionMenu(0, 0, 200, advancementIds).setValue(getAdvancementId())
+                .setElementNameGetter(v -> Component.literal(v.toString())).setResponder(v -> selectAdvancementId(consumer, v));
         editor.increaseHeight(19);
     }
 
@@ -174,8 +168,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
 
         @Override
         public SkillRequirement<?> createDefaultInstance() {
-            return new AdvancementRequirement(
-                    ResourceLocation.parse("minecraft:adventure/hero_of_the_village"));
+            return new AdvancementRequirement(ResourceLocation.parse("minecraft:adventure/hero_of_the_village"));
         }
     }
 }

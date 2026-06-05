@@ -1,7 +1,7 @@
 package daripher.skilltree.entity.player;
 
 public interface PlayerExtension {
-  int getGemsRandomSeed();
+    int getGemsRandomSeed();
 
-  void updateGemsRandomSeed();
+    void updateGemsRandomSeed();
 }

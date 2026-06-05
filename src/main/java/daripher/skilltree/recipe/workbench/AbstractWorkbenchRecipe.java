@@ -21,90 +21,86 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public abstract class AbstractWorkbenchRecipe
-    implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
-  private final Map<Ingredient, Integer> additionalIngredients;
-  private final ResourceLocation id;
-  private final boolean requiresPassiveSkill;
+public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
+    private final Map<Ingredient, Integer> additionalIngredients;
+    private final ResourceLocation id;
+    private final boolean requiresPassiveSkill;
 
-  public AbstractWorkbenchRecipe(
-      ResourceLocation id, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill) {
-    this.additionalIngredients = ingredients;
-    this.requiresPassiveSkill = requiresPassiveSkill;
-    this.id = id;
-  }
-
-  @Override
-  public boolean matches(@NotNull WorkbenchContainer container, @NotNull Level level) {
-    if (!isValidBaseItem(container.getBaseItem())) {
-      return false;
+    public AbstractWorkbenchRecipe(ResourceLocation id, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill) {
+        this.additionalIngredients = ingredients;
+        this.requiresPassiveSkill = requiresPassiveSkill;
+        this.id = id;
     }
-    if (isLockedFor(container.getPlayer())) {
-      return false;
+
+    @Override
+    public boolean matches(@NotNull WorkbenchContainer container, @NotNull Level level) {
+        if (!isValidBaseItem(container.getBaseItem())) {
+            return false;
+        }
+        if (isLockedFor(container.getPlayer())) {
+            return false;
+        }
+        return hasIngredients(container, additionalIngredients);
     }
-    return hasIngredients(container, additionalIngredients);
-  }
 
-  protected String getDescriptionId() {
-    ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    protected String getDescriptionId() {
+        ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  public boolean isLockedFor(@NotNull Player player) {
-    return requiresPassiveSkill && !hasRecipeLearned(player);
-  }
+    public boolean isLockedFor(@NotNull Player player) {
+        return requiresPassiveSkill && !hasRecipeLearned(player);
+    }
 
-  public abstract boolean isValidBaseItem(ItemStack itemStack);
+    public abstract boolean isValidBaseItem(ItemStack itemStack);
 
-  public abstract Component getShortDescription();
+    public abstract Component getShortDescription();
 
-  public List<Component> getFullDescription() {
-    return List.of(getShortDescription());
-  }
+    public List<Component> getFullDescription() {
+        return List.of(getShortDescription());
+    }
 
-  public abstract @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer);
+    public abstract @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer);
 
-  public abstract int requiredBaseItemAmount();
+    public abstract int requiredBaseItemAmount();
 
-  public Map<Ingredient, Integer> getAdditionalIngredients() {
-    return additionalIngredients;
-  }
+    public Map<Ingredient, Integer> getAdditionalIngredients() {
+        return additionalIngredients;
+    }
 
-  protected final boolean hasRecipeLearned(@NotNull Player player) {
-    return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream()
-        .map(RecipeUnlockBonus::getRecipeId)
-        .anyMatch(getId()::equals);
-  }
+    protected final boolean hasRecipeLearned(@NotNull Player player) {
+        return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream().map(RecipeUnlockBonus::getRecipeId)
+                .anyMatch(getId()::equals);
+    }
 
-  protected boolean hasIngredients(
-      @NotNull WorkbenchContainer container, Map<Ingredient, Integer> ingredients) {
-    return container.hasIngredients(ingredients);
-  }
+    protected boolean hasIngredients(@NotNull WorkbenchContainer container, Map<Ingredient, Integer> ingredients) {
+        return container.hasIngredients(ingredients);
+    }
 
-  @Override
-  public boolean canCraftInDimensions(int width, int height) {
-    return width == 7 && height == 1;
-  }
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return width == 7 && height == 1;
+    }
 
-  @Override
-  public @NotNull ResourceLocation getId() {
-    return id;
-  }
+    @Override
+    public @NotNull ResourceLocation getId() {
+        return id;
+    }
 
-  @Deprecated
-  @Override
-  public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registryAccess) {
-    return ItemStack.EMPTY;
-  }
+    @Deprecated
+    @Override
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registryAccess) {
+        return ItemStack.EMPTY;
+    }
 
-  @Override
-  public @NotNull RecipeType<?> getType() {
-    return PSTRecipeTypes.WORKBENCH;
-  }
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return PSTRecipeTypes.WORKBENCH;
+    }
 
-  @Override
-  public boolean hasPassiveSkillRequirement() {
-    return requiresPassiveSkill;
-  }
+    @Override
+    public boolean hasPassiveSkillRequirement() {
+        return requiresPassiveSkill;
+    }
 }

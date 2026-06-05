@@ -13,33 +13,33 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.function.Consumer;
 
 public interface FloatFunction<T> {
-  float apply(LivingEntity entity);
+    float apply(LivingEntity entity);
 
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.FLOAT_FUNCTIONS.get().getKey(getSerializer());
-    assert id != null;
-    return "value_provider.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.FLOAT_FUNCTIONS.get().getKey(getSerializer());
+        assert id != null;
+        return "value_provider.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  default String formatNumber(float number) {
-    return TooltipHelper.formatNumber(number);
-  }
+    default String formatNumber(float number) {
+        return TooltipHelper.formatNumber(number);
+    }
 
-  MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip);
+    MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip);
 
-  MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue);
+    MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue);
 
-  MutableComponent getRequirementTooltip(FloatFunctionEntityPredicate.Logic logic, float requiredValue);
+    MutableComponent getRequirementTooltip(FloatFunctionEntityPredicate.Logic logic, float requiredValue);
 
-  Serializer getSerializer();
+    Serializer getSerializer();
 
-  default T createDefaultInstance() {
-    return (T) getSerializer().createDefaultInstance();
-  }
+    default T createDefaultInstance() {
+        return (T) getSerializer().createDefaultInstance();
+    }
 
-  void addEditorWidgets(SkillTreeEditor editor, Consumer<FloatFunction<?>> consumer);
+    void addEditorWidgets(SkillTreeEditor editor, Consumer<FloatFunction<?>> consumer);
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<FloatFunction<?>> {
-    FloatFunction<?> createDefaultInstance();
-  }
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<FloatFunction<?>> {
+        FloatFunction<?> createDefaultInstance();
+    }
 }

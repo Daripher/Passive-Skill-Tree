@@ -23,8 +23,7 @@ public class SkillDragger extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(
-            @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    protected void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         if (showGrid) {
             int width = editor.getScreenWidth();
             int height = editor.getScreenHeight();
@@ -47,8 +46,7 @@ public class SkillDragger extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseDragged(
-            double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
+    public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
         if (mouseButton == 0 && Screen.hasControlDown() && !editor.getSelectedSkills().isEmpty()) {
             dragX = dragX / editor.getZoom();
             dragY = dragY / editor.getZoom();

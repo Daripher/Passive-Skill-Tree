@@ -18,125 +18,120 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public final class EnchantedStackPredicate implements ItemStackPredicate {
-  private ItemStackPredicate itemStackPredicate;
+    private ItemStackPredicate itemStackPredicate;
 
-  public EnchantedStackPredicate(ItemStackPredicate itemStackPredicate) {
-    this.itemStackPredicate = itemStackPredicate;
-  }
-
-  @Override
-  public boolean test(ItemStack stack) {
-    return !EnchantmentHelper.getEnchantments(stack).isEmpty() && itemStackPredicate.test(stack);
-  }
-
-  @Override
-  public Component getTooltip() {
-    return Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip("type"));
-  }
-
-  @Override
-  public Component getTooltip(String type) {
-    return Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip(type + ".type"));
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-        return true;
+    public EnchantedStackPredicate(ItemStackPredicate itemStackPredicate) {
+        this.itemStackPredicate = itemStackPredicate;
     }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
+
+    @Override
+    public boolean test(ItemStack stack) {
+        return !EnchantmentHelper.getEnchantments(stack).isEmpty() && itemStackPredicate.test(stack);
     }
-    EnchantedStackPredicate that = (EnchantedStackPredicate) o;
-    return itemStackPredicate.equals(that.itemStackPredicate);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(itemStackPredicate);
-  }
+    @Override
+    public Component getTooltip() {
+        return Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip("type"));
+    }
 
-  @Override
-  public ItemStackPredicate.Serializer getSerializer() {
-    return PSTItemConditions.ENCHANTED.get();
-  }
+    @Override
+    public Component getTooltip(String type) {
+        return Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip(type + ".type"));
+    }
 
-  @Override
-  public void addEditorWidgets(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer) {
-    editor.addLabel(0, 0, "Inner Item Condition", ChatFormatting.GREEN);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, itemStackPredicate)
-        .setResponder(condition -> selectItemCondition(editor, consumer, condition))
-        .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
-    editor.increaseHeight(19);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        EnchantedStackPredicate that = (EnchantedStackPredicate) o;
+        return itemStackPredicate.equals(that.itemStackPredicate);
+    }
 
-  private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer) {
-    itemStackPredicate.addEditorWidgets(
-        editor,
-        condition -> {
-          setItemCondition(condition);
-          consumer.accept(this);
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemStackPredicate);
+    }
+
+    @Override
+    public ItemStackPredicate.Serializer getSerializer() {
+        return PSTItemConditions.ENCHANTED.get();
+    }
+
+    @Override
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer) {
+        editor.addLabel(0, 0, "Inner Item Condition", ChatFormatting.GREEN);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))
+                .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
+        editor.increaseHeight(19);
+    }
+
+    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer) {
+        itemStackPredicate.addEditorWidgets(editor, condition -> {
+            setItemCondition(condition);
+            consumer.accept(this);
         });
-  }
-
-  private void selectItemCondition(
-      SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer, ItemStackPredicate condition) {
-    setItemCondition(condition);
-    consumer.accept(this);
-    editor.rebuildWidgets();
-  }
-
-  public void setItemCondition(ItemStackPredicate itemStackPredicate) {
-    this.itemStackPredicate = itemStackPredicate;
-  }
-
-  public static class Serializer implements ItemStackPredicate.Serializer {
-    @Override
-    public ItemStackPredicate deserialize(JsonObject json) throws JsonParseException {
-      return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(json));
     }
 
-    @Override
-    public void serialize(JsonObject json, ItemStackPredicate condition) {
-      if (!(condition instanceof EnchantedStackPredicate aCondition)) {
-        throw new IllegalArgumentException();
-      }
-      SerializationHelper.serializeItemCondition(json, aCondition.itemStackPredicate);
+    private void selectItemCondition(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer, ItemStackPredicate condition) {
+        setItemCondition(condition);
+        consumer.accept(this);
+        editor.rebuildWidgets();
     }
 
-    @Override
-    public ItemStackPredicate deserialize(CompoundTag tag) {
-      return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(tag));
+    public void setItemCondition(ItemStackPredicate itemStackPredicate) {
+        this.itemStackPredicate = itemStackPredicate;
     }
 
-    @Override
-    public CompoundTag serialize(ItemStackPredicate condition) {
-      if (!(condition instanceof EnchantedStackPredicate aCondition)) {
-        throw new IllegalArgumentException();
-      }
-      CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeItemCondition(tag, aCondition.itemStackPredicate);
-      return tag;
-    }
+    public static class Serializer implements ItemStackPredicate.Serializer {
+        @Override
+        public ItemStackPredicate deserialize(JsonObject json) throws JsonParseException {
+            return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(json));
+        }
 
-    @Override
-    public ItemStackPredicate deserialize(FriendlyByteBuf buf) {
-      return new EnchantedStackPredicate(NetworkHelper.readItemCondition(buf));
-    }
+        @Override
+        public void serialize(JsonObject json, ItemStackPredicate condition) {
+            if (!(condition instanceof EnchantedStackPredicate aCondition)) {
+                throw new IllegalArgumentException();
+            }
+            SerializationHelper.serializeItemCondition(json, aCondition.itemStackPredicate);
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, ItemStackPredicate condition) {
-      if (!(condition instanceof EnchantedStackPredicate aCondition)) {
-        throw new IllegalArgumentException();
-      }
-      NetworkHelper.writeItemCondition(buf, aCondition.itemStackPredicate);
-    }
+        @Override
+        public ItemStackPredicate deserialize(CompoundTag tag) {
+            return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(tag));
+        }
 
-    @Override
-    public ItemStackPredicate createDefaultInstance() {
-      return new EnchantedStackPredicate(new ItemTagPredicate(ItemTags.SWORDS.location()));
+        @Override
+        public CompoundTag serialize(ItemStackPredicate condition) {
+            if (!(condition instanceof EnchantedStackPredicate aCondition)) {
+                throw new IllegalArgumentException();
+            }
+            CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeItemCondition(tag, aCondition.itemStackPredicate);
+            return tag;
+        }
+
+        @Override
+        public ItemStackPredicate deserialize(FriendlyByteBuf buf) {
+            return new EnchantedStackPredicate(NetworkHelper.readItemCondition(buf));
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, ItemStackPredicate condition) {
+            if (!(condition instanceof EnchantedStackPredicate aCondition)) {
+                throw new IllegalArgumentException();
+            }
+            NetworkHelper.writeItemCondition(buf, aCondition.itemStackPredicate);
+        }
+
+        @Override
+        public ItemStackPredicate createDefaultInstance() {
+            return new EnchantedStackPredicate(new ItemTagPredicate(ItemTags.SWORDS.location()));
+        }
     }
-  }
 }

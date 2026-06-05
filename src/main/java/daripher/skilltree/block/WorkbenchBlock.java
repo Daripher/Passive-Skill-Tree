@@ -20,45 +20,29 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchBlock extends Block {
-  private static final Component CONTAINER_TITLE = Component.translatable("container.upgrade");
+    private static final Component CONTAINER_TITLE = Component.translatable("container.upgrade");
 
-  public WorkbenchBlock() {
-    super(
-        Properties.of()
-            .mapColor(MapColor.WOOD)
-            .instrument(NoteBlockInstrument.BASS)
-            .strength(2.5F)
-            .sound(SoundType.WOOD)
-            .ignitedByLava());
-  }
-
-  @SuppressWarnings("deprecation")
-  @Override
-  public @NotNull InteractionResult use(
-      @NotNull BlockState blockState,
-      Level level,
-      @NotNull BlockPos blockPos,
-      @NotNull Player player,
-      @NotNull InteractionHand interactionHand,
-      @NotNull BlockHitResult blockHitResult) {
-    if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
-    } else {
-      player.openMenu(blockState.getMenuProvider(level, blockPos));
-      // add custom stat awarded for block usage?
-      return InteractionResult.CONSUME;
+    public WorkbenchBlock() {
+        super(Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD)
+                .ignitedByLava());
     }
-  }
 
-  @SuppressWarnings("deprecation")
-  @Nullable
-  @Override
-  public MenuProvider getMenuProvider(
-      @NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos) {
-    return new SimpleMenuProvider(
-        (containerId, inventory, player) ->
-            new WorkbenchMenu(
-                containerId, inventory, ContainerLevelAccess.create(level, blockPos)),
-        CONTAINER_TITLE);
-  }
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull InteractionResult use(@NotNull BlockState blockState, Level level, @NotNull BlockPos blockPos, @NotNull Player player, @NotNull InteractionHand interactionHand, @NotNull BlockHitResult blockHitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
+            player.openMenu(blockState.getMenuProvider(level, blockPos));
+            // add custom stat awarded for block usage?
+            return InteractionResult.CONSUME;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos) {
+        return new SimpleMenuProvider((containerId, inventory, player) -> new WorkbenchMenu(containerId, inventory, ContainerLevelAccess.create(level, blockPos)), CONTAINER_TITLE);
+    }
 }

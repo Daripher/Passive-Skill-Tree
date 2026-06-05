@@ -20,124 +20,115 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class WorkbenchItemBonusRecipeBuilder {
-  private final ResourceLocation id;
-  private ItemStackPredicate baseItemStackPredicate;
-  private final Map<Ingredient, Integer> ingredients = new HashMap<>();
-  private boolean requiresPassiveSkill;
-  private ItemBonus<?> itemBonus;
-
-  private WorkbenchItemBonusRecipeBuilder(ResourceLocation id) {
-    this.id = id;
-  }
-
-  public static WorkbenchItemBonusRecipeBuilder create(ResourceLocation id) {
-    return new WorkbenchItemBonusRecipeBuilder(id);
-  }
-
-  public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(
-      ItemStackPredicate baseItemStackPredicate) {
-    this.baseItemStackPredicate = baseItemStackPredicate;
-    return this;
-  }
-
-  public WorkbenchItemBonusRecipeBuilder addIngredients(Ingredient ingredient, int requiredAmount) {
-    this.ingredients.put(ingredient, requiredAmount);
-    return this;
-  }
-
-  public WorkbenchItemBonusRecipeBuilder setRequiresPassiveSkill() {
-    this.requiresPassiveSkill = true;
-    return this;
-  }
-
-  public WorkbenchItemBonusRecipeBuilder setItemBonus(ItemBonus<?> itemBonus) {
-    this.itemBonus = itemBonus;
-    return this;
-  }
-
-  public WorkbenchItemBonusRecipeBuilder setItemBonus(SkillBonus<?> skillBonus) {
-    this.itemBonus = new SkillBonusItemBonus(skillBonus);
-    return this;
-  }
-
-  public void save(Consumer<FinishedRecipe> finishedRecipeConsumer) {
-    validate();
-    finishedRecipeConsumer.accept(
-        new Result(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus));
-  }
-
-  private void validate() {
-    if (baseItemStackPredicate == null) {
-      throw new IllegalStateException("No base item condition set for recipe " + id);
-    }
-    if (ingredients.isEmpty()) {
-      throw new IllegalStateException("No ingredients set for recipe " + id);
-    }
-    if (ingredients.size() > 6) {
-      throw new IllegalStateException("Too many ingredients set for recipe " + id);
-    }
-    if (itemBonus == null) {
-      throw new IllegalStateException("No item bonus set for recipe " + id);
-    }
-  }
-
-  private static class Result implements FinishedRecipe {
     private final ResourceLocation id;
-    private final ItemStackPredicate baseItemStackPredicate;
-    private final Map<Ingredient, Integer> ingredients;
-    private final boolean requiresPassiveSkill;
-    private final ItemBonus<?> itemBonus;
+    private ItemStackPredicate baseItemStackPredicate;
+    private final Map<Ingredient, Integer> ingredients = new HashMap<>();
+    private boolean requiresPassiveSkill;
+    private ItemBonus<?> itemBonus;
 
-    private Result(
-        ResourceLocation id,
-        ItemStackPredicate baseItemStackPredicate,
-        Map<Ingredient, Integer> ingredients,
-        boolean requiresPassiveSkill,
-        ItemBonus<?> itemBonus) {
-      this.id = id;
-      this.baseItemStackPredicate = baseItemStackPredicate;
-      this.ingredients = ingredients;
-      this.requiresPassiveSkill = requiresPassiveSkill;
-      this.itemBonus = itemBonus;
+    private WorkbenchItemBonusRecipeBuilder(ResourceLocation id) {
+        this.id = id;
     }
 
-    @Override
-    public void serializeRecipeData(@NotNull JsonObject jsonObject) {
-      JsonArray ingredientsJson = new JsonArray();
-      ingredients.forEach(
-          ((ingredient, requiredAmount) -> {
-            JsonObject ingredientJson = new JsonObject();
-            ingredientJson.add("ingredient", ingredient.toJson());
-            ingredientJson.addProperty("required_amount", requiredAmount);
-            ingredientsJson.add(ingredientJson);
-          }));
-      SerializationHelper.serializeItemCondition(
-          jsonObject, baseItemStackPredicate, "base_item_condition");
-      SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
-      jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
-      jsonObject.add("ingredients", ingredientsJson);
+    public static WorkbenchItemBonusRecipeBuilder create(ResourceLocation id) {
+        return new WorkbenchItemBonusRecipeBuilder(id);
     }
 
-    @Override
-    public @NotNull ResourceLocation getId() {
-      return id;
+    public WorkbenchItemBonusRecipeBuilder setBaseItemCondition(ItemStackPredicate baseItemStackPredicate) {
+        this.baseItemStackPredicate = baseItemStackPredicate;
+        return this;
     }
 
-    @Override
-    public @NotNull RecipeSerializer<?> getType() {
-      return PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get();
+    public WorkbenchItemBonusRecipeBuilder addIngredients(Ingredient ingredient, int requiredAmount) {
+        this.ingredients.put(ingredient, requiredAmount);
+        return this;
     }
 
-    @Nullable
-    @Override
-    public JsonObject serializeAdvancement() {
-      return null;
+    public WorkbenchItemBonusRecipeBuilder setRequiresPassiveSkill() {
+        this.requiresPassiveSkill = true;
+        return this;
     }
 
-    @Nullable
-    @Override
-    public ResourceLocation getAdvancementId() {
-      return null;
+    public WorkbenchItemBonusRecipeBuilder setItemBonus(ItemBonus<?> itemBonus) {
+        this.itemBonus = itemBonus;
+        return this;
     }
-  }
+
+    public WorkbenchItemBonusRecipeBuilder setItemBonus(SkillBonus<?> skillBonus) {
+        this.itemBonus = new SkillBonusItemBonus(skillBonus);
+        return this;
+    }
+
+    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+        validate();
+        finishedRecipeConsumer.accept(new Result(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus));
+    }
+
+    private void validate() {
+        if (baseItemStackPredicate == null) {
+            throw new IllegalStateException("No base item condition set for recipe " + id);
+        }
+        if (ingredients.isEmpty()) {
+            throw new IllegalStateException("No ingredients set for recipe " + id);
+        }
+        if (ingredients.size() > 6) {
+            throw new IllegalStateException("Too many ingredients set for recipe " + id);
+        }
+        if (itemBonus == null) {
+            throw new IllegalStateException("No item bonus set for recipe " + id);
+        }
+    }
+
+    private static class Result implements FinishedRecipe {
+        private final ResourceLocation id;
+        private final ItemStackPredicate baseItemStackPredicate;
+        private final Map<Ingredient, Integer> ingredients;
+        private final boolean requiresPassiveSkill;
+        private final ItemBonus<?> itemBonus;
+
+        private Result(ResourceLocation id, ItemStackPredicate baseItemStackPredicate, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill, ItemBonus<?> itemBonus) {
+            this.id = id;
+            this.baseItemStackPredicate = baseItemStackPredicate;
+            this.ingredients = ingredients;
+            this.requiresPassiveSkill = requiresPassiveSkill;
+            this.itemBonus = itemBonus;
+        }
+
+        @Override
+        public void serializeRecipeData(@NotNull JsonObject jsonObject) {
+            JsonArray ingredientsJson = new JsonArray();
+            ingredients.forEach(((ingredient, requiredAmount) -> {
+                JsonObject ingredientJson = new JsonObject();
+                ingredientJson.add("ingredient", ingredient.toJson());
+                ingredientJson.addProperty("required_amount", requiredAmount);
+                ingredientsJson.add(ingredientJson);
+            }));
+            SerializationHelper.serializeItemCondition(jsonObject, baseItemStackPredicate, "base_item_condition");
+            SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
+            jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
+            jsonObject.add("ingredients", ingredientsJson);
+        }
+
+        @Override
+        public @NotNull ResourceLocation getId() {
+            return id;
+        }
+
+        @Override
+        public @NotNull RecipeSerializer<?> getType() {
+            return PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get();
+        }
+
+        @Nullable
+        @Override
+        public JsonObject serializeAdvancement() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public ResourceLocation getAdvancementId() {
+            return null;
+        }
+    }
 }

@@ -8,10 +8,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class PSTBlocks {
-  public static final DeferredRegister<Block> REGISTRY =
-      DeferredRegister.create(ForgeRegistries.BLOCKS, SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, SkillTreeMod.MOD_ID);
 
-  // crafting stations
-  public static final RegistryObject<Block> WORKBENCH =
-      REGISTRY.register("workbench", WorkbenchBlock::new);
+    // crafting stations
+    public static final RegistryObject<Block> WORKBENCH = REGISTRY.register("workbench", WorkbenchBlock::new);
 }

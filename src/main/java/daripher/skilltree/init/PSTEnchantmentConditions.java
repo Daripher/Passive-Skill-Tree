@@ -14,27 +14,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class PSTEnchantmentConditions {
-  public static final ResourceLocation REGISTRY_ID =
-      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "enchantment_conditions");
-  public static final DeferredRegister<EnchantmentCondition.Serializer> REGISTRY =
-      DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
+    public static final ResourceLocation REGISTRY_ID = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "enchantment_conditions");
+    public static final DeferredRegister<EnchantmentCondition.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
-  public static final RegistryObject<EnchantmentCondition.Serializer> NONE =
-      REGISTRY.register("none", NoneEnchantmentCondition.Serializer::new);
-  public static final RegistryObject<EnchantmentCondition.Serializer> ARMOR =
-      REGISTRY.register("armor", ArmorEnchantmentCondition.Serializer::new);
-  public static final RegistryObject<EnchantmentCondition.Serializer> WEAPON =
-      REGISTRY.register("weapon", WeaponEnchantmentCondition.Serializer::new);
+    public static final RegistryObject<EnchantmentCondition.Serializer> NONE = REGISTRY.register("none", NoneEnchantmentCondition.Serializer::new);
+    public static final RegistryObject<EnchantmentCondition.Serializer> ARMOR = REGISTRY.register("armor", ArmorEnchantmentCondition.Serializer::new);
+    public static final RegistryObject<EnchantmentCondition.Serializer> WEAPON = REGISTRY.register("weapon", WeaponEnchantmentCondition.Serializer::new);
 
-  public static List<EnchantmentCondition> conditionsList() {
-    return PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValues().stream()
-        .map(EnchantmentCondition.Serializer::createDefaultInstance)
-        .toList();
-  }
+    public static List<EnchantmentCondition> conditionsList() {
+        return PSTRegistries.ENCHANTMENT_CONDITIONS.get().getValues().stream().map(EnchantmentCondition.Serializer::createDefaultInstance)
+                .toList();
+    }
 
-  public static String getName(EnchantmentCondition condition) {
-    ResourceLocation id =
-        PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(condition.getSerializer());
-    return TooltipHelper.idToName(Objects.requireNonNull(id).getPath());
-  }
+    public static String getName(EnchantmentCondition condition) {
+        ResourceLocation id = PSTRegistries.ENCHANTMENT_CONDITIONS.get().getKey(condition.getSerializer());
+        return TooltipHelper.idToName(Objects.requireNonNull(id).getPath());
+    }
 }

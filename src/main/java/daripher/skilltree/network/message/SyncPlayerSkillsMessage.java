@@ -20,56 +20,53 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SyncPlayerSkillsMessage {
-  private List<ResourceLocation> learnedSkills = new ArrayList<>();
-  private int skillPoints;
+    private List<ResourceLocation> learnedSkills = new ArrayList<>();
+    private int skillPoints;
 
-  private SyncPlayerSkillsMessage() {}
-
-  public SyncPlayerSkillsMessage(Player player) {
-    IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
-    learnedSkills = skillsCapability.getPlayerSkills().stream().map(PassiveSkill::getId).toList();
-    skillPoints = skillsCapability.getSkillPoints();
-  }
-
-  public static SyncPlayerSkillsMessage decode(FriendlyByteBuf buf) {
-    SyncPlayerSkillsMessage result = new SyncPlayerSkillsMessage();
-    int learnedSkillsCount = buf.readInt();
-    for (int i = 0; i < learnedSkillsCount; i++) {
-      result.learnedSkills.add(ResourceLocation.parse(buf.readUtf()));
+    private SyncPlayerSkillsMessage() {
     }
-    result.skillPoints = buf.readInt();
-    return result;
-  }
 
-  public static void receive(
-      SyncPlayerSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
-    NetworkEvent.Context ctx = ctxSupplier.get();
-    ctx.setPacketHandled(true);
-    ctx.enqueueWork(
-        () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(message, ctx)));
-  }
-
-  @OnlyIn(value = Dist.CLIENT)
-  private static void handlePacket(SyncPlayerSkillsMessage message, NetworkEvent.Context ctx) {
-    ctx.setPacketHandled(true);
-    Minecraft minecraft = Minecraft.getInstance();
-    assert minecraft.player != null;
-    IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
-    capability.getPlayerSkills().clear();
-    message.learnedSkills.stream()
-        .map(SkillsReloader::getSkillById)
-        .filter(Objects::nonNull)
-        .forEach(capability.getPlayerSkills()::add);
-    capability.setSkillPoints(message.skillPoints);
-    if (minecraft.screen instanceof SkillTreeScreen screen) {
-      screen.updateSkillPoints(capability.getSkillPoints());
-      screen.init();
+    public SyncPlayerSkillsMessage(Player player) {
+        IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
+        learnedSkills = skillsCapability.getPlayerSkills().stream().map(PassiveSkill::getId).toList();
+        skillPoints = skillsCapability.getSkillPoints();
     }
-  }
 
-  public void encode(FriendlyByteBuf buf) {
-    buf.writeInt(learnedSkills.size());
-    learnedSkills.stream().map(ResourceLocation::toString).forEach(buf::writeUtf);
-    buf.writeInt(skillPoints);
-  }
+    public static SyncPlayerSkillsMessage decode(FriendlyByteBuf buf) {
+        SyncPlayerSkillsMessage result = new SyncPlayerSkillsMessage();
+        int learnedSkillsCount = buf.readInt();
+        for (int i = 0; i < learnedSkillsCount; i++) {
+            result.learnedSkills.add(ResourceLocation.parse(buf.readUtf()));
+        }
+        result.skillPoints = buf.readInt();
+        return result;
+    }
+
+    public static void receive(SyncPlayerSkillsMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context ctx = ctxSupplier.get();
+        ctx.setPacketHandled(true);
+        ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(message, ctx)));
+    }
+
+    @OnlyIn(value = Dist.CLIENT)
+    private static void handlePacket(SyncPlayerSkillsMessage message, NetworkEvent.Context ctx) {
+        ctx.setPacketHandled(true);
+        Minecraft minecraft = Minecraft.getInstance();
+        assert minecraft.player != null;
+        IPlayerSkills capability = PlayerSkillsProvider.get(minecraft.player);
+        capability.getPlayerSkills().clear();
+        message.learnedSkills.stream().map(SkillsReloader::getSkillById).filter(Objects::nonNull)
+                .forEach(capability.getPlayerSkills()::add);
+        capability.setSkillPoints(message.skillPoints);
+        if (minecraft.screen instanceof SkillTreeScreen screen) {
+            screen.updateSkillPoints(capability.getSkillPoints());
+            screen.init();
+        }
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(learnedSkills.size());
+        learnedSkills.stream().map(ResourceLocation::toString).forEach(buf::writeUtf);
+        buf.writeInt(skillPoints);
+    }
 }

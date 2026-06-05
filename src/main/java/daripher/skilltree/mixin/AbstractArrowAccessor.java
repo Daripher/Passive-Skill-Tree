@@ -9,8 +9,8 @@ import javax.annotation.Nullable;
 
 @Mixin(AbstractArrow.class)
 public interface AbstractArrowAccessor {
-  // Should never be null. Some mods still return null.
-  @Nullable
-  @Invoker("getPickupItem")
-  ItemStack invokeGetPickupItem();
+    // Should never be null. Some mods still return null.
+    @Nullable
+    @Invoker("getPickupItem")
+    ItemStack invokeGetPickupItem();
 }

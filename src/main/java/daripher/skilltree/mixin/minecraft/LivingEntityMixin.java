@@ -19,36 +19,35 @@ import java.util.List;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements EquippedEntity {
-  private final List<ItemStack> equippedItems = new ArrayList<>();
+    private final List<ItemStack> equippedItems = new ArrayList<>();
 
-  @SuppressWarnings("unused")
-  @Inject(method = "dropAllDeathLoot", at = @At("HEAD"))
-  private void storeEquipmentBeforeDeath(DamageSource damageSource, CallbackInfo callbackInfo) {
-    for (EquipmentSlot slot : EquipmentSlot.values()) {
-      ItemStack itemInSlot = getItemBySlot(slot);
-      if (itemInSlot.isEmpty()) {
-          continue;
-      }
-      equippedItems.add(itemInSlot);
+    @SuppressWarnings("unused")
+    @Inject(method = "dropAllDeathLoot", at = @At("HEAD"))
+    private void storeEquipmentBeforeDeath(DamageSource damageSource, CallbackInfo callbackInfo) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack itemInSlot = getItemBySlot(slot);
+            if (itemInSlot.isEmpty()) {
+                continue;
+            }
+            equippedItems.add(itemInSlot);
+        }
     }
-  }
 
-  @SuppressWarnings({"ConstantValue", "unused"})
-  @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
-  private float applyJumpHeightBonus(float original) {
-    boolean isPlayer = (Object) this instanceof Player;
-    if (!isPlayer) {
-        return original;
+    @SuppressWarnings({"ConstantValue", "unused"})
+    @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
+    private float applyJumpHeightBonus(float original) {
+        boolean isPlayer = (Object) this instanceof Player;
+        if (!isPlayer) {
+            return original;
+        }
+        Player player = (Player) (Object) this;
+        return original * SkillBonusHandler.getJumpHeightMultiplier(player);
     }
-    Player player = (Player) (Object) this;
-    return original * SkillBonusHandler.getJumpHeightMultiplier(player);
-  }
 
-  @Override
-  public boolean hasItemEquipped(ItemStack stack) {
-    return equippedItems.stream()
-        .anyMatch(equipped -> ItemStack.matches(stack, equipped));
-  }
+    @Override
+    public boolean hasItemEquipped(ItemStack stack) {
+        return equippedItems.stream().anyMatch(equipped -> ItemStack.matches(stack, equipped));
+    }
 
-  public abstract @Shadow ItemStack getItemBySlot(EquipmentSlot slot);
+    public abstract @Shadow ItemStack getItemBySlot(EquipmentSlot slot);
 }

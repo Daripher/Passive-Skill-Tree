@@ -15,16 +15,12 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PSTMenuTypes {
-  public static final DeferredRegister<MenuType<?>> REGISTRY =
-      DeferredRegister.create(ForgeRegistries.MENU_TYPES, SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.MENU_TYPES, SkillTreeMod.MOD_ID);
 
-  public static final RegistryObject<MenuType<WorkbenchMenu>> ARTISAN_WORKBENCH =
-      REGISTRY.register("artisan_workbench", () -> new MenuType<>(WorkbenchMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final RegistryObject<MenuType<WorkbenchMenu>> ARTISAN_WORKBENCH = REGISTRY.register("artisan_workbench", () -> new MenuType<>(WorkbenchMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
-  @SubscribeEvent
-  public static void clientSetup(FMLClientSetupEvent event) {
-    event.enqueueWork(
-        () -> MenuScreens.register(ARTISAN_WORKBENCH.get(), WorkbenchScreen::new)
-    );
-  }
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> MenuScreens.register(ARTISAN_WORKBENCH.get(), WorkbenchScreen::new));
+    }
 }

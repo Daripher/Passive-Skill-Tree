@@ -12,26 +12,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(targets = "net.minecraft.world.inventory.InventoryMenu$1")
 public abstract class ArmorSlotMixin extends Slot {
-  @SuppressWarnings("DataFlowIssue")
-  public ArmorSlotMixin() {
-    super(null, 0, 0, 0);
-  }
+    @SuppressWarnings("DataFlowIssue")
+    public ArmorSlotMixin() {
+        super(null, 0, 0, 0);
+    }
 
-  @Inject(
-      method = {"mayPlace", "m_5857_"},
-      at = @At("HEAD"),
-      cancellable = true,
-      remap = false)
-  private void preventItemUsage(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
-    if (!(container instanceof Inventory inventory)) {
-        return;
+    @Inject(method = {"mayPlace", "m_5857_"}, at = @At("HEAD"), cancellable = true, remap = false)
+    private void preventItemUsage(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (!(container instanceof Inventory inventory)) {
+            return;
+        }
+        for (CantUseItemBonus bonus : SkillBonusHandler.getSkillBonuses(inventory.player, CantUseItemBonus.class)) {
+            if (bonus.getItemCondition().test(stack)) {
+                callbackInfo.setReturnValue(false);
+                return;
+            }
+        }
     }
-    for (CantUseItemBonus bonus :
-        SkillBonusHandler.getSkillBonuses(inventory.player, CantUseItemBonus.class)) {
-      if (bonus.getItemCondition().test(stack)) {
-        callbackInfo.setReturnValue(false);
-        return;
-      }
-    }
-  }
 }

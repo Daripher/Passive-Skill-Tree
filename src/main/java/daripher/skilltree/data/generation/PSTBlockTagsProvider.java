@@ -10,13 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 public class PSTBlockTagsProvider extends BlockTagsProvider {
-  public PSTBlockTagsProvider(
-      DataGenerator dataGenerator,
-      CompletableFuture<HolderLookup.Provider> provider,
-      ExistingFileHelper fileHelper) {
-    super(dataGenerator.getPackOutput(), provider, SkillTreeMod.MOD_ID, fileHelper);
-  }
+    public PSTBlockTagsProvider(DataGenerator dataGenerator, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper fileHelper) {
+        super(dataGenerator.getPackOutput(), provider, SkillTreeMod.MOD_ID, fileHelper);
+    }
 
-  @Override
-  protected void addTags(@NotNull HolderLookup.Provider provider) {}
+    @Override
+    protected void addTags(@NotNull HolderLookup.Provider provider) {
+    }
 }

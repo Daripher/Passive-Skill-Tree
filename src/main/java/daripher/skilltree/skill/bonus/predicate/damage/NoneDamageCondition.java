@@ -8,59 +8,59 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.damagesource.DamageSource;
 
 public enum NoneDamageCondition implements DamageCondition {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public boolean met(DamageSource source) {
-    return true;
-  }
-
-  @Override
-  public DamageCondition.Serializer getSerializer() {
-    return PSTDamageConditions.NONE.get();
-  }
-
-  public static class Serializer implements DamageCondition.Serializer {
     @Override
-    public DamageCondition deserialize(JsonObject json) throws JsonParseException {
-      return NoneDamageCondition.INSTANCE;
+    public boolean met(DamageSource source) {
+        return true;
     }
 
     @Override
-    public void serialize(JsonObject json, DamageCondition condition) {
-      if (condition != NoneDamageCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
+    public DamageCondition.Serializer getSerializer() {
+        return PSTDamageConditions.NONE.get();
     }
 
-    @Override
-    public DamageCondition deserialize(CompoundTag tag) {
-      return NoneDamageCondition.INSTANCE;
-    }
+    public static class Serializer implements DamageCondition.Serializer {
+        @Override
+        public DamageCondition deserialize(JsonObject json) throws JsonParseException {
+            return NoneDamageCondition.INSTANCE;
+        }
 
-    @Override
-    public CompoundTag serialize(DamageCondition condition) {
-      if (condition != NoneDamageCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-      return new CompoundTag();
-    }
+        @Override
+        public void serialize(JsonObject json, DamageCondition condition) {
+            if (condition != NoneDamageCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
 
-    @Override
-    public DamageCondition deserialize(FriendlyByteBuf buf) {
-      return NoneDamageCondition.INSTANCE;
-    }
+        @Override
+        public DamageCondition deserialize(CompoundTag tag) {
+            return NoneDamageCondition.INSTANCE;
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, DamageCondition condition) {
-      if (condition != NoneDamageCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-    }
+        @Override
+        public CompoundTag serialize(DamageCondition condition) {
+            if (condition != NoneDamageCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+            return new CompoundTag();
+        }
 
-    @Override
-    public DamageCondition createDefaultInstance() {
-      return NoneDamageCondition.INSTANCE;
+        @Override
+        public DamageCondition deserialize(FriendlyByteBuf buf) {
+            return NoneDamageCondition.INSTANCE;
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, DamageCondition condition) {
+            if (condition != NoneDamageCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        public DamageCondition createDefaultInstance() {
+            return NoneDamageCondition.INSTANCE;
+        }
     }
-  }
 }

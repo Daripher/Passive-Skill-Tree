@@ -6,15 +6,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
 public interface Serializer<T> {
-  T deserialize(JsonObject json) throws JsonParseException;
+    T deserialize(JsonObject json) throws JsonParseException;
 
-  void serialize(JsonObject json, T object);
+    void serialize(JsonObject json, T object);
 
-  T deserialize(CompoundTag tag);
+    T deserialize(CompoundTag tag);
 
-  CompoundTag serialize(T object);
+    CompoundTag serialize(T object);
 
-  T deserialize(FriendlyByteBuf buf);
+    T deserialize(FriendlyByteBuf buf);
 
-  void serialize(FriendlyByteBuf buf, T object);
+    void serialize(FriendlyByteBuf buf, T object);
 }

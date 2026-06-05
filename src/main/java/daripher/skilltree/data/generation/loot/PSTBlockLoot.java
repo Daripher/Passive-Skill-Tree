@@ -10,17 +10,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 
 public class PSTBlockLoot extends BlockLootSubProvider {
-  protected PSTBlockLoot() {
-    super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
-  }
+    protected PSTBlockLoot() {
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    }
 
-  @Override
-  protected void generate() {
-    dropSelf(PSTBlocks.WORKBENCH.get());
-  }
+    @Override
+    protected void generate() {
+        dropSelf(PSTBlocks.WORKBENCH.get());
+    }
 
-  @Override
-  protected @NotNull Iterable<Block> getKnownBlocks() {
-    return PSTBlocks.REGISTRY.getEntries().stream().map(RegistryObject::get)::iterator;
-  }
+    @Override
+    protected @NotNull Iterable<Block> getKnownBlocks() {
+        return PSTBlocks.REGISTRY.getEntries().stream().map(RegistryObject::get)::iterator;
+    }
 }

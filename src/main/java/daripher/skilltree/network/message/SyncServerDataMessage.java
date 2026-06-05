@@ -9,19 +9,18 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class SyncServerDataMessage {
-  public static SyncServerDataMessage decode(FriendlyByteBuf buf) {
-    SkillsReloader.loadFromByteBuf(buf);
-    SkillTreesReloader.loadFromByteBuf(buf);
-    return new SyncServerDataMessage();
-  }
+    public static SyncServerDataMessage decode(FriendlyByteBuf buf) {
+        SkillsReloader.loadFromByteBuf(buf);
+        SkillTreesReloader.loadFromByteBuf(buf);
+        return new SyncServerDataMessage();
+    }
 
-  public static void receive(
-      SyncServerDataMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
-    ctxSupplier.get().setPacketHandled(true);
-  }
+    public static void receive(SyncServerDataMessage message, Supplier<NetworkEvent.Context> ctxSupplier) {
+        ctxSupplier.get().setPacketHandled(true);
+    }
 
-  public void encode(FriendlyByteBuf buf) {
-    NetworkHelper.writePassiveSkills(buf, SkillsReloader.getSkills().values());
-    NetworkHelper.writePassiveSkillTrees(buf, SkillTreesReloader.getSkillTrees().values());
-  }
+    public void encode(FriendlyByteBuf buf) {
+        NetworkHelper.writePassiveSkills(buf, SkillsReloader.getSkills().values());
+        NetworkHelper.writePassiveSkillTrees(buf, SkillTreesReloader.getSkillTrees().values());
+    }
 }

@@ -21,83 +21,82 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkillBonusesModifier extends LootModifier {
-  public SkillBonusesModifier(LootItemCondition... conditionsIn) {
-    super(conditionsIn);
-  }
+    public SkillBonusesModifier(LootItemCondition... conditionsIn) {
+        super(conditionsIn);
+    }
 
-  public static final Supplier<Codec<SkillBonusesModifier>> CODEC =
-      Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SkillBonusesModifier::new)));
+    public static final Supplier<Codec<SkillBonusesModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SkillBonusesModifier::new)));
 
-  @Override
-  protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-    for (LootItemCondition condition : this.conditions) {
-      if (!condition.test(lootContext)) {
-        return generatedLoot;
-      }
+    @Override
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
+        for (LootItemCondition condition : this.conditions) {
+            if (!condition.test(lootContext)) {
+                return generatedLoot;
+            }
+        }
+        Player player = null;
+        float lootMultiplier = 0f;
+        for (LootDuplicationBonus.LootType lootType : LootDuplicationBonus.LootType.values()) {
+            if (lootType.canAffect(lootContext)) {
+                player = (Player) lootContext.getParam(lootType.getPlayerLootContextParam());
+                lootMultiplier = getLootMultiplier(player, lootType);
+            }
+        }
+        if (player == null) {
+            return generatedLoot;
+        }
+        if (lootMultiplier == 0f) {
+            return generatedLoot;
+        }
+        RandomSource random = lootContext.getRandom();
+        ObjectArrayList<ItemStack> newLoot = new ObjectArrayList<>();
+        int copies = (int) lootMultiplier;
+        lootMultiplier -= copies;
+        copies++;
+        for (ItemStack stack : generatedLoot) {
+            int itemCopies = copies;
+            if (random.nextFloat() < lootMultiplier) {
+                itemCopies++;
+            }
+            for (int i = 0; i < itemCopies; i++) {
+                newLoot.add(stack.copy());
+            }
+        }
+        return newLoot;
     }
-    Player player = null;
-    float lootMultiplier = 0f;
-    for (LootDuplicationBonus.LootType lootType : LootDuplicationBonus.LootType.values()) {
-      if (lootType.canAffect(lootContext)) {
-        player = (Player) lootContext.getParam(lootType.getPlayerLootContextParam());
-        lootMultiplier = getLootMultiplier(player, lootType);
-      }
-    }
-    if (player == null) {
-      return generatedLoot;
-    }
-    if (lootMultiplier == 0f) {
-        return generatedLoot;
-    }
-    RandomSource random = lootContext.getRandom();
-    ObjectArrayList<ItemStack> newLoot = new ObjectArrayList<>();
-    int copies = (int) lootMultiplier;
-    lootMultiplier -= copies;
-    copies++;
-    for (ItemStack stack : generatedLoot) {
-      int itemCopies = copies;
-      if (random.nextFloat() < lootMultiplier) {
-        itemCopies++;
-      }
-      for (int i = 0; i < itemCopies; i++) {
-        newLoot.add(stack.copy());
-      }
-    }
-    return newLoot;
-  }
 
-  private static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
-    RandomSource random = player.getRandom();
-    Map<Float, Float> multipliers = getLootMultipliers(player, lootType);
-    float multiplier = 0f;
-    for (Map.Entry<Float, Float> entry : multipliers.entrySet()) {
-      float chance = entry.getValue();
-      while (chance > 1) {
-        multiplier += entry.getKey();
-        chance--;
-      }
-      if (random.nextFloat() < chance) {
-        multiplier += entry.getKey();
-      }
+    private static float getLootMultiplier(Player player, LootDuplicationBonus.LootType lootType) {
+        RandomSource random = player.getRandom();
+        Map<Float, Float> multipliers = getLootMultipliers(player, lootType);
+        float multiplier = 0f;
+        for (Map.Entry<Float, Float> entry : multipliers.entrySet()) {
+            float chance = entry.getValue();
+            while (chance > 1) {
+                multiplier += entry.getKey();
+                chance--;
+            }
+            if (random.nextFloat() < chance) {
+                multiplier += entry.getKey();
+            }
+        }
+        return multiplier;
     }
-    return multiplier;
-  }
 
-  @Nonnull
-  private static Map<Float, Float> getLootMultipliers(Player player, LootDuplicationBonus.LootType lootType) {
-    Map<Float, Float> multipliers = new HashMap<>();
-    for (LootDuplicationBonus bonus : SkillBonusHandler.getSkillBonuses(player, LootDuplicationBonus.class)) {
-      if (bonus.getLootType() != lootType) {
-          continue;
-      }
-      float chance = bonus.getChance() + multipliers.getOrDefault(bonus.getMultiplier(), 0f);
-      multipliers.put(bonus.getMultiplier(), chance);
+    @Nonnull
+    private static Map<Float, Float> getLootMultipliers(Player player, LootDuplicationBonus.LootType lootType) {
+        Map<Float, Float> multipliers = new HashMap<>();
+        for (LootDuplicationBonus bonus : SkillBonusHandler.getSkillBonuses(player, LootDuplicationBonus.class)) {
+            if (bonus.getLootType() != lootType) {
+                continue;
+            }
+            float chance = bonus.getChance() + multipliers.getOrDefault(bonus.getMultiplier(), 0f);
+            multipliers.put(bonus.getMultiplier(), chance);
+        }
+        return multipliers;
     }
-    return multipliers;
-  }
 
-  @Override
-  public Codec<? extends IGlobalLootModifier> codec() {
-    return CODEC.get();
-  }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC.get();
+    }
 }

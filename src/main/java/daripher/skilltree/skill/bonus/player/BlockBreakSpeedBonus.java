@@ -24,252 +24,216 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBonus> {
-  private float multiplier;
-  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
-  private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
+    private float multiplier;
+    private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+    private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
-  public BlockBreakSpeedBonus(float multiplier) {
-    this.multiplier = multiplier;
-  }
-
-  public float getMultiplier(Player player) {
-    if (!playerCondition.test(player)) {
-        return 0f;
+    public BlockBreakSpeedBonus(float multiplier) {
+        this.multiplier = multiplier;
     }
-    return multiplier * playerMultiplier.getValue(player);
-  }
 
-  @Override
-  public SkillBonus.Serializer getSerializer() {
-    return PSTSkillBonuses.BLOCK_BREAK_SPEED.get();
-  }
-
-  @Override
-  public BlockBreakSpeedBonus copy() {
-    return new BlockBreakSpeedBonus(multiplier)
-        .setPlayerCondition(playerCondition)
-        .setPlayerMultiplier(playerMultiplier);
-  }
-
-  @Override
-  public BlockBreakSpeedBonus multiply(double multiplier) {
-    this.multiplier = (float) (this.multiplier * multiplier);
-    return this;
-  }
-
-  @Override
-  public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof BlockBreakSpeedBonus otherBonus)) {
-        return false;
+    public float getMultiplier(Player player) {
+        if (!playerCondition.test(player)) {
+            return 0f;
+        }
+        return multiplier * playerMultiplier.getValue(player);
     }
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
-        return false;
+
+    @Override
+    public SkillBonus.Serializer getSerializer() {
+        return PSTSkillBonuses.BLOCK_BREAK_SPEED.get();
     }
-    return Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier);
-  }
 
-  @Override
-  public SkillBonus<BlockBreakSpeedBonus> merge(SkillBonus<?> other) {
-    if (!(other instanceof BlockBreakSpeedBonus otherBonus)) {
-      throw new IllegalArgumentException();
+    @Override
+    public BlockBreakSpeedBonus copy() {
+        return new BlockBreakSpeedBonus(multiplier).setPlayerCondition(playerCondition).setPlayerMultiplier(playerMultiplier);
     }
-    return new BlockBreakSpeedBonus(otherBonus.multiplier + this.multiplier)
-        .setPlayerCondition(playerCondition)
-        .setPlayerMultiplier(playerMultiplier);
-  }
 
-  @Override
-  public MutableComponent getTooltip() {
-    MutableComponent bonusTooltip =
-        TooltipHelper.getSkillBonusTooltip(
-            getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
-    bonusTooltip = playerCondition.getTooltip(bonusTooltip, Target.PLAYER);
-    bonusTooltip = playerMultiplier.getTooltip(bonusTooltip, Target.PLAYER);
-    return bonusTooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
-  }
+    @Override
+    public BlockBreakSpeedBonus multiply(double multiplier) {
+        this.multiplier = (float) (this.multiplier * multiplier);
+        return this;
+    }
 
-  @Override
-  public boolean isPositive() {
-    return multiplier > 0;
-  }
+    @Override
+    public boolean canMerge(SkillBonus<?> other) {
+        if (!(other instanceof BlockBreakSpeedBonus otherBonus)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+            return false;
+        }
+        return Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier);
+    }
 
-  @Override
-  public void addEditorWidgets(
-      SkillTreeEditor editor, int index, Consumer<BlockBreakSpeedBonus> consumer) {
-    editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addNumericTextField(0, 0, 50, 14, multiplier)
-        .setNumericResponder(value -> selectMultiplier(consumer, value));
-    editor.increaseHeight(19);
-    editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, playerCondition)
-        .setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
-        .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
-    editor.increaseHeight(19);
-    editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, playerMultiplier)
-        .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
-        .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
-    editor.increaseHeight(19);
-  }
+    @Override
+    public SkillBonus<BlockBreakSpeedBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof BlockBreakSpeedBonus otherBonus)) {
+            throw new IllegalArgumentException();
+        }
+        return new BlockBreakSpeedBonus(otherBonus.multiplier + this.multiplier).setPlayerCondition(playerCondition)
+                .setPlayerMultiplier(playerMultiplier);
+    }
 
-  private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer, LivingEntityPredicate condition) {
-    setPlayerCondition(condition);
-    consumer.accept(this.copy());
-    editor.rebuildWidgets();
-  }
+    @Override
+    public MutableComponent getTooltip() {
+        MutableComponent bonusTooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
+        bonusTooltip = playerCondition.getTooltip(bonusTooltip, Target.PLAYER);
+        bonusTooltip = playerMultiplier.getTooltip(bonusTooltip, Target.PLAYER);
+        return bonusTooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+    }
 
-  private void selectPlayerMultiplier(
-      SkillTreeEditor editor,
-      Consumer<BlockBreakSpeedBonus> consumer,
-      LivingMultiplier multiplier) {
-    setPlayerMultiplier(multiplier);
-    consumer.accept(this.copy());
-    editor.rebuildWidgets();
-  }
+    @Override
+    public boolean isPositive() {
+        return multiplier > 0;
+    }
 
-  private void selectMultiplier(Consumer<BlockBreakSpeedBonus> consumer, Double value) {
-    setMultiplier(value.floatValue());
-    consumer.accept(this.copy());
-  }
+    @Override
+    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<BlockBreakSpeedBonus> consumer) {
+        editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addNumericTextField(0, 0, 50, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));
+        editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, playerCondition).setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
+                .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
+        editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, playerMultiplier)
+                .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
+                .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
+        editor.increaseHeight(19);
+    }
 
-  private void addPlayerConditionWidgets(
-      SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer) {
-    playerCondition.addEditorWidgets(
-        editor,
-        c -> {
-          setPlayerCondition(c);
-          consumer.accept(this.copy());
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer, LivingEntityPredicate condition) {
+        setPlayerCondition(condition);
+        consumer.accept(this.copy());
+        editor.rebuildWidgets();
+    }
+
+    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer, LivingMultiplier multiplier) {
+        setPlayerMultiplier(multiplier);
+        consumer.accept(this.copy());
+        editor.rebuildWidgets();
+    }
+
+    private void selectMultiplier(Consumer<BlockBreakSpeedBonus> consumer, Double value) {
+        setMultiplier(value.floatValue());
+        consumer.accept(this.copy());
+    }
+
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer) {
+        playerCondition.addEditorWidgets(editor, c -> {
+            setPlayerCondition(c);
+            consumer.accept(this.copy());
         });
-  }
+    }
 
-  private void addPlayerMultiplierWidgets(
-      SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer) {
-    playerMultiplier.addEditorWidgets(
-        editor,
-        m -> {
-          setPlayerMultiplier(m);
-          consumer.accept(this.copy());
+    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<BlockBreakSpeedBonus> consumer) {
+        playerMultiplier.addEditorWidgets(editor, m -> {
+            setPlayerMultiplier(m);
+            consumer.accept(this.copy());
         });
-  }
-
-  public BlockBreakSpeedBonus setPlayerCondition(@Nonnull LivingEntityPredicate playerCondition) {
-    this.playerCondition = playerCondition;
-    return this;
-  }
-
-  public BlockBreakSpeedBonus setPlayerMultiplier(@Nonnull LivingMultiplier playerMultiplier) {
-    this.playerMultiplier = playerMultiplier;
-    return this;
-  }
-
-  public BlockBreakSpeedBonus setMultiplier(float multiplier) {
-    this.multiplier = multiplier;
-    return this;
-  }
-
-  @Nonnull
-  public LivingEntityPredicate getPlayerCondition() {
-    return playerCondition;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-        return true;
     }
-    if (o == null || getClass() != o.getClass()) {
-        return false;
+
+    public BlockBreakSpeedBonus setPlayerCondition(@Nonnull LivingEntityPredicate playerCondition) {
+        this.playerCondition = playerCondition;
+        return this;
     }
-    BlockBreakSpeedBonus that = (BlockBreakSpeedBonus) o;
-    return Float.compare(multiplier, that.multiplier) == 0
-        && Objects.equals(playerCondition, that.playerCondition)
-        && Objects.equals(playerMultiplier, that.playerMultiplier);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(multiplier, playerCondition, playerMultiplier);
-  }
+    public BlockBreakSpeedBonus setPlayerMultiplier(@Nonnull LivingMultiplier playerMultiplier) {
+        this.playerMultiplier = playerMultiplier;
+        return this;
+    }
 
-  public static class Serializer implements SkillBonus.Serializer {
-    @Override
-    public BlockBreakSpeedBonus deserialize(JsonObject json) throws JsonParseException {
-      float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
-      LivingEntityPredicate playerCondition =
-          SerializationHelper.deserializeLivingCondition(json, "player_condition");
-      LivingMultiplier playerMultiplier =
-          SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
-      return new BlockBreakSpeedBonus(multiplier)
-          .setPlayerCondition(playerCondition)
-          .setPlayerMultiplier(playerMultiplier);
+    public BlockBreakSpeedBonus setMultiplier(float multiplier) {
+        this.multiplier = multiplier;
+        return this;
+    }
+
+    @Nonnull
+    public LivingEntityPredicate getPlayerCondition() {
+        return playerCondition;
     }
 
     @Override
-    public void serialize(JsonObject json, SkillBonus<?> bonus) {
-      if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      json.addProperty("multiplier", aBonus.multiplier);
-      SerializationHelper.serializeLivingCondition(
-          json, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeLivingMultiplier(
-          json, aBonus.playerMultiplier, "player_multiplier");
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BlockBreakSpeedBonus that = (BlockBreakSpeedBonus) o;
+        return Float.compare(multiplier, that.multiplier) == 0 && Objects.equals(playerCondition, that.playerCondition) && Objects.equals(playerMultiplier, that.playerMultiplier);
     }
 
     @Override
-    public BlockBreakSpeedBonus deserialize(CompoundTag tag) {
-      float multiplier = tag.getFloat("multiplier");
-      LivingEntityPredicate playerCondition =
-          SerializationHelper.deserializeLivingCondition(tag, "player_condition");
-      LivingMultiplier playerMultiplier =
-          SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
-      return new BlockBreakSpeedBonus(multiplier)
-          .setPlayerCondition(playerCondition)
-          .setPlayerMultiplier(playerMultiplier);
+    public int hashCode() {
+        return Objects.hash(multiplier, playerCondition, playerMultiplier);
     }
 
-    @Override
-    public CompoundTag serialize(SkillBonus<?> bonus) {
-      if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
-      SerializationHelper.serializeLivingMultiplier(
-          tag, aBonus.playerMultiplier, "player_multiplier");
-      tag.putFloat("multiplier", aBonus.multiplier);
-      return tag;
-    }
+    public static class Serializer implements SkillBonus.Serializer {
+        @Override
+        public BlockBreakSpeedBonus deserialize(JsonObject json) throws JsonParseException {
+            float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
+            LivingEntityPredicate playerCondition = SerializationHelper.deserializeLivingCondition(json, "player_condition");
+            LivingMultiplier playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+            return new BlockBreakSpeedBonus(multiplier).setPlayerCondition(playerCondition).setPlayerMultiplier(playerMultiplier);
+        }
 
-    @Override
-    public BlockBreakSpeedBonus deserialize(FriendlyByteBuf buf) {
-      LivingEntityPredicate playerCondition = NetworkHelper.readLivingCondition(buf);
-      LivingMultiplier playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
-      return new BlockBreakSpeedBonus(buf.readFloat())
-          .setPlayerCondition(playerCondition)
-          .setPlayerMultiplier(playerMultiplier);
-    }
+        @Override
+        public void serialize(JsonObject json, SkillBonus<?> bonus) {
+            if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            json.addProperty("multiplier", aBonus.multiplier);
+            SerializationHelper.serializeLivingCondition(json, aBonus.playerCondition, "player_condition");
+            SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-      if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
-      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
-      buf.writeFloat(aBonus.multiplier);
-    }
+        @Override
+        public BlockBreakSpeedBonus deserialize(CompoundTag tag) {
+            float multiplier = tag.getFloat("multiplier");
+            LivingEntityPredicate playerCondition = SerializationHelper.deserializeLivingCondition(tag, "player_condition");
+            LivingMultiplier playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+            return new BlockBreakSpeedBonus(multiplier).setPlayerCondition(playerCondition).setPlayerMultiplier(playerMultiplier);
+        }
 
-    @Override
-    public SkillBonus<?> createDefaultInstance() {
-      return new BlockBreakSpeedBonus(0.1f);
+        @Override
+        public CompoundTag serialize(SkillBonus<?> bonus) {
+            if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
+            SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
+            tag.putFloat("multiplier", aBonus.multiplier);
+            return tag;
+        }
+
+        @Override
+        public BlockBreakSpeedBonus deserialize(FriendlyByteBuf buf) {
+            LivingEntityPredicate playerCondition = NetworkHelper.readLivingCondition(buf);
+            LivingMultiplier playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
+            return new BlockBreakSpeedBonus(buf.readFloat()).setPlayerCondition(playerCondition).setPlayerMultiplier(playerMultiplier);
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
+            if (!(bonus instanceof BlockBreakSpeedBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
+            NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
+            buf.writeFloat(aBonus.multiplier);
+        }
+
+        @Override
+        public SkillBonus<?> createDefaultInstance() {
+            return new BlockBreakSpeedBonus(0.1f);
+        }
     }
-  }
 }

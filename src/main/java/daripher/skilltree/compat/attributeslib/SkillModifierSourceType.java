@@ -12,30 +12,24 @@ import net.minecraft.world.entity.player.Player;
 import java.util.function.BiConsumer;
 
 public class SkillModifierSourceType extends ModifierSourceType<PassiveSkill> {
-  @Override
-  public void extract(
-      LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> consumer) {
-    if (!(entity instanceof Player player)) {
-        return;
+    @Override
+    public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> consumer) {
+        if (!(entity instanceof Player player)) {
+            return;
+        }
+        if (!PlayerSkillsProvider.hasSkills(player)) {
+            return;
+        }
+        PlayerSkillsProvider.get(player).getPlayerSkills().forEach(skill -> addSkillBonusIcons(consumer, skill));
     }
-    if (!PlayerSkillsProvider.hasSkills(player)) {
-        return;
+
+    private static void addSkillBonusIcons(BiConsumer<AttributeModifier, ModifierSource<?>> consumer, PassiveSkill skill) {
+        skill.getBonuses().stream().filter(AttributeBonus.class::isInstance).map(AttributeBonus.class::cast)
+                .forEach(bonus -> consumer.accept(bonus.getModifier(), new SkillModifierSource(skill)));
     }
-    PlayerSkillsProvider.get(player)
-        .getPlayerSkills()
-        .forEach(skill -> addSkillBonusIcons(consumer, skill));
-  }
 
-  private static void addSkillBonusIcons(
-      BiConsumer<AttributeModifier, ModifierSource<?>> consumer, PassiveSkill skill) {
-    skill.getBonuses().stream()
-        .filter(AttributeBonus.class::isInstance)
-        .map(AttributeBonus.class::cast)
-        .forEach(bonus -> consumer.accept(bonus.getModifier(), new SkillModifierSource(skill)));
-  }
-
-  @Override
-  public int getPriority() {
-    return 1;
-  }
+    @Override
+    public int getPriority() {
+        return 1;
+    }
 }

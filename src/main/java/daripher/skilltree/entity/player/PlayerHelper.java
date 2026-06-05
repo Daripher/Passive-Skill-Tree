@@ -13,43 +13,38 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class PlayerHelper {
-  public static Stream<ItemStack> getAllEquipment(LivingEntity living) {
-    return Streams.concat(getVanillaEquipment(living), getCurios(living));
-  }
-
-  public static Stream<ItemStack> getItemsInHands(LivingEntity living) {
-    return Stream.of(living.getMainHandItem(), living.getOffhandItem());
-  }
-
-  public static Stream<ItemStack> getVanillaEquipment(LivingEntity living) {
-    return Arrays.stream(EquipmentSlot.values()).map(slot -> getEquipmentInSlot(living, slot));
-  }
-
-  public static Stream<ItemStack> getArmor(LivingEntity living) {
-    return Arrays.stream(EquipmentSlot.values())
-        .filter(EquipmentSlot::isArmor)
-        .map(slot -> getEquipmentInSlot(living, slot));
-  }
-
-  @NotNull
-  private static ItemStack getEquipmentInSlot(LivingEntity living, EquipmentSlot slot) {
-    ItemStack stack = living.getItemBySlot(slot);
-    if (slot == EquipmentSlot.MAINHAND
-        && !EquipmentPredicate.isWeapon(stack)
-        && !EquipmentPredicate.isTool(stack)
-        && !EquipmentPredicate.isPotion(stack)) {
-      return ItemStack.EMPTY;
+    public static Stream<ItemStack> getAllEquipment(LivingEntity living) {
+        return Streams.concat(getVanillaEquipment(living), getCurios(living));
     }
-    if (slot == EquipmentSlot.OFFHAND && EquipmentPredicate.isPotion(stack)) {
-      return ItemStack.EMPTY;
-    }
-    return stack;
-  }
 
-  public static Stream<ItemStack> getCurios(LivingEntity living) {
-    if (ModList.get().isLoaded("curios")) {
-      return CuriosCompatibility.INSTANCE.getCurios(living);
+    public static Stream<ItemStack> getItemsInHands(LivingEntity living) {
+        return Stream.of(living.getMainHandItem(), living.getOffhandItem());
     }
-    return Stream.of();
-  }
+
+    public static Stream<ItemStack> getVanillaEquipment(LivingEntity living) {
+        return Arrays.stream(EquipmentSlot.values()).map(slot -> getEquipmentInSlot(living, slot));
+    }
+
+    public static Stream<ItemStack> getArmor(LivingEntity living) {
+        return Arrays.stream(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).map(slot -> getEquipmentInSlot(living, slot));
+    }
+
+    @NotNull
+    private static ItemStack getEquipmentInSlot(LivingEntity living, EquipmentSlot slot) {
+        ItemStack stack = living.getItemBySlot(slot);
+        if (slot == EquipmentSlot.MAINHAND && !EquipmentPredicate.isWeapon(stack) && !EquipmentPredicate.isTool(stack) && !EquipmentPredicate.isPotion(stack)) {
+            return ItemStack.EMPTY;
+        }
+        if (slot == EquipmentSlot.OFFHAND && EquipmentPredicate.isPotion(stack)) {
+            return ItemStack.EMPTY;
+        }
+        return stack;
+    }
+
+    public static Stream<ItemStack> getCurios(LivingEntity living) {
+        if (ModList.get().isLoaded("curios")) {
+            return CuriosCompatibility.INSTANCE.getCurios(living);
+        }
+        return Stream.of();
+    }
 }

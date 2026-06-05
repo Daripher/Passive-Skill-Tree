@@ -8,59 +8,59 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public enum NoneEnchantmentCondition implements EnchantmentCondition {
-  INSTANCE;
+    INSTANCE;
 
-  @Override
-  public boolean met(EnchantmentCategory category) {
-    return true;
-  }
-
-  @Override
-  public EnchantmentCondition.Serializer getSerializer() {
-    return PSTEnchantmentConditions.NONE.get();
-  }
-
-  public static class Serializer implements EnchantmentCondition.Serializer {
     @Override
-    public EnchantmentCondition deserialize(JsonObject json) throws JsonParseException {
-      return NoneEnchantmentCondition.INSTANCE;
+    public boolean met(EnchantmentCategory category) {
+        return true;
     }
 
     @Override
-    public void serialize(JsonObject json, EnchantmentCondition condition) {
-      if (condition != NoneEnchantmentCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
+    public EnchantmentCondition.Serializer getSerializer() {
+        return PSTEnchantmentConditions.NONE.get();
     }
 
-    @Override
-    public EnchantmentCondition deserialize(CompoundTag tag) {
-      return NoneEnchantmentCondition.INSTANCE;
-    }
+    public static class Serializer implements EnchantmentCondition.Serializer {
+        @Override
+        public EnchantmentCondition deserialize(JsonObject json) throws JsonParseException {
+            return NoneEnchantmentCondition.INSTANCE;
+        }
 
-    @Override
-    public CompoundTag serialize(EnchantmentCondition condition) {
-      if (condition != NoneEnchantmentCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-      return new CompoundTag();
-    }
+        @Override
+        public void serialize(JsonObject json, EnchantmentCondition condition) {
+            if (condition != NoneEnchantmentCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
 
-    @Override
-    public EnchantmentCondition deserialize(FriendlyByteBuf buf) {
-      return NoneEnchantmentCondition.INSTANCE;
-    }
+        @Override
+        public EnchantmentCondition deserialize(CompoundTag tag) {
+            return NoneEnchantmentCondition.INSTANCE;
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, EnchantmentCondition condition) {
-      if (condition != NoneEnchantmentCondition.INSTANCE) {
-        throw new IllegalArgumentException();
-      }
-    }
+        @Override
+        public CompoundTag serialize(EnchantmentCondition condition) {
+            if (condition != NoneEnchantmentCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+            return new CompoundTag();
+        }
 
-    @Override
-    public EnchantmentCondition createDefaultInstance() {
-      return NoneEnchantmentCondition.INSTANCE;
+        @Override
+        public EnchantmentCondition deserialize(FriendlyByteBuf buf) {
+            return NoneEnchantmentCondition.INSTANCE;
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, EnchantmentCondition condition) {
+            if (condition != NoneEnchantmentCondition.INSTANCE) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        public EnchantmentCondition createDefaultInstance() {
+            return NoneEnchantmentCondition.INSTANCE;
+        }
     }
-  }
 }

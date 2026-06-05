@@ -11,21 +11,21 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public interface SkillRequirement<T extends SkillRequirement<T>> extends Predicate<Player> {
-  MutableComponent getTooltip();
+    MutableComponent getTooltip();
 
-  void addEditorWidgets(SkillTreeEditor editor, Consumer<T> consumer);
+    void addEditorWidgets(SkillTreeEditor editor, Consumer<T> consumer);
 
-  Serializer getSerializer();
+    Serializer getSerializer();
 
-  T copy();
+    T copy();
 
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "skill_requirements.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "skill_requirements.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillRequirement<?>> {
-    SkillRequirement<?> createDefaultInstance();
-  }
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillRequirement<?>> {
+        SkillRequirement<?> createDefaultInstance();
+    }
 }

@@ -13,24 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-  @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-  public void preventDurabilityLoss(
-      int amount,
-      RandomSource random,
-      @Nullable ServerPlayer user,
-      CallbackInfoReturnable<Boolean> callbackInfo) {
-    if (user == null) {
-      return;
+    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
+    public void preventDurabilityLoss(int amount, RandomSource random, @Nullable ServerPlayer user, CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (user == null) {
+            return;
+        }
+        @SuppressWarnings("DataFlowIssue") ItemStack itemStack = (ItemStack) (Object) this;
+        float chance = SkillBonusHandler.getSkillBonuses(user, ItemDurabilityLossAvoidanceBonus.class).stream()
+                .map(bonus -> bonus.getChance(user, itemStack)).reduce(Float::sum).orElse(0f);
+        if (random.nextFloat() < chance) {
+            callbackInfo.setReturnValue(false);
+        }
     }
-    @SuppressWarnings("DataFlowIssue")
-    ItemStack itemStack = (ItemStack) (Object) this;
-    float chance =
-        SkillBonusHandler.getSkillBonuses(user, ItemDurabilityLossAvoidanceBonus.class).stream()
-            .map(bonus -> bonus.getChance(user, itemStack))
-            .reduce(Float::sum)
-            .orElse(0f);
-    if (random.nextFloat() < chance) {
-      callbackInfo.setReturnValue(false);
-    }
-  }
 }

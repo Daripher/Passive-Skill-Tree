@@ -12,19 +12,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity implements PlayerExtension {
-  @SuppressWarnings("DataFlowIssue")
-  protected PlayerMixin() {
-    super(null, null);
-  }
-
-  @SuppressWarnings("DataFlowIssue")
-  @Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
-  private void restoreEnchantmentExperience(
-      ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
-    Player player = (Player) (Object) this;
-    float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player, itemStack);
-    if (player.getRandom().nextFloat() < freeEnchantmentChance) {
-      player.giveExperienceLevels(enchantmentCost);
+    @SuppressWarnings("DataFlowIssue")
+    protected PlayerMixin() {
+        super(null, null);
     }
-  }
+
+    @SuppressWarnings("DataFlowIssue")
+    @Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
+    private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
+        Player player = (Player) (Object) this;
+        float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player, itemStack);
+        if (player.getRandom().nextFloat() < freeEnchantmentChance) {
+            player.giveExperienceLevels(enchantmentCost);
+        }
+    }
 }

@@ -11,19 +11,20 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public interface LivingEntityPredicate extends Predicate<LivingEntity> {
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(getSerializer());
-    assert id != null;
-    return "living_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(getSerializer());
+        assert id != null;
+        return "living_condition.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target);
+    MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target);
 
-  Serializer getSerializer();
+    Serializer getSerializer();
 
-  default void addEditorWidgets(SkillTreeEditor editor, Consumer<LivingEntityPredicate> consumer) {}
+    default void addEditorWidgets(SkillTreeEditor editor, Consumer<LivingEntityPredicate> consumer) {
+    }
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<LivingEntityPredicate> {
-    LivingEntityPredicate createDefaultInstance();
-  }
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<LivingEntityPredicate> {
+        LivingEntityPredicate createDefaultInstance();
+    }
 }

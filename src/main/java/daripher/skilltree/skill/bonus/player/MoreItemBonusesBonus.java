@@ -21,191 +21,182 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBonus> {
-  private @Nonnull ItemStackPredicate itemStackPredicate;
-  private int amount;
+    private @Nonnull ItemStackPredicate itemStackPredicate;
+    private int amount;
 
-  public MoreItemBonusesBonus(@Nonnull ItemStackPredicate itemStackPredicate, int amount) {
-    this.itemStackPredicate = itemStackPredicate;
-    this.amount = amount;
-  }
-
-  @Override
-  public SkillBonus.Serializer getSerializer() {
-    return PSTSkillBonuses.MORE_ITEM_BONUSES.get();
-  }
-
-  @Override
-  public MoreItemBonusesBonus copy() {
-    return new MoreItemBonusesBonus(itemStackPredicate, amount);
-  }
-
-  @Override
-  public MoreItemBonusesBonus multiply(double multiplier) {
-    return new MoreItemBonusesBonus(itemStackPredicate, (int) (amount * multiplier));
-  }
-
-  @Override
-  public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
-        return false;
+    public MoreItemBonusesBonus(@Nonnull ItemStackPredicate itemStackPredicate, int amount) {
+        this.itemStackPredicate = itemStackPredicate;
+        this.amount = amount;
     }
-    return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
-  }
 
-  @Override
-  public SkillBonus<MoreItemBonusesBonus> merge(SkillBonus<?> other) {
-    if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
-      throw new IllegalArgumentException();
+    @Override
+    public SkillBonus.Serializer getSerializer() {
+        return PSTSkillBonuses.MORE_ITEM_BONUSES.get();
     }
-    return new MoreItemBonusesBonus(itemStackPredicate, otherBonus.amount + this.amount);
-  }
 
-  @Override
-  public MutableComponent getTooltip() {
-    Component itemDescription = itemStackPredicate.getTooltip("plural");
-    MutableComponent bonusDescription;
-    if (amount == 1) {
-      bonusDescription = Component.translatable(getDescriptionId() + ".one", itemDescription);
-    } else {
-      bonusDescription = Component.translatable(getDescriptionId(), itemDescription, amount);
+    @Override
+    public MoreItemBonusesBonus copy() {
+        return new MoreItemBonusesBonus(itemStackPredicate, amount);
     }
-    return bonusDescription.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
-  }
 
-  @Override
-  public boolean isPositive() {
-    return amount > 0;
-  }
+    @Override
+    public MoreItemBonusesBonus multiply(double multiplier) {
+        return new MoreItemBonusesBonus(itemStackPredicate, (int) (amount * multiplier));
+    }
 
-  @Override
-  public void addEditorWidgets(
-      SkillTreeEditor editor, int row, Consumer<MoreItemBonusesBonus> consumer) {
-    editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addNumericTextField(0, 0, 50, 14, amount)
-        .setNumericResponder(value -> selectAmount(consumer, value));
-    editor.increaseHeight(19);
-    editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, itemStackPredicate)
-        .setResponder(condition -> selectItemCondition(editor, consumer, condition))
-        .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
-    editor.increaseHeight(19);
-  }
+    @Override
+    public boolean canMerge(SkillBonus<?> other) {
+        if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
+            return false;
+        }
+        return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
+    }
 
-  private void addItemConditionWidgets(
-      SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer) {
-    itemStackPredicate.addEditorWidgets(
-        editor,
-        condition -> {
-          setItemCondition(condition);
-          consumer.accept(this.copy());
+    @Override
+    public SkillBonus<MoreItemBonusesBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
+            throw new IllegalArgumentException();
+        }
+        return new MoreItemBonusesBonus(itemStackPredicate, otherBonus.amount + this.amount);
+    }
+
+    @Override
+    public MutableComponent getTooltip() {
+        Component itemDescription = itemStackPredicate.getTooltip("plural");
+        MutableComponent bonusDescription;
+        if (amount == 1) {
+            bonusDescription = Component.translatable(getDescriptionId() + ".one", itemDescription);
+        } else {
+            bonusDescription = Component.translatable(getDescriptionId(), itemDescription, amount);
+        }
+        return bonusDescription.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+    }
+
+    @Override
+    public boolean isPositive() {
+        return amount > 0;
+    }
+
+    @Override
+    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<MoreItemBonusesBonus> consumer) {
+        editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));
+        editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))
+                .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
+        editor.increaseHeight(19);
+    }
+
+    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer) {
+        itemStackPredicate.addEditorWidgets(editor, condition -> {
+            setItemCondition(condition);
+            consumer.accept(this.copy());
         });
-  }
-
-  private void selectItemCondition(
-      SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer, ItemStackPredicate condition) {
-    setItemCondition(condition);
-    consumer.accept(this.copy());
-    editor.rebuildWidgets();
-  }
-
-  private void selectAmount(Consumer<MoreItemBonusesBonus> consumer, Double value) {
-    setAmount(value.intValue());
-    consumer.accept(this.copy());
-  }
-
-  public void setItemCondition(@Nonnull ItemStackPredicate itemStackPredicate) {
-    this.itemStackPredicate = itemStackPredicate;
-  }
-
-  public void setAmount(int amount) {
-    this.amount = amount;
-  }
-
-  @Nonnull
-  public ItemStackPredicate getItemCondition() {
-    return itemStackPredicate;
-  }
-
-  public int getAmount() {
-    return amount;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (obj == this) {
-        return true;
     }
-    if (obj == null || obj.getClass() != this.getClass()) {
-        return false;
-    }
-    MoreItemBonusesBonus that = (MoreItemBonusesBonus) obj;
-    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) {
-        return false;
-    }
-    return this.amount == that.amount;
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(itemStackPredicate, amount);
-  }
+    private void selectItemCondition(SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer, ItemStackPredicate condition) {
+        setItemCondition(condition);
+        consumer.accept(this.copy());
+        editor.rebuildWidgets();
+    }
 
-  public static class Serializer implements SkillBonus.Serializer {
-    @Override
-    public MoreItemBonusesBonus deserialize(JsonObject json) throws JsonParseException {
-      ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
-      int amount = SerializationHelper.getElement(json, "amount").getAsInt();
-      return new MoreItemBonusesBonus(condition, amount);
+    private void selectAmount(Consumer<MoreItemBonusesBonus> consumer, Double value) {
+        setAmount(value.intValue());
+        consumer.accept(this.copy());
+    }
+
+    public void setItemCondition(@Nonnull ItemStackPredicate itemStackPredicate) {
+        this.itemStackPredicate = itemStackPredicate;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @Nonnull
+    public ItemStackPredicate getItemCondition() {
+        return itemStackPredicate;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override
-    public void serialize(JsonObject json, SkillBonus<?> bonus) {
-      if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
-      json.addProperty("amount", aBonus.amount);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        MoreItemBonusesBonus that = (MoreItemBonusesBonus) obj;
+        if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) {
+            return false;
+        }
+        return this.amount == that.amount;
     }
 
     @Override
-    public MoreItemBonusesBonus deserialize(CompoundTag tag) {
-      ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
-      int amount = tag.getInt("amount");
-      return new MoreItemBonusesBonus(condition, amount);
+    public int hashCode() {
+        return Objects.hash(itemStackPredicate, amount);
     }
 
-    @Override
-    public CompoundTag serialize(SkillBonus<?> bonus) {
-      if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
-      tag.putInt("amount", aBonus.amount);
-      return tag;
-    }
+    public static class Serializer implements SkillBonus.Serializer {
+        @Override
+        public MoreItemBonusesBonus deserialize(JsonObject json) throws JsonParseException {
+            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
+            int amount = SerializationHelper.getElement(json, "amount").getAsInt();
+            return new MoreItemBonusesBonus(condition, amount);
+        }
 
-    @Override
-    public MoreItemBonusesBonus deserialize(FriendlyByteBuf buf) {
-      return new MoreItemBonusesBonus(NetworkHelper.readItemCondition(buf), buf.readInt());
-    }
+        @Override
+        public void serialize(JsonObject json, SkillBonus<?> bonus) {
+            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
+            json.addProperty("amount", aBonus.amount);
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-      if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
-      buf.writeInt(aBonus.amount);
-    }
+        @Override
+        public MoreItemBonusesBonus deserialize(CompoundTag tag) {
+            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
+            int amount = tag.getInt("amount");
+            return new MoreItemBonusesBonus(condition, amount);
+        }
 
-    @Override
-    public SkillBonus<?> createDefaultInstance() {
-      return new MoreItemBonusesBonus(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD), 1);
+        @Override
+        public CompoundTag serialize(SkillBonus<?> bonus) {
+            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
+            tag.putInt("amount", aBonus.amount);
+            return tag;
+        }
+
+        @Override
+        public MoreItemBonusesBonus deserialize(FriendlyByteBuf buf) {
+            return new MoreItemBonusesBonus(NetworkHelper.readItemCondition(buf), buf.readInt());
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
+            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
+            buf.writeInt(aBonus.amount);
+        }
+
+        @Override
+        public SkillBonus<?> createDefaultInstance() {
+            return new MoreItemBonusesBonus(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD), 1);
+        }
     }
-  }
 }

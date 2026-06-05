@@ -13,65 +13,66 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBonus<?>> {
-  default void onSkillLearned(ServerPlayer player, boolean firstTime) {}
-
-  default void onSkillRemoved(ServerPlayer player) {}
-
-  boolean canMerge(SkillBonus<?> other);
-
-  default boolean sameBonus(SkillBonus<?> other) {
-    return canMerge(other);
-  }
-
-  SkillBonus<T> merge(SkillBonus<?> other);
-
-  SkillBonus<T> copy();
-
-  T multiply(double multiplier);
-
-  Serializer getSerializer();
-
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "skill_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
-
-  MutableComponent getTooltip();
-
-  default void gatherInfo(Consumer<MutableComponent> consumer) {
-    TooltipHelper.consumeTranslated(getDescriptionId() + ".info", consumer);
-  }
-
-  boolean isPositive();
-
-  void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<T> consumer);
-
-  @Override
-  default int compareTo(@NotNull SkillBonus<?> o) {
-    if (isPositive() != o.isPositive()) {
-      return isPositive() ? -1 : 1;
-    }
-    String regex = "\\+?-?[0-9]+\\.?[0-9]?%? ";
-    String as = getTooltip().getString().replaceAll(regex, "");
-    String bs = o.getTooltip().getString().replaceAll(regex, "");
-    return as.compareTo(bs);
-  }
-
-  enum Target {
-    PLAYER,
-    ENEMY;
-
-    public String getName() {
-      return name().toLowerCase(Locale.ROOT);
+    default void onSkillLearned(ServerPlayer player, boolean firstTime) {
     }
 
-    public static Target fromName(String name) {
-      return valueOf(name.toUpperCase(Locale.ROOT));
+    default void onSkillRemoved(ServerPlayer player) {
     }
-  }
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {
-    SkillBonus<?> createDefaultInstance();
-  }
+    boolean canMerge(SkillBonus<?> other);
+
+    default boolean sameBonus(SkillBonus<?> other) {
+        return canMerge(other);
+    }
+
+    SkillBonus<T> merge(SkillBonus<?> other);
+
+    SkillBonus<T> copy();
+
+    T multiply(double multiplier);
+
+    Serializer getSerializer();
+
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.SKILL_BONUSES.get().getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "skill_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
+
+    MutableComponent getTooltip();
+
+    default void gatherInfo(Consumer<MutableComponent> consumer) {
+        TooltipHelper.consumeTranslated(getDescriptionId() + ".info", consumer);
+    }
+
+    boolean isPositive();
+
+    void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<T> consumer);
+
+    @Override
+    default int compareTo(@NotNull SkillBonus<?> o) {
+        if (isPositive() != o.isPositive()) {
+            return isPositive() ? -1 : 1;
+        }
+        String regex = "\\+?-?[0-9]+\\.?[0-9]?%? ";
+        String as = getTooltip().getString().replaceAll(regex, "");
+        String bs = o.getTooltip().getString().replaceAll(regex, "");
+        return as.compareTo(bs);
+    }
+
+    enum Target {
+        PLAYER, ENEMY;
+
+        public String getName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        public static Target fromName(String name) {
+            return valueOf(name.toUpperCase(Locale.ROOT));
+        }
+    }
+
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {
+        SkillBonus<?> createDefaultInstance();
+    }
 }

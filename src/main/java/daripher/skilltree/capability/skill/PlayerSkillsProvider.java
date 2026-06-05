@@ -30,97 +30,91 @@ import org.jetbrains.annotations.Nullable;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
-  private static final ResourceLocation CAPABILITY_ID =
-      ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "player_skills");
-  private static final Capability<IPlayerSkills> CAPABILITY =
-      CapabilityManager.get(new CapabilityToken<>() {});
-  private final LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(PlayerSkills::new);
+    private static final ResourceLocation CAPABILITY_ID = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "player_skills");
+    private static final Capability<IPlayerSkills> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
+    private final LazyOptional<IPlayerSkills> optionalCapability = LazyOptional.of(PlayerSkills::new);
 
-  @SubscribeEvent
-  public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-    if (!(event.getObject() instanceof Player)) {
-        return;
+    @SubscribeEvent
+    public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
+        if (!(event.getObject() instanceof Player)) {
+            return;
+        }
+        PlayerSkillsProvider provider = new PlayerSkillsProvider();
+        event.addCapability(CAPABILITY_ID, provider);
     }
-    PlayerSkillsProvider provider = new PlayerSkillsProvider();
-    event.addCapability(CAPABILITY_ID, provider);
-  }
 
-  @SubscribeEvent
-  public static void persistThroughDeath(PlayerEvent.Clone event) {
-    if (event.getEntity().level().isClientSide) {
-        return;
+    @SubscribeEvent
+    public static void persistThroughDeath(PlayerEvent.Clone event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        event.getOriginal().reviveCaps();
+        IPlayerSkills originalData = get(event.getOriginal());
+        IPlayerSkills cloneData = get(event.getEntity());
+        cloneData.deserializeNBT(originalData.serializeNBT());
+        event.getOriginal().invalidateCaps();
     }
-    event.getOriginal().reviveCaps();
-    IPlayerSkills originalData = get(event.getOriginal());
-    IPlayerSkills cloneData = get(event.getEntity());
-    cloneData.deserializeNBT(originalData.serializeNBT());
-    event.getOriginal().invalidateCaps();
-  }
 
-  @SubscribeEvent
-  public static void syncSkills(PlayerLoggedInEvent event) {
-    if (event.getEntity().level().isClientSide) {
-        return;
+    @SubscribeEvent
+    public static void syncSkills(PlayerLoggedInEvent event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new SyncServerDataMessage());
     }
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()),
-        new SyncServerDataMessage());
-  }
 
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) {
-        return;
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
     }
-    get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
-  }
 
-  @SubscribeEvent
-  public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof Player player)) {
-        return;
+    @SubscribeEvent
+    public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        IPlayerSkills capability = get(player);
+        if (capability.isTreeReset()) {
+            player.sendSystemMessage(Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
+            capability.setTreeReset(false);
+        }
     }
-    if (event.getEntity().level().isClientSide) {
-        return;
+
+    @SubscribeEvent
+    public static void syncPlayerSkills(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
     }
-    IPlayerSkills capability = get(player);
-    if (capability.isTreeReset()) {
-      player.sendSystemMessage(
-          Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
-      capability.setTreeReset(false);
+
+    public static @NotNull IPlayerSkills get(Player player) {
+        return player.getCapability(CAPABILITY).orElseThrow(NullPointerException::new);
     }
-  }
 
-  @SubscribeEvent
-  public static void syncPlayerSkills(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) {
-        return;
+    public static boolean hasSkills(@NotNull Player player) {
+        return player.getCapability(CAPABILITY).isPresent();
     }
-    NetworkDispatcher.network_channel.send(
-        PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
-  }
 
-  public static @NotNull IPlayerSkills get(Player player) {
-    return player.getCapability(CAPABILITY).orElseThrow(NullPointerException::new);
-  }
+    @Override
+    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        return cap == CAPABILITY ? optionalCapability.cast() : LazyOptional.empty();
+    }
 
-  public static boolean hasSkills(@NotNull Player player) {
-    return player.getCapability(CAPABILITY).isPresent();
-  }
+    @Override
+    public CompoundTag serializeNBT() {
+        return optionalCapability.orElseThrow(NullPointerException::new).serializeNBT();
+    }
 
-  @Override
-  public <T> @NotNull LazyOptional<T> getCapability(
-      @NotNull Capability<T> cap, @Nullable Direction side) {
-    return cap == CAPABILITY ? optionalCapability.cast() : LazyOptional.empty();
-  }
-
-  @Override
-  public CompoundTag serializeNBT() {
-    return optionalCapability.orElseThrow(NullPointerException::new).serializeNBT();
-  }
-
-  @Override
-  public void deserializeNBT(CompoundTag compoundTag) {
-    optionalCapability.orElseThrow(NullPointerException::new).deserializeNBT(compoundTag);
-  }
+    @Override
+    public void deserializeNBT(CompoundTag compoundTag) {
+        optionalCapability.orElseThrow(NullPointerException::new).deserializeNBT(compoundTag);
+    }
 }

@@ -12,25 +12,25 @@ import java.util.function.BiFunction;
 
 @Mixin(EditBox.class)
 public interface EditBoxAccessor {
-  @Accessor
-  @Nullable
-  String getSuggestion();
+    @Accessor
+    @Nullable
+    String getSuggestion();
 
-  @Accessor
-  int getDisplayPos();
+    @Accessor
+    int getDisplayPos();
 
-  @Accessor
-  int getHighlightPos();
+    @Accessor
+    int getHighlightPos();
 
-  @Accessor
-  int getFrame();
+    @Accessor
+    int getFrame();
 
-  @Accessor
-  int getMaxLength();
+    @Accessor
+    int getMaxLength();
 
-  @Accessor
-  BiFunction<String, Integer, FormattedCharSequence> getFormatter();
+    @Accessor
+    BiFunction<String, Integer, FormattedCharSequence> getFormatter();
 
-  @Invoker
-  void invokeRenderHighlight(GuiGraphics graphics, int startX, int startY, int endX, int endY);
+    @Invoker
+    void invokeRenderHighlight(GuiGraphics graphics, int startX, int startY, int endX, int endY);
 }

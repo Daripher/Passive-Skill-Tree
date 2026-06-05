@@ -20,12 +20,9 @@ public enum IronsSpellbooksCompat {
     INSTANCE;
 
     private static final Map<Player, List<UUID>> PLAYER_SPELLS_MAP = new HashMap<>();
-    public static final RegistryObject<SkillBonus.Serializer> GRANT_SPELL_BONUS =
-            PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> SPELL_LEVEL_BONUS =
-            PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
-    public static final RegistryObject<FloatFunction.Serializer> MANA_LEVEL_FUNCTION =
-            PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> GRANT_SPELL_BONUS = PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> SPELL_LEVEL_BONUS = PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
+    public static final RegistryObject<FloatFunction.Serializer> MANA_LEVEL_FUNCTION = PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
 
     public void register() {
         MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
@@ -61,7 +58,7 @@ public enum IronsSpellbooksCompat {
     }
 
     private void applySpellLevelBonus(ModifySpellLevelEvent event) {
-        if (!(event.getEntity() instanceof Player player))  {
+        if (!(event.getEntity() instanceof Player player)) {
             return;
         }
         List<SpellLevelSkillBonus> skillBonuses = SkillBonusHandler.getSkillBonuses(player, SpellLevelSkillBonus.class);

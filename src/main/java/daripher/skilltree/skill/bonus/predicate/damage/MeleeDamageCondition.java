@@ -9,70 +9,70 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 
 public record MeleeDamageCondition() implements DamageCondition {
-  @Override
-  public boolean met(DamageSource source) {
-    return source.getDirectEntity() instanceof LivingEntity;
-  }
-
-  @Override
-  public DamageCondition.Serializer getSerializer() {
-    return PSTDamageConditions.MELEE.get();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-        return true;
-    }
-    return o != null && getClass() == o.getClass();
-  }
-
-  @Override
-  public int hashCode() {
-    return getSerializer().hashCode();
-  }
-
-  public static class Serializer implements DamageCondition.Serializer {
     @Override
-    public DamageCondition deserialize(JsonObject json) throws JsonParseException {
-      return new MeleeDamageCondition();
+    public boolean met(DamageSource source) {
+        return source.getDirectEntity() instanceof LivingEntity;
     }
 
     @Override
-    public void serialize(JsonObject json, DamageCondition condition) {
-      if (!(condition instanceof MeleeDamageCondition)) {
-        throw new IllegalArgumentException();
-      }
+    public DamageCondition.Serializer getSerializer() {
+        return PSTDamageConditions.MELEE.get();
     }
 
     @Override
-    public DamageCondition deserialize(CompoundTag tag) {
-      return new MeleeDamageCondition();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        return o != null && getClass() == o.getClass();
     }
 
     @Override
-    public CompoundTag serialize(DamageCondition condition) {
-      if (!(condition instanceof MeleeDamageCondition)) {
-        throw new IllegalArgumentException();
-      }
-      return new CompoundTag();
+    public int hashCode() {
+        return getSerializer().hashCode();
     }
 
-    @Override
-    public DamageCondition deserialize(FriendlyByteBuf buf) {
-      return new MeleeDamageCondition();
-    }
+    public static class Serializer implements DamageCondition.Serializer {
+        @Override
+        public DamageCondition deserialize(JsonObject json) throws JsonParseException {
+            return new MeleeDamageCondition();
+        }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, DamageCondition condition) {
-      if (!(condition instanceof MeleeDamageCondition)) {
-        throw new IllegalArgumentException();
-      }
-    }
+        @Override
+        public void serialize(JsonObject json, DamageCondition condition) {
+            if (!(condition instanceof MeleeDamageCondition)) {
+                throw new IllegalArgumentException();
+            }
+        }
 
-    @Override
-    public DamageCondition createDefaultInstance() {
-      return new MeleeDamageCondition();
+        @Override
+        public DamageCondition deserialize(CompoundTag tag) {
+            return new MeleeDamageCondition();
+        }
+
+        @Override
+        public CompoundTag serialize(DamageCondition condition) {
+            if (!(condition instanceof MeleeDamageCondition)) {
+                throw new IllegalArgumentException();
+            }
+            return new CompoundTag();
+        }
+
+        @Override
+        public DamageCondition deserialize(FriendlyByteBuf buf) {
+            return new MeleeDamageCondition();
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, DamageCondition condition) {
+            if (!(condition instanceof MeleeDamageCondition)) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        public DamageCondition createDefaultInstance() {
+            return new MeleeDamageCondition();
+        }
     }
-  }
 }

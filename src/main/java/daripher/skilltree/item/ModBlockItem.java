@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockItem extends BlockItem {
-  public ModBlockItem(RegistryObject<Block> blockRegistryObject) {
-    super(blockRegistryObject.get(), new Properties());
-  }
+    public ModBlockItem(RegistryObject<Block> blockRegistryObject) {
+        super(blockRegistryObject.get(), new Properties());
+    }
 }

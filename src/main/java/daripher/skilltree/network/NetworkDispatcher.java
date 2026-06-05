@@ -18,43 +18,15 @@ import java.util.Optional;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = SkillTreeMod.MOD_ID)
 public class NetworkDispatcher {
-  public static SimpleChannel network_channel;
+    public static SimpleChannel network_channel;
 
-  @SubscribeEvent
-  public static void registerNetworkChannel(FMLCommonSetupEvent event) {
-    network_channel =
-        NetworkRegistry.newSimpleChannel(
-            ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "channel"),
-            () -> "1.0",
-            s -> true,
-            s -> true);
-    network_channel.registerMessage(
-        1,
-        SyncServerDataMessage.class,
-        SyncServerDataMessage::encode,
-        SyncServerDataMessage::decode,
-        SyncServerDataMessage::receive,
-        Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-    network_channel.registerMessage(
-        2,
-        SyncPlayerSkillsMessage.class,
-        SyncPlayerSkillsMessage::encode,
-        SyncPlayerSkillsMessage::decode,
-        SyncPlayerSkillsMessage::receive,
-        Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-    network_channel.registerMessage(
-        3,
-        LearnSkillMessage.class,
-        LearnSkillMessage::encode,
-        LearnSkillMessage::decode,
-        LearnSkillMessage::receive,
-        Optional.of(NetworkDirection.PLAY_TO_SERVER));
-    network_channel.registerMessage(
-        4,
-        GainSkillPointMessage.class,
-        (msg, buf) -> {},
-        (buf) -> new GainSkillPointMessage(),
-        (msg, ctx) -> GainSkillPointMessage.receive(ctx),
-        Optional.of(NetworkDirection.PLAY_TO_SERVER));
-  }
+    @SubscribeEvent
+    public static void registerNetworkChannel(FMLCommonSetupEvent event) {
+        network_channel = NetworkRegistry.newSimpleChannel(ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "channel"), () -> "1.0", s -> true, s -> true);
+        network_channel.registerMessage(1, SyncServerDataMessage.class, SyncServerDataMessage::encode, SyncServerDataMessage::decode, SyncServerDataMessage::receive, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        network_channel.registerMessage(2, SyncPlayerSkillsMessage.class, SyncPlayerSkillsMessage::encode, SyncPlayerSkillsMessage::decode, SyncPlayerSkillsMessage::receive, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        network_channel.registerMessage(3, LearnSkillMessage.class, LearnSkillMessage::encode, LearnSkillMessage::decode, LearnSkillMessage::receive, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        network_channel.registerMessage(4, GainSkillPointMessage.class, (msg, buf) -> {
+        }, (buf) -> new GainSkillPointMessage(), (msg, ctx) -> GainSkillPointMessage.receive(ctx), Optional.of(NetworkDirection.PLAY_TO_SERVER));
+    }
 }

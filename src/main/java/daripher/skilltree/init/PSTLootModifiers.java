@@ -10,16 +10,14 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class PSTLootModifiers {
-  public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> REGISTRY = DeferredRegister.create(
-      ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS,
-      SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> REGISTRY = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, SkillTreeMod.MOD_ID);
 
-  static {
-    REGISTRY.register("add_item", AddItemModifier.CODEC);
-    REGISTRY.register("skill_bonuses", SkillBonusesModifier.CODEC);
-  }
+    static {
+        REGISTRY.register("add_item", AddItemModifier.CODEC);
+        REGISTRY.register("skill_bonuses", SkillBonusesModifier.CODEC);
+    }
 
-  public static void register(IEventBus eventBus) {
-    REGISTRY.register(eventBus);
-  }
+    public static void register(IEventBus eventBus) {
+        REGISTRY.register(eventBus);
+    }
 }

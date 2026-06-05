@@ -21,123 +21,122 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import java.util.function.Consumer;
 
 public class AttributeValueFunction implements FloatFunction<AttributeValueFunction> {
-  private Attribute attribute;
+    private Attribute attribute;
 
-  public AttributeValueFunction(Attribute attribute) {
-    this.attribute = attribute;
-  }
-
-  @Override
-  public float apply(LivingEntity entity) {
-    AttributeMap attributes = entity.getAttributes();
-    return attributes.hasAttribute(attribute) ? (float) attributes.getValue(attribute) : 0f;
-  }
-
-  @Override
-  public MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip) {
-    String key = "%s.multiplier.%s".formatted(getDescriptionId(), target.getName());
-    MutableComponent attributeDescription = Component.translatable(attribute.getDescriptionId());
-    if (divisor != 1) {
-      key += ".plural";
-      return Component.translatable(key, bonusTooltip, formatNumber(divisor), attributeDescription);
-    } else {
-      return Component.translatable(key, bonusTooltip, attributeDescription);
-    }
-  }
-
-  @Override
-  public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip,
-                                              float requiredValue) {
-    String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
-    Component attributeDescription = Component.translatable(attribute.getDescriptionId());
-    String valueDescription = formatNumber(requiredValue);
-    Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
-    return Component.translatable(key, bonusTooltip, attributeDescription, logicDescription);
-  }
-
-  @Override
-  public MutableComponent getRequirementTooltip(FloatFunctionEntityPredicate.Logic logic, float requiredValue) {
-    String key = "%s.requirement".formatted(getDescriptionId());
-    Component attributeDescription = Component.translatable(attribute.getDescriptionId());
-    String valueDescription = formatNumber(requiredValue);
-    Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
-    return Component.translatable(key, logicDescription, attributeDescription);
-  }
-
-  @Override
-  public FloatFunction.Serializer getSerializer() {
-    return PSTFloatFunctions.ATTRIBUTE_VALUE.get();
-  }
-
-  @Override
-  public void addEditorWidgets(SkillTreeEditor editor, Consumer<FloatFunction<?>> consumer) {
-    editor.addLabel(0, 0, "Attribute", ChatFormatting.GREEN);
-    editor.increaseHeight(19);
-    editor.addSelectionMenu(0, 0, 200, attribute).setResponder(attribute -> selectAttribute(consumer, attribute));
-    editor.increaseHeight(19);
-  }
-
-  private void selectAttribute(Consumer<FloatFunction<?>> consumer, Attribute attribute) {
-    setAttribute(attribute);
-    consumer.accept(this);
-  }
-
-  public void setAttribute(Attribute attribute) {
-    this.attribute = attribute;
-  }
-
-  public Attribute getAttribute() {
-    return attribute;
-  }
-
-  public static class Serializer implements FloatFunction.Serializer {
-    @Override
-    public FloatFunction<?> deserialize(JsonObject json) throws JsonParseException {
-      Attribute attribute = SerializationHelper.deserializeAttribute(json);
-      return new AttributeValueFunction(attribute);
+    public AttributeValueFunction(Attribute attribute) {
+        this.attribute = attribute;
     }
 
     @Override
-    public void serialize(JsonObject json, FloatFunction<?> provider) {
-      if (!(provider instanceof AttributeValueFunction aProvider)) {
-        throw new IllegalArgumentException();
-      }
-      SerializationHelper.serializeAttribute(json, aProvider.attribute);
+    public float apply(LivingEntity entity) {
+        AttributeMap attributes = entity.getAttributes();
+        return attributes.hasAttribute(attribute) ? (float) attributes.getValue(attribute) : 0f;
     }
 
     @Override
-    public FloatFunction<?> deserialize(CompoundTag tag) {
-      Attribute attribute = SerializationHelper.deserializeAttribute(tag);
-      return new AttributeValueFunction(attribute);
+    public MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip) {
+        String key = "%s.multiplier.%s".formatted(getDescriptionId(), target.getName());
+        MutableComponent attributeDescription = Component.translatable(attribute.getDescriptionId());
+        if (divisor != 1) {
+            key += ".plural";
+            return Component.translatable(key, bonusTooltip, formatNumber(divisor), attributeDescription);
+        } else {
+            return Component.translatable(key, bonusTooltip, attributeDescription);
+        }
     }
 
     @Override
-    public CompoundTag serialize(FloatFunction<?> provider) {
-      if (!(provider instanceof AttributeValueFunction aProvider)) {
-        throw new IllegalArgumentException();
-      }
-      CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeAttribute(tag, aProvider.attribute);
-      return tag;
+    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+        String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
+        Component attributeDescription = Component.translatable(attribute.getDescriptionId());
+        String valueDescription = formatNumber(requiredValue);
+        Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
+        return Component.translatable(key, bonusTooltip, attributeDescription, logicDescription);
     }
 
     @Override
-    public FloatFunction<?> deserialize(FriendlyByteBuf buf) {
-      Attribute attribute = NetworkHelper.readAttribute(buf);
-      return new AttributeValueFunction(attribute);
+    public MutableComponent getRequirementTooltip(FloatFunctionEntityPredicate.Logic logic, float requiredValue) {
+        String key = "%s.requirement".formatted(getDescriptionId());
+        Component attributeDescription = Component.translatable(attribute.getDescriptionId());
+        String valueDescription = formatNumber(requiredValue);
+        Component logicDescription = logic.getTooltip("attribute_value", valueDescription);
+        return Component.translatable(key, logicDescription, attributeDescription);
     }
 
     @Override
-    public void serialize(FriendlyByteBuf buf, FloatFunction<?> provider) {
-      if (!(provider instanceof AttributeValueFunction aProvider)) {
-        throw new IllegalArgumentException();
-      }
-      NetworkHelper.writeAttribute(buf, aProvider.attribute);
+    public FloatFunction.Serializer getSerializer() {
+        return PSTFloatFunctions.ATTRIBUTE_VALUE.get();
     }
 
     @Override
-    public FloatFunction<?> createDefaultInstance() {
-      return new AttributeValueFunction(Attributes.MAX_HEALTH);
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<FloatFunction<?>> consumer) {
+        editor.addLabel(0, 0, "Attribute", ChatFormatting.GREEN);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, attribute).setResponder(attribute -> selectAttribute(consumer, attribute));
+        editor.increaseHeight(19);
     }
-  }
+
+    private void selectAttribute(Consumer<FloatFunction<?>> consumer, Attribute attribute) {
+        setAttribute(attribute);
+        consumer.accept(this);
+    }
+
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    public static class Serializer implements FloatFunction.Serializer {
+        @Override
+        public FloatFunction<?> deserialize(JsonObject json) throws JsonParseException {
+            Attribute attribute = SerializationHelper.deserializeAttribute(json);
+            return new AttributeValueFunction(attribute);
+        }
+
+        @Override
+        public void serialize(JsonObject json, FloatFunction<?> provider) {
+            if (!(provider instanceof AttributeValueFunction aProvider)) {
+                throw new IllegalArgumentException();
+            }
+            SerializationHelper.serializeAttribute(json, aProvider.attribute);
+        }
+
+        @Override
+        public FloatFunction<?> deserialize(CompoundTag tag) {
+            Attribute attribute = SerializationHelper.deserializeAttribute(tag);
+            return new AttributeValueFunction(attribute);
+        }
+
+        @Override
+        public CompoundTag serialize(FloatFunction<?> provider) {
+            if (!(provider instanceof AttributeValueFunction aProvider)) {
+                throw new IllegalArgumentException();
+            }
+            CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeAttribute(tag, aProvider.attribute);
+            return tag;
+        }
+
+        @Override
+        public FloatFunction<?> deserialize(FriendlyByteBuf buf) {
+            Attribute attribute = NetworkHelper.readAttribute(buf);
+            return new AttributeValueFunction(attribute);
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, FloatFunction<?> provider) {
+            if (!(provider instanceof AttributeValueFunction aProvider)) {
+                throw new IllegalArgumentException();
+            }
+            NetworkHelper.writeAttribute(buf, aProvider.attribute);
+        }
+
+        @Override
+        public FloatFunction<?> createDefaultInstance() {
+            return new AttributeValueFunction(Attributes.MAX_HEALTH);
+        }
+    }
 }
