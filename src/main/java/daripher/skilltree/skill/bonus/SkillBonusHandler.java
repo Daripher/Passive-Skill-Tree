@@ -350,6 +350,9 @@ public class SkillBonusHandler {
         if (!(event.getTarget() instanceof LivingEntity target)) {
             return;
         }
+        if (!event.isVanillaCritical() && event.getResult() != Event.Result.ALLOW) {
+            return;
+        }
         Player player = event.getEntity();
         for (EventListenerBonus<?> bonus : getMergedSkillBonuses(player, EventListenerBonus.class)) {
             if (!(bonus.getEventListener() instanceof CritEventListener listener)) {
