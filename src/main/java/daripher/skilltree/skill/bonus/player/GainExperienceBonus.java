@@ -70,8 +70,12 @@ public final class GainExperienceBonus implements EventListenerBonus<GainExperie
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof GainExperienceBonus otherBonus)) return false;
-    if (otherBonus.amount != this.amount) return false;
+    if (!(other instanceof GainExperienceBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.amount != this.amount) {
+        return false;
+    }
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 

@@ -97,7 +97,9 @@ public final class AllAttributesBonus
               double value = modifier.getAmount();
               value *= playerMultiplier.getValue(player);
               if (oldModifier != null) {
-                if (oldModifier.getAmount() == value) return;
+                if (oldModifier.getAmount() == value) {
+                    return;
+                }
                 playerAttribute.removeModifier(modifier.getId());
               }
               AttributeModifier dynamicModifier =
@@ -151,9 +153,15 @@ public final class AllAttributesBonus
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof AllAttributesBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+    if (!(other instanceof AllAttributesBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
     return otherBonus.modifier.getOperation() == this.modifier.getOperation();
   }
 

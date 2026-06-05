@@ -48,7 +48,9 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof RecipeUnlockBonus otherBonus)) return false;
+    if (!(other instanceof RecipeUnlockBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.recipeId, this.recipeId);
   }
 
@@ -108,8 +110,12 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     RecipeUnlockBonus that = (RecipeUnlockBonus) obj;
     return Objects.equals(this.recipeId, that.recipeId);
   }

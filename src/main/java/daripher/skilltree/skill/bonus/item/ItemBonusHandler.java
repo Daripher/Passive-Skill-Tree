@@ -43,7 +43,9 @@ public class ItemBonusHandler {
   @SubscribeEvent
   public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
     LivingEntity entity = event.getEntity();
-    if (!(entity instanceof Player)) return;
+    if (!(entity instanceof Player)) {
+        return;
+    }
     for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), SkillBonusItemBonus.class)) {
       SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
       if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
@@ -75,7 +77,9 @@ public class ItemBonusHandler {
   }
 
   public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
-    if (!stack.hasTag()) return ImmutableList.of();
+    if (!stack.hasTag()) {
+        return ImmutableList.of();
+    }
     List<ItemBonus<?>> list = new ArrayList<>();
     CompoundTag stackTag = stack.getOrCreateTag();
     CompoundTag bonusesTag = stackTag.getCompound("SkillBonuses");
@@ -127,10 +131,14 @@ public class ItemBonusHandler {
   }
 
   private static ItemBonus<?> deserializeBonus(CompoundTag tag) {
-    if (!tag.contains("type")) return null;
+    if (!tag.contains("type")) {
+        return null;
+    }
     ResourceLocation id = ResourceLocation.parse(tag.getString("type"));
     ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(id);
-    if (serializer == null) return null;
+    if (serializer == null) {
+        return null;
+    }
     try {
       return serializer.deserialize(tag);
     } catch (Exception e) {

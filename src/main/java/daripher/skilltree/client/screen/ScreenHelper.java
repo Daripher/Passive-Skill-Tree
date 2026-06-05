@@ -71,12 +71,16 @@ public class ScreenHelper {
         tooltip.add(component);
       }
     }
-    if (tooltip.isEmpty()) return;
+    if (tooltip.isEmpty()) {
+        return;
+    }
     int tooltipWidth = 0;
     int tooltipHeight = tooltip.size() == 1 ? 8 : 10;
     for (MutableComponent component : tooltip) {
       int k = font.width(component);
-      if (k > tooltipWidth) tooltipWidth = k;
+      if (k > tooltipWidth) {
+          tooltipWidth = k;
+      }
       tooltipHeight += font.lineHeight + 2;
     }
     tooltipWidth += 42;
@@ -88,8 +92,12 @@ public class ScreenHelper {
     if (tooltipY + tooltipHeight + 6 > height) {
       tooltipY = height - tooltipHeight - 6;
     }
-    if (tooltipX < 5) tooltipX = 5;
-    if (tooltipY < 5) tooltipY = 5;
+    if (tooltipX < 5) {
+        tooltipX = 5;
+    }
+    if (tooltipY < 5) {
+        tooltipY = 5;
+    }
     graphics.pose().pushPose();
     graphics.pose().translate(tooltipX, tooltipY, 10);
     graphics.fill(1, 4, tooltipWidth - 1, tooltipHeight + 4, 0xDD000000);

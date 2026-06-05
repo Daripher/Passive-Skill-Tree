@@ -37,8 +37,12 @@ public class ItemUsedEventListener implements SkillEventListener {
 
   public void onEvent(
       @Nonnull Player player, @Nonnull ItemStack stack, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.test(player)) return;
-    if (!itemStackPredicate.test(stack)) return;
+    if (!playerCondition.test(player)) {
+        return;
+    }
+    if (!itemStackPredicate.test(stack)) {
+        return;
+    }
     skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
   }
 
@@ -59,8 +63,12 @@ public class ItemUsedEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     ItemUsedEventListener listener = (ItemUsedEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(playerMultiplier, listener.playerMultiplier)

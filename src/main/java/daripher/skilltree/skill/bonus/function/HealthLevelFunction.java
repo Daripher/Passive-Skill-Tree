@@ -138,8 +138,12 @@ public class HealthLevelFunction implements FloatFunction<HealthLevelFunction> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     HealthLevelFunction that = (HealthLevelFunction) o;
     return percentage == that.percentage && missing == that.missing;
   }

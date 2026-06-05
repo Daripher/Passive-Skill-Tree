@@ -43,12 +43,22 @@ public class BlockEventListener implements SkillEventListener {
       @Nullable LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (enemyCondition != NoneLivingEntityPredicate.INSTANCE && enemy == null) return;
-    if (!playerCondition.test(player)) return;
-    if (!enemyCondition.test(enemy)) return;
-    if (!damageCondition.met(damage)) return;
+    if (enemyCondition != NoneLivingEntityPredicate.INSTANCE && enemy == null) {
+        return;
+    }
+    if (!playerCondition.test(player)) {
+        return;
+    }
+    if (!enemyCondition.test(enemy)) {
+        return;
+    }
+    if (!damageCondition.met(damage)) {
+        return;
+    }
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
-    if (target == null) return;
+    if (target == null) {
+        return;
+    }
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))
         .applyEffect(target);
@@ -79,8 +89,12 @@ public class BlockEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     BlockEventListener listener = (BlockEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(enemyCondition, listener.enemyCondition)

@@ -47,7 +47,9 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof RepairEfficiencyBonus otherBonus)) return false;
+    if (!(other instanceof RepairEfficiencyBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
   }
 
@@ -135,10 +137,16 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     RepairEfficiencyBonus that = (RepairEfficiencyBonus) obj;
-    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) return false;
+    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) {
+        return false;
+    }
     return this.multiplier == that.multiplier;
   }
 

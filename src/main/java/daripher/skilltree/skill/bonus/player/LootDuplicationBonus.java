@@ -55,8 +55,12 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof LootDuplicationBonus otherBonus)) return false;
-    if (otherBonus.multiplier != this.multiplier) return false;
+    if (!(other instanceof LootDuplicationBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.multiplier != this.multiplier) {
+        return false;
+    }
     return Objects.equals(otherBonus.lootType, this.lootType);
   }
 
@@ -158,11 +162,19 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     LootDuplicationBonus that = (LootDuplicationBonus) o;
-    if (Float.compare(multiplier, that.multiplier) != 0) return false;
-    if (Float.compare(chance, that.chance) != 0) return false;
+    if (Float.compare(multiplier, that.multiplier) != 0) {
+        return false;
+    }
+    if (Float.compare(chance, that.chance) != 0) {
+        return false;
+    }
     return lootType == that.lootType;
   }
 
@@ -181,8 +193,12 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
     public boolean canAffect(LootContext lootContext) {
       LootContextParam<Entity> playerLootContextParam = getPlayerLootContextParam();
-      if (!lootContext.hasParam(playerLootContextParam)) return false;
-      if (!(lootContext.getParam(playerLootContextParam) instanceof Player)) return false;
+      if (!lootContext.hasParam(playerLootContextParam)) {
+          return false;
+      }
+      if (!(lootContext.getParam(playerLootContextParam) instanceof Player)) {
+          return false;
+      }
       ResourceLocation lootTableId = lootContext.getQueriedLootTableId();
       String lootTableName = lootTableId.toString();
       return switch (this) {
@@ -219,7 +235,9 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
     public static LootType byName(String name) {
       for (LootType type : values()) {
-        if (type.name.equals(name)) return type;
+        if (type.name.equals(name)) {
+            return type;
+        }
       }
       return MOBS;
     }

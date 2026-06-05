@@ -48,9 +48,15 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
   }
 
   public float getConversionRate(DamageSource source, Player player, LivingEntity target) {
-    if (!originalDamageCondition.met(source)) return 0f;
-    if (!playerCondition.test(player)) return 0f;
-    if (!targetCondition.test(target)) return 0f;
+    if (!originalDamageCondition.met(source)) {
+        return 0f;
+    }
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
+    if (!targetCondition.test(target)) {
+        return 0f;
+    }
     return amount * playerMultiplier.getValue(player) * targetMultiplier.getValue(target);
   }
 
@@ -78,13 +84,24 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof DamageConversionBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.targetMultiplier, this.targetMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    if (!Objects.equals(otherBonus.originalDamageCondition, this.originalDamageCondition))
-      return false;
-    if (!Objects.equals(otherBonus.resultDamageCondition, this.resultDamageCondition)) return false;
+    if (!(other instanceof DamageConversionBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.targetMultiplier, this.targetMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.originalDamageCondition, this.originalDamageCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.resultDamageCondition, this.resultDamageCondition)) {
+        return false;
+    }
     return Objects.equals(otherBonus.targetCondition, this.targetCondition);
   }
 

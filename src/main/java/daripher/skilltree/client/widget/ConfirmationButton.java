@@ -31,7 +31,9 @@ public class ConfirmationButton extends Button {
   @Override
   public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
     boolean clicked = super.mouseClicked(pMouseX, pMouseY, pButton);
-    if (!clicked) confirming = false;
+    if (!clicked) {
+        confirming = false;
+    }
     return clicked;
   }
 

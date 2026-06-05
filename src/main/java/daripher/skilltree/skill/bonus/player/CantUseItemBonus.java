@@ -44,7 +44,9 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof CantUseItemBonus otherBonus)) return false;
+    if (!(other instanceof CantUseItemBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
   }
 
@@ -105,8 +107,12 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     CantUseItemBonus that = (CantUseItemBonus) obj;
     return Objects.equals(this.itemStackPredicate, that.itemStackPredicate);
   }

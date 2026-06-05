@@ -76,7 +76,9 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     if (otherBonus.chance < 1 && this.chance < 1 && otherBonus.damage != this.damage) {
       return false;
     }
-    if (!Objects.equals(otherBonus.eventListener, this.eventListener)) return false;
+    if (!Objects.equals(otherBonus.eventListener, this.eventListener)) {
+        return false;
+    }
     return Objects.equals(damageType, otherBonus.damageType);
   }
 

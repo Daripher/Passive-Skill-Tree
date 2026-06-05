@@ -43,12 +43,18 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
 
   public float getDuration(@Nullable Player effectSource, LivingEntity entity) {
     if (target == Target.PLAYER) {
-      if (!playerCondition.test(entity)) return 0f;
+      if (!playerCondition.test(entity)) {
+          return 0f;
+      }
       return duration * playerMultiplier.getValue(entity);
     }
-    if (!enemyCondition.test(entity)) return 0f;
+    if (!enemyCondition.test(entity)) {
+        return 0f;
+    }
     float duration = this.duration;
-    if (effectSource != null && !playerCondition.test(effectSource)) return 0f;
+    if (effectSource != null && !playerCondition.test(effectSource)) {
+        return 0f;
+    }
     return duration * playerMultiplier.getValue(entity) * enemyMultiplier.getValue(entity);
   }
 
@@ -75,12 +81,24 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof EffectDurationBonus otherBonus)) return false;
-    if (otherBonus.playerCondition != playerCondition) return false;
-    if (otherBonus.playerMultiplier != playerMultiplier) return false;
-    if (otherBonus.target != target) return false;
-    if (otherBonus.enemyCondition != enemyCondition) return false;
-    if (otherBonus.enemyMultiplier != enemyMultiplier) return false;
+    if (!(other instanceof EffectDurationBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.playerCondition != playerCondition) {
+        return false;
+    }
+    if (otherBonus.playerMultiplier != playerMultiplier) {
+        return false;
+    }
+    if (otherBonus.target != target) {
+        return false;
+    }
+    if (otherBonus.enemyCondition != enemyCondition) {
+        return false;
+    }
+    if (otherBonus.enemyMultiplier != enemyMultiplier) {
+        return false;
+    }
     return otherBonus.effectType == this.effectType;
   }
 

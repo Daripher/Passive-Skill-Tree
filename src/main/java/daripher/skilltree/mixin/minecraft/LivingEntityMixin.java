@@ -26,7 +26,9 @@ public abstract class LivingEntityMixin implements EquippedEntity {
   private void storeEquipmentBeforeDeath(DamageSource damageSource, CallbackInfo callbackInfo) {
     for (EquipmentSlot slot : EquipmentSlot.values()) {
       ItemStack itemInSlot = getItemBySlot(slot);
-      if (itemInSlot.isEmpty()) continue;
+      if (itemInSlot.isEmpty()) {
+          continue;
+      }
       equippedItems.add(itemInSlot);
     }
   }
@@ -35,7 +37,9 @@ public abstract class LivingEntityMixin implements EquippedEntity {
   @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
   private float applyJumpHeightBonus(float original) {
     boolean isPlayer = (Object) this instanceof Player;
-    if (!isPlayer) return original;
+    if (!isPlayer) {
+        return original;
+    }
     Player player = (Player) (Object) this;
     return original * SkillBonusHandler.getJumpHeightMultiplier(player);
   }

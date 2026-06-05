@@ -7,5 +7,5 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 
 public class PSTDamageTypes {
-  public static ResourceKey<DamageType> POISON = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "poison"));
+  public static final ResourceKey<DamageType> POISON = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "poison"));
 }

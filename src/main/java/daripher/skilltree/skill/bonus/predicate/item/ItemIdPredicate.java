@@ -39,8 +39,12 @@ public final class ItemIdPredicate implements ItemStackPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     ItemIdPredicate that = (ItemIdPredicate) o;
     return id.equals(that.id);
   }
@@ -72,7 +76,9 @@ public final class ItemIdPredicate implements ItemStackPredicate {
   }
 
   private static boolean isItemId(String text) {
-    if (!ResourceLocation.isValidResourceLocation(text)) return false;
+    if (!ResourceLocation.isValidResourceLocation(text)) {
+        return false;
+    }
     return ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse(text));
   }
 

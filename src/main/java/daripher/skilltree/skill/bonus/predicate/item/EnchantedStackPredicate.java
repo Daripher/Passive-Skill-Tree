@@ -41,8 +41,12 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     EnchantedStackPredicate that = (EnchantedStackPredicate) o;
     return itemStackPredicate.equals(that.itemStackPredicate);
   }

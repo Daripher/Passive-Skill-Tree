@@ -143,8 +143,12 @@ public class ManaLevelFunction implements FloatFunction<ManaLevelFunction> {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     ManaLevelFunction that = (ManaLevelFunction) o;
     return percentage == that.percentage && missing == that.missing;
   }

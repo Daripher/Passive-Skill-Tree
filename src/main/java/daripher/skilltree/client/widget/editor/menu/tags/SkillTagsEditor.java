@@ -19,10 +19,16 @@ public class SkillTagsEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (editor.getSelectedSkills().isEmpty()) return;
+    if (editor.getSelectedSkills().isEmpty()) {
+        return;
+    }
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
-    if (!canEditTags()) return;
+    if (selectedSkill == null) {
+        return;
+    }
+    if (!canEditTags()) {
+        return;
+    }
     PassiveSkillTree skillTree = editor.getSkillTree();
     Map<String, Integer> limitations = skillTree.getSkillLimitations();
     editor.addLabel(0, 0, "Tag List", ChatFormatting.GOLD);
@@ -86,15 +92,25 @@ public class SkillTagsEditor extends EditorMenu {
 
   protected boolean canEditTags() {
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return false;
-    if (editor.getSelectedSkills().size() < 2) return true;
+    if (selectedSkill == null) {
+        return false;
+    }
+    if (editor.getSelectedSkills().size() < 2) {
+        return true;
+    }
     for (PassiveSkill otherSkill : editor.getSelectedSkills()) {
-      if (selectedSkill == otherSkill) continue;
+      if (selectedSkill == otherSkill) {
+          continue;
+      }
       List<String> tags = selectedSkill.getTags();
       List<String> otherTags = otherSkill.getTags();
-      if (tags.size() != otherTags.size()) return false;
+      if (tags.size() != otherTags.size()) {
+          return false;
+      }
       for (int i = 0; i < tags.size(); i++) {
-        if (!tags.get(i).equals(otherTags.get(i))) return false;
+        if (!tags.get(i).equals(otherTags.get(i))) {
+            return false;
+        }
       }
     }
     return true;

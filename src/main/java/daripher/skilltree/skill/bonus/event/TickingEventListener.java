@@ -81,8 +81,12 @@ public class TickingEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     TickingEventListener that = (TickingEventListener) o;
     return cooldown == that.cooldown &&
            Objects.equals(playerCondition, that.playerCondition) &&

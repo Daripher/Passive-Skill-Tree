@@ -35,8 +35,12 @@ public class CritEventListener implements SkillEventListener {
 
   public void onEvent(
       @Nonnull Player player, @Nonnull LivingEntity enemy, @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.test(player)) return;
-    if (!enemyCondition.test(enemy)) return;
+    if (!playerCondition.test(player)) {
+        return;
+    }
+    if (!enemyCondition.test(enemy)) {
+        return;
+    }
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))
@@ -61,8 +65,12 @@ public class CritEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     CritEventListener listener = (CritEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(enemyCondition, listener.enemyCondition)

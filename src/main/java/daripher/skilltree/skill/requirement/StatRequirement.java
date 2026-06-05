@@ -188,8 +188,12 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     StatRequirement that = (StatRequirement) o;
     return minValue == that.minValue
         && Objects.equals(statTypeId, that.statTypeId)

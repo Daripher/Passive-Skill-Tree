@@ -29,7 +29,9 @@ public final class PotionStackPredicate implements ItemStackPredicate {
 
   @Override
   public boolean test(ItemStack stack) {
-    if (!(stack.getItem() instanceof PotionItem)) return false;
+    if (!(stack.getItem() instanceof PotionItem)) {
+        return false;
+    }
     return switch (type) {
       case ANY -> true;
       case NEUTRAL -> hasEffects(stack, MobEffectCategory.NEUTRAL);
@@ -51,8 +53,12 @@ public final class PotionStackPredicate implements ItemStackPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     PotionStackPredicate that = (PotionStackPredicate) o;
     return type == that.type;
   }
@@ -84,7 +90,9 @@ public final class PotionStackPredicate implements ItemStackPredicate {
 
     public static Type byName(String name) {
       for (Type type : values()) {
-        if (type.name.equals(name)) return type;
+        if (type.name.equals(name)) {
+            return type;
+        }
       }
       return ANY;
     }

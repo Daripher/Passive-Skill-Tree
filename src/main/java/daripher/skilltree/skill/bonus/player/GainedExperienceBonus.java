@@ -55,8 +55,12 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof GainedExperienceBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.experienceSource, this.experienceSource)) return false;
+    if (!(other instanceof GainedExperienceBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.experienceSource, this.experienceSource)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier);
   }
 
@@ -148,10 +152,16 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     GainedExperienceBonus that = (GainedExperienceBonus) o;
-    if (Float.compare(multiplier, that.multiplier) != 0) return false;
+    if (Float.compare(multiplier, that.multiplier) != 0) {
+        return false;
+    }
     return experienceSource == that.experienceSource;
   }
 
@@ -245,7 +255,9 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
     public static ExperienceSource byName(String name) {
       for (ExperienceSource type : values()) {
-        if (type.name.equals(name)) return type;
+        if (type.name.equals(name)) {
+            return type;
+        }
       }
       return MOBS;
     }

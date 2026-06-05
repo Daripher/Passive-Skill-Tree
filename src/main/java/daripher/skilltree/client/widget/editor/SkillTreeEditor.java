@@ -417,14 +417,22 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
     public boolean canEditSkillBonuses() {
         PassiveSkill selectedSkill = getFirstSelectedSkill();
-        if (selectedSkill == null) return false;
+        if (selectedSkill == null) {
+            return false;
+        }
         for (PassiveSkill otherSkill : getSelectedSkills()) {
-            if (otherSkill == selectedSkill) continue;
+            if (otherSkill == selectedSkill) {
+                continue;
+            }
             List<SkillBonus<?>> bonuses = otherSkill.getBonuses();
             List<SkillBonus<?>> otherBonuses = selectedSkill.getBonuses();
-            if (bonuses.size() != otherBonuses.size()) return false;
+            if (bonuses.size() != otherBonuses.size()) {
+                return false;
+            }
             for (int i = 0; i < bonuses.size(); i++) {
-                if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) return false;
+                if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) {
+                    return false;
+                }
             }
         }
         return true;
@@ -432,14 +440,22 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
     public boolean canEditSkillRequirements() {
         PassiveSkill selectedSkill = getFirstSelectedSkill();
-        if (selectedSkill == null) return false;
+        if (selectedSkill == null) {
+            return false;
+        }
         for (PassiveSkill otherSkill : getSelectedSkills()) {
-            if (otherSkill == selectedSkill) continue;
+            if (otherSkill == selectedSkill) {
+                continue;
+            }
             List<SkillRequirement<?>> requirements = otherSkill.getRequirements();
             List<SkillRequirement<?>> otherRequirements = selectedSkill.getRequirements();
-            if (requirements.size() != otherRequirements.size()) return false;
+            if (requirements.size() != otherRequirements.size()) {
+                return false;
+            }
             for (int i = 0; i < requirements.size(); i++) {
-                if (!requirements.get(i).equals(otherRequirements.get(i))) return false;
+                if (!requirements.get(i).equals(otherRequirements.get(i))) {
+                    return false;
+                }
             }
         }
         return true;

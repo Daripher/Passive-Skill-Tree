@@ -42,9 +42,15 @@ public class AttackEventListener implements SkillEventListener {
       @Nonnull LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.test(player)) return;
-    if (!enemyCondition.test(enemy)) return;
-    if (!damageCondition.met(damage)) return;
+    if (!playerCondition.test(player)) {
+        return;
+    }
+    if (!enemyCondition.test(enemy)) {
+        return;
+    }
+    if (!damageCondition.met(damage)) {
+        return;
+    }
     LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))
@@ -75,8 +81,12 @@ public class AttackEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     AttackEventListener listener = (AttackEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(enemyCondition, listener.enemyCondition)

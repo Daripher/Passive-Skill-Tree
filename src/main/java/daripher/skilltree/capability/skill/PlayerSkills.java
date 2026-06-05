@@ -41,8 +41,12 @@ public class PlayerSkills implements IPlayerSkills {
 
   @Override
   public boolean learnSkill(@Nonnull PassiveSkill passiveSkill) {
-    if (skillPoints == 0) return false;
-    if (skills.contains(passiveSkill)) return false;
+    if (skillPoints == 0) {
+        return false;
+    }
+    if (skills.contains(passiveSkill)) {
+        return false;
+    }
     skillPoints--;
     return skills.add(passiveSkill);
   }

@@ -15,7 +15,9 @@ public class SkillButtonEditor extends EditorMenu {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     if (editor.canEdit(PassiveSkill::getSkillSize)) {
       editor.addLabel(0, 0, "Size", ChatFormatting.GOLD);
       editor.increaseHeight(19);
@@ -89,7 +91,9 @@ public class SkillButtonEditor extends EditorMenu {
 
   private void setSkillPosition(float x, float y) {
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     selectedSkill.setPosition(x, y);
     editor.removeSkillButton(selectedSkill);
     editor.addSkillButton(selectedSkill);

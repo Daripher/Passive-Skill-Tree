@@ -76,7 +76,9 @@ public class SerializationHelper {
 
   public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
       JsonObject json, String name) {
-    if (!json.has(name)) return NoneLivingMultiplier.INSTANCE;
+    if (!json.has(name)) {
+        return NoneLivingMultiplier.INSTANCE;
+    }
     JsonObject multiplierJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = ResourceLocation.parse(multiplierJson.get("type").getAsString());
     LivingMultiplier.Serializer serializer =
@@ -87,7 +89,9 @@ public class SerializationHelper {
 
   public static void serializeLivingMultiplier(
       JsonObject json, @Nonnull LivingMultiplier multiplier, String name) {
-    if (multiplier == NoneLivingMultiplier.INSTANCE) return;
+    if (multiplier == NoneLivingMultiplier.INSTANCE) {
+        return;
+    }
     JsonObject multiplierJson = new JsonObject();
     LivingMultiplier.Serializer serializer = multiplier.getSerializer();
     serializer.serialize(multiplierJson, multiplier);
@@ -98,7 +102,9 @@ public class SerializationHelper {
   }
 
   public static @Nonnull LivingEntityPredicate deserializeLivingCondition(JsonObject json, String name) {
-    if (!json.has(name)) return NoneLivingEntityPredicate.INSTANCE;
+    if (!json.has(name)) {
+        return NoneLivingEntityPredicate.INSTANCE;
+    }
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = ResourceLocation.parse(conditionJson.get("type").getAsString());
     LivingEntityPredicate.Serializer serializer =
@@ -109,7 +115,9 @@ public class SerializationHelper {
 
   public static void serializeLivingCondition(
       JsonObject json, @Nonnull LivingEntityPredicate condition, String name) {
-    if (condition == NoneLivingEntityPredicate.INSTANCE) return;
+    if (condition == NoneLivingEntityPredicate.INSTANCE) {
+        return;
+    }
     JsonObject conditionJson = new JsonObject();
     LivingEntityPredicate.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
@@ -126,7 +134,9 @@ public class SerializationHelper {
 
   @Nonnull
   public static DamageCondition deserializeDamageCondition(JsonObject json, String name) {
-    if (!json.has(name)) return NoneDamageCondition.INSTANCE;
+    if (!json.has(name)) {
+        return NoneDamageCondition.INSTANCE;
+    }
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = ResourceLocation.parse(conditionJson.get("type").getAsString());
     DamageCondition.Serializer serializer =
@@ -154,7 +164,9 @@ public class SerializationHelper {
   }
 
   public static @Nonnull ItemStackPredicate deserializeItemCondition(JsonObject json, String name) {
-    if (!json.has(name)) return NoneItemStackPredicate.INSTANCE;
+    if (!json.has(name)) {
+        return NoneItemStackPredicate.INSTANCE;
+    }
     JsonObject conditionJson = json.getAsJsonObject(name);
     ResourceLocation serializerId = ResourceLocation.parse(conditionJson.get("type").getAsString());
     ItemStackPredicate.Serializer serializer =
@@ -168,7 +180,9 @@ public class SerializationHelper {
   }
 
   public static void serializeItemCondition(JsonObject json, @Nonnull ItemStackPredicate condition, String name) {
-    if (condition == NoneItemStackPredicate.INSTANCE) return;
+    if (condition == NoneItemStackPredicate.INSTANCE) {
+        return;
+    }
     JsonObject conditionJson = new JsonObject();
     ItemStackPredicate.Serializer serializer = condition.getSerializer();
     serializer.serialize(conditionJson, condition);
@@ -197,7 +211,9 @@ public class SerializationHelper {
   }
 
   public static @Nullable MobEffect deserializeEffect(JsonObject json) {
-    if (!json.has("effect")) return null;
+    if (!json.has("effect")) {
+        return null;
+    }
     ResourceLocation effectId = ResourceLocation.parse(json.get("effect").getAsString());
     return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
   }
@@ -290,7 +306,9 @@ public class SerializationHelper {
 
   public static @Nonnull LivingMultiplier deserializeLivingMultiplier(
       CompoundTag tag, String name) {
-    if (!tag.contains(name)) return NoneLivingMultiplier.INSTANCE;
+    if (!tag.contains(name)) {
+        return NoneLivingMultiplier.INSTANCE;
+    }
     CompoundTag multiplierTag = tag.getCompound(name);
     ResourceLocation serializerId = ResourceLocation.parse(multiplierTag.getString("type"));
     LivingMultiplier.Serializer serializer =
@@ -385,7 +403,9 @@ public class SerializationHelper {
 
   @Nullable
   public static MobEffect deserializeEffect(CompoundTag tag) {
-    if (!tag.contains("effect")) return null;
+    if (!tag.contains("effect")) {
+        return null;
+    }
     ResourceLocation effectId = ResourceLocation.parse(tag.getString("effect"));
     return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
   }

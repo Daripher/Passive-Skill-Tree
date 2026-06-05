@@ -75,8 +75,12 @@ public final class HasItemInHandEntityPredicate implements LivingEntityPredicate
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     HasItemInHandEntityPredicate that = (HasItemInHandEntityPredicate) o;
     return Objects.equals(itemStackPredicate, that.itemStackPredicate);
   }

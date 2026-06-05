@@ -26,7 +26,9 @@ public class PassiveSkillTree {
   }
 
   public Map<String, Integer> getSkillLimitations() {
-    if (skillLimitations == null) return skillLimitations = new LinkedHashMap<>();
+    if (skillLimitations == null) {
+        return skillLimitations = new LinkedHashMap<>();
+    }
     return skillLimitations;
   }
 }

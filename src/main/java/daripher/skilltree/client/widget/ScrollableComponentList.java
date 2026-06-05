@@ -25,7 +25,9 @@ public class ScrollableComponentList extends AbstractWidget {
   @Override
   public void renderWidget(
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-    if (components.isEmpty()) return;
+    if (components.isEmpty()) {
+        return;
+    }
     renderBackground(graphics);
     renderText(graphics);
     renderScrollBar(graphics);
@@ -60,8 +62,12 @@ public class ScrollableComponentList extends AbstractWidget {
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
     int maxScroll = components.size() - maxLines;
-    if (amount < 0 && scroll < maxScroll) scroll++;
-    if (amount > 0 && scroll > 0) scroll--;
+    if (amount < 0 && scroll < maxScroll) {
+        scroll++;
+    }
+    if (amount > 0 && scroll > 0) {
+        scroll--;
+    }
     return true;
   }
 
@@ -72,7 +78,9 @@ public class ScrollableComponentList extends AbstractWidget {
     Font font = Minecraft.getInstance().font;
     for (Component stat : components) {
       int statWidth = font.width(stat);
-      if (statWidth > width) width = statWidth;
+      if (statWidth > width) {
+          width = statWidth;
+      }
     }
     width += 14;
     height = components.size() * (font.lineHeight + 3) + 10;

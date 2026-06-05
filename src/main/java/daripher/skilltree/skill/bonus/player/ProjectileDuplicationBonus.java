@@ -36,7 +36,9 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
   }
 
   public float getChance(Player player) {
-    if (!playerCondition.test(player)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     return chance * playerMultiplier.getValue(player);
   }
 
@@ -61,8 +63,12 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof ProjectileDuplicationBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
+    if (!(other instanceof ProjectileDuplicationBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 

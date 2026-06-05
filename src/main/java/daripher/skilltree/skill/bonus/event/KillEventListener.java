@@ -39,9 +39,15 @@ public class KillEventListener implements SkillEventListener {
       @Nonnull LivingEntity enemy,
       @Nonnull DamageSource damage,
       @Nonnull EventListenerBonus<?> skill) {
-    if (!playerCondition.test(player)) return;
-    if (!enemyCondition.test(enemy)) return;
-    if (!damageCondition.met(damage)) return;
+    if (!playerCondition.test(player)) {
+        return;
+    }
+    if (!enemyCondition.test(enemy)) {
+        return;
+    }
+    if (!damageCondition.met(damage)) {
+        return;
+    }
     skill
         .multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy))
         .applyEffect(player);
@@ -76,8 +82,12 @@ public class KillEventListener implements SkillEventListener {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     KillEventListener listener = (KillEventListener) o;
     return Objects.equals(playerCondition, listener.playerCondition)
         && Objects.equals(enemyCondition, listener.enemyCondition)

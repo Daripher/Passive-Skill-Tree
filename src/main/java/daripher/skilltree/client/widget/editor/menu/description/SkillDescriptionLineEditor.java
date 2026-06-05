@@ -26,10 +26,16 @@ public class SkillDescriptionLineEditor extends EditorMenu {
   @Override
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
-    if (editor.getSelectedSkills().isEmpty()) return;
+    if (editor.getSelectedSkills().isEmpty()) {
+        return;
+    }
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
-    if (!canEditDescription()) return;
+    if (selectedSkill == null) {
+        return;
+    }
+    if (!canEditDescription()) {
+        return;
+    }
     List<MutableComponent> description = selectedSkill.getDescription();
     editor
         .addConfirmationButton(110, 0, 90, 14, "Remove", "Confirm")
@@ -109,16 +115,28 @@ public class SkillDescriptionLineEditor extends EditorMenu {
 
   private boolean canEditDescription() {
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return false;
-    if (editor.getSelectedSkills().size() < 2) return true;
+    if (selectedSkill == null) {
+        return false;
+    }
+    if (editor.getSelectedSkills().size() < 2) {
+        return true;
+    }
     for (PassiveSkill otherSkill : editor.getSelectedSkills()) {
       List<MutableComponent> description = selectedSkill.getDescription();
       List<MutableComponent> otherDescription = otherSkill.getDescription();
-      if (description == null && otherDescription == null) continue;
-      if (description == null || otherDescription == null) return false;
-      if (description.size() != otherDescription.size()) return false;
+      if (description == null && otherDescription == null) {
+          continue;
+      }
+      if (description == null || otherDescription == null) {
+          return false;
+      }
+      if (description.size() != otherDescription.size()) {
+          return false;
+      }
       for (int i = 0; i < description.size(); i++) {
-        if (!description.get(i).equals(otherDescription.get(i))) return false;
+        if (!description.get(i).equals(otherDescription.get(i))) {
+            return false;
+        }
       }
     }
     return true;

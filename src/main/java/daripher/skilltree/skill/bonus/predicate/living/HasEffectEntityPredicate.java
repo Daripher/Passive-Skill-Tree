@@ -36,7 +36,9 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
   @Override
   public boolean test(LivingEntity living) {
-    if (amplifier == 0) return living.hasEffect(this.effect);
+    if (amplifier == 0) {
+        return living.hasEffect(this.effect);
+    }
     MobEffectInstance effect = living.getEffect(this.effect);
     return effect != null && effect.getAmplifier() >= this.amplifier;
   }
@@ -88,8 +90,12 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     HasEffectEntityPredicate that = (HasEffectEntityPredicate) o;
     return amplifier == that.amplifier && Objects.equals(effect, that.effect);
   }

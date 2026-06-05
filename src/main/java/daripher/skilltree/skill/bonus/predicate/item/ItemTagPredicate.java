@@ -34,8 +34,12 @@ public class ItemTagPredicate implements ItemStackPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     ItemTagPredicate that = (ItemTagPredicate) o;
     return Objects.equals(tagId, that.tagId);
   }

@@ -112,7 +112,9 @@ public class NetworkHelper {
   public static List<ResourceLocation> readResourceLocations(FriendlyByteBuf buf) {
     int count = buf.readInt();
     List<ResourceLocation> locations = new ArrayList<>();
-    for (int i = 0; i < count; i++) locations.add(ResourceLocation.parse(buf.readUtf()));
+    for (int i = 0; i < count; i++) {
+        locations.add(ResourceLocation.parse(buf.readUtf()));
+    }
     return locations;
   }
 
@@ -209,7 +211,9 @@ public class NetworkHelper {
   public static void writeDescription(
       FriendlyByteBuf buf, @Nullable List<MutableComponent> description) {
     buf.writeBoolean(description != null);
-    if (description == null) return;
+    if (description == null) {
+        return;
+    }
     buf.writeInt(description.size());
     for (MutableComponent component : description) {
       writeChatComponent(buf, component);
@@ -217,7 +221,9 @@ public class NetworkHelper {
   }
 
   public static @Nullable List<MutableComponent> readDescription(FriendlyByteBuf buf) {
-    if (!buf.readBoolean()) return null;
+    if (!buf.readBoolean()) {
+        return null;
+    }
     int size = buf.readInt();
     List<MutableComponent> description = new ArrayList<>();
     for (int i = 0; i < size; i++) {

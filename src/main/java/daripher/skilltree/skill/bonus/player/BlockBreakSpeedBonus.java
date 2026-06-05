@@ -33,7 +33,9 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
   }
 
   public float getMultiplier(Player player) {
-    if (!playerCondition.test(player)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     return multiplier * playerMultiplier.getValue(player);
   }
 
@@ -57,8 +59,12 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof BlockBreakSpeedBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+    if (!(other instanceof BlockBreakSpeedBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier);
   }
 
@@ -175,8 +181,12 @@ public final class BlockBreakSpeedBonus implements SkillBonus<BlockBreakSpeedBon
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     BlockBreakSpeedBonus that = (BlockBreakSpeedBonus) o;
     return Float.compare(multiplier, that.multiplier) == 0
         && Objects.equals(playerCondition, that.playerCondition)

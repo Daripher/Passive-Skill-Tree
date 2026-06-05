@@ -23,9 +23,13 @@ public class SkillBonusEditor extends EditorMenu {
         .addConfirmationButton(110, 0, 90, 14, "Remove", "Confirm")
         .setPressFunc(b -> deleteSelectedSkillBonuses(editor));
     editor.increaseHeight(29);
-    if (!editor.canEditSkillBonuses()) return;
+    if (!editor.canEditSkillBonuses()) {
+        return;
+    }
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     List<SkillBonus<?>> bonuses = selectedSkill.getBonuses();
     if (selectedBonus >= bonuses.size()) {
       editor.selectMenu(previousMenu);

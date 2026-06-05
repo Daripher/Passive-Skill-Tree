@@ -20,7 +20,9 @@ import java.util.function.Consumer;
 public record SkillBonusItemBonus(SkillBonus<?> skillBonus) implements ItemBonus<SkillBonusItemBonus> {
   @Override
   public boolean canMerge(ItemBonus<?> other) {
-    if (!(other instanceof SkillBonusItemBonus otherBonus)) return false;
+    if (!(other instanceof SkillBonusItemBonus otherBonus)) {
+        return false;
+    }
     return otherBonus.skillBonus.canMerge(this.skillBonus);
   }
 
@@ -60,8 +62,12 @@ public record SkillBonusItemBonus(SkillBonus<?> skillBonus) implements ItemBonus
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     SkillBonusItemBonus that = (SkillBonusItemBonus) obj;
     return Objects.equals(this.skillBonus, that.skillBonus);
   }

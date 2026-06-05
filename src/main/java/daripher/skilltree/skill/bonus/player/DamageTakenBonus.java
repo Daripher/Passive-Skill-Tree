@@ -48,10 +48,18 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
       DamageSource source,
       Player player,
       LivingEntity attacker) {
-    if (this.operation != operation) return 0f;
-    if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.test(player)) return 0f;
-    if (!attackerCondition.test(attacker)) return 0f;
+    if (this.operation != operation) {
+        return 0f;
+    }
+    if (!damageCondition.met(source)) {
+        return 0f;
+    }
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
+    if (!attackerCondition.test(attacker)) {
+        return 0f;
+    }
     return amount * playerMultiplier.getValue(player) * attackerMultiplier.getValue(attacker);
   }
 
@@ -79,12 +87,24 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof DamageTakenBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.attackerMultiplier, this.attackerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) return false;
-    if (!Objects.equals(otherBonus.attackerCondition, this.attackerCondition)) return false;
+    if (!(other instanceof DamageTakenBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.attackerMultiplier, this.attackerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.attackerCondition, this.attackerCondition)) {
+        return false;
+    }
     return otherBonus.operation == this.operation;
   }
 

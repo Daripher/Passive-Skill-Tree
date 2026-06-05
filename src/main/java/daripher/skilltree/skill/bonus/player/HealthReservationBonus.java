@@ -33,7 +33,9 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
   }
 
   public float getAmount(Player player) {
-    if (!playerCondition.test(player)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     return amount * playerMultiplier.getValue(player);
   }
 
@@ -58,8 +60,12 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof HealthReservationBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
+    if (!(other instanceof HealthReservationBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 

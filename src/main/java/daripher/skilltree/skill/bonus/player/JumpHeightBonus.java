@@ -35,7 +35,9 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
   }
 
   public float getJumpHeightMultiplier(Player player) {
-    if (!playerCondition.test(player)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     return multiplier;
   }
 
@@ -57,7 +59,9 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof JumpHeightBonus otherBonus)) return false;
+    if (!(other instanceof JumpHeightBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 
@@ -137,10 +141,16 @@ public final class JumpHeightBonus implements SkillBonus<JumpHeightBonus> {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     JumpHeightBonus that = (JumpHeightBonus) obj;
-    if (!Objects.equals(this.playerCondition, that.playerCondition)) return false;
+    if (!Objects.equals(this.playerCondition, that.playerCondition)) {
+        return false;
+    }
     return this.multiplier == that.multiplier;
   }
 

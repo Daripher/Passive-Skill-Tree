@@ -38,8 +38,12 @@ public final class ItemUsageSpeedBonus implements SkillBonus<ItemUsageSpeedBonus
   }
 
   public float getMultiplier(Player player, ItemStack itemStack) {
-    if (!playerCondition.test(player)) return 0f;
-    if (!itemStackPredicate.test(itemStack)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
+    if (!itemStackPredicate.test(itemStack)) {
+        return 0f;
+    }
     return multiplier * playerMultiplier.getValue(player);
   }
 
@@ -65,9 +69,15 @@ public final class ItemUsageSpeedBonus implements SkillBonus<ItemUsageSpeedBonus
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof ItemUsageSpeedBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) return false;
+    if (!(other instanceof ItemUsageSpeedBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 

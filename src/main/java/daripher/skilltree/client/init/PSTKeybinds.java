@@ -33,21 +33,27 @@ public class PSTKeybinds {
     @SubscribeEvent
     public static void keyPressed(InputEvent.Key event) {
       Minecraft minecraft = Minecraft.getInstance();
-      if (event.getAction() != GLFW.GLFW_PRESS) return;
-      if (minecraft.screen != null) return;
-      if (minecraft.player == null) return;
+      if (event.getAction() != GLFW.GLFW_PRESS) {
+          return;
+      }
+      if (minecraft.screen != null) {
+          return;
+      }
+      if (minecraft.player == null) {
+          return;
+      }
       if (event.getKey() == SKILL_TREE_KEY.getKey().getValue()) {
         ResourceLocation defaultTreeId = SkillTreesReloader.getDefaultSkillTreeId();
         if (defaultTreeId == null) {
-          SkillTreeEditorData.printMessage("No skill trees found.", ChatFormatting.DARK_RED);
+          SkillTreeEditorData.sendChatMessage("No skill trees found.", ChatFormatting.DARK_RED);
           return;
         }
         if (SkillTreesReloader.getSkillTrees().size() == 1) {
           PassiveSkillTree skillTree = SkillTreesReloader.getSkillTreeById(defaultTreeId);
           for (ResourceLocation skillId : skillTree.getSkillIds()) {
             if (SkillsReloader.getSkillById(skillId) == null) {
-              SkillTreeEditorData.printMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
-              SkillTreeEditorData.printMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
+              SkillTreeEditorData.sendChatMessage("This skill tree is broken.", ChatFormatting.DARK_RED);
+              SkillTreeEditorData.sendChatMessage("Open it in the editor to resolve issues.", ChatFormatting.RED);
               return;
             }
           }

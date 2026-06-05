@@ -93,7 +93,9 @@ public class PassiveSkill {
   }
 
   public @Nonnull List<SkillRequirement<?>> getRequirements() {
-    if (requirements == null) return requirements = new ArrayList<>();
+    if (requirements == null) {
+        return requirements = new ArrayList<>();
+    }
     return requirements;
   }
 
@@ -124,25 +126,33 @@ public class PassiveSkill {
 
   @Nonnull
   public List<ResourceLocation> getDirectConnections() {
-    if (directConnections == null) return directConnections = new ArrayList<>();
+    if (directConnections == null) {
+        return directConnections = new ArrayList<>();
+    }
     return directConnections;
   }
 
   @Nonnull
   public List<ResourceLocation> getLongConnections() {
-    if (longConnections == null) return longConnections = new ArrayList<>();
+    if (longConnections == null) {
+        return longConnections = new ArrayList<>();
+    }
     return longConnections;
   }
 
   @Nonnull
   public List<ResourceLocation> getOneWayConnections() {
-    if (oneWayConnections == null) return oneWayConnections = new ArrayList<>();
+    if (oneWayConnections == null) {
+        return oneWayConnections = new ArrayList<>();
+    }
     return oneWayConnections;
   }
 
   @Nonnull
   public List<String> getTags() {
-    if (tags == null) return tags = new ArrayList<>();
+    if (tags == null) {
+        return tags = new ArrayList<>();
+    }
     return tags;
   }
 

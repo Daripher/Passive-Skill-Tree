@@ -31,7 +31,9 @@ public class SkillMirrorer extends AbstractWidget {
     editor.addLabel(19, 0, "Mirror", ChatFormatting.GOLD);
     editor.addCheckBox(0, 0, active).setResponder(v -> setActive(editor, v));
     editor.increaseHeight(19);
-    if (!active) return;
+    if (!active) {
+        return;
+    }
     editor.addLabel(0, 0, "Sectors", ChatFormatting.GOLD);
     editor
         .addNumericTextField(160, 0, 40, 14, mirrorSides)
@@ -50,7 +52,9 @@ public class SkillMirrorer extends AbstractWidget {
     editor
         .addNumericTextField(115, 0, 40, 14, mirrorCenterY)
         .setNumericResponder(v -> mirrorCenterY = v.floatValue());
-    if (editor.getSelectedSkills().size() != 1) return;
+    if (editor.getSelectedSkills().size() != 1) {
+        return;
+    }
     editor.addButton(70, 0, 40, 14, "Set").setPressFunc(b -> setMirrorCenter(editor));
     editor.increaseHeight(19);
   }
@@ -58,7 +62,9 @@ public class SkillMirrorer extends AbstractWidget {
   @Override
   protected void renderWidget(
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-    if (!active) return;
+    if (!active) {
+        return;
+    }
     graphics.pose().pushPose();
     int width = editor.getScreenWidth();
     int height = editor.getScreenHeight();
@@ -83,7 +89,9 @@ public class SkillMirrorer extends AbstractWidget {
 
   private void setMirrorCenter(SkillTreeEditor editor) {
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     mirrorCenterX = selectedSkill.getPositionX();
     mirrorCenterY = selectedSkill.getPositionY();
     editor.rebuildWidgets();
@@ -111,7 +119,9 @@ public class SkillMirrorer extends AbstractWidget {
   }
 
   public void createSkills(float angle, float distance, SkillFactory skillFactory) {
-    if (!active) return;
+    if (!active) {
+        return;
+    }
     float sectorSize = 360f / mirrorSides;
     for (int i = 1; i < mirrorSides; i++) {
       angle = mirrorSides == 2 ? -angle - mirrorAngle * 2 : angle - sectorSize;
@@ -126,7 +136,9 @@ public class SkillMirrorer extends AbstractWidget {
   private void createSkill(
       float distance, float angle, int sector, PassiveSkill skill, SkillFactory skillFactory) {
     skill = getMirroredSkill(skill, sector);
-    if (skill == null) return;
+    if (skill == null) {
+        return;
+    }
     float skillSize = skill.getSkillSize() / 2f + 8;
     float skillX = skill.getPositionX() + Mth.sin(angle) * (distance + skillSize);
     float skillY = skill.getPositionY() + Mth.cos(angle) * (distance + skillSize);
@@ -137,7 +149,9 @@ public class SkillMirrorer extends AbstractWidget {
   private PassiveSkill getSkillAtPosition(float x, float y) {
     for (PassiveSkill skill : editor.getSkills()) {
       double distance = Math.hypot(x - skill.getPositionX(), y - skill.getPositionY());
-      if (distance < skill.getSkillSize()) return skill;
+      if (distance < skill.getSkillSize()) {
+          return skill;
+      }
     }
     return null;
   }

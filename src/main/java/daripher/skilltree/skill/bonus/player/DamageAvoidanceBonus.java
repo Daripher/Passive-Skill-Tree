@@ -44,8 +44,12 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
 
   public float getAvoidanceChance(
       DamageSource source, Player player, @Nullable LivingEntity attacker) {
-    if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.test(player)) return 0f;
+    if (!damageCondition.met(source)) {
+        return 0f;
+    }
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     if (attackerCondition != NoneLivingEntityPredicate.INSTANCE) {
       if (attacker == null || !attackerCondition.test(attacker)) {
         return 0f;
@@ -82,11 +86,21 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof DamageAvoidanceBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.attackerMultiplier, this.attackerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) return false;
+    if (!(other instanceof DamageAvoidanceBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.attackerMultiplier, this.attackerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) {
+        return false;
+    }
     return Objects.equals(otherBonus.attackerCondition, this.attackerCondition);
   }
 

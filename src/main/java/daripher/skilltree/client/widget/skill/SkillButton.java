@@ -95,7 +95,9 @@ public class SkillButton extends Button {
   }
 
   private void renderFavoriteSkillHighlight(GuiGraphics graphics) {
-    if (!ClientConfig.favorite_skills.contains(skill.getId())) return;
+    if (!ClientConfig.favorite_skills.contains(skill.getId())) {
+        return;
+    }
     ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/favorite_skill.png");
     int color;
     if (ClientConfig.favorite_color_is_rainbow) {
@@ -159,7 +161,9 @@ public class SkillButton extends Button {
   }
 
   public void addRequirementsTooltip(ArrayList<MutableComponent> tooltip) {
-    if (skill.getRequirements().isEmpty()) return;
+    if (skill.getRequirements().isEmpty()) {
+        return;
+    }
     if (tooltip.size() > 1) {
       tooltip.add(Component.empty());
     }
@@ -184,7 +188,9 @@ public class SkillButton extends Button {
   }
 
   private void addInfoTooltip(List<MutableComponent> tooltip) {
-    if (!Screen.hasAltDown()) return;
+    if (!Screen.hasAltDown()) {
+        return;
+    }
     List<MutableComponent> info = new ArrayList<>();
     for (SkillBonus<?> skillBonus : skill.getBonuses()) {
       skillBonus.gatherInfo(
@@ -201,7 +207,9 @@ public class SkillButton extends Button {
 
   protected void addAdvancedTooltip(List<MutableComponent> tooltip) {
     Minecraft minecraft = Minecraft.getInstance();
-    if (!minecraft.options.advancedItemTooltips) return;
+    if (!minecraft.options.advancedItemTooltips) {
+        return;
+    }
     addIdTooltip(tooltip);
   }
 
@@ -223,7 +231,9 @@ public class SkillButton extends Button {
     boolean addedLimitTooltip = false;
     for (String tag : skill.getTags()) {
       int limit = skillTree.getSkillLimitations().getOrDefault(tag, 0);
-      if (limit <= 0) continue;
+      if (limit <= 0) {
+          continue;
+      }
       addedLimitTooltip = true;
       AtomicReference<MutableComponent> tagTooltip = new AtomicReference<>(Component.literal(tag));
       TooltipHelper.consumeTranslated("skill.tag.%s.name".formatted(tag), tagTooltip::set);

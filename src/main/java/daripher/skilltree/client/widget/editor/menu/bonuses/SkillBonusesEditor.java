@@ -19,14 +19,18 @@ public class SkillBonusesEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (!editor.canEditSkillBonuses()) return;
+    if (!editor.canEditSkillBonuses()) {
+        return;
+    }
     SkillBonus<?> defaultBonus = PSTSkillBonuses.ATTRIBUTE.get().createDefaultInstance();
     editor
         .addSelectionMenu(110, -29, 90, defaultBonus)
         .setResponder(skillBonus -> addSkillBonus(editor, skillBonus))
         .setMessage(Component.literal("Add"));
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     List<SkillBonus<?>> bonuses = selectedSkill.getBonuses();
     for (int i = 0; i < bonuses.size(); i++) {
       final int bonusIndex = i;

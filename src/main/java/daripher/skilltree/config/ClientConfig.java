@@ -42,8 +42,12 @@ public class ClientConfig {
   }
 
   private static boolean isValidHexColor(Object o) {
-    if (!(o instanceof String s)) return false;
-    if (s.equals("rainbow")) return true;
+    if (!(o instanceof String s)) {
+        return false;
+    }
+    if (s.equals("rainbow")) {
+        return true;
+    }
     try {
       Integer.decode(s);
     } catch (NumberFormatException e) {
@@ -54,7 +58,9 @@ public class ClientConfig {
 
   @SubscribeEvent
   static void load(ModConfigEvent.Loading event) {
-    if (event.getConfig().getSpec() != SPEC) return;
+    if (event.getConfig().getSpec() != SPEC) {
+        return;
+    }
     favorite_skills =
         FAVORITE_SKILLS.get().stream().map(ResourceLocation::parse).collect(Collectors.toSet());
     favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");

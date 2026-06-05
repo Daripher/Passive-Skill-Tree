@@ -104,9 +104,12 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof InflictEffectBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.effectInstance.getEffect(), this.effectInstance.getEffect()))
-      return false;
+    if (!(other instanceof InflictEffectBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.effectInstance.getEffect(), this.effectInstance.getEffect())) {
+        return false;
+    }
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 

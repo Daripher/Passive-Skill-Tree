@@ -55,11 +55,11 @@ public class SkillTreeEditorData {
           loadOrCreateEditorSkill(skillId);
         } catch (Exception exception) {
           exception.printStackTrace();
-          printMessage("Couldn't read passive skill " + skillId, ChatFormatting.DARK_RED);
-          printMessage("");
+          sendChatMessage("Couldn't read passive skill " + skillId, ChatFormatting.DARK_RED);
+          sendChatMessage("");
           String errorMessage =
               exception.getMessage() == null ? "No error message" : exception.getMessage();
-          printMessage(errorMessage, ChatFormatting.RED);
+          sendChatMessage(errorMessage, ChatFormatting.RED);
           return null;
         }
       }
@@ -67,15 +67,15 @@ public class SkillTreeEditorData {
     } catch (Exception exception) {
       EDITOR_TREES.clear();
       EDITOR_PASSIVE_SKILLS.clear();
-      printMessage("Couldn't read skill tree " + treeId, ChatFormatting.DARK_RED);
-      printMessage("");
+      sendChatMessage("Couldn't read skill tree " + treeId, ChatFormatting.DARK_RED);
+      sendChatMessage("");
       String errorMessage =
           exception.getMessage() == null ? "No error message" : exception.getMessage();
-      printMessage(errorMessage, ChatFormatting.RED);
-      printMessage("");
-      printMessage("Try removing files from folder", ChatFormatting.DARK_RED);
-      printMessage("");
-      printMessage(getEditorDataFolder().getPath(), ChatFormatting.RED);
+      sendChatMessage(errorMessage, ChatFormatting.RED);
+      sendChatMessage("");
+      sendChatMessage("Try removing files from folder", ChatFormatting.DARK_RED);
+      sendChatMessage("");
+      sendChatMessage(getEditorDataFolder().getPath(), ChatFormatting.RED);
       exception.printStackTrace();
       return null;
     }
@@ -114,7 +114,9 @@ public class SkillTreeEditorData {
     createSkillsSaveFolder(skillId);
     if (!getSkillSaveFile(skillId).exists()) {
       PassiveSkill skill = SkillsReloader.getSkillById(skillId);
-      if (skill != null) saveEditorSkill(skill);
+      if (skill != null) {
+          saveEditorSkill(skill);
+      }
     }
     if (!EDITOR_PASSIVE_SKILLS.containsKey(skillId)) {
       loadEditorSkill(skillId);
@@ -135,8 +137,8 @@ public class SkillTreeEditorData {
       SkillTreesReloader.GSON.toJson(skillTree, writer);
     } catch (JsonIOException | IOException exception) {
       Minecraft.getInstance().setScreen(null);
-      printMessage("Can't save editor skill tree " + skillTree.getId(), ChatFormatting.DARK_RED);
-      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
+      sendChatMessage("Can't save editor skill tree " + skillTree.getId(), ChatFormatting.DARK_RED);
+      sendChatMessage(exception.getMessage(), ChatFormatting.DARK_RED);
     }
   }
 
@@ -161,8 +163,8 @@ public class SkillTreeEditorData {
       SkillsReloader.GSON.toJson(skill, writer);
     } catch (JsonIOException | IOException exception) {
       Minecraft.getInstance().setScreen(null);
-      printMessage("Can't save editor skill " + skill.getId(), ChatFormatting.DARK_RED);
-      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
+      sendChatMessage("Can't save editor skill " + skill.getId(), ChatFormatting.DARK_RED);
+      sendChatMessage(exception.getMessage(), ChatFormatting.DARK_RED);
     }
   }
 
@@ -175,8 +177,8 @@ public class SkillTreeEditorData {
       }
       skill = readFromFile(PassiveSkill.class, saveFile);
     } catch (IOException exception) {
-      printMessage("Can't load editor skill " + skillId, ChatFormatting.DARK_RED);
-      printMessage(exception.getMessage(), ChatFormatting.DARK_RED);
+      sendChatMessage("Can't load editor skill " + skillId, ChatFormatting.DARK_RED);
+      sendChatMessage(exception.getMessage(), ChatFormatting.DARK_RED);
       return;
     }
     EDITOR_PASSIVE_SKILLS.put(skillId, skill);
@@ -217,7 +219,7 @@ public class SkillTreeEditorData {
     }
   }
 
-  public static void printMessage(String text, ChatFormatting... styles) {
+  public static void sendChatMessage(String text, ChatFormatting... styles) {
     LocalPlayer player = Minecraft.getInstance().player;
     if (player != null) {
       MutableComponent component = Component.literal(text);
@@ -238,15 +240,23 @@ public class SkillTreeEditorData {
       return EDITOR_TREES_IDS;
     }
     for (File namespaceDirectory : dataFiles) {
-      if (!namespaceDirectory.isDirectory()) continue;
+      if (!namespaceDirectory.isDirectory()) {
+          continue;
+      }
       File skillTreesDirectory = new File(namespaceDirectory, "skill_trees");
-      if (!skillTreesDirectory.exists()) continue;
+      if (!skillTreesDirectory.exists()) {
+          continue;
+      }
       File[] skillTreeFiles = skillTreesDirectory.listFiles();
-      if (skillTreeFiles == null) continue;
+      if (skillTreeFiles == null) {
+          continue;
+      }
       String namespace = namespaceDirectory.getName();
       for (File skillTreeFile : skillTreeFiles) {
         String skillTreeFileName = skillTreeFile.getName();
-        if (!skillTreeFileName.endsWith(".json")) continue;
+        if (!skillTreeFileName.endsWith(".json")) {
+            continue;
+        }
         String skillTreeName = skillTreeFileName.substring(0, skillTreeFileName.lastIndexOf('.'));
         EDITOR_TREES_IDS.add(ResourceLocation.fromNamespaceAndPath(namespace, skillTreeName));
       }

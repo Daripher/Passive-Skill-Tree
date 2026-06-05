@@ -47,9 +47,15 @@ public class ScrollableZoomableWidgetGroup<T extends AbstractWidget> extends Wid
   @Override
   public boolean mouseDragged(
       double mouseX, double mouseY, int button, double dragX, double dragY) {
-    if (button != GLFW.GLFW_MOUSE_BUTTON_MIDDLE) return false;
-    if (maxScrollX > 0) scrollX += (float) (dragX);
-    if (maxScrollY > 0) scrollY += (float) (dragY);
+    if (button != GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+        return false;
+    }
+    if (maxScrollX > 0) {
+        scrollX += (float) (dragX);
+    }
+    if (maxScrollY > 0) {
+        scrollY += (float) (dragY);
+    }
     return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
   }
 

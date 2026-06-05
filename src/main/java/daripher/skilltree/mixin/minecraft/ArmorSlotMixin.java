@@ -23,7 +23,9 @@ public abstract class ArmorSlotMixin extends Slot {
       cancellable = true,
       remap = false)
   private void preventItemUsage(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
-    if (!(container instanceof Inventory inventory)) return;
+    if (!(container instanceof Inventory inventory)) {
+        return;
+    }
     for (CantUseItemBonus bonus :
         SkillBonusHandler.getSkillBonuses(inventory.player, CantUseItemBonus.class)) {
       if (bonus.getItemCondition().test(stack)) {

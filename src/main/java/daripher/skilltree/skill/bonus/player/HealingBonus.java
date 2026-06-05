@@ -78,9 +78,15 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof HealingBonus otherBonus)) return false;
-    if (otherBonus.amount != this.amount) return false;
-    if (otherBonus.isPercentageHealing != isPercentageHealing) return false;
+    if (!(other instanceof HealingBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.amount != this.amount) {
+        return false;
+    }
+    if (otherBonus.isPercentageHealing != isPercentageHealing) {
+        return false;
+    }
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 

@@ -164,7 +164,9 @@ public class SkillSelector extends AbstractWidget {
   }
 
   public @Nullable PassiveSkill getFirstSelectedSkill() {
-    if (selectedSkills.isEmpty()) return null;
+    if (selectedSkills.isEmpty()) {
+        return null;
+    }
     return (PassiveSkill) selectedSkills.toArray()[0];
   }
 

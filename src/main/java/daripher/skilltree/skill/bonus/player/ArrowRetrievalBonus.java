@@ -89,8 +89,12 @@ public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     ArrowRetrievalBonus that = (ArrowRetrievalBonus) obj;
     return Float.floatToIntBits(this.chance) == Float.floatToIntBits(that.chance);
   }

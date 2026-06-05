@@ -33,7 +33,9 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
   }
 
   public float getHealingMultiplier(Player player) {
-    if (!playerCondition.test(player)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
     return this.multiplier * playerMultiplier.getValue(player);
   }
 
@@ -58,9 +60,15 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof IncomingHealingBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+    if (!(other instanceof IncomingHealingBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
     return otherBonus.multiplier == this.multiplier;
   }
 

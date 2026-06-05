@@ -53,8 +53,12 @@ public class SkillTreeSelectionScreen extends Screen {
     renderBackground(guiGraphics);
     super.render(guiGraphics, mouseX, mouseY, partialTick);
     for (Renderable widget : renderables) {
-      if (!(widget instanceof SkillTreeSelectionButton button)) continue;
-      if (!button.isMouseOver(mouseX, mouseY)) continue;
+      if (!(widget instanceof SkillTreeSelectionButton button)) {
+          continue;
+      }
+      if (!button.isMouseOver(mouseX, mouseY)) {
+          continue;
+      }
       guiGraphics.renderTooltip(font, button.getMessage(), mouseX, mouseY);
     }
   }

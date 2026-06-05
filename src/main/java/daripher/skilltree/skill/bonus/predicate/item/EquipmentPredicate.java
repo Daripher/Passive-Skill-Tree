@@ -73,7 +73,9 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   public static boolean isTrident(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (Objects.requireNonNull(id).toString().equals("tetra:modular_single")) return true;
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_single")) {
+        return true;
+    }
     return stack.getItem() instanceof TridentItem || stack.is(Tags.Items.TOOLS_TRIDENTS);
   }
 
@@ -83,7 +85,9 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   public static boolean isCrossbow(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (Objects.requireNonNull(id).toString().equals("tetra:modular_crossbow")) return true;
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_crossbow")) {
+        return true;
+    }
     return stack.getItem() instanceof CrossbowItem || stack.is(Tags.Items.TOOLS_CROSSBOWS);
   }
 
@@ -107,7 +111,9 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   public static boolean isShield(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (Objects.requireNonNull(id).toString().equals("tetra:modular_shield")) return true;
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_shield")) {
+        return true;
+    }
     return stack.getItem() instanceof ShieldItem || stack.is(Tags.Items.TOOLS_SHIELDS);
   }
 
@@ -119,7 +125,9 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   public static boolean isSword(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (Objects.requireNonNull(id).toString().equals("tetra:modular_sword")) return true;
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_sword")) {
+        return true;
+    }
     return stack.getItem() instanceof SwordItem || stack.is(ItemTags.SWORDS);
   }
 
@@ -133,7 +141,9 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   public static boolean isBow(ItemStack stack) {
     ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
-    if (Objects.requireNonNull(id).toString().equals("tetra:modular_bow")) return true;
+    if (Objects.requireNonNull(id).toString().equals("tetra:modular_bow")) {
+        return true;
+    }
     return stack.getItem() instanceof BowItem || stack.is(Tags.Items.TOOLS_BOWS);
   }
 
@@ -158,8 +168,12 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
     EquipmentPredicate that = (EquipmentPredicate) o;
     return Objects.equals(type, that.type);
   }

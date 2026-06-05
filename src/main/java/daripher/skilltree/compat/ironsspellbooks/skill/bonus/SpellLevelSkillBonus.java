@@ -74,9 +74,15 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof SpellLevelSkillBonus otherBonus)) return false;
-        if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+        if (!(other instanceof SpellLevelSkillBonus otherBonus)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+            return false;
+        }
         return otherBonus.getSpellId().equals(this.getSpellId());
     }
 

@@ -64,8 +64,12 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof InflictIgniteBonus otherBonus)) return false;
-    if (otherBonus.duration != this.duration) return false;
+    if (!(other instanceof InflictIgniteBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.duration != this.duration) {
+        return false;
+    }
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 

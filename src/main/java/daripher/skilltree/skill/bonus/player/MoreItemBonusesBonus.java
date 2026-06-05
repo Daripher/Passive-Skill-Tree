@@ -46,7 +46,9 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof MoreItemBonusesBonus otherBonus)) return false;
+    if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
   }
 
@@ -134,10 +136,16 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+        return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+        return false;
+    }
     MoreItemBonusesBonus that = (MoreItemBonusesBonus) obj;
-    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) return false;
+    if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) {
+        return false;
+    }
     return this.amount == that.amount;
   }
 

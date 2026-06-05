@@ -19,7 +19,9 @@ public class SkillRequirementsEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (!editor.canEditSkillRequirements()) return;
+    if (!editor.canEditSkillRequirements()) {
+        return;
+    }
     SkillRequirement<?> defaultRequirement =
         PSTSkillRequirements.STAT_VALUE.get().createDefaultInstance();
     editor
@@ -27,7 +29,9 @@ public class SkillRequirementsEditor extends EditorMenu {
         .setResponder(requirement -> addSkillRequirement(editor, requirement))
         .setMessage(Component.literal("Add"));
     PassiveSkill selectedSkill = editor.getFirstSelectedSkill();
-    if (selectedSkill == null) return;
+    if (selectedSkill == null) {
+        return;
+    }
     List<SkillRequirement<?>> requirements = selectedSkill.getRequirements();
     for (int i = 0; i < requirements.size(); i++) {
       final int requirementIndex = i;

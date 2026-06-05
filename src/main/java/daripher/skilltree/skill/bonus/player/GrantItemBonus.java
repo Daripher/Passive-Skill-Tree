@@ -41,7 +41,7 @@ public final class GrantItemBonus implements SkillBonus<GrantItemBonus> {
     if (firstTime) {
       Item item = ForgeRegistries.ITEMS.getValue(itemId);
       if (item == null) {
-        SkillTreeEditorData.printMessage("Unknown item: " + itemId, ChatFormatting.DARK_RED);
+        SkillTreeEditorData.sendChatMessage("Unknown item: " + itemId, ChatFormatting.DARK_RED);
         return;
       }
       int amountLeft = amount;
@@ -73,7 +73,9 @@ public final class GrantItemBonus implements SkillBonus<GrantItemBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof GrantItemBonus otherBonus)) return false;
+    if (!(other instanceof GrantItemBonus otherBonus)) {
+        return false;
+    }
     return Objects.equals(otherBonus.itemId, this.itemId);
   }
 

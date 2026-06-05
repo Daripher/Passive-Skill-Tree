@@ -83,7 +83,9 @@ public class ServerConfig {
 
   @SubscribeEvent
   static void load(ModConfigEvent event) {
-    if (event.getConfig().getSpec() != SPEC) return;
+    if (event.getConfig().getSpec() != SPEC) {
+        return;
+    }
     skill_points_costs = SKILL_POINTS_COSTS.get();
     use_skill_points_array = USE_POINTS_COSTS_ARRAY.get();
     max_skill_points = MAX_SKILL_POINTS.get();

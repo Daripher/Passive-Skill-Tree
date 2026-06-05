@@ -29,7 +29,9 @@ public class SkillNodeEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (editor.getSelectedSkills().isEmpty()) return;
+    if (editor.getSelectedSkills().isEmpty()) {
+        return;
+    }
     editor.addLabel(0, 0, "Distance", ChatFormatting.GOLD);
     editor.addLabel(65, 0, "Angle", ChatFormatting.GOLD);
     editor.increaseHeight(19);

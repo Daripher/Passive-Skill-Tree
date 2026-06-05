@@ -15,8 +15,12 @@ public class SkillModifierSourceType extends ModifierSourceType<PassiveSkill> {
   @Override
   public void extract(
       LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> consumer) {
-    if (!(entity instanceof Player player)) return;
-    if (!PlayerSkillsProvider.hasSkills(player)) return;
+    if (!(entity instanceof Player player)) {
+        return;
+    }
+    if (!PlayerSkillsProvider.hasSkills(player)) {
+        return;
+    }
     PlayerSkillsProvider.get(player)
         .getPlayerSkills()
         .forEach(skill -> addSkillBonusIcons(consumer, skill));

@@ -45,10 +45,16 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
   @Override
   public void applyEffect(LivingEntity target) {
-    if (!(target instanceof Player player)) return;
-    if (command.isEmpty()) return;
+    if (!(target instanceof Player player)) {
+        return;
+    }
+    if (command.isEmpty()) {
+        return;
+    }
     MinecraftServer server = player.getServer();
-    if (server == null) return;
+    if (server == null) {
+        return;
+    }
     CommandSourceStack commandSourceStack =
         createCommandSourceStack(player, (ServerLevel) player.level());
     Commands commands = server.getCommands();
@@ -77,8 +83,12 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
   @Override
   public boolean sameBonus(SkillBonus<?> other) {
-    if (!(other instanceof CommandBonus otherBonus)) return false;
-    if (!otherBonus.command.equals(this.command)) return false;
+    if (!(other instanceof CommandBonus otherBonus)) {
+        return false;
+    }
+    if (!otherBonus.command.equals(this.command)) {
+        return false;
+    }
     return Objects.equals(otherBonus.eventListener, this.eventListener);
   }
 

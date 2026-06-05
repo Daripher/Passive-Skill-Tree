@@ -57,7 +57,9 @@ public class TextField extends EditBox implements TickingWidget {
   public void setResponder(@NotNull Consumer<String> responder) {
     super.setResponder(
         s -> {
-          if (!isValueValid()) return;
+          if (!isValueValid()) {
+              return;
+          }
           responder.accept(s);
         });
   }
@@ -76,7 +78,9 @@ public class TextField extends EditBox implements TickingWidget {
   public void renderWidget(
       @NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
     EditBoxAccessor accessor = (EditBoxAccessor) this;
-    if (!isVisible()) return;
+    if (!isVisible()) {
+        return;
+    }
     ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/widgets.png");
     int v = isHoveredOrFocused() ? 42 : 56;
     graphics.blit(texture, getX(), getY(), 0, v, width / 2, height);
@@ -98,7 +102,9 @@ public class TextField extends EditBox implements TickingWidget {
     int textX = getX() + 5;
     int textStartX = textX;
     int textY = getY() + 3;
-    if (highlightWidth > visibleText.length()) highlightWidth = visibleText.length();
+    if (highlightWidth > visibleText.length()) {
+        highlightWidth = visibleText.length();
+    }
     if (!visibleText.isEmpty()) {
       String s1 =
           isTextSplitByCursor ? visibleText.substring(0, cursorVisiblePosition) : visibleText;
@@ -137,8 +143,11 @@ public class TextField extends EditBox implements TickingWidget {
       graphics.drawString(font, accessor.getSuggestion(), cursorX - 1, textY, -8355712, true);
     }
     if (isCursorVisible) {
-      if (isCursorSurrounded) graphics.fill(cursorX, textY - 1, cursorX + 1, textY + 9, -3092272);
-      else graphics.drawString(font, "_", cursorX, textY, textColor, true);
+      if (isCursorSurrounded) {
+          graphics.fill(cursorX, textY - 1, cursorX + 1, textY + 9, -3092272);
+      } else {
+          graphics.drawString(font, "_", cursorX, textY, textColor, true);
+      }
     }
     if (highlightWidth != cursorVisiblePosition) {
       int highlightEndX = textStartX + font.width(visibleText.substring(0, highlightWidth));

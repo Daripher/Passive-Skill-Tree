@@ -31,7 +31,9 @@ public class SkillTagLimitsEditor extends EditorMenu {
           limitations.clear();
           for (Pair<TextField, NumericTextField> pair : widgetPairs) {
             int limit = (int) pair.getValue().getNumericValue();
-            if (limit == 0) continue;
+            if (limit == 0) {
+                continue;
+            }
             String tag = pair.getKey().getValue();
             limitations.put(tag, limit);
           }

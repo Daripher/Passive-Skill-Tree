@@ -38,8 +38,12 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
   }
 
   public float getChance(Player player, ItemStack itemStack) {
-    if (!playerCondition.test(player)) return 0f;
-    if (!itemStackPredicate.test(itemStack)) return 0f;
+    if (!playerCondition.test(player)) {
+        return 0f;
+    }
+    if (!itemStackPredicate.test(itemStack)) {
+        return 0f;
+    }
     return chance * playerMultiplier.getValue(player);
   }
 
@@ -65,9 +69,15 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof FreeEnchantmentBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) return false;
+    if (!(other instanceof FreeEnchantmentBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate)) {
+        return false;
+    }
     return Objects.equals(otherBonus.playerCondition, this.playerCondition);
   }
 

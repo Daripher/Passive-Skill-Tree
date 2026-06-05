@@ -100,12 +100,16 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   private void applyDynamicAttributeBonus(ServerPlayer player) {
     AttributeInstance instance = player.getAttribute(attribute);
-    if (instance == null) return;
+    if (instance == null) {
+        return;
+    }
     AttributeModifier oldModifier = instance.getModifier(modifier.getId());
     double value = modifier.getAmount();
     value *= playerMultiplier.getValue(player);
     if (oldModifier != null) {
-      if (oldModifier.getAmount() == value) return;
+      if (oldModifier.getAmount() == value) {
+          return;
+      }
     }
     AttributeModifier dynamicModifier =
         new AttributeModifier(modifier.getId(), "DynamicBonus", value, modifier.getOperation());
@@ -156,10 +160,18 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof AttributeBonus otherBonus)) return false;
-    if (otherBonus.attribute != this.attribute) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+    if (!(other instanceof AttributeBonus otherBonus)) {
+        return false;
+    }
+    if (otherBonus.attribute != this.attribute) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
     return otherBonus.modifier.getOperation() == this.modifier.getOperation();
   }
 

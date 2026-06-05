@@ -46,7 +46,9 @@ public class SkillBonusesModifier extends LootModifier {
     if (player == null) {
       return generatedLoot;
     }
-    if (lootMultiplier == 0f) return generatedLoot;
+    if (lootMultiplier == 0f) {
+        return generatedLoot;
+    }
     RandomSource random = lootContext.getRandom();
     ObjectArrayList<ItemStack> newLoot = new ObjectArrayList<>();
     int copies = (int) lootMultiplier;
@@ -85,7 +87,9 @@ public class SkillBonusesModifier extends LootModifier {
   private static Map<Float, Float> getLootMultipliers(Player player, LootDuplicationBonus.LootType lootType) {
     Map<Float, Float> multipliers = new HashMap<>();
     for (LootDuplicationBonus bonus : SkillBonusHandler.getSkillBonuses(player, LootDuplicationBonus.class)) {
-      if (bonus.getLootType() != lootType) continue;
+      if (bonus.getLootType() != lootType) {
+          continue;
+      }
       float chance = bonus.getChance() + multipliers.getOrDefault(bonus.getMultiplier(), 0f);
       multipliers.put(bonus.getMultiplier(), chance);
     }

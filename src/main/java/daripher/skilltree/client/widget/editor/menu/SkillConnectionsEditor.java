@@ -16,7 +16,9 @@ public class SkillConnectionsEditor extends EditorMenu {
   public void init() {
     editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
     editor.increaseHeight(29);
-    if (editor.getSelectedSkills().size() < 2) return;
+    if (editor.getSelectedSkills().size() < 2) {
+        return;
+    }
     if (selectedSkillsConnected()) {
       editor.addButton(0, 0, 100, 14, "Disconnect").setPressFunc(b -> disconnectSelectedSkills());
     } else {
@@ -42,7 +44,9 @@ public class SkillConnectionsEditor extends EditorMenu {
     for (int i = 0; i < selectedSkills.length - 1; i++) {
       PassiveSkill skill1 = selectedSkills[i];
       PassiveSkill skill2 = selectedSkills[i + 1];
-      if (!skillsConnected(skill1, skill2)) return false;
+      if (!skillsConnected(skill1, skill2)) {
+          return false;
+      }
     }
     return true;
   }

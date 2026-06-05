@@ -24,7 +24,9 @@ public abstract class MobEffectMixin implements IForgeMobEffect {
   @Inject(method = "applyEffectTick", at = @At("HEAD"), cancellable = true)
   public void inflictPoisonDamage(LivingEntity livingEntity, int amplifier, CallbackInfo callbackInfo) {
     //noinspection ConstantValue
-    if (((Object) this) != MobEffects.POISON) return;
+    if (((Object) this) != MobEffects.POISON) {
+        return;
+    }
     handlePoisonDamage(livingEntity);
     callbackInfo.cancel();
   }
@@ -34,7 +36,9 @@ public abstract class MobEffectMixin implements IForgeMobEffect {
     float damage = 1f;
     boolean isLowHealth = livingEntity.getHealth() <= damage;
     boolean isPoisonLethal = isPoisonLethal(attacker);
-    if (isLowHealth && !isPoisonLethal) return;
+    if (isLowHealth && !isPoisonLethal) {
+        return;
+    }
     DamageSources damageSources = livingEntity.damageSources();
     DamageSource damageSource = damageSources.magic();
     if (attacker instanceof Player player) {

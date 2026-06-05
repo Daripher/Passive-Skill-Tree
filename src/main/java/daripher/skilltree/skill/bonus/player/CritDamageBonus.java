@@ -41,9 +41,15 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
   }
 
   public float getDamageBonus(DamageSource source, Player attacker, LivingEntity target) {
-    if (!damageCondition.met(source)) return 0f;
-    if (!playerCondition.test(attacker)) return 0f;
-    if (!targetCondition.test(target)) return 0f;
+    if (!damageCondition.met(source)) {
+        return 0f;
+    }
+    if (!playerCondition.test(attacker)) {
+        return 0f;
+    }
+    if (!targetCondition.test(target)) {
+        return 0f;
+    }
     return amount * playerMultiplier.getValue(attacker);
   }
 
@@ -71,11 +77,21 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
 
   @Override
   public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof CritDamageBonus otherBonus)) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.targetMultiplier, this.targetMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) return false;
+    if (!(other instanceof CritDamageBonus otherBonus)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.targetMultiplier, this.targetMultiplier)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+        return false;
+    }
+    if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) {
+        return false;
+    }
     return Objects.equals(otherBonus.targetCondition, this.targetCondition);
   }
 

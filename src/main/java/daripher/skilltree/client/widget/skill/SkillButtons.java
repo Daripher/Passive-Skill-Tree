@@ -73,7 +73,9 @@ public class SkillButtons extends ScrollableZoomableWidgetGroup<SkillButton> {
 
   public void renderTooltip(GuiGraphics graphics, float tooltipX, float tooltipY) {
     SkillButton skill = getWidgetAt(tooltipX, tooltipY);
-    if (skill == null) return;
+    if (skill == null) {
+        return;
+    }
     ScreenHelper.renderSkillTooltip(skillTree, skill, graphics, tooltipX, tooltipY, width, height);
   }
 

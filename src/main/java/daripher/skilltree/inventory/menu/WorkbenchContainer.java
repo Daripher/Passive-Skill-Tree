@@ -28,11 +28,15 @@ public class WorkbenchContainer extends TransientCraftingContainer {
     Map<Ingredient, Integer> remaining = new HashMap<>(ingredients);
     for (int i = 1; i < getContainerSize(); i++) {
       ItemStack item = getItem(i);
-      if (item.isEmpty()) continue;
+      if (item.isEmpty()) {
+          continue;
+      }
       for (Map.Entry<Ingredient, Integer> entry : new HashMap<>(remaining).entrySet()) {
         Ingredient ingredient = entry.getKey();
         int needed = entry.getValue();
-        if (needed <= 0) continue;
+        if (needed <= 0) {
+            continue;
+        }
         if (ingredient.test(item)) {
           int available = item.getCount();
           if (available >= needed) {

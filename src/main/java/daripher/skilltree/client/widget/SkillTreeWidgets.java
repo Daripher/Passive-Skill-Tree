@@ -271,15 +271,21 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
 
   private void buySkillPoint() {
     int currentLevel = getCurrentLevel();
-    if (!canBuySkillPoint(currentLevel)) return;
+    if (!canBuySkillPoint(currentLevel)) {
+        return;
+    }
     int cost = ServerConfig.getSkillPointCost(currentLevel);
     NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
     player.giveExperiencePoints(-cost);
   }
 
   private boolean canBuySkillPoint(int currentLevel) {
-    if (!ServerConfig.enable_exp_exchange) return false;
-    if (isMaxLevel(currentLevel)) return false;
+    if (!ServerConfig.enable_exp_exchange) {
+        return false;
+    }
+    if (isMaxLevel(currentLevel)) {
+        return false;
+    }
     int cost = ServerConfig.getSkillPointCost(currentLevel);
     return ExpHelper.getPlayerExp(player) >= cost;
   }
@@ -322,7 +328,9 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
   protected void updateBuyPointButton() {
     int currentLevel = getCurrentLevel();
     buyButton.active = false;
-    if (isMaxLevel(currentLevel)) return;
+    if (isMaxLevel(currentLevel)) {
+        return;
+    }
     int pointCost = ServerConfig.getSkillPointCost(currentLevel);
     buyButton.active = ExpHelper.getPlayerExp(player) >= pointCost;
   }

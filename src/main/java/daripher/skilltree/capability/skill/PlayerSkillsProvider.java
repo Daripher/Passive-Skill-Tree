@@ -38,14 +38,18 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
   @SubscribeEvent
   public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
-    if (!(event.getObject() instanceof Player)) return;
+    if (!(event.getObject() instanceof Player)) {
+        return;
+    }
     PlayerSkillsProvider provider = new PlayerSkillsProvider();
     event.addCapability(CAPABILITY_ID, provider);
   }
 
   @SubscribeEvent
   public static void persistThroughDeath(PlayerEvent.Clone event) {
-    if (event.getEntity().level().isClientSide) return;
+    if (event.getEntity().level().isClientSide) {
+        return;
+    }
     event.getOriginal().reviveCaps();
     IPlayerSkills originalData = get(event.getOriginal());
     IPlayerSkills cloneData = get(event.getEntity());
@@ -55,7 +59,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
   @SubscribeEvent
   public static void syncSkills(PlayerLoggedInEvent event) {
-    if (event.getEntity().level().isClientSide) return;
+    if (event.getEntity().level().isClientSide) {
+        return;
+    }
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()),
         new SyncServerDataMessage());
@@ -63,14 +69,20 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) return;
+    if (!(event.getEntity() instanceof ServerPlayer player)) {
+        return;
+    }
     get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
   }
 
   @SubscribeEvent
   public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof Player player)) return;
-    if (event.getEntity().level().isClientSide) return;
+    if (!(event.getEntity() instanceof Player player)) {
+        return;
+    }
+    if (event.getEntity().level().isClientSide) {
+        return;
+    }
     IPlayerSkills capability = get(player);
     if (capability.isTreeReset()) {
       player.sendSystemMessage(
@@ -81,7 +93,9 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
 
   @SubscribeEvent
   public static void syncPlayerSkills(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) return;
+    if (!(event.getEntity() instanceof ServerPlayer player)) {
+        return;
+    }
     NetworkDispatcher.network_channel.send(
         PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
   }

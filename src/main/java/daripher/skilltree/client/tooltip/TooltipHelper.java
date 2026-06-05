@@ -52,7 +52,9 @@ public class TooltipHelper {
               .setStyle(Style.EMPTY);
     } else {
       effectDescription = effect.getEffect().getDisplayName();
-      if (effect.getAmplifier() == 0) return effectDescription;
+      if (effect.getAmplifier() == 0) {
+          return effectDescription;
+      }
       Component amplifier = Component.translatable("potion.potency." + effect.getAmplifier());
       effectDescription =
           Component.translatable("potion.withAmplifier", effectDescription, amplifier);
@@ -93,7 +95,9 @@ public class TooltipHelper {
       multiplier = 100;
     }
     double visibleAmount = amount * multiplier;
-    if (amount < 0) visibleAmount *= -1;
+    if (amount < 0) {
+        visibleAmount *= -1;
+    }
     String operationDescription = amount > 0 ? "plus" : "take";
     operationDescription = "attribute.modifier." + operationDescription + "." + operation.ordinal();
     String multiplierDescription = formatNumber(visibleAmount);
