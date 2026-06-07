@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 public class PSTRegistries {
     public static final Supplier<IForgeRegistry<SkillBonus.Serializer>> SKILL_BONUSES = PSTSkillBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<LivingMultiplier.Serializer>> LIVING_MULTIPLIERS = PSTLivingMultipliers.REGISTRY.makeRegistry(RegistryBuilder::new);
-    public static final Supplier<IForgeRegistry<LivingEntityPredicate.Serializer>> LIVING_CONDITIONS = PSTLivingConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<LivingEntityPredicate.Serializer>> LIVING_CONDITIONS = PSTLivingEntityPredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<DamageCondition.Serializer>> DAMAGE_CONDITIONS = PSTDamageConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<ItemStackPredicate.Serializer>> ITEM_CONDITIONS = PSTItemConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<EnchantmentCondition.Serializer>> ENCHANTMENT_CONDITIONS = PSTEnchantmentConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
@@ -37,7 +37,7 @@ public class PSTRegistries {
     public static void registerRegistries(NewRegistryEvent event) {
         createRegistry(event, PSTSkillBonuses.REGISTRY_ID);
         createRegistry(event, PSTLivingMultipliers.REGISTRY_ID);
-        createRegistry(event, PSTLivingConditions.REGISTRY_ID);
+        createRegistry(event, PSTLivingEntityPredicates.REGISTRY_ID);
         createRegistry(event, PSTDamageConditions.REGISTRY_ID);
         createRegistry(event, PSTItemConditions.REGISTRY_ID);
         createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);

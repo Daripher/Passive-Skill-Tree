@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.ChatFormatting;
@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.HAS_EFFECT.get();
+        return PSTLivingEntityPredicates.HAS_EFFECT.get();
     }
 
     @Override
@@ -117,12 +118,10 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (!(condition instanceof HasEffectEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
-            }
-            SerializationHelper.serializeEffect(json, aCondition.effect);
-            json.addProperty("amplifier", aCondition.amplifier);
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
+            SerializationHelper.serializeEffect(json, validPredicate.effect);
+            json.addProperty("amplifier", validPredicate.amplifier);
         }
 
         @Override
@@ -134,13 +133,11 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (!(condition instanceof HasEffectEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeEffect(tag, aCondition.effect);
-            tag.putInt("amplifier", aCondition.amplifier);
+            SerializationHelper.serializeEffect(tag, validPredicate.effect);
+            tag.putInt("amplifier", validPredicate.amplifier);
             return tag;
         }
 
@@ -152,12 +149,17 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (!(condition instanceof HasEffectEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
+            NetworkHelper.writeEffect(buf, validPredicate.effect);
+            buf.writeInt(validPredicate.amplifier);
+        }
+
+        private static @NotNull HasEffectEntityPredicate validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof HasEffectEntityPredicate validPredicate)) {
+                throw new IllegalArgumentException("Expected HasEffectEntityPredicate, got: " + predicate);
             }
-            NetworkHelper.writeEffect(buf, aCondition.effect);
-            buf.writeInt(aCondition.amplifier);
+            return validPredicate;
         }
 
         @Override

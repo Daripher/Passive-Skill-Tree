@@ -110,8 +110,8 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Loot Type", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        SelectionList<LootType> lootTypeSelection = editor.addSelection(0, 0, 190, 6, lootType).setNameGetter(LootType::getFormattedName)
-                .setResponder(lootType -> selectLootType(consumer, lootType));
+        SelectionList<LootType> lootTypeSelection = editor.addSelection(0, 0, 190, 6, lootType)
+                .setNameGetter(LootType::getFormattedName).setResponder(lootType -> selectLootType(consumer, lootType));
         editor.increaseHeight(lootTypeSelection.getHeight() + 10);
     }
 

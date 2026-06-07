@@ -27,15 +27,11 @@ public interface FloatFunction<T> {
 
     MutableComponent getMultiplierTooltip(SkillBonus.Target target, float divisor, Component bonusTooltip);
 
-    MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue);
+    MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue);
 
     MutableComponent getRequirementTooltip(FloatFunctionEntityPredicate.Logic logic, float requiredValue);
 
     Serializer getSerializer();
-
-    default T createDefaultInstance() {
-        return (T) getSerializer().createDefaultInstance();
-    }
 
     void addEditorWidgets(SkillTreeEditor editor, Consumer<FloatFunction<?>> consumer);
 

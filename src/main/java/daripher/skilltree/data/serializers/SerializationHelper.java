@@ -152,11 +152,11 @@ public class SerializationHelper {
         json.add(name, conditionJson);
     }
 
-    public static @Nonnull ItemStackPredicate deserializeItemCondition(JsonObject json) {
-        return deserializeItemCondition(json, "item_condition");
+    public static @Nonnull ItemStackPredicate deserializeItemPredicate(JsonObject json) {
+        return deserializeItemPredicate(json, "item_condition");
     }
 
-    public static @Nonnull ItemStackPredicate deserializeItemCondition(JsonObject json, String name) {
+    public static @Nonnull ItemStackPredicate deserializeItemPredicate(JsonObject json, String name) {
         if (!json.has(name)) {
             return NoneItemStackPredicate.INSTANCE;
         }
@@ -167,11 +167,11 @@ public class SerializationHelper {
         return deserializeObject(serializer, conditionJson, errorMessage);
     }
 
-    public static void serializeItemCondition(JsonObject json, @Nonnull ItemStackPredicate condition) {
-        serializeItemCondition(json, condition, "item_condition");
+    public static void serializeItemPredicate(JsonObject json, @Nonnull ItemStackPredicate condition) {
+        serializeItemPredicate(json, condition, "item_condition");
     }
 
-    public static void serializeItemCondition(JsonObject json, @Nonnull ItemStackPredicate condition, String name) {
+    public static void serializeItemPredicate(JsonObject json, @Nonnull ItemStackPredicate condition, String name) {
         if (condition == NoneItemStackPredicate.INSTANCE) {
             return;
         }
@@ -349,14 +349,14 @@ public class SerializationHelper {
         tag.put(name, conditionTag);
     }
 
-    public static @Nonnull ItemStackPredicate deserializeItemCondition(CompoundTag tag) {
+    public static @Nonnull ItemStackPredicate deserializeItemPredicate(CompoundTag tag) {
         CompoundTag conditionTag = tag.getCompound("item_condition");
         ResourceLocation serializerId = ResourceLocation.parse(conditionTag.getString("type"));
         ItemStackPredicate.Serializer serializer = PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
         return Objects.requireNonNull(serializer).deserialize(conditionTag);
     }
 
-    public static void serializeItemCondition(CompoundTag tag, @Nonnull ItemStackPredicate condition) {
+    public static void serializeItemPredicate(CompoundTag tag, @Nonnull ItemStackPredicate condition) {
         ItemStackPredicate.Serializer serializer = condition.getSerializer();
         CompoundTag conditionTag = serializer.serialize(condition);
         ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);

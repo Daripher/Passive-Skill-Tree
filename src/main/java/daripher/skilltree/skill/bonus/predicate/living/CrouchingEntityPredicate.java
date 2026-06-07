@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -27,7 +27,7 @@ public record CrouchingEntityPredicate() implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.CROUCHING.get();
+        return PSTLivingEntityPredicates.CROUCHING.get();
     }
 
     @Override
@@ -50,10 +50,8 @@ public record CrouchingEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (!(condition instanceof CrouchingEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
         }
 
         @Override
@@ -62,10 +60,8 @@ public record CrouchingEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (!(condition instanceof CrouchingEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
             return new CompoundTag();
         }
 
@@ -75,9 +71,13 @@ public record CrouchingEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (!(condition instanceof CrouchingEntityPredicate)) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
+        }
+
+        private static void validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof CrouchingEntityPredicate)) {
+                throw new IllegalArgumentException("Expected CrouchingEntityPredicate, got: " + predicate);
             }
         }
 

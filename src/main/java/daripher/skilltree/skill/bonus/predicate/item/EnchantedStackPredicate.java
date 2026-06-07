@@ -90,7 +90,7 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
     public static class Serializer implements ItemStackPredicate.Serializer {
         @Override
         public ItemStackPredicate deserialize(JsonObject json) throws JsonParseException {
-            return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(json));
+            return new EnchantedStackPredicate(SerializationHelper.deserializeItemPredicate(json));
         }
 
         @Override
@@ -98,12 +98,12 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
             if (!(condition instanceof EnchantedStackPredicate aCondition)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aCondition.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aCondition.itemStackPredicate);
         }
 
         @Override
         public ItemStackPredicate deserialize(CompoundTag tag) {
-            return new EnchantedStackPredicate(SerializationHelper.deserializeItemCondition(tag));
+            return new EnchantedStackPredicate(SerializationHelper.deserializeItemPredicate(tag));
         }
 
         @Override
@@ -112,13 +112,13 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aCondition.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aCondition.itemStackPredicate);
             return tag;
         }
 
         @Override
         public ItemStackPredicate deserialize(FriendlyByteBuf buf) {
-            return new EnchantedStackPredicate(NetworkHelper.readItemCondition(buf));
+            return new EnchantedStackPredicate(NetworkHelper.readItemPredicate(buf));
         }
 
         @Override
@@ -126,7 +126,7 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
             if (!(condition instanceof EnchantedStackPredicate aCondition)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aCondition.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aCondition.itemStackPredicate);
         }
 
         @Override

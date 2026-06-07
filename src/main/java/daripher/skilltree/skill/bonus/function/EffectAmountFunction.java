@@ -54,7 +54,7 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         String effectTypeKey = effectType.getDescriptionId();
         if (!(requiredValue == 0 && logic == FloatFunctionEntityPredicate.Logic.MORE)) {

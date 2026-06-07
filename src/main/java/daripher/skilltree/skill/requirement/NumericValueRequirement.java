@@ -3,7 +3,7 @@ package daripher.skilltree.skill.requirement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.bonus.function.EffectAmountFunction;
 import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
@@ -55,7 +55,7 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
     public static class Serializer implements SkillRequirement.Serializer {
         @Override
         public SkillRequirement<?> deserialize(JsonObject json) throws JsonParseException {
-            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get()
+            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingEntityPredicates.NUMERIC_VALUE.get()
                     .deserialize(json);
             return new NumericValueRequirement(condition);
         }
@@ -69,7 +69,7 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
 
         @Override
         public SkillRequirement<?> deserialize(CompoundTag tag) {
-            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get()
+            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingEntityPredicates.NUMERIC_VALUE.get()
                     .deserialize(tag);
             return new NumericValueRequirement(condition);
         }
@@ -85,7 +85,7 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
 
         @Override
         public SkillRequirement<?> deserialize(FriendlyByteBuf buf) {
-            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingConditions.NUMERIC_VALUE.get()
+            FloatFunctionEntityPredicate condition = (FloatFunctionEntityPredicate) PSTLivingEntityPredicates.NUMERIC_VALUE.get()
                     .deserialize(buf);
             return new NumericValueRequirement(condition);
         }

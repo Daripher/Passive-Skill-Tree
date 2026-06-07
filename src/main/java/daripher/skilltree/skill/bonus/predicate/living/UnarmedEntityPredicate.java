@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.item.EquipmentPredicate;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +28,7 @@ public record UnarmedEntityPredicate() implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.UNARMED.get();
+        return PSTLivingEntityPredicates.UNARMED.get();
     }
 
     @Override
@@ -51,10 +51,8 @@ public record UnarmedEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (!(condition instanceof UnarmedEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
         }
 
         @Override
@@ -63,10 +61,8 @@ public record UnarmedEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (!(condition instanceof UnarmedEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
             return new CompoundTag();
         }
 
@@ -76,9 +72,13 @@ public record UnarmedEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (!(condition instanceof UnarmedEntityPredicate)) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
+        }
+
+        private static void validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof UnarmedEntityPredicate)) {
+                throw new IllegalArgumentException("Expected UnarmedEntityPredicate, got: " + predicate);
             }
         }
 

@@ -117,7 +117,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
     public static class Serializer implements SkillBonus.Serializer {
         @Override
         public CantUseItemBonus deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(json);
             return new CantUseItemBonus(condition);
         }
 
@@ -126,12 +126,12 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
             if (!(bonus instanceof CantUseItemBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
         }
 
         @Override
         public CantUseItemBonus deserialize(CompoundTag tag) {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(tag);
             return new CantUseItemBonus(condition);
         }
 
@@ -141,13 +141,13 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aBonus.itemStackPredicate);
             return tag;
         }
 
         @Override
         public CantUseItemBonus deserialize(FriendlyByteBuf buf) {
-            return new CantUseItemBonus(NetworkHelper.readItemCondition(buf));
+            return new CantUseItemBonus(NetworkHelper.readItemPredicate(buf));
         }
 
         @Override
@@ -155,7 +155,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
             if (!(bonus instanceof CantUseItemBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
         }
 
         @Override

@@ -200,42 +200,42 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "loot from ore");
         add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "loot from archaeology");
         // living conditions
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.player", "with");
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.enemy", "if enemy has");
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "%s %s %s equipped");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "target.player", "you are");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "target.enemy", "enemy is");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "%s if %s affected by %s");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "amplifier", "%s if %s affected by %s or higher");
-        add(PSTLivingConditions.BURNING.get(), "target.player", "you are");
-        add(PSTLivingConditions.BURNING.get(), "target.enemy", "enemy is");
-        add(PSTLivingConditions.BURNING.get(), "%s if %s burning");
-        add(PSTLivingConditions.FISHING.get(), "target.player", "you are");
-        add(PSTLivingConditions.FISHING.get(), "target.enemy", "enemy is");
-        add(PSTLivingConditions.FISHING.get(), "%s if %s fishing");
-        add(PSTLivingConditions.UNDERWATER.get(), "target.player", "you are");
-        add(PSTLivingConditions.UNDERWATER.get(), "target.enemy", "enemy is");
-        add(PSTLivingConditions.UNDERWATER.get(), "%s if %s under water");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "target.player", "you have");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "target.enemy", "enemy has");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "%s if %s %s in both hands");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.player", "with");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.enemy", "if enemy has");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s %s %s in hand");
-        add(PSTLivingConditions.CROUCHING.get(), "target.player", "while crouching");
-        add(PSTLivingConditions.CROUCHING.get(), "target.enemy", "if enemy is crouching");
-        add(PSTLivingConditions.CROUCHING.get(), "%s %s");
-        add(PSTLivingConditions.UNARMED.get(), "target.player", "while unarmed");
-        add(PSTLivingConditions.UNARMED.get(), "target.enemy", "if enemy is unarmed");
-        add(PSTLivingConditions.UNARMED.get(), "%s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "more than %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "less than %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "equal to %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_least", "at least %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_most", "at most %s");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "if all your armor is");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "if all target's armor is");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.player", "with");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.enemy", "if enemy has");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "%s %s %s equipped");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "target.player", "you are");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "target.enemy", "enemy is");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "%s if %s affected by %s");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "amplifier", "%s if %s affected by %s or higher");
+        add(PSTLivingEntityPredicates.BURNING.get(), "target.player", "you are");
+        add(PSTLivingEntityPredicates.BURNING.get(), "target.enemy", "enemy is");
+        add(PSTLivingEntityPredicates.BURNING.get(), "%s if %s burning");
+        add(PSTLivingEntityPredicates.FISHING.get(), "target.player", "you are");
+        add(PSTLivingEntityPredicates.FISHING.get(), "target.enemy", "enemy is");
+        add(PSTLivingEntityPredicates.FISHING.get(), "%s if %s fishing");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "target.player", "you are");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "target.enemy", "enemy is");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "%s if %s under water");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "target.player", "you have");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "target.enemy", "enemy has");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "%s if %s %s in both hands");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "target.player", "with");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "target.enemy", "if enemy has");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "%s %s %s in hand");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.player", "while crouching");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.enemy", "if enemy is crouching");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "%s %s");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "target.player", "while unarmed");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "target.enemy", "if enemy is unarmed");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "%s %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "more", "more than %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "less", "less than %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal", "equal to %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "at_least", "at least %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "at_most", "at most %s");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.player", "if all your armor is");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.enemy", "if all target's armor is");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "%s %s %s");
         // event listeners
         add(PSTEventListeners.ATTACK.get(), "%s on hit");
         add(PSTEventListeners.ATTACK.get(), "damage", "%s on %s hit");
@@ -369,7 +369,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "requirement", "Have %s %s on you");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.effect_amount", "exactly %s");
 
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s per %s enchantments on your %s");
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player", "%s per enchantment on your %s");
@@ -388,7 +388,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "requirement", "Have %s %s on your %s");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.enchantment_amount", "exactly %s");
 
         add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player.plural", "%s per %s enchantment levels on your %s");
         add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player", "%s per enchantment level on your %s");
@@ -417,7 +417,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "requirement", "Have %s durability on your %s");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.equipment_durability", "exactly %s");
 
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "point", "hunger point");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "point.plural", "hunger points");
@@ -438,7 +438,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.not_full", "%s if you are hungry");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s if target is hungry");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "requirement", "Have %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.food_level", "exactly %s");
 
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point", "health point");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point.plural", "health points");
@@ -461,7 +461,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.not_full", "%s while injured");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s if target is injured");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "requirement", "Have %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.health_level", "exactly %s");
 
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point", "mana point");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point.plural", "mana points");
@@ -484,7 +484,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.not_full", "%s while injured");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.not_full", "%s if target is injured");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "requirement", "Have %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.mana_level", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.mana_level", "exactly %s");
 
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "point", "skill");
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "point.plural", "skills");
@@ -495,7 +495,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "condition.player", "%s if you have learned %s %s");
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "condition.enemy", "%s if target has learned %s %s");
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "requirement", "Learn %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.learned_skills_amount", "exactly %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.learned_skills_amount", "exactly %s");
 
         // skill requirements
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");

@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,7 +24,7 @@ public enum NoneLivingEntityPredicate implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.NONE.get();
+        return PSTLivingEntityPredicates.NONE.get();
     }
 
     public static class Serializer implements LivingEntityPredicate.Serializer {
@@ -34,10 +34,8 @@ public enum NoneLivingEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (condition != NoneLivingEntityPredicate.INSTANCE) {
-                throw new IllegalArgumentException();
-            }
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
         }
 
         @Override
@@ -46,10 +44,8 @@ public enum NoneLivingEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (condition != NoneLivingEntityPredicate.INSTANCE) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
             return new CompoundTag();
         }
 
@@ -59,9 +55,13 @@ public enum NoneLivingEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (condition != NoneLivingEntityPredicate.INSTANCE) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
+        }
+
+        private void validatePredicate(LivingEntityPredicate predicate) {
+            if (predicate != NoneLivingEntityPredicate.INSTANCE) {
+                throw new IllegalArgumentException("Expected NoneLivingEntityPredicate, got: " + predicate);
             }
         }
 

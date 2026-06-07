@@ -43,7 +43,7 @@ public class DistanceToTargetFunction implements FloatFunction<DistanceToTargetF
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         String valueDescription = formatNumber(requiredValue);
         Component logicDescription = logic.getTooltip("distance_to_target", valueDescription);

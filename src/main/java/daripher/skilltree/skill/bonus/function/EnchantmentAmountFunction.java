@@ -55,7 +55,7 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         String enchantmentsKey = getDescriptionId() + ".enchantment";
         if (requiredValue != 1) {
@@ -145,7 +145,7 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
     public static class Serializer implements FloatFunction.Serializer {
         @Override
         public FloatFunction<?> deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(json);
             return new EnchantmentAmountFunction(itemStackPredicate);
         }
 
@@ -154,12 +154,12 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
             if (!(provider instanceof EnchantmentAmountFunction aProvider)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aProvider.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aProvider.itemStackPredicate);
         }
 
         @Override
         public FloatFunction<?> deserialize(CompoundTag tag) {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(tag);
             return new EnchantmentAmountFunction(itemStackPredicate);
         }
 
@@ -169,13 +169,13 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aProvider.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aProvider.itemStackPredicate);
             return tag;
         }
 
         @Override
         public FloatFunction<?> deserialize(FriendlyByteBuf buf) {
-            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemCondition(buf);
+            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemPredicate(buf);
             return new EnchantmentAmountFunction(itemStackPredicate);
         }
 
@@ -184,7 +184,7 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
             if (!(provider instanceof EnchantmentAmountFunction aProvider)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aProvider.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aProvider.itemStackPredicate);
         }
 
         @Override

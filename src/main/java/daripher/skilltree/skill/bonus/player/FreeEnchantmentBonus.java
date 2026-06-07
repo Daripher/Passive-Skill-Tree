@@ -207,7 +207,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             FreeEnchantmentBonus bonus = new FreeEnchantmentBonus(chance);
             bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(json, "player_condition");
-            bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
+            bonus.itemStackPredicate = SerializationHelper.deserializeItemPredicate(json);
             return bonus;
         }
 
@@ -219,7 +219,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             json.addProperty("chance", aBonus.chance);
             SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
             SerializationHelper.serializeLivingCondition(json, aBonus.playerCondition, "player_condition");
-            SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
         }
 
         @Override
@@ -228,7 +228,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             FreeEnchantmentBonus bonus = new FreeEnchantmentBonus(chance);
             bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(tag, "player_condition");
-            bonus.itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
+            bonus.itemStackPredicate = SerializationHelper.deserializeItemPredicate(tag);
             return bonus;
         }
 
@@ -241,7 +241,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             tag.putFloat("chance", aBonus.chance);
             SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
             SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
-            SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aBonus.itemStackPredicate);
             return tag;
         }
 
@@ -251,7 +251,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             FreeEnchantmentBonus bonus = new FreeEnchantmentBonus(chance);
             bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
             bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
-            bonus.itemStackPredicate = NetworkHelper.readItemCondition(buf);
+            bonus.itemStackPredicate = NetworkHelper.readItemPredicate(buf);
             return bonus;
         }
 
@@ -263,7 +263,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
             buf.writeFloat(aBonus.chance);
             NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
             NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
-            NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
         }
 
         @Override

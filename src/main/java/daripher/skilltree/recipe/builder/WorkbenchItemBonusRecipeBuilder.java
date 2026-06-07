@@ -103,7 +103,7 @@ public class WorkbenchItemBonusRecipeBuilder {
                 ingredientJson.addProperty("required_amount", requiredAmount);
                 ingredientsJson.add(ingredientJson);
             }));
-            SerializationHelper.serializeItemCondition(jsonObject, baseItemStackPredicate, "base_item_condition");
+            SerializationHelper.serializeItemPredicate(jsonObject, baseItemStackPredicate, "base_item_condition");
             SerializationHelper.serializeItemBonus(jsonObject, itemBonus);
             jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
             jsonObject.add("ingredients", ingredientsJson);

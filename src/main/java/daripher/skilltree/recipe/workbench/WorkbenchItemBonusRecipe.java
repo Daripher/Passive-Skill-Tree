@@ -98,7 +98,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
     public static class Serializer implements RecipeSerializer<WorkbenchItemBonusRecipe> {
         @Override
         public @NotNull WorkbenchItemBonusRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
-            ItemStackPredicate baseItemStackPredicate = SerializationHelper.deserializeItemCondition(jsonObject, "base_item_condition");
+            ItemStackPredicate baseItemStackPredicate = SerializationHelper.deserializeItemPredicate(jsonObject, "base_item_condition");
             ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
             boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
             Map<Ingredient, Integer> ingredients = new HashMap<>();
@@ -113,7 +113,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
 
         @Override
         public @Nullable WorkbenchItemBonusRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
-            ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemCondition(buf);
+            ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemPredicate(buf);
             ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
             boolean requiresPassiveSkill = buf.readBoolean();
             Map<Ingredient, Integer> ingredients = new HashMap<>();
@@ -126,7 +126,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
 
         @Override
         public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchItemBonusRecipe recipe) {
-            NetworkHelper.writeItemCondition(buf, recipe.baseItemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, recipe.baseItemStackPredicate);
             NetworkHelper.writeItemBonus(buf, recipe.itemBonus);
             buf.writeBoolean(recipe.hasPassiveSkillRequirement());
             int ingredientsCount = recipe.getAdditionalIngredients().size();

@@ -46,7 +46,7 @@ public class AttributeValueFunction implements FloatFunction<AttributeValueFunct
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         Component attributeDescription = Component.translatable(attribute.getDescriptionId());
         String valueDescription = formatNumber(requiredValue);

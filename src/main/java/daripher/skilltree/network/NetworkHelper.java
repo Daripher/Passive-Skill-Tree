@@ -336,14 +336,14 @@ public class NetworkHelper {
         return Objects.requireNonNull(serializer).deserialize(buf);
     }
 
-    public static void writeItemCondition(FriendlyByteBuf buf, @Nonnull ItemStackPredicate condition) {
+    public static void writeItemPredicate(FriendlyByteBuf buf, @Nonnull ItemStackPredicate condition) {
         ItemStackPredicate.Serializer serializer = condition.getSerializer();
         ResourceLocation serializerId = PSTRegistries.ITEM_CONDITIONS.get().getKey(serializer);
         buf.writeUtf(Objects.requireNonNull(serializerId).toString());
         serializer.serialize(buf, condition);
     }
 
-    public static @Nonnull ItemStackPredicate readItemCondition(FriendlyByteBuf buf) {
+    public static @Nonnull ItemStackPredicate readItemPredicate(FriendlyByteBuf buf) {
         ResourceLocation serializerId = ResourceLocation.parse(buf.readUtf());
         ItemStackPredicate.Serializer serializer = PSTRegistries.ITEM_CONDITIONS.get().getValue(serializerId);
         return Objects.requireNonNull(serializer).deserialize(buf);

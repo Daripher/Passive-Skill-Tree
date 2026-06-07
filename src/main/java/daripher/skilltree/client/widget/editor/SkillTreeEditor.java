@@ -179,10 +179,10 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
                 .toList();
     }
 
-    private static @Nullable StatRequirement createDefaultRequirement(StatType<?> statType) {
+    private static @Nullable <T> StatRequirement createDefaultRequirement(StatType<T> statType) {
         ResourceLocation statId = ForgeRegistries.STAT_TYPES.getKey(statType);
-        Registry<Object> statRegistry = (Registry<Object>) statType.getRegistry();
-        var stat = statRegistry.byId(0);
+        Registry<T> statRegistry = statType.getRegistry();
+        T stat = statRegistry.byId(0);
         if (stat == null) {
             return null;
         }
@@ -203,9 +203,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     public SelectionMenuButton<LivingEntityPredicate> addSelectionMenu(int x, int y, int width, LivingEntityPredicate defaultValue) {
-        Collection<LivingEntityPredicate> values = PSTLivingConditions.conditionsList();
+        Collection<LivingEntityPredicate> values = PSTLivingEntityPredicates.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
-                .setElementNameGetter(c -> Component.literal(PSTLivingConditions.getName(c)));
+                .setElementNameGetter(c -> Component.literal(PSTLivingEntityPredicates.getName(c)));
     }
 
     public SelectionMenuButton<LivingMultiplier> addSelectionMenu(int x, int y, int width, LivingMultiplier defaultValue) {
@@ -271,7 +271,7 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
     @NotNull
     private static <T extends Enum<T>> List<T> getEnumValues(T defaultValue) {
-        Class<T> enumType = (Class<T>) defaultValue.getClass();
+        Class<T> enumType = defaultValue.getDeclaringClass();
         return List.of(enumType.getEnumConstants());
     }
 

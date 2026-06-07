@@ -92,7 +92,8 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
         editor.addLabel(0, 0, "Source", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(110, 0, 90, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));
-        editor.addSelection(0, 0, 80, 1, experienceSource).setNameGetter(ExperienceSource::getFormattedName)
+        editor.addSelection(0, 0, 80, 1, experienceSource)
+                .setNameGetter(ExperienceSource::getFormattedName)
                 .setResponder(experienceSource -> selectExperienceSource(consumer, experienceSource));
         editor.increaseHeight(29);
         editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);

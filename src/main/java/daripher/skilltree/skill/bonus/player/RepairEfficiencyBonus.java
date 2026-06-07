@@ -148,7 +148,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     public static class Serializer implements SkillBonus.Serializer {
         @Override
         public RepairEfficiencyBonus deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(json);
             float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
             return new RepairEfficiencyBonus(condition, multiplier);
         }
@@ -158,13 +158,13 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
             if (!(bonus instanceof RepairEfficiencyBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
             json.addProperty("multiplier", aBonus.multiplier);
         }
 
         @Override
         public RepairEfficiencyBonus deserialize(CompoundTag tag) {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(tag);
             float multiplier = tag.getFloat("multiplier");
             return new RepairEfficiencyBonus(condition, multiplier);
         }
@@ -175,14 +175,14 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aBonus.itemStackPredicate);
             tag.putFloat("multiplier", aBonus.multiplier);
             return tag;
         }
 
         @Override
         public RepairEfficiencyBonus deserialize(FriendlyByteBuf buf) {
-            return new RepairEfficiencyBonus(NetworkHelper.readItemCondition(buf), buf.readFloat());
+            return new RepairEfficiencyBonus(NetworkHelper.readItemPredicate(buf), buf.readFloat());
         }
 
         @Override
@@ -190,7 +190,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
             if (!(bonus instanceof RepairEfficiencyBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
             buf.writeFloat(aBonus.multiplier);
         }
 

@@ -200,42 +200,42 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "награды из руды");
         add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "награды от археологии");
         // living conditions
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.you", "вас");
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "target.target", "цели");
-        add(PSTLivingConditions.HAS_ITEM_EQUIPPED.get(), "%s если на %s %s");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "target.you", "вас");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "target.target", "цель");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "%s если на %s действует %s");
-        add(PSTLivingConditions.HAS_EFFECT.get(), "amplifier", "%s если на %s действует %s или выше");
-        add(PSTLivingConditions.BURNING.get(), "target.you", "вы горите");
-        add(PSTLivingConditions.BURNING.get(), "target.target", "цель горит");
-        add(PSTLivingConditions.BURNING.get(), "%s если %s");
-        add(PSTLivingConditions.FISHING.get(), "target.player", "вы рыбачите");
-        add(PSTLivingConditions.FISHING.get(), "target.target", "цель рыбачит");
-        add(PSTLivingConditions.FISHING.get(), "%s если %s");
-        add(PSTLivingConditions.UNDERWATER.get(), "target.you", "вы");
-        add(PSTLivingConditions.UNDERWATER.get(), "target.target", "цель");
-        add(PSTLivingConditions.UNDERWATER.get(), "%s если %s под водой");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "target.you", "вы держите");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "target.target", "цель держит");
-        add(PSTLivingConditions.DUAL_WIELDING.get(), "%s если %s %s в обеих руках");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.you", "вас");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "target.target", "цели");
-        add(PSTLivingConditions.HAS_ITEM_IN_HAND.get(), "%s если у %s в руке %s");
-        add(PSTLivingConditions.CROUCHING.get(), "target.you", "вы крадётесь");
-        add(PSTLivingConditions.CROUCHING.get(), "target.target", "цель крадется");
-        add(PSTLivingConditions.CROUCHING.get(), "%s если %s");
-        add(PSTLivingConditions.UNARMED.get(), "target.you", "без оружия");
-        add(PSTLivingConditions.UNARMED.get(), "target.target", "если цель безоружна");
-        add(PSTLivingConditions.UNARMED.get(), "%s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "more", "больше чем %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "less", "меньше чем %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal", "равно %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_least", "минимум %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "at_most", "максимум %s");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "target.player", "если вся ваша броня - ");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "target.enemy", "если вся броня цели - ");
-        add(PSTLivingConditions.ALL_ARMOR.get(), "%s %s %s");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.you", "вас");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.target", "цели");
+        add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "%s если на %s %s");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "target.you", "вас");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "target.target", "цель");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "%s если на %s действует %s");
+        add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "amplifier", "%s если на %s действует %s или выше");
+        add(PSTLivingEntityPredicates.BURNING.get(), "target.you", "вы горите");
+        add(PSTLivingEntityPredicates.BURNING.get(), "target.target", "цель горит");
+        add(PSTLivingEntityPredicates.BURNING.get(), "%s если %s");
+        add(PSTLivingEntityPredicates.FISHING.get(), "target.player", "вы рыбачите");
+        add(PSTLivingEntityPredicates.FISHING.get(), "target.target", "цель рыбачит");
+        add(PSTLivingEntityPredicates.FISHING.get(), "%s если %s");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "target.you", "вы");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "target.target", "цель");
+        add(PSTLivingEntityPredicates.UNDERWATER.get(), "%s если %s под водой");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "target.you", "вы держите");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "target.target", "цель держит");
+        add(PSTLivingEntityPredicates.DUAL_WIELDING.get(), "%s если %s %s в обеих руках");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "target.you", "вас");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "target.target", "цели");
+        add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "%s если у %s в руке %s");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.you", "вы крадётесь");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.target", "цель крадется");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "%s если %s");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "target.you", "без оружия");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "target.target", "если цель безоружна");
+        add(PSTLivingEntityPredicates.UNARMED.get(), "%s %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "more", "больше чем %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "less", "меньше чем %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal", "равно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "at_least", "минимум %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "at_most", "максимум %s");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.player", "если вся ваша броня - ");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.enemy", "если вся броня цели - ");
+        add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "%s %s %s");
         // event listeners
         add(PSTEventListeners.ATTACK.get(), "%s при атаке");
         add(PSTEventListeners.ATTACK.get(), "damage", "%s при атаке %s");
@@ -452,7 +452,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "requirement", "На вас %s %s");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.effect_amount", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.effect_amount", "ровно %s");
 
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player.plural", "%s за каждое %s зачарования на %s");
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "multiplier.player", "%s за каждое зачарование на %s");
@@ -471,7 +471,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.ENCHANTMENT_AMOUNT.get(), "requirement", "На вашем %3$s %1$s %2$s");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.enchantment_amount", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.enchantment_amount", "ровно %s");
 
         add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player.plural", "%s за %s уровня зачарований на %s");
         add(PSTFloatFunctions.ENCHANTMENT_LEVELS.get(), "multiplier.player", "%s за каждый уровень зачарований на %s");
@@ -500,7 +500,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
 
         add(PSTFloatFunctions.EQUIPMENT_DURABILITY.get(), "requirement", "Ваш %2$s имеет %1$s прочности");
 
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.equipment_durability", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.equipment_durability", "ровно %s");
 
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "point", "очко сытости");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "point.plural", "очка сытости");
@@ -521,7 +521,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.player.not_full", "%s если вы голодны");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "condition.enemy.not_full", "%s если цель голодна");
         add(PSTFloatFunctions.FOOD_LEVEL.get(), "requirement", "У вас %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.food_level", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.food_level", "ровно %s");
 
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point", "очко здоровья");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "point.plural", "очка здоровья");
@@ -544,7 +544,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.player.not_full", "%s если вы ранены");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "condition.enemy.not_full", "%s если цель ранена");
         add(PSTFloatFunctions.HEALTH_LEVEL.get(), "requirement", "У вас %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.health_level", "ровно %s");
 
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point", "очко маны");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "point.plural", "очка маны");
@@ -567,7 +567,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.player.not_full", "%s если у вас неполная мана");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "condition.enemy.not_full", "%s если у цели неполная мана");
         add(IronsSpellbooksCompat.MANA_LEVEL_FUNCTION.get(), "requirement", "У вас %s %s");
-        add(PSTLivingConditions.NUMERIC_VALUE.get(), "equal.mana_level", "ровно %s");
+        add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.mana_level", "ровно %s");
 
         // skill requirements
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение %s");

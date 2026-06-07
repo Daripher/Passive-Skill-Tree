@@ -40,7 +40,7 @@ public class LearnedSkillsNumberFunction implements FloatFunction<LearnedSkillsN
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         String pointsKey = getDescriptionId() + ".point";
         if (requiredValue != 1) {

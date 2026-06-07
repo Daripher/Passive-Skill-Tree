@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
@@ -16,6 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -46,12 +47,12 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
 
     @Override
     public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
-        return valueProvider.getConditionTooltip(target, logic, bonusTooltip, requiredValue);
+        return valueProvider.getPredicateTooltip(target, logic, bonusTooltip, requiredValue);
     }
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.NUMERIC_VALUE.get();
+        return PSTLivingEntityPredicates.NUMERIC_VALUE.get();
     }
 
     @Override
@@ -147,13 +148,11 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (!(condition instanceof FloatFunctionEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
-            }
-            SerializationHelper.serializeValueProvider(json, aCondition.valueProvider);
-            json.addProperty("required_value", aCondition.requiredValue);
-            json.addProperty("logic", aCondition.logic.name());
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            FloatFunctionEntityPredicate validPredicate = validatePredicate(predicate);
+            SerializationHelper.serializeValueProvider(json, validPredicate.valueProvider);
+            json.addProperty("required_value", validPredicate.requiredValue);
+            json.addProperty("logic", validPredicate.logic.name());
         }
 
         @Override
@@ -165,14 +164,12 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (!(condition instanceof FloatFunctionEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            FloatFunctionEntityPredicate validPredicate = validatePredicate(predicate);
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeValueProvider(tag, aCondition.valueProvider);
-            tag.putFloat("required_value", aCondition.requiredValue);
-            tag.putString("logic", aCondition.logic.name());
+            SerializationHelper.serializeValueProvider(tag, validPredicate.valueProvider);
+            tag.putFloat("required_value", validPredicate.requiredValue);
+            tag.putString("logic", validPredicate.logic.name());
             return tag;
         }
 
@@ -185,13 +182,18 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (!(condition instanceof FloatFunctionEntityPredicate aCondition)) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            FloatFunctionEntityPredicate validPredicate = validatePredicate(predicate);
+            NetworkHelper.writeValueProvider(buf, validPredicate.valueProvider);
+            buf.writeFloat(validPredicate.requiredValue);
+            buf.writeInt(validPredicate.logic.ordinal());
+        }
+
+        private static @NotNull FloatFunctionEntityPredicate validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof FloatFunctionEntityPredicate validPredicate)) {
+                throw new IllegalArgumentException("Expected FloatFunctionEntityPredicate, got: " + predicate);
             }
-            NetworkHelper.writeValueProvider(buf, aCondition.valueProvider);
-            buf.writeFloat(aCondition.requiredValue);
-            buf.writeInt(aCondition.logic.ordinal());
+            return validPredicate;
         }
 
         @Override
@@ -208,8 +210,8 @@ public class FloatFunctionEntityPredicate implements LivingEntityPredicate {
         }
 
         public Component getTooltip(String subtype, Object... args) {
-            String conditionDescriptionId = PSTLivingConditions.NUMERIC_VALUE.get().createDefaultInstance().getDescriptionId();
-            String key = conditionDescriptionId + "." + getName();
+            String predicateDescriptionId = PSTLivingEntityPredicates.NUMERIC_VALUE.get().createDefaultInstance().getDescriptionId();
+            String key = predicateDescriptionId + "." + getName();
             return TooltipHelper.getOptionalTooltip(key, subtype, args);
         }
     }

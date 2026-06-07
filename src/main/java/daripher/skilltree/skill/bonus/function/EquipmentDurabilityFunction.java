@@ -48,7 +48,7 @@ public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurab
     }
 
     @Override
-    public MutableComponent getConditionTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
+    public MutableComponent getPredicateTooltip(SkillBonus.Target target, FloatFunctionEntityPredicate.Logic logic, Component bonusTooltip, float requiredValue) {
         String key = "%s.condition.%s".formatted(getDescriptionId(), target.getName());
         Component itemDescription = itemStackPredicate.getTooltip();
         String valueDescription = formatNumber(requiredValue);
@@ -116,7 +116,7 @@ public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurab
     public static class Serializer implements FloatFunction.Serializer {
         @Override
         public FloatFunction<?> deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(json);
             return new EquipmentDurabilityFunction(itemStackPredicate);
         }
 
@@ -125,12 +125,12 @@ public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurab
             if (!(provider instanceof EquipmentDurabilityFunction aProvider)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aProvider.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aProvider.itemStackPredicate);
         }
 
         @Override
         public FloatFunction<?> deserialize(CompoundTag tag) {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(tag);
             return new EquipmentDurabilityFunction(itemStackPredicate);
         }
 
@@ -140,13 +140,13 @@ public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurab
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aProvider.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aProvider.itemStackPredicate);
             return tag;
         }
 
         @Override
         public FloatFunction<?> deserialize(FriendlyByteBuf buf) {
-            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemCondition(buf);
+            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemPredicate(buf);
             return new EquipmentDurabilityFunction(itemStackPredicate);
         }
 
@@ -155,7 +155,7 @@ public class EquipmentDurabilityFunction implements FloatFunction<EquipmentDurab
             if (!(provider instanceof EquipmentDurabilityFunction aProvider)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aProvider.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aProvider.itemStackPredicate);
         }
 
         @Override

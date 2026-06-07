@@ -155,7 +155,7 @@ public class ItemUsedEventListener implements SkillEventListener {
     public static class Serializer implements SkillEventListener.Serializer {
         @Override
         public SkillEventListener deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(json);
             ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(json, "player_condition"));
             listener.setPlayerMultiplier(SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier"));
@@ -167,14 +167,14 @@ public class ItemUsedEventListener implements SkillEventListener {
             if (!(listener instanceof ItemUsedEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aListener.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aListener.itemStackPredicate);
             SerializationHelper.serializeLivingCondition(json, aListener.playerCondition, "player_condition");
             SerializationHelper.serializeLivingMultiplier(json, aListener.playerMultiplier, "player_multiplier");
         }
 
         @Override
         public SkillEventListener deserialize(CompoundTag tag) {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(tag);
             ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(tag, "player_condition"));
             listener.setPlayerMultiplier(SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier"));
@@ -187,7 +187,7 @@ public class ItemUsedEventListener implements SkillEventListener {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aListener.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aListener.itemStackPredicate);
             SerializationHelper.serializeLivingCondition(tag, aListener.playerCondition, "player_condition");
             SerializationHelper.serializeLivingMultiplier(tag, aListener.playerMultiplier, "player_multiplier");
             return tag;
@@ -195,7 +195,7 @@ public class ItemUsedEventListener implements SkillEventListener {
 
         @Override
         public SkillEventListener deserialize(FriendlyByteBuf buf) {
-            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemCondition(buf);
+            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemPredicate(buf);
             ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
             listener.setPlayerCondition(NetworkHelper.readLivingCondition(buf));
             listener.setPlayerMultiplier(NetworkHelper.readLivingMultiplier(buf));
@@ -207,7 +207,7 @@ public class ItemUsedEventListener implements SkillEventListener {
             if (!(listener instanceof ItemUsedEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aListener.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aListener.itemStackPredicate);
             NetworkHelper.writeLivingCondition(buf, aListener.playerCondition);
             NetworkHelper.writeLivingMultiplier(buf, aListener.playerMultiplier);
         }

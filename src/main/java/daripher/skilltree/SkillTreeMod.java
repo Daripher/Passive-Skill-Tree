@@ -32,7 +32,7 @@ public class SkillTreeMod {
         PSTMobEffects.REGISTRY.register(eventBus);
         PSTCreativeTabs.REGISTRY.register(eventBus);
         PSTSkillBonuses.REGISTRY.register(eventBus);
-        PSTLivingConditions.REGISTRY.register(eventBus);
+        PSTLivingEntityPredicates.REGISTRY.register(eventBus);
         PSTLivingMultipliers.REGISTRY.register(eventBus);
         PSTDamageConditions.REGISTRY.register(eventBus);
         PSTItemConditions.REGISTRY.register(eventBus);

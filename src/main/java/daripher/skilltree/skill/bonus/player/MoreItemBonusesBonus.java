@@ -148,7 +148,7 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
     public static class Serializer implements SkillBonus.Serializer {
         @Override
         public MoreItemBonusesBonus deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(json);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(json);
             int amount = SerializationHelper.getElement(json, "amount").getAsInt();
             return new MoreItemBonusesBonus(condition, amount);
         }
@@ -158,13 +158,13 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
             if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemCondition(json, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
             json.addProperty("amount", aBonus.amount);
         }
 
         @Override
         public MoreItemBonusesBonus deserialize(CompoundTag tag) {
-            ItemStackPredicate condition = SerializationHelper.deserializeItemCondition(tag);
+            ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(tag);
             int amount = tag.getInt("amount");
             return new MoreItemBonusesBonus(condition, amount);
         }
@@ -175,14 +175,14 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemCondition(tag, aBonus.itemStackPredicate);
+            SerializationHelper.serializeItemPredicate(tag, aBonus.itemStackPredicate);
             tag.putInt("amount", aBonus.amount);
             return tag;
         }
 
         @Override
         public MoreItemBonusesBonus deserialize(FriendlyByteBuf buf) {
-            return new MoreItemBonusesBonus(NetworkHelper.readItemCondition(buf), buf.readInt());
+            return new MoreItemBonusesBonus(NetworkHelper.readItemPredicate(buf), buf.readInt());
         }
 
         @Override
@@ -190,7 +190,7 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
             if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemCondition(buf, aBonus.itemStackPredicate);
+            NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
             buf.writeInt(aBonus.amount);
         }
 

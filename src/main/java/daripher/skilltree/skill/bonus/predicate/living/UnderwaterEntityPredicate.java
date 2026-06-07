@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTLivingConditions;
+import daripher.skilltree.init.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,7 +28,7 @@ public record UnderwaterEntityPredicate() implements LivingEntityPredicate {
 
     @Override
     public LivingEntityPredicate.Serializer getSerializer() {
-        return PSTLivingConditions.UNDERWATER.get();
+        return PSTLivingEntityPredicates.UNDERWATER.get();
     }
 
     @Override
@@ -51,10 +51,8 @@ public record UnderwaterEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(JsonObject json, LivingEntityPredicate condition) {
-            if (!(condition instanceof UnderwaterEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
         }
 
         @Override
@@ -63,10 +61,8 @@ public record UnderwaterEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public CompoundTag serialize(LivingEntityPredicate condition) {
-            if (!(condition instanceof UnderwaterEntityPredicate)) {
-                throw new IllegalArgumentException();
-            }
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
             return new CompoundTag();
         }
 
@@ -76,9 +72,13 @@ public record UnderwaterEntityPredicate() implements LivingEntityPredicate {
         }
 
         @Override
-        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-            if (!(condition instanceof UnderwaterEntityPredicate)) {
-                throw new IllegalArgumentException();
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            validatePredicate(predicate);
+        }
+
+        private static void validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof UnderwaterEntityPredicate)) {
+                throw new IllegalArgumentException("Expected UnderwaterEntityPredicate, got: " + predicate);
             }
         }
 
