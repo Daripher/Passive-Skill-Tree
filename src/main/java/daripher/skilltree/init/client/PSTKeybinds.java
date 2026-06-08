@@ -1,7 +1,7 @@
 package daripher.skilltree.init.client;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeEditorData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
 import daripher.skilltree.client.screen.SkillTreeSelectionScreen;
 import daripher.skilltree.data.reloader.SkillTreesReloader;

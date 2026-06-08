@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.tags;
 
-import daripher.skilltree.client.data.SkillTreeEditorData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.client.widget.NumericTextField;
 import daripher.skilltree.client.widget.TextField;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;

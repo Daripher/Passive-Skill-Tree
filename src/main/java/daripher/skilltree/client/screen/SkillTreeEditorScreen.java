@@ -3,7 +3,7 @@ package daripher.skilltree.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.client.data.SkillTreeEditorData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.SkillNodeEditor;
 import daripher.skilltree.client.widget.skill.SkillButtons;

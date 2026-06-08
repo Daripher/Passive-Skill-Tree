@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.bonuses;
 
-import daripher.skilltree.client.data.SkillTreeEditorData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.skill.PassiveSkill;

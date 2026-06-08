@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.client.data.SkillTreeEditorData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;

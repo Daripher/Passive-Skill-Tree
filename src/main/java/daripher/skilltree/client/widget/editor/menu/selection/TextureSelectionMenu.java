@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu.selection;
 
-import daripher.skilltree.client.data.SkillTexturesData;
+import daripher.skilltree.data.client.SkillTexturesData;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import net.minecraft.ChatFormatting;

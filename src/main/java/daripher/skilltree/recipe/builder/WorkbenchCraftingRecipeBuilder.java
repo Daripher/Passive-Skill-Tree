@@ -63,7 +63,7 @@ public class WorkbenchCraftingRecipeBuilder {
         if (ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients set for recipe " + id);
         }
-        if (ingredients.size() > 6) {
+        if (ingredients.size() > 9) {
             throw new IllegalStateException("Too many ingredients set for recipe " + id);
         }
         if (result == null) {
@@ -71,21 +71,8 @@ public class WorkbenchCraftingRecipeBuilder {
         }
     }
 
-    private static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final Map<Ingredient, Integer> ingredients;
-        private final @Nullable Pair<Ingredient, Integer> baseIngredient;
-        private final boolean requiresPassiveSkill;
-        private final ItemStack result;
-
-        private Result(ResourceLocation id, @Nullable Pair<Ingredient, Integer> baseIngredient, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill, ItemStack result) {
-            this.id = id;
-            this.baseIngredient = baseIngredient;
-            this.ingredients = ingredients;
-            this.requiresPassiveSkill = requiresPassiveSkill;
-            this.result = result;
-        }
-
+    private record Result(ResourceLocation id, @Nullable Pair<Ingredient, Integer> baseIngredient, Map<Ingredient, Integer> ingredients,
+                          boolean requiresPassiveSkill, ItemStack result) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(@NotNull JsonObject jsonObject) {
             JsonArray ingredientsJson = new JsonArray();

@@ -1,6 +1,6 @@
 package daripher.skilltree.client.widget.editor.menu;
 
-import daripher.skilltree.client.data.SkillTexturesData;
+import daripher.skilltree.data.client.SkillTexturesData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.skill.PassiveSkill;

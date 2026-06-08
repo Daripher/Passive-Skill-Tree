@@ -1,8 +1,6 @@
 package daripher.skilltree.client.widget.editor;
 
 import daripher.skilltree.attribute.AttributesHelper;
-import daripher.skilltree.client.data.SkillTexturesData;
-import daripher.skilltree.client.data.SkillTreeEditorData;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
@@ -14,6 +12,8 @@ import daripher.skilltree.client.widget.editor.menu.selection.TextureSelectionMe
 import daripher.skilltree.client.widget.group.WidgetGroup;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.client.widget.skill.SkillButtons;
+import daripher.skilltree.data.client.SkillTexturesData;
+import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.init.*;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;

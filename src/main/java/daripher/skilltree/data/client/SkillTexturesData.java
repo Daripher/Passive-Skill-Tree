@@ -1,4 +1,4 @@
-package daripher.skilltree.client.data;
+package daripher.skilltree.data.client;
 
 import daripher.skilltree.SkillTreeMod;
 import net.minecraft.resources.ResourceLocation;

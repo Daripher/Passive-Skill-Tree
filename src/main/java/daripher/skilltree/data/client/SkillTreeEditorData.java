@@ -1,7 +1,8 @@
-package daripher.skilltree.client.data;
+package daripher.skilltree.data.client;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.stream.JsonReader;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.skill.PassiveSkill;
@@ -15,8 +16,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import javax.annotation.Nullable;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -54,7 +59,7 @@ public class SkillTreeEditorData {
                 try {
                     loadOrCreateEditorSkill(skillId);
                 } catch (Exception exception) {
-                    exception.printStackTrace();
+                    SkillTreeMod.LOGGER.error(exception);
                     sendChatMessage("Couldn't read passive skill " + skillId, ChatFormatting.DARK_RED);
                     sendChatMessage("");
                     String errorMessage = exception.getMessage() == null ? "No error message" : exception.getMessage();
@@ -74,36 +79,36 @@ public class SkillTreeEditorData {
             sendChatMessage("Try removing files from folder", ChatFormatting.DARK_RED);
             sendChatMessage("");
             sendChatMessage(getEditorDataFolder().getPath(), ChatFormatting.RED);
-            exception.printStackTrace();
+            SkillTreeMod.LOGGER.error(exception);
             return null;
         }
     }
 
     private static void createSkillTreesSaveFolders(ResourceLocation treeId) {
         File folder = getSkillTreeSavesFolder(treeId);
-        if (!folder.exists()) {
-            folder.mkdirs();
+        try {
+            Files.createDirectories(folder.toPath());
+        } catch (IOException exception) {
+            String errorMessage = "Failed to create skill tree save directory for: " + treeId;
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
         }
     }
 
     private static void generatePackMcmetaFile(File file) {
+        String fileContents = """
+                {
+                  "pack": {
+                    "description": {
+                      "text": "PST editor data"
+                    },
+                    "pack_format": 15
+                  }
+                }
+                """;
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            String contents = """
-                    {
-                      "pack": {
-                        "description": {
-                          "text": "PST editor data"
-                        },
-                        "pack_format": 15
-                      }
-                    }
-                    """;
-            writer.write(contents);
-            writer.close();
+            Files.writeString(file.toPath(), fileContents);
         } catch (IOException exception) {
-            exception.printStackTrace();
-            throw new RuntimeException(exception);
+            throw new RuntimeException("Failed to generate pack.mcmeta", exception);
         }
     }
 
@@ -121,9 +126,12 @@ public class SkillTreeEditorData {
     }
 
     private static void createSkillsSaveFolder(ResourceLocation skillId) {
-        File skillSavesFolder = getSkillSavesFolder(skillId);
-        if (!skillSavesFolder.exists()) {
-            skillSavesFolder.mkdirs();
+        File folder = getSkillSavesFolder(skillId);
+        try {
+            Files.createDirectories(folder.toPath());
+        } catch (IOException exception) {
+            String errorMessage = "Failed to create skill save directory for: " + skillId;
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
         }
     }
 
@@ -182,7 +190,12 @@ public class SkillTreeEditorData {
     }
 
     public static void deleteEditorSkill(PassiveSkill skill) {
-        getSkillSaveFile(skill.getId()).delete();
+        try {
+            Files.delete(getSkillSaveFile(skill.getId()).toPath());
+        } catch (IOException exception) {
+            String errorMessage = "Failed to delete skill file for: " + skill.getId();
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
+        }
         EDITOR_PASSIVE_SKILLS.remove(skill.getId());
     }
 
