@@ -517,7 +517,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add("skilltree.message.reset", "Skill Tree has changed. Your skill points have been restored.");
         add("skilltree.message.reset_command", "Your skill tree has been reset.");
         add("skilltree.message.point_command", "Skill point gained.");
-        add("skilltree.message.grant_skill_command", "You were granted a %s skill.");
+        add("skilltree.message.grant_skill_command", "You were granted the %s skill.");
         // screen info
         add("widget.skill_points_left", "Points left: %s");
         add("widget.skill_button.not_learned", "Skill not learned");
