@@ -1,5 +1,5 @@
 {
-  "block.skilltree.workbench": "Workbench",
+  "block.skilltree.workbench": "Advanced Workbench",
   "damage_condition.skilltree.fall": "Fall Damage",
   "damage_condition.skilltree.fall.type": "Fall",
   "damage_condition.skilltree.fire": "Fire Damage",
@@ -409,8 +409,8 @@
   "skill_bonus.skilltree.loot_duplication.guaranteed": "You always get %s %s",
   "skill_bonus.skilltree.loot_duplication.multiplier": "+%s%%",
   "skill_bonus.skilltree.loot_duplication.triple": "triple",
-  "skill_bonus.skilltree.more_item_bonuses": "You can upgrade %s %s additional times using workbench",
-  "skill_bonus.skilltree.more_item_bonuses.one": "You can upgrade %s an additional time using workbench",
+  "skill_bonus.skilltree.more_item_bonuses": "You can upgrade %s %s additional times using advanced workbench",
+  "skill_bonus.skilltree.more_item_bonuses.one": "You can upgrade %s an additional time using advanced workbench",
   "skill_bonus.skilltree.projectile_duplication": "Fire an additional projectile",
   "skill_bonus.skilltree.projectile_duplication.amount": "Fire %s additional projectiles",
   "skill_bonus.skilltree.projectile_duplication.chance": "Chance to fire additional projectile",

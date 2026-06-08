@@ -181,8 +181,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "positive", "Reduces movement speed penalty from using %s by %s%%");
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove", "Removes movement speed penalty from using %s");
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative", "Increases movement speed penalty from using %s by %s%%");
-        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one", "You can upgrade %s an additional time using workbench");
-        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using workbench");
+        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one", "You can upgrade %s an additional time using advanced workbench");
+        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "You can upgrade %s %s additional times using advanced workbench");
         add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Gain %s experience");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Chance to gain %s experience");
@@ -504,7 +504,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add("item.cant_use.info", "You can not use this");
         add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
         add(PSTItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
-        add(PSTItems.WORKBENCH.get(), "Workbench");
+        add(PSTItems.WORKBENCH.get(), "Advanced Workbench");
         addTooltip(PSTItems.WISDOM_SCROLL.get(), "Grants one passive skill point");
         addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Resets your passive skill tree");
         addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% of your skill points will be lost");

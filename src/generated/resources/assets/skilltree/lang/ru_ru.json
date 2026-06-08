@@ -1,5 +1,5 @@
 {
-  "block.skilltree.workbench": "Рабочий стол",
+  "block.skilltree.workbench": "Продвинутый рабочий стол",
   "damage_condition.skilltree.fall": "Урон от падения",
   "damage_condition.skilltree.fall.type": "от падения",
   "damage_condition.skilltree.fire": "Урон огнём",
@@ -489,8 +489,8 @@
   "skill_bonus.skilltree.loot_duplication.guaranteed": "Вы всегда получаете %s %s",
   "skill_bonus.skilltree.loot_duplication.multiplier": "+%s%%",
   "skill_bonus.skilltree.loot_duplication.triple": "тройные",
-  "skill_bonus.skilltree.more_item_bonuses": "Вы можете улучшить %s %s дополнительных раза используя рабочий стол",
-  "skill_bonus.skilltree.more_item_bonuses.one": "Вы можете улучшить %s дополнительный раз используя рабочий стол",
+  "skill_bonus.skilltree.more_item_bonuses": "Вы можете улучшить %s %s дополнительных раза используя продвинутый рабочий стол",
+  "skill_bonus.skilltree.more_item_bonuses.one": "Вы можете улучшить %s дополнительный раз используя продвинутый рабочий стол",
   "skill_bonus.skilltree.projectile_duplication": "Вы выпускаете дополнительный снаряд",
   "skill_bonus.skilltree.projectile_duplication.amount": "Вы выпускаете %s дополнительных снарядов",
   "skill_bonus.skilltree.projectile_duplication.chance": "Шанс удвоить выпущенный снаряд",

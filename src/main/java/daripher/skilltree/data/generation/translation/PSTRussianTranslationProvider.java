@@ -181,8 +181,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "positive", "Используя %s вы замедляетесь на %s%% слабее");
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "remove", "Используя %s вы не замедляетесь");
         add(PSTSkillBonuses.ITEM_USE_MOVEMENT_SPEED.get(), "negative", "Используя %s вы замедляетесь на %s%% сильнее");
-        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one", "Вы можете улучшить %s дополнительный раз используя рабочий стол");
-        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %s дополнительных раза используя рабочий стол");
+        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "one", "Вы можете улучшить %s дополнительный раз используя продвинутый рабочий стол");
+        add(PSTSkillBonuses.MORE_ITEM_BONUSES.get(), "Вы можете улучшить %s %s дополнительных раза используя продвинутый рабочий стол");
         add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Открывает рецепт: %s");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Вы получаете %s опыта");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Шанс получить %s опыта");
@@ -576,7 +576,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add("item.cant_use.info", "Вы не можете это использовать");
         add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
         add(PSTItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
-        add(PSTItems.WORKBENCH.get(), "Рабочий стол");
+        add(PSTItems.WORKBENCH.get(), "Продвинутый рабочий стол");
         addTooltip(PSTItems.WISDOM_SCROLL.get(), "Дарует одно очко пассивных умений");
         addTooltip(PSTItems.AMNESIA_SCROLL.get(), "Сбрасывает ваше древо пассивных умений");
         addWarning(PSTItems.AMNESIA_SCROLL.get(), "%d%% очков умений будут потеряны");
