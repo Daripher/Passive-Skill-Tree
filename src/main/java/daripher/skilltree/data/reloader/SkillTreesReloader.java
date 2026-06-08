@@ -63,8 +63,8 @@ public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
             PassiveSkillTree tree = GSON.fromJson(json, PassiveSkillTree.class);
             SKILL_TREES.put(tree.getId(), tree);
         } catch (Exception exception) {
-            SkillTreeMod.LOGGER.error("Couldn't load passive skill tree {}", id);
-            exception.printStackTrace();
+            String errorMessage = "Couldn't load passive skill tree: " + id;
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
         }
     }
 }
