@@ -1,4 +1,4 @@
-package daripher.skilltree.client.init;
+package daripher.skilltree.init.client;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.data.SkillTreeEditorData;

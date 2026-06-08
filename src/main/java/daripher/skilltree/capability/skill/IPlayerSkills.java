@@ -13,6 +13,8 @@ public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
 
     boolean learnSkill(PassiveSkill passiveSkill);
 
+    boolean grantSkill(PassiveSkill passiveSkill);
+
     int getSkillPoints();
 
     void setSkillPoints(int skillPoints);

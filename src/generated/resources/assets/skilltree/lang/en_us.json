@@ -422,6 +422,7 @@
   "skill_bonus.skilltree.spell_level": "to level of %s spell",
   "skill_requirements.skilltree.advancement": "Get %s advancement",
   "skill_requirements.skilltree.learned_skill": "Learn %s skill",
+  "skilltree.message.grant_skill_command": "You were granted a %s skill.",
   "skilltree.message.point_command": "Skill point gained.",
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",
   "skilltree.message.reset_command": "Your skill tree has been reset.",

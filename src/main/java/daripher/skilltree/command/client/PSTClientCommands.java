@@ -1,4 +1,4 @@
-package daripher.skilltree.client.command;
+package daripher.skilltree.command.client;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -25,13 +25,7 @@ import java.util.stream.Stream;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PSTClientCommands {
-    public static final SuggestionProvider<CommandSourceStack> SKILL_TREE_ID_PROVIDER = (ctx, builder) -> SharedSuggestionProvider.suggest(gatherSkillTreesPaths(), builder);
-
-    @NotNull
-    private static Stream<String> gatherSkillTreesPaths() {
-        return Stream.concat(SkillTreesReloader.getSkillTrees().keySet().stream(), SkillTreeEditorData.getEditorTreesIDs().stream())
-                .map(ResourceLocation::toString);
-    }
+    public static final SuggestionProvider<CommandSourceStack> CLIENT_SKILL_TREE_ID_PROVIDER = (ctx, builder) -> SharedSuggestionProvider.suggest(gatherClientSkillTreesPaths(), builder);
 
     private static ResourceLocation tree_to_display;
     private static int timer;
@@ -39,7 +33,7 @@ public class PSTClientCommands {
     @SubscribeEvent
     public static void registerCommands(RegisterClientCommandsEvent event) {
         LiteralArgumentBuilder<CommandSourceStack> editorCommand = Commands.literal("skilltree").then(Commands.literal("editor")
-                .then(Commands.argument("treeId", StringArgumentType.greedyString()).suggests(SKILL_TREE_ID_PROVIDER)
+                .then(Commands.argument("treeId", StringArgumentType.greedyString()).suggests(CLIENT_SKILL_TREE_ID_PROVIDER)
                         .executes(PSTClientCommands::displaySkillTreeEditor)));
         event.getDispatcher().register(editorCommand);
     }
@@ -61,5 +55,11 @@ public class PSTClientCommands {
         PSTClientCommands.tree_to_display = ResourceLocation.parse(treeIdArg);
         PSTClientCommands.timer = 1;
         return 1;
+    }
+
+    @NotNull
+    private static Stream<String> gatherClientSkillTreesPaths() {
+        return Stream.concat(SkillTreesReloader.getSkillTrees().keySet().stream(), SkillTreeEditorData.getEditorTreesIDs().stream())
+                .map(ResourceLocation::toString);
     }
 }

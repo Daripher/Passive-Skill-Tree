@@ -589,6 +589,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add("skilltree.message.reset", "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.");
         add("skilltree.message.reset_command", "Ваше древо пассивных умений было сброшено.");
         add("skilltree.message.point_command", "Получено очко пассивных умений.");
+        add("skilltree.message.grant_skill_command", "Вам было даровано умение %s.");
         // screen info
         add("widget.skill_points_left", "Очков осталось: %s");
         add("widget.skill_button.not_learned", "Умение не изучено");

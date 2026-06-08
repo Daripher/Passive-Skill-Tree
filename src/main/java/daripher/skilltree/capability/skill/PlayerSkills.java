@@ -52,6 +52,14 @@ public class PlayerSkills implements IPlayerSkills {
     }
 
     @Override
+    public boolean grantSkill(PassiveSkill passiveSkill) {
+        if (skills.contains(passiveSkill)) {
+            return false;
+        }
+        return skills.add(passiveSkill);
+    }
+
+    @Override
     public boolean isTreeReset() {
         return treeReset;
     }
