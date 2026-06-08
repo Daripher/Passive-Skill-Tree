@@ -22,12 +22,12 @@ import java.util.List;
 
 public class WorkbenchMenu extends AbstractContainerMenu {
     private static final int RESULT_SLOT = 0;
-    private static final int CRAFT_SLOT_START = 1;
-    private static final int CRAFT_SLOT_END = 8;
-    private static final int INV_SLOT_START = 8;
-    private static final int INV_SLOT_END = 35;
-    private static final int HOTBAR_SLOT_START = 35;
-    private static final int HOTBAR_SLOT_END = 44;
+    private static final int CRAFT_SLOT_START = RESULT_SLOT + 1;
+    private static final int CRAFT_SLOT_END = CRAFT_SLOT_START + 10;
+    private static final int INV_SLOT_START = CRAFT_SLOT_END;
+    private static final int INV_SLOT_END = INV_SLOT_START + 27;
+    private static final int HOTBAR_SLOT_START = INV_SLOT_END;
+    private static final int HOTBAR_SLOT_END = HOTBAR_SLOT_START + 9;
     private final WorkbenchContainer workbenchContainer;
     private final ResultContainer resultSlots;
     private final ContainerLevelAccess levelAccess;
@@ -51,19 +51,22 @@ public class WorkbenchMenu extends AbstractContainerMenu {
         this.player = playerInventory.player;
         this.level = player.level();
         addSlot(new WorkbenchResultSlot(playerInventory.player, workbenchContainer, resultSlots, 0, 143, 129));
-        addSlot(new WorkbenchBaseSlot(workbenchContainer, 0, 71, 129));
+        addSlot(new WorkbenchBaseSlot(workbenchContainer, 0, 8, 120));
         for (int i = 0; i < 2; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                addSlot(new WorkbenchSlot(workbenchContainer, j + i * 3 + 1, 8 + j * 18, 120 + i * 18, j + i * 3));
+            for (int j = 0; j < 5; ++j) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                addSlot(new WorkbenchSlot(workbenchContainer, j + i * 5, 8 + j * 18, 120 + i * 18, j + i * 5 - 1));
             }
+        }
+        for (int i = 0; i < 9; ++i) {
+            addSlot(new Slot(playerInventory, i, 8 + i * 18, 218));
         }
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 160 + i * 18));
             }
-        }
-        for (int i = 0; i < 9; ++i) {
-            addSlot(new Slot(playerInventory, i, 8 + i * 18, 218));
         }
         addDataSlot(selectedRecipeIndex);
         setupRecipeList();

@@ -80,7 +80,7 @@ public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContain
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return width == 7 && height == 1;
+        return width == 5 && height == 2;
     }
 
     @Override

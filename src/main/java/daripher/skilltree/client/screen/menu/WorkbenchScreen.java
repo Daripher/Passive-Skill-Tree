@@ -125,9 +125,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     private void renderGhostRecipe(GuiGraphics guiGraphics) {
         AbstractWorkbenchRecipe selectedRecipe = menu.getSelectedRecipe();
         if (selectedRecipe == null) {
-            for (int i = 0; i < 6; i++) {
-                int itemX = leftPos + 8 + i % 3 * 18;
-                int itemY = topPos + 120 + i / 3 * 18;
+            for (int i = 1; i < 10; i++) {
+                int itemX = leftPos + 8 + i % 5 * 18;
+                int itemY = topPos + 120 + i / 5 * 18;
                 guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
             }
             return;
@@ -137,9 +137,10 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             guiGraphics.fill(leftPos + 62, topPos + 120, leftPos + 96, topPos + 154, 0x30ff0000);
         }
         List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
-        for (int i = 0; i < 6; i++) {
-            int itemX = leftPos + 8 + i % 3 * 18;
-            int itemY = topPos + 120 + i / 3 * 18;
+        for (int i = 0; i < 9; i++) {
+            int slotIndex = i + 1;
+            int itemX = leftPos + 8 + slotIndex % 5 * 18;
+            int itemY = topPos + 120 + slotIndex / 5 * 18;
             if (i >= requiredIngredients.size()) {
                 guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
                 continue;
@@ -184,11 +185,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return;
         }
         AbstractWorkbenchRecipe selectedRecipe = selectedRecipes.get(selectedRecipeIndex);
-        AtomicInteger slotIndex = new AtomicInteger();
+        AtomicInteger slotIndex = new AtomicInteger(1);
         selectedRecipe.getAdditionalIngredients().forEach((ingredient, requiredAmount) -> {
-            if (menu.getWorkbenchContainer().getItem(slotIndex.get() + 1).isEmpty()) {
-                int itemX = leftPos + 8 + slotIndex.get() % 3 * 18;
-                int itemY = topPos + 120 + slotIndex.get() / 3 * 18;
+            if (menu.getWorkbenchContainer().getItem(slotIndex.get()).isEmpty()) {
+                int itemX = leftPos + 8 + slotIndex.get() % 5 * 18;
+                int itemY = topPos + 120 + slotIndex.get() / 5 * 18;
                 if (isMouseOverArea(mouseX, mouseY, itemX, itemY, 16, 16)) {
                     ItemStack itemStack = ingredient.getItems()[0].copy();
                     itemStack.setCount(requiredAmount);

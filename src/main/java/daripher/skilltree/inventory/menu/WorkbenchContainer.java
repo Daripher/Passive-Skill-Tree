@@ -12,7 +12,7 @@ public class WorkbenchContainer extends TransientCraftingContainer {
     public final WorkbenchMenu menu;
 
     public WorkbenchContainer(WorkbenchMenu menu) {
-        super(menu, 7, 1);
+        super(menu, 5, 2);
         this.menu = menu;
     }
 
