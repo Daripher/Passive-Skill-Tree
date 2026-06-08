@@ -25,6 +25,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -88,6 +90,7 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
         return this;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public MutableComponent getTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;

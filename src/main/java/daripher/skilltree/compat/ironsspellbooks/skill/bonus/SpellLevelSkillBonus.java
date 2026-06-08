@@ -24,6 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -96,6 +98,7 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
         return bonus;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public MutableComponent getTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
