@@ -420,6 +420,7 @@
   "skill_bonus.skilltree.repair_efficiency.bonus": "Durability restored",
   "skill_bonus.skilltree.self_splash_immune": "Your splash potions do not affect you",
   "skill_bonus.skilltree.spell_level": "to level of %s spell",
+  "skill_bonus.skilltree.vanilla_recipe_unlock": "You can create %s on advanced workbench",
   "skill_requirements.skilltree.advancement": "Get %s advancement",
   "skill_requirements.skilltree.learned_skill": "Learn %s skill",
   "skilltree.message.grant_skill_command": "You were granted the %s skill.",

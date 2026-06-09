@@ -2,6 +2,8 @@ package daripher.skilltree.recipe.workbench;
 
 import com.google.gson.JsonObject;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
+import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.player.VanillaRecipeUnlockBonus;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -82,7 +84,13 @@ public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
 
     @Override
     public boolean isLockedFor(@NotNull Player player) {
-        return false;
+        List<VanillaRecipeUnlockBonus> recipeUnlockBonuses = SkillBonusHandler.getSkillBonuses(player, VanillaRecipeUnlockBonus.class);
+        for (VanillaRecipeUnlockBonus skillBonus : recipeUnlockBonuses) {
+            if (skillBonus.canUnlockRecipe(this)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -92,6 +100,10 @@ public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
 
     @Override
     public @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer) {
+        return result.copy();
+    }
+
+    public @NotNull ItemStack getResult() {
         return result.copy();
     }
 

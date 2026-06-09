@@ -186,6 +186,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.RECIPE_UNLOCK.get(), "Unlocks Recipe: %s");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "Gain %s experience");
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Chance to gain %s experience");
+        add(PSTSkillBonuses.VANILLA_RECIPE_UNLOCK.get(), "You can create %s on advanced workbench");
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Grants %s %s spell");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "to level of %s spell");
         // experience sources
