@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,6 +89,11 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
     @Override
     public int requiredBaseItemAmount() {
         return 1;
+    }
+
+    @Override
+    public Pair<Ingredient, Integer> getBaseIngredient() {
+        return null;
     }
 
     @Override

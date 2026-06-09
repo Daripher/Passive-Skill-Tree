@@ -76,7 +76,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         guiGraphics.blit(BACKGROUND_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         renderScroll(guiGraphics);
         renderRecipes(guiGraphics, mouseX, mouseY);
-        if (!searchBox.isFocused()) {
+        if (searchBox.getValue().isEmpty()) {
             Component searchHint = Component.translatable("gui.recipebook.search_hint").withStyle(ChatFormatting.ITALIC);
             guiGraphics.drawString(font, searchHint, searchBox.getX(), searchBox.getY(), 0x555555, false);
         }
@@ -133,20 +133,30 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return;
         }
         Objects.requireNonNull(minecraft);
-        if (selectedRecipe.requiredBaseItemAmount() == 0) {
-            guiGraphics.fill(leftPos + 62, topPos + 120, leftPos + 96, topPos + 154, 0x30ff0000);
+        int requiredBaseItemAmount = selectedRecipe.requiredBaseItemAmount();
+        Pair<Ingredient, Integer> requiredBaseItem = selectedRecipe.getBaseIngredient();
+        boolean usingValidBaseItem = selectedRecipe.isValidBaseItem(menu.getWorkbenchContainer().getBaseItem());
+        if (requiredBaseItemAmount == 0 && !menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
+            guiGraphics.fill(leftPos + 8, topPos + 120, leftPos + 24, topPos + 136, 0x30ff0000);
+        }
+        if (requiredBaseItem != null && requiredBaseItemAmount > 0 && !usingValidBaseItem) {
+            guiGraphics.fill(leftPos + 8, topPos + 120, leftPos + 24, topPos + 136, 0x30ff0000);
+            ItemStack requiredBaseItemStack = requiredBaseItem.getLeft().getItems()[0];
+            requiredBaseItemStack.setCount(requiredBaseItemAmount);
+            if (!requiredBaseItemStack.isEmpty() && menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
+                renderMissingItem(guiGraphics, leftPos + 8, topPos + 120, requiredBaseItemStack);
+            }
         }
         List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
-        for (int i = 0; i < 9; i++) {
-            int slotIndex = i + 1;
-            int itemX = leftPos + 8 + slotIndex % 5 * 18;
-            int itemY = topPos + 120 + slotIndex / 5 * 18;
-            if (i >= requiredIngredients.size()) {
+        for (int i = 1; i < 10; i++) {
+            int itemX = leftPos + 8 + i % 5 * 18;
+            int itemY = topPos + 120 + i / 5 * 18;
+            if (i - 1 >= requiredIngredients.size()) {
                 guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
                 continue;
             }
-            ItemStack existingIngredient = menu.getWorkbenchContainer().getItem(i + 1);
-            int requiredAmount = requiredIngredients.get(i).getValue();
+            ItemStack existingIngredient = menu.getWorkbenchContainer().getItem(i);
+            int requiredAmount = requiredIngredients.get(i - 1).getValue();
             if (!existingIngredient.isEmpty()) {
                 if (existingIngredient.getCount() < requiredAmount) {
                     guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
@@ -154,7 +164,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
                 continue;
             }
             guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
-            Ingredient ingredient = requiredIngredients.get(i).getKey();
+            Ingredient ingredient = requiredIngredients.get(i - 1).getKey();
             ItemStack itemStack = ingredient.getItems()[0].copy();
             itemStack.setCount(requiredAmount);
             renderMissingItem(guiGraphics, itemX, itemY, itemStack);
@@ -185,6 +195,19 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return;
         }
         AbstractWorkbenchRecipe selectedRecipe = selectedRecipes.get(selectedRecipeIndex);
+        int requiredBaseItemAmount = selectedRecipe.requiredBaseItemAmount();
+        Pair<Ingredient, Integer> requiredBaseItem = selectedRecipe.getBaseIngredient();
+        boolean missingBaseItem = menu.getWorkbenchContainer().getBaseItem().isEmpty();
+        if (requiredBaseItem != null && requiredBaseItemAmount > 0 && missingBaseItem) {
+            int itemX = leftPos + 8;
+            int itemY = topPos + 120;
+            if (isMouseOverArea(mouseX, mouseY, itemX, itemY, 16, 16)) {
+                ItemStack requiredBaseItemStack = requiredBaseItem.getLeft().getItems()[0];
+                if (!requiredBaseItemStack.isEmpty() && menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
+                    renderItemTooltip(guiGraphics, mouseX, mouseY, requiredBaseItemStack);
+                }
+            }
+        }
         AtomicInteger slotIndex = new AtomicInteger(1);
         selectedRecipe.getAdditionalIngredients().forEach((ingredient, requiredAmount) -> {
             if (menu.getWorkbenchContainer().getItem(slotIndex.get()).isEmpty()) {
@@ -299,6 +322,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     private Pair<AbstractWorkbenchRecipe, Integer> getRecipeInSlot(int slot) {
+        if (slot + amountScrolled >= searchedRecipes.size()) {
+            return searchedRecipes.get(0);
+        }
         return searchedRecipes.get(slot + amountScrolled);
     }
 
@@ -312,7 +338,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         for (int i = 0; i < selectedRecipes.size(); i++) {
             AbstractWorkbenchRecipe recipe = selectedRecipes.get(i);
             String search = searchBox.getValue();
-            if (search.isEmpty() || recipe.getShortDescription().toString().contains(search)) {
+            String recipeTitle = recipe.getShortDescription().getString().toLowerCase(Locale.ROOT);
+            if (search.isEmpty() || recipeTitle.contains(search.toLowerCase(Locale.ROOT))) {
                 searchedRecipes.add(Pair.of(recipe, i));
             }
         }

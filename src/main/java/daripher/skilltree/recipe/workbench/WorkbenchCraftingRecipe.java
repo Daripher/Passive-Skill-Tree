@@ -59,6 +59,11 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
     }
 
     @Override
+    public @Nullable Pair<Ingredient, Integer> getBaseIngredient() {
+        return baseIngredient;
+    }
+
+    @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
         return PSTRecipeSerializers.WORKBENCH_CRAFTING.get();
     }

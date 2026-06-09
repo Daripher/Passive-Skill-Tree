@@ -7,11 +7,14 @@ import daripher.skilltree.inventory.slot.WorkbenchBaseSlot;
 import daripher.skilltree.inventory.slot.WorkbenchResultSlot;
 import daripher.skilltree.inventory.slot.WorkbenchSlot;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
+import daripher.skilltree.recipe.workbench.WorkbenchVanillaCraftingRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class WorkbenchMenu extends AbstractContainerMenu {
+    private static final List<AbstractWorkbenchRecipe> WORKBENCH_RECIPE_CACHE = new ArrayList<>();
     private static final int RESULT_SLOT = 0;
     private static final int CRAFT_SLOT_START = RESULT_SLOT + 1;
     private static final int CRAFT_SLOT_END = CRAFT_SLOT_START + 10;
@@ -155,10 +159,6 @@ public class WorkbenchMenu extends AbstractContainerMenu {
         ItemStack input = workbenchContainer.getBaseItem();
         AbstractWorkbenchRecipe selectedRecipe = getSelectedRecipe();
         if (selectedRecipe != null) {
-            if (!selectedRecipe.isValidBaseItem(input)) {
-                setupRecipeList();
-                return;
-            }
             updateCraftingResult(selectedRecipe);
             return;
         }
@@ -191,12 +191,27 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     private void setupRecipeList() {
         selectedRecipeIndex.set(-1);
         resultSlots.setItem(0, ItemStack.EMPTY);
-        selectedRecipes = level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.WORKBENCH).stream().filter(this::shouldDisplayRecipe)
+        selectedRecipes = getAllWorkbenchRecipes().stream().filter(this::shouldDisplayRecipe)
                 .sorted(Comparator.comparing(AbstractWorkbenchRecipe::getId)).toList();
     }
 
+    private List<AbstractWorkbenchRecipe> getAllWorkbenchRecipes() {
+        if (!WORKBENCH_RECIPE_CACHE.isEmpty()) {
+            return WORKBENCH_RECIPE_CACHE;
+        }
+        List<CraftingRecipe> vanillaCraftingRecipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream()
+                .filter(recipe -> !recipe.getResultItem(level.registryAccess()).isEmpty()).toList();
+        WORKBENCH_RECIPE_CACHE.addAll(level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.WORKBENCH));
+        WORKBENCH_RECIPE_CACHE.addAll(vanillaCraftingRecipes.stream().map(this::convertVanillaRecipe).toList());
+        return WORKBENCH_RECIPE_CACHE;
+    }
+
+    private AbstractWorkbenchRecipe convertVanillaRecipe(CraftingRecipe craftingRecipe) {
+        return new WorkbenchVanillaCraftingRecipe(craftingRecipe, level.registryAccess());
+    }
+
     private boolean shouldDisplayRecipe(AbstractWorkbenchRecipe recipe) {
-        if (recipe.hasPassiveSkillRequirement() && recipe.isLockedFor(player)) {
+        if (recipe.isLockedFor(player)) {
             return false;
         }
         return workbenchContainer.getBaseItem().isEmpty() || recipe.isValidBaseItem(workbenchContainer.getBaseItem());

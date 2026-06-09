@@ -15,14 +15,16 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
-    private final Map<Ingredient, Integer> additionalIngredients;
+    private Map<Ingredient, Integer> additionalIngredients;
     private final ResourceLocation id;
     private final boolean requiresPassiveSkill;
 
@@ -65,8 +67,14 @@ public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContain
 
     public abstract int requiredBaseItemAmount();
 
+    public abstract @Nullable Pair<Ingredient, Integer> getBaseIngredient();
+
     public Map<Ingredient, Integer> getAdditionalIngredients() {
         return additionalIngredients;
+    }
+
+    protected void setAdditionalIngredients(Map<Ingredient, Integer> additionalIngredients) {
+        this.additionalIngredients = additionalIngredients;
     }
 
     protected final boolean hasRecipeLearned(@NotNull Player player) {
