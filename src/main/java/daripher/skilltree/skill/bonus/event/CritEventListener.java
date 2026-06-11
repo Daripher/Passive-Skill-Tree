@@ -41,7 +41,8 @@ public class CritEventListener implements SkillEventListener {
             return;
         }
         LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
-        skill.multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy)).applyEffect(target);
+        float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
+        skill.multiply(effectMultiplier).applyEffect(target, player);
     }
 
     @Override

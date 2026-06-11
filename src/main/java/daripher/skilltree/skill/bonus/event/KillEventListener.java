@@ -44,7 +44,8 @@ public class KillEventListener implements SkillEventListener {
         if (!damageCondition.met(damage)) {
             return;
         }
-        skill.multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy)).applyEffect(player);
+        float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
+        skill.multiply(effectMultiplier).applyEffect(player, player);
     }
 
     @Override

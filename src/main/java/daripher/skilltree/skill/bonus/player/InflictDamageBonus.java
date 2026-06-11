@@ -22,6 +22,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -44,7 +45,7 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         target.hurt(target.level().damageSources().magic(), damage);
     }
 

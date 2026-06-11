@@ -20,11 +20,11 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBonus> {
+public final class ItemUpgradeLimitBonusesBonus implements SkillBonus<ItemUpgradeLimitBonusesBonus> {
     private @Nonnull ItemStackPredicate itemStackPredicate;
     private int amount;
 
-    public MoreItemBonusesBonus(@Nonnull ItemStackPredicate itemStackPredicate, int amount) {
+    public ItemUpgradeLimitBonusesBonus(@Nonnull ItemStackPredicate itemStackPredicate, int amount) {
         this.itemStackPredicate = itemStackPredicate;
         this.amount = amount;
     }
@@ -35,29 +35,29 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
     }
 
     @Override
-    public MoreItemBonusesBonus copy() {
-        return new MoreItemBonusesBonus(itemStackPredicate, amount);
+    public ItemUpgradeLimitBonusesBonus copy() {
+        return new ItemUpgradeLimitBonusesBonus(itemStackPredicate, amount);
     }
 
     @Override
-    public MoreItemBonusesBonus multiply(double multiplier) {
-        return new MoreItemBonusesBonus(itemStackPredicate, (int) (amount * multiplier));
+    public ItemUpgradeLimitBonusesBonus multiply(double multiplier) {
+        return new ItemUpgradeLimitBonusesBonus(itemStackPredicate, (int) (amount * multiplier));
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
+        if (!(other instanceof ItemUpgradeLimitBonusesBonus otherBonus)) {
             return false;
         }
         return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
     }
 
     @Override
-    public SkillBonus<MoreItemBonusesBonus> merge(SkillBonus<?> other) {
-        if (!(other instanceof MoreItemBonusesBonus otherBonus)) {
+    public SkillBonus<ItemUpgradeLimitBonusesBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof ItemUpgradeLimitBonusesBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
-        return new MoreItemBonusesBonus(itemStackPredicate, otherBonus.amount + this.amount);
+        return new ItemUpgradeLimitBonusesBonus(itemStackPredicate, otherBonus.amount + this.amount);
     }
 
     @Override
@@ -78,7 +78,7 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<MoreItemBonusesBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<ItemUpgradeLimitBonusesBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));
@@ -90,20 +90,20 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
         editor.increaseHeight(19);
     }
 
-    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer) {
+    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<ItemUpgradeLimitBonusesBonus> consumer) {
         itemStackPredicate.addEditorWidgets(editor, condition -> {
             setItemCondition(condition);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectItemCondition(SkillTreeEditor editor, Consumer<MoreItemBonusesBonus> consumer, ItemStackPredicate condition) {
+    private void selectItemCondition(SkillTreeEditor editor, Consumer<ItemUpgradeLimitBonusesBonus> consumer, ItemStackPredicate condition) {
         setItemCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectAmount(Consumer<MoreItemBonusesBonus> consumer, Double value) {
+    private void selectAmount(Consumer<ItemUpgradeLimitBonusesBonus> consumer, Double value) {
         setAmount(value.intValue());
         consumer.accept(this.copy());
     }
@@ -133,7 +133,7 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        MoreItemBonusesBonus that = (MoreItemBonusesBonus) obj;
+        ItemUpgradeLimitBonusesBonus that = (ItemUpgradeLimitBonusesBonus) obj;
         if (!Objects.equals(this.itemStackPredicate, that.itemStackPredicate)) {
             return false;
         }
@@ -147,15 +147,15 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public MoreItemBonusesBonus deserialize(JsonObject json) throws JsonParseException {
+        public ItemUpgradeLimitBonusesBonus deserialize(JsonObject json) throws JsonParseException {
             ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(json);
             int amount = SerializationHelper.getElement(json, "amount").getAsInt();
-            return new MoreItemBonusesBonus(condition, amount);
+            return new ItemUpgradeLimitBonusesBonus(condition, amount);
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+            if (!(bonus instanceof ItemUpgradeLimitBonusesBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
@@ -163,15 +163,15 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
         }
 
         @Override
-        public MoreItemBonusesBonus deserialize(CompoundTag tag) {
+        public ItemUpgradeLimitBonusesBonus deserialize(CompoundTag tag) {
             ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(tag);
             int amount = tag.getInt("amount");
-            return new MoreItemBonusesBonus(condition, amount);
+            return new ItemUpgradeLimitBonusesBonus(condition, amount);
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+            if (!(bonus instanceof ItemUpgradeLimitBonusesBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -181,13 +181,13 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
         }
 
         @Override
-        public MoreItemBonusesBonus deserialize(FriendlyByteBuf buf) {
-            return new MoreItemBonusesBonus(NetworkHelper.readItemPredicate(buf), buf.readInt());
+        public ItemUpgradeLimitBonusesBonus deserialize(FriendlyByteBuf buf) {
+            return new ItemUpgradeLimitBonusesBonus(NetworkHelper.readItemPredicate(buf), buf.readInt());
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof MoreItemBonusesBonus aBonus)) {
+            if (!(bonus instanceof ItemUpgradeLimitBonusesBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
@@ -196,7 +196,7 @@ public final class MoreItemBonusesBonus implements SkillBonus<MoreItemBonusesBon
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new MoreItemBonusesBonus(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD), 1);
+            return new ItemUpgradeLimitBonusesBonus(new EquipmentPredicate(EquipmentPredicate.Type.SHIELD), 1);
         }
     }
 }

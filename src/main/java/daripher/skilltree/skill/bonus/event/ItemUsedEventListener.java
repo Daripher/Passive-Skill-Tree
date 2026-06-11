@@ -42,7 +42,7 @@ public class ItemUsedEventListener implements SkillEventListener {
         if (!itemStackPredicate.test(stack)) {
             return;
         }
-        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
+        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player, player);
     }
 
     @Override

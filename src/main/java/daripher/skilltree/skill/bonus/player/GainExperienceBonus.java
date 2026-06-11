@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -39,7 +40,7 @@ public final class GainExperienceBonus implements EventListenerBonus<GainExperie
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         if (!(target instanceof Player player)) {
             return;
         }

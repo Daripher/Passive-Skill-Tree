@@ -26,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -41,7 +42,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         if (!(target instanceof Player player)) {
             return;
         }

@@ -48,7 +48,8 @@ public class EvasionEventListener implements SkillEventListener {
         if (target == null) {
             return;
         }
-        skill.multiply(playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy)).applyEffect(target);
+        float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
+        skill.multiply(effectMultiplier).applyEffect(target, player);
     }
 
     @Override

@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -42,13 +43,13 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         if (target.getRandom().nextFloat() < chance) {
             float healAmount = amount;
             if (isPercentageHealing) {
                 healAmount = amount * target.getMaxHealth();
             }
-            if (target.getHealth() < target.getMaxHealth() && target instanceof Player player) {
+            if (target instanceof Player player && target.getHealth() < target.getMaxHealth()) {
                 player.getFoodData().addExhaustion(healAmount / 2);
             }
             target.heal(healAmount);

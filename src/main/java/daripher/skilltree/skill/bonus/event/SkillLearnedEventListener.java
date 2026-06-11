@@ -25,7 +25,7 @@ public class SkillLearnedEventListener implements SkillEventListener {
     private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
     public void onEvent(@Nonnull Player player, @Nonnull EventListenerBonus<?> skill) {
-        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
+        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player, player);
     }
 
     @Override

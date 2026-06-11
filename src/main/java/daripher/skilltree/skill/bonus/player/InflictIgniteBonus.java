@@ -20,6 +20,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -40,7 +41,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         if (target.getRandom().nextFloat() < chance) {
             target.setSecondsOnFire(duration);
         }

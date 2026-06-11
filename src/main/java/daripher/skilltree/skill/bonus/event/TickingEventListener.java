@@ -41,7 +41,7 @@ public class TickingEventListener implements SkillEventListener {
         if (!playerCondition.test(player)) {
             return;
         }
-        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player);
+        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player, player);
     }
 
     @Override

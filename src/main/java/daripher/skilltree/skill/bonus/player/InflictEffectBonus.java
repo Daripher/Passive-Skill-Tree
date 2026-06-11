@@ -25,6 +25,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -46,7 +47,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public void applyEffect(LivingEntity target) {
+    public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         RandomSource random = target.getRandom();
         if (!(random.nextFloat() < chance)) {
             return;
@@ -56,7 +57,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
         if (maxStacks > 1) {
             effectInstanceCopy = getEffectInstanceAfterStacking(target, effect, effectInstanceCopy);
         }
-        target.addEffect(effectInstanceCopy);
+        target.addEffect(effectInstanceCopy, source);
     }
 
     private MobEffectInstance getEffectInstanceAfterStacking(LivingEntity target, MobEffect effect, MobEffectInstance effectInstance) {

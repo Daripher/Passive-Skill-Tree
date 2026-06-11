@@ -7,6 +7,8 @@ import daripher.skilltree.skill.bonus.event.TickingEventListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 
+import javax.annotation.Nullable;
+
 public interface EventListenerBonus<T> extends TickingSkillBonus, SkillBonus<EventListenerBonus<T>> {
     @Override
     default void onSkillLearned(ServerPlayer player, boolean firstTime) {
@@ -33,5 +35,5 @@ public interface EventListenerBonus<T> extends TickingSkillBonus, SkillBonus<Eve
 
     SkillEventListener getEventListener();
 
-    void applyEffect(LivingEntity target);
+    void applyEffect(LivingEntity target, @Nullable LivingEntity source);
 }
