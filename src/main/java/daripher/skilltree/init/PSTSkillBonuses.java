@@ -53,6 +53,7 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> GAIN_EXPERIENCE = REGISTRY.register("gain_experience", GainExperienceBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> VANILLA_RECIPE_UNLOCK = REGISTRY.register("vanilla_recipe_unlock", VanillaRecipeUnlockBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> CRAFTED_ITEM_BONUS = REGISTRY.register("crafted_item_bonus", CraftedItemBonusBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> STEALTH = REGISTRY.register("stealth", StealthBonus.Serializer::new);
 
     @SuppressWarnings("rawtypes")
     public static List<SkillBonus> bonusList() {

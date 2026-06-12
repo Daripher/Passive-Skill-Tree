@@ -501,6 +501,8 @@
   "skill_bonus.skilltree.repair_efficiency.bonus": "Прочности восстановлено",
   "skill_bonus.skilltree.self_splash_immune": "Ваши взрывные зелья не действуют на вас",
   "skill_bonus.skilltree.spell_level": "к уровню заклинания %s",
+  "skill_bonus.skilltree.stealth": "Вас на %s%% сложнее обнаружить",
+  "skill_bonus.skilltree.stealth.negative": "Вас на %s%% легче обнаружить",
   "skill_bonus.skilltree.vanilla_recipe_unlock": "Вы можете создавать %s на продвинутом рабочем столе",
   "skill_bonus_multiplier.skilltree.numeric_value": "%s per %s",
   "skill_bonus_multiplier.skilltree.numeric_value.plural": "%s per %s %s",

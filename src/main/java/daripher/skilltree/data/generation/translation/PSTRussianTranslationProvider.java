@@ -188,6 +188,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.GAIN_EXPERIENCE.get(), "chance", "Шанс получить %s опыта");
         add(PSTSkillBonuses.VANILLA_RECIPE_UNLOCK.get(), "Вы можете создавать %s на продвинутом рабочем столе");
         add(PSTSkillBonuses.CRAFTED_ITEM_BONUS.get(), "%s создаваемые на продвинутом рабочем столе получают:");
+        add(PSTSkillBonuses.STEALTH.get(), "Вас на %s%% сложнее обнаружить");
+        add(PSTSkillBonuses.STEALTH.get(), "negative", "Вас на %s%% легче обнаружить");
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Дарует заклинание %s %s");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "к уровню заклинания %s");
         // experience sources

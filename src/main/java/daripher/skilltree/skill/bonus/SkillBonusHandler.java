@@ -9,9 +9,9 @@ import daripher.skilltree.mixin.AbstractArrowAccessor;
 import daripher.skilltree.mixin.MobEffectInstanceAccessor;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.event.*;
+import daripher.skilltree.skill.bonus.item.EquipmentBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
-import daripher.skilltree.skill.bonus.item.EquipmentBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import net.minecraft.ChatFormatting;
@@ -763,6 +763,19 @@ public class SkillBonusHandler {
             input.leftImpulse *= 5;
             input.forwardImpulse *= 5;
         }
+    }
+
+    @SubscribeEvent
+    public static void applyStealthBonus(LivingEvent.LivingVisibilityEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        if (!(event.getLookingEntity() instanceof LivingEntity lookingEntity)) {
+            return;
+        }
+        float stealthMultiplier = getSkillBonuses(player, StealthBonus.class).stream()
+                .map(bonus -> bonus.getStealthMultiplier(player, lookingEntity)).reduce(Float::sum).orElse(0f);
+        event.modifyVisibility(1 - stealthMultiplier);
     }
 
     private static void fireDuplicateProjectiles(Projectile projectile, ServerLevel level, Player player, int projectileAmount) {
