@@ -80,7 +80,7 @@ public class SkillBonusesEditor extends EditorMenu {
             }
         });
         editor.saveSelectedSkills();
-        editor.selectMenu(previousMenu);
+        editor.selectMenu(editor.getSelectedMenu().previousMenu);
     }
 
     private void addSkillBonus(SkillTreeEditor editor, SkillBonus<?> skillBonus) {

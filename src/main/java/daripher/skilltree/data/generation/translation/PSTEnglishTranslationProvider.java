@@ -213,7 +213,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "%s if %s affected by %s");
         add(PSTLivingEntityPredicates.HAS_EFFECT.get(), "amplifier", "%s if %s affected by %s or higher");
         add(PSTLivingEntityPredicates.BURNING.get(), "target.player", "you are");
-        add(PSTLivingEntityPredicates.BURNING.get(), "target.enemy", "enemy is");
+        add(PSTLivingEntityPredicates.BURNING.get(), "target.enemy", "an enemy is");
+        add(PSTLivingEntityPredicates.BURNING.get(), "reverse.target.player", "you are not");
+        add(PSTLivingEntityPredicates.BURNING.get(), "reverse.target.enemy", "an enemy is not");
         add(PSTLivingEntityPredicates.BURNING.get(), "%s if %s burning");
         add(PSTLivingEntityPredicates.FISHING.get(), "target.player", "you are");
         add(PSTLivingEntityPredicates.FISHING.get(), "target.enemy", "enemy is");
@@ -228,7 +230,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "target.enemy", "if enemy has");
         add(PSTLivingEntityPredicates.HAS_ITEM_IN_HAND.get(), "%s %s %s in hand");
         add(PSTLivingEntityPredicates.CROUCHING.get(), "target.player", "while crouching");
-        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.enemy", "if enemy is crouching");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "target.enemy", "if an enemy is crouching");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "reverse.target.player", "while not crouching");
+        add(PSTLivingEntityPredicates.CROUCHING.get(), "reverse.target.enemy", "if an enemy is not crouching");
         add(PSTLivingEntityPredicates.CROUCHING.get(), "%s %s");
         add(PSTLivingEntityPredicates.UNARMED.get(), "target.player", "while unarmed");
         add(PSTLivingEntityPredicates.UNARMED.get(), "target.enemy", "if enemy is unarmed");
