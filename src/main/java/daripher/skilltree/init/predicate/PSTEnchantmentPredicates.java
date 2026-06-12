@@ -1,7 +1,8 @@
-package daripher.skilltree.init;
+package daripher.skilltree.init.predicate;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
+import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.predicate.enchantment.ArmorEnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.NoneEnchantmentCondition;
@@ -13,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 import java.util.Objects;
 
-public class PSTEnchantmentConditions {
+public class PSTEnchantmentPredicates {
     public static final ResourceLocation REGISTRY_ID = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "enchantment_conditions");
     public static final DeferredRegister<EnchantmentCondition.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

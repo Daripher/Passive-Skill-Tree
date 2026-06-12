@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.damage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTDamageConditions;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,7 +16,7 @@ public record ProjectileDamageCondition() implements DamageCondition {
 
     @Override
     public DamageCondition.Serializer getSerializer() {
-        return PSTDamageConditions.PROJECTILE.get();
+        return PSTDamagePredicates.PROJECTILE.get();
     }
 
     @Override

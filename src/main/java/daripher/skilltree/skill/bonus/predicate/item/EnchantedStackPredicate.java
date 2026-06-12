@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTItemConditions;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.network.NetworkHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +58,7 @@ public final class EnchantedStackPredicate implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate.Serializer getSerializer() {
-        return PSTItemConditions.ENCHANTED.get();
+        return PSTItemPredicates.ENCHANTED.get();
     }
 
     @Override

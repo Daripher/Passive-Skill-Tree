@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.enchantment;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTEnchantmentConditions;
+import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -30,7 +30,7 @@ public class ArmorEnchantmentCondition implements EnchantmentCondition {
 
     @Override
     public EnchantmentCondition.Serializer getSerializer() {
-        return PSTEnchantmentConditions.ARMOR.get();
+        return PSTEnchantmentPredicates.ARMOR.get();
     }
 
     public static class Serializer implements EnchantmentCondition.Serializer {

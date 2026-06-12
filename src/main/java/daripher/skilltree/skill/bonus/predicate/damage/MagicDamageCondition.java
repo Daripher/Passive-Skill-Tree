@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.damage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTDamageConditions;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
 import daripher.skilltree.init.PSTTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -22,7 +22,7 @@ public record MagicDamageCondition() implements DamageCondition {
 
     @Override
     public DamageCondition.Serializer getSerializer() {
-        return PSTDamageConditions.MAGIC.get();
+        return PSTDamagePredicates.MAGIC.get();
     }
 
     @Override

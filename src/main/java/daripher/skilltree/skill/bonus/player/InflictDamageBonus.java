@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
-import daripher.skilltree.init.PSTDamageConditions;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
 import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
@@ -132,10 +132,10 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Damage Type", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        List<DamageCondition> damageTypes = PSTDamageConditions.conditionsList().stream().filter(DamageCondition::canCreateDamageSource)
+        List<DamageCondition> damageTypes = PSTDamagePredicates.conditionsList().stream().filter(DamageCondition::canCreateDamageSource)
                 .toList();
         editor.addSelectionMenu(0, 0, 200, damageTypes).setValue(damageType)
-                .setElementNameGetter(c -> Component.translatable(PSTDamageConditions.getName(c)))
+                .setElementNameGetter(c -> Component.translatable(PSTDamagePredicates.getName(c)))
                 .setResponder(damageType -> selectDamageType(editor, consumer, damageType));
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Event", ChatFormatting.GOLD);

@@ -1,7 +1,8 @@
-package daripher.skilltree.init;
+package daripher.skilltree.init.predicate;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
+import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.predicate.damage.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
@@ -10,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 import java.util.Objects;
 
-public class PSTDamageConditions {
+public class PSTDamagePredicates {
     public static final ResourceLocation REGISTRY_ID = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "damage_conditions");
     public static final DeferredRegister<DamageCondition.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 

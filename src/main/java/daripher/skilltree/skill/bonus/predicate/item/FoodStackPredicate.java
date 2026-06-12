@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.item;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTItemConditions;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +25,7 @@ public record FoodStackPredicate() implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate.Serializer getSerializer() {
-        return PSTItemConditions.FOOD.get();
+        return PSTItemPredicates.FOOD.get();
     }
 
     public static class Serializer implements ItemStackPredicate.Serializer {

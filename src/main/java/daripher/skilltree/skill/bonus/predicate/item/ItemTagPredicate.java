@@ -3,7 +3,7 @@ package daripher.skilltree.skill.bonus.predicate.item;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.init.PSTItemConditions;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -51,7 +51,7 @@ public class ItemTagPredicate implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate.Serializer getSerializer() {
-        return PSTItemConditions.TAG.get();
+        return PSTItemPredicates.TAG.get();
     }
 
     @Override

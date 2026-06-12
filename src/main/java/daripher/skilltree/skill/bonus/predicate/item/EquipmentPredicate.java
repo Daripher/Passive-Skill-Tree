@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
-import daripher.skilltree.init.PSTItemConditions;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.PSTTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -177,7 +177,7 @@ public class EquipmentPredicate implements ItemStackPredicate {
 
     @Override
     public ItemStackPredicate.Serializer getSerializer() {
-        return PSTItemConditions.EQUIPMENT_TYPE.get();
+        return PSTItemPredicates.EQUIPMENT_TYPE.get();
     }
 
     @Override

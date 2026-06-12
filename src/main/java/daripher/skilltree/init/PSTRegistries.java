@@ -1,6 +1,10 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
+import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
+import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
@@ -25,9 +29,9 @@ public class PSTRegistries {
     public static final Supplier<IForgeRegistry<SkillBonus.Serializer>> SKILL_BONUSES = PSTSkillBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<LivingMultiplier.Serializer>> LIVING_MULTIPLIERS = PSTLivingMultipliers.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<LivingEntityPredicate.Serializer>> LIVING_CONDITIONS = PSTLivingEntityPredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
-    public static final Supplier<IForgeRegistry<DamageCondition.Serializer>> DAMAGE_CONDITIONS = PSTDamageConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-    public static final Supplier<IForgeRegistry<ItemStackPredicate.Serializer>> ITEM_CONDITIONS = PSTItemConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
-    public static final Supplier<IForgeRegistry<EnchantmentCondition.Serializer>> ENCHANTMENT_CONDITIONS = PSTEnchantmentConditions.REGISTRY.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<DamageCondition.Serializer>> DAMAGE_CONDITIONS = PSTDamagePredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<ItemStackPredicate.Serializer>> ITEM_CONDITIONS = PSTItemPredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<EnchantmentCondition.Serializer>> ENCHANTMENT_CONDITIONS = PSTEnchantmentPredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<SkillEventListener.Serializer>> EVENT_LISTENERS = PSTEventListeners.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<FloatFunction.Serializer>> FLOAT_FUNCTIONS = PSTFloatFunctions.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<SkillRequirement.Serializer>> SKILL_REQUIREMENTS = PSTSkillRequirements.REGISTRY.makeRegistry(RegistryBuilder::new);
@@ -38,9 +42,9 @@ public class PSTRegistries {
         createRegistry(event, PSTSkillBonuses.REGISTRY_ID);
         createRegistry(event, PSTLivingMultipliers.REGISTRY_ID);
         createRegistry(event, PSTLivingEntityPredicates.REGISTRY_ID);
-        createRegistry(event, PSTDamageConditions.REGISTRY_ID);
-        createRegistry(event, PSTItemConditions.REGISTRY_ID);
-        createRegistry(event, PSTEnchantmentConditions.REGISTRY_ID);
+        createRegistry(event, PSTDamagePredicates.REGISTRY_ID);
+        createRegistry(event, PSTItemPredicates.REGISTRY_ID);
+        createRegistry(event, PSTEnchantmentPredicates.REGISTRY_ID);
         createRegistry(event, PSTEventListeners.REGISTRY_ID);
         createRegistry(event, PSTFloatFunctions.REGISTRY_ID);
         createRegistry(event, PSTSkillRequirements.REGISTRY_ID);

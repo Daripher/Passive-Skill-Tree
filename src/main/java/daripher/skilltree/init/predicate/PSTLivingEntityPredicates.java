@@ -1,7 +1,8 @@
-package daripher.skilltree.init;
+package daripher.skilltree.init.predicate;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
+import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.predicate.living.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;

@@ -15,6 +15,10 @@ import daripher.skilltree.client.widget.skill.SkillButtons;
 import daripher.skilltree.data.client.SkillTexturesData;
 import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.init.*;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
+import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
+import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
@@ -216,9 +220,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     public SelectionMenuButton<ItemStackPredicate> addSelectionMenu(int x, int y, int width, ItemStackPredicate defaultValue) {
-        Collection<ItemStackPredicate> values = PSTItemConditions.conditionsList();
+        Collection<ItemStackPredicate> values = PSTItemPredicates.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
-                .setElementNameGetter(c -> Component.literal(PSTItemConditions.getName(c)));
+                .setElementNameGetter(c -> Component.literal(PSTItemPredicates.getName(c)));
     }
 
     @SuppressWarnings("rawtypes")
@@ -235,9 +239,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     public SelectionMenuButton<DamageCondition> addSelectionMenu(int x, int y, int width, DamageCondition defaultValue) {
-        List<DamageCondition> values = PSTDamageConditions.conditionsList();
+        List<DamageCondition> values = PSTDamagePredicates.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
-                .setElementNameGetter(c -> Component.translatable(PSTDamageConditions.getName(c)));
+                .setElementNameGetter(c -> Component.translatable(PSTDamagePredicates.getName(c)));
     }
 
     public SelectionMenuButton<SkillEventListener> addSelectionMenu(int x, int y, int width, SkillEventListener defaultValue) {
@@ -247,9 +251,9 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     public SelectionMenuButton<EnchantmentCondition> addSelectionMenu(int x, int y, int width, EnchantmentCondition defaultValue) {
-        List<EnchantmentCondition> values = PSTEnchantmentConditions.conditionsList();
+        List<EnchantmentCondition> values = PSTEnchantmentPredicates.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
-                .setElementNameGetter(c -> Component.translatable(PSTEnchantmentConditions.getName(c)));
+                .setElementNameGetter(c -> Component.translatable(PSTEnchantmentPredicates.getName(c)));
     }
 
     public <T extends Enum<T>> SelectionMenuButton<T> addSelectionMenu(int x, int y, int width, T defaultValue) {
