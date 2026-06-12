@@ -21,7 +21,7 @@ public class SkillRequirementEditor extends EditorMenu {
         editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
         editor.addConfirmationButton(110, 0, 90, 14, "Remove", "Confirm").setPressFunc(b -> deleteSelectedSkillBonuses(editor));
         editor.increaseHeight(29);
-        if (!editor.canEditSkillRequirements()) {
+        if (editor.selectedMismatchingRequirements()) {
             return;
         }
         PassiveSkill selectedSkill = editor.getFirstSelectedSkill();

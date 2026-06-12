@@ -383,10 +383,10 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         return selectedMenu;
     }
 
-    public boolean canEditSkillBonuses() {
+    public boolean selectedMismatchedBonuses() {
         PassiveSkill selectedSkill = getFirstSelectedSkill();
         if (selectedSkill == null) {
-            return false;
+            return true;
         }
         for (PassiveSkill otherSkill : getSelectedSkills()) {
             if (otherSkill == selectedSkill) {
@@ -395,21 +395,21 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
             List<SkillBonus<?>> bonuses = otherSkill.getBonuses();
             List<SkillBonus<?>> otherBonuses = selectedSkill.getBonuses();
             if (bonuses.size() != otherBonuses.size()) {
-                return false;
+                return true;
             }
             for (int i = 0; i < bonuses.size(); i++) {
                 if (!bonuses.get(i).sameBonus(otherBonuses.get(i))) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
-    public boolean canEditSkillRequirements() {
+    public boolean selectedMismatchingRequirements() {
         PassiveSkill selectedSkill = getFirstSelectedSkill();
         if (selectedSkill == null) {
-            return false;
+            return true;
         }
         for (PassiveSkill otherSkill : getSelectedSkills()) {
             if (otherSkill == selectedSkill) {
@@ -418,15 +418,15 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
             List<SkillRequirement<?>> requirements = otherSkill.getRequirements();
             List<SkillRequirement<?>> otherRequirements = selectedSkill.getRequirements();
             if (requirements.size() != otherRequirements.size()) {
-                return false;
+                return true;
             }
             for (int i = 0; i < requirements.size(); i++) {
                 if (!requirements.get(i).equals(otherRequirements.get(i))) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public SkillDragger getSkillDragger() {

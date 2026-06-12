@@ -19,7 +19,7 @@ public class SkillRequirementsEditor extends EditorMenu {
     public void init() {
         editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
         editor.increaseHeight(29);
-        if (!editor.canEditSkillRequirements()) {
+        if (editor.selectedMismatchingRequirements()) {
             return;
         }
         SkillRequirement<?> defaultRequirement = PSTSkillRequirements.STAT_VALUE.get().createDefaultInstance();

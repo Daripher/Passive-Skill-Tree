@@ -20,7 +20,7 @@ public class SkillBonusesEditor extends EditorMenu {
     public void init() {
         editor.addButton(0, 0, 90, 14, "Back").setPressFunc(b -> editor.selectMenu(previousMenu));
         editor.increaseHeight(29);
-        if (!editor.canEditSkillBonuses()) {
+        if (editor.selectedMismatchedBonuses()) {
             return;
         }
         SkillBonus<?> defaultBonus = PSTSkillBonuses.ATTRIBUTE.get().createDefaultInstance();
@@ -45,7 +45,7 @@ public class SkillBonusesEditor extends EditorMenu {
     }
 
     private @Nullable SkillBonus<?> getSelectedSkillBonus(int selectedBonusIndex) {
-        if (!editor.canEditSkillBonuses()) {
+        if (editor.selectedMismatchedBonuses()) {
             return null;
         }
         PassiveSkill selectedSkill = editor.getFirstSelectedSkill();

@@ -12,7 +12,6 @@ import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,14 +23,14 @@ public class SkillTreeMod {
     public static final String MOD_ID = "skilltree";
     public static final Logger LOGGER = LogManager.getLogger(SkillTreeMod.MOD_ID);
 
-    public SkillTreeMod() {
-        registerModRegistries();
-        registerConfigs();
+    public SkillTreeMod(FMLJavaModLoadingContext context) {
+        registerModRegistries(context);
+        registerConfigs(context);
         registerCompatibilities();
     }
 
-    private static void registerModRegistries() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    private static void registerModRegistries(FMLJavaModLoadingContext context) {
+        IEventBus eventBus = context.getModEventBus();
         PSTItems.REGISTRY.register(eventBus);
         PSTMobEffects.REGISTRY.register(eventBus);
         PSTCreativeTabs.REGISTRY.register(eventBus);
@@ -53,9 +52,9 @@ public class SkillTreeMod {
         PSTRecipeTypes.REGISTRY.register(eventBus);
     }
 
-    private static void registerConfigs() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+    private static void registerConfigs(FMLJavaModLoadingContext context) {
+        context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+        context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     private static void registerCompatibilities() {
