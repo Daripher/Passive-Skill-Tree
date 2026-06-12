@@ -88,7 +88,7 @@ public final class GrantItemBonus implements SkillBonus<GrantItemBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Item item = ForgeRegistries.ITEMS.getValue(itemId);
         if (item == null) {
             return Component.literal("Unknown item: " + itemId).withStyle(ChatFormatting.DARK_RED);
@@ -109,7 +109,7 @@ public final class GrantItemBonus implements SkillBonus<GrantItemBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<GrantItemBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GrantItemBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 90, 14, amount).setNumericFilter(v -> v > 0 && v % 1 == 0)

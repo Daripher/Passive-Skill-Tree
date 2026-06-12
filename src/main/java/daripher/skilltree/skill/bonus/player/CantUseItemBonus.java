@@ -56,7 +56,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component itemDescription = itemStackPredicate.getTooltip("plural");
         return Component.translatable(getDescriptionId(), itemDescription).withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
@@ -67,7 +67,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<CantUseItemBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<CantUseItemBonus> consumer) {
         editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))

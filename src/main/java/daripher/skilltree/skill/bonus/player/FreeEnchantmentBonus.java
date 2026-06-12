@@ -95,7 +95,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip;
         if (chance < 1f) {
             tooltip = Component.translatable(getDescriptionId() + ".chance", itemStackPredicate.getTooltip());
@@ -114,7 +114,7 @@ public final class FreeEnchantmentBonus implements SkillBonus<FreeEnchantmentBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<FreeEnchantmentBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<FreeEnchantmentBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, chance).setNumericResponder(value -> selectChance(consumer, value));

@@ -92,7 +92,7 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
         MutableComponent tooltip = Component.translatable(getDescriptionId(), spellName, spellLevel);
@@ -106,7 +106,7 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<GrantSpellSkillBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GrantSpellSkillBonus> consumer) {
         editor.addLabel(0, 0, "Spell", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId)

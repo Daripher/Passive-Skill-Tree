@@ -436,6 +436,7 @@
   "skill_bonus.skilltree.block_break_speed": "Скорость добычи блоков",
   "skill_bonus.skilltree.can_poison_anyone": "Ваши яды действуют на любых врагов",
   "skill_bonus.skilltree.cant_use_item": "Нельзя использовать %s",
+  "skill_bonus.skilltree.crafted_item_bonus": "%s создаваемые на продвинутом рабочем столе получают:",
   "skill_bonus.skilltree.crit_chance": "Шанс критического удара",
   "skill_bonus.skilltree.crit_chance.damage": "Шанс критического удара %s",
   "skill_bonus.skilltree.crit_damage": "Множитель критического урона",

@@ -40,7 +40,7 @@ public final class SelfSplashImmuneBonus implements SkillBonus<SelfSplashImmuneB
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         return Component.translatable(getDescriptionId()).withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
 
@@ -50,7 +50,7 @@ public final class SelfSplashImmuneBonus implements SkillBonus<SelfSplashImmuneB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<SelfSplashImmuneBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<SelfSplashImmuneBonus> consumer) {
     }
 
     public static class Serializer implements SkillBonus.Serializer {

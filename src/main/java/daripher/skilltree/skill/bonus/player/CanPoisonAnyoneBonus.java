@@ -40,7 +40,7 @@ public final class CanPoisonAnyoneBonus implements SkillBonus<CanPoisonAnyoneBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         return Component.translatable(getDescriptionId()).withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
 
@@ -50,7 +50,7 @@ public final class CanPoisonAnyoneBonus implements SkillBonus<CanPoisonAnyoneBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<CanPoisonAnyoneBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<CanPoisonAnyoneBonus> consumer) {
     }
 
     public static class Serializer implements SkillBonus.Serializer {

@@ -85,7 +85,7 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip;
         if (chance < 1f || chance % 1 != 0) {
             tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId() + ".chance", chance, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -105,7 +105,7 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<ProjectileDuplicationBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ProjectileDuplicationBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, chance).setNumericResponder(value -> selectChance(consumer, value));

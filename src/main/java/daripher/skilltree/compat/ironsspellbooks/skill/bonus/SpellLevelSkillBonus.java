@@ -100,7 +100,7 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
         AttributeModifier.Operation operation = AttributeModifier.Operation.ADDITION;
@@ -117,7 +117,7 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<SpellLevelSkillBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
         editor.addLabel(0, 0, "Spell", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId)

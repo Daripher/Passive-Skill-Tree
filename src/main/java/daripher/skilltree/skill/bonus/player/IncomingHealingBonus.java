@@ -84,7 +84,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
@@ -97,7 +97,7 @@ public final class IncomingHealingBonus implements SkillBonus<IncomingHealingBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<IncomingHealingBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<IncomingHealingBonus> consumer) {
         editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));

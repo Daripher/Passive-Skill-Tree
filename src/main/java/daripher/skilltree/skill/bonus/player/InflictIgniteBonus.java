@@ -83,7 +83,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         String durationDescription = StringUtil.formatTickDuration(duration * 20);
         String targetDescription = eventListener.getTarget().name().toLowerCase(Locale.ROOT);
         String bonusDescription = getDescriptionId() + "." + targetDescription;
@@ -109,7 +109,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<EventListenerBonus<InflictIgniteBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictIgniteBonus>> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Duration", ChatFormatting.GOLD);
         editor.increaseHeight(19);

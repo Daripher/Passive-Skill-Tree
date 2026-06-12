@@ -96,7 +96,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip;
         String keySuffix = isPositive() ? "positive" : "negative";
         String multiplierString = TooltipHelper.formatNumber(Mth.abs(multiplier) * 100);
@@ -119,7 +119,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<ItemUseMovementSpeedBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ItemUseMovementSpeedBonus> consumer) {
         editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));

@@ -116,7 +116,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component effectTypeDescription = Component.translatable(effectType.getDescriptionId() + ".plural");
         String key = getDescriptionId() + "." + target.getName();
         MutableComponent tooltip = Component.translatable(key, effectTypeDescription);
@@ -135,7 +135,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
 
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<EffectDurationBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EffectDurationBonus> consumer) {
         editor.addLabel(0, 0, "Effect Type", ChatFormatting.GREEN);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, effectType).setElementNameGetter(effectType -> Component.literal(effectType.name()))

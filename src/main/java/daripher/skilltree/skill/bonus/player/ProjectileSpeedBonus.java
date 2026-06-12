@@ -76,7 +76,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent bonusTooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
         bonusTooltip = playerCondition.getTooltip(bonusTooltip, Target.PLAYER);
         bonusTooltip = playerMultiplier.getTooltip(bonusTooltip, Target.PLAYER);
@@ -89,7 +89,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<ProjectileSpeedBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ProjectileSpeedBonus> consumer) {
         editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));

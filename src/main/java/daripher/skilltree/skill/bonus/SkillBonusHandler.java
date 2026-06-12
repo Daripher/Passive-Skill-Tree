@@ -11,7 +11,7 @@ import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.event.*;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonusHandler;
-import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
+import daripher.skilltree.skill.bonus.item.EquipmentBonus;
 import daripher.skilltree.skill.bonus.player.*;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import net.minecraft.ChatFormatting;
@@ -879,14 +879,13 @@ public class SkillBonusHandler {
     }
 
     @NotNull
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({"rawtypes", "unchecked", "SuspiciousMethodCalls"})
     private static <T> List<T> mergeSkillBonuses(List<T> bonuses) {
         List<T> mergedBonuses = new ArrayList<>();
         for (T bonus : bonuses) {
             SkillBonus skillBonus = (SkillBonus) bonus;
             Optional<SkillBonus> mergeTarget = mergedBonuses.stream().map(SkillBonus.class::cast).filter(skillBonus::canMerge).findAny();
             if (mergeTarget.isPresent()) {
-                //noinspection SuspiciousMethodCalls
                 mergedBonuses.remove(mergeTarget.get());
                 mergedBonuses.add((T) mergeTarget.get().copy().merge(skillBonus));
             } else {
@@ -931,8 +930,8 @@ public class SkillBonusHandler {
         List<ItemBonus<?>> itemBonuses = new ArrayList<>(ItemBonusHandler.getItemBonuses(stack));
         List<T> bonuses = new ArrayList<>();
         for (ItemBonus<?> itemBonus : itemBonuses) {
-            if (itemBonus instanceof SkillBonusItemBonus bonus) {
-                SkillBonus<?> skillBonus = bonus.skillBonus();
+            if (itemBonus instanceof EquipmentBonus bonus) {
+                SkillBonus<?> skillBonus = bonus.getSkillBonus();
                 if (type.isInstance(skillBonus)) {
                     bonuses.add(type.cast(skillBonus));
                 }

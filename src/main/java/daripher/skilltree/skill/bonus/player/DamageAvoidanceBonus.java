@@ -119,7 +119,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = Component.translatable(getDescriptionId(), damageCondition.getTooltip());
         tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
@@ -135,7 +135,7 @@ public final class DamageAvoidanceBonus implements SkillBonus<DamageAvoidanceBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<DamageAvoidanceBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, chance).setNumericResponder(value -> selectChance(consumer, value));

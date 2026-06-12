@@ -127,7 +127,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component effectDescription = TooltipHelper.getEffectTooltip(effectInstance);
         int duration = effectInstance.getDuration();
         Target target = eventListener.getTarget();
@@ -181,7 +181,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<EventListenerBonus<InflictEffectBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictEffectBonus>> consumer) {
         editor.addLabel(0, 0, "Effect", ChatFormatting.GOLD);
         editor.addLabel(150, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);

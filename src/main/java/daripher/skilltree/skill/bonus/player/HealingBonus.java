@@ -102,7 +102,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         String targetDescription = eventListener.getTarget().name().toLowerCase(Locale.ROOT);
         String bonusDescription = getDescriptionId() + "." + targetDescription;
         if (chance < 1) {
@@ -133,7 +133,7 @@ public final class HealingBonus implements EventListenerBonus<HealingBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<EventListenerBonus<HealingBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<HealingBonus>> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);

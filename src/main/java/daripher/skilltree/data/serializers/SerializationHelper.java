@@ -455,4 +455,21 @@ public class SerializationHelper {
         Objects.requireNonNull(serializer);
         return serializer.deserialize(itemBonusJson);
     }
+
+    public static void serializeItemBonus(CompoundTag tag, ItemBonus<?> itemBonus) {
+        ItemBonus.Serializer itemBonusSerializer = itemBonus.getSerializer();
+        ResourceLocation itemBonusId = PSTRegistries.ITEM_BONUSES.get().getKey(itemBonusSerializer);
+        Objects.requireNonNull(itemBonusId);
+        CompoundTag itemBonusTag = itemBonusSerializer.serialize(itemBonus);
+        itemBonusTag.putString("type", itemBonusId.toString());
+        tag.put("item_bonus", itemBonusTag);
+    }
+
+    public static ItemBonus<?> deserializeItemBonus(CompoundTag tag) {
+        CompoundTag itemBonusTag = tag.getCompound("item_bonus");
+        ResourceLocation serializerId = ResourceLocation.parse(itemBonusTag.getString("type"));
+        ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
+        Objects.requireNonNull(serializer);
+        return serializer.deserialize(itemBonusTag);
+    }
 }

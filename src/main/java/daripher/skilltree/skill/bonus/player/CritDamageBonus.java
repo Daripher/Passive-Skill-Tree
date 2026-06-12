@@ -110,7 +110,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
         MutableComponent tooltip;
         if (damageCondition == NoneDamageCondition.INSTANCE) {
@@ -132,7 +132,7 @@ public final class CritDamageBonus implements SkillBonus<CritDamageBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<CritDamageBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<CritDamageBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));

@@ -92,7 +92,7 @@ public final class GainExperienceBonus implements EventListenerBonus<GainExperie
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         String bonusDescription = getDescriptionId();
         if (chance < 1) {
             bonusDescription += ".chance";
@@ -116,7 +116,7 @@ public final class GainExperienceBonus implements EventListenerBonus<GainExperie
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<EventListenerBonus<GainExperienceBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<GainExperienceBonus>> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);

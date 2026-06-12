@@ -60,9 +60,9 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component recipeTooltip = TooltipHelper.getRecipeTooltip(recipeId);
-        Style recipeTooltipStyle = TooltipHelper.getItemBonusStyle();
+        Style recipeTooltipStyle = TooltipHelper.getItemUpgradeStyle();
         recipeTooltip = Component.literal(recipeTooltip.getString()).withStyle(recipeTooltipStyle);
         MutableComponent tooltip = Component.translatable(getDescriptionId(), recipeTooltip);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
@@ -74,7 +74,7 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<RecipeUnlockBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<RecipeUnlockBonus> consumer) {
         editor.addLabel(0, 0, "Recipe ID", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         ClientLevel clientLevel = Minecraft.getInstance().level;

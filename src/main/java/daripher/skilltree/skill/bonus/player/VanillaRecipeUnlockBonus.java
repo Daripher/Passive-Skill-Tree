@@ -59,9 +59,9 @@ public class VanillaRecipeUnlockBonus implements SkillBonus<VanillaRecipeUnlockB
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component itemStackPredicateTooltip = itemStackPredicate.getTooltip();
-        Style recipeTooltipStyle = TooltipHelper.getItemBonusStyle();
+        Style recipeTooltipStyle = TooltipHelper.getItemUpgradeStyle();
         MutableComponent tooltip = Component.translatable(getDescriptionId(), itemStackPredicateTooltip);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
@@ -72,7 +72,7 @@ public class VanillaRecipeUnlockBonus implements SkillBonus<VanillaRecipeUnlockB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<VanillaRecipeUnlockBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<VanillaRecipeUnlockBonus> consumer) {
         editor.addLabel(0, 0, "Item Stack Predicate", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))

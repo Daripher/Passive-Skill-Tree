@@ -6,7 +6,7 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
-import daripher.skilltree.skill.bonus.item.SkillBonusItemBonus;
+import daripher.skilltree.skill.bonus.item.EquipmentBonus;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +55,7 @@ public class WorkbenchItemBonusRecipeBuilder {
     }
 
     public WorkbenchItemBonusRecipeBuilder setItemBonus(SkillBonus<?> skillBonus) {
-        this.itemBonus = new SkillBonusItemBonus(skillBonus);
+        this.itemBonus = new EquipmentBonus(skillBonus);
         return this;
     }
 

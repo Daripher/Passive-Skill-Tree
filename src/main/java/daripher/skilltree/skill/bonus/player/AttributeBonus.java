@@ -169,7 +169,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         float visibleAmount = (float) modifier.getAmount();
         String descriptionId = attribute.getDescriptionId();
         MutableComponent tooltip;
@@ -210,7 +210,7 @@ public final class AttributeBonus implements SkillBonus<AttributeBonus>, Ticking
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<AttributeBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
         editor.addLabel(0, 0, "Attribute", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, attribute).setResponder(attribute -> selectAttribute(consumer, attribute));

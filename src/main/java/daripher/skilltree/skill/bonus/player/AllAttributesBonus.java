@@ -151,7 +151,7 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), modifier.getAmount(), modifier.getOperation());
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
@@ -164,7 +164,7 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<AllAttributesBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<AllAttributesBonus> consumer) {
         editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
         editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
         editor.increaseHeight(19);

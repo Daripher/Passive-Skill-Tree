@@ -20,6 +20,7 @@ import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
+import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
@@ -218,6 +219,13 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         Collection<ItemStackPredicate> values = PSTItemConditions.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.literal(PSTItemConditions.getName(c)));
+    }
+
+    @SuppressWarnings("rawtypes")
+    public SelectionMenuButton<ItemBonus> addSelectionMenu(int x, int y, int width, ItemBonus defaultValue) {
+        Collection<ItemBonus> values = PSTItemBonuses.bonusList();
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
+                .setElementNameGetter(c -> Component.literal(PSTItemBonuses.getName(c)));
     }
 
     public SelectionMenuButton<MobEffect> addSelectionMenu(int x, int y, int width, MobEffect defaultValue) {

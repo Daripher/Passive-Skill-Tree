@@ -356,6 +356,8 @@
   "skill_bonus.skilltree.block_break_speed": "Block break speed",
   "skill_bonus.skilltree.can_poison_anyone": "Your poisons can affect any enemies",
   "skill_bonus.skilltree.cant_use_item": "Can not use %s",
+  "skill_bonus.skilltree.crafted_item_bonus": "%s created on advanced workbench gain:",
+  "skill_bonus.skilltree.crafted_item_bonus.list_item_prefix": " • ",
   "skill_bonus.skilltree.crit_chance": "Critical Hit Chance",
   "skill_bonus.skilltree.crit_chance.damage": "%s Critical Hit Chance",
   "skill_bonus.skilltree.crit_damage": "Critical Damage Multiplier",

@@ -1,5 +1,6 @@
 package daripher.skilltree.skill.bonus.item;
 
+import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +32,8 @@ public interface ItemBonus<T extends ItemBonus<T>> {
     void addTooltip(Consumer<MutableComponent> consumer);
 
     boolean isPositive();
+
+    void addEditorWidgets(SkillTreeEditor editor, Consumer<T> consumer);
 
     interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {
         ItemBonus<?> createDefaultInstance();

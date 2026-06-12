@@ -73,7 +73,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component lootDescription = Component.translatable(lootType.getDescriptionId());
         String descriptionId = getDescriptionId();
         MutableComponent multiplierDescription;
@@ -101,7 +101,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<LootDuplicationBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LootDuplicationBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);

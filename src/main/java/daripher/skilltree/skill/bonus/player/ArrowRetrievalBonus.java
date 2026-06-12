@@ -52,7 +52,7 @@ public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         return TooltipHelper.getSkillBonusTooltip(getDescriptionId(), chance, AttributeModifier.Operation.MULTIPLY_BASE)
                 .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
@@ -63,7 +63,7 @@ public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<ArrowRetrievalBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ArrowRetrievalBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, chance).setNumericResponder(value -> selectChance(consumer, value));

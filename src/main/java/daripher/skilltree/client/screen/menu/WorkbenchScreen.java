@@ -170,12 +170,18 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             renderMissingItem(guiGraphics, itemX, itemY, itemStack);
         }
         if (menu.getResultItem().isEmpty()) {
-            ItemStack resultItem = selectedRecipe.getResult(menu.getWorkbenchContainer());
+            ItemStack resultItem = getResultItem(selectedRecipe);
             guiGraphics.fill(leftPos + 134, topPos + 120, leftPos + 168, topPos + 154, 0x30ff0000);
             if (!resultItem.isEmpty()) {
                 renderMissingItem(guiGraphics, leftPos + 143, topPos + 129, resultItem);
             }
         }
+    }
+
+    private @NotNull ItemStack getResultItem(AbstractWorkbenchRecipe selectedRecipe) {
+        ItemStack resultItem = selectedRecipe.getResult(menu.getWorkbenchContainer());
+        menu.addCraftingBonuses(resultItem);
+        return resultItem;
     }
 
     @Override
@@ -223,7 +229,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         });
         if (menu.getResultItem().isEmpty() && isMouseOverArea(mouseX, mouseY, leftPos + 134, topPos + 120, 34, 34)) {
             Objects.requireNonNull(minecraft);
-            ItemStack resultItem = selectedRecipe.getResult(menu.getWorkbenchContainer());
+            ItemStack resultItem = getResultItem(selectedRecipe);
             renderItemTooltip(guiGraphics, mouseX, mouseY, resultItem);
         }
     }

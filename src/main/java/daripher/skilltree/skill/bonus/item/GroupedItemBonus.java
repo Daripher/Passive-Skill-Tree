@@ -3,28 +3,46 @@ package daripher.skilltree.skill.bonus.item;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.client.tooltip.TooltipHelper;
+import daripher.skilltree.client.widget.editor.SkillTreeEditor;
+import daripher.skilltree.client.widget.editor.menu.EditorMenu;
+import daripher.skilltree.client.widget.editor.menu.bonuses.ItemBonusEditor;
+import daripher.skilltree.client.widget.editor.menu.selection.SelectionList;
+import daripher.skilltree.client.widget.editor.menu.selection.SelectionMenu;
+import daripher.skilltree.client.widget.editor.menu.selection.TextSelectionList;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
+import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
-public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) implements ItemBonus<ItemBonusListItemBonus> {
+public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
+    private final ArrayList<ItemBonus<?>> innerBonuses;
+
+    public GroupedItemBonus(ArrayList<ItemBonus<?>> innerBonuses) {
+        this.innerBonuses = innerBonuses;
+    }
+
     @Override
     public boolean canMerge(ItemBonus<?> other) {
-        if (!(other instanceof ItemBonusListItemBonus otherBonus)) {
+        if (!(other instanceof GroupedItemBonus otherBonus)) {
             return false;
         }
         if (otherBonus.innerBonuses.size() != innerBonuses.size()) {
@@ -39,30 +57,31 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
     }
 
     @Override
-    public ItemBonusListItemBonus merge(ItemBonus<?> other) {
-        if (!(other instanceof ItemBonusListItemBonus otherBonus)) {
+    public GroupedItemBonus merge(ItemBonus<?> other) {
+        if (!(other instanceof GroupedItemBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
         if (otherBonus.innerBonuses.size() != innerBonuses.size()) {
             throw new IllegalArgumentException();
         }
-        List<ItemBonus<?>> mergedSkillBonuses = new ArrayList<>();
+        ArrayList<ItemBonus<?>> mergedSkillBonuses = new ArrayList<>();
         for (int i = 0; i < innerBonuses.size(); i++) {
             if (!innerBonuses.get(i).canMerge(otherBonus.innerBonuses.get(i))) {
                 throw new IllegalArgumentException();
             }
             mergedSkillBonuses.add(innerBonuses.get(i).merge(otherBonus.innerBonuses.get(i)));
         }
-        return new ItemBonusListItemBonus(mergedSkillBonuses);
+        return new GroupedItemBonus(mergedSkillBonuses);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public GroupedItemBonus copy() {
+        return new GroupedItemBonus((ArrayList<ItemBonus<?>>) innerBonuses.stream().map(ItemBonus::copy).toList());
     }
 
     @Override
-    public ItemBonusListItemBonus copy() {
-        return new ItemBonusListItemBonus(innerBonuses.stream().map(ItemBonus::copy).toList());
-    }
-
-    @Override
-    public ItemBonusListItemBonus multiply(double multiplier) {
+    public GroupedItemBonus multiply(double multiplier) {
         innerBonuses.forEach(bonus -> bonus.multiply(multiplier));
         return this;
     }
@@ -92,7 +111,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ItemBonusListItemBonus that = (ItemBonusListItemBonus) o;
+        GroupedItemBonus that = (GroupedItemBonus) o;
         return Objects.equals(innerBonuses, that.innerBonuses);
     }
 
@@ -101,11 +120,87 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
         return Objects.hash(innerBonuses);
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GroupedItemBonus> consumer) {
+        ItemBonus<?> defaultBonus = PSTItemBonuses.SKILL_BONUS.get().createDefaultInstance();
+        editor.addSelectionMenu(0, 0, 90, defaultBonus).setResponder(itemBonus -> addItemBonus(editor, itemBonus))
+                .setMessage(Component.literal("Add"));
+        editor.increaseHeight(29);
+        for (int i = 0; i < getInnerBonuses().size(); i++) {
+            final int bonusIndex = i;
+            ItemBonus selectedItemBonus = getInnerBonuses().get(i);
+            final AtomicReference<MutableComponent> tooltip = new AtomicReference<>();
+            selectedItemBonus.addTooltip(component -> {
+                if (tooltip.get() == null) {
+                    tooltip.set((MutableComponent) component);
+                }
+            });
+            String message = tooltip.get().getString();
+            message = TooltipHelper.getTrimmedString(message, 190);
+            editor.addButton(0, 0, 200, 14, message)
+                    .setPressFunc(button -> editor.selectMenu(new ItemBonusEditor(editor, editor.getSelectedMenu(), bonus -> skillBonusChanged(bonus, bonusIndex), () -> selectedItemBonus)));
+            editor.increaseHeight(19);
+        }
+    }
+
+    private @Nullable ItemBonus<?> getSelectedItemBonus(int selectedBonusIndex) {
+        if (selectedBonusIndex >= getInnerBonuses().size()) {
+            return null;
+        }
+        return getInnerBonuses().get(selectedBonusIndex);
+    }
+
+    private void skillBonusChanged(@Nullable ItemBonus<?> itemBonus, int selectedBonusIndex) {
+        if (itemBonus == null) {
+            deleteSelectedItemBonuses(selectedBonusIndex);
+        } else {
+            setItemBonuses(itemBonus, selectedBonusIndex);
+        }
+    }
+
+    private void setItemBonuses(ItemBonus<?> bonus, int selectedBonusIndex) {
+        innerBonuses.set(selectedBonusIndex, bonus);
+    }
+
+    private void deleteSelectedItemBonuses(int selectedBonusIndex) {
+        if (getInnerBonuses().size() > selectedBonusIndex) {
+            getInnerBonuses().remove(selectedBonusIndex);
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    private void addItemBonus(SkillTreeEditor editor, ItemBonus<?> itemBonus) {
+        final EditorMenu previousMenu = editor.getSelectedMenu().previousMenu;
+        if (itemBonus instanceof EquipmentBonus equipmentBonus) {
+            SelectionList<SkillBonus> skillBonusSelectionList = new TextSelectionList<>(0, 0, 190, 14, PSTSkillBonuses.bonusList()).setRows(8)
+                    .setNameGetter(bonus -> Component.literal(PSTSkillBonuses.getName(bonus))).selectElement(equipmentBonus.getSkillBonus());
+            editor.selectMenu(new SelectionMenu<>(editor, editor.getSelectedMenu(), skillBonusSelectionList, () -> {
+            }).setResponder(skillBonus -> {
+                innerBonuses.add(new EquipmentBonus(skillBonus));
+                editor.selectMenu(previousMenu);
+            }));
+            return;
+        }
+        innerBonuses.add(itemBonus);
+        editor.selectMenu(previousMenu);
+    }
+
+    public List<? extends ItemBonus<?>> getInnerBonuses() {
+        return innerBonuses;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupedItemBonus[" + "innerBonuses=" + innerBonuses + ']';
+    }
+
+
     public static class Serializer implements ItemBonus.Serializer {
         @Override
         public ItemBonus<?> deserialize(JsonObject json) throws JsonParseException {
             JsonArray innerBonusesJson = json.get("inner_bonuses").getAsJsonArray();
-            List<ItemBonus<?>> innerBonuses = new ArrayList<>();
+            ArrayList<ItemBonus<?>> innerBonuses = new ArrayList<>();
             for (int i = 0; i < innerBonusesJson.size(); i++) {
                 JsonObject innerBonusTag = innerBonusesJson.get(i).getAsJsonObject();
                 String serializerIdString = innerBonusTag.get("type").getAsString();
@@ -115,12 +210,12 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
                 ItemBonus<?> innerBonus = serializer.deserialize(innerBonusTag);
                 innerBonuses.add(innerBonus);
             }
-            return new ItemBonusListItemBonus(innerBonuses);
+            return new GroupedItemBonus(innerBonuses);
         }
 
         @Override
         public void serialize(JsonObject json, ItemBonus<?> bonus) {
-            if (!(bonus instanceof ItemBonusListItemBonus aBonus)) {
+            if (!(bonus instanceof GroupedItemBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             JsonArray innerBonusesJson = new JsonArray();
@@ -139,7 +234,7 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
 
         @Override
         public ItemBonus<?> deserialize(CompoundTag tag) {
-            List<ItemBonus<?>> innerBonuses = new ArrayList<>();
+            ArrayList<ItemBonus<?>> innerBonuses = new ArrayList<>();
             ListTag innerBonusesTag = tag.getList("inner_bonuses", Tag.TAG_COMPOUND);
             for (Tag value : innerBonusesTag) {
                 CompoundTag innerBonusTag = (CompoundTag) value;
@@ -149,12 +244,12 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
                 Objects.requireNonNull(serializer, "Unknown item bonus: " + serializerId);
                 innerBonuses.add(serializer.deserialize(innerBonusTag));
             }
-            return new ItemBonusListItemBonus(innerBonuses);
+            return new GroupedItemBonus(innerBonuses);
         }
 
         @Override
         public CompoundTag serialize(ItemBonus<?> bonus) {
-            if (!(bonus instanceof ItemBonusListItemBonus aBonus)) {
+            if (!(bonus instanceof GroupedItemBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -174,17 +269,17 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
 
         @Override
         public ItemBonus<?> deserialize(FriendlyByteBuf buf) {
-            List<ItemBonus<?>> innerBonuses = new ArrayList<>();
+            ArrayList<ItemBonus<?>> innerBonuses = new ArrayList<>();
             int size = buf.readInt();
             for (int i = 0; i < size; i++) {
                 innerBonuses.add(NetworkHelper.readItemBonus(buf));
             }
-            return new ItemBonusListItemBonus(innerBonuses);
+            return new GroupedItemBonus(innerBonuses);
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, ItemBonus<?> bonus) {
-            if (!(bonus instanceof ItemBonusListItemBonus aBonus)) {
+            if (!(bonus instanceof GroupedItemBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             buf.writeInt(aBonus.innerBonuses.size());
@@ -196,9 +291,12 @@ public record ItemBonusListItemBonus(List<? extends ItemBonus<?>> innerBonuses) 
         @Override
         public ItemBonus<?> createDefaultInstance() {
             AttributeModifier defaultModifier = new AttributeModifier("Default Modifier", 1, AttributeModifier.Operation.ADDITION);
-            ItemBonus<?> bonus1 = new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR, defaultModifier));
-            ItemBonus<?> bonus2 = new SkillBonusItemBonus(new AttributeBonus(Attributes.ARMOR_TOUGHNESS, defaultModifier));
-            return new ItemBonusListItemBonus(List.of(bonus1, bonus2));
+            ItemBonus<?> bonus1 = new EquipmentBonus(new AttributeBonus(Attributes.ARMOR, defaultModifier));
+            ItemBonus<?> bonus2 = new EquipmentBonus(new AttributeBonus(Attributes.ARMOR_TOUGHNESS, defaultModifier));
+            ArrayList<ItemBonus<?>> bonuses = new ArrayList<>();
+            bonuses.add(bonus1);
+            bonuses.add(bonus2);
+            return new GroupedItemBonus(bonuses);
         }
     }
 }

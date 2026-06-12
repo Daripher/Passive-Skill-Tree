@@ -120,7 +120,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = Component.translatable(getDescriptionId(), damageCondition.getTooltip());
         tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, amount, operation);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
@@ -136,7 +136,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<DamageTakenBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
         editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
         editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
         editor.increaseHeight(19);

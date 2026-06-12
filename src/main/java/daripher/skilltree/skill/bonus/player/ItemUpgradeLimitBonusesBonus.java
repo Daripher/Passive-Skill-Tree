@@ -61,7 +61,7 @@ public final class ItemUpgradeLimitBonusesBonus implements SkillBonus<ItemUpgrad
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component itemDescription = itemStackPredicate.getTooltip("plural");
         MutableComponent bonusDescription;
         if (amount == 1) {
@@ -78,7 +78,7 @@ public final class ItemUpgradeLimitBonusesBonus implements SkillBonus<ItemUpgrad
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<ItemUpgradeLimitBonusesBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ItemUpgradeLimitBonusesBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));

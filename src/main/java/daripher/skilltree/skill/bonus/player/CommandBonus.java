@@ -95,7 +95,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Style style = TooltipHelper.getSkillBonusStyle(isPositive());
         return Component.translatable(description).withStyle(style);
     }
@@ -111,7 +111,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int index, Consumer<EventListenerBonus<CommandBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer) {
         editor.addLabel(0, 0, "Command", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addTextArea(0, 0, 200, 70, command).setResponder(v -> selectCommand(consumer, v));

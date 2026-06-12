@@ -85,7 +85,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component slotDescription;
         if (Math.abs(amount) > 1) {
             slotDescription = TooltipHelper.getSlotTooltip(slotName, "plural");
@@ -102,7 +102,7 @@ public final class CurioSlotsBonus implements SkillBonus<CurioSlotsBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<CurioSlotsBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<CurioSlotsBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));

@@ -33,7 +33,7 @@ public class TooltipHelper {
     private static final Style SKILL_BONUS_SECOND_STYLE_NEGATIVE = Style.EMPTY.withColor(0xDB9792);
     private static final Style SKILL_REQUIREMENT_STYLE = Style.EMPTY.withColor(0x83E27A);
     private static final Style SKILL_REQUIREMENT_STYLE_UNFINISHED = Style.EMPTY.withColor(0xE25A5A);
-    private static final Style ITEM_BONUS_STYLE = Style.EMPTY.withColor(0xECBE46);
+    private static final Style ITEM_UPGRADE_STYLE = Style.EMPTY.withColor(0xECBE46);
     private static final Style LESSER_TITLE_STYLE = Style.EMPTY.withColor(0xEAA169);
     private static final Style NOTABLE_TITLE_STYLE = Style.EMPTY.withColor(0x9B66D8);
     private static final Style CLASS_TITLE_STYLE = Style.EMPTY.withColor(0xFFD75F);
@@ -43,7 +43,7 @@ public class TooltipHelper {
     public static Component getEffectTooltip(MobEffectInstance effect) {
         Component effectDescription;
         if (effect.getEffect() instanceof SkillBonusEffect skillEffect) {
-            effectDescription = skillEffect.getBonus().copy().multiply(effect.getAmplifier() + 1).getTooltip().setStyle(Style.EMPTY);
+            effectDescription = skillEffect.getBonus().copy().multiply(effect.getAmplifier() + 1).getSimpleTooltip().setStyle(Style.EMPTY);
         } else {
             effectDescription = effect.getEffect().getDisplayName();
             if (effect.getAmplifier() == 0) {
@@ -118,8 +118,8 @@ public class TooltipHelper {
         return positive ? SKILL_BONUS_SECOND_STYLE : SKILL_BONUS_SECOND_STYLE_NEGATIVE;
     }
 
-    public static Style getItemBonusStyle() {
-        return ITEM_BONUS_STYLE;
+    public static Style getItemUpgradeStyle() {
+        return ITEM_UPGRADE_STYLE;
     }
 
     public static MutableComponent getTextureName(ResourceLocation location) {

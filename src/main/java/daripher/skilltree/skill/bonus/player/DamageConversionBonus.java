@@ -116,7 +116,7 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         String formattedAmount = TooltipHelper.formatNumber(amount * 100);
         MutableComponent tooltip = Component.translatable(getDescriptionId(), formattedAmount, originalDamageCondition.getTooltip(), resultDamageCondition.getTooltip());
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
@@ -132,7 +132,7 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<DamageConversionBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<DamageConversionBonus> consumer) {
         editor.addLabel(0, 0, "Conversion", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));

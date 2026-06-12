@@ -62,7 +62,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component itemDescription = itemStackPredicate.getTooltip("plural.type");
         AttributeModifier.Operation operation = AttributeModifier.Operation.MULTIPLY_BASE;
         Component bonusDescription = Component.translatable(getDescriptionId() + ".bonus");
@@ -78,7 +78,7 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<RepairEfficiencyBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<RepairEfficiencyBonus> consumer) {
         editor.addLabel(0, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, multiplier).setNumericResponder(value -> selectMultiplier(consumer, value));

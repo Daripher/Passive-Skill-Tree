@@ -73,7 +73,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         Component sourceDescription = Component.translatable(experienceSource.getDescriptionId());
         MutableComponent tooltip = Component.translatable(getDescriptionId(), sourceDescription);
         tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -87,7 +87,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<GainedExperienceBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GainedExperienceBonus> consumer) {
         editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
         editor.addLabel(0, 0, "Source", ChatFormatting.GOLD);
         editor.increaseHeight(19);

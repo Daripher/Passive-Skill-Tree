@@ -30,11 +30,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
+public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
     private final ItemStackPredicate baseItemStackPredicate;
     private final ItemBonus<?> itemBonus;
 
-    public WorkbenchItemBonusRecipe(ResourceLocation id, ItemStackPredicate baseItemStackPredicate, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill, ItemBonus<?> itemBonus) {
+    public WorkbenchUpgradeBonusRecipe(ResourceLocation id, ItemStackPredicate baseItemStackPredicate, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill, ItemBonus<?> itemBonus) {
         super(id, ingredients, requiresPassiveSkill);
         this.baseItemStackPredicate = baseItemStackPredicate;
         this.itemBonus = itemBonus;
@@ -61,7 +61,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
     @Override
     public List<Component> getFullDescription() {
         List<Component> fullDescription = new ArrayList<>();
-        Style style = TooltipHelper.getItemBonusStyle();
+        Style style = TooltipHelper.getItemUpgradeStyle();
         itemBonus.addTooltip(tooltip -> fullDescription.add(tooltip.withStyle(style)));
         Component itemTooltip = baseItemStackPredicate.getTooltip("plural");
         itemTooltip = Component.literal("[").append(itemTooltip).append("]");
@@ -82,7 +82,7 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
             originalBonuses.remove(0);
         }
         originalBonuses.add(itemBonus.copy());
-        ItemBonusHandler.setItemBonuses(baseItem, originalBonuses);
+        ItemBonusHandler.setUpgradeBonuses(baseItem, originalBonuses);
         return baseItem;
     }
 
@@ -101,9 +101,9 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
         return PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get();
     }
 
-    public static class Serializer implements RecipeSerializer<WorkbenchItemBonusRecipe> {
+    public static class Serializer implements RecipeSerializer<WorkbenchUpgradeBonusRecipe> {
         @Override
-        public @NotNull WorkbenchItemBonusRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
+        public @NotNull WorkbenchUpgradeBonusRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
             ItemStackPredicate baseItemStackPredicate = SerializationHelper.deserializeItemPredicate(jsonObject, "base_item_condition");
             ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
             boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
@@ -114,11 +114,11 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
                 int requiredAmount = jsonElement.getAsJsonObject().get("required_amount").getAsInt();
                 ingredients.put(ingredient, requiredAmount);
             }
-            return new WorkbenchItemBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
+            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
         }
 
         @Override
-        public @Nullable WorkbenchItemBonusRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
+        public @Nullable WorkbenchUpgradeBonusRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
             ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemPredicate(buf);
             ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
             boolean requiresPassiveSkill = buf.readBoolean();
@@ -127,11 +127,11 @@ public class WorkbenchItemBonusRecipe extends AbstractWorkbenchRecipe {
             for (int i = 0; i < ingredientsCount; i++) {
                 ingredients.put(Ingredient.fromNetwork(buf), buf.readInt());
             }
-            return new WorkbenchItemBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
+            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
         }
 
         @Override
-        public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchItemBonusRecipe recipe) {
+        public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchUpgradeBonusRecipe recipe) {
             NetworkHelper.writeItemPredicate(buf, recipe.baseItemStackPredicate);
             NetworkHelper.writeItemBonus(buf, recipe.itemBonus);
             buf.writeBoolean(recipe.hasPassiveSkillRequirement());

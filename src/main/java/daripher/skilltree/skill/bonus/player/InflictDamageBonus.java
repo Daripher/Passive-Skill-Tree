@@ -96,7 +96,7 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         String targetDescription = eventListener.getTarget().getName();
         String key = getDescriptionId() + "." + targetDescription;
         String damageDescription = TooltipHelper.formatNumber(damage);
@@ -123,7 +123,7 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<EventListenerBonus<InflictDamageBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictDamageBonus>> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Damage", ChatFormatting.GOLD);
         editor.increaseHeight(19);

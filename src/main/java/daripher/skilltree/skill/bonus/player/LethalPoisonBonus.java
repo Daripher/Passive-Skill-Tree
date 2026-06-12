@@ -40,7 +40,7 @@ public final class LethalPoisonBonus implements SkillBonus<LethalPoisonBonus> {
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         return Component.translatable(getDescriptionId()).withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
 
@@ -50,7 +50,7 @@ public final class LethalPoisonBonus implements SkillBonus<LethalPoisonBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<LethalPoisonBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LethalPoisonBonus> consumer) {
     }
 
     public static class Serializer implements SkillBonus.Serializer {

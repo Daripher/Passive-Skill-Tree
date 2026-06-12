@@ -81,7 +81,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
     }
 
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, AttributeModifier.Operation.MULTIPLY_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
@@ -94,7 +94,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, int row, Consumer<HealthReservationBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<HealthReservationBonus> consumer) {
         editor.addLabel(0, 0, "Amount", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addNumericTextField(0, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));

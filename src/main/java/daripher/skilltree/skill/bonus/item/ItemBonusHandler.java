@@ -6,7 +6,7 @@ import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
-import daripher.skilltree.skill.bonus.player.MoreItemBonusesBonus;
+import daripher.skilltree.skill.bonus.player.ItemUpgradeLimitBonusesBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -27,28 +27,31 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {
+    public static final String UPGRADE_BONUSES_TAG_NAME = "UpgradeBonuses";
+    public static final String CRAFTING_BONUSES_TAG_NAME = "CraftingBonuses";
+
     @SubscribeEvent
     public static void addItemBonusTooltips(ItemTooltipEvent event) {
-        List<Component> components = event.getToolTip();
+        List<Component> toolTip = event.getToolTip();
         List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
         if (!itemBonuses.isEmpty()) {
-            components.add(Component.empty());
+            toolTip.add(Component.empty());
         }
         for (ItemBonus<?> itemBonus : itemBonuses) {
-            Style style = TooltipHelper.getItemBonusStyle();
-            itemBonus.addTooltip(tooltip -> components.add(tooltip.withStyle(style)));
+            Style style = TooltipHelper.getItemUpgradeStyle();
+            itemBonus.addTooltip(tooltip -> toolTip.add(tooltip.withStyle(style)));
         }
     }
 
     @SubscribeEvent
-    public static void addCraftedItemAttributeBonuses(LivingEquipmentChangeEvent event) {
+    public static void addEquipmentAttributeBonuses(LivingEquipmentChangeEvent event) {
         LivingEntity entity = event.getEntity();
         if (!(entity instanceof Player)) {
             return;
         }
-        for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), SkillBonusItemBonus.class)) {
-            SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
-            if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+        for (ItemBonus<?> itemBonus : getItemBonuses(event.getFrom(), EquipmentBonus.class)) {
+            EquipmentBonus bonus = (EquipmentBonus) itemBonus;
+            if (!(bonus.getSkillBonus() instanceof AttributeBonus attributeBonus)) {
                 continue;
             }
             AttributeInstance attributeInstance = entity.getAttribute(attributeBonus.getAttribute());
@@ -57,9 +60,9 @@ public class ItemBonusHandler {
             }
             attributeInstance.removeModifier(attributeBonus.getModifier().getId());
         }
-        for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), SkillBonusItemBonus.class)) {
-            SkillBonusItemBonus bonus = (SkillBonusItemBonus) itemBonus;
-            if (!(bonus.skillBonus() instanceof AttributeBonus attributeBonus)) {
+        for (ItemBonus<?> itemBonus : getItemBonuses(event.getTo(), EquipmentBonus.class)) {
+            EquipmentBonus bonus = (EquipmentBonus) itemBonus;
+            if (!(bonus.getSkillBonus() instanceof AttributeBonus attributeBonus)) {
                 continue;
             }
             if (attributeBonus.isDynamic()) {
@@ -76,13 +79,34 @@ public class ItemBonusHandler {
         }
     }
 
-    public static List<ItemBonus<?>> getItemBonuses(ItemStack stack) {
-        if (!stack.hasTag()) {
+    public static void addCraftingBonuses(ItemStack itemStack, GroupedItemBonus itemBonuses) {
+        List<ItemBonus<?>> craftingBonuses = getBonusesFromTag(itemStack, CRAFTING_BONUSES_TAG_NAME);
+        craftingBonuses.add(itemBonuses);
+        setCraftingBonuses(itemStack, craftingBonuses);
+    }
+
+    public static List<ItemBonus<?>> getItemBonuses(ItemStack itemStack) {
+        if (!itemStack.hasTag()) {
             return ImmutableList.of();
         }
         List<ItemBonus<?>> list = new ArrayList<>();
-        CompoundTag stackTag = stack.getOrCreateTag();
-        CompoundTag bonusesTag = stackTag.getCompound("SkillBonuses");
+        list.addAll(getUpgradeBonuses(itemStack));
+        list.addAll(getCraftingBonuses(itemStack));
+        return list;
+    }
+
+    private static List<ItemBonus<?>> getCraftingBonuses(ItemStack itemStack) {
+        return getBonusesFromTag(itemStack, CRAFTING_BONUSES_TAG_NAME);
+    }
+
+    private static List<ItemBonus<?>> getUpgradeBonuses(ItemStack itemStack) {
+        return getBonusesFromTag(itemStack, UPGRADE_BONUSES_TAG_NAME);
+    }
+
+    private static List<ItemBonus<?>> getBonusesFromTag(ItemStack itemStack, String subTagName) {
+        CompoundTag stackTag = itemStack.getOrCreateTag();
+        List<ItemBonus<?>> list = new ArrayList<>();
+        CompoundTag bonusesTag = stackTag.getCompound(subTagName);
         for (int i = 0; true; i++) {
             if (!bonusesTag.contains("" + i)) {
                 return list;
@@ -95,8 +119,8 @@ public class ItemBonusHandler {
     public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
         List<ItemBonus<?>> bonuses = new ArrayList<>();
         for (ItemBonus<?> bonus : getItemBonuses(stack)) {
-            if (bonus instanceof ItemBonusListItemBonus listBonus) {
-                bonuses.addAll(listBonus.innerBonuses());
+            if (bonus instanceof GroupedItemBonus listBonus) {
+                bonuses.addAll(listBonus.getInnerBonuses());
             } else {
                 bonuses.add(bonus);
             }
@@ -104,7 +128,15 @@ public class ItemBonusHandler {
         return bonuses.stream().filter(type::isInstance).toList();
     }
 
-    public static void setItemBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
+    public static void setUpgradeBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
+        setTagBonuses(stack, bonuses, UPGRADE_BONUSES_TAG_NAME);
+    }
+
+    public static void setCraftingBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
+        setTagBonuses(stack, bonuses, UPGRADE_BONUSES_TAG_NAME);
+    }
+
+    private static void setTagBonuses(ItemStack stack, List<ItemBonus<?>> bonuses, String tagName) {
         CompoundTag bonusesTag = new CompoundTag();
         int i = 0;
         for (ItemBonus<?> itemBonus : bonuses) {
@@ -112,14 +144,14 @@ public class ItemBonusHandler {
             bonusesTag.put("" + i, bonusTag);
             i++;
         }
-        stack.getOrCreateTag().put("SkillBonuses", bonusesTag);
+        stack.getOrCreateTag().put(tagName, bonusesTag);
     }
 
-    public static void removeItemBonuses(ItemStack stack) {
+    public static void removeUpgradeBonuses(ItemStack stack) {
         if (!stack.hasTag()) {
             return;
         }
-        stack.getOrCreateTag().remove("SkillBonuses");
+        stack.getOrCreateTag().remove(UPGRADE_BONUSES_TAG_NAME);
     }
 
     private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
@@ -141,8 +173,9 @@ public class ItemBonusHandler {
         }
         try {
             return serializer.deserialize(tag);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            String errorMessage = "Couldn't deserialize item bonus from " + tag;
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
             return null;
         }
     }
@@ -150,8 +183,8 @@ public class ItemBonusHandler {
     public static int getCraftedBonusLimit(ItemStack itemStack, @Nullable Player player) {
         int limit = 1;
         if (player != null) {
-            limit += SkillBonusHandler.getSkillBonuses(player, MoreItemBonusesBonus.class).stream()
-                    .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(MoreItemBonusesBonus::getAmount).reduce(Integer::sum)
+            limit += SkillBonusHandler.getSkillBonuses(player, ItemUpgradeLimitBonusesBonus.class).stream()
+                    .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(ItemUpgradeLimitBonusesBonus::getAmount).reduce(Integer::sum)
                     .orElse(0);
         }
         return limit;
