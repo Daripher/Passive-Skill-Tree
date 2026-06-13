@@ -6,7 +6,7 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.skill.bonus.function.EffectAmountFunction;
-import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectType;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -99,7 +99,7 @@ public final class NumericValueRequirement implements SkillRequirement<NumericVa
 
         @Override
         public SkillRequirement<?> createDefaultInstance() {
-            return new NumericValueRequirement(new FloatFunctionEntityPredicate(new EffectAmountFunction(EffectType.BENEFICIAL), 5, FloatFunctionEntityPredicate.Logic.MORE));
+            return new NumericValueRequirement(new FloatFunctionEntityPredicate(new EffectAmountFunction(MobEffectType.BENEFICIAL), 5, FloatFunctionEntityPredicate.Logic.MORE));
         }
     }
 }

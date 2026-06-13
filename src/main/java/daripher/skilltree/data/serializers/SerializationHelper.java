@@ -11,6 +11,10 @@ import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectType;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectTypePredicate;
+import daripher.skilltree.skill.bonus.predicate.effect.NoneMobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
@@ -122,6 +126,35 @@ public class SerializationHelper {
         json.add(name, conditionJson);
     }
 
+    public static @Nonnull MobEffectPredicate deserializeMobEffectCondition(JsonObject json, String name) {
+        if (!json.has(name)) {
+            // backwards compatibility fallback
+            if (json.has("effect_type")) {
+                MobEffectType effectType = MobEffectType.fromName(json.get("effect_type").getAsString());
+                return new MobEffectTypePredicate(effectType);
+            }
+            return NoneMobEffectPredicate.INSTANCE;
+        }
+        JsonObject conditionJson = json.getAsJsonObject(name);
+        ResourceLocation serializerId = ResourceLocation.parse(conditionJson.get("type").getAsString());
+        MobEffectPredicate.Serializer serializer = PSTRegistries.MOB_EFFECT_PREDICATES.get().getValue(serializerId);
+        String errorMessage = "Unknown living condition: " + serializerId;
+        return deserializeObject(serializer, conditionJson, errorMessage);
+    }
+
+    public static void serializeMobEffectCondition(JsonObject json, @Nonnull MobEffectPredicate condition, String name) {
+        if (condition == NoneMobEffectPredicate.INSTANCE) {
+            return;
+        }
+        JsonObject conditionJson = new JsonObject();
+        MobEffectPredicate.Serializer serializer = condition.getSerializer();
+        serializer.serialize(conditionJson, condition);
+        ResourceLocation serializerId = PSTRegistries.MOB_EFFECT_PREDICATES.get().getKey(serializer);
+        Objects.requireNonNull(serializerId);
+        conditionJson.addProperty("type", serializerId.toString());
+        json.add(name, conditionJson);
+    }
+
     @Nonnull
     public static DamageCondition deserializeDamageCondition(JsonObject json) {
         return deserializeDamageCondition(json, "damage_condition");
@@ -200,7 +233,7 @@ public class SerializationHelper {
         json.add("event_listener", conditionJson);
     }
 
-    public static @Nullable MobEffect deserializeEffect(JsonObject json) {
+    public static @Nullable MobEffect deserializeMobEffect(JsonObject json) {
         if (!json.has("effect")) {
             return null;
         }
@@ -208,7 +241,7 @@ public class SerializationHelper {
         return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
     }
 
-    public static void serializeEffect(JsonObject json, MobEffect effect) {
+    public static void serializeMobEffect(JsonObject json, MobEffect effect) {
         ResourceLocation effectId = ForgeRegistries.MOB_EFFECTS.getKey(effect);
         json.addProperty("effect", Objects.requireNonNull(effectId).toString());
     }
@@ -222,14 +255,14 @@ public class SerializationHelper {
     }
 
     public static MobEffectInstance deserializeEffectInstance(JsonObject json) {
-        MobEffect effect = deserializeEffect(json);
+        MobEffect effect = deserializeMobEffect(json);
         int duration = json.get("duration").getAsInt();
         int amplifier = json.get("amplifier").getAsInt();
         return new MobEffectInstance(Objects.requireNonNull(effect), duration, amplifier);
     }
 
     public static void serializeEffectInstance(JsonObject json, MobEffectInstance effect) {
-        serializeEffect(json, effect.getEffect());
+        serializeMobEffect(json, effect.getEffect());
         json.addProperty("duration", effect.getDuration());
         json.addProperty("amplifier", effect.getAmplifier());
     }
@@ -326,6 +359,22 @@ public class SerializationHelper {
         tag.put(name, conditionTag);
     }
 
+    public static @Nonnull MobEffectPredicate deserializeMobEffectCondition(CompoundTag tag, String name) {
+        CompoundTag conditionTag = tag.getCompound(name);
+        ResourceLocation serializerId = ResourceLocation.parse(conditionTag.getString("type"));
+        MobEffectPredicate.Serializer serializer = PSTRegistries.MOB_EFFECT_PREDICATES.get().getValue(serializerId);
+        return Objects.requireNonNull(serializer).deserialize(conditionTag);
+    }
+
+    public static void serializeMobEffectCondition(CompoundTag tag, @Nonnull MobEffectPredicate condition, String name) {
+        MobEffectPredicate.Serializer serializer = condition.getSerializer();
+        CompoundTag conditionTag = serializer.serialize(condition);
+        ResourceLocation serializerId = PSTRegistries.MOB_EFFECT_PREDICATES.get().getKey(serializer);
+        Objects.requireNonNull(serializerId);
+        conditionTag.putString("type", serializerId.toString());
+        tag.put(name, conditionTag);
+    }
+
     public static @Nonnull DamageCondition deserializeDamageCondition(CompoundTag tag) {
         return deserializeDamageCondition(tag, "damage_condition");
     }
@@ -380,7 +429,7 @@ public class SerializationHelper {
     }
 
     @Nullable
-    public static MobEffect deserializeEffect(CompoundTag tag) {
+    public static MobEffect deserializeMobEffect(CompoundTag tag) {
         if (!tag.contains("effect")) {
             return null;
         }
@@ -388,7 +437,7 @@ public class SerializationHelper {
         return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
     }
 
-    public static void serializeEffect(CompoundTag tag, MobEffect effect) {
+    public static void serializeMobEffect(CompoundTag tag, MobEffect effect) {
         ResourceLocation effectId = ForgeRegistries.MOB_EFFECTS.getKey(effect);
         tag.putString("effect", Objects.requireNonNull(effectId).toString());
     }
@@ -402,14 +451,14 @@ public class SerializationHelper {
     }
 
     public static MobEffectInstance deserializeEffectInstance(CompoundTag tag) {
-        MobEffect effect = Objects.requireNonNull(deserializeEffect(tag));
+        MobEffect effect = Objects.requireNonNull(deserializeMobEffect(tag));
         int duration = tag.getInt("duration");
         int amplifier = tag.getInt("amplifier");
         return new MobEffectInstance(effect, duration, amplifier);
     }
 
     public static void serializeEffectInstance(CompoundTag tag, MobEffectInstance effect) {
-        serializeEffect(tag, effect.getEffect());
+        serializeMobEffect(tag, effect.getEffect());
         tag.putInt("duration", effect.getDuration());
         tag.putInt("amplifier", effect.getAmplifier());
     }

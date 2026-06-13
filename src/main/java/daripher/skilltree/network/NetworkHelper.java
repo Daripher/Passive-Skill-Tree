@@ -10,6 +10,7 @@ import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.requirement.SkillRequirement;
@@ -322,6 +323,19 @@ public class NetworkHelper {
         return Objects.requireNonNull(serializer).deserialize(buf);
     }
 
+    public static void writeMobEffectCondition(FriendlyByteBuf buf, @Nonnull MobEffectPredicate condition) {
+        MobEffectPredicate.Serializer serializer = condition.getSerializer();
+        ResourceLocation serializerId = PSTRegistries.MOB_EFFECT_PREDICATES.get().getKey(serializer);
+        buf.writeUtf(Objects.requireNonNull(serializerId).toString());
+        serializer.serialize(buf, condition);
+    }
+
+    public static @Nonnull MobEffectPredicate readMobEffectCondition(FriendlyByteBuf buf) {
+        ResourceLocation serializerId = ResourceLocation.parse(buf.readUtf());
+        MobEffectPredicate.Serializer serializer = PSTRegistries.MOB_EFFECT_PREDICATES.get().getValue(serializerId);
+        return Objects.requireNonNull(serializer).deserialize(buf);
+    }
+
     public static void writeDamageCondition(FriendlyByteBuf buf, @Nonnull DamageCondition condition) {
         DamageCondition.Serializer serializer = condition.getSerializer();
         ResourceLocation serializerId = PSTRegistries.DAMAGE_CONDITIONS.get().getKey(serializer);
@@ -362,12 +376,12 @@ public class NetworkHelper {
         return Objects.requireNonNull(serializer).deserialize(buf);
     }
 
-    public static void writeEffect(FriendlyByteBuf buf, MobEffect effect) {
+    public static void writeMobEffect(FriendlyByteBuf buf, MobEffect effect) {
         ResourceLocation effectId = ForgeRegistries.MOB_EFFECTS.getKey(effect);
         buf.writeUtf(Objects.requireNonNull(effectId).toString());
     }
 
-    public static @Nullable MobEffect readEffect(FriendlyByteBuf buf) {
+    public static @Nullable MobEffect readMobEffect(FriendlyByteBuf buf) {
         ResourceLocation effectId = ResourceLocation.parse(buf.readUtf());
         return ForgeRegistries.MOB_EFFECTS.getValue(effectId);
     }
@@ -390,14 +404,14 @@ public class NetworkHelper {
     }
 
     public static void writeEffectInstance(FriendlyByteBuf buf, MobEffectInstance effect) {
-        writeEffect(buf, effect.getEffect());
+        writeMobEffect(buf, effect.getEffect());
         buf.writeInt(effect.getDuration());
         buf.writeInt(effect.getAmplifier());
     }
 
     @NotNull
     public static MobEffectInstance readEffectInstance(FriendlyByteBuf buf) {
-        MobEffect effect = readEffect(buf);
+        MobEffect effect = readMobEffect(buf);
         Objects.requireNonNull(effect);
         return new MobEffectInstance(effect, buf.readInt(), buf.readInt());
     }

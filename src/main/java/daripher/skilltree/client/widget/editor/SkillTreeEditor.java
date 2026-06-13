@@ -15,10 +15,7 @@ import daripher.skilltree.client.widget.skill.SkillButtons;
 import daripher.skilltree.data.client.SkillTexturesData;
 import daripher.skilltree.data.client.SkillTreeEditorData;
 import daripher.skilltree.init.*;
-import daripher.skilltree.init.predicate.PSTDamagePredicates;
-import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
-import daripher.skilltree.init.predicate.PSTItemPredicates;
-import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
+import daripher.skilltree.init.predicate.*;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
@@ -27,6 +24,7 @@ import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
@@ -211,6 +209,12 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
         Collection<LivingEntityPredicate> values = PSTLivingEntityPredicates.conditionsList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(c -> Component.literal(PSTLivingEntityPredicates.getName(c)));
+    }
+
+    public SelectionMenuButton<MobEffectPredicate> addSelectionMenu(int x, int y, int width, MobEffectPredicate defaultValue) {
+        Collection<MobEffectPredicate> values = PSTMobEffectPredicates.defaultInstances();
+        return addSelectionMenu(x, y, width, values).setValue(defaultValue)
+                .setElementNameGetter(c -> Component.literal(PSTMobEffectPredicates.getName(c)));
     }
 
     public SelectionMenuButton<LivingMultiplier> addSelectionMenu(int x, int y, int width, LivingMultiplier defaultValue) {

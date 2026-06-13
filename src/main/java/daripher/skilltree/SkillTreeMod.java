@@ -6,10 +6,7 @@ import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.init.*;
-import daripher.skilltree.init.predicate.PSTDamagePredicates;
-import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
-import daripher.skilltree.init.predicate.PSTItemPredicates;
-import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
+import daripher.skilltree.init.predicate.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -50,6 +47,7 @@ public class SkillTreeMod {
         PSTRecipeSerializers.REGISTRY.register(eventBus);
         PSTItemBonuses.REGISTRY.register(eventBus);
         PSTRecipeTypes.REGISTRY.register(eventBus);
+        PSTMobEffectPredicates.REGISTRY.register(eventBus);
     }
 
     private static void registerConfigs(FMLJavaModLoadingContext context) {

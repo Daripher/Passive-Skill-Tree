@@ -248,6 +248,15 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.player", "если вся ваша броня - ");
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.enemy", "если вся броня цели - ");
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "%s %s %s");
+        // effect predicates
+        add("effect_type.beneficial", "положительный эффект");
+        add("effect_type.beneficial.plural", "положительные эффекты");
+        add("effect_type.harmful", "негативный эффект");
+        add("effect_type.harmful.plural", "негативные эффекты");
+        add("effect_type.neutral", "нейтральный эффект");
+        add("effect_type.neutral.plural", "нейтральные эффект");
+        add("effect_type.any", "эффект");
+        add("effect_type.any.plural", "эффекты");
         // event listeners
         add(PSTEventListeners.ATTACK.get(), "%s при атаке");
         add(PSTEventListeners.ATTACK.get(), "damage", "%s при атаке %s");
@@ -440,15 +449,6 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s за каждый блок между вами и целью");
 
         add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "condition.player", "%s если расстояние между вами и целью %s");
-
-        add("effect_type.beneficial", "положительный эффект");
-        add("effect_type.beneficial.plural", "положительные эффекты");
-        add("effect_type.harmful", "негативный эффект");
-        add("effect_type.harmful.plural", "негативные эффекты");
-        add("effect_type.neutral", "нейтральный эффект");
-        add("effect_type.neutral.plural", "нейтральные эффект");
-        add("effect_type.any", "эффект");
-        add("effect_type.any.plural", "эффекты");
 
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player.plural", "%s за каждые %s %s на вас");
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player", "%s за каждый %s на вас");

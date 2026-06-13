@@ -6,6 +6,7 @@ import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
@@ -59,6 +60,20 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
         ResourceLocation id = PSTRegistries.LIVING_CONDITIONS.get().getKey(condition);
         assert id != null;
         String key = "living_condition.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
+        add(key, value);
+    }
+
+    protected void add(MobEffectPredicate.Serializer condition, String value) {
+        ResourceLocation id = PSTRegistries.MOB_EFFECT_PREDICATES.get().getKey(condition);
+        assert id != null;
+        String key = "mob_effect_predicate.%s.%s".formatted(id.getNamespace(), id.getPath());
+        add(key, value);
+    }
+
+    protected void add(MobEffectPredicate.Serializer condition, String type, String value) {
+        ResourceLocation id = PSTRegistries.MOB_EFFECT_PREDICATES.get().getKey(condition);
+        assert id != null;
+        String key = "mob_effect_predicate.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
         add(key, value);
     }
 

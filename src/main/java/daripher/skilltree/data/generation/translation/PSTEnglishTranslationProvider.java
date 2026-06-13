@@ -3,10 +3,7 @@ package daripher.skilltree.data.generation.translation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.init.*;
-import daripher.skilltree.init.predicate.PSTDamagePredicates;
-import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
-import daripher.skilltree.init.predicate.PSTItemPredicates;
-import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
+import daripher.skilltree.init.predicate.*;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
@@ -249,6 +246,15 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.player", "if all your armor is");
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "target.enemy", "if all target's armor is");
         add(PSTLivingEntityPredicates.ALL_ARMOR.get(), "%s %s %s");
+        // effect predicates
+        add("effect_type.beneficial", "beneficial effect");
+        add("effect_type.beneficial.plural", "beneficial effects");
+        add("effect_type.harmful", "harmful effect");
+        add("effect_type.harmful.plural", "harmful effects");
+        add("effect_type.neutral", "neutral effect");
+        add("effect_type.neutral.plural", "neutral effects");
+        add("effect_type.any", "effect");
+        add("effect_type.any.plural", "effects");
         // event listeners
         add(PSTEventListeners.ATTACK.get(), "%s on hit");
         add(PSTEventListeners.ATTACK.get(), "damage", "%s on %s hit");
@@ -358,15 +364,6 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "multiplier.player", "%s per block between you and enemy");
 
         add(PSTFloatFunctions.DISTANCE_TO_TARGET.get(), "condition.player", "%s if distance to target is %s");
-
-        add("effect_type.beneficial", "beneficial effect");
-        add("effect_type.beneficial.plural", "beneficial effects");
-        add("effect_type.harmful", "harmful effect");
-        add("effect_type.harmful.plural", "harmful effects");
-        add("effect_type.neutral", "neutral effect");
-        add("effect_type.neutral.plural", "neutral effects");
-        add("effect_type.any", "effect");
-        add("effect_type.any.plural", "effects");
 
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player.plural", "%s per %s %s on you");
         add(PSTFloatFunctions.EFFECT_AMOUNT.get(), "multiplier.player", "%s per %s on you");

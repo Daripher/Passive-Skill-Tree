@@ -111,7 +111,7 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
     public static class Serializer implements LivingEntityPredicate.Serializer {
         @Override
         public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
-            MobEffect effect = SerializationHelper.deserializeEffect(json);
+            MobEffect effect = SerializationHelper.deserializeMobEffect(json);
             int amplifier = !json.has("amplifier") ? 0 : json.get("amplifier").getAsInt();
             Objects.requireNonNull(effect);
             return new HasEffectEntityPredicate(effect, amplifier);
@@ -120,13 +120,13 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         @Override
         public void serialize(JsonObject json, LivingEntityPredicate predicate) {
             HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
-            SerializationHelper.serializeEffect(json, validPredicate.effect);
+            SerializationHelper.serializeMobEffect(json, validPredicate.effect);
             json.addProperty("amplifier", validPredicate.amplifier);
         }
 
         @Override
         public LivingEntityPredicate deserialize(CompoundTag tag) {
-            MobEffect effect = SerializationHelper.deserializeEffect(tag);
+            MobEffect effect = SerializationHelper.deserializeMobEffect(tag);
             int amplifier = !tag.contains("amplifier") ? 0 : tag.getInt("amplifier");
             Objects.requireNonNull(effect);
             return new HasEffectEntityPredicate(effect, amplifier);
@@ -136,14 +136,14 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         public CompoundTag serialize(LivingEntityPredicate predicate) {
             HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeEffect(tag, validPredicate.effect);
+            SerializationHelper.serializeMobEffect(tag, validPredicate.effect);
             tag.putInt("amplifier", validPredicate.amplifier);
             return tag;
         }
 
         @Override
         public LivingEntityPredicate deserialize(FriendlyByteBuf buf) {
-            MobEffect effect = NetworkHelper.readEffect(buf);
+            MobEffect effect = NetworkHelper.readMobEffect(buf);
             Objects.requireNonNull(effect);
             return new HasEffectEntityPredicate(effect, buf.readInt());
         }
@@ -151,7 +151,7 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
         @Override
         public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
             HasEffectEntityPredicate validPredicate = validatePredicate(predicate);
-            NetworkHelper.writeEffect(buf, validPredicate.effect);
+            NetworkHelper.writeMobEffect(buf, validPredicate.effect);
             buf.writeInt(validPredicate.amplifier);
         }
 

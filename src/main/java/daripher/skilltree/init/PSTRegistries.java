@@ -1,16 +1,14 @@
 package daripher.skilltree.init;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.init.predicate.PSTDamagePredicates;
-import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
-import daripher.skilltree.init.predicate.PSTItemPredicates;
-import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
+import daripher.skilltree.init.predicate.*;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
 import daripher.skilltree.skill.bonus.item.ItemBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.enchantment.EnchantmentCondition;
 import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
@@ -36,6 +34,7 @@ public class PSTRegistries {
     public static final Supplier<IForgeRegistry<FloatFunction.Serializer>> FLOAT_FUNCTIONS = PSTFloatFunctions.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<SkillRequirement.Serializer>> SKILL_REQUIREMENTS = PSTSkillRequirements.REGISTRY.makeRegistry(RegistryBuilder::new);
     public static final Supplier<IForgeRegistry<ItemBonus.Serializer>> ITEM_BONUSES = PSTItemBonuses.REGISTRY.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<MobEffectPredicate.Serializer>> MOB_EFFECT_PREDICATES = PSTMobEffectPredicates.REGISTRY.makeRegistry(RegistryBuilder::new);
 
     @SubscribeEvent
     public static void registerRegistries(NewRegistryEvent event) {
@@ -49,6 +48,7 @@ public class PSTRegistries {
         createRegistry(event, PSTFloatFunctions.REGISTRY_ID);
         createRegistry(event, PSTSkillRequirements.REGISTRY_ID);
         createRegistry(event, PSTItemBonuses.REGISTRY_ID);
+        createRegistry(event, PSTMobEffectPredicates.REGISTRY_ID);
     }
 
     private static <T> void createRegistry(NewRegistryEvent event, ResourceLocation id) {

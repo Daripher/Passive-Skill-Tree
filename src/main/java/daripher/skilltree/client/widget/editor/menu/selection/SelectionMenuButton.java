@@ -16,6 +16,7 @@ public class SelectionMenuButton<T> extends Button {
     };
     protected int selectionListRows = 10;
     protected int selectionListColumns = 10;
+    private boolean requiresSearch = true;
 
     public SelectionMenuButton(SkillTreeEditor editor, int x, int y, int width, String message, Collection<T> values) {
         super(x, y, width, 14, Component.literal(message));
@@ -57,12 +58,18 @@ public class SelectionMenuButton<T> extends Button {
         return this;
     }
 
+    public SelectionMenuButton<T> setRequiresSearch(boolean requiresSearch) {
+        this.requiresSearch = requiresSearch;
+        return this;
+    }
+
     public void setMenuInitFunc(Runnable onMenuInit) {
         this.onMenuInit = onMenuInit;
     }
 
     protected void selectMenu(SkillTreeEditor editor) {
-        SelectionMenu<T> menu = new SelectionMenu<>(editor, editor.getSelectedMenu(), selectionList, onMenuInit).setResponder(responder);
+        SelectionMenu<T> menu = new SelectionMenu<>(editor, editor.getSelectedMenu(), selectionList, onMenuInit).setResponder(responder)
+                .setRequiresSearch(requiresSearch);
         editor.selectMenu(menu);
     }
 }

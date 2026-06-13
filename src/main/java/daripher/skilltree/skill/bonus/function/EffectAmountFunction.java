@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTFloatFunctions;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.predicate.effect.EffectType;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectType;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class EffectAmountFunction implements FloatFunction<EffectAmountFunction> {
-    private EffectType effectType;
+    private MobEffectType effectType;
 
-    public EffectAmountFunction(EffectType effectType) {
+    public EffectAmountFunction(MobEffectType effectType) {
         this.effectType = effectType;
     }
 
@@ -109,19 +109,19 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
         editor.increaseHeight(19);
     }
 
-    private void selectEffectType(Consumer<FloatFunction<?>> consumer, EffectType type) {
+    private void selectEffectType(Consumer<FloatFunction<?>> consumer, MobEffectType type) {
         setEffectType(type);
         consumer.accept(this);
     }
 
-    public void setEffectType(EffectType type) {
+    public void setEffectType(MobEffectType type) {
         this.effectType = type;
     }
 
     public static class Serializer implements FloatFunction.Serializer {
         @Override
         public FloatFunction<?> deserialize(JsonObject json) throws JsonParseException {
-            EffectType type = EffectType.fromName(json.get("effect_type").getAsString());
+            MobEffectType type = MobEffectType.fromName(json.get("effect_type").getAsString());
             return new EffectAmountFunction(type);
         }
 
@@ -135,7 +135,7 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
 
         @Override
         public FloatFunction<?> deserialize(CompoundTag tag) {
-            EffectType type = EffectType.fromName(tag.getString("effect_type"));
+            MobEffectType type = MobEffectType.fromName(tag.getString("effect_type"));
             return new EffectAmountFunction(type);
         }
 
@@ -151,7 +151,7 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
 
         @Override
         public FloatFunction<?> deserialize(FriendlyByteBuf buf) {
-            EffectType type = EffectType.values()[buf.readInt()];
+            MobEffectType type = MobEffectType.values()[buf.readInt()];
             return new EffectAmountFunction(type);
         }
 
@@ -165,7 +165,7 @@ public class EffectAmountFunction implements FloatFunction<EffectAmountFunction>
 
         @Override
         public FloatFunction<?> createDefaultInstance() {
-            return new EffectAmountFunction(EffectType.ANY);
+            return new EffectAmountFunction(MobEffectType.ANY);
         }
     }
 }
