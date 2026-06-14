@@ -192,6 +192,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.CRAFTED_ITEM_BONUS.get(), "list_item_prefix", " • ");
         add(PSTSkillBonuses.STEALTH.get(), "You are %s%% harder to detect");
         add(PSTSkillBonuses.STEALTH.get(), "negative", "You are %s%% easier to detect");
+        add(PSTSkillBonuses.EFFECT_IMMUNITY.get(), "You are immune to %s");
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Grants %s %s spell");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "to level of %s spell");
         // experience sources

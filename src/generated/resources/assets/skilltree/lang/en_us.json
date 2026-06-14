@@ -371,6 +371,7 @@
   "skill_bonus.skilltree.damage_taken": "%s taken",
   "skill_bonus.skilltree.effect_duration.enemy": "Duration of inflicted %s",
   "skill_bonus.skilltree.effect_duration.player": "Duration of %s on you",
+  "skill_bonus.skilltree.effect_immunity": "You are immune to %s",
   "skill_bonus.skilltree.free_enchantment": "Enchant %s for free",
   "skill_bonus.skilltree.free_enchantment.chance": "Chance to enchant %s for free",
   "skill_bonus.skilltree.gain_experience": "Gain %s experience",

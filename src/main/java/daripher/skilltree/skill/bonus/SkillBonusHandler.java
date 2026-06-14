@@ -526,7 +526,24 @@ public class SkillBonusHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
-    public static void applyIgnoreEffectImmunityBonus(MobEffectEvent.Applicable event) {
+    public static void applyEffectImmunityBonuses(MobEffectEvent.Applicable event) {
+        applyEffectImmunityBonus(event);
+        applyIgnoreEffectImmunityBonus(event);
+    }
+
+    private static void applyEffectImmunityBonus(MobEffectEvent.Applicable event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        Stream<EffectImmunityBonus> skillBonuses = getSkillBonuses(player, EffectImmunityBonus.class).stream()
+                .filter(bonus -> bonus.shouldProvideImmunity(event.getEffectInstance().getEffect(), player));
+        if (skillBonuses.findAny().isEmpty()) {
+            return;
+        }
+        event.setResult(Event.Result.DENY);
+    }
+
+    private static void applyIgnoreEffectImmunityBonus(MobEffectEvent.Applicable event) {
         if (!(event.getEntity().getKillCredit() instanceof Player player)) {
             return;
         }

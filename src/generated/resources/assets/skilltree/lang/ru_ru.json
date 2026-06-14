@@ -450,6 +450,7 @@
   "skill_bonus.skilltree.damage_taken": "Получаемый %s",
   "skill_bonus.skilltree.effect_duration.enemy": "Длительность накладываемых %s",
   "skill_bonus.skilltree.effect_duration.player": "Длительность %s на вас",
+  "skill_bonus.skilltree.effect_immunity": "Вы невосприимчевы к %s",
   "skill_bonus.skilltree.free_enchantment": "Вы зачаровываете %s бесплатно",
   "skill_bonus.skilltree.free_enchantment.chance": "Шанс зачаровать %s бесплатно",
   "skill_bonus.skilltree.gain_experience": "Вы получаете %s опыта",
