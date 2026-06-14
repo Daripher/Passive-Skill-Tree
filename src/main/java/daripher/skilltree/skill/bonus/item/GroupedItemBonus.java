@@ -144,13 +144,6 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
         }
     }
 
-    private @Nullable ItemBonus<?> getSelectedItemBonus(int selectedBonusIndex) {
-        if (selectedBonusIndex >= getInnerBonuses().size()) {
-            return null;
-        }
-        return getInnerBonuses().get(selectedBonusIndex);
-    }
-
     private void skillBonusChanged(@Nullable ItemBonus<?> itemBonus, int selectedBonusIndex) {
         if (itemBonus == null) {
             deleteSelectedItemBonuses(selectedBonusIndex);
@@ -173,7 +166,7 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
     private void addItemBonus(SkillTreeEditor editor, ItemBonus<?> itemBonus) {
         final EditorMenu previousMenu = editor.getSelectedMenu().previousMenu;
         if (itemBonus instanceof EquipmentBonus equipmentBonus) {
-            SelectionList<SkillBonus> skillBonusSelectionList = new TextSelectionList<>(0, 0, 190, 14, PSTSkillBonuses.bonusList()).setRows(8)
+            SelectionList<SkillBonus> skillBonusSelectionList = new TextSelectionList<>(0, 0, 190, 14, PSTSkillBonuses.defaultInstances()).setRows(8)
                     .setNameGetter(bonus -> Component.literal(PSTSkillBonuses.getName(bonus))).selectElement(equipmentBonus.getSkillBonus());
             editor.selectMenu(new SelectionMenu<>(editor, editor.getSelectedMenu(), skillBonusSelectionList, () -> {
             }).setResponder(skillBonus -> {

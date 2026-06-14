@@ -159,7 +159,7 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
 
     @SuppressWarnings("rawtypes")
     public SelectionMenuButton<SkillBonus> addSelectionMenu(int x, int y, int width, SkillBonus defaultValue) {
-        Collection<SkillBonus> values = PSTSkillBonuses.bonusList();
+        Collection<SkillBonus> values = PSTSkillBonuses.defaultInstances();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(b -> Component.literal(PSTSkillBonuses.getName(b)));
     }

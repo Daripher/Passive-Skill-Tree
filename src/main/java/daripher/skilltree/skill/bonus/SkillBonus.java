@@ -9,6 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -82,6 +83,6 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
     }
 
     interface Serializer extends daripher.skilltree.data.serializers.Serializer<SkillBonus<?>> {
-        SkillBonus<?> createDefaultInstance();
+        @Nullable SkillBonus<?> createDefaultInstance();
     }
 }

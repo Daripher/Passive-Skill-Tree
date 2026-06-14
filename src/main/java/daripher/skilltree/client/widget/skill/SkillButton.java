@@ -7,6 +7,7 @@ import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.PassiveSkillTree;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.player.BrokenSkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -39,6 +40,7 @@ public class SkillButton extends Button {
     public boolean canLearn;
     public boolean searched;
     public boolean selected;
+    public boolean hasBrokenBonuses;
 
     public SkillButton(Supplier<Float> animationFunc, float x, float y, PassiveSkill skill) {
         super((int) x, (int) y, skill.getSkillSize(), skill.getSkillSize(), Component.empty(), b -> {
@@ -48,6 +50,7 @@ public class SkillButton extends Button {
         this.skill = skill;
         this.animationFunction = animationFunc;
         this.active = false;
+        this.hasBrokenBonuses = skill.getBonuses().stream().anyMatch(bonus -> bonus instanceof BrokenSkillBonus);
     }
 
     @Override
@@ -55,6 +58,12 @@ public class SkillButton extends Button {
         RenderSystem.enableBlend();
         graphics.pose().pushPose();
         graphics.pose().translate(x, y, 0);
+        if (hasBrokenBonuses) {
+            ResourceLocation brokenTexture = ResourceLocation.parse("skilltree:textures/icons/broken_skill.png");
+            graphics.blit(brokenTexture, 0, 0, width, height, 0, 0, width, height, width, height);
+            graphics.pose().popPose();
+            return;
+        }
         renderFavoriteSkillHighlight(graphics);
         renderBackground(graphics);
         graphics.pose().pushPose();

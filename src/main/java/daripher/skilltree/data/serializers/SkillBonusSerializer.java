@@ -3,6 +3,7 @@ package daripher.skilltree.data.serializers;
 import com.google.gson.*;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.player.BrokenSkillBonus;
 import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.Type;
@@ -15,7 +16,9 @@ public class SkillBonusSerializer implements JsonSerializer<SkillBonus<?>>, Json
         String type = jsonObj.get("type").getAsString();
         ResourceLocation serializerId = ResourceLocation.parse(type);
         SkillBonus.Serializer serializer = PSTRegistries.SKILL_BONUSES.get().getValue(serializerId);
-        Objects.requireNonNull(serializer, "Unknown skill bonus: " + serializerId);
+        if (serializer == null) {
+            return new BrokenSkillBonus("Unknown skill bonus: " + serializerId);
+        }
         return serializer.deserialize(jsonObj);
     }
 

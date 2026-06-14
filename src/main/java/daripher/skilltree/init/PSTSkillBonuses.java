@@ -55,11 +55,12 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> CRAFTED_ITEM_BONUS = REGISTRY.register("crafted_item_bonus", CraftedItemBonusBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> STEALTH = REGISTRY.register("stealth", StealthBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> EFFECT_IMMUNITY = REGISTRY.register("effect_immunity", EffectImmunityBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> BROKEN = REGISTRY.register("broken", BrokenSkillBonus.Serializer::new);
 
     @SuppressWarnings("rawtypes")
-    public static List<SkillBonus> bonusList() {
+    public static List<SkillBonus> defaultInstances() {
         return PSTRegistries.SKILL_BONUSES.get().getValues().stream().map(SkillBonus.Serializer::createDefaultInstance)
-                .map(SkillBonus.class::cast).toList();
+                .map(SkillBonus.class::cast).filter(Objects::nonNull).toList();
     }
 
     public static String getName(SkillBonus<?> bonus) {
