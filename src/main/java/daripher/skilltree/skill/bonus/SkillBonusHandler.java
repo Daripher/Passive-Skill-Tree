@@ -28,6 +28,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -622,20 +623,21 @@ public class SkillBonusHandler {
         }
         final Player playerSource = source;
         float durationMultiplier = 1;
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        MobEffect mobEffect = effectInstance.getEffect();
         if (source != null) {
             durationMultiplier += getSkillBonuses(playerSource, EffectDurationBonus.class).stream()
-                    .filter(b -> b.getTarget() == SkillBonus.Target.ENEMY).map(b -> b.getDuration(playerSource, event.getEntity()))
-                    .reduce(Float::sum).orElse(0f);
+                    .filter(b -> b.getTarget() == SkillBonus.Target.ENEMY)
+                    .map(b -> b.getDuration(mobEffect, playerSource, event.getEntity())).reduce(Float::sum).orElse(0f);
         }
         if (event.getEntity() instanceof Player player) {
             durationMultiplier += getSkillBonuses(player, EffectDurationBonus.class).stream()
-                    .filter(b -> b.getTarget() == SkillBonus.Target.PLAYER).map(b -> b.getDuration(playerSource, player)).reduce(Float::sum)
-                    .orElse(0f);
+                    .filter(b -> b.getTarget() == SkillBonus.Target.PLAYER).map(b -> b.getDuration(mobEffect, playerSource, player))
+                    .reduce(Float::sum).orElse(0f);
         }
         if (durationMultiplier == 1) {
             return;
         }
-        MobEffectInstance effectInstance = event.getEffectInstance();
         int newDuration = (int) (effectInstance.getDuration() * durationMultiplier);
         ((MobEffectInstanceAccessor) effectInstance).setDuration(newDuration);
     }

@@ -20,6 +20,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +44,10 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
         this.target = target;
     }
 
-    public float getDuration(@Nullable Player effectSource, LivingEntity entity) {
+    public float getDuration(MobEffect mobEffect, @Nullable Player effectSource, LivingEntity entity) {
+        if (!effectPredicate.test(mobEffect)) {
+            return 0f;
+        }
         if (target == Target.PLAYER) {
             if (!playerCondition.test(entity)) {
                 return 0f;
