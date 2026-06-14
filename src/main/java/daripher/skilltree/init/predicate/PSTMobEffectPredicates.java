@@ -3,6 +3,7 @@ package daripher.skilltree.init.predicate;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
+import daripher.skilltree.skill.bonus.predicate.effect.MobEffectIdPredicate;
 import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.effect.MobEffectTypePredicate;
 import daripher.skilltree.skill.bonus.predicate.effect.NoneMobEffectPredicate;
@@ -18,7 +19,8 @@ public class PSTMobEffectPredicates {
     public static final DeferredRegister<MobEffectPredicate.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
     public static final RegistryObject<MobEffectPredicate.Serializer> NONE = REGISTRY.register("none", NoneMobEffectPredicate.Serializer::new);
-    public static final RegistryObject<MobEffectPredicate.Serializer> EFFECT_TYPE = REGISTRY.register("effect_type", MobEffectTypePredicate.Serializer::new);
+    public static final RegistryObject<MobEffectPredicate.Serializer> EFFECT_CATEGORY = REGISTRY.register("effect_category", MobEffectTypePredicate.Serializer::new);
+    public static final RegistryObject<MobEffectPredicate.Serializer> EFFECT_ID = REGISTRY.register("effect_id", MobEffectIdPredicate.Serializer::new);
 
     public static List<MobEffectPredicate> defaultInstances() {
         return PSTRegistries.MOB_EFFECT_PREDICATES.get().getValues().stream().map(MobEffectPredicate.Serializer::createDefaultInstance)
