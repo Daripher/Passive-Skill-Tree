@@ -35,7 +35,7 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> CANT_USE_ITEM = REGISTRY.register("cant_use_item", CantUseItemBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> HEALING = REGISTRY.register("healing", HealingBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> INFLICT_DAMAGE = REGISTRY.register("inflict_damage", InflictDamageBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> CAN_POISON_ANYONE = REGISTRY.register("can_poison_anyone", CanPoisonAnyoneBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> IGNORE_EFFECT_IMMUNITY = REGISTRY.register("ignore_effect_immunity", IgnoreEffectImmunityBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> LETHAL_POISON = REGISTRY.register("lethal_poison", LethalPoisonBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> DAMAGE_TAKEN = REGISTRY.register("damage_taken", DamageTakenBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> DAMAGE_AVOIDANCE = REGISTRY.register("damage_avoidance", DamageAvoidanceBonus.Serializer::new);

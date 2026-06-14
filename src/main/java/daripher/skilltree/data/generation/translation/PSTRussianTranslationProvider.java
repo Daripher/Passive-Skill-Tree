@@ -164,7 +164,7 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "player.chance", "Шанс получить %s урона");
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy", "+%s урона наносится %s");
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy.chance", "Шанс нанести %s урона %s");
-        add(PSTSkillBonuses.CAN_POISON_ANYONE.get(), "Ваши яды действуют на любых врагов");
+        add(PSTSkillBonuses.IGNORE_EFFECT_IMMUNITY.get(), "Вы можете накладывать %s игнорируя невосприимчевость");
         add(PSTSkillBonuses.LETHAL_POISON.get(), "Ваши яды летальны");
         add(PSTSkillBonuses.DAMAGE_TAKEN.get(), "Получаемый %s");
         add(PSTSkillBonuses.DAMAGE_AVOIDANCE.get(), "Шанс избежать %s");

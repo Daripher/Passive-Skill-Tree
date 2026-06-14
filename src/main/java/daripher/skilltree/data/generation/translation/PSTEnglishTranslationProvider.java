@@ -161,7 +161,7 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "player.chance", "Chance to take %s %s");
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy", "+%s %s Damage inflicted");
         add(PSTSkillBonuses.INFLICT_DAMAGE.get(), "enemy.chance", "Chance to inflict %s %s Damage");
-        add(PSTSkillBonuses.CAN_POISON_ANYONE.get(), "Your poisons can affect any enemies");
+        add(PSTSkillBonuses.IGNORE_EFFECT_IMMUNITY.get(), "You can apply %s ignoring immunity");
         add(PSTSkillBonuses.LETHAL_POISON.get(), "Your poisons are lethal");
         add(PSTSkillBonuses.DAMAGE_TAKEN.get(), "%s taken");
         add(PSTSkillBonuses.DAMAGE_AVOIDANCE.get(), "Chance to avoid %s");

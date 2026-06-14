@@ -30,7 +30,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -527,14 +526,13 @@ public class SkillBonusHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
-    public static void inflictPoisonForcefully(MobEffectEvent.Applicable event) {
-        if (event.getEffectInstance().getEffect() != MobEffects.POISON) {
-            return;
-        }
+    public static void applyIgnoreEffectImmunityBonus(MobEffectEvent.Applicable event) {
         if (!(event.getEntity().getKillCredit() instanceof Player player)) {
             return;
         }
-        if (getSkillBonuses(player, CanPoisonAnyoneBonus.class).isEmpty()) {
+        Stream<IgnoreEffectImmunityBonus> skillBonuses = getSkillBonuses(player, IgnoreEffectImmunityBonus.class).stream()
+                .filter(bonus -> bonus.shouldIgnoreEffectImmunity(event.getEffectInstance().getEffect(), player, event.getEntity()));
+        if (skillBonuses.findAny().isEmpty()) {
             return;
         }
         event.setResult(Event.Result.ALLOW);
