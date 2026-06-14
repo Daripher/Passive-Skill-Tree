@@ -2,7 +2,11 @@
   "id": "skilltree:alchemist_32",
   "bonuses": [
     {
-      "type": "skilltree:can_poison_anyone"
+      "type": "skilltree:ignore_effect_immunity",
+      "mob_effect_predicate": {
+        "effect": "minecraft:poison",
+        "type": "skilltree:effect_id"
+      }
     }
   ],
   "requirements": [
@@ -22,6 +26,7 @@
   "backgroundTexture": "skilltree:textures/icons/background/keystone.png",
   "iconTexture": "skilltree:textures/icons/potion_green_big.png",
   "borderTexture": "skilltree:textures/tooltip/lesser.png",
+  "titleColor": "",
   "positionX": 124.70306,
   "positionY": 72.00797,
   "buttonSize": 32,
