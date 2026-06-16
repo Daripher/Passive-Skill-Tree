@@ -30,12 +30,12 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class CommandBonus implements EventListenerBonus<CommandBonus> {
+public class ExecuteCommandBonus implements EventListenerBonus<ExecuteCommandBonus> {
     private @Nonnull String command;
     private @Nonnull String description;
     private @Nonnull SkillEventListener eventListener;
 
-    public CommandBonus(@Nonnull String command, @Nonnull String description, @Nonnull SkillEventListener eventListener) {
+    public ExecuteCommandBonus(@Nonnull String command, @Nonnull String description, @Nonnull SkillEventListener eventListener) {
         this.command = command;
         this.description = description;
         this.eventListener = eventListener;
@@ -64,12 +64,12 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public CommandBonus copy() {
-        return new CommandBonus(command, description, eventListener);
+    public ExecuteCommandBonus copy() {
+        return new ExecuteCommandBonus(command, description, eventListener);
     }
 
     @Override
-    public CommandBonus multiply(double multiplier) {
+    public ExecuteCommandBonus multiply(double multiplier) {
         return this;
     }
 
@@ -80,7 +80,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
     @Override
     public boolean sameBonus(SkillBonus<?> other) {
-        if (!(other instanceof CommandBonus otherBonus)) {
+        if (!(other instanceof ExecuteCommandBonus otherBonus)) {
             return false;
         }
         if (!otherBonus.command.equals(this.command)) {
@@ -90,7 +90,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public SkillBonus<EventListenerBonus<CommandBonus>> merge(SkillBonus<?> other) {
+    public SkillBonus<EventListenerBonus<ExecuteCommandBonus>> merge(SkillBonus<?> other) {
         throw new UnsupportedOperationException();
     }
 
@@ -111,7 +111,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<ExecuteCommandBonus>> consumer) {
         editor.addLabel(0, 0, "Command", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addTextArea(0, 0, 200, 70, command).setResponder(v -> selectCommand(consumer, v));
@@ -128,23 +128,23 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
         editor.increaseHeight(19);
     }
 
-    private void selectDescription(Consumer<EventListenerBonus<CommandBonus>> consumer, String text) {
+    private void selectDescription(Consumer<EventListenerBonus<ExecuteCommandBonus>> consumer, String text) {
         setDescription(text);
         consumer.accept(this.copy());
     }
 
-    private void selectCommand(Consumer<EventListenerBonus<CommandBonus>> consumer, String text) {
+    private void selectCommand(Consumer<EventListenerBonus<ExecuteCommandBonus>> consumer, String text) {
         setCommand(text);
         consumer.accept(this.copy());
     }
 
-    private void selectEventListener(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer, SkillEventListener eventListener) {
+    private void selectEventListener(SkillTreeEditor editor, Consumer<EventListenerBonus<ExecuteCommandBonus>> consumer, SkillEventListener eventListener) {
         setEventListener(eventListener);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addEventListenerWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<CommandBonus>> consumer) {
+    private void addEventListenerWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<ExecuteCommandBonus>> consumer) {
         eventListener.addEditorWidgets(editor, e -> {
             setEventListener(e);
             consumer.accept(this.copy());
@@ -170,16 +170,16 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public CommandBonus deserialize(JsonObject json) throws JsonParseException {
+        public ExecuteCommandBonus deserialize(JsonObject json) throws JsonParseException {
             String command = json.get("command").getAsString();
             String description = json.has("description") ? json.get("description").getAsString() : "";
             SkillEventListener eventListener = SerializationHelper.deserializeEventListener(json);
-            return new CommandBonus(command, description, eventListener);
+            return new ExecuteCommandBonus(command, description, eventListener);
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof CommandBonus aBonus)) {
+            if (!(bonus instanceof ExecuteCommandBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             json.addProperty("command", aBonus.command);
@@ -188,7 +188,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
         }
 
         @Override
-        public CommandBonus deserialize(CompoundTag tag) {
+        public ExecuteCommandBonus deserialize(CompoundTag tag) {
             String command = tag.getString("command");
             String description = tag.contains("description") ? tag.getString("description") : "";
             SkillEventListener eventListener;
@@ -197,12 +197,12 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
             } else {
                 eventListener = SerializationHelper.deserializeEventListener(tag);
             }
-            return new CommandBonus(command, description, eventListener);
+            return new ExecuteCommandBonus(command, description, eventListener);
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof CommandBonus aBonus)) {
+            if (!(bonus instanceof ExecuteCommandBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -213,16 +213,16 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
         }
 
         @Override
-        public CommandBonus deserialize(FriendlyByteBuf buf) {
+        public ExecuteCommandBonus deserialize(FriendlyByteBuf buf) {
             String command = buf.readUtf();
             String description = buf.readUtf();
             SkillEventListener eventListener = NetworkHelper.readEventListener(buf);
-            return new CommandBonus(command, description, eventListener);
+            return new ExecuteCommandBonus(command, description, eventListener);
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof CommandBonus aBonus)) {
+            if (!(bonus instanceof ExecuteCommandBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             buf.writeUtf(aBonus.command);
@@ -232,7 +232,7 @@ public class CommandBonus implements EventListenerBonus<CommandBonus> {
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new CommandBonus("give @p minecraft:apple", "Grants an apple when learned", new SkillLearnedEventListener());
+            return new ExecuteCommandBonus("give @p minecraft:apple", "Grants an apple when learned", new SkillLearnedEventListener());
         }
     }
 }

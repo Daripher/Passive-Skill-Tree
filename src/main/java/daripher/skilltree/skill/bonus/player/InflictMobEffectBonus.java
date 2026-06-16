@@ -29,20 +29,20 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class InflictEffectBonus implements EventListenerBonus<InflictEffectBonus> {
+public final class InflictMobEffectBonus implements EventListenerBonus<InflictMobEffectBonus> {
     private MobEffectInstance effectInstance;
     private SkillEventListener eventListener;
     private float chance;
     private int maxStacks;
 
-    public InflictEffectBonus(float chance, MobEffectInstance effectInstance, SkillEventListener eventListener, int maxStacks) {
+    public InflictMobEffectBonus(float chance, MobEffectInstance effectInstance, SkillEventListener eventListener, int maxStacks) {
         this.chance = chance;
         this.effectInstance = effectInstance;
         this.eventListener = eventListener;
         this.maxStacks = maxStacks;
     }
 
-    public InflictEffectBonus(float chance, MobEffectInstance effectInstance, int maxStacks) {
+    public InflictMobEffectBonus(float chance, MobEffectInstance effectInstance, int maxStacks) {
         this(chance, effectInstance, new AttackEventListener(), maxStacks);
     }
 
@@ -82,25 +82,25 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public InflictEffectBonus copy() {
-        return new InflictEffectBonus(chance, effectInstance, eventListener, maxStacks);
+    public InflictMobEffectBonus copy() {
+        return new InflictMobEffectBonus(chance, effectInstance, eventListener, maxStacks);
     }
 
     @Override
-    public InflictEffectBonus multiply(double multiplier) {
+    public InflictMobEffectBonus multiply(double multiplier) {
         if (chance < 1) {
             chance *= (float) multiplier;
         } else {
             int newDuration = (int) (effectInstance.getDuration() * multiplier);
             effectInstance = new MobEffectInstance(effectInstance.getEffect(), newDuration, effectInstance.getAmplifier());
-            return new InflictEffectBonus(chance, effectInstance, eventListener, maxStacks);
+            return new InflictMobEffectBonus(chance, effectInstance, eventListener, maxStacks);
         }
         return this;
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof InflictEffectBonus otherBonus)) {
+        if (!(other instanceof InflictMobEffectBonus otherBonus)) {
             return false;
         }
         if (!Objects.equals(otherBonus.effectInstance.getEffect(), this.effectInstance.getEffect())) {
@@ -110,8 +110,8 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public SkillBonus<EventListenerBonus<InflictEffectBonus>> merge(SkillBonus<?> other) {
-        if (!(other instanceof InflictEffectBonus otherBonus)) {
+    public SkillBonus<EventListenerBonus<InflictMobEffectBonus>> merge(SkillBonus<?> other) {
+        if (!(other instanceof InflictMobEffectBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
         int maxStacks = Math.max(this.maxStacks, otherBonus.maxStacks);
@@ -120,9 +120,9 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
         MobEffectInstance effectInstance = new MobEffectInstance(this.effectInstance.getEffect(), duration, amplifier);
         if (chance < 1) {
             float chance = this.chance + otherBonus.chance;
-            return new InflictEffectBonus(chance, effectInstance, eventListener, maxStacks);
+            return new InflictMobEffectBonus(chance, effectInstance, eventListener, maxStacks);
         } else {
-            return new InflictEffectBonus(chance, effectInstance, eventListener, maxStacks);
+            return new InflictMobEffectBonus(chance, effectInstance, eventListener, maxStacks);
         }
     }
 
@@ -181,7 +181,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictEffectBonus>> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer) {
         editor.addLabel(0, 0, "Effect", ChatFormatting.GOLD);
         editor.addLabel(150, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
@@ -207,40 +207,40 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
         editor.increaseHeight(19);
     }
 
-    private void addEventListenerWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictEffectBonus>> consumer) {
+    private void addEventListenerWidgets(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer) {
         eventListener.addEditorWidgets(editor, eventListener -> {
             setEventListener(eventListener);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectEventListener(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictEffectBonus>> consumer, SkillEventListener eventListener) {
+    private void selectEventListener(SkillTreeEditor editor, Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, SkillEventListener eventListener) {
         setEventListener(eventListener);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectAmplifier(Consumer<EventListenerBonus<InflictEffectBonus>> consumer, Double value) {
+    private void selectAmplifier(Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, Double value) {
         setAmplifier(value.intValue());
         consumer.accept(this.copy());
     }
 
-    private void selectMaxStacks(Consumer<EventListenerBonus<InflictEffectBonus>> consumer, Double value) {
+    private void selectMaxStacks(Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, Double value) {
         setMaxStacks(value.intValue());
         consumer.accept(this.copy());
     }
 
-    private void selectDuration(Consumer<EventListenerBonus<InflictEffectBonus>> consumer, Double value) {
+    private void selectDuration(Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, Double value) {
         setDuration(value.intValue());
         consumer.accept(this.copy());
     }
 
-    private void selectChance(Consumer<EventListenerBonus<InflictEffectBonus>> consumer, Double value) {
+    private void selectChance(Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, Double value) {
         setChance(value.floatValue());
         consumer.accept(this.copy());
     }
 
-    private void selectEffect(Consumer<EventListenerBonus<InflictEffectBonus>> consumer, MobEffect effect) {
+    private void selectEffect(Consumer<EventListenerBonus<InflictMobEffectBonus>> consumer, MobEffect effect) {
         setEffectInstance(effect);
         consumer.accept(this);
     }
@@ -271,18 +271,18 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public InflictEffectBonus deserialize(JsonObject json) throws JsonParseException {
+        public InflictMobEffectBonus deserialize(JsonObject json) throws JsonParseException {
             float chance = SerializationHelper.getElement(json, "chance").getAsFloat();
             MobEffectInstance effect = SerializationHelper.deserializeEffectInstance(json);
             int maxStacks = json.has("max_stacks") ? json.get("max_stacks").getAsInt() : 0;
-            InflictEffectBonus bonus = new InflictEffectBonus(chance, effect, maxStacks);
+            InflictMobEffectBonus bonus = new InflictMobEffectBonus(chance, effect, maxStacks);
             bonus.eventListener = SerializationHelper.deserializeEventListener(json);
             return bonus;
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof InflictEffectBonus aBonus)) {
+            if (!(bonus instanceof InflictMobEffectBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             json.addProperty("chance", aBonus.chance);
@@ -292,18 +292,18 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
         }
 
         @Override
-        public InflictEffectBonus deserialize(CompoundTag tag) {
+        public InflictMobEffectBonus deserialize(CompoundTag tag) {
             float chance = tag.getFloat("chance");
             MobEffectInstance effect = SerializationHelper.deserializeEffectInstance(tag);
             int maxStacks = tag.getInt("max_stacks");
-            InflictEffectBonus bonus = new InflictEffectBonus(chance, effect, maxStacks);
+            InflictMobEffectBonus bonus = new InflictMobEffectBonus(chance, effect, maxStacks);
             bonus.eventListener = SerializationHelper.deserializeEventListener(tag);
             return bonus;
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof InflictEffectBonus aBonus)) {
+            if (!(bonus instanceof InflictMobEffectBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -315,18 +315,18 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
         }
 
         @Override
-        public InflictEffectBonus deserialize(FriendlyByteBuf buf) {
+        public InflictMobEffectBonus deserialize(FriendlyByteBuf buf) {
             float amount = buf.readFloat();
             int maxStacks = buf.readInt();
             MobEffectInstance effect = NetworkHelper.readEffectInstance(buf);
-            InflictEffectBonus bonus = new InflictEffectBonus(amount, effect, maxStacks);
+            InflictMobEffectBonus bonus = new InflictMobEffectBonus(amount, effect, maxStacks);
             bonus.eventListener = NetworkHelper.readEventListener(buf);
             return bonus;
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof InflictEffectBonus aBonus)) {
+            if (!(bonus instanceof InflictMobEffectBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             buf.writeFloat(aBonus.chance);
@@ -337,7 +337,7 @@ public final class InflictEffectBonus implements EventListenerBonus<InflictEffec
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new InflictEffectBonus(0.05f, new MobEffectInstance(MobEffects.POISON, 100), 1);
+            return new InflictMobEffectBonus(0.05f, new MobEffectInstance(MobEffects.POISON, 100), 1);
         }
     }
 }
