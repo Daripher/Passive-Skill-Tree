@@ -42,6 +42,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     private final List<Pair<AbstractWorkbenchRecipe, Integer>> searchedRecipes = new ArrayList<>();
     private EditBox searchBox;
     private int amountScrolled;
+    private float tickCount;
 
     public WorkbenchScreen(WorkbenchMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -120,6 +121,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         renderGhostRecipe(guiGraphics);
         renderTooltip(guiGraphics, mouseX, mouseY);
+        tickCount += partialTicks;
     }
 
     private void renderGhostRecipe(GuiGraphics guiGraphics) {
@@ -128,54 +130,81 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             for (int i = 1; i < 10; i++) {
                 int itemX = leftPos + 8 + i % 5 * 18;
                 int itemY = topPos + 120 + i / 5 * 18;
-                guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
+                renderMissingItemOverlay(guiGraphics, itemX, itemY);
             }
             return;
         }
-        Objects.requireNonNull(minecraft);
+        renderGhostBaseIngredient(guiGraphics, selectedRecipe);
+        renderGhostAdditionalIngredients(guiGraphics, selectedRecipe);
+        renderGhostResult(guiGraphics, selectedRecipe);
+    }
+
+    private void renderGhostResult(GuiGraphics guiGraphics, AbstractWorkbenchRecipe selectedRecipe) {
+        if (!menu.getResultItem().isEmpty()) {
+            return;
+        }
+        renderMissingItemOverlay(guiGraphics, leftPos + 134, topPos + 120, 34);
+        renderMissingItemStack(guiGraphics, leftPos + 143, topPos + 129, getResultItem(selectedRecipe));
+    }
+
+    private void renderGhostAdditionalIngredients(GuiGraphics guiGraphics, AbstractWorkbenchRecipe selectedRecipe) {
+        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
+        for (int ingredientIndex = 0; ingredientIndex < 9; ingredientIndex++) {
+            int slot = ingredientIndex + 1;
+            int itemX = leftPos + 8 + (slot % 5) * 18;
+            int itemY = topPos + 120 + (slot / 5) * 18;
+            if (ingredientIndex >= requiredIngredients.size()) {
+                renderMissingItemOverlay(guiGraphics, itemX, itemY);
+                continue;
+            }
+            ItemStack existingIngredient = menu.getWorkbenchContainer().getItem(slot);
+            Map.Entry<Ingredient, Integer> ingredientAmountEntry = requiredIngredients.get(ingredientIndex);
+            if (existingIngredient.isEmpty()) {
+                renderMissingIngredient(guiGraphics, slot, itemX, itemY, Pair.of(ingredientAmountEntry));
+                continue;
+            }
+            int requiredAmount = ingredientAmountEntry.getValue();
+            if (existingIngredient.getCount() < requiredAmount) {
+                renderMissingItemOverlay(guiGraphics, itemX, itemY);
+            }
+        }
+    }
+
+    private void renderGhostBaseIngredient(GuiGraphics guiGraphics, AbstractWorkbenchRecipe selectedRecipe) {
         int requiredBaseItemAmount = selectedRecipe.requiredBaseItemAmount();
-        Pair<Ingredient, Integer> requiredBaseItem = selectedRecipe.getBaseIngredient();
+        Pair<Ingredient, Integer> baseIngredient = selectedRecipe.getBaseIngredient();
         boolean usingValidBaseItem = selectedRecipe.isValidBaseItem(menu.getWorkbenchContainer().getBaseItem());
         if (requiredBaseItemAmount == 0 && !menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
-            guiGraphics.fill(leftPos + 8, topPos + 120, leftPos + 24, topPos + 136, 0x30ff0000);
+            renderMissingItemOverlay(guiGraphics, leftPos + 8, topPos + 120);
         }
-        if (requiredBaseItem != null && requiredBaseItemAmount > 0 && !usingValidBaseItem) {
-            guiGraphics.fill(leftPos + 8, topPos + 120, leftPos + 24, topPos + 136, 0x30ff0000);
-            ItemStack requiredBaseItemStack = requiredBaseItem.getLeft().getItems()[0];
-            requiredBaseItemStack.setCount(requiredBaseItemAmount);
-            if (!requiredBaseItemStack.isEmpty() && menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
-                renderMissingItem(guiGraphics, leftPos + 8, topPos + 120, requiredBaseItemStack);
-            }
+        if (baseIngredient != null && requiredBaseItemAmount > 0 && !usingValidBaseItem) {
+            renderMissingIngredient(guiGraphics, 0, leftPos + 8, topPos + 120, baseIngredient);
         }
-        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
-        for (int i = 1; i < 10; i++) {
-            int itemX = leftPos + 8 + i % 5 * 18;
-            int itemY = topPos + 120 + i / 5 * 18;
-            if (i - 1 >= requiredIngredients.size()) {
-                guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
-                continue;
-            }
-            ItemStack existingIngredient = menu.getWorkbenchContainer().getItem(i);
-            int requiredAmount = requiredIngredients.get(i - 1).getValue();
-            if (!existingIngredient.isEmpty()) {
-                if (existingIngredient.getCount() < requiredAmount) {
-                    guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
-                }
-                continue;
-            }
-            guiGraphics.fill(itemX, itemY, itemX + 16, itemY + 16, 0x30ff0000);
-            Ingredient ingredient = requiredIngredients.get(i - 1).getKey();
-            ItemStack itemStack = ingredient.getItems()[0].copy();
-            itemStack.setCount(requiredAmount);
-            renderMissingItem(guiGraphics, itemX, itemY, itemStack);
+    }
+
+    private void renderMissingIngredient(GuiGraphics guiGraphics, int slot, int x, int y, Pair<Ingredient, Integer> ingredientAmountPair) {
+        renderMissingItemOverlay(guiGraphics, x, y);
+        ItemStack itemStack = getDisplayedItemStack(ingredientAmountPair, slot);
+        itemStack.setCount(ingredientAmountPair.getRight());
+        if (!itemStack.isEmpty()) {
+            renderMissingItemStack(guiGraphics, x, y, itemStack);
         }
-        if (menu.getResultItem().isEmpty()) {
-            ItemStack resultItem = getResultItem(selectedRecipe);
-            guiGraphics.fill(leftPos + 134, topPos + 120, leftPos + 168, topPos + 154, 0x30ff0000);
-            if (!resultItem.isEmpty()) {
-                renderMissingItem(guiGraphics, leftPos + 143, topPos + 129, resultItem);
-            }
-        }
+    }
+
+    private ItemStack getDisplayedItemStack(Pair<Ingredient, Integer> ingredientAmountPair, int slot) {
+        ItemStack[] ingredientItemStacks = ingredientAmountPair.getLeft().getItems();
+        Random random = new Random(slot);
+        int ingredientCount = ingredientItemStacks.length;
+        int displayedItemIndex = Mth.floor((tickCount / 20f + random.nextInt(ingredientCount)) % ingredientCount);
+        return ingredientItemStacks[displayedItemIndex];
+    }
+
+    private void renderMissingItemOverlay(GuiGraphics guiGraphics, int x, int y) {
+        renderMissingItemOverlay(guiGraphics, x, y, 16);
+    }
+
+    private void renderMissingItemOverlay(GuiGraphics guiGraphics, int x, int y, int slotSize) {
+        guiGraphics.fill(x, y, x + slotSize, y + slotSize, 0x30ff0000);
     }
 
     private @NotNull ItemStack getResultItem(AbstractWorkbenchRecipe selectedRecipe) {
@@ -208,21 +237,21 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             int itemX = leftPos + 8;
             int itemY = topPos + 120;
             if (isMouseOverArea(mouseX, mouseY, itemX, itemY, 16, 16)) {
-                ItemStack requiredBaseItemStack = requiredBaseItem.getLeft().getItems()[0];
+                ItemStack requiredBaseItemStack = getDisplayedItemStack(requiredBaseItem, 0);
                 if (!requiredBaseItemStack.isEmpty() && menu.getWorkbenchContainer().getBaseItem().isEmpty()) {
                     renderItemTooltip(guiGraphics, mouseX, mouseY, requiredBaseItemStack);
                 }
             }
         }
         AtomicInteger slotIndex = new AtomicInteger(1);
-        selectedRecipe.getAdditionalIngredients().forEach((ingredient, requiredAmount) -> {
-            if (menu.getWorkbenchContainer().getItem(slotIndex.get()).isEmpty()) {
-                int itemX = leftPos + 8 + slotIndex.get() % 5 * 18;
-                int itemY = topPos + 120 + slotIndex.get() / 5 * 18;
+        selectedRecipe.getAdditionalIngredients().entrySet().forEach(ingredientAmountEntry -> {
+            int slot = slotIndex.get();
+            if (menu.getWorkbenchContainer().getItem(slot).isEmpty()) {
+                int itemX = leftPos + 8 + slot % 5 * 18;
+                int itemY = topPos + 120 + slot / 5 * 18;
                 if (isMouseOverArea(mouseX, mouseY, itemX, itemY, 16, 16)) {
-                    ItemStack itemStack = ingredient.getItems()[0].copy();
-                    itemStack.setCount(requiredAmount);
-                    renderItemTooltip(guiGraphics, mouseX, mouseY, itemStack);
+                    Pair<Ingredient, Integer> ingredientAmountPair = Pair.of(ingredientAmountEntry);
+                    renderItemTooltip(guiGraphics, mouseX, mouseY, getDisplayedItemStack(ingredientAmountPair, slot));
                 }
                 slotIndex.getAndIncrement();
             }
@@ -250,7 +279,10 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         guiGraphics.renderTooltip(font, tooltip, tooltipImage, itemStack, x, y);
     }
 
-    private void renderMissingItem(GuiGraphics guiGraphics, int itemX, int itemY, ItemStack itemStack) {
+    private void renderMissingItemStack(GuiGraphics guiGraphics, int itemX, int itemY, ItemStack itemStack) {
+        if (itemStack.isEmpty()) {
+            return;
+        }
         guiGraphics.renderFakeItem(itemStack, itemX, itemY);
         guiGraphics.fill(RenderType.guiGhostRecipeOverlay(), itemX, itemY, itemX + 16, itemY + 16, 0x30ffffff);
         guiGraphics.renderItemDecorations(font, itemStack, itemX, itemY);
