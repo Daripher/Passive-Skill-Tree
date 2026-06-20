@@ -586,6 +586,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение %s");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Изучите умение %s");
         // items
+        add("item.minecraft.potion.mixture", "Микстура");
+        add("item.minecraft.splash_potion.mixture", "Врзывная микстура");
+        add("item.minecraft.lingering_potion.mixture", "Туманная микстура");
         add("item.cant_use.info", "Вы не можете это использовать");
         add(PSTItems.WISDOM_SCROLL.get(), "Свиток мудрости");
         add(PSTItems.AMNESIA_SCROLL.get(), "Свиток амнезии");
@@ -619,6 +622,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add("itemGroup.skilltree", "Passive Skill Tree");
         // recipes
         add(PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get(), "%s [%s]");
+        add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "Смешивание зелий");
+        add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "custom_skill_description", "Вы можете смешивать зелья используя продвинутый рабочий стол");
     }
 
     protected void add(Potion potion, String name) {

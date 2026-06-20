@@ -148,7 +148,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     private void renderGhostAdditionalIngredients(GuiGraphics guiGraphics, AbstractWorkbenchRecipe selectedRecipe) {
-        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
+        ItemStack baseItemStack = menu.getWorkbenchContainer().getBaseItem();
+        Map<Ingredient, Integer> additionalIngredients = selectedRecipe.getAdditionalIngredients(baseItemStack);
+        List<Map.Entry<Ingredient, Integer>> requiredIngredients = additionalIngredients.entrySet().stream().toList();
         for (int ingredientIndex = 0; ingredientIndex < 9; ingredientIndex++) {
             int slot = ingredientIndex + 1;
             int itemX = leftPos + 8 + (slot % 5) * 18;
@@ -244,7 +246,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             }
         }
         AtomicInteger slotIndex = new AtomicInteger(1);
-        selectedRecipe.getAdditionalIngredients().entrySet().forEach(ingredientAmountEntry -> {
+        ItemStack baseItemStack = menu.getWorkbenchContainer().getBaseItem();
+        Map<Ingredient, Integer> additionalIngredients = selectedRecipe.getAdditionalIngredients(baseItemStack);
+        additionalIngredients.entrySet().forEach(ingredientAmountEntry -> {
             int slot = slotIndex.get();
             if (menu.getWorkbenchContainer().getItem(slot).isEmpty()) {
                 int itemX = leftPos + 8 + slot % 5 * 18;

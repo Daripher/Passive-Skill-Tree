@@ -24,28 +24,27 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
-    private Map<Ingredient, Integer> additionalIngredients;
     private final ResourceLocation id;
     private final boolean requiresPassiveSkill;
 
-    public AbstractWorkbenchRecipe(ResourceLocation id, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill) {
-        this.additionalIngredients = ingredients;
+    public AbstractWorkbenchRecipe(ResourceLocation id, boolean requiresPassiveSkill) {
         this.requiresPassiveSkill = requiresPassiveSkill;
         this.id = id;
     }
 
     @Override
     public boolean matches(@NotNull WorkbenchContainer container, @NotNull Level level) {
-        if (!isValidBaseItem(container.getBaseItem())) {
+        ItemStack baseItem = container.getBaseItem();
+        if (!isValidBaseItem(baseItem)) {
             return false;
         }
         if (isLockedFor(container.getPlayer())) {
             return false;
         }
-        return hasIngredients(container, additionalIngredients);
+        return hasIngredients(container, getAdditionalIngredients(baseItem));
     }
 
-    protected String getDescriptionId() {
+    public String getDescriptionId() {
         ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
         Objects.requireNonNull(id);
         return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
@@ -56,6 +55,10 @@ public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContain
     }
 
     public abstract boolean isValidBaseItem(ItemStack itemStack);
+
+    public boolean isValidIngredient(ItemStack itemStack) {
+        return true;
+    }
 
     public abstract Component getShortDescription();
 
@@ -69,13 +72,7 @@ public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContain
 
     public abstract @Nullable Pair<Ingredient, Integer> getBaseIngredient();
 
-    public Map<Ingredient, Integer> getAdditionalIngredients() {
-        return additionalIngredients;
-    }
-
-    protected void setAdditionalIngredients(Map<Ingredient, Integer> additionalIngredients) {
-        this.additionalIngredients = additionalIngredients;
-    }
+    public abstract Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient);
 
     protected final boolean hasRecipeLearned(@NotNull Player player) {
         return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream().map(RecipeUnlockBonus::getRecipeId)

@@ -1,0 +1,5 @@
+{
+  "type": "skilltree:workbench_potion_mixing",
+  "base_item": "minecraft:potion",
+  "requires_passive_skill": false
+}

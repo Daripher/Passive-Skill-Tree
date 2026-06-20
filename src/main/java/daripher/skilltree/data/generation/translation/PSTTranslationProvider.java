@@ -196,4 +196,10 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
         Objects.requireNonNull(id);
         add("recipe.%s.%s".formatted(id.getNamespace(), id.getPath()), translation);
     }
+
+    protected void add(RecipeSerializer<?> recipeSerializer, String type, String translation) {
+        ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(recipeSerializer);
+        Objects.requireNonNull(id);
+        add("recipe.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type), translation);
+    }
 }

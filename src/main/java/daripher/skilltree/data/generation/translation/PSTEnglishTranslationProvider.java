@@ -512,6 +512,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Learn %s skill");
         // items
+        add("item.minecraft.potion.mixture", "Mixture");
+        add("item.minecraft.splash_potion.mixture", "Splash Mixture");
+        add("item.minecraft.lingering_potion.mixture", "Lingering Mixture");
         add("item.cant_use.info", "You can not use this");
         add(PSTItems.WISDOM_SCROLL.get(), "Wisdom Scroll");
         add(PSTItems.AMNESIA_SCROLL.get(), "Amnesia Scroll");
@@ -545,6 +548,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add("itemGroup.skilltree", "Passive Skill Tree");
         // recipes
         add(PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get(), "%s [%s]");
+        add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "Potion mixing");
+        add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "custom_skill_description", "You can mix potions using advanced workbench");
     }
 
     protected void add(Potion potion, String name) {

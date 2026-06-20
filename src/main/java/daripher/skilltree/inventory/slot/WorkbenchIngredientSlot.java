@@ -10,11 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
-public class WorkbenchSlot extends Slot {
+public class WorkbenchIngredientSlot extends Slot {
     private final WorkbenchContainer container;
     private final int ingredientIndex;
 
-    public WorkbenchSlot(WorkbenchContainer container, int index, int x, int y, int ingredientIndex) {
+    public WorkbenchIngredientSlot(WorkbenchContainer container, int index, int x, int y, int ingredientIndex) {
         super(container, index, x, y);
         this.container = container;
         this.ingredientIndex = ingredientIndex;
@@ -26,7 +26,12 @@ public class WorkbenchSlot extends Slot {
         if (selectedRecipe == null) {
             return false;
         }
-        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
+        if (!selectedRecipe.isValidIngredient(itemStack)) {
+            return false;
+        }
+        ItemStack baseItemStack = container.getBaseItem();
+        Map<Ingredient, Integer> additionalIngredients = selectedRecipe.getAdditionalIngredients(baseItemStack);
+        List<Map.Entry<Ingredient, Integer>> requiredIngredients = additionalIngredients.entrySet().stream().toList();
         if (ingredientIndex >= requiredIngredients.size()) {
             return false;
         }

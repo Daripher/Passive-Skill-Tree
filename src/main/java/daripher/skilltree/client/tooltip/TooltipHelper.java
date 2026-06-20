@@ -252,4 +252,16 @@ public class TooltipHelper {
         }
         return getRecipeTooltip(recipe);
     }
+
+    public static String getRecipeDescriptionId(ResourceLocation recipeId) {
+        ClientLevel level = Minecraft.getInstance().level;
+        Objects.requireNonNull(level);
+        RecipeManager recipeManager = level.getRecipeManager();
+        List<AbstractWorkbenchRecipe> recipes = recipeManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH);
+        AbstractWorkbenchRecipe recipe = recipes.stream().filter(r -> r.getId().equals(recipeId)).findAny().orElse(null);
+        if (recipe == null) {
+            return "Unknown Recipe: " + recipeId.toString();
+        }
+        return recipe.getDescriptionId();
+    }
 }

@@ -24,23 +24,25 @@ import java.util.stream.Collectors;
 
 public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
     private @Nullable Pair<Ingredient, Integer> baseIngredient;
+    private Map<Ingredient, Integer> additionalIngredients;
     private final ItemStack result;
 
     public WorkbenchVanillaCraftingRecipe(CraftingRecipe vanillaRecipe, RegistryAccess registryAccess) {
-        super(vanillaRecipe.getId(), getIngredientsFromCraftingRecipe(vanillaRecipe), true);
+        super(vanillaRecipe.getId(), true);
         this.result = vanillaRecipe.getResultItem(registryAccess);
-        List<Pair<Ingredient, Integer>> ingredients = getAdditionalIngredients().entrySet().stream().map(Pair::of).toList();
-        ingredients = new ArrayList<>(ingredients);
+        additionalIngredients = getIngredientsFromCraftingRecipe(vanillaRecipe);
+        List<Pair<Ingredient, Integer>> ingredients = new ArrayList<>(additionalIngredients.entrySet().stream().map(Pair::of).toList());
         if (!ingredients.isEmpty()) {
             this.baseIngredient = ingredients.remove(0);
-            setAdditionalIngredients(ingredients.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+            additionalIngredients = ingredients.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
     }
 
-    private WorkbenchVanillaCraftingRecipe(@NotNull ResourceLocation id, @Nullable Pair<Ingredient, Integer> baseIngredient, Map<Ingredient, Integer> ingredients, ItemStack result) {
-        super(id, ingredients, true);
+    private WorkbenchVanillaCraftingRecipe(@NotNull ResourceLocation id, @Nullable Pair<Ingredient, Integer> baseIngredient, Map<Ingredient, Integer> additionalIngredients, ItemStack result) {
+        super(id, true);
         this.result = result;
         this.baseIngredient = baseIngredient;
+        this.additionalIngredients = additionalIngredients;
     }
 
     private static Map<Ingredient, Integer> getIngredientsFromCraftingRecipe(CraftingRecipe vanillaRecipe) {
@@ -80,6 +82,15 @@ public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
             return false;
         }
         return baseIngredient.getKey().test(itemStack) && itemStack.getCount() >= baseIngredient.getValue();
+    }
+
+    @Override
+    public Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient) {
+        return getAdditionalIngredients();
+    }
+
+    public Map<Ingredient, Integer> getAdditionalIngredients() {
+        return additionalIngredients;
     }
 
     @Override
@@ -133,7 +144,6 @@ public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
 
         @Override
         public @Nullable WorkbenchVanillaCraftingRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
-            boolean requiresPassiveSkill = buf.readBoolean();
             Map<Ingredient, Integer> ingredients = new HashMap<>();
             int ingredientsCount = buf.readInt();
             for (int i = 0; i < ingredientsCount; i++) {
@@ -150,7 +160,6 @@ public class WorkbenchVanillaCraftingRecipe extends AbstractWorkbenchRecipe {
 
         @Override
         public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchVanillaCraftingRecipe recipe) {
-            buf.writeBoolean(recipe.hasPassiveSkillRequirement());
             int ingredientsCount = recipe.getAdditionalIngredients().size();
             buf.writeInt(ingredientsCount);
             recipe.getAdditionalIngredients().forEach((ingredient, requiredAmount) -> {

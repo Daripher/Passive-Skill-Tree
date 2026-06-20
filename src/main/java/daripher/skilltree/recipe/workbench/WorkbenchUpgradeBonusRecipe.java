@@ -32,12 +32,14 @@ import java.util.Map;
 
 public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
     private final ItemStackPredicate baseItemStackPredicate;
+    private final Map<Ingredient, Integer> additionalIngredients;
     private final ItemBonus<?> itemBonus;
 
-    public WorkbenchUpgradeBonusRecipe(ResourceLocation id, ItemStackPredicate baseItemStackPredicate, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill, ItemBonus<?> itemBonus) {
-        super(id, ingredients, requiresPassiveSkill);
+    public WorkbenchUpgradeBonusRecipe(ResourceLocation id, ItemStackPredicate baseItemStackPredicate, Map<Ingredient, Integer> additionalIngredients, boolean requiresPassiveSkill, ItemBonus<?> itemBonus) {
+        super(id, requiresPassiveSkill);
         this.baseItemStackPredicate = baseItemStackPredicate;
         this.itemBonus = itemBonus;
+        this.additionalIngredients = additionalIngredients;
     }
 
     @Override
@@ -48,6 +50,15 @@ public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
     @Override
     public boolean isValidBaseItem(ItemStack itemStack) {
         return baseItemStackPredicate.test(itemStack);
+    }
+
+    @Override
+    public Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient) {
+        return additionalIngredients;
+    }
+
+    public Map<Ingredient, Integer> getAdditionalIngredients() {
+        return additionalIngredients;
     }
 
     @Override
@@ -107,14 +118,14 @@ public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
             ItemStackPredicate baseItemStackPredicate = SerializationHelper.deserializeItemPredicate(jsonObject, "base_item_condition");
             ItemBonus<?> itemBonus = SerializationHelper.deserializeItemBonus(jsonObject);
             boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
-            Map<Ingredient, Integer> ingredients = new HashMap<>();
-            JsonArray ingredientsJson = jsonObject.getAsJsonArray("ingredients");
+            Map<Ingredient, Integer> additionalIngredients = new HashMap<>();
+            JsonArray ingredientsJson = jsonObject.getAsJsonArray("additionalIngredients");
             for (JsonElement jsonElement : ingredientsJson) {
                 Ingredient ingredient = Ingredient.fromJson(jsonElement.getAsJsonObject().get("ingredient"));
                 int requiredAmount = jsonElement.getAsJsonObject().get("required_amount").getAsInt();
-                ingredients.put(ingredient, requiredAmount);
+                additionalIngredients.put(ingredient, requiredAmount);
             }
-            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
+            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, additionalIngredients, requiresPassiveSkill, itemBonus);
         }
 
         @Override
@@ -122,12 +133,12 @@ public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
             ItemStackPredicate baseItemStackPredicate = NetworkHelper.readItemPredicate(buf);
             ItemBonus<?> itemBonus = NetworkHelper.readItemBonus(buf);
             boolean requiresPassiveSkill = buf.readBoolean();
-            Map<Ingredient, Integer> ingredients = new HashMap<>();
+            Map<Ingredient, Integer> additionalIngredients = new HashMap<>();
             int ingredientsCount = buf.readInt();
             for (int i = 0; i < ingredientsCount; i++) {
-                ingredients.put(Ingredient.fromNetwork(buf), buf.readInt());
+                additionalIngredients.put(Ingredient.fromNetwork(buf), buf.readInt());
             }
-            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, ingredients, requiresPassiveSkill, itemBonus);
+            return new WorkbenchUpgradeBonusRecipe(id, baseItemStackPredicate, additionalIngredients, requiresPassiveSkill, itemBonus);
         }
 
         @Override

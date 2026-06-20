@@ -54,7 +54,9 @@ public class WorkbenchResultSlot extends Slot {
         if (requiredBaseItems != 0) {
             additionalCrafts = workbenchContainer.getBaseItem().getCount() / requiredBaseItems;
         }
-        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
+        ItemStack baseItemStack = workbenchContainer.getBaseItem();
+        Map<Ingredient, Integer> additionalIngredients = selectedRecipe.getAdditionalIngredients(baseItemStack);
+        List<Map.Entry<Ingredient, Integer>> requiredIngredients = additionalIngredients.entrySet().stream().toList();
         for (int i = 0; i < requiredIngredients.size(); i++) {
             int requiredAmount = requiredIngredients.get(i).getValue();
             int availableAmount = workbenchContainer.getItem(i + 1).getCount();
@@ -97,7 +99,9 @@ public class WorkbenchResultSlot extends Slot {
         if (!workbenchContainer.getItem(0).isEmpty()) {
             workbenchContainer.removeItem(0, selectedRecipe.requiredBaseItemAmount());
         }
-        List<Map.Entry<Ingredient, Integer>> requiredIngredients = selectedRecipe.getAdditionalIngredients().entrySet().stream().toList();
+        ItemStack baseItemStack = workbenchContainer.getBaseItem();
+        Map<Ingredient, Integer> additionalIngredients = selectedRecipe.getAdditionalIngredients(baseItemStack);
+        List<Map.Entry<Ingredient, Integer>> requiredIngredients = additionalIngredients.entrySet().stream().toList();
         for (int i = 0; i < requiredIngredients.size(); i++) {
             int requiredAmount = requiredIngredients.get(i).getValue();
             workbenchContainer.removeItem(i + 1, requiredAmount);

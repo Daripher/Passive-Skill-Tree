@@ -40,7 +40,7 @@ public final class PotionStackPredicate implements ItemStackPredicate {
         };
     }
 
-    private boolean hasEffects(ItemStack stack, MobEffectCategory category) {
+    public static boolean hasEffects(ItemStack stack, MobEffectCategory category) {
         return PotionUtils.getAllEffects(stack.getOrCreateTag()).stream().map(MobEffectInstance::getEffect)
                 .anyMatch(effect -> effect.getCategory() == category);
     }

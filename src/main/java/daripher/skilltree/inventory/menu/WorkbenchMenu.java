@@ -5,7 +5,7 @@ import daripher.skilltree.init.PSTMenuTypes;
 import daripher.skilltree.init.PSTRecipeTypes;
 import daripher.skilltree.inventory.slot.WorkbenchBaseSlot;
 import daripher.skilltree.inventory.slot.WorkbenchResultSlot;
-import daripher.skilltree.inventory.slot.WorkbenchSlot;
+import daripher.skilltree.inventory.slot.WorkbenchIngredientSlot;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
 import daripher.skilltree.recipe.workbench.WorkbenchVanillaCraftingRecipe;
 import daripher.skilltree.skill.bonus.SkillBonusHandler;
@@ -63,7 +63,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
                 if (i == 0 && j == 0) {
                     continue;
                 }
-                addSlot(new WorkbenchSlot(workbenchContainer, j + i * 5, 8 + j * 18, 120 + i * 18, j + i * 5 - 1));
+                addSlot(new WorkbenchIngredientSlot(workbenchContainer, j + i * 5, 8 + j * 18, 120 + i * 18, j + i * 5 - 1));
             }
         }
         for (int i = 0; i < 9; ++i) {
