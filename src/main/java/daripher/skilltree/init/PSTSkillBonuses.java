@@ -16,7 +16,7 @@ public class PSTSkillBonuses {
     public static final DeferredRegister<SkillBonus.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
     public static final RegistryObject<SkillBonus.Serializer> ATTRIBUTE = REGISTRY.register("attribute", AttributeBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> COMMAND = REGISTRY.register("command", CommandBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> COMMAND = REGISTRY.register("command", ExecuteCommandBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> DAMAGE = REGISTRY.register("damage", DamageBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> CRIT_DAMAGE = REGISTRY.register("crit_damage", CritDamageBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> CRIT_CHANCE = REGISTRY.register("crit_chance", CritChanceBonus.Serializer::new);
@@ -31,9 +31,9 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> ARROW_RETRIEVAL = REGISTRY.register("arrow_retrieval", ArrowRetrievalBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> HEALTH_RESERVATION = REGISTRY.register("health_reservation", HealthReservationBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> ALL_ATTRIBUTES = REGISTRY.register("all_attributes", AllAttributesBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> INFLICT_EFFECT = REGISTRY.register("inflict_effect", InflictEffectBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> INFLICT_EFFECT = REGISTRY.register("inflict_effect", InflictMobEffectBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> CANT_USE_ITEM = REGISTRY.register("cant_use_item", CantUseItemBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> HEALING = REGISTRY.register("healing", HealingBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> HEALING = REGISTRY.register("healing", RestoreHealthBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> INFLICT_DAMAGE = REGISTRY.register("inflict_damage", InflictDamageBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> IGNORE_EFFECT_IMMUNITY = REGISTRY.register("ignore_effect_immunity", IgnoreEffectImmunityBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> LETHAL_POISON = REGISTRY.register("lethal_poison", LethalPoisonBonus.Serializer::new);
@@ -50,7 +50,7 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> ITEM_USE_MOVEMENT_SPEED = REGISTRY.register("item_use_movement_speed", ItemUseMovementSpeedBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> RECIPE_UNLOCK = REGISTRY.register("recipe_unlock", RecipeUnlockBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> MORE_ITEM_BONUSES = REGISTRY.register("more_item_bonuses", ItemUpgradeLimitBonusesBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> GAIN_EXPERIENCE = REGISTRY.register("gain_experience", GainExperienceBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> GAIN_EXPERIENCE = REGISTRY.register("gain_experience", GrantExperienceBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> VANILLA_RECIPE_UNLOCK = REGISTRY.register("vanilla_recipe_unlock", VanillaRecipeUnlockBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> CRAFTED_ITEM_BONUS = REGISTRY.register("crafted_item_bonus", CraftedItemBonusBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> STEALTH = REGISTRY.register("stealth", StealthBonus.Serializer::new);
