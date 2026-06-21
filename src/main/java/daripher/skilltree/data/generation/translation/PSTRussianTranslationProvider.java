@@ -586,6 +586,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение %s");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Изучите умение %s");
         // items
+        add("skilltree.poisoned_weapon", "Отравлено:");
+        add("skilltree.poisoned_weapon.uses_left", "Отравлено [%s использований]:");
         add("item.minecraft.potion.mixture", "Микстура");
         add("item.minecraft.splash_potion.mixture", "Врзывная микстура");
         add("item.minecraft.lingering_potion.mixture", "Туманная микстура");
@@ -624,6 +626,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get(), "%s [%s]");
         add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "Смешивание зелий");
         add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "custom_skill_description", "Вы можете смешивать зелья используя продвинутый рабочий стол");
+        add(PSTRecipeSerializers.WORKBENCH_WEAPON_POISONING.get(), "Отравление оружия");
+        add(PSTRecipeSerializers.WORKBENCH_WEAPON_POISONING.get(), "custom_skill_description", "Вы можете отравлять оружие используя продвинутый рабочий стол");
     }
 
     protected void add(Potion potion, String name) {

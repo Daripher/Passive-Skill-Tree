@@ -1,0 +1,5 @@
+{
+  "type": "skilltree:workbench_weapon_poisoning",
+  "max_uses": 20,
+  "requires_passive_skill": true
+}

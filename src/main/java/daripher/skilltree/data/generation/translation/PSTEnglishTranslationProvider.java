@@ -3,7 +3,10 @@ package daripher.skilltree.data.generation.translation;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.compat.ironsspellbooks.IronsSpellbooksCompat;
 import daripher.skilltree.init.*;
-import daripher.skilltree.init.predicate.*;
+import daripher.skilltree.init.predicate.PSTDamagePredicates;
+import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
+import daripher.skilltree.init.predicate.PSTItemPredicates;
+import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
@@ -507,11 +510,14 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "condition.enemy", "%s if target has learned %s %s");
         add(PSTFloatFunctions.LEARNED_SKILLS_AMOUNT.get(), "requirement", "Learn %s %s");
         add(PSTLivingEntityPredicates.NUMERIC_VALUE.get(), "equal.learned_skills_amount", "exactly %s");
-
         // skill requirements
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Learn %s skill");
         // items
+        add("skilltree.poisoned_weapon", "Poisoned:");
+        add("skilltree.poisoned_weapon.uses_left", "Poisoned [%s uses left]:");
+        add("skilltree.poisoned_weapon.effect", " • %s (%s)");
+        add("skilltree.poisoned_weapon.effect_instant", " • %s");
         add("item.minecraft.potion.mixture", "Mixture");
         add("item.minecraft.splash_potion.mixture", "Splash Mixture");
         add("item.minecraft.lingering_potion.mixture", "Lingering Mixture");
@@ -550,6 +556,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTRecipeSerializers.WORKBENCH_ITEM_BONUS.get(), "%s [%s]");
         add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "Potion mixing");
         add(PSTRecipeSerializers.WORKBENCH_POTION_MIXING.get(), "custom_skill_description", "You can mix potions using advanced workbench");
+        add(PSTRecipeSerializers.WORKBENCH_WEAPON_POISONING.get(), "Weapon poisoning");
+        add(PSTRecipeSerializers.WORKBENCH_WEAPON_POISONING.get(), "custom_skill_description", "You can apply poisons to weapons using advanced workbench");
     }
 
     protected void add(Potion potion, String name) {
