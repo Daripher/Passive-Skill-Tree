@@ -334,7 +334,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
         List<SkillBonus<?>> bonuses = new ArrayList<>();
         learnedSkills.stream().map(skills::getWidgetById).filter(Objects::nonNull).map(button -> button.skill).map(PassiveSkill::getBonuses)
                 .flatMap(List::stream).forEach(b -> addToMergeList(b, bonuses));
-        return bonuses.stream().sorted().map(SkillBonus::getSimpleTooltip).map(Component.class::cast).toList();
+        return bonuses.stream().sorted().map(SkillBonus::getFullTooltip).flatMap(List::stream).map(Component.class::cast).toList();
     }
 
     public void updateSkillPoints(int skillPoints) {
