@@ -192,7 +192,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     }
 
     public void addCraftingBonuses(ItemStack craftResult) {
-        SkillBonusHandler.getSkillBonuses(player, CraftedItemBonusBonus.class).forEach(bonus -> bonus.itemCrafted(craftResult, player));
+        SkillBonusHandler.getMergedSkillBonuses(player, CraftedItemBonusBonus.class).forEach(bonus -> bonus.itemCrafted(craftResult));
     }
 
     private void setupRecipeList() {

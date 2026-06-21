@@ -83,7 +83,7 @@ public final class EquipmentBonus implements ItemBonus<EquipmentBonus> {
     public void addEditorWidgets(SkillTreeEditor editor, Consumer<EquipmentBonus> consumer) {
         skillBonus.addEditorWidgets(editor, skillBonus -> {
             setSkillBonus(skillBonus);
-            consumer.accept(this);
+            consumer.accept(this.copy());
         });
     }
 

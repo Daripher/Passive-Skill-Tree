@@ -20,7 +20,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -38,7 +37,7 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
         this.itemBonuses = itemBonuses;
     }
 
-    public void itemCrafted(ItemStack craftResult, Player player) {
+    public void itemCrafted(ItemStack craftResult) {
         if (!itemStackPredicate.test(craftResult)) {
             return;
         }
@@ -65,15 +64,16 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
         if (!(other instanceof CraftedItemBonusBonus otherBonus)) {
             return false;
         }
-        if (!Objects.equals(otherBonus.itemBonuses, this.itemBonuses)) {
-            return false;
-        }
         return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
     }
 
     @Override
     public SkillBonus<CraftedItemBonusBonus> merge(SkillBonus<?> other) {
-        return this;
+        if (!(other instanceof CraftedItemBonusBonus otherBonus)) {
+            throw new IllegalArgumentException();
+        }
+        GroupedItemBonus mergedItemBonuses = ItemBonusHandler.mergeGroupedItemBonuses(itemBonuses, otherBonus.itemBonuses);
+        return new CraftedItemBonusBonus(itemStackPredicate, mergedItemBonuses);
     }
 
     @Override
@@ -108,12 +108,12 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Item Bonuses", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        itemBonuses.addEditorWidgets(editor, itemBonuses -> selectItemBonuses(editor, consumer, itemBonuses));
+        addItemBonusWidgets(editor, consumer);
     }
 
     private void addItemBonusWidgets(SkillTreeEditor editor, Consumer<CraftedItemBonusBonus> consumer) {
         itemBonuses.addEditorWidgets(editor, itemBonuses -> {
-            setItemBonuses(itemBonuses);
+            selectItemBonuses(editor, consumer, itemBonuses);
             consumer.accept(this.copy());
         });
     }
@@ -143,11 +143,6 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
 
     public void setItemCondition(@Nonnull ItemStackPredicate itemStackPredicate) {
         this.itemStackPredicate = itemStackPredicate;
-    }
-
-    @Nonnull
-    public ItemStackPredicate getItemCondition() {
-        return itemStackPredicate;
     }
 
     @Override

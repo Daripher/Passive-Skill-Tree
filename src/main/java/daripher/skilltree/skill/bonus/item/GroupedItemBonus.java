@@ -42,18 +42,7 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
 
     @Override
     public boolean canMerge(ItemBonus<?> other) {
-        if (!(other instanceof GroupedItemBonus otherBonus)) {
-            return false;
-        }
-        if (otherBonus.innerBonuses.size() != innerBonuses.size()) {
-            return false;
-        }
-        for (int i = 0; i < innerBonuses.size(); i++) {
-            if (!innerBonuses.get(i).canMerge(otherBonus.innerBonuses.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return other instanceof GroupedItemBonus;
     }
 
     @Override
@@ -61,23 +50,12 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
         if (!(other instanceof GroupedItemBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
-        if (otherBonus.innerBonuses.size() != innerBonuses.size()) {
-            throw new IllegalArgumentException();
-        }
-        ArrayList<ItemBonus<?>> mergedSkillBonuses = new ArrayList<>();
-        for (int i = 0; i < innerBonuses.size(); i++) {
-            if (!innerBonuses.get(i).canMerge(otherBonus.innerBonuses.get(i))) {
-                throw new IllegalArgumentException();
-            }
-            mergedSkillBonuses.add(innerBonuses.get(i).merge(otherBonus.innerBonuses.get(i)));
-        }
-        return new GroupedItemBonus(mergedSkillBonuses);
+        return ItemBonusHandler.mergeGroupedItemBonuses(this, otherBonus);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public GroupedItemBonus copy() {
-        return new GroupedItemBonus((ArrayList<ItemBonus<?>>) innerBonuses.stream().map(ItemBonus::copy).toList());
+        return new GroupedItemBonus(new ArrayList<>(innerBonuses.stream().map(ItemBonus::copy).toList()));
     }
 
     @Override
@@ -138,18 +116,21 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
             });
             String message = tooltip.get().getString();
             message = TooltipHelper.getTrimmedString(message, 190);
-            editor.addButton(0, 0, 200, 14, message)
-                    .setPressFunc(button -> editor.selectMenu(new ItemBonusEditor(editor, editor.getSelectedMenu(), bonus -> skillBonusChanged(bonus, bonusIndex), () -> selectedItemBonus)));
+            editor.addButton(0, 0, 200, 14, message).setPressFunc(button -> {
+                ItemBonusEditor itemBonusEditor = new ItemBonusEditor(editor, editor.getSelectedMenu(), bonus -> skillBonusChanged(bonus, bonusIndex, consumer), () -> selectedItemBonus);
+                editor.selectMenu(itemBonusEditor);
+            });
             editor.increaseHeight(19);
         }
     }
 
-    private void skillBonusChanged(@Nullable ItemBonus<?> itemBonus, int selectedBonusIndex) {
+    private void skillBonusChanged(@Nullable ItemBonus<?> itemBonus, int selectedBonusIndex, Consumer<GroupedItemBonus> consumer) {
         if (itemBonus == null) {
             deleteSelectedItemBonuses(selectedBonusIndex);
         } else {
             setItemBonuses(itemBonus, selectedBonusIndex);
         }
+        consumer.accept(this.copy());
     }
 
     private void setItemBonuses(ItemBonus<?> bonus, int selectedBonusIndex) {
@@ -167,7 +148,8 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
         final EditorMenu previousMenu = editor.getSelectedMenu().previousMenu;
         if (itemBonus instanceof EquipmentBonus equipmentBonus) {
             SelectionList<SkillBonus> skillBonusSelectionList = new TextSelectionList<>(0, 0, 190, 14, PSTSkillBonuses.defaultInstances()).setRows(8)
-                    .setNameGetter(bonus -> Component.literal(PSTSkillBonuses.getName(bonus))).selectElement(equipmentBonus.getSkillBonus());
+                    .setNameGetter(bonus -> Component.literal(PSTSkillBonuses.getName(bonus)))
+                    .selectElement(equipmentBonus.getSkillBonus());
             editor.selectMenu(new SelectionMenu<>(editor, editor.getSelectedMenu(), skillBonusSelectionList, () -> {
             }).setResponder(skillBonus -> {
                 innerBonuses.add(new EquipmentBonus(skillBonus));

@@ -19,11 +19,13 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemBonusHandler {
@@ -188,5 +190,30 @@ public class ItemBonusHandler {
                     .orElse(0);
         }
         return limit;
+    }
+
+    @NotNull
+    @SuppressWarnings({"rawtypes", "unchecked", "SuspiciousMethodCalls"})
+    public static <T> List<T> mergeItemBonuses(List<T> bonuses) {
+        List<T> mergedBonuses = new ArrayList<>();
+        for (T bonus : bonuses) {
+            ItemBonus itemBonus = (ItemBonus) bonus;
+            Optional<ItemBonus> mergeTarget = mergedBonuses.stream().map(ItemBonus.class::cast).filter(itemBonus::canMerge).findAny();
+            if (mergeTarget.isPresent()) {
+                mergedBonuses.remove(mergeTarget.get());
+                mergedBonuses.add((T) mergeTarget.get().copy().merge(itemBonus));
+            } else {
+                mergedBonuses.add((T) itemBonus);
+            }
+        }
+        return mergedBonuses;
+    }
+
+    public static GroupedItemBonus mergeGroupedItemBonuses(GroupedItemBonus itemBonus1, GroupedItemBonus itemBonus2) {
+        ArrayList<ItemBonus<?>> innerBonuses = new ArrayList<>();
+        innerBonuses.addAll(itemBonus1.getInnerBonuses());
+        innerBonuses.addAll(itemBonus2.getInnerBonuses());
+        ItemBonusHandler.mergeItemBonuses(innerBonuses);
+        return new GroupedItemBonus(innerBonuses);
     }
 }
