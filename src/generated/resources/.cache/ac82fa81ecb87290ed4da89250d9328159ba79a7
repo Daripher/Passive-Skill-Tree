@@ -1,5 +1,0 @@
-// 1.20.1	2025-10-31T14:48:06.5457769	Tags for minecraft:item mod id skilltree
-62a08dbba8d31146be8d8adf446c9ba6f0544444 data/forge/tags/items/tools.json
-b9be800558c6cd2dcd4d1ab3458903f1a58713f5 data/skilltree/tags/items/armors/leather.json
-01d06e1c3cd6ee881097875b179c1f9f014e3457 data/skilltree/tags/items/melee_weapon.json
-b66e5136e9f0246d08fbf8e91dc9e7d6d2217e00 data/skilltree/tags/items/ranged_weapon.json
