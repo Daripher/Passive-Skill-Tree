@@ -8,6 +8,8 @@ import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.player.ItemUpgradeLimitBonusesBonus;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -107,15 +109,13 @@ public class ItemBonusHandler {
 
     private static List<ItemBonus<?>> getBonusesFromTag(ItemStack itemStack, String subTagName) {
         CompoundTag stackTag = itemStack.getOrCreateTag();
-        List<ItemBonus<?>> list = new ArrayList<>();
-        CompoundTag bonusesTag = stackTag.getCompound(subTagName);
-        for (int i = 0; true; i++) {
-            if (!bonusesTag.contains("" + i)) {
-                return list;
-            }
-            CompoundTag itemBonusTag = bonusesTag.getCompound("" + i);
-            list.add(deserializeBonus(itemBonusTag));
+        List<ItemBonus<?>> itemBonuses = new ArrayList<>();
+        if (!stackTag.contains(subTagName, Tag.TAG_LIST)) {
+            return new ArrayList<>();
         }
+        ListTag bonusesTagList = stackTag.getList(subTagName, Tag.TAG_COMPOUND);
+        bonusesTagList.stream().map(CompoundTag.class::cast).forEach(bonusTag -> itemBonuses.add(deserializeBonus(bonusTag)));
+        return itemBonuses;
     }
 
     public static List<ItemBonus<?>> getItemBonuses(ItemStack stack, Class<?> type) {
@@ -135,25 +135,15 @@ public class ItemBonusHandler {
     }
 
     public static void setCraftingBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
-        setTagBonuses(stack, bonuses, UPGRADE_BONUSES_TAG_NAME);
+        setTagBonuses(stack, bonuses, CRAFTING_BONUSES_TAG_NAME);
     }
 
     private static void setTagBonuses(ItemStack stack, List<ItemBonus<?>> bonuses, String tagName) {
-        CompoundTag bonusesTag = new CompoundTag();
-        int i = 0;
+        ListTag bonusesTagList = new ListTag();
         for (ItemBonus<?> itemBonus : bonuses) {
-            CompoundTag bonusTag = serializeBonus(itemBonus);
-            bonusesTag.put("" + i, bonusTag);
-            i++;
+            bonusesTagList.add(serializeBonus(itemBonus));
         }
-        stack.getOrCreateTag().put(tagName, bonusesTag);
-    }
-
-    public static void removeUpgradeBonuses(ItemStack stack) {
-        if (!stack.hasTag()) {
-            return;
-        }
-        stack.getOrCreateTag().remove(UPGRADE_BONUSES_TAG_NAME);
+        stack.getOrCreateTag().put(tagName, bonusesTagList);
     }
 
     private static CompoundTag serializeBonus(ItemBonus<? extends ItemBonus<?>> bonus) {
@@ -186,8 +176,8 @@ public class ItemBonusHandler {
         int limit = 1;
         if (player != null) {
             limit += SkillBonusHandler.getSkillBonuses(player, ItemUpgradeLimitBonusesBonus.class).stream()
-                    .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(ItemUpgradeLimitBonusesBonus::getAmount).reduce(Integer::sum)
-                    .orElse(0);
+                    .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(ItemUpgradeLimitBonusesBonus::getAmount)
+                    .reduce(Integer::sum).orElse(0);
         }
         return limit;
     }
