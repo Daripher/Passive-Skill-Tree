@@ -50,15 +50,19 @@ public class SkillButtonEditor extends EditorMenu {
             editor.increaseHeight(19);
         }
         if (editor.canEdit(PassiveSkill::isStartingPoint)) {
-            int widgetsX = 0;
-            if (canEditTitleColor) {
-                editor.increaseHeight(-38);
-                widgetsX = 100;
-            }
-            editor.addLabel(widgetsX, 0, "Starting Point", ChatFormatting.GOLD);
+            editor.addLabel(0, 0, "Starting Point", ChatFormatting.GOLD);
             editor.increaseHeight(19);
-            editor.addCheckBox(widgetsX, 0, selectedSkill.isStartingPoint()).setResponder(v -> {
+            editor.addCheckBox(0, 0, selectedSkill.isStartingPoint()).setResponder(v -> {
                 editor.getSelectedSkills().forEach(s -> s.setStartingPoint(v));
+                editor.saveSelectedSkills();
+            });
+            editor.increaseHeight(19);
+        }
+        if (editor.canEdit(PassiveSkill::isAlwaysStartingPoint)) {
+            editor.addLabel(0, 0, "Always Starting Point", ChatFormatting.GOLD);
+            editor.increaseHeight(19);
+            editor.addCheckBox(0, 0, selectedSkill.isAlwaysStartingPoint()).setResponder(v -> {
+                editor.getSelectedSkills().forEach(s -> s.setAlwaysStartingPoint(v));
                 editor.saveSelectedSkills();
             });
             editor.increaseHeight(19);

@@ -41,6 +41,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
     private final List<ResourceLocation> learnedSkills = new ArrayList<>();
     public final List<ResourceLocation> newlyLearnedSkills = new ArrayList<>();
     private final List<SkillButton> startingPoints = new ArrayList<>();
+    private final List<SkillButton> alwaysStartingPoints = new ArrayList<>();
     private Button buyButton;
     private Label pointsInfo;
     private ProgressBar progressBar;
@@ -73,6 +74,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
         addWidget(statsInfo);
         startingPoints.clear();
         skills.getWidgets().stream().filter(button -> button.skill.isStartingPoint()).forEach(startingPoints::add);
+        skills.getWidgets().stream().filter(button -> button.skill.isAlwaysStartingPoint()).forEach(alwaysStartingPoints::add);
         highlightSkills();
         updateSearch();
     }
@@ -147,6 +149,12 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
         if (learnedSkills.size() + newlyLearnedSkills.size() >= ServerConfig.max_skill_points) {
             return;
         }
+        alwaysStartingPoints.stream().filter(button -> canLearnSkill(button.skill)).forEach(skillButton -> {
+            ResourceLocation skillId = skillButton.skill.getId();
+            if (!newlyLearnedSkills.contains(skillId) && !learnedSkills.contains(skillId)) {
+                skillButton.setCanLearn();
+            }
+        });
         skills.getSkillConnections().forEach(connection -> {
             SkillButton button1 = connection.getFirstButton();
             SkillButton button2 = connection.getSecondButton();

@@ -27,6 +27,7 @@ public class PassiveSkill {
     private float positionX, positionY;
     private int buttonSize;
     private boolean isStartingPoint;
+    private boolean isAlwaysStartingPoint;
     private @Nullable List<MutableComponent> description;
 
     public PassiveSkill(ResourceLocation id, int buttonSize, ResourceLocation backgroundTexture, ResourceLocation iconTexture, ResourceLocation borderTexture, boolean isStartingPoint) {
@@ -75,11 +76,19 @@ public class PassiveSkill {
     }
 
     public boolean isStartingPoint() {
-        return isStartingPoint;
+        return isStartingPoint || isAlwaysStartingPoint;
     }
 
     public void setStartingPoint(boolean isStartingPoint) {
         this.isStartingPoint = isStartingPoint;
+    }
+
+    public boolean isAlwaysStartingPoint() {
+        return isAlwaysStartingPoint;
+    }
+
+    public void setAlwaysStartingPoint(boolean alwaysStartingPoint) {
+        isAlwaysStartingPoint = alwaysStartingPoint;
     }
 
     public List<SkillBonus<?>> getBonuses() {

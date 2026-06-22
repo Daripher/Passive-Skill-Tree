@@ -74,6 +74,7 @@ public class SkillNodeEditor extends EditorMenu {
         PassiveSkill skill = new PassiveSkill(createNewSkillId(skillTreeId), original.getSkillSize(), original.getFrameTexture(), original.getIconTexture(), original.getTooltipFrameTexture(), original.isStartingPoint());
         skill.setPosition(x, y);
         skill.setStartingPoint(original.isStartingPoint());
+        skill.setAlwaysStartingPoint(original.isAlwaysStartingPoint());
         original.getBonuses().stream().map(SkillBonus::copy).forEach(skill::addSkillBonus);
         original.getRequirements().stream().map(SkillRequirement::copy).forEach(skill::addSkillRequirement);
         original.getTags().forEach(skill.getTags()::add);

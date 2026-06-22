@@ -39,6 +39,7 @@ public class NetworkHelper {
         buf.writeUtf(skill.getIconTexture().toString());
         buf.writeUtf(skill.getTooltipFrameTexture().toString());
         buf.writeBoolean(skill.isStartingPoint());
+        buf.writeBoolean(skill.isAlwaysStartingPoint());
         buf.writeFloat(skill.getPositionX());
         buf.writeFloat(skill.getPositionY());
         buf.writeUtf(skill.getTitle());
@@ -59,7 +60,9 @@ public class NetworkHelper {
         ResourceLocation icon = ResourceLocation.parse(buf.readUtf());
         ResourceLocation border = ResourceLocation.parse(buf.readUtf());
         boolean startingPoint = buf.readBoolean();
+        boolean alwaysStartingPoint = buf.readBoolean();
         PassiveSkill skill = new PassiveSkill(id, size, background, icon, border, startingPoint);
+        skill.setAlwaysStartingPoint(alwaysStartingPoint);
         skill.setPosition(buf.readFloat(), buf.readFloat());
         skill.setTitle(buf.readUtf());
         skill.setTitleColor(buf.readUtf());
