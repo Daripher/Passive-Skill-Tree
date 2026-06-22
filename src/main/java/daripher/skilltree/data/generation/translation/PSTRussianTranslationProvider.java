@@ -195,6 +195,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.STEALTH.get(), "Вас на %s%% сложнее обнаружить");
         add(PSTSkillBonuses.STEALTH.get(), "negative", "Вас на %s%% легче обнаружить");
         add(PSTSkillBonuses.EFFECT_IMMUNITY.get(), "Вы невосприимчевы к %s");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "player", "Развеивает %s на вас");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "player.chance", "Шанс развеять %s на вас");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "enemy", "Развеивает %s на врагах");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "enemy.chance", "Шанс развеять %s%s на врагах");
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Дарует заклинание %s %s");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "к уровню заклинания %s");
         // experience sources

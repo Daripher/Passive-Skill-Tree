@@ -56,6 +56,7 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> STEALTH = REGISTRY.register("stealth", StealthBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> EFFECT_IMMUNITY = REGISTRY.register("effect_immunity", EffectImmunityBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> BROKEN = REGISTRY.register("broken", BrokenSkillBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> REMOVE_EFFECT = REGISTRY.register("remove_effect", RemoveMobEffectBonus.Serializer::new);
 
     @SuppressWarnings("rawtypes")
     public static List<SkillBonus> defaultInstances() {

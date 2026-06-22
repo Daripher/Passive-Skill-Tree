@@ -196,6 +196,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.STEALTH.get(), "You are %s%% harder to detect");
         add(PSTSkillBonuses.STEALTH.get(), "negative", "You are %s%% easier to detect");
         add(PSTSkillBonuses.EFFECT_IMMUNITY.get(), "You are immune to %s");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "player", "Dispel %s from self");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "player.chance", "Chance to dispel %s from self");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "enemy", "Dispel %s from an enemy");
+        add(PSTSkillBonuses.REMOVE_EFFECT.get(), "enemy.chance", "Chance to dispel %s from an enemy");
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Grants %s %s spell");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "to level of %s spell");
         // experience sources
