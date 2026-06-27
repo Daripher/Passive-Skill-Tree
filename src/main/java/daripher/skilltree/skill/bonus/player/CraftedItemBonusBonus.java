@@ -113,15 +113,14 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
 
     private void addItemBonusWidgets(SkillTreeEditor editor, Consumer<CraftedItemBonusBonus> consumer) {
         itemBonuses.addEditorWidgets(editor, itemBonuses -> {
-            selectItemBonuses(editor, consumer, itemBonuses);
+            selectItemBonuses(consumer, itemBonuses);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectItemBonuses(SkillTreeEditor editor, Consumer<CraftedItemBonusBonus> consumer, GroupedItemBonus itemBonuses) {
+    private void selectItemBonuses(Consumer<CraftedItemBonusBonus> consumer, GroupedItemBonus itemBonuses) {
         setItemBonuses(itemBonuses);
         consumer.accept(this.copy());
-        editor.rebuildWidgets();
     }
 
     private void setItemBonuses(@Nonnull GroupedItemBonus itemBonuses) {
