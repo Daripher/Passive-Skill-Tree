@@ -3,7 +3,7 @@ package daripher.skilltree.recipe.workbench;
 import daripher.skilltree.init.PSTRecipeTypes;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -75,7 +75,7 @@ public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContain
     public abstract Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient);
 
     protected final boolean hasRecipeLearned(@NotNull Player player) {
-        return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream().map(RecipeUnlockBonus::getRecipeId)
+        return SkillBonusProvider.getSkillBonuses(player, RecipeUnlockBonus.class).stream().map(RecipeUnlockBonus::getRecipeId)
                 .anyMatch(getId()::equals);
     }
 

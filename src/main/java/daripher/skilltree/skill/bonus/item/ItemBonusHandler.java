@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.init.PSTRegistries;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.AttributeBonus;
 import daripher.skilltree.skill.bonus.player.ItemUpgradeLimitBonusesBonus;
 import net.minecraft.nbt.CompoundTag;
@@ -175,7 +175,7 @@ public class ItemBonusHandler {
     public static int getCraftedBonusLimit(ItemStack itemStack, @Nullable Player player) {
         int limit = 1;
         if (player != null) {
-            limit += SkillBonusHandler.getSkillBonuses(player, ItemUpgradeLimitBonusesBonus.class).stream()
+            limit += SkillBonusProvider.getSkillBonuses(player, ItemUpgradeLimitBonusesBonus.class).stream()
                     .filter(bonus -> bonus.getItemCondition().test(itemStack)).map(ItemUpgradeLimitBonusesBonus::getAmount)
                     .reduce(Integer::sum).orElse(0);
         }

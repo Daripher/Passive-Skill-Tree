@@ -32,7 +32,7 @@ public final class ProjectileSpeedBonus implements SkillBonus<ProjectileSpeedBon
         this.multiplier = multiplier;
     }
 
-    public float getMultiplier(Player player) {
+    public float getProjectileSpeedModifier(Player player) {
         if (!playerCondition.test(player)) {
             return 0f;
         }

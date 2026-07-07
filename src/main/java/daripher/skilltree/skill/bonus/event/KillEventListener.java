@@ -45,7 +45,7 @@ public class KillEventListener implements SkillEventListener {
             return;
         }
         float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
-        skill.multiply(effectMultiplier).applyEffect(player, player);
+        skill.copy().multiply(effectMultiplier).applyEffect(player, player);
     }
 
     @Override

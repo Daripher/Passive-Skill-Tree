@@ -2,9 +2,9 @@ package daripher.skilltree.compat.curios;
 
 import daripher.skilltree.compat.curios.skill.bonus.CurioSlotsBonus;
 import daripher.skilltree.init.PSTSkillBonuses;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
-import daripher.skilltree.skill.bonus.player.CantUseItemBonus;
+import daripher.skilltree.skill.bonus.player.PreventItemUsageBonus;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +43,7 @@ public enum CuriosCompatibility {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        for (CantUseItemBonus bonus : SkillBonusHandler.getSkillBonuses(player, CantUseItemBonus.class)) {
+        for (PreventItemUsageBonus bonus : SkillBonusProvider.getSkillBonuses(player, PreventItemUsageBonus.class)) {
             if (bonus.getItemCondition().test(event.getStack())) {
                 event.setResult(Event.Result.DENY);
                 return;

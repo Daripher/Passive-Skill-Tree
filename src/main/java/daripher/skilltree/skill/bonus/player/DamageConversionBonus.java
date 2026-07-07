@@ -57,6 +57,10 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
         return amount * playerMultiplier.getValue(player) * targetMultiplier.getValue(target);
     }
 
+    public boolean canConvertDamage(DamageSource damageSource) {
+        return originalDamageCondition.met(damageSource) && !resultDamageCondition.met(damageSource);
+    }
+
     @Override
     public SkillBonus.Serializer getSerializer() {
         return PSTSkillBonuses.DAMAGE_CONVERSION.get();
@@ -269,11 +273,6 @@ public final class DamageConversionBonus implements SkillBonus<DamageConversionB
 
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-
-    @Nonnull
-    public DamageCondition getOriginalDamageCondition() {
-        return originalDamageCondition;
     }
 
     @Nonnull

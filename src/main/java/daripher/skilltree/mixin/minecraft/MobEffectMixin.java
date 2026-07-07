@@ -1,8 +1,8 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.init.PSTDamageTypes;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
-import daripher.skilltree.skill.bonus.player.LethalPoisonBonus;
+import daripher.skilltree.skill.bonus.handler.LethalPoisonBonusHandler;
+import daripher.skilltree.skill.bonus.handler.SkillBonusHandlerUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,31 +28,27 @@ public abstract class MobEffectMixin implements IForgeMobEffect {
         if (((Object) this) != MobEffects.POISON) {
             return;
         }
-        handlePoisonDamage(livingEntity);
-        callbackInfo.cancel();
-    }
-
-    private static void handlePoisonDamage(LivingEntity livingEntity) {
         LivingEntity attacker = livingEntity.getKillCredit();
         float damage = 1f;
         boolean isLowHealth = livingEntity.getHealth() <= damage;
-        boolean isPoisonLethal = isPoisonLethal(attacker);
+        boolean isPoisonLethal = LethalPoisonBonusHandler.canEntityKillWithPoison(attacker);
         if (isLowHealth && !isPoisonLethal) {
             return;
         }
         DamageSources damageSources = livingEntity.damageSources();
         DamageSource damageSource = damageSources.magic();
         if (attacker instanceof Player player) {
-            Registry<DamageType> damageTypes = player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
-            Holder.Reference<DamageType> damageType = damageTypes.getHolderOrThrow(PSTDamageTypes.POISON);
-            damageSource = new DamageSource(damageType, player, null);
+            Holder.Reference<DamageType> damageTypeHolder = getPoisonDamageType(player);
+            damageSource = new DamageSource(damageTypeHolder, player, null);
             // resets hurt timer
             livingEntity.setLastHurtByPlayer(player);
         }
-        SkillBonusHandler.forcefullyInflictDamage(damageSource, damage, livingEntity);
+        SkillBonusHandlerUtils.hurtIgnoringInvulnerabilityTime(livingEntity, damageSource, damage);
+        callbackInfo.cancel();
     }
 
-    private static boolean isPoisonLethal(LivingEntity attacker) {
-        return attacker instanceof Player player && !SkillBonusHandler.getSkillBonuses(player, LethalPoisonBonus.class).isEmpty();
+    private static @NotNull Holder.Reference<DamageType> getPoisonDamageType(Player player) {
+        Registry<DamageType> damageTypeRegistry = player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
+        return damageTypeRegistry.getHolderOrThrow(PSTDamageTypes.POISON);
     }
 }

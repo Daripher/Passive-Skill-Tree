@@ -16,6 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -28,6 +29,13 @@ public final class RepairEfficiencyBonus implements SkillBonus<RepairEfficiencyB
     public RepairEfficiencyBonus(@Nonnull ItemStackPredicate itemStackPredicate, float multiplier) {
         this.itemStackPredicate = itemStackPredicate;
         this.multiplier = multiplier;
+    }
+
+    public float getRepairEfficiencyMultiplier(ItemStack stack) {
+        if (!getItemCondition().test(stack)) {
+            return 0f;
+        }
+        return getMultiplier();
     }
 
     @Override

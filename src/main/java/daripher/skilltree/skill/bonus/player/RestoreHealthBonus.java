@@ -9,7 +9,7 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.OutgoingDamageEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -39,7 +39,7 @@ public final class RestoreHealthBonus implements EventListenerBonus<RestoreHealt
     }
 
     public RestoreHealthBonus(float chance, float amount) {
-        this(chance, amount, new AttackEventListener().setTarget(Target.PLAYER), false);
+        this(chance, amount, new OutgoingDamageEventListener().setTarget(Target.PLAYER), false);
     }
 
     @Override

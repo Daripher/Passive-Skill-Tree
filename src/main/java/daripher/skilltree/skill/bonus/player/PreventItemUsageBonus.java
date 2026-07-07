@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
+public final class PreventItemUsageBonus implements SkillBonus<PreventItemUsageBonus> {
     private @Nonnull ItemStackPredicate itemStackPredicate;
 
-    public CantUseItemBonus(@Nonnull ItemStackPredicate itemStackPredicate) {
+    public PreventItemUsageBonus(@Nonnull ItemStackPredicate itemStackPredicate) {
         this.itemStackPredicate = itemStackPredicate;
     }
 
@@ -33,25 +33,25 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
     }
 
     @Override
-    public CantUseItemBonus copy() {
-        return new CantUseItemBonus(itemStackPredicate);
+    public PreventItemUsageBonus copy() {
+        return new PreventItemUsageBonus(itemStackPredicate);
     }
 
     @Override
-    public CantUseItemBonus multiply(double multiplier) {
+    public PreventItemUsageBonus multiply(double multiplier) {
         return this;
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof CantUseItemBonus otherBonus)) {
+        if (!(other instanceof PreventItemUsageBonus otherBonus)) {
             return false;
         }
         return Objects.equals(otherBonus.itemStackPredicate, this.itemStackPredicate);
     }
 
     @Override
-    public SkillBonus<CantUseItemBonus> merge(SkillBonus<?> other) {
+    public SkillBonus<PreventItemUsageBonus> merge(SkillBonus<?> other) {
         return this;
     }
 
@@ -67,7 +67,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<CantUseItemBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<PreventItemUsageBonus> consumer) {
         editor.addLabel(0, 0, "Item Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))
@@ -75,13 +75,13 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
         editor.increaseHeight(19);
     }
 
-    private void selectItemCondition(SkillTreeEditor editor, Consumer<CantUseItemBonus> consumer, ItemStackPredicate condition) {
+    private void selectItemCondition(SkillTreeEditor editor, Consumer<PreventItemUsageBonus> consumer, ItemStackPredicate condition) {
         setItemCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<CantUseItemBonus> consumer) {
+    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<PreventItemUsageBonus> consumer) {
         itemStackPredicate.addEditorWidgets(editor, c -> {
             setItemCondition(c);
             consumer.accept(this.copy());
@@ -105,7 +105,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        CantUseItemBonus that = (CantUseItemBonus) obj;
+        PreventItemUsageBonus that = (PreventItemUsageBonus) obj;
         return Objects.equals(this.itemStackPredicate, that.itemStackPredicate);
     }
 
@@ -116,28 +116,28 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public CantUseItemBonus deserialize(JsonObject json) throws JsonParseException {
+        public PreventItemUsageBonus deserialize(JsonObject json) throws JsonParseException {
             ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(json);
-            return new CantUseItemBonus(condition);
+            return new PreventItemUsageBonus(condition);
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof CantUseItemBonus aBonus)) {
+            if (!(bonus instanceof PreventItemUsageBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             SerializationHelper.serializeItemPredicate(json, aBonus.itemStackPredicate);
         }
 
         @Override
-        public CantUseItemBonus deserialize(CompoundTag tag) {
+        public PreventItemUsageBonus deserialize(CompoundTag tag) {
             ItemStackPredicate condition = SerializationHelper.deserializeItemPredicate(tag);
-            return new CantUseItemBonus(condition);
+            return new PreventItemUsageBonus(condition);
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof CantUseItemBonus aBonus)) {
+            if (!(bonus instanceof PreventItemUsageBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -146,13 +146,13 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
         }
 
         @Override
-        public CantUseItemBonus deserialize(FriendlyByteBuf buf) {
-            return new CantUseItemBonus(NetworkHelper.readItemPredicate(buf));
+        public PreventItemUsageBonus deserialize(FriendlyByteBuf buf) {
+            return new PreventItemUsageBonus(NetworkHelper.readItemPredicate(buf));
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof CantUseItemBonus aBonus)) {
+            if (!(bonus instanceof PreventItemUsageBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             NetworkHelper.writeItemPredicate(buf, aBonus.itemStackPredicate);
@@ -160,7 +160,7 @@ public final class CantUseItemBonus implements SkillBonus<CantUseItemBonus> {
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new CantUseItemBonus(new EquipmentPredicate(EquipmentPredicate.Type.BOW));
+            return new PreventItemUsageBonus(new EquipmentPredicate(EquipmentPredicate.Type.BOW));
         }
     }
 }

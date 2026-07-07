@@ -3,7 +3,7 @@ package daripher.skilltree.loot.modifier;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
@@ -85,7 +85,7 @@ public class SkillBonusesModifier extends LootModifier {
     @Nonnull
     private static Map<Float, Float> getLootMultipliers(Player player, LootDuplicationBonus.LootType lootType) {
         Map<Float, Float> multipliers = new HashMap<>();
-        for (LootDuplicationBonus bonus : SkillBonusHandler.getSkillBonuses(player, LootDuplicationBonus.class)) {
+        for (LootDuplicationBonus bonus : SkillBonusProvider.getSkillBonuses(player, LootDuplicationBonus.class)) {
             if (bonus.getLootType() != lootType) {
                 continue;
             }

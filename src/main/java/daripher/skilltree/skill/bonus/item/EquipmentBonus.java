@@ -8,7 +8,7 @@ import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTRegistries;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.player.DamageBonus;
+import daripher.skilltree.skill.bonus.player.OutgoingDamageBonus;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
@@ -168,7 +168,7 @@ public final class EquipmentBonus implements ItemBonus<EquipmentBonus> {
 
         @Override
         public ItemBonus<?> createDefaultInstance() {
-            return new EquipmentBonus(new DamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
+            return new EquipmentBonus(new OutgoingDamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
         }
     }
 }

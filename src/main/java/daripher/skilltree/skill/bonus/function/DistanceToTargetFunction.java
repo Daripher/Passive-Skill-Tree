@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTFloatFunctions;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import daripher.skilltree.skill.bonus.handler.SkillBonusHandlerUtils;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -23,8 +24,7 @@ public class DistanceToTargetFunction implements FloatFunction<DistanceToTargetF
         if (!(entity instanceof Player player)) {
             return 0f;
         }
-        int lastTargetId = player.getPersistentData().getInt("LastAttackTarget");
-        Entity target = entity.level().getEntity(lastTargetId);
+        Entity target = SkillBonusHandlerUtils.getLastPlayerAttackTarget(player);
         if (target == null) {
             return 0f;
         }

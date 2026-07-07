@@ -7,7 +7,7 @@ import daripher.skilltree.init.predicate.PSTDamagePredicates;
 import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
 import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
-import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
+import daripher.skilltree.skill.bonus.player.ExperienceGainMultiplierBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
@@ -202,9 +202,9 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Дарует заклинание %s %s");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "к уровню заклинания %s");
         // experience sources
-        add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
-        add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
-        add(GainedExperienceBonus.ExperienceSource.FISHING.getDescriptionId(), "за Рыбалку");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.MOBS.getDescriptionId(), "с Существ");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.FISHING.getDescriptionId(), "за Рыбалку");
         // loot conditions
         add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "награды с существ");
         add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "награды с рыбалки");

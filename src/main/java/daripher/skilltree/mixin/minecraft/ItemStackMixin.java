@@ -1,7 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
-import daripher.skilltree.skill.bonus.player.ItemDurabilityLossAvoidanceBonus;
+import daripher.skilltree.skill.bonus.handler.ItemDurabilityLossPreventionBonusHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -14,14 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    public void preventDurabilityLoss(int amount, RandomSource random, @Nullable ServerPlayer user, CallbackInfoReturnable<Boolean> callbackInfo) {
-        if (user == null) {
+    public void preventDurabilityLoss(int amount, RandomSource random, @Nullable ServerPlayer playerUsingItem, CallbackInfoReturnable<Boolean> callbackInfo) {
+        if (playerUsingItem == null) {
             return;
         }
         @SuppressWarnings("DataFlowIssue") ItemStack itemStack = (ItemStack) (Object) this;
-        float chance = SkillBonusHandler.getSkillBonuses(user, ItemDurabilityLossAvoidanceBonus.class).stream()
-                .map(bonus -> bonus.getChance(user, itemStack)).reduce(Float::sum).orElse(0f);
-        if (random.nextFloat() < chance) {
+        if (ItemDurabilityLossPreventionBonusHandler.shouldPreventItemDurabilityLoss(playerUsingItem, itemStack, random)) {
             callbackInfo.setReturnValue(false);
         }
     }

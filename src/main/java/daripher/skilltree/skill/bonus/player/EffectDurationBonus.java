@@ -44,7 +44,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
         this.target = target;
     }
 
-    public float getDuration(MobEffect mobEffect, @Nullable Player effectSource, LivingEntity entity) {
+    public float getDurationModifier(MobEffect mobEffect, @Nullable Player effectSource, LivingEntity entity) {
         if (!effectPredicate.test(mobEffect)) {
             return 0f;
         }

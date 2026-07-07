@@ -35,7 +35,7 @@ public final class ProjectileDuplicationBonus implements SkillBonus<ProjectileDu
         this.chance = chance;
     }
 
-    public float getChance(Player player) {
+    public float getDuplicationChance(Player player) {
         if (!playerCondition.test(player)) {
             return 0f;
         }

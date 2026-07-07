@@ -9,7 +9,7 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.OutgoingDamageEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +37,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
     }
 
     public InflictIgniteBonus(float chance, int duration) {
-        this(chance, duration, new AttackEventListener());
+        this(chance, duration, new OutgoingDamageEventListener());
     }
 
     @Override

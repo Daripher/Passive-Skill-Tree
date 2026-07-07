@@ -10,7 +10,7 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.event.BlockEventListener;
+import daripher.skilltree.skill.bonus.event.ShieldBlockEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
 import daripher.skilltree.skill.bonus.predicate.damage.MagicDamageCondition;
@@ -41,7 +41,7 @@ public final class InflictDamageBonus implements EventListenerBonus<InflictDamag
     }
 
     public InflictDamageBonus(float chance, float damage) {
-        this(chance, damage, new BlockEventListener(), new MagicDamageCondition());
+        this(chance, damage, new ShieldBlockEventListener(), new MagicDamageCondition());
     }
 
     @Override

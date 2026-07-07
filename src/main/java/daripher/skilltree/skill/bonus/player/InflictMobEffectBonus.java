@@ -9,7 +9,7 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.OutgoingDamageEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.event.TickingEventListener;
 import net.minecraft.ChatFormatting;
@@ -43,7 +43,7 @@ public final class InflictMobEffectBonus implements EventListenerBonus<InflictMo
     }
 
     public InflictMobEffectBonus(float chance, MobEffectInstance effectInstance, int maxStacks) {
-        this(chance, effectInstance, new AttackEventListener(), maxStacks);
+        this(chance, effectInstance, new OutgoingDamageEventListener(), maxStacks);
     }
 
     @Override

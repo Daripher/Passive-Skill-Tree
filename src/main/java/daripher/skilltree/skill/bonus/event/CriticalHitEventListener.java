@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.event;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.PSTEventListeners;
@@ -10,8 +11,6 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
-import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import net.minecraft.ChatFormatting;
@@ -19,44 +18,47 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class ItemUsedEventListener implements SkillEventListener {
+public class CriticalHitEventListener implements SkillEventListener {
     private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+    private LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
     private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-    private ItemStackPredicate itemStackPredicate;
+    private LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
+    private SkillBonus.Target target = SkillBonus.Target.ENEMY;
 
-    public ItemUsedEventListener(ItemStackPredicate itemStackPredicate) {
-        this.itemStackPredicate = itemStackPredicate;
-    }
-
-    public void onEvent(@Nonnull Player player, @Nonnull ItemStack stack, @Nonnull EventListenerBonus<?> skill) {
+    public void onEvent(@Nonnull Player player, @Nonnull LivingEntity enemy, @Nonnull EventListenerBonus<?> skill) {
         if (!playerCondition.test(player)) {
             return;
         }
-        if (!itemStackPredicate.test(stack)) {
+        if (!enemyCondition.test(enemy)) {
             return;
         }
-        skill.multiply(playerMultiplier.getValue(player)).applyEffect(player, player);
+        LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
+        float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
+        skill.copy().multiply(effectMultiplier).applyEffect(target, player);
     }
 
     @Override
     public MutableComponent getTooltip(Component bonusTooltip) {
-        Component itemTooltip = itemStackPredicate.getTooltip();
-        MutableComponent eventTooltip = Component.translatable(getDescriptionId(), bonusTooltip, itemTooltip);
+        MutableComponent eventTooltip;
+        eventTooltip = Component.translatable(getDescriptionId(), bonusTooltip);
         eventTooltip = playerCondition.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
+        eventTooltip = enemyCondition.getTooltip(eventTooltip, SkillBonus.Target.ENEMY);
         eventTooltip = playerMultiplier.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
+        eventTooltip = enemyMultiplier.getTooltip(eventTooltip, SkillBonus.Target.ENEMY);
         return eventTooltip;
     }
 
     @Override
     public SkillEventListener.Serializer getSerializer() {
-        return PSTEventListeners.ITEM_USED.get();
+        return PSTEventListeners.CRITICAL_HIT.get();
     }
 
     @Override
@@ -67,13 +69,13 @@ public class ItemUsedEventListener implements SkillEventListener {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ItemUsedEventListener listener = (ItemUsedEventListener) o;
-        return Objects.equals(playerCondition, listener.playerCondition) && Objects.equals(playerMultiplier, listener.playerMultiplier) && Objects.equals(itemStackPredicate, listener.itemStackPredicate);
+        CriticalHitEventListener listener = (CriticalHitEventListener) o;
+        return Objects.equals(playerCondition, listener.playerCondition) && Objects.equals(enemyCondition, listener.enemyCondition) && Objects.equals(playerMultiplier, listener.playerMultiplier) && Objects.equals(enemyMultiplier, listener.enemyMultiplier) && target == listener.target;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerCondition, playerMultiplier, itemStackPredicate);
+        return Objects.hash(playerCondition, enemyCondition, playerMultiplier, enemyMultiplier, target);
     }
 
     @Override
@@ -83,28 +85,43 @@ public class ItemUsedEventListener implements SkillEventListener {
         editor.addSelectionMenu(0, 0, 200, playerCondition).setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
                 .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
         editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Enemy Condition", ChatFormatting.GREEN);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, enemyCondition).setResponder(condition -> selectTargetCondition(editor, consumer, condition))
+                .setMenuInitFunc(() -> addTargetConditionWidgets(editor, consumer));
+        editor.increaseHeight(19);
         editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GREEN);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, playerMultiplier)
                 .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
                 .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
         editor.increaseHeight(19);
-        editor.addLabel(0, 0, "Item Condition", ChatFormatting.GREEN);
+        editor.addLabel(0, 0, "Enemy Multiplier", ChatFormatting.GREEN);
         editor.increaseHeight(19);
-        editor.addSelectionMenu(0, 0, 200, itemStackPredicate).setResponder(condition -> selectItemCondition(editor, consumer, condition))
-                .setMenuInitFunc(() -> addItemConditionWidgets(editor, consumer));
+        editor.addSelectionMenu(0, 0, 200, enemyMultiplier).setResponder(multiplier -> selectTargetMultiplier(editor, consumer, multiplier))
+                .setMenuInitFunc(() -> addTargetMultiplierWidgets(editor, consumer));
         editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Target", ChatFormatting.GREEN);
+        editor.increaseHeight(19);
+        editor.addSelection(0, 0, 80, 1, target).setNameGetter(TooltipHelper::getTargetName)
+                .setResponder(target -> selectTarget(consumer, target));
+        editor.increaseHeight(29);
     }
 
-    private void addItemConditionWidgets(SkillTreeEditor editor, Consumer<SkillEventListener> consumer) {
-        itemStackPredicate.addEditorWidgets(editor, condition -> {
-            setItemCondition(condition);
+    private void selectTarget(Consumer<SkillEventListener> consumer, SkillBonus.Target target) {
+        setTarget(target);
+        consumer.accept(this);
+    }
+
+    private void addTargetMultiplierWidgets(SkillTreeEditor editor, Consumer<SkillEventListener> consumer) {
+        enemyMultiplier.addEditorWidgets(editor, multiplier -> {
+            setPlayerMultiplier(multiplier);
             consumer.accept(this);
         });
     }
 
-    private void selectItemCondition(SkillTreeEditor editor, Consumer<SkillEventListener> consumer, ItemStackPredicate condition) {
-        setItemCondition(condition);
+    private void selectTargetMultiplier(SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingMultiplier multiplier) {
+        setEnemyMultiplier(multiplier);
         consumer.accept(this);
         editor.rebuildWidgets();
     }
@@ -118,6 +135,19 @@ public class ItemUsedEventListener implements SkillEventListener {
 
     private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingMultiplier multiplier) {
         setPlayerMultiplier(multiplier);
+        consumer.accept(this);
+        editor.rebuildWidgets();
+    }
+
+    private void addTargetConditionWidgets(SkillTreeEditor editor, Consumer<SkillEventListener> consumer) {
+        enemyCondition.addEditorWidgets(editor, condition -> {
+            setEnemyCondition(condition);
+            consumer.accept(this);
+        });
+    }
+
+    private void selectTargetCondition(SkillTreeEditor editor, Consumer<SkillEventListener> consumer, LivingEntityPredicate condition) {
+        setEnemyCondition(condition);
         consumer.accept(this);
         editor.rebuildWidgets();
     }
@@ -137,84 +167,109 @@ public class ItemUsedEventListener implements SkillEventListener {
 
     @Override
     public SkillBonus.Target getTarget() {
-        return SkillBonus.Target.PLAYER;
+        return target;
     }
 
-    public void setPlayerCondition(LivingEntityPredicate playerCondition) {
+    public CriticalHitEventListener setEnemyCondition(LivingEntityPredicate enemyCondition) {
+        this.enemyCondition = enemyCondition;
+        return this;
+    }
+
+    public CriticalHitEventListener setPlayerCondition(LivingEntityPredicate playerCondition) {
         this.playerCondition = playerCondition;
+        return this;
     }
 
-    public void setPlayerMultiplier(LivingMultiplier playerMultiplier) {
+    public CriticalHitEventListener setEnemyMultiplier(LivingMultiplier enemyMultiplier) {
+        this.enemyMultiplier = enemyMultiplier;
+        return this;
+    }
+
+    public CriticalHitEventListener setPlayerMultiplier(LivingMultiplier playerMultiplier) {
         this.playerMultiplier = playerMultiplier;
+        return this;
     }
 
-    public void setItemCondition(ItemStackPredicate itemStackPredicate) {
-        this.itemStackPredicate = itemStackPredicate;
+    public CriticalHitEventListener setTarget(SkillBonus.Target target) {
+        this.target = target;
+        return this;
     }
 
     public static class Serializer implements SkillEventListener.Serializer {
         @Override
         public SkillEventListener deserialize(JsonObject json) throws JsonParseException {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(json);
-            ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
+            CriticalHitEventListener listener = new CriticalHitEventListener();
+            listener.setEnemyCondition(SerializationHelper.deserializeLivingCondition(json, "enemy_condition"));
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(json, "player_condition"));
+            listener.setEnemyMultiplier(SerializationHelper.deserializeLivingMultiplier(json, "enemy_multiplier"));
             listener.setPlayerMultiplier(SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier"));
+            listener.setTarget(SkillBonus.Target.valueOf(json.get("target").getAsString().toUpperCase(Locale.ROOT)));
             return listener;
         }
 
         @Override
         public void serialize(JsonObject json, SkillEventListener listener) {
-            if (!(listener instanceof ItemUsedEventListener aListener)) {
+            if (!(listener instanceof CriticalHitEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
-            SerializationHelper.serializeItemPredicate(json, aListener.itemStackPredicate);
+            SerializationHelper.serializeLivingCondition(json, aListener.enemyCondition, "enemy_condition");
             SerializationHelper.serializeLivingCondition(json, aListener.playerCondition, "player_condition");
+            SerializationHelper.serializeLivingMultiplier(json, aListener.enemyMultiplier, "enemy_multiplier");
             SerializationHelper.serializeLivingMultiplier(json, aListener.playerMultiplier, "player_multiplier");
+            json.addProperty("target", aListener.target.name().toLowerCase(Locale.ROOT));
         }
 
         @Override
         public SkillEventListener deserialize(CompoundTag tag) {
-            ItemStackPredicate itemStackPredicate = SerializationHelper.deserializeItemPredicate(tag);
-            ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
+            CriticalHitEventListener listener = new CriticalHitEventListener();
+            listener.setEnemyCondition(SerializationHelper.deserializeLivingCondition(tag, "enemy_condition"));
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(tag, "player_condition"));
+            listener.setEnemyMultiplier(SerializationHelper.deserializeLivingMultiplier(tag, "enemy_multiplier"));
             listener.setPlayerMultiplier(SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier"));
+            listener.setTarget(SkillBonus.Target.valueOf(tag.getString("target").toUpperCase(Locale.ROOT)));
             return listener;
         }
 
         @Override
         public CompoundTag serialize(SkillEventListener listener) {
-            if (!(listener instanceof ItemUsedEventListener aListener)) {
+            if (!(listener instanceof CriticalHitEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            SerializationHelper.serializeItemPredicate(tag, aListener.itemStackPredicate);
+            SerializationHelper.serializeLivingCondition(tag, aListener.enemyCondition, "enemy_condition");
             SerializationHelper.serializeLivingCondition(tag, aListener.playerCondition, "player_condition");
+            SerializationHelper.serializeLivingMultiplier(tag, aListener.enemyMultiplier, "enemy_multiplier");
             SerializationHelper.serializeLivingMultiplier(tag, aListener.playerMultiplier, "player_multiplier");
+            tag.putString("target", aListener.target.name().toLowerCase(Locale.ROOT));
             return tag;
         }
 
         @Override
         public SkillEventListener deserialize(FriendlyByteBuf buf) {
-            ItemStackPredicate itemStackPredicate = NetworkHelper.readItemPredicate(buf);
-            ItemUsedEventListener listener = new ItemUsedEventListener(itemStackPredicate);
+            CriticalHitEventListener listener = new CriticalHitEventListener();
+            listener.setEnemyCondition(NetworkHelper.readLivingCondition(buf));
             listener.setPlayerCondition(NetworkHelper.readLivingCondition(buf));
+            listener.setEnemyMultiplier(NetworkHelper.readLivingMultiplier(buf));
             listener.setPlayerMultiplier(NetworkHelper.readLivingMultiplier(buf));
+            listener.setTarget(SkillBonus.Target.values()[buf.readInt()]);
             return listener;
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillEventListener listener) {
-            if (!(listener instanceof ItemUsedEventListener aListener)) {
+            if (!(listener instanceof CriticalHitEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
-            NetworkHelper.writeItemPredicate(buf, aListener.itemStackPredicate);
+            NetworkHelper.writeLivingCondition(buf, aListener.enemyCondition);
             NetworkHelper.writeLivingCondition(buf, aListener.playerCondition);
+            NetworkHelper.writeLivingMultiplier(buf, aListener.enemyMultiplier);
             NetworkHelper.writeLivingMultiplier(buf, aListener.playerMultiplier);
+            buf.writeInt(aListener.target.ordinal());
         }
 
         @Override
         public SkillEventListener createDefaultInstance() {
-            return new ItemUsedEventListener(new PotionStackPredicate(PotionStackPredicate.Type.ANY));
+            return new CriticalHitEventListener();
         }
     }
 }

@@ -11,6 +11,8 @@ import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
+import daripher.skilltree.skill.bonus.predicate.damage.DamageCondition;
+import daripher.skilltree.skill.bonus.predicate.damage.NoneDamageCondition;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import net.minecraft.ChatFormatting;
@@ -18,37 +20,49 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class CritEventListener implements SkillEventListener {
+public class IncomingDamageEventListener implements SkillEventListener {
     private LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
     private LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
+    private DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
     private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
     private LivingMultiplier enemyMultiplier = NoneLivingMultiplier.INSTANCE;
     private SkillBonus.Target target = SkillBonus.Target.ENEMY;
 
-    public void onEvent(@Nonnull Player player, @Nonnull LivingEntity enemy, @Nonnull EventListenerBonus<?> skill) {
+    public void onEvent(@Nonnull Player player, @Nullable LivingEntity enemy, @Nonnull DamageSource damage, @Nonnull EventListenerBonus<?> skill) {
+        if (enemyCondition != NoneLivingEntityPredicate.INSTANCE && enemy == null) {
+            return;
+        }
         if (!playerCondition.test(player)) {
             return;
         }
         if (!enemyCondition.test(enemy)) {
             return;
         }
+        if (!damageCondition.met(damage)) {
+            return;
+        }
         LivingEntity target = this.target == SkillBonus.Target.PLAYER ? player : enemy;
+        if (target == null) {
+            return;
+        }
         float effectMultiplier = playerMultiplier.getValue(player) * enemyMultiplier.getValue(enemy);
-        skill.multiply(effectMultiplier).applyEffect(target, player);
+        skill.copy().multiply(effectMultiplier).applyEffect(target, player);
     }
 
     @Override
     public MutableComponent getTooltip(Component bonusTooltip) {
-        MutableComponent eventTooltip;
-        eventTooltip = Component.translatable(getDescriptionId(), bonusTooltip);
+        Component damageDescription = damageCondition.getTooltip();
+        MutableComponent eventTooltip = Component.translatable(getDescriptionId(), bonusTooltip, damageDescription);
         eventTooltip = playerCondition.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
         eventTooltip = enemyCondition.getTooltip(eventTooltip, SkillBonus.Target.ENEMY);
         eventTooltip = playerMultiplier.getTooltip(eventTooltip, SkillBonus.Target.PLAYER);
@@ -58,7 +72,7 @@ public class CritEventListener implements SkillEventListener {
 
     @Override
     public SkillEventListener.Serializer getSerializer() {
-        return PSTEventListeners.CRITICAL_HIT.get();
+        return PSTEventListeners.DAMAGE_TAKEN.get();
     }
 
     @Override
@@ -69,13 +83,13 @@ public class CritEventListener implements SkillEventListener {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CritEventListener listener = (CritEventListener) o;
-        return Objects.equals(playerCondition, listener.playerCondition) && Objects.equals(enemyCondition, listener.enemyCondition) && Objects.equals(playerMultiplier, listener.playerMultiplier) && Objects.equals(enemyMultiplier, listener.enemyMultiplier) && target == listener.target;
+        IncomingDamageEventListener listener = (IncomingDamageEventListener) o;
+        return Objects.equals(playerCondition, listener.playerCondition) && Objects.equals(enemyCondition, listener.enemyCondition) && Objects.equals(damageCondition, listener.damageCondition) && Objects.equals(playerMultiplier, listener.playerMultiplier) && Objects.equals(enemyMultiplier, listener.enemyMultiplier) && target == listener.target;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerCondition, enemyCondition, playerMultiplier, enemyMultiplier, target);
+        return Objects.hash(playerCondition, enemyCondition, damageCondition, playerMultiplier, enemyMultiplier, target);
     }
 
     @Override
@@ -101,8 +115,10 @@ public class CritEventListener implements SkillEventListener {
         editor.addSelectionMenu(0, 0, 200, enemyMultiplier).setResponder(multiplier -> selectTargetMultiplier(editor, consumer, multiplier))
                 .setMenuInitFunc(() -> addTargetMultiplierWidgets(editor, consumer));
         editor.increaseHeight(19);
+        editor.addLabel(110, 0, "Damage", ChatFormatting.GREEN);
         editor.addLabel(0, 0, "Target", ChatFormatting.GREEN);
         editor.increaseHeight(19);
+        editor.addSelectionMenu(110, 0, 95, damageCondition).setResponder(condition -> selectDamageCondition(consumer, condition));
         editor.addSelection(0, 0, 80, 1, target).setNameGetter(TooltipHelper::getTargetName)
                 .setResponder(target -> selectTarget(consumer, target));
         editor.increaseHeight(29);
@@ -110,6 +126,11 @@ public class CritEventListener implements SkillEventListener {
 
     private void selectTarget(Consumer<SkillEventListener> consumer, SkillBonus.Target target) {
         setTarget(target);
+        consumer.accept(this);
+    }
+
+    private void selectDamageCondition(Consumer<SkillEventListener> consumer, DamageCondition condition) {
+        setDamageCondition(condition);
         consumer.accept(this);
     }
 
@@ -170,35 +191,35 @@ public class CritEventListener implements SkillEventListener {
         return target;
     }
 
-    public CritEventListener setEnemyCondition(LivingEntityPredicate enemyCondition) {
+    public void setDamageCondition(DamageCondition damageCondition) {
+        this.damageCondition = damageCondition;
+    }
+
+    public void setEnemyCondition(LivingEntityPredicate enemyCondition) {
         this.enemyCondition = enemyCondition;
-        return this;
     }
 
-    public CritEventListener setPlayerCondition(LivingEntityPredicate playerCondition) {
+    public void setPlayerCondition(LivingEntityPredicate playerCondition) {
         this.playerCondition = playerCondition;
-        return this;
     }
 
-    public CritEventListener setEnemyMultiplier(LivingMultiplier enemyMultiplier) {
+    public void setEnemyMultiplier(LivingMultiplier enemyMultiplier) {
         this.enemyMultiplier = enemyMultiplier;
-        return this;
     }
 
-    public CritEventListener setPlayerMultiplier(LivingMultiplier playerMultiplier) {
+    public void setPlayerMultiplier(LivingMultiplier playerMultiplier) {
         this.playerMultiplier = playerMultiplier;
-        return this;
     }
 
-    public CritEventListener setTarget(SkillBonus.Target target) {
+    public void setTarget(SkillBonus.Target target) {
         this.target = target;
-        return this;
     }
 
     public static class Serializer implements SkillEventListener.Serializer {
         @Override
         public SkillEventListener deserialize(JsonObject json) throws JsonParseException {
-            CritEventListener listener = new CritEventListener();
+            IncomingDamageEventListener listener = new IncomingDamageEventListener();
+            listener.setDamageCondition(SerializationHelper.deserializeDamageCondition(json));
             listener.setEnemyCondition(SerializationHelper.deserializeLivingCondition(json, "enemy_condition"));
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(json, "player_condition"));
             listener.setEnemyMultiplier(SerializationHelper.deserializeLivingMultiplier(json, "enemy_multiplier"));
@@ -209,9 +230,10 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public void serialize(JsonObject json, SkillEventListener listener) {
-            if (!(listener instanceof CritEventListener aListener)) {
+            if (!(listener instanceof IncomingDamageEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
+            SerializationHelper.serializeDamageCondition(json, aListener.damageCondition);
             SerializationHelper.serializeLivingCondition(json, aListener.enemyCondition, "enemy_condition");
             SerializationHelper.serializeLivingCondition(json, aListener.playerCondition, "player_condition");
             SerializationHelper.serializeLivingMultiplier(json, aListener.enemyMultiplier, "enemy_multiplier");
@@ -221,7 +243,8 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public SkillEventListener deserialize(CompoundTag tag) {
-            CritEventListener listener = new CritEventListener();
+            IncomingDamageEventListener listener = new IncomingDamageEventListener();
+            listener.setDamageCondition(SerializationHelper.deserializeDamageCondition(tag));
             listener.setEnemyCondition(SerializationHelper.deserializeLivingCondition(tag, "enemy_condition"));
             listener.setPlayerCondition(SerializationHelper.deserializeLivingCondition(tag, "player_condition"));
             listener.setEnemyMultiplier(SerializationHelper.deserializeLivingMultiplier(tag, "enemy_multiplier"));
@@ -232,10 +255,11 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public CompoundTag serialize(SkillEventListener listener) {
-            if (!(listener instanceof CritEventListener aListener)) {
+            if (!(listener instanceof IncomingDamageEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeDamageCondition(tag, aListener.damageCondition);
             SerializationHelper.serializeLivingCondition(tag, aListener.enemyCondition, "enemy_condition");
             SerializationHelper.serializeLivingCondition(tag, aListener.playerCondition, "player_condition");
             SerializationHelper.serializeLivingMultiplier(tag, aListener.enemyMultiplier, "enemy_multiplier");
@@ -246,7 +270,8 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public SkillEventListener deserialize(FriendlyByteBuf buf) {
-            CritEventListener listener = new CritEventListener();
+            IncomingDamageEventListener listener = new IncomingDamageEventListener();
+            listener.setDamageCondition(NetworkHelper.readDamageCondition(buf));
             listener.setEnemyCondition(NetworkHelper.readLivingCondition(buf));
             listener.setPlayerCondition(NetworkHelper.readLivingCondition(buf));
             listener.setEnemyMultiplier(NetworkHelper.readLivingMultiplier(buf));
@@ -257,9 +282,10 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillEventListener listener) {
-            if (!(listener instanceof CritEventListener aListener)) {
+            if (!(listener instanceof IncomingDamageEventListener aListener)) {
                 throw new IllegalArgumentException();
             }
+            NetworkHelper.writeDamageCondition(buf, aListener.damageCondition);
             NetworkHelper.writeLivingCondition(buf, aListener.enemyCondition);
             NetworkHelper.writeLivingCondition(buf, aListener.playerCondition);
             NetworkHelper.writeLivingMultiplier(buf, aListener.enemyMultiplier);
@@ -269,7 +295,7 @@ public class CritEventListener implements SkillEventListener {
 
         @Override
         public SkillEventListener createDefaultInstance() {
-            return new CritEventListener();
+            return new IncomingDamageEventListener();
         }
     }
 }

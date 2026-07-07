@@ -26,12 +26,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectImmunityBonus> {
+public final class EffectImmunityBypassBonus implements SkillBonus<EffectImmunityBypassBonus> {
     private @Nonnull MobEffectPredicate effectPredicate;
     private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
     private @Nonnull LivingEntityPredicate enemyCondition = NoneLivingEntityPredicate.INSTANCE;
 
-    public IgnoreEffectImmunityBonus(@Nonnull MobEffectPredicate effectPredicate) {
+    public EffectImmunityBypassBonus(@Nonnull MobEffectPredicate effectPredicate) {
         this.effectPredicate = effectPredicate;
     }
 
@@ -51,15 +51,15 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
     }
 
     @Override
-    public IgnoreEffectImmunityBonus copy() {
-        IgnoreEffectImmunityBonus copy = new IgnoreEffectImmunityBonus(effectPredicate);
+    public EffectImmunityBypassBonus copy() {
+        EffectImmunityBypassBonus copy = new EffectImmunityBypassBonus(effectPredicate);
         copy.playerCondition = playerCondition;
         copy.enemyCondition = enemyCondition;
         return copy;
     }
 
     @Override
-    public IgnoreEffectImmunityBonus multiply(double multiplier) {
+    public EffectImmunityBypassBonus multiply(double multiplier) {
         return this;
     }
 
@@ -69,7 +69,7 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
     }
 
     @Override
-    public SkillBonus<IgnoreEffectImmunityBonus> merge(SkillBonus<?> other) {
+    public SkillBonus<EffectImmunityBypassBonus> merge(SkillBonus<?> other) {
         return this;
     }
 
@@ -88,7 +88,7 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer) {
         editor.addLabel(0, 0, "Effect Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, effectPredicate).setRequiresSearch(false)
@@ -107,39 +107,39 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
         editor.increaseHeight(19);
     }
 
-    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer, LivingEntityPredicate condition) {
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer, LivingEntityPredicate condition) {
         setPlayerCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectEnemyCondition(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer, LivingEntityPredicate condition) {
+    private void selectEnemyCondition(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer, LivingEntityPredicate condition) {
         setEnemyCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectEffectPredicate(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer, MobEffectPredicate effectPredicate) {
+    private void selectEffectPredicate(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer, MobEffectPredicate effectPredicate) {
         setEffectPredicate(effectPredicate);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addEffectPredicateWidgets(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer) {
+    private void addEffectPredicateWidgets(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer) {
         effectPredicate.addEditorWidgets(editor, predicate -> {
             setEffectPredicate(predicate);
             consumer.accept(this.copy());
         });
     }
 
-    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer) {
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer) {
         playerCondition.addEditorWidgets(editor, c -> {
             setPlayerCondition(c);
             consumer.accept(this.copy());
         });
     }
 
-    private void addEnemyConditionWidgets(SkillTreeEditor editor, Consumer<IgnoreEffectImmunityBonus> consumer) {
+    private void addEnemyConditionWidgets(SkillTreeEditor editor, Consumer<EffectImmunityBypassBonus> consumer) {
         enemyCondition.addEditorWidgets(editor, c -> {
             setPlayerCondition(c);
             consumer.accept(this.copy());
@@ -161,9 +161,9 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public IgnoreEffectImmunityBonus deserialize(JsonObject json) throws JsonParseException {
+        public EffectImmunityBypassBonus deserialize(JsonObject json) throws JsonParseException {
             MobEffectPredicate mobEffectPredicate = SerializationHelper.deserializeMobEffectCondition(json, "mob_effect_predicate");
-            IgnoreEffectImmunityBonus bonus = new IgnoreEffectImmunityBonus(mobEffectPredicate);
+            EffectImmunityBypassBonus bonus = new EffectImmunityBypassBonus(mobEffectPredicate);
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(json, "player_condition");
             bonus.enemyCondition = SerializationHelper.deserializeLivingCondition(json, "enemy_condition");
             return bonus;
@@ -171,16 +171,16 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            IgnoreEffectImmunityBonus validBonus = validateBonus(bonus);
+            EffectImmunityBypassBonus validBonus = validateBonus(bonus);
             SerializationHelper.serializeMobEffectCondition(json, validBonus.effectPredicate, "mob_effect_predicate");
             SerializationHelper.serializeLivingCondition(json, validBonus.playerCondition, "player_condition");
             SerializationHelper.serializeLivingCondition(json, validBonus.enemyCondition, "enemy_condition");
         }
 
         @Override
-        public IgnoreEffectImmunityBonus deserialize(CompoundTag tag) {
+        public EffectImmunityBypassBonus deserialize(CompoundTag tag) {
             MobEffectPredicate mobEffectPredicate = SerializationHelper.deserializeMobEffectCondition(tag, "mob_effect_predicate");
-            IgnoreEffectImmunityBonus bonus = new IgnoreEffectImmunityBonus(mobEffectPredicate);
+            EffectImmunityBypassBonus bonus = new EffectImmunityBypassBonus(mobEffectPredicate);
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(tag, "player_condition");
             bonus.enemyCondition = SerializationHelper.deserializeLivingCondition(tag, "enemy_condition");
             return bonus;
@@ -188,7 +188,7 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            IgnoreEffectImmunityBonus validBonus = validateBonus(bonus);
+            EffectImmunityBypassBonus validBonus = validateBonus(bonus);
             CompoundTag compoundTag = new CompoundTag();
             SerializationHelper.serializeMobEffectCondition(compoundTag, validBonus.effectPredicate, "mob_effect_predicate");
             SerializationHelper.serializeLivingCondition(compoundTag, validBonus.playerCondition, "player_condition");
@@ -197,9 +197,9 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
         }
 
         @Override
-        public IgnoreEffectImmunityBonus deserialize(FriendlyByteBuf buf) {
+        public EffectImmunityBypassBonus deserialize(FriendlyByteBuf buf) {
             MobEffectPredicate mobEffectPredicate = NetworkHelper.readMobEffectCondition(buf);
-            IgnoreEffectImmunityBonus bonus = new IgnoreEffectImmunityBonus(mobEffectPredicate);
+            EffectImmunityBypassBonus bonus = new EffectImmunityBypassBonus(mobEffectPredicate);
             bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
             bonus.enemyCondition = NetworkHelper.readLivingCondition(buf);
             return bonus;
@@ -207,14 +207,14 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            IgnoreEffectImmunityBonus validBonus = validateBonus(bonus);
+            EffectImmunityBypassBonus validBonus = validateBonus(bonus);
             NetworkHelper.writeMobEffectCondition(buf, validBonus.effectPredicate);
             NetworkHelper.writeLivingCondition(buf, validBonus.playerCondition);
             NetworkHelper.writeLivingCondition(buf, validBonus.enemyCondition);
         }
 
-        private IgnoreEffectImmunityBonus validateBonus(SkillBonus<?> bonus) {
-            if (!(bonus instanceof IgnoreEffectImmunityBonus validBonus)) {
+        private EffectImmunityBypassBonus validateBonus(SkillBonus<?> bonus) {
+            if (!(bonus instanceof EffectImmunityBypassBonus validBonus)) {
                 throw new IllegalArgumentException();
             }
             return validBonus;
@@ -222,7 +222,7 @@ public final class IgnoreEffectImmunityBonus implements SkillBonus<IgnoreEffectI
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new IgnoreEffectImmunityBonus(new MobEffectIdPredicate(MobEffects.POISON));
+            return new EffectImmunityBypassBonus(new MobEffectIdPredicate(MobEffects.POISON));
         }
     }
 }

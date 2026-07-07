@@ -9,7 +9,7 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.EventListenerBonus;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.event.AttackEventListener;
+import daripher.skilltree.skill.bonus.event.OutgoingDamageEventListener;
 import daripher.skilltree.skill.bonus.event.SkillEventListener;
 import daripher.skilltree.skill.bonus.predicate.effect.MobEffectPredicate;
 import daripher.skilltree.skill.bonus.predicate.effect.MobEffectType;
@@ -231,7 +231,7 @@ public final class RemoveMobEffectBonus implements EventListenerBonus<RemoveMobE
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new RemoveMobEffectBonus(0.05f, new MobEffectTypePredicate(MobEffectType.HARMFUL), new AttackEventListener());
+            return new RemoveMobEffectBonus(0.05f, new MobEffectTypePredicate(MobEffectType.HARMFUL), new OutgoingDamageEventListener());
         }
     }
 }

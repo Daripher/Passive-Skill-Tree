@@ -1,7 +1,6 @@
 package daripher.skilltree.mixin.minecraft;
 
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
-import daripher.skilltree.skill.bonus.player.SelfSplashImmuneBonus;
+import daripher.skilltree.skill.bonus.handler.SelfSplashImmunityBonusHandler;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,21 +33,20 @@ public abstract class ThrownPotionMixin extends ThrowableItemProjectile implemen
 
     @Redirect(method = "applySplash", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;" + "getEntitiesOfClass(" + "Ljava/lang/Class;" + "Lnet/minecraft/world/phys/AABB;" + ")Ljava/util/List;"))
     private <T extends Entity> List<T> removePlayerTarget(Level level, Class<T> entityClass, AABB area) {
-        List<T> targets = level.getEntitiesOfClass(entityClass, area);
+        List<T> baseTargets = level.getEntitiesOfClass(entityClass, area);
         Entity owner = getOwner();
         if (!(owner instanceof Player player)) {
-            return targets;
+            return baseTargets;
         }
         //noinspection SuspiciousMethodCalls
-        if (!targets.contains(player)) {
-            return targets;
+        if (!baseTargets.contains(player)) {
+            return baseTargets;
         }
-        List<SelfSplashImmuneBonus> bonuses = SkillBonusHandler.getSkillBonuses(player, SelfSplashImmuneBonus.class);
-        if (bonuses.isEmpty()) {
-            return targets;
+        if (!SelfSplashImmunityBonusHandler.isPlayerImmuneToOwnSplashPotions(player)) {
+            return baseTargets;
         }
-        targets.removeIf(owner::equals);
-        return targets;
+        baseTargets.removeIf(owner::equals);
+        return baseTargets;
     }
 }
 

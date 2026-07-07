@@ -21,17 +21,17 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class GainedExperienceBonus implements SkillBonus<GainedExperienceBonus> {
+public final class ExperienceGainMultiplierBonus implements SkillBonus<ExperienceGainMultiplierBonus> {
     private ExperienceSource experienceSource;
     private float multiplier;
     private LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
 
-    public GainedExperienceBonus(float multiplier, ExperienceSource source) {
+    public ExperienceGainMultiplierBonus(float multiplier, ExperienceSource source) {
         this.multiplier = multiplier;
         this.experienceSource = source;
     }
 
-    public GainedExperienceBonus(float multiplier, ExperienceSource source, LivingMultiplier playerMultiplier) {
+    public ExperienceGainMultiplierBonus(float multiplier, ExperienceSource source, LivingMultiplier playerMultiplier) {
         this.multiplier = multiplier;
         this.experienceSource = source;
         this.playerMultiplier = playerMultiplier;
@@ -43,19 +43,19 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
     }
 
     @Override
-    public GainedExperienceBonus copy() {
-        return new GainedExperienceBonus(multiplier, experienceSource, playerMultiplier);
+    public ExperienceGainMultiplierBonus copy() {
+        return new ExperienceGainMultiplierBonus(multiplier, experienceSource, playerMultiplier);
     }
 
     @Override
-    public GainedExperienceBonus multiply(double multiplier) {
+    public ExperienceGainMultiplierBonus multiply(double multiplier) {
         this.multiplier = (float) (this.multiplier * multiplier);
         return this;
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof GainedExperienceBonus otherBonus)) {
+        if (!(other instanceof ExperienceGainMultiplierBonus otherBonus)) {
             return false;
         }
         if (!Objects.equals(otherBonus.experienceSource, this.experienceSource)) {
@@ -65,11 +65,11 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
     }
 
     @Override
-    public SkillBonus<GainedExperienceBonus> merge(SkillBonus<?> other) {
-        if (!(other instanceof GainedExperienceBonus otherBonus)) {
+    public SkillBonus<ExperienceGainMultiplierBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof ExperienceGainMultiplierBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
-        return new GainedExperienceBonus(otherBonus.multiplier + this.multiplier, experienceSource, playerMultiplier);
+        return new ExperienceGainMultiplierBonus(otherBonus.multiplier + this.multiplier, experienceSource, playerMultiplier);
     }
 
     @Override
@@ -87,7 +87,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GainedExperienceBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<ExperienceGainMultiplierBonus> consumer) {
         editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
         editor.addLabel(0, 0, "Source", ChatFormatting.GOLD);
         editor.increaseHeight(19);
@@ -104,23 +104,23 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
         editor.increaseHeight(19);
     }
 
-    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<GainedExperienceBonus> consumer, LivingMultiplier playerMultiplier) {
+    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<ExperienceGainMultiplierBonus> consumer, LivingMultiplier playerMultiplier) {
         setPlayerMultiplier(playerMultiplier);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectExperienceSource(Consumer<GainedExperienceBonus> consumer, ExperienceSource experienceSource) {
+    private void selectExperienceSource(Consumer<ExperienceGainMultiplierBonus> consumer, ExperienceSource experienceSource) {
         setExpericenSource(experienceSource);
         consumer.accept(this.copy());
     }
 
-    private void selectMultiplier(Consumer<GainedExperienceBonus> consumer, Double value) {
+    private void selectMultiplier(Consumer<ExperienceGainMultiplierBonus> consumer, Double value) {
         setMultiplier(value.floatValue());
         consumer.accept(this.copy());
     }
 
-    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<GainedExperienceBonus> consumer) {
+    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<ExperienceGainMultiplierBonus> consumer) {
         playerMultiplier.addEditorWidgets(editor, m -> {
             setPlayerMultiplier(m);
             consumer.accept(this.copy());
@@ -157,7 +157,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        GainedExperienceBonus that = (GainedExperienceBonus) o;
+        ExperienceGainMultiplierBonus that = (ExperienceGainMultiplierBonus) o;
         if (Float.compare(multiplier, that.multiplier) != 0) {
             return false;
         }
@@ -171,16 +171,16 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public GainedExperienceBonus deserialize(JsonObject json) throws JsonParseException {
+        public ExperienceGainMultiplierBonus deserialize(JsonObject json) throws JsonParseException {
             float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
             ExperienceSource experienceSource = ExperienceSource.byName(json.get("experience_source").getAsString());
             LivingMultiplier playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
-            return new GainedExperienceBonus(multiplier, experienceSource, playerMultiplier);
+            return new ExperienceGainMultiplierBonus(multiplier, experienceSource, playerMultiplier);
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof GainedExperienceBonus aBonus)) {
+            if (!(bonus instanceof ExperienceGainMultiplierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             json.addProperty("multiplier", aBonus.multiplier);
@@ -189,16 +189,16 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
         }
 
         @Override
-        public GainedExperienceBonus deserialize(CompoundTag tag) {
+        public ExperienceGainMultiplierBonus deserialize(CompoundTag tag) {
             float multiplier = tag.getFloat("multiplier");
             ExperienceSource experienceSource = ExperienceSource.byName(tag.getString("experience_source"));
             LivingMultiplier playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
-            return new GainedExperienceBonus(multiplier, experienceSource, playerMultiplier);
+            return new ExperienceGainMultiplierBonus(multiplier, experienceSource, playerMultiplier);
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof GainedExperienceBonus aBonus)) {
+            if (!(bonus instanceof ExperienceGainMultiplierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -209,16 +209,16 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
         }
 
         @Override
-        public GainedExperienceBonus deserialize(FriendlyByteBuf buf) {
+        public ExperienceGainMultiplierBonus deserialize(FriendlyByteBuf buf) {
             float multiplier = buf.readFloat();
             ExperienceSource experienceSource = ExperienceSource.values()[buf.readInt()];
             LivingMultiplier playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
-            return new GainedExperienceBonus(multiplier, experienceSource, playerMultiplier);
+            return new ExperienceGainMultiplierBonus(multiplier, experienceSource, playerMultiplier);
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof GainedExperienceBonus aBonus)) {
+            if (!(bonus instanceof ExperienceGainMultiplierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             buf.writeFloat(aBonus.multiplier);
@@ -228,7 +228,7 @@ public final class GainedExperienceBonus implements SkillBonus<GainedExperienceB
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new GainedExperienceBonus(0.25f, ExperienceSource.MOBS);
+            return new ExperienceGainMultiplierBonus(0.25f, ExperienceSource.MOBS);
         }
     }
 

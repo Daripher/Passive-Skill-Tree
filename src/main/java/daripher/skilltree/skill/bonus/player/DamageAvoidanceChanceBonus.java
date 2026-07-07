@@ -26,47 +26,49 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
-    private float amount;
-    private AttributeModifier.Operation operation;
+public final class DamageAvoidanceChanceBonus implements SkillBonus<DamageAvoidanceChanceBonus> {
+    private float chance;
     private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
     private @Nonnull LivingMultiplier attackerMultiplier = NoneLivingMultiplier.INSTANCE;
     private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
     private @Nonnull LivingEntityPredicate attackerCondition = NoneLivingEntityPredicate.INSTANCE;
     private @Nonnull DamageCondition damageCondition = NoneDamageCondition.INSTANCE;
 
-    public DamageTakenBonus(float amount, AttributeModifier.Operation operation) {
-        this.amount = amount;
-        this.operation = operation;
+    public DamageAvoidanceChanceBonus(float chance) {
+        this.chance = chance;
     }
 
-    public float getDamageBonus(AttributeModifier.Operation operation, DamageSource source, Player player, LivingEntity attacker) {
-        if (this.operation != operation) {
-            return 0f;
-        }
+    public float getChance(DamageSource source, Player player, @Nullable LivingEntity attacker) {
         if (!damageCondition.met(source)) {
             return 0f;
         }
         if (!playerCondition.test(player)) {
             return 0f;
         }
-        if (!attackerCondition.test(attacker)) {
-            return 0f;
+        if (attackerCondition != NoneLivingEntityPredicate.INSTANCE) {
+            if (attacker == null || !attackerCondition.test(attacker)) {
+                return 0f;
+            }
         }
-        return amount * playerMultiplier.getValue(player) * attackerMultiplier.getValue(attacker);
+        float result = chance * playerMultiplier.getValue(player);
+        if (attacker != null) {
+            result *= attackerMultiplier.getValue(attacker);
+        }
+        return result;
     }
 
     @Override
     public SkillBonus.Serializer getSerializer() {
-        return PSTSkillBonuses.DAMAGE_TAKEN.get();
+        return PSTSkillBonuses.DAMAGE_AVOIDANCE.get();
     }
 
     @Override
-    public DamageTakenBonus copy() {
-        DamageTakenBonus bonus = new DamageTakenBonus(amount, operation);
+    public DamageAvoidanceChanceBonus copy() {
+        DamageAvoidanceChanceBonus bonus = new DamageAvoidanceChanceBonus(chance);
         bonus.playerMultiplier = this.playerMultiplier;
         bonus.attackerMultiplier = this.attackerMultiplier;
         bonus.playerCondition = this.playerCondition;
@@ -76,14 +78,14 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
     }
 
     @Override
-    public DamageTakenBonus multiply(double multiplier) {
-        amount *= (float) multiplier;
+    public DamageAvoidanceChanceBonus multiply(double multiplier) {
+        chance *= (float) multiplier;
         return this;
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof DamageTakenBonus otherBonus)) {
+        if (!(other instanceof DamageAvoidanceChanceBonus otherBonus)) {
             return false;
         }
         if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
@@ -98,19 +100,16 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         if (!Objects.equals(otherBonus.damageCondition, this.damageCondition)) {
             return false;
         }
-        if (!Objects.equals(otherBonus.attackerCondition, this.attackerCondition)) {
-            return false;
-        }
-        return otherBonus.operation == this.operation;
+        return Objects.equals(otherBonus.attackerCondition, this.attackerCondition);
     }
 
     @Override
-    public SkillBonus<DamageTakenBonus> merge(SkillBonus<?> other) {
-        if (!(other instanceof DamageTakenBonus otherBonus)) {
+    public SkillBonus<DamageAvoidanceChanceBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof DamageAvoidanceChanceBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
-        float mergedAmount = otherBonus.amount + this.amount;
-        DamageTakenBonus mergedBonus = new DamageTakenBonus(mergedAmount, this.operation);
+        float mergedChance = otherBonus.chance + this.chance;
+        DamageAvoidanceChanceBonus mergedBonus = new DamageAvoidanceChanceBonus(mergedChance);
         mergedBonus.playerMultiplier = this.playerMultiplier;
         mergedBonus.attackerMultiplier = this.attackerMultiplier;
         mergedBonus.playerCondition = this.playerCondition;
@@ -122,7 +121,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
     @Override
     public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = Component.translatable(getDescriptionId(), damageCondition.getTooltip());
-        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, amount, operation);
+        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = attackerMultiplier.getTooltip(tooltip, Target.ENEMY);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
@@ -132,17 +131,15 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
     @Override
     public boolean isPositive() {
-        return amount < 0;
+        return chance > 0;
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
-        editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
-        editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer) {
+        editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor.addNumericTextField(110, 0, 50, 14, amount).setNumericResponder(value -> selectAmount(consumer, value));
-        editor.addOperationSelection(0, 0, 80, operation).setResponder(operation -> selectOperation(consumer, operation));
-        editor.increaseHeight(29);
+        editor.addNumericTextField(0, 0, 50, 14, chance).setNumericResponder(value -> selectChance(consumer, value));
+        editor.increaseHeight(19);
         editor.addLabel(0, 0, "Damage Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
         editor.addSelectionMenu(0, 0, 200, damageCondition).setResponder(condition -> selectDamageCondition(consumer, condition));
@@ -171,69 +168,64 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         editor.increaseHeight(19);
     }
 
-    private void selectOperation(Consumer<DamageTakenBonus> consumer, AttributeModifier.Operation operation) {
-        setOperation(operation);
+    private void selectChance(Consumer<DamageAvoidanceChanceBonus> consumer, Double value) {
+        setChance(value.floatValue());
         consumer.accept(this.copy());
     }
 
-    private void selectAmount(Consumer<DamageTakenBonus> consumer, Double value) {
-        setAmount(value.floatValue());
-        consumer.accept(this.copy());
-    }
-
-    private void addTargetMultiplierWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
+    private void addTargetMultiplierWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer) {
         attackerMultiplier.addEditorWidgets(editor, multiplier -> {
             setEnemyMultiplier(multiplier);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectTargetMultiplier(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer, LivingMultiplier multiplier) {
+    private void selectTargetMultiplier(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer, LivingMultiplier multiplier) {
         setEnemyMultiplier(multiplier);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
+    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer) {
         playerMultiplier.addEditorWidgets(editor, multiplier -> {
             setPlayerMultiplier(multiplier);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer, LivingMultiplier multiplier) {
+    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer, LivingMultiplier multiplier) {
         setPlayerMultiplier(multiplier);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addTargetConditionWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
+    private void addTargetConditionWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer) {
         attackerCondition.addEditorWidgets(editor, c -> {
             setTargetCondition(c);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectTargetCondition(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer, LivingEntityPredicate condition) {
+    private void selectTargetCondition(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer, LivingEntityPredicate condition) {
         setTargetCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer) {
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer) {
         playerCondition.addEditorWidgets(editor, c -> {
             setPlayerCondition(c);
             consumer.accept(this.copy());
         });
     }
 
-    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<DamageTakenBonus> consumer, LivingEntityPredicate condition) {
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<DamageAvoidanceChanceBonus> consumer, LivingEntityPredicate condition) {
         setPlayerCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
     }
 
-    private void selectDamageCondition(Consumer<DamageTakenBonus> consumer, DamageCondition condition) {
+    private void selectDamageCondition(Consumer<DamageAvoidanceChanceBonus> consumer, DamageCondition condition) {
         setDamageCondition(condition);
         consumer.accept(this.copy());
     }
@@ -263,20 +255,15 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         return this;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
-    public void setOperation(AttributeModifier.Operation operation) {
-        this.operation = operation;
+    public void setChance(float chance) {
+        this.chance = chance;
     }
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public DamageTakenBonus deserialize(JsonObject json) throws JsonParseException {
-            float amount = SerializationHelper.getElement(json, "amount").getAsFloat();
-            AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(json);
-            DamageTakenBonus bonus = new DamageTakenBonus(amount, operation);
+        public DamageAvoidanceChanceBonus deserialize(JsonObject json) throws JsonParseException {
+            float chance = SerializationHelper.getElement(json, "chance").getAsFloat();
+            DamageAvoidanceChanceBonus bonus = new DamageAvoidanceChanceBonus(chance);
             bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
             bonus.attackerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "attacker_multiplier");
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(json, "player_condition");
@@ -287,11 +274,10 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof DamageTakenBonus aBonus)) {
+            if (!(bonus instanceof DamageAvoidanceChanceBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            json.addProperty("amount", aBonus.amount);
-            SerializationHelper.serializeOperation(json, aBonus.operation);
+            json.addProperty("chance", aBonus.chance);
             SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
             SerializationHelper.serializeLivingMultiplier(json, aBonus.attackerMultiplier, "attacker_multiplier");
             SerializationHelper.serializeLivingCondition(json, aBonus.playerCondition, "player_condition");
@@ -300,10 +286,9 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         }
 
         @Override
-        public DamageTakenBonus deserialize(CompoundTag tag) {
-            float amount = tag.getFloat("amount");
-            AttributeModifier.Operation operation = SerializationHelper.deserializeOperation(tag);
-            DamageTakenBonus bonus = new DamageTakenBonus(amount, operation);
+        public DamageAvoidanceChanceBonus deserialize(CompoundTag tag) {
+            float chance = tag.getFloat("chance");
+            DamageAvoidanceChanceBonus bonus = new DamageAvoidanceChanceBonus(chance);
             bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
             bonus.attackerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "attacker_multiplier");
             bonus.playerCondition = SerializationHelper.deserializeLivingCondition(tag, "player_condition");
@@ -314,12 +299,11 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof DamageTakenBonus aBonus)) {
+            if (!(bonus instanceof DamageAvoidanceChanceBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
-            tag.putFloat("amount", aBonus.amount);
-            SerializationHelper.serializeOperation(tag, aBonus.operation);
+            tag.putFloat("chance", aBonus.chance);
             SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
             SerializationHelper.serializeLivingMultiplier(tag, aBonus.attackerMultiplier, "attacker_multiplier");
             SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
@@ -329,10 +313,9 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
         }
 
         @Override
-        public DamageTakenBonus deserialize(FriendlyByteBuf buf) {
-            float amount = buf.readFloat();
-            AttributeModifier.Operation operation = AttributeModifier.Operation.fromValue(buf.readInt());
-            DamageTakenBonus bonus = new DamageTakenBonus(amount, operation);
+        public DamageAvoidanceChanceBonus deserialize(FriendlyByteBuf buf) {
+            float chance = buf.readFloat();
+            DamageAvoidanceChanceBonus bonus = new DamageAvoidanceChanceBonus(chance);
             bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
             bonus.attackerMultiplier = NetworkHelper.readLivingMultiplier(buf);
             bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
@@ -343,11 +326,10 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof DamageTakenBonus aBonus)) {
+            if (!(bonus instanceof DamageAvoidanceChanceBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
-            buf.writeFloat(aBonus.amount);
-            buf.writeInt(aBonus.operation.toValue());
+            buf.writeFloat(aBonus.chance);
             NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
             NetworkHelper.writeLivingMultiplier(buf, aBonus.attackerMultiplier);
             NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
@@ -357,7 +339,7 @@ public final class DamageTakenBonus implements SkillBonus<DamageTakenBonus> {
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new DamageTakenBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new MeleeDamageCondition());
+            return new DamageAvoidanceChanceBonus(0.1f).setDamageCondition(new MeleeDamageCondition());
         }
     }
 }

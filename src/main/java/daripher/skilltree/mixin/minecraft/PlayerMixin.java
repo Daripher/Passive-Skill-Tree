@@ -1,7 +1,7 @@
 package daripher.skilltree.mixin.minecraft;
 
 import daripher.skilltree.entity.player.PlayerExtension;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.bonus.handler.EnchantingExperienceRefundBonusHandler;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,11 +18,10 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerExtensio
     }
 
     @SuppressWarnings("DataFlowIssue")
-    @Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
+    @Inject(method = "onEnchantmentPerformed", at = @At("TAIL"))
     private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
         Player player = (Player) (Object) this;
-        float freeEnchantmentChance = SkillBonusHandler.getFreeEnchantmentChance(player, itemStack);
-        if (player.getRandom().nextFloat() < freeEnchantmentChance) {
+        if (EnchantingExperienceRefundBonusHandler.shouldRefundEnchantingExperience(player, itemStack)) {
             player.giveExperienceLevels(enchantmentCost);
         }
     }

@@ -7,7 +7,7 @@ import daripher.skilltree.init.predicate.PSTDamagePredicates;
 import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
 import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
-import daripher.skilltree.skill.bonus.player.GainedExperienceBonus;
+import daripher.skilltree.skill.bonus.player.ExperienceGainMultiplierBonus;
 import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
@@ -203,9 +203,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(IronsSpellbooksCompat.GRANT_SPELL_BONUS.get(), "Grants %s %s spell");
         add(IronsSpellbooksCompat.SPELL_LEVEL_BONUS.get(), "to level of %s spell");
         // experience sources
-        add(GainedExperienceBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
-        add(GainedExperienceBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
-        add(GainedExperienceBonus.ExperienceSource.FISHING.getDescriptionId(), "Fishing");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.MOBS.getDescriptionId(), "Mobs");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
+        add(ExperienceGainMultiplierBonus.ExperienceSource.FISHING.getDescriptionId(), "Fishing");
         // loot conditions
         add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "mobs loot");
         add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "fishing loot");

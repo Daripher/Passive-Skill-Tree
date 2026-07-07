@@ -37,7 +37,7 @@ public final class ItemUsageSpeedBonus implements SkillBonus<ItemUsageSpeedBonus
         this.multiplier = multiplier;
     }
 
-    public float getMultiplier(Player player, ItemStack itemStack) {
+    public float getItemUsageSpeedModifier(Player player, ItemStack itemStack) {
         if (!playerCondition.test(player)) {
             return 0f;
         }

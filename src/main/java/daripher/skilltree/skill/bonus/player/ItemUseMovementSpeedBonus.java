@@ -38,7 +38,7 @@ public final class ItemUseMovementSpeedBonus implements SkillBonus<ItemUseMoveme
         this.multiplier = multiplier;
     }
 
-    public float getMultiplier(Player player, ItemStack itemStack) {
+    public float getMovementPenaltyReduction(Player player, ItemStack itemStack) {
         if (!playerCondition.test(player)) {
             return 0f;
         }

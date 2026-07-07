@@ -8,7 +8,7 @@ import daripher.skilltree.inventory.slot.WorkbenchResultSlot;
 import daripher.skilltree.inventory.slot.WorkbenchIngredientSlot;
 import daripher.skilltree.recipe.workbench.AbstractWorkbenchRecipe;
 import daripher.skilltree.recipe.workbench.WorkbenchVanillaCraftingRecipe;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.CraftedItemBonusBonus;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -192,7 +192,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
     }
 
     public void addCraftingBonuses(ItemStack craftResult) {
-        SkillBonusHandler.getMergedSkillBonuses(player, CraftedItemBonusBonus.class).forEach(bonus -> bonus.itemCrafted(craftResult));
+        SkillBonusProvider.getMergedSkillBonuses(player, CraftedItemBonusBonus.class).forEach(bonus -> bonus.itemCrafted(craftResult));
     }
 
     private void setupRecipeList() {
