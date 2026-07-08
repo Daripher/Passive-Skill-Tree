@@ -200,7 +200,7 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     public SelectionMenuButton<Attribute> addSelectionMenu(int x, int y, int width, Attribute defaultValue) {
-        Collection<Attribute> values = AttributesHelper.attributeList();
+        Collection<Attribute> values = AttributesHelper.playerAttributesList();
         return addSelectionMenu(x, y, width, values).setValue(defaultValue)
                 .setElementNameGetter(a -> Component.literal(AttributesHelper.getName(a)));
     }
