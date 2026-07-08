@@ -25,7 +25,7 @@ public class PSTSkillBonuses {
     public static final RegistryObject<SkillBonus.Serializer> FREE_ENCHANTMENT = REGISTRY.register("free_enchantment", EnchantingExperienceRefundBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> JUMP_HEIGHT = REGISTRY.register("jump_height", JumpHeightBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> INCOMING_HEALING = REGISTRY.register("incoming_healing", IncomingHealingBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> LOOT_DUPLICATION = REGISTRY.register("loot_duplication", LootDuplicationBonus.Serializer::new);
+    public static final RegistryObject<SkillBonus.Serializer> LOOT_DUPLICATION = REGISTRY.register("loot_duplication", LootAmountModifierBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> GAINED_EXPERIENCE = REGISTRY.register("gained_experience", ExperienceGainMultiplierBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> INFLICT_IGNITE = REGISTRY.register("inflict_ignite", InflictIgniteBonus.Serializer::new);
     public static final RegistryObject<SkillBonus.Serializer> ARROW_RETRIEVAL = REGISTRY.register("arrow_retrieval", ArrowRetrievalBonus.Serializer::new);

@@ -3,7 +3,7 @@ package daripher.skilltree.init;
 import com.mojang.serialization.Codec;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.loot.modifier.AddItemModifier;
-import daripher.skilltree.loot.modifier.SkillBonusesModifier;
+import daripher.skilltree.loot.modifier.SkillBonusesLootModifier;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,7 +14,7 @@ public class PSTLootModifiers {
 
     static {
         REGISTRY.register("add_item", AddItemModifier.CODEC);
-        REGISTRY.register("skill_bonuses", SkillBonusesModifier.CODEC);
+        REGISTRY.register("skill_bonuses", SkillBonusesLootModifier.CODEC);
     }
 
     public static void register(IEventBus eventBus) {

@@ -8,7 +8,7 @@ import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
 import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.player.ExperienceGainMultiplierBonus;
-import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
+import daripher.skilltree.skill.bonus.player.LootAmountModifierBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -138,8 +138,10 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Chance to get %s %s");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "multiplier", "+%s%%");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "guaranteed", "You always get %s %s");
+        add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "guaranteed.none", "You get no %s");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "double", "double");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "triple", "triple");
+        add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "none", "no");
         add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Experience from %s");
         add(PSTSkillBonuses.INFLICT_IGNITE.get(), "player", "You catch fire for %s");
         add(PSTSkillBonuses.INFLICT_IGNITE.get(), "player.chance", "Chance to catch fire for %s");
@@ -207,12 +209,12 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         add(ExperienceGainMultiplierBonus.ExperienceSource.ORE.getDescriptionId(), "Ores");
         add(ExperienceGainMultiplierBonus.ExperienceSource.FISHING.getDescriptionId(), "Fishing");
         // loot conditions
-        add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "mobs loot");
-        add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "fishing loot");
-        add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "gems from ore");
-        add(LootDuplicationBonus.LootType.CHESTS.getDescriptionId(), "loot in chests");
-        add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "loot from ore");
-        add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "loot from archaeology");
+        add(LootAmountModifierBonus.LootType.MOBS.getDescriptionId(), "mobs loot");
+        add(LootAmountModifierBonus.LootType.FISHING.getDescriptionId(), "fishing loot");
+        add(LootAmountModifierBonus.LootType.GEMS.getDescriptionId(), "gems from ore");
+        add(LootAmountModifierBonus.LootType.CHESTS.getDescriptionId(), "loot in chests");
+        add(LootAmountModifierBonus.LootType.ORE.getDescriptionId(), "loot from ore");
+        add(LootAmountModifierBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "loot from archaeology");
         // living conditions
         add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.player", "with");
         add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.enemy", "if enemy has");

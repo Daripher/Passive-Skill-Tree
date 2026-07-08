@@ -26,12 +26,12 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBonus> {
+public final class LootAmountModifierBonus implements SkillBonus<LootAmountModifierBonus> {
     private LootType lootType;
     private float multiplier;
     private float chance;
 
-    public LootDuplicationBonus(float chance, float multiplier, LootType lootType) {
+    public LootAmountModifierBonus(float chance, float multiplier, LootType lootType) {
         this.chance = chance;
         this.multiplier = multiplier;
         this.lootType = lootType;
@@ -43,19 +43,19 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     }
 
     @Override
-    public LootDuplicationBonus copy() {
-        return new LootDuplicationBonus(chance, multiplier, lootType);
+    public LootAmountModifierBonus copy() {
+        return new LootAmountModifierBonus(chance, multiplier, lootType);
     }
 
     @Override
-    public LootDuplicationBonus multiply(double multiplier) {
+    public LootAmountModifierBonus multiply(double multiplier) {
         chance = (float) (chance * multiplier);
         return this;
     }
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof LootDuplicationBonus otherBonus)) {
+        if (!(other instanceof LootAmountModifierBonus otherBonus)) {
             return false;
         }
         if (otherBonus.multiplier != this.multiplier) {
@@ -65,11 +65,11 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
     }
 
     @Override
-    public SkillBonus<LootDuplicationBonus> merge(SkillBonus<?> other) {
-        if (!(other instanceof LootDuplicationBonus otherBonus)) {
+    public SkillBonus<LootAmountModifierBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof LootAmountModifierBonus otherBonus)) {
             throw new IllegalArgumentException();
         }
-        return new LootDuplicationBonus(otherBonus.chance + this.chance, multiplier, lootType);
+        return new LootAmountModifierBonus(otherBonus.chance + this.chance, multiplier, lootType);
     }
 
     @Override
@@ -81,6 +81,8 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
             multiplierDescription = Component.translatable(descriptionId + ".double");
         } else if (multiplier == 2) {
             multiplierDescription = Component.translatable(descriptionId + ".triple");
+        } else if (multiplier == -1) {
+            multiplierDescription = Component.translatable(descriptionId + ".none");
         } else {
             String formattedMultiplier = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(multiplier * 100);
             multiplierDescription = Component.translatable(descriptionId + ".multiplier", formattedMultiplier);
@@ -90,18 +92,23 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
             bonusDescription = Component.translatable(descriptionId, multiplierDescription, lootDescription);
             bonusDescription = TooltipHelper.getSkillBonusTooltip(bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE);
         } else {
-            bonusDescription = Component.translatable(descriptionId + ".guaranteed", multiplierDescription, lootDescription);
+            descriptionId += ".guaranteed";
+            if (multiplier == -1) {
+                bonusDescription = Component.translatable(descriptionId + ".none", lootDescription);
+            } else {
+                bonusDescription = Component.translatable(descriptionId, multiplierDescription, lootDescription);
+            }
         }
         return bonusDescription.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
 
     @Override
     public boolean isPositive() {
-        return chance > 0;
+        return chance > 0 ^ multiplier < 0;
     }
 
     @Override
-    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LootDuplicationBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LootAmountModifierBonus> consumer) {
         editor.addLabel(0, 0, "Chance", ChatFormatting.GOLD);
         editor.addLabel(110, 0, "Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
@@ -115,17 +122,17 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         editor.increaseHeight(lootTypeSelection.getHeight() + 10);
     }
 
-    private void selectLootType(Consumer<LootDuplicationBonus> consumer, LootType lootType) {
+    private void selectLootType(Consumer<LootAmountModifierBonus> consumer, LootType lootType) {
         setLootType(lootType);
         consumer.accept(this.copy());
     }
 
-    private void selectMultiplier(Consumer<LootDuplicationBonus> consumer, Double value) {
+    private void selectMultiplier(Consumer<LootAmountModifierBonus> consumer, Double value) {
         setMultiplier(value.floatValue());
         consumer.accept(this.copy());
     }
 
-    private void selectChance(Consumer<LootDuplicationBonus> consumer, Double value) {
+    private void selectChance(Consumer<LootAmountModifierBonus> consumer, Double value) {
         setChance(value.floatValue());
         consumer.accept(this.copy());
     }
@@ -146,7 +153,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         return chance;
     }
 
-    public float getMultiplier() {
+    public float getLootAmountModifier() {
         return multiplier;
     }
 
@@ -162,7 +169,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LootDuplicationBonus that = (LootDuplicationBonus) o;
+        LootAmountModifierBonus that = (LootAmountModifierBonus) o;
         if (Float.compare(multiplier, that.multiplier) != 0) {
             return false;
         }
@@ -238,16 +245,16 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
     public static class Serializer implements SkillBonus.Serializer {
         @Override
-        public LootDuplicationBonus deserialize(JsonObject json) throws JsonParseException {
+        public LootAmountModifierBonus deserialize(JsonObject json) throws JsonParseException {
             float chance = SerializationHelper.getElement(json, "chance").getAsFloat();
             float multiplier = SerializationHelper.getElement(json, "multiplier").getAsFloat();
             LootType lootType = LootType.byName(json.get("loot_type").getAsString());
-            return new LootDuplicationBonus(chance, multiplier, lootType);
+            return new LootAmountModifierBonus(chance, multiplier, lootType);
         }
 
         @Override
         public void serialize(JsonObject json, SkillBonus<?> bonus) {
-            if (!(bonus instanceof LootDuplicationBonus aBonus)) {
+            if (!(bonus instanceof LootAmountModifierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             json.addProperty("chance", aBonus.chance);
@@ -256,16 +263,16 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         }
 
         @Override
-        public LootDuplicationBonus deserialize(CompoundTag tag) {
+        public LootAmountModifierBonus deserialize(CompoundTag tag) {
             float chance = tag.getFloat("chance");
             float multiplier = tag.getFloat("multiplier");
             LootType lootType = LootType.byName(tag.getString("loot_type"));
-            return new LootDuplicationBonus(chance, multiplier, lootType);
+            return new LootAmountModifierBonus(chance, multiplier, lootType);
         }
 
         @Override
         public CompoundTag serialize(SkillBonus<?> bonus) {
-            if (!(bonus instanceof LootDuplicationBonus aBonus)) {
+            if (!(bonus instanceof LootAmountModifierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             CompoundTag tag = new CompoundTag();
@@ -276,13 +283,13 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
         }
 
         @Override
-        public LootDuplicationBonus deserialize(FriendlyByteBuf buf) {
-            return new LootDuplicationBonus(buf.readFloat(), buf.readFloat(), LootType.byName(buf.readUtf()));
+        public LootAmountModifierBonus deserialize(FriendlyByteBuf buf) {
+            return new LootAmountModifierBonus(buf.readFloat(), buf.readFloat(), LootType.byName(buf.readUtf()));
         }
 
         @Override
         public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-            if (!(bonus instanceof LootDuplicationBonus aBonus)) {
+            if (!(bonus instanceof LootAmountModifierBonus aBonus)) {
                 throw new IllegalArgumentException();
             }
             buf.writeFloat(aBonus.chance);
@@ -292,7 +299,7 @@ public final class LootDuplicationBonus implements SkillBonus<LootDuplicationBon
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new LootDuplicationBonus(0.05f, 1f, LootType.MOBS);
+            return new LootAmountModifierBonus(0.05f, 1f, LootType.MOBS);
         }
     }
 }

@@ -8,7 +8,7 @@ import daripher.skilltree.init.predicate.PSTEnchantmentPredicates;
 import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.player.ExperienceGainMultiplierBonus;
-import daripher.skilltree.skill.bonus.player.LootDuplicationBonus;
+import daripher.skilltree.skill.bonus.player.LootAmountModifierBonus;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -138,8 +138,10 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "Шанс получить %s %s");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "multiplier", "+%s%%");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "guaranteed", "Вы всегда получаете %s %s");
+        add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "guaranteed.none", "Вы не можете получать %s");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "double", "двойные");
         add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "triple", "тройные");
+        add(PSTSkillBonuses.LOOT_DUPLICATION.get(), "none", "ничего вместо");
         add(PSTSkillBonuses.GAINED_EXPERIENCE.get(), "Опыт %s");
         add(PSTSkillBonuses.INFLICT_IGNITE.get(), "player", "Вы загораетесь на %s");
         add(PSTSkillBonuses.INFLICT_IGNITE.get(), "player.chance", "Шанс загореться на %s");
@@ -206,12 +208,12 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         add(ExperienceGainMultiplierBonus.ExperienceSource.ORE.getDescriptionId(), "из Руды");
         add(ExperienceGainMultiplierBonus.ExperienceSource.FISHING.getDescriptionId(), "за Рыбалку");
         // loot conditions
-        add(LootDuplicationBonus.LootType.MOBS.getDescriptionId(), "награды с существ");
-        add(LootDuplicationBonus.LootType.FISHING.getDescriptionId(), "награды с рыбалки");
-        add(LootDuplicationBonus.LootType.GEMS.getDescriptionId(), "самоцветы из руды");
-        add(LootDuplicationBonus.LootType.CHESTS.getDescriptionId(), "награды в сундуках");
-        add(LootDuplicationBonus.LootType.ORE.getDescriptionId(), "награды из руды");
-        add(LootDuplicationBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "награды от археологии");
+        add(LootAmountModifierBonus.LootType.MOBS.getDescriptionId(), "награды с существ");
+        add(LootAmountModifierBonus.LootType.FISHING.getDescriptionId(), "награды с рыбалки");
+        add(LootAmountModifierBonus.LootType.GEMS.getDescriptionId(), "самоцветы из руды");
+        add(LootAmountModifierBonus.LootType.CHESTS.getDescriptionId(), "награды в сундуках");
+        add(LootAmountModifierBonus.LootType.ORE.getDescriptionId(), "награды из руды");
+        add(LootAmountModifierBonus.LootType.ARCHAEOLOGY.getDescriptionId(), "награды от археологии");
         // living conditions
         add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.you", "вас");
         add(PSTLivingEntityPredicates.HAS_ITEM_EQUIPPED.get(), "target.enemy", "враге");

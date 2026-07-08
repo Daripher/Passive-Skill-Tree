@@ -1,7 +1,7 @@
 package daripher.skilltree.data.generation.loot;
 
 import daripher.skilltree.SkillTreeMod;
-import daripher.skilltree.loot.modifier.SkillBonusesModifier;
+import daripher.skilltree.loot.modifier.SkillBonusesLootModifier;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
@@ -12,6 +12,6 @@ public class PSTGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("skill_bonuses", new SkillBonusesModifier());
+        add("skill_bonuses", new SkillBonusesLootModifier());
     }
 }
