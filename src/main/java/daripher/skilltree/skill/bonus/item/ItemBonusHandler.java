@@ -38,9 +38,10 @@ public class ItemBonusHandler {
     public static void addItemBonusTooltips(ItemTooltipEvent event) {
         List<Component> toolTip = event.getToolTip();
         List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
-        if (!itemBonuses.isEmpty()) {
-            toolTip.add(Component.empty());
+        if (itemBonuses.isEmpty()) {
+            return;
         }
+        toolTip.add(Component.empty());
         for (ItemBonus<?> itemBonus : itemBonuses) {
             Style style = TooltipHelper.getItemUpgradeStyle();
             itemBonus.addTooltip(tooltip -> toolTip.add(tooltip.withStyle(style)));
