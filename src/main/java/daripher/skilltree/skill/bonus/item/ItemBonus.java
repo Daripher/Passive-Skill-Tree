@@ -5,15 +5,12 @@ import daripher.skilltree.init.PSTRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public interface ItemBonus<T extends ItemBonus<T>> {
     boolean canMerge(ItemBonus<?> other);
-
-    default boolean sameBonus(ItemBonus<?> other) {
-        return canMerge(other);
-    }
 
     T merge(ItemBonus<?> other);
 
@@ -29,7 +26,7 @@ public interface ItemBonus<T extends ItemBonus<T>> {
         return "item_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
     }
 
-    void addTooltip(Consumer<MutableComponent> consumer);
+    List<MutableComponent> getFullTooltip();
 
     boolean isPositive();
 

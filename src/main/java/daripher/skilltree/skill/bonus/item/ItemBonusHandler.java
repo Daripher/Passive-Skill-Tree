@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,14 +38,17 @@ public class ItemBonusHandler {
     @SubscribeEvent
     public static void addItemBonusTooltips(ItemTooltipEvent event) {
         List<Component> toolTip = event.getToolTip();
-        List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack());
+        List<ItemBonus<?>> itemBonuses = getItemBonuses(event.getItemStack(), ItemBonus.class);
         if (itemBonuses.isEmpty()) {
             return;
         }
         toolTip.add(Component.empty());
-        for (ItemBonus<?> itemBonus : itemBonuses) {
+        List<ItemBonus<?>> mergedItemBonuses = mergeItemBonuses(itemBonuses);
+        for (ItemBonus<?> itemBonus : mergedItemBonuses) {
             Style style = TooltipHelper.getItemUpgradeStyle();
-            itemBonus.addTooltip(tooltip -> toolTip.add(tooltip.withStyle(style)));
+            for (MutableComponent mutableComponent : itemBonus.getFullTooltip()) {
+                toolTip.add(mutableComponent.withStyle(style));
+            }
         }
     }
 

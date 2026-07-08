@@ -87,10 +87,10 @@ public final class CraftedItemBonusBonus implements SkillBonus<CraftedItemBonusB
     public List<MutableComponent> getFullTooltip() {
         List<MutableComponent> fullTooltip = new ArrayList<>();
         fullTooltip.add(getSimpleTooltip());
-        itemBonuses.addTooltip(component -> {
+        for (MutableComponent mutableComponent : itemBonuses.getFullTooltip()) {
             MutableComponent listItemPrefix = Component.translatable(getDescriptionId() + ".list_item_prefix");
-            fullTooltip.add(listItemPrefix.append(component).withStyle(component.getStyle()));
-        });
+            fullTooltip.add(listItemPrefix.append(mutableComponent).withStyle(mutableComponent.getStyle()));
+        }
         return fullTooltip;
     }
 

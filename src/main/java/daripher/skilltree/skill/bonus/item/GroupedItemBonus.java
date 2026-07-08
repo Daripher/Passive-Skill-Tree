@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
@@ -70,10 +69,12 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
     }
 
     @Override
-    public void addTooltip(Consumer<MutableComponent> consumer) {
+    public List<MutableComponent> getFullTooltip() {
+        List<MutableComponent> fullTooltip = new ArrayList<>();
         for (ItemBonus<?> itemBonus : innerBonuses) {
-            itemBonus.addTooltip(consumer);
+            fullTooltip.addAll(itemBonus.getFullTooltip());
         }
+        return fullTooltip;
     }
 
     @Override
@@ -98,7 +99,7 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
         return Objects.hash(innerBonuses);
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"rawtypes"})
     @Override
     public void addEditorWidgets(SkillTreeEditor editor, Consumer<GroupedItemBonus> consumer) {
         ItemBonus<?> defaultBonus = PSTItemBonuses.SKILL_BONUS.get().createDefaultInstance();
@@ -110,13 +111,8 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
         for (int i = 0; i < getInnerBonuses().size(); i++) {
             final int bonusIndex = i;
             ItemBonus selectedItemBonus = getInnerBonuses().get(i);
-            final AtomicReference<MutableComponent> tooltip = new AtomicReference<>();
-            selectedItemBonus.addTooltip(component -> {
-                if (tooltip.get() == null) {
-                    tooltip.set((MutableComponent) component);
-                }
-            });
-            String message = tooltip.get().getString();
+            MutableComponent tooltip = getFullTooltip().get(0);
+            String message = tooltip.getString();
             message = TooltipHelper.getTrimmedString(message, 190);
             editor.addButton(0, 0, 200, 14, message).setPressFunc(button -> {
                 ItemBonusEditor itemBonusEditor = new ItemBonusEditor(editor, editor.getSelectedMenu(), bonus -> skillBonusChanged(bonus, bonusIndex, consumer), () -> selectedItemBonus);

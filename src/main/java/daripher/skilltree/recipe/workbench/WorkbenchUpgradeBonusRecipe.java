@@ -63,17 +63,17 @@ public class WorkbenchUpgradeBonusRecipe extends AbstractWorkbenchRecipe {
 
     @Override
     public Component getShortDescription() {
-        List<MutableComponent> bonusTooltip = new ArrayList<>();
-        itemBonus.addTooltip(bonusTooltip::add);
         Component itemTooltip = baseItemStackPredicate.getTooltip("plural");
-        return Component.translatable(getDescriptionId(), bonusTooltip.get(0), itemTooltip);
+        return Component.translatable(getDescriptionId(), itemBonus.getFullTooltip().get(0), itemTooltip);
     }
 
     @Override
     public List<Component> getFullDescription() {
         List<Component> fullDescription = new ArrayList<>();
         Style style = TooltipHelper.getItemUpgradeStyle();
-        itemBonus.addTooltip(tooltip -> fullDescription.add(tooltip.withStyle(style)));
+        for (MutableComponent mutableComponent : itemBonus.getFullTooltip()) {
+            fullDescription.add(mutableComponent.withStyle(style));
+        }
         Component itemTooltip = baseItemStackPredicate.getTooltip("plural");
         itemTooltip = Component.literal("[").append(itemTooltip).append("]");
         fullDescription.add(itemTooltip);

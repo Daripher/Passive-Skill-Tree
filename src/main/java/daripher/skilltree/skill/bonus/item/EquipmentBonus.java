@@ -15,6 +15,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -58,8 +59,8 @@ public final class EquipmentBonus implements ItemBonus<EquipmentBonus> {
     }
 
     @Override
-    public void addTooltip(Consumer<MutableComponent> consumer) {
-        skillBonus.getFullTooltip().forEach(consumer);
+    public List<MutableComponent> getFullTooltip() {
+        return skillBonus.getFullTooltip();
     }
 
     @Override
