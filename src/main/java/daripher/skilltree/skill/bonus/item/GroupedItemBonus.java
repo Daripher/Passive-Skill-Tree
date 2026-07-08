@@ -9,6 +9,7 @@ import daripher.skilltree.client.widget.editor.menu.EditorMenu;
 import daripher.skilltree.client.widget.editor.menu.bonuses.ItemBonusEditor;
 import daripher.skilltree.client.widget.editor.menu.selection.SelectionList;
 import daripher.skilltree.client.widget.editor.menu.selection.SelectionMenu;
+import daripher.skilltree.client.widget.editor.menu.selection.SelectionMenuButton;
 import daripher.skilltree.client.widget.editor.menu.selection.TextSelectionList;
 import daripher.skilltree.init.PSTItemBonuses;
 import daripher.skilltree.init.PSTRegistries;
@@ -28,10 +29,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
     private final ArrayList<ItemBonus<?>> innerBonuses;
@@ -102,7 +105,7 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
     @Override
     public void addEditorWidgets(SkillTreeEditor editor, Consumer<GroupedItemBonus> consumer) {
         ItemBonus<?> defaultBonus = PSTItemBonuses.SKILL_BONUS.get().createDefaultInstance();
-        editor.addSelectionMenu(0, 0, 90, defaultBonus).setResponder(itemBonus -> addItemBonus(editor, itemBonus))
+        addItemBonusSelectionMenu(editor, 0, 0, 90, defaultBonus).setResponder(itemBonus -> addItemBonus(editor, itemBonus))
                 .setMessage(Component.literal("Add"));
         editor.increaseHeight(29);
         for (int i = 0; i < getInnerBonuses().size(); i++) {
@@ -122,6 +125,15 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
             });
             editor.increaseHeight(19);
         }
+    }
+
+    @SuppressWarnings("rawtypes")
+    public SelectionMenuButton<ItemBonus> addItemBonusSelectionMenu(SkillTreeEditor editor, int x, int y, int width, ItemBonus defaultValue) {
+        Collection<ItemBonus> values = PSTRegistries.ITEM_BONUSES.get().getValues().stream()
+                .map(ItemBonus.Serializer::createDefaultInstance).map(ItemBonus.class::cast)
+                .filter(Predicate.not(GroupedItemBonus.class::isInstance)).toList();
+        return editor.addSelectionMenu(x, y, width, values).setValue(defaultValue)
+                .setElementNameGetter(c -> Component.literal(PSTItemBonuses.getName(c)));
     }
 
     private void skillBonusChanged(@Nullable ItemBonus<?> itemBonus, int selectedBonusIndex, Consumer<GroupedItemBonus> consumer) {
