@@ -591,6 +591,8 @@ public class PSTRussianTranslationProvider extends PSTTranslationProvider {
         // skill requirements
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Получите достижение %s");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Изучите умение %s");
+        add(PSTSkillRequirements.STAT_VALUE.get(), "killed", "Вы убили %s %s");
+        add(PSTSkillRequirements.STAT_VALUE.get(), "killed_by", "Вы были убиты %s %s раз");
         // items
         add("skilltree.poisoned_weapon", "Отравлено:");
         add("skilltree.poisoned_weapon.uses_left", "Отравлено [%s использований]:");

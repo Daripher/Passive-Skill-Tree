@@ -70,7 +70,7 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
                 return Component.literal("Unknown entity: " + statId).withStyle(ChatFormatting.RED);
             }
             Component entityName = entityType.getDescription();
-            return Component.translatable(statType.getTranslationKey(), minValue, entityName);
+            return Component.translatable(getDescriptionId() + ".killed", minValue, entityName);
         }
         if (statType == Stats.ENTITY_KILLED_BY) {
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(statId);
@@ -78,7 +78,7 @@ public final class StatRequirement implements SkillRequirement<StatRequirement> 
                 return Component.literal("Unknown entity: " + statId).withStyle(ChatFormatting.RED);
             }
             Component entityName = entityType.getDescription();
-            return Component.translatable(statType.getTranslationKey(), entityName, minValue);
+            return Component.translatable(getDescriptionId() + ".killed_by", entityName, minValue);
         } else {
             Item item = ForgeRegistries.ITEMS.getValue(statId);
             if (item == null) {

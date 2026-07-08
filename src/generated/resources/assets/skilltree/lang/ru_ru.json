@@ -526,6 +526,8 @@
   "skill_bonus_multiplier.skilltree.numeric_value.plural": "%s per %s %s",
   "skill_requirements.skilltree.advancement": "Получите достижение %s",
   "skill_requirements.skilltree.learned_skill": "Изучите умение %s",
+  "skill_requirements.skilltree.stat_value.killed": "Вы убили %s %s",
+  "skill_requirements.skilltree.stat_value.killed_by": "Вы были убиты %s %s раз",
   "skilltree.message.grant_skill_command": "Вам было даровано умение %s.",
   "skilltree.message.point_command": "Получено очко пассивных умений.",
   "skilltree.message.reset": "Древо пассивных умений изменилось. Ваши очки умений были восстановлены.",

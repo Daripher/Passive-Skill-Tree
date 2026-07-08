@@ -445,6 +445,8 @@
   "skill_bonus.skilltree.vanilla_recipe_unlock": "You can create %s on advanced workbench",
   "skill_requirements.skilltree.advancement": "Get %s advancement",
   "skill_requirements.skilltree.learned_skill": "Learn %s skill",
+  "skill_requirements.skilltree.stat_value.killed": "You killed %s %s",
+  "skill_requirements.skilltree.stat_value.killed_by": "You were killed by %s %s times",
   "skilltree.message.grant_skill_command": "You were granted the %s skill.",
   "skilltree.message.point_command": "Skill point gained.",
   "skilltree.message.reset": "Skill Tree has changed. Your skill points have been restored.",

@@ -84,6 +84,13 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
         add(key, value);
     }
 
+    protected void add(SkillRequirement.Serializer requirement, String type, String value) {
+        ResourceLocation id = PSTRegistries.SKILL_REQUIREMENTS.get().getKey(requirement);
+        assert id != null;
+        String key = "skill_requirements.%s.%s.%s".formatted(id.getNamespace(), id.getPath(), type);
+        add(key, value);
+    }
+
     protected void add(SkillEventListener.Serializer condition, String value) {
         ResourceLocation id = PSTRegistries.EVENT_LISTENERS.get().getKey(condition);
         assert id != null;

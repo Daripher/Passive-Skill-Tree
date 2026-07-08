@@ -519,6 +519,8 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
         // skill requirements
         add(PSTSkillRequirements.ADVANCEMENT.get(), "Get %s advancement");
         add(PSTSkillRequirements.LEARNED_SKILL.get(), "Learn %s skill");
+        add(PSTSkillRequirements.STAT_VALUE.get(), "killed", "You killed %s %s");
+        add(PSTSkillRequirements.STAT_VALUE.get(), "killed_by", "You were killed by %s %s times");
         // items
         add("skilltree.poisoned_weapon", "Poisoned:");
         add("skilltree.poisoned_weapon.uses_left", "Poisoned [%s uses left]:");
