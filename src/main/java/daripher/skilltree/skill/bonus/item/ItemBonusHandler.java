@@ -122,12 +122,25 @@ public class ItemBonusHandler {
         List<ItemBonus<?>> bonuses = new ArrayList<>();
         for (ItemBonus<?> bonus : getItemBonuses(stack)) {
             if (bonus instanceof GroupedItemBonus listBonus) {
-                bonuses.addAll(listBonus.getInnerBonuses());
+                bonuses.addAll(getItemBonuses(listBonus));
             } else {
                 bonuses.add(bonus);
             }
         }
         return bonuses.stream().filter(type::isInstance).toList();
+    }
+
+    private static List<? extends ItemBonus<?>> getItemBonuses(GroupedItemBonus listBonus) {
+        List<ItemBonus<?>> bonuses = new ArrayList<>();
+        for (ItemBonus<?> bonus : listBonus.getInnerBonuses()) {
+            if (bonus instanceof GroupedItemBonus innerListBonus) {
+                List<? extends ItemBonus<?>> innerBonuses = getItemBonuses(innerListBonus);
+                bonuses.addAll(innerBonuses);
+            } else {
+                bonuses.add(bonus);
+            }
+        }
+        return bonuses;
     }
 
     public static void setUpgradeBonuses(ItemStack stack, List<ItemBonus<?>> bonuses) {
