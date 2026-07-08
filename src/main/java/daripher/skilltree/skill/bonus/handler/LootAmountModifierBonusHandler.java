@@ -8,7 +8,9 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -21,6 +23,12 @@ public class LootAmountModifierBonusHandler {
         for (LootAmountModifierBonus.LootType lootType : LootAmountModifierBonus.LootType.values()) {
             if (!lootType.canAffect(lootContext)) {
                 continue;
+            }
+            if (lootContext.hasParam(LootContextParams.TOOL)) {
+                ItemStack tool = lootContext.getParam(LootContextParams.TOOL);
+                if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0) {
+                    return defaultLoot;
+                }
             }
             player = (Player) lootContext.getParam(lootType.getPlayerLootContextParam());
             lootAmountModifier = LootAmountModifierBonusHandler.getLootAmountModifier(player, lootType);
