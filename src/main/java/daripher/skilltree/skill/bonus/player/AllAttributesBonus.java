@@ -2,6 +2,7 @@ package daripher.skilltree.skill.bonus.player;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.attribute.AttributesHelper;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.data.serializers.SerializationHelper;
@@ -18,24 +19,17 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>, TickingSkillBonus {
-    private static final Set<Attribute> AFFECTED_ATTRIBUTES = new HashSet<>();
     private AttributeModifier modifier;
     private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
     private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
@@ -49,13 +43,13 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
         if (playerCondition != NoneLivingEntityPredicate.INSTANCE || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
             return;
         }
-        getAffectedAttributes().stream().map(player::getAttribute).filter(Objects::nonNull).filter(a -> !a.hasModifier(modifier))
+        AttributesHelper.playerAttributesList().stream().map(player::getAttribute).filter(Objects::nonNull).filter(a -> !a.hasModifier(modifier))
                 .forEach(a -> applyAttributeModifier(a, modifier, player));
     }
 
     @Override
     public void onSkillRemoved(ServerPlayer player) {
-        getAffectedAttributes().stream().map(player::getAttribute).filter(Objects::nonNull).filter(a -> !a.hasModifier(modifier))
+        AttributesHelper.playerAttributesList().stream().map(player::getAttribute).filter(Objects::nonNull).filter(a -> !a.hasModifier(modifier))
                 .forEach(a -> a.removeModifier(modifier.getId()));
     }
 
@@ -78,7 +72,7 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
     }
 
     private void applyDynamicAttributeBonus(ServerPlayer player) {
-        getAffectedAttributes().stream().map(player::getAttribute).filter(Objects::nonNull).forEach(playerAttribute -> {
+        AttributesHelper.playerAttributesList().stream().map(player::getAttribute).filter(Objects::nonNull).forEach(playerAttribute -> {
             AttributeModifier oldModifier = playerAttribute.getModifier(modifier.getId());
             double value = modifier.getAmount();
             value *= playerMultiplier.getValue(player);
@@ -99,7 +93,7 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
     private void applyAttributeModifier(AttributeInstance instance, AttributeModifier modifier, Player player) {
         float healthPercentage = player.getHealth() / player.getMaxHealth();
         instance.addTransientModifier(modifier);
-        if (getAffectedAttributes().contains(Attributes.MAX_HEALTH)) {
+        if (AttributesHelper.playerAttributesList().contains(Attributes.MAX_HEALTH)) {
             player.setHealth(player.getMaxHealth() * healthPercentage);
         }
     }
@@ -236,15 +230,6 @@ public final class AllAttributesBonus implements SkillBonus<AllAttributesBonus>,
     public SkillBonus<?> setMultiplier(LivingMultiplier multiplier) {
         this.playerMultiplier = multiplier;
         return this;
-    }
-
-    @SuppressWarnings("deprecation")
-    private static Set<Attribute> getAffectedAttributes() {
-        if (AFFECTED_ATTRIBUTES.isEmpty()) {
-            ForgeRegistries.ATTRIBUTES.getValues().stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute)
-                    .forEach(AFFECTED_ATTRIBUTES::add);
-        }
-        return AFFECTED_ATTRIBUTES;
     }
 
     public static class Serializer implements SkillBonus.Serializer {
