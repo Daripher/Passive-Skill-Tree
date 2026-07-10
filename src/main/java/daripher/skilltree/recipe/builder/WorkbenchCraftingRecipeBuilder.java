@@ -83,7 +83,7 @@ public class WorkbenchCraftingRecipeBuilder {
                 ingredientsJson.add(ingredientJson);
             }));
             jsonObject.addProperty("requires_passive_skill", requiresPassiveSkill);
-            jsonObject.add("ingredients", ingredientsJson);
+            jsonObject.add("additionalIngredients", ingredientsJson);
             if (baseIngredient != null) {
                 JsonObject baseIngredientJson = new JsonObject();
                 baseIngredientJson.add("ingredient", baseIngredient.getLeft().toJson());
