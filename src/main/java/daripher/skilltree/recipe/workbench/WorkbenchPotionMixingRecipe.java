@@ -21,14 +21,13 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WorkbenchPotionMixingRecipe extends AbstractWorkbenchRecipe {
     public static final String IS_MIXTURE_TAG_NAME = "isMixture";
+    private static Ingredient cachedAllPotionsIngredient = null;
+    private static final Map<PotionItem, Ingredient> cachedPotionItemIngredients = new ConcurrentHashMap<>();
 
     public WorkbenchPotionMixingRecipe(ResourceLocation id, boolean requiresPassiveSkill) {
         super(id, requiresPassiveSkill);
@@ -70,22 +69,36 @@ public class WorkbenchPotionMixingRecipe extends AbstractWorkbenchRecipe {
     }
 
     private Ingredient getPotionItemIngredient(PotionItem baseItem) {
-        Collection<Potion> availablePotions = ForgeRegistries.POTIONS.getValues();
-        Stream<Potion> potionsWithEffects = availablePotions.stream().filter(potion -> !potion.getEffects().isEmpty());
-        Stream<ItemStack> suitablePotionStacks = potionsWithEffects.map(potion -> getPotionStack(baseItem, potion));
-        return Ingredient.of(suitablePotionStacks.toList().toArray(new ItemStack[0]));
+        return cachedPotionItemIngredients.computeIfAbsent(
+                baseItem, item -> {
+                    Collection<Potion> availablePotions = ForgeRegistries.POTIONS.getValues();
+                    ItemStack[] suitablePotionStacks = availablePotions.stream()
+                            .filter(potion -> !potion.getEffects().isEmpty())
+                            .map(potion -> getPotionStack(item, potion))
+                            .toArray(ItemStack[]::new);
+                    return Ingredient.of(suitablePotionStacks);
+                }
+        );
     }
 
     private Ingredient getAllPotionsIngredient() {
-        Collection<Potion> availablePotions = ForgeRegistries.POTIONS.getValues();
-        Stream<Potion> potions = availablePotions.stream().filter(potion -> !potion.getEffects().isEmpty());
-        List<ItemStack> suitablePotionStacks = new ArrayList<>();
-        potions.forEach(potion -> {
-            List<PotionItem> potionItems = ForgeRegistries.ITEMS.getValues().stream().filter(PotionItem.class::isInstance)
-                    .map(PotionItem.class::cast).toList();
-            potionItems.forEach(potionItem -> suitablePotionStacks.add(getPotionStack(potionItem, potion)));
-        });
-        return Ingredient.of(suitablePotionStacks.toArray(new ItemStack[0]));
+        if (cachedAllPotionsIngredient == null) {
+            Collection<Potion> availablePotions = ForgeRegistries.POTIONS.getValues();
+            List<Potion> potionsWithEffects = availablePotions.stream().filter(potion -> !potion.getEffects().isEmpty()).toList();
+            List<PotionItem> potionItems = ForgeRegistries.ITEMS.getValues()
+                    .stream()
+                    .filter(PotionItem.class::isInstance)
+                    .map(PotionItem.class::cast)
+                    .toList();
+            List<ItemStack> suitablePotionStacks = new ArrayList<>();
+            for (Potion potion : potionsWithEffects) {
+                for (PotionItem potionItem : potionItems) {
+                    suitablePotionStacks.add(getPotionStack(potionItem, potion));
+                }
+            }
+            cachedAllPotionsIngredient = Ingredient.of(suitablePotionStacks.toArray(new ItemStack[0]));
+        }
+        return cachedAllPotionsIngredient;
     }
 
     private static @NotNull ItemStack getPotionStack(PotionItem baseItem, Potion potion) {
@@ -96,15 +109,14 @@ public class WorkbenchPotionMixingRecipe extends AbstractWorkbenchRecipe {
 
     @Override
     public Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseItem) {
-        Map<Ingredient, Integer> allPotionsIngredient = Map.of(getAllPotionsIngredient(), 1);
         if (baseItem.isEmpty()) {
-            return allPotionsIngredient;
+            return Collections.singletonMap(getAllPotionsIngredient(), 1);
         }
         Item item = baseItem.getItem();
         if (!(item instanceof PotionItem potionItem)) {
-            return allPotionsIngredient;
+            return Collections.singletonMap(getAllPotionsIngredient(), 1);
         }
-        return Map.of(getPotionItemIngredient(potionItem), 1);
+        return Collections.singletonMap(getPotionItemIngredient(potionItem), 1);
     }
 
     @Override
