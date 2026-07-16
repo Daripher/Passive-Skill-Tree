@@ -8,16 +8,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import daripher.skilltree.util.ForgeRegistries;
 
 public class PSTRecipeTypes {
-  public static final DeferredRegister<RecipeType<?>> REGISTRY =
-      DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, SkillTreeMod.MOD_ID);
 
-  public static final DeferredHolder<RecipeType<?>, RecipeType<AbstractWorkbenchRecipe>> WORKBENCH =
-      REGISTRY.register(
-          "workbench",
-          () ->
-              new RecipeType<>() {
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AbstractWorkbenchRecipe>> WORKBENCH =
+            REGISTRY.register("workbench", () -> new RecipeType<>() {
                 public String toString() {
-                  return SkillTreeMod.MOD_ID + ":workbench";
+                    return SkillTreeMod.MOD_ID + ":workbench";
                 }
-              });
+            });
 }

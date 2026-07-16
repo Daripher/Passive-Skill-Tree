@@ -14,14 +14,12 @@ import daripher.skilltree.util.ForgeRegistries;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class PSTMenuTypes {
-  public static final DeferredRegister<MenuType<?>> REGISTRY =
-      DeferredRegister.create(ForgeRegistries.MENU_TYPES, SkillTreeMod.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.MENU_TYPES, SkillTreeMod.MOD_ID);
 
-  public static final DeferredHolder<MenuType<?>, ? extends MenuType<WorkbenchMenu>> ARTISAN_WORKBENCH =
-      REGISTRY.register("artisan_workbench", () -> new MenuType<>(WorkbenchMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final DeferredHolder<MenuType<?>, ? extends MenuType<WorkbenchMenu>> ARTISAN_WORKBENCH = REGISTRY.register("artisan_workbench", () -> new MenuType<>(WorkbenchMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
-  @SubscribeEvent
-  public static void registerScreens(RegisterMenuScreensEvent event) {
-    event.register(ARTISAN_WORKBENCH.get(), WorkbenchScreen::new);
-  }
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(ARTISAN_WORKBENCH.get(), WorkbenchScreen::new);
+    }
 }

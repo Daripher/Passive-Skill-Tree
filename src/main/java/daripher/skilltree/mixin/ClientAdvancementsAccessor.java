@@ -10,6 +10,6 @@ import java.util.Map;
 
 @Mixin(ClientAdvancements.class)
 public interface ClientAdvancementsAccessor {
-  @Accessor
-  Map<AdvancementHolder, AdvancementProgress> getProgress();
+    @Accessor
+    Map<AdvancementHolder, AdvancementProgress> getProgress();
 }

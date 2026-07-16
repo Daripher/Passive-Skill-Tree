@@ -7,19 +7,21 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public interface IPlayerSkills extends INBTSerializable<CompoundTag> {
-  NonNullList<PassiveSkill> getPlayerSkills();
+    NonNullList<PassiveSkill> getPlayerSkills();
 
-  boolean learnSkill(PassiveSkill passiveSkill);
+    boolean learnSkill(PassiveSkill passiveSkill);
 
-  int getSkillPoints();
+    boolean grantSkill(PassiveSkill passiveSkill);
 
-  void setSkillPoints(int skillPoints);
+    int getSkillPoints();
 
-  void grantSkillPoints(int skillPoints);
+    void setSkillPoints(int skillPoints);
 
-  boolean isTreeReset();
+    void grantSkillPoints(int skillPoints);
 
-  void setTreeReset(boolean reset);
+    boolean isTreeReset();
 
-  void resetTree(ServerPlayer player);
+    void setTreeReset(boolean reset);
+
+    void resetTree(ServerPlayer player);
 }

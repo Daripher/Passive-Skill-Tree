@@ -6,8 +6,6 @@ import com.google.gson.JsonElement;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkillTree;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -19,57 +17,54 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillTreesReloader extends SimpleJsonResourceReloadListener {
-  public static final Gson GSON =
-      new GsonBuilder()
-          .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-          .setPrettyPrinting()
-          .create();
-  private static final Map<ResourceLocation, PassiveSkillTree> SKILL_TREES = new HashMap<>();
+    public static final Gson GSON = new GsonBuilder().registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+            .setPrettyPrinting().create();
+    private static final Map<ResourceLocation, PassiveSkillTree> SKILL_TREES = new HashMap<>();
 
-  public SkillTreesReloader() {
-    super(GSON, "skill_trees");
-  }
-
-  @SubscribeEvent
-  public static void addReloadListener(AddReloadListenerEvent event) {
-    event.addListener(new SkillTreesReloader());
-  }
-
-  public static Map<ResourceLocation, PassiveSkillTree> getSkillTrees() {
-    return SKILL_TREES;
-  }
-
-  public static PassiveSkillTree getSkillTreeById(ResourceLocation id) {
-    return SKILL_TREES.getOrDefault(id, new PassiveSkillTree(id));
-  }
-
-  public static @Nullable ResourceLocation getDefaultSkillTreeId() {
-    return getSkillTrees().keySet().stream().findAny().orElse(null);
-  }
-
-  public static void loadFromByteBuf(FriendlyByteBuf buf) {
-    SKILL_TREES.clear();
-    NetworkHelper.readPassiveSkillTrees(buf).forEach(t -> SKILL_TREES.put(t.getId(), t));
-  }
-
-  @Override
-  protected void apply(
-      Map<ResourceLocation, JsonElement> map,
-      @NotNull ResourceManager resourceManager,
-      @NotNull ProfilerFiller profilerFiller) {
-    SKILL_TREES.clear();
-    map.forEach(this::readSkillTree);
-  }
-
-  protected void readSkillTree(ResourceLocation id, JsonElement json) {
-    try {
-      PassiveSkillTree tree = GSON.fromJson(json, PassiveSkillTree.class);
-      SKILL_TREES.put(tree.getId(), tree);
-    } catch (Exception exception) {
-      SkillTreeMod.LOGGER.error("Couldn't load passive skill tree {}", id);
-      exception.printStackTrace();
+    public SkillTreesReloader() {
+        super(GSON, "skill_trees");
     }
-  }
+
+    @SubscribeEvent
+    public static void addReloadListener(AddReloadListenerEvent event) {
+        event.addListener(new SkillTreesReloader());
+    }
+
+    public static Map<ResourceLocation, PassiveSkillTree> getSkillTrees() {
+        return SKILL_TREES;
+    }
+
+    public static PassiveSkillTree getSkillTreeById(ResourceLocation id) {
+        return SKILL_TREES.getOrDefault(id, new PassiveSkillTree(id));
+    }
+
+    public static @Nullable ResourceLocation getDefaultSkillTreeId() {
+        return getSkillTrees().keySet().stream().findAny().orElse(null);
+    }
+
+    public static void loadFromByteBuf(FriendlyByteBuf buf) {
+        SKILL_TREES.clear();
+        NetworkHelper.readPassiveSkillTrees(buf).forEach(t -> SKILL_TREES.put(t.getId(), t));
+    }
+
+    @Override
+    protected void apply(Map<ResourceLocation, JsonElement> map, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profilerFiller) {
+        SKILL_TREES.clear();
+        map.forEach(this::readSkillTree);
+    }
+
+    protected void readSkillTree(ResourceLocation id, JsonElement json) {
+        try {
+            PassiveSkillTree tree = GSON.fromJson(json, PassiveSkillTree.class);
+            SKILL_TREES.put(tree.getId(), tree);
+        } catch (Exception exception) {
+            String errorMessage = "Couldn't load passive skill tree: " + id;
+            SkillTreeMod.LOGGER.error(errorMessage, exception);
+        }
+    }
 }

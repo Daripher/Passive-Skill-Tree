@@ -24,6 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -74,9 +76,15 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
 
     @Override
     public boolean canMerge(SkillBonus<?> other) {
-        if (!(other instanceof SpellLevelSkillBonus otherBonus)) return false;
-        if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
+        if (!(other instanceof SpellLevelSkillBonus otherBonus)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+            return false;
+        }
         return otherBonus.getSpellId().equals(this.getSpellId());
     }
 
@@ -90,8 +98,9 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
         return bonus;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
         AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_VALUE;
@@ -108,33 +117,28 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
     }
 
     @Override
-    public void addEditorWidgets(
-            SkillTreeEditor editor, int row, Consumer<SpellLevelSkillBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
         editor.addLabel(0, 0, "Spell", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId).map(ResourceLocation::parse).toList();
-        editor.addSelectionMenu(0, 0, 200, spellIds)
-                .setValue(spellId)
+        List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId)
+                .map(ResourceLocation::parse).toList();
+        editor.addSelectionMenu(0, 0, 200, spellIds).setValue(spellId)
                 .setElementNameGetter(spellId -> Component.literal(spellId.toString()))
                 .setResponder(spellId -> selectSpellId(editor, consumer, spellId));
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Bonus Levels", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor.addNumericTextField(0, 0, 50, 14, bonusLevels)
-                .setNumericFilter(v -> v != 0 && v % 1 == 0)
+        editor.addNumericTextField(0, 0, 50, 14, bonusLevels).setNumericFilter(v -> v != 0 && v % 1 == 0)
                 .setNumericResponder(spellLevel -> selectBonusLevels(consumer, spellLevel));
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor
-                .addSelectionMenu(0, 0, 200, playerCondition)
-                .setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
+        editor.addSelectionMenu(0, 0, 200, playerCondition).setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
                 .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
         editor.increaseHeight(19);
         editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor
-                .addSelectionMenu(0, 0, 200, playerMultiplier)
+        editor.addSelectionMenu(0, 0, 200, playerMultiplier)
                 .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
                 .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
         editor.increaseHeight(19);
@@ -159,20 +163,14 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
         this.spellId = spellId;
     }
 
-    private void addPlayerConditionWidgets(
-            SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
-        playerCondition.addEditorWidgets(
-                editor,
-                c -> {
-                    setPlayerCondition(c);
-                    consumer.accept(this.copy());
-                });
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
+        playerCondition.addEditorWidgets(editor, c -> {
+            setPlayerCondition(c);
+            consumer.accept(this.copy());
+        });
     }
 
-    private void selectPlayerCondition(
-            SkillTreeEditor editor,
-            Consumer<SpellLevelSkillBonus> consumer,
-            LivingEntityPredicate condition) {
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer, LivingEntityPredicate condition) {
         setPlayerCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();
@@ -183,18 +181,14 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
         return this;
     }
 
-    private void addPlayerMultiplierWidgets(
-            SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
-        playerMultiplier.addEditorWidgets(
-                editor,
-                m -> {
-                    setMultiplier(m);
-                    consumer.accept(this.copy());
-                });
+    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer) {
+        playerMultiplier.addEditorWidgets(editor, m -> {
+            setMultiplier(m);
+            consumer.accept(this.copy());
+        });
     }
 
-    private void selectPlayerMultiplier(
-            SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer, LivingMultiplier multiplier) {
+    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<SpellLevelSkillBonus> consumer, LivingMultiplier multiplier) {
         setMultiplier(multiplier);
         consumer.accept(this.copy());
         editor.rebuildWidgets();

@@ -12,34 +12,31 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record GainSkillPointMessage() implements CustomPacketPayload {
-  public static final Type<GainSkillPointMessage> TYPE =
-      new Type<>(ResourceLocation.fromNamespaceAndPath("skilltree", "gain_skill_point"));
-  public static final StreamCodec<ByteBuf, GainSkillPointMessage> STREAM_CODEC =
-      StreamCodec.unit(new GainSkillPointMessage());
+    public static final Type<GainSkillPointMessage> TYPE =
+            new Type<>(ResourceLocation.fromNamespaceAndPath("skilltree", "gain_skill_point"));
+    public static final StreamCodec<ByteBuf, GainSkillPointMessage> STREAM_CODEC =
+            StreamCodec.unit(new GainSkillPointMessage());
 
-  @Override
-  public Type<? extends CustomPacketPayload> type() {
-    return TYPE;
-  }
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
 
-  public static void handle(GainSkillPointMessage message, IPayloadContext context) {
-    context.enqueueWork(
-        () -> {
-          ServerPlayer player = (ServerPlayer) context.player();
-          IPlayerSkills capability = PlayerSkillsProvider.get(player);
-          int skills = capability.getPlayerSkills().size();
-          int points = capability.getSkillPoints();
-          int level = skills + points;
-          if (level >= ServerConfig.max_skill_points) {
-            return;
-          }
-          int cost = ServerConfig.getSkillPointCost(level);
-          if (ExpHelper.getPlayerExp(player) < cost) {
-            return;
-          }
-          player.giveExperiencePoints(-cost);
-          capability.grantSkillPoints(1);
-          PlayerSkillsProvider.sendPlayerSkills(player);
+    public static void handle(GainSkillPointMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ServerPlayer player = (ServerPlayer) context.player();
+            IPlayerSkills capability = PlayerSkillsProvider.get(player);
+            int level = capability.getPlayerSkills().size() + capability.getSkillPoints();
+            if (level >= ServerConfig.max_skill_points) {
+                return;
+            }
+            int cost = ServerConfig.getSkillPointCost(level);
+            if (ExpHelper.getPlayerExp(player) < cost) {
+                return;
+            }
+            player.giveExperiencePoints(-cost);
+            capability.grantSkillPoints(1);
+            PlayerSkillsProvider.sendPlayerSkills(player);
         });
-  }
+    }
 }

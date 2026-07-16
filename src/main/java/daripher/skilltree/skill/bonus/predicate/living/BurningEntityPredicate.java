@@ -2,87 +2,119 @@ package daripher.skilltree.skill.bonus.predicate.living;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import daripher.skilltree.init.PSTLivingConditions;
-import java.util.Objects;
-
+import daripher.skilltree.client.widget.editor.SkillTreeEditor;
+import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.SkillBonus;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 
-public record BurningEntityPredicate() implements LivingEntityPredicate {
-  @Override
-  public boolean test(LivingEntity living) {
-    return living.getRemainingFireTicks() > 0;
-  }
+import java.util.Objects;
+import java.util.function.Consumer;
 
-  @Override
-  public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
-    String key = getDescriptionId();
-    MutableComponent targetDescription =
-        Component.translatable("%s.target.%s".formatted(key, target.getName()));
-    return Component.translatable(key, bonusTooltip, targetDescription);
-  }
+public final class BurningEntityPredicate implements LivingEntityPredicate {
+    private boolean reverseLogic;
 
-  @Override
-  public LivingEntityPredicate.Serializer getSerializer() {
-    return PSTLivingConditions.BURNING.get();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    return o != null && getClass() == o.getClass();
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(getSerializer());
-  }
-
-  public static class Serializer implements LivingEntityPredicate.Serializer {
-    @Override
-    public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
-      return new BurningEntityPredicate();
+    public BurningEntityPredicate(boolean reverseLogic) {
+        this.reverseLogic = reverseLogic;
     }
 
     @Override
-    public void serialize(JsonObject json, LivingEntityPredicate condition) {
-      if (!(condition instanceof BurningEntityPredicate)) {
-        throw new IllegalArgumentException();
-      }
+    public boolean test(LivingEntity living) {
+        return living.getRemainingFireTicks() > 0 ^ reverseLogic;
     }
 
     @Override
-    public LivingEntityPredicate deserialize(CompoundTag tag) {
-      return new BurningEntityPredicate();
+    public MutableComponent getTooltip(MutableComponent bonusTooltip, SkillBonus.Target target) {
+        String key = getDescriptionId();
+        MutableComponent targetDescription = Component.translatable("%s%s.target.%s".formatted(key, reverseLogic ? ".reverse" : "", target.getName()));
+        return Component.translatable(key, bonusTooltip, targetDescription);
     }
 
     @Override
-    public CompoundTag serialize(LivingEntityPredicate condition) {
-      if (!(condition instanceof BurningEntityPredicate)) {
-        throw new IllegalArgumentException();
-      }
-      return new CompoundTag();
+    public LivingEntityPredicate.Serializer getSerializer() {
+        return PSTLivingEntityPredicates.BURNING.get();
     }
 
     @Override
-    public LivingEntityPredicate deserialize(FriendlyByteBuf buf) {
-      return new BurningEntityPredicate();
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<LivingEntityPredicate> consumer) {
+        editor.addLabel(0, 0, "Reverse Logic", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addCheckBox(0, 0, reverseLogic).setResponder(value -> setReverseLogic(value, consumer));
+        editor.increaseHeight(19);
+    }
+
+    public void setReverseLogic(boolean reverseLogic, Consumer<LivingEntityPredicate> consumer) {
+        this.reverseLogic = reverseLogic;
+        consumer.accept(this);
     }
 
     @Override
-    public void serialize(FriendlyByteBuf buf, LivingEntityPredicate condition) {
-      if (!(condition instanceof BurningEntityPredicate)) {
-        throw new IllegalArgumentException();
-      }
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BurningEntityPredicate that = (BurningEntityPredicate) o;
+        return reverseLogic == that.reverseLogic;
     }
 
     @Override
-    public LivingEntityPredicate createDefaultInstance() {
-      return new BurningEntityPredicate();
+    public int hashCode() {
+        return Objects.hashCode(reverseLogic);
     }
-  }
+
+    public static class Serializer implements LivingEntityPredicate.Serializer {
+        @Override
+        public LivingEntityPredicate deserialize(JsonObject json) throws JsonParseException {
+            boolean reverseLogic = json.has("reverse_logic") && json.get("reverse_logic").getAsBoolean();
+            return new BurningEntityPredicate(reverseLogic);
+        }
+
+        @Override
+        public void serialize(JsonObject json, LivingEntityPredicate predicate) {
+            BurningEntityPredicate validPredicate = validatePredicate(predicate);
+            json.addProperty("reverse_logic", validPredicate.reverseLogic);
+        }
+
+        @Override
+        public LivingEntityPredicate deserialize(CompoundTag tag) {
+            boolean reverseLogic = tag.contains("reverse_logic") && tag.getBoolean("reverse_logic");
+            return new BurningEntityPredicate(reverseLogic);
+        }
+
+        @Override
+        public CompoundTag serialize(LivingEntityPredicate predicate) {
+            BurningEntityPredicate validPredicate = validatePredicate(predicate);
+            CompoundTag compoundTag = new CompoundTag();
+            compoundTag.putBoolean("reverse_logic", validPredicate.reverseLogic);
+            return compoundTag;
+        }
+
+        @Override
+        public LivingEntityPredicate deserialize(FriendlyByteBuf buf) {
+            boolean reverseLogic = buf.readBoolean();
+            return new BurningEntityPredicate(reverseLogic);
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, LivingEntityPredicate predicate) {
+            BurningEntityPredicate validPredicate = validatePredicate(predicate);
+            buf.writeBoolean(validPredicate.reverseLogic);
+        }
+
+        private static BurningEntityPredicate validatePredicate(LivingEntityPredicate predicate) {
+            if (!(predicate instanceof BurningEntityPredicate validPredicate)) {
+                throw new IllegalArgumentException("Expected BurningEntityPredicate, got: " + predicate);
+            }
+            return validPredicate;
+        }
+
+        @Override
+        public LivingEntityPredicate createDefaultInstance() {
+            return new BurningEntityPredicate(false);
+        }
+    }
 }

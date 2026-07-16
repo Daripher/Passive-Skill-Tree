@@ -1,6 +1,7 @@
 package daripher.skilltree.skill.bonus.player;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
@@ -9,15 +10,12 @@ import daripher.skilltree.init.PSTSkillBonuses;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.TickingSkillBonus;
-import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
-import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import daripher.skilltree.skill.bonus.function.AttributeValueFunction;
+import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.LivingMultiplier;
 import daripher.skilltree.skill.bonus.multiplier.NoneLivingMultiplier;
-import daripher.skilltree.skill.bonus.multiplier.FloatFunctionMultiplier;
-import java.util.*;
-import java.util.function.Consumer;
-import javax.annotation.Nonnull;
+import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
+import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,403 +31,378 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Consumer;
+
 public final class AttributeBonus implements SkillBonus<AttributeBonus>, TickingSkillBonus {
-  private Attribute attribute;
-  private AttributeModifier modifier;
-  private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
-  private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
+    private Attribute attribute;
+    private AttributeModifier modifier;
+    private @Nonnull LivingMultiplier playerMultiplier = NoneLivingMultiplier.INSTANCE;
+    private @Nonnull LivingEntityPredicate playerCondition = NoneLivingEntityPredicate.INSTANCE;
 
-  public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
-    this.attribute = attribute;
-    this.modifier = modifier;
-  }
-
-  @Override
-  public void onSkillLearned(ServerPlayer player, boolean firstTime) {
-    if (playerCondition != NoneLivingEntityPredicate.INSTANCE
-        || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
-      return;
+    public AttributeBonus(Attribute attribute, AttributeModifier modifier) {
+        this.attribute = attribute;
+        this.modifier = modifier;
     }
-    AttributeInstance instance = player.getAttribute(getAttributeHolder());
-    if (instance == null) {
-      SkillTreeMod.LOGGER.error(
-          "Attempting to add attribute modifier to attribute {}, which is not present for player",
-          attribute);
-      return;
+
+    @Override
+    public void onSkillLearned(ServerPlayer player, boolean firstTime) {
+        if (playerCondition != NoneLivingEntityPredicate.INSTANCE || playerMultiplier != NoneLivingMultiplier.INSTANCE) {
+            return;
+        }
+        AttributeInstance instance = player.getAttribute(getAttributeHolder());
+        if (instance == null) {
+            SkillTreeMod.LOGGER.error("Attempting to add attribute modifier to attribute {}, which is not present for player", attribute);
+            return;
+        }
+        if (!instance.hasModifier(modifier.id())) {
+            applyAttributeModifier(instance, modifier, player);
+        }
     }
-    if (!instance.hasModifier(modifier.id())) {
-      applyAttributeModifier(instance, modifier, player);
+
+    @Override
+    public void onSkillRemoved(ServerPlayer player) {
+        AttributeInstance instance = player.getAttribute(getAttributeHolder());
+        if (instance == null) {
+            SkillTreeMod.LOGGER.error("Attempting to remove attribute modifier from attribute {}, which is not present for player", attribute);
+            return;
+        }
+        instance.removeModifier(modifier.id());
     }
-  }
 
-  @Override
-  public void onSkillRemoved(ServerPlayer player) {
-    AttributeInstance instance = player.getAttribute(getAttributeHolder());
-    if (instance == null) {
-      SkillTreeMod.LOGGER.error(
-          "Attempting to remove attribute modifier from attribute {}, which is not present for player",
-          attribute);
-      return;
+    @Override
+    public void tick(ServerPlayer player) {
+        if (!isDynamic()) {
+            return;
+        }
+        if (playerCondition != NoneLivingEntityPredicate.INSTANCE) {
+            if (!playerCondition.test(player)) {
+                onSkillRemoved(player);
+                return;
+            }
+        }
+        if (playerMultiplier != NoneLivingMultiplier.INSTANCE && playerMultiplier.getValue(player) == 0) {
+            onSkillRemoved(player);
+            return;
+        }
+        applyDynamicAttributeBonus(player);
     }
-    instance.removeModifier(modifier.id());
-  }
 
-  @Override
-  public void tick(ServerPlayer player) {
-    if (!isDynamic()) {
-      return;
+    public boolean isDynamic() {
+        return playerCondition != NoneLivingEntityPredicate.INSTANCE || playerMultiplier != NoneLivingMultiplier.INSTANCE;
     }
-    if (playerCondition != NoneLivingEntityPredicate.INSTANCE) {
-      if (!playerCondition.test(player)) {
-        onSkillRemoved(player);
-        return;
-      }
+
+    private void applyDynamicAttributeBonus(ServerPlayer player) {
+        AttributeInstance instance = player.getAttribute(getAttributeHolder());
+        if (instance == null) {
+            return;
+        }
+        AttributeModifier oldModifier = instance.getModifier(modifier.id());
+        double value = modifier.amount();
+        value *= playerMultiplier.getValue(player);
+        if (oldModifier != null) {
+            if (oldModifier.amount() == value) {
+                return;
+            }
+        }
+        AttributeModifier dynamicModifier =
+                new AttributeModifier(modifier.id(), value, modifier.operation());
+        applyAttributeModifier(instance, dynamicModifier, player);
     }
-    if (playerMultiplier != NoneLivingMultiplier.INSTANCE
-        && playerMultiplier.getValue(player) == 0) {
-      onSkillRemoved(player);
-      return;
+
+    private void applyAttributeModifier(AttributeInstance instance, AttributeModifier modifier, Player player) {
+        float healthPercentage = player.getHealth() / player.getMaxHealth();
+        if (instance.getModifier(modifier.id()) != null) {
+            instance.removeModifier(modifier.id());
+        }
+        instance.addTransientModifier(modifier);
+        if (attribute == Attributes.MAX_HEALTH.value()) {
+            player.setHealth(player.getMaxHealth() * healthPercentage);
+        }
     }
-    applyDynamicAttributeBonus(player);
-  }
 
-  public boolean isDynamic() {
-    return playerCondition != NoneLivingEntityPredicate.INSTANCE
-        || playerMultiplier != NoneLivingMultiplier.INSTANCE;
-  }
-
-  private void applyDynamicAttributeBonus(ServerPlayer player) {
-    AttributeInstance instance = player.getAttribute(getAttributeHolder());
-    if (instance == null) return;
-    AttributeModifier oldModifier = instance.getModifier(modifier.id());
-    double value = modifier.amount();
-    value *= playerMultiplier.getValue(player);
-    if (oldModifier != null) {
-      if (oldModifier.amount() == value) return;
+    @Override
+    public SkillBonus.Serializer getSerializer() {
+        return PSTSkillBonuses.ATTRIBUTE.get();
     }
-    AttributeModifier dynamicModifier =
-        new AttributeModifier(modifier.id(), value, modifier.operation());
-    applyAttributeModifier(instance, dynamicModifier, player);
-  }
 
-  private void applyAttributeModifier(
-      AttributeInstance instance, AttributeModifier modifier, Player player) {
-    float healthPercentage = player.getHealth() / player.getMaxHealth();
-    if (instance.getModifier(modifier.id()) != null) {
-      instance.removeModifier(modifier.id());
+    @Override
+    public AttributeBonus copy() {
+        AttributeModifier modifier = new AttributeModifier(
+                ResourceLocation.fromNamespaceAndPath(
+                        SkillTreeMod.MOD_ID, "attribute_bonus/" + UUID.randomUUID()),
+                this.modifier.amount(),
+                this.modifier.operation());
+        AttributeBonus bonus = new AttributeBonus(attribute, modifier);
+        bonus.playerMultiplier = this.playerMultiplier;
+        bonus.playerCondition = this.playerCondition;
+        return bonus;
     }
-    instance.addTransientModifier(modifier);
-    if (attribute == Attributes.MAX_HEALTH.value()) {
-      player.setHealth(player.getMaxHealth() * healthPercentage);
+
+    @Override
+    public AttributeBonus multiply(double multiplier) {
+        modifier = new AttributeModifier(
+                modifier.id(), modifier.amount() * multiplier, modifier.operation());
+        return this;
     }
-  }
 
-  @Override
-  public SkillBonus.Serializer getSerializer() {
-    return PSTSkillBonuses.ATTRIBUTE.get();
-  }
-
-  @Override
-  public AttributeBonus copy() {
-    AttributeModifier modifier =
-        new AttributeModifier(
-            ResourceLocation.fromNamespaceAndPath(
-                SkillTreeMod.MOD_ID, "attribute_bonus/" + UUID.randomUUID()),
-            this.modifier.amount(),
-            this.modifier.operation());
-    AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-    bonus.playerMultiplier = this.playerMultiplier;
-    bonus.playerCondition = this.playerCondition;
-    return bonus;
-  }
-
-  @Override
-  public AttributeBonus multiply(double multiplier) {
-    modifier =
-        new AttributeModifier(
-            modifier.id(),
-            modifier.amount() * multiplier,
-            modifier.operation());
-    return this;
-  }
-
-  @Override
-  public boolean canMerge(SkillBonus<?> other) {
-    if (!(other instanceof AttributeBonus otherBonus)) return false;
-    if (otherBonus.attribute != this.attribute) return false;
-    if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) return false;
-    if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) return false;
-    return otherBonus.modifier.operation() == this.modifier.operation();
-  }
-
-  @Override
-  public SkillBonus<AttributeBonus> merge(SkillBonus<?> other) {
-    if (!(other instanceof AttributeBonus otherBonus)) {
-      throw new IllegalArgumentException();
+    @Override
+    public boolean canMerge(SkillBonus<?> other) {
+        if (!(other instanceof AttributeBonus otherBonus)) {
+            return false;
+        }
+        if (otherBonus.attribute != this.attribute) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerMultiplier, this.playerMultiplier)) {
+            return false;
+        }
+        if (!Objects.equals(otherBonus.playerCondition, this.playerCondition)) {
+            return false;
+        }
+        return otherBonus.modifier.operation() == this.modifier.operation();
     }
-    AttributeModifier mergedModifier =
-        new AttributeModifier(
-            this.modifier.id(),
-            this.modifier.amount() + otherBonus.modifier.amount(),
-            this.modifier.operation());
-    AttributeBonus mergedBonus = new AttributeBonus(this.attribute, mergedModifier);
-    mergedBonus.playerMultiplier = this.playerMultiplier;
-    mergedBonus.playerCondition = this.playerCondition;
-    return mergedBonus;
-  }
 
-  @Override
-  public MutableComponent getTooltip() {
-    float visibleAmount = (float) modifier.amount();
-    String descriptionId = attribute.getDescriptionId();
-    MutableComponent tooltip;
-    if (isPercentageRegeneration()) {
-      visibleAmount *= 100;
-      String amountDescription = TooltipHelper.formatNumber(visibleAmount);
-      descriptionId = getDescriptionId() + ".percentage_regeneration";
-      tooltip = Component.translatable(descriptionId, amountDescription);
-    } else {
-      if (isKnockbackResistanceAddition()) {
-        visibleAmount *= 10;
-      }
-      AttributeModifier.Operation operation = modifier.operation();
-      tooltip = TooltipHelper.getSkillBonusTooltip(descriptionId, visibleAmount, operation);
-      tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
+    @Override
+    public SkillBonus<AttributeBonus> merge(SkillBonus<?> other) {
+        if (!(other instanceof AttributeBonus otherBonus)) {
+            throw new IllegalArgumentException();
+        }
+        AttributeModifier mergedModifier = new AttributeModifier(
+                this.modifier.id(),
+                this.modifier.amount() + otherBonus.modifier.amount(),
+                this.modifier.operation());
+        AttributeBonus mergedBonus = new AttributeBonus(this.attribute, mergedModifier);
+        mergedBonus.playerMultiplier = this.playerMultiplier;
+        mergedBonus.playerCondition = this.playerCondition;
+        return mergedBonus;
     }
-    tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
-    return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
-  }
 
-  private boolean isKnockbackResistanceAddition() {
-    return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
-        && attribute.equals(Attributes.KNOCKBACK_RESISTANCE.value());
-  }
+    @Override
+    public MutableComponent getSimpleTooltip() {
+        float visibleAmount = (float) modifier.amount();
+        String descriptionId = attribute.getDescriptionId();
+        MutableComponent tooltip;
+        if (isPercentageRegeneration()) {
+            visibleAmount *= 100;
+            String amountDescription = TooltipHelper.formatNumber(visibleAmount);
+            descriptionId = getDescriptionId() + ".percentage_regeneration";
+            tooltip = Component.translatable(descriptionId, amountDescription);
+        } else {
+            if (isKnockbackResistanceAddition()) {
+                visibleAmount *= 10;
+            }
+            AttributeModifier.Operation operation = modifier.operation();
+            tooltip = TooltipHelper.getSkillBonusTooltip(descriptionId, visibleAmount, operation);
+            tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
+        }
+        tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
+        return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
+    }
 
-  private boolean isPercentageRegeneration() {
-    return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
-           && playerMultiplier instanceof FloatFunctionMultiplier floatFunctionMultiplier
-           && floatFunctionMultiplier.getFloatFunction()
-            instanceof AttributeValueFunction attributeValueFunction
-           && attributeValueFunction.getAttribute() == Attributes.MAX_HEALTH.value()
-           && floatFunctionMultiplier.getDivisor() == 1;
-  }
+    private boolean isKnockbackResistanceAddition() {
+        return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
+                && attribute.equals(Attributes.KNOCKBACK_RESISTANCE.value());
+    }
 
-  @Override
-  public void gatherInfo(Consumer<MutableComponent> consumer) {
-    SkillBonus.super.gatherInfo(consumer);
-    TooltipHelper.consumeTranslated(attribute.getDescriptionId() + ".info", consumer);
-  }
+    private boolean isPercentageRegeneration() {
+        return modifier.operation() == AttributeModifier.Operation.ADD_VALUE
+                && playerMultiplier instanceof FloatFunctionMultiplier floatFunctionMultiplier
+                && floatFunctionMultiplier.getFloatFunction()
+                        instanceof AttributeValueFunction attributeValueFunction
+                && attributeValueFunction.getAttribute() == Attributes.MAX_HEALTH.value()
+                && floatFunctionMultiplier.getDivisor() == 1;
+    }
 
-  @Override
-  public boolean isPositive() {
-    return modifier.amount() > 0;
-  }
+    @Override
+    public void gatherInfo(Consumer<MutableComponent> consumer) {
+        SkillBonus.super.gatherInfo(consumer);
+        TooltipHelper.consumeTranslated(attribute.getDescriptionId() + ".info", consumer);
+    }
 
-  @Override
-  public void addEditorWidgets(
-      SkillTreeEditor editor, int index, Consumer<AttributeBonus> consumer) {
-    editor.addLabel(0, 0, "Attribute", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, attribute)
-        .setResponder(attribute -> selectAttribute(consumer, attribute));
-    editor.increaseHeight(19);
-    editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
-    editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addNumericTextField(110, 0, 50, 14, modifier.amount())
-        .setNumericResponder(value -> selectAmount(consumer, value));
-    editor
-        .addOperationSelection(0, 0, 80, modifier.operation())
-        .setResponder(operation -> selectOperation(consumer, operation));
-    editor.increaseHeight(29);
-    editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, playerCondition)
-        .setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
-        .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
-    editor.increaseHeight(19);
-    editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
-    editor.increaseHeight(19);
-    editor
-        .addSelectionMenu(0, 0, 200, playerMultiplier)
-        .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
-        .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
-    editor.increaseHeight(19);
-  }
+    @Override
+    public boolean isPositive() {
+        return modifier.amount() > 0;
+    }
 
-  private void selectPlayerMultiplier(
-      SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingMultiplier multiplier) {
-    setMultiplier(multiplier);
-    consumer.accept(this.copy());
-    editor.rebuildWidgets();
-  }
+    @Override
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
+        editor.addLabel(0, 0, "Attribute", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, attribute).setResponder(attribute -> selectAttribute(consumer, attribute));
+        editor.increaseHeight(19);
+        editor.addLabel(110, 0, "Amount", ChatFormatting.GOLD);
+        editor.addLabel(0, 0, "Operation", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addNumericTextField(110, 0, 50, 14, modifier.amount()).setNumericResponder(value -> selectAmount(consumer, value));
+        editor.addOperationSelection(0, 0, 80, modifier.operation()).setResponder(operation -> selectOperation(consumer, operation));
+        editor.increaseHeight(29);
+        editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, playerCondition).setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
+                .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
+        editor.increaseHeight(19);
+        editor.addLabel(0, 0, "Player Multiplier", ChatFormatting.GOLD);
+        editor.increaseHeight(19);
+        editor.addSelectionMenu(0, 0, 200, playerMultiplier)
+                .setResponder(multiplier -> selectPlayerMultiplier(editor, consumer, multiplier))
+                .setMenuInitFunc(() -> addPlayerMultiplierWidgets(editor, consumer));
+        editor.increaseHeight(19);
+    }
 
-  private void selectPlayerCondition(
-      SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingEntityPredicate condition) {
-    setCondition(condition);
-    consumer.accept(this.copy());
-    editor.rebuildWidgets();
-  }
+    private void selectPlayerMultiplier(SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingMultiplier multiplier) {
+        setMultiplier(multiplier);
+        consumer.accept(this.copy());
+        editor.rebuildWidgets();
+    }
 
-  private void selectOperation(
-      Consumer<AttributeBonus> consumer, AttributeModifier.Operation operation) {
-    setOperation(operation);
-    consumer.accept(this.copy());
-  }
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<AttributeBonus> consumer, LivingEntityPredicate condition) {
+        setCondition(condition);
+        consumer.accept(this.copy());
+        editor.rebuildWidgets();
+    }
 
-  private void selectAmount(Consumer<AttributeBonus> consumer, Double value) {
-    setAmount(value);
-    consumer.accept(this.copy());
-  }
+    private void selectOperation(Consumer<AttributeBonus> consumer, AttributeModifier.Operation operation) {
+        setOperation(operation);
+        consumer.accept(this.copy());
+    }
 
-  private void selectAttribute(Consumer<AttributeBonus> consumer, Attribute attribute) {
-    setAttribute(attribute);
-    consumer.accept(this.copy());
-  }
+    private void selectAmount(Consumer<AttributeBonus> consumer, Double value) {
+        setAmount(value);
+        consumer.accept(this.copy());
+    }
 
-  private void addPlayerConditionWidgets(
-      SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
-    playerCondition.addEditorWidgets(
-        editor,
-        c -> {
-          setCondition(c);
-          consumer.accept(this.copy());
+    private void selectAttribute(Consumer<AttributeBonus> consumer, Attribute attribute) {
+        setAttribute(attribute);
+        consumer.accept(this.copy());
+    }
+
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
+        playerCondition.addEditorWidgets(editor, c -> {
+            setCondition(c);
+            consumer.accept(this.copy());
         });
-  }
+    }
 
-  private void addPlayerMultiplierWidgets(
-      SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
-    playerMultiplier.addEditorWidgets(
-        editor,
-        m -> {
-          setMultiplier(m);
-          consumer.accept(this.copy());
+    private void addPlayerMultiplierWidgets(SkillTreeEditor editor, Consumer<AttributeBonus> consumer) {
+        playerMultiplier.addEditorWidgets(editor, m -> {
+            setMultiplier(m);
+            consumer.accept(this.copy());
         });
-  }
-
-  public Attribute getAttribute() {
-    return attribute;
-  }
-
-  public Holder<Attribute> getAttributeHolder() {
-    return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
-  }
-
-  public AttributeModifier getModifier() {
-    return modifier;
-  }
-
-  public void setAttribute(Attribute attribute) {
-    this.attribute = attribute;
-  }
-
-  public void setAmount(double amount) {
-    this.modifier =
-        new AttributeModifier(
-            modifier.id(), amount, modifier.operation());
-  }
-
-  public void setOperation(AttributeModifier.Operation operation) {
-    this.modifier =
-        new AttributeModifier(
-            modifier.id(), modifier.amount(), operation);
-  }
-
-  public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
-    this.playerCondition = condition;
-    return this;
-  }
-
-  public SkillBonus<?> setMultiplier(LivingMultiplier multiplier) {
-    this.playerMultiplier = multiplier;
-    return this;
-  }
-
-  public static class Serializer implements SkillBonus.Serializer {
-    @Override
-    public AttributeBonus deserialize(JsonObject json) throws JsonParseException {
-      Attribute attribute = SerializationHelper.deserializeAttribute(json);
-      AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(json);
-      AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier =
-          SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
-      bonus.playerCondition =
-          SerializationHelper.deserializeLivingCondition(json, "player_condition");
-      return bonus;
     }
 
-    @Override
-    public void serialize(JsonObject json, SkillBonus<?> bonus) {
-      if (!(bonus instanceof AttributeBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      SerializationHelper.serializeAttribute(json, aBonus.attribute);
-      SerializationHelper.serializeAttributeModifier(json, aBonus.modifier);
-      SerializationHelper.serializeLivingMultiplier(
-          json, aBonus.playerMultiplier, "player_multiplier");
-      SerializationHelper.serializeLivingCondition(
-          json, aBonus.playerCondition, "player_condition");
+    public Attribute getAttribute() {
+        return attribute;
     }
 
-    @Override
-    public AttributeBonus deserialize(CompoundTag tag) {
-      Attribute attribute = SerializationHelper.deserializeAttribute(tag);
-      AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(tag);
-      AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier =
-          SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
-      bonus.playerCondition =
-          SerializationHelper.deserializeLivingCondition(tag, "player_condition");
-      return bonus;
+    public Holder<Attribute> getAttributeHolder() {
+        return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
     }
 
-    @Override
-    public CompoundTag serialize(SkillBonus<?> bonus) {
-      if (!(bonus instanceof AttributeBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      CompoundTag tag = new CompoundTag();
-      SerializationHelper.serializeAttribute(tag, aBonus.attribute);
-      SerializationHelper.serializeAttributeModifier(tag, aBonus.modifier);
-      SerializationHelper.serializeLivingMultiplier(
-          tag, aBonus.playerMultiplier, "player_multiplier");
-      SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
-      return tag;
+    public AttributeModifier getModifier() {
+        return modifier;
     }
 
-    @Override
-    public AttributeBonus deserialize(FriendlyByteBuf buf) {
-      Attribute attribute = NetworkHelper.readAttribute(buf);
-      AttributeModifier modifier = NetworkHelper.readAttributeModifier(buf);
-      AttributeBonus bonus = new AttributeBonus(attribute, modifier);
-      bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
-      bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
-      return bonus;
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
     }
 
-    @Override
-    public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
-      if (!(bonus instanceof AttributeBonus aBonus)) {
-        throw new IllegalArgumentException();
-      }
-      NetworkHelper.writeAttribute(buf, aBonus.attribute);
-      NetworkHelper.writeAttributeModifier(buf, aBonus.modifier);
-      NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
-      NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
+    public void setAmount(double amount) {
+        this.modifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
     }
 
-    @Override
-    public SkillBonus<?> createDefaultInstance() {
-      return new AttributeBonus(
-          Attributes.ARMOR.value(),
-          new AttributeModifier(
-              ResourceLocation.fromNamespaceAndPath(
-                  SkillTreeMod.MOD_ID, "attribute_bonus/" + UUID.randomUUID()),
-              1,
-              AttributeModifier.Operation.ADD_VALUE));
+    public void setOperation(AttributeModifier.Operation operation) {
+        this.modifier = new AttributeModifier(modifier.id(), modifier.amount(), operation);
     }
-  }
+
+    public SkillBonus<?> setCondition(LivingEntityPredicate condition) {
+        this.playerCondition = condition;
+        return this;
+    }
+
+    public SkillBonus<?> setMultiplier(LivingMultiplier multiplier) {
+        this.playerMultiplier = multiplier;
+        return this;
+    }
+
+    public static class Serializer implements SkillBonus.Serializer {
+        @Override
+        public AttributeBonus deserialize(JsonObject json) throws JsonParseException {
+            Attribute attribute = SerializationHelper.deserializeAttribute(json);
+            AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(json);
+            AttributeBonus bonus = new AttributeBonus(attribute, modifier);
+            bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(json, "player_multiplier");
+            bonus.playerCondition = SerializationHelper.deserializeLivingCondition(json, "player_condition");
+            return bonus;
+        }
+
+        @Override
+        public void serialize(JsonObject json, SkillBonus<?> bonus) {
+            if (!(bonus instanceof AttributeBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            SerializationHelper.serializeAttribute(json, aBonus.attribute);
+            SerializationHelper.serializeAttributeModifier(json, aBonus.modifier);
+            SerializationHelper.serializeLivingMultiplier(json, aBonus.playerMultiplier, "player_multiplier");
+            SerializationHelper.serializeLivingCondition(json, aBonus.playerCondition, "player_condition");
+        }
+
+        @Override
+        public AttributeBonus deserialize(CompoundTag tag) {
+            Attribute attribute = SerializationHelper.deserializeAttribute(tag);
+            AttributeModifier modifier = SerializationHelper.deserializeAttributeModifier(tag);
+            AttributeBonus bonus = new AttributeBonus(attribute, modifier);
+            bonus.playerMultiplier = SerializationHelper.deserializeLivingMultiplier(tag, "player_multiplier");
+            bonus.playerCondition = SerializationHelper.deserializeLivingCondition(tag, "player_condition");
+            return bonus;
+        }
+
+        @Override
+        public CompoundTag serialize(SkillBonus<?> bonus) {
+            if (!(bonus instanceof AttributeBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            CompoundTag tag = new CompoundTag();
+            SerializationHelper.serializeAttribute(tag, aBonus.attribute);
+            SerializationHelper.serializeAttributeModifier(tag, aBonus.modifier);
+            SerializationHelper.serializeLivingMultiplier(tag, aBonus.playerMultiplier, "player_multiplier");
+            SerializationHelper.serializeLivingCondition(tag, aBonus.playerCondition, "player_condition");
+            return tag;
+        }
+
+        @Override
+        public AttributeBonus deserialize(FriendlyByteBuf buf) {
+            Attribute attribute = NetworkHelper.readAttribute(buf);
+            AttributeModifier modifier = NetworkHelper.readAttributeModifier(buf);
+            AttributeBonus bonus = new AttributeBonus(attribute, modifier);
+            bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
+            bonus.playerCondition = NetworkHelper.readLivingCondition(buf);
+            return bonus;
+        }
+
+        @Override
+        public void serialize(FriendlyByteBuf buf, SkillBonus<?> bonus) {
+            if (!(bonus instanceof AttributeBonus aBonus)) {
+                throw new IllegalArgumentException();
+            }
+            NetworkHelper.writeAttribute(buf, aBonus.attribute);
+            NetworkHelper.writeAttributeModifier(buf, aBonus.modifier);
+            NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
+            NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
+        }
+
+        @Override
+        public SkillBonus<?> createDefaultInstance() {
+            return new AttributeBonus(
+                    Attributes.ARMOR.value(),
+                    new AttributeModifier(
+                            ResourceLocation.fromNamespaceAndPath(
+                                    SkillTreeMod.MOD_ID,
+                                    "attribute_bonus/" + UUID.randomUUID()),
+                            1,
+                            AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
 }

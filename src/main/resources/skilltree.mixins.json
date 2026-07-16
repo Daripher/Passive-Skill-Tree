@@ -6,7 +6,6 @@
   "mixins": [
     "minecraft/PlayerMixin",
     "minecraft/LivingEntityMixin",
-    "minecraft/ArmorSlotMixin",
     "minecraft/MobEffectMixin",
     "minecraft/ThrownPotionMixin",
     "minecraft/ItemStackMixin",

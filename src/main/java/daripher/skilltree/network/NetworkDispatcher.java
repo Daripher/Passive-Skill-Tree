@@ -13,18 +13,22 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = SkillTreeMod.MOD_ID)
 public class NetworkDispatcher {
-  @SubscribeEvent
-  public static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
-    PayloadRegistrar registrar = event.registrar("1");
-    registrar.playToClient(
-        SyncServerDataMessage.TYPE, SyncServerDataMessage.STREAM_CODEC, SyncServerDataMessage::handle);
-    registrar.playToClient(
-        SyncPlayerSkillsMessage.TYPE,
-        SyncPlayerSkillsMessage.STREAM_CODEC,
-        SyncPlayerSkillsMessage::handle);
-    registrar.playToServer(
-        LearnSkillMessage.TYPE, LearnSkillMessage.STREAM_CODEC, LearnSkillMessage::handle);
-    registrar.playToServer(
-        GainSkillPointMessage.TYPE, GainSkillPointMessage.STREAM_CODEC, GainSkillPointMessage::handle);
-  }
+    @SubscribeEvent
+    public static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToClient(
+                SyncServerDataMessage.TYPE,
+                SyncServerDataMessage.STREAM_CODEC,
+                SyncServerDataMessage::handle);
+        registrar.playToClient(
+                SyncPlayerSkillsMessage.TYPE,
+                SyncPlayerSkillsMessage.STREAM_CODEC,
+                SyncPlayerSkillsMessage::handle);
+        registrar.playToServer(
+                LearnSkillMessage.TYPE, LearnSkillMessage.STREAM_CODEC, LearnSkillMessage::handle);
+        registrar.playToServer(
+                GainSkillPointMessage.TYPE,
+                GainSkillPointMessage.STREAM_CODEC,
+                GainSkillPointMessage::handle);
+    }
 }

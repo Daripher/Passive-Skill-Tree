@@ -8,29 +8,29 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillTreeSelectionButton extends Button {
-  private final ResourceLocation skillTreeId;
+    private final ResourceLocation skillTreeId;
 
-  public SkillTreeSelectionButton(
-      int x, int y, int width, int height, ResourceLocation skillTreeId) {
-    super(x, y, width, height, Component.translatable(skillTreeId.toString()));
-    setPressFunc(b -> onPress(skillTreeId));
-    this.skillTreeId = skillTreeId;
-  }
+    public SkillTreeSelectionButton(int x, int y, int width, int height, ResourceLocation skillTreeId) {
+        super(x, y, width, height, Component.translatable(skillTreeId.toString()));
+        setPressFunc(b -> onPress(skillTreeId));
+        this.skillTreeId = skillTreeId;
+    }
 
-  private static void onPress(ResourceLocation skillTreeId) {
-    getMinecraft().setScreen(new SkillTreeScreen(skillTreeId));
-  }
+    private static void onPress(ResourceLocation skillTreeId) {
+        getMinecraft().setScreen(new SkillTreeScreen(skillTreeId));
+    }
 
-  protected void renderBackground(@NotNull GuiGraphics graphics) {
-    String texturesFolder = "textures/icons/skill_tree/";
-    ResourceLocation texture = skillTreeId.withPrefix(texturesFolder).withSuffix(".png");
-    int v = getTextureVariant() * 19;
-    graphics.blit(texture, getX(), getY(), 0, v, width, height, 19, 57);
-  }
+    protected void renderBackground(@NotNull GuiGraphics graphics) {
+        String texturesFolder = "textures/icons/skill_tree/";
+        ResourceLocation texture = skillTreeId.withPrefix(texturesFolder).withSuffix(".png");
+        int v = getTextureVariant() * 19;
+        graphics.blit(texture, getX(), getY(), 0, v, width, height, 19, 57);
+    }
 
-  protected void renderText(@NotNull GuiGraphics graphics) {}
+    protected void renderText(@NotNull GuiGraphics graphics) {
+    }
 
-  private static Minecraft getMinecraft() {
-    return Minecraft.getInstance();
-  }
+    private static Minecraft getMinecraft() {
+        return Minecraft.getInstance();
+    }
 }

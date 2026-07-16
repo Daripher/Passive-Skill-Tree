@@ -4,46 +4,38 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import java.util.function.Supplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 public class AddItemModifier extends LootModifier {
-  private final ItemStack itemStack;
+    private final ItemStack itemStack;
 
-  public AddItemModifier(ItemStack item, LootItemCondition... conditionsIn) {
-    super(conditionsIn);
-    this.itemStack = item;
-  }
-
-  public static final Supplier<MapCodec<AddItemModifier>> CODEC =
-      Suppliers.memoize(
-          () ->
-              RecordCodecBuilder.mapCodec(
-                  inst ->
-                      codecStart(inst)
-                          .and(ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack))
-                          .apply(
-                              inst,
-                              (conditionsIn, item) -> new AddItemModifier(item, conditionsIn))));
-
-  @Override
-  protected @NotNull ObjectArrayList<ItemStack> doApply(
-      ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-    for (LootItemCondition condition : this.conditions) {
-      if (!condition.test(lootContext)) {
-        return generatedLoot;
-      }
+    public AddItemModifier(ItemStack item, LootItemCondition... conditionsIn) {
+        super(conditionsIn);
+        this.itemStack = item;
     }
-    generatedLoot.add(this.itemStack);
-    return generatedLoot;
-  }
 
-  @Override
-  public MapCodec<AddItemModifier> codec() {
-    return CODEC.get();
-  }
+    public static final Supplier<MapCodec<AddItemModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(ItemStack.CODEC.fieldOf("item")
+            .forGetter(m -> m.itemStack)).apply(inst, (conditionsIn, item) -> new AddItemModifier(item, conditionsIn))));
+
+    @Override
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
+        for (LootItemCondition condition : this.conditions) {
+            if (!condition.test(lootContext)) {
+                return generatedLoot;
+            }
+        }
+        generatedLoot.add(this.itemStack);
+        return generatedLoot;
+    }
+
+    @Override
+    public MapCodec<AddItemModifier> codec() {
+        return CODEC.get();
+    }
 }

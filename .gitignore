@@ -32,3 +32,6 @@ resume.txt
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# generated data files cache
+/src/generated/resources/.cache/

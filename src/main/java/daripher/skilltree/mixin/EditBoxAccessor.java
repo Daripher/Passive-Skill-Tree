@@ -1,8 +1,5 @@
 package daripher.skilltree.mixin;
 
-import java.util.function.BiFunction;
-import javax.annotation.Nullable;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.util.FormattedCharSequence;
@@ -10,24 +7,27 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
+import javax.annotation.Nullable;
+import java.util.function.BiFunction;
+
 @Mixin(EditBox.class)
 public interface EditBoxAccessor {
-  @Accessor
-  @Nullable
-  String getSuggestion();
+    @Accessor
+    @Nullable
+    String getSuggestion();
 
-  @Accessor
-  int getDisplayPos();
+    @Accessor
+    int getDisplayPos();
 
-  @Accessor
-  int getHighlightPos();
+    @Accessor
+    int getHighlightPos();
 
-  @Accessor
-  int getMaxLength();
+    @Accessor
+    int getMaxLength();
 
-  @Accessor
-  BiFunction<String, Integer, FormattedCharSequence> getFormatter();
+    @Accessor
+    BiFunction<String, Integer, FormattedCharSequence> getFormatter();
 
-  @Invoker
-  void invokeRenderHighlight(GuiGraphics graphics, int startX, int startY, int endX, int endY);
+    @Invoker
+    void invokeRenderHighlight(GuiGraphics graphics, int startX, int startY, int endX, int endY);
 }

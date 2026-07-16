@@ -2,10 +2,6 @@ package daripher.skilltree.config;
 
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.PassiveSkill;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,63 +10,68 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class ClientConfig {
-  public static final ModConfigSpec SPEC;
-  private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
-  private static final ConfigValue<List<? extends String>> FAVORITE_SKILLS;
-  private static final ConfigValue<? extends String> FAVORITE_COLOR_HEX;
-  private static final ConfigValue<Boolean> SKILL_TREE_BACKGROUND_PARALLAX;
-  public static Set<ResourceLocation> favorite_skills;
-  public static int favorite_color;
-  public static boolean favorite_color_is_rainbow;
-  public static boolean skill_tree_background_parallax;
+    public static final ModConfigSpec SPEC;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    private static final ConfigValue<List<? extends String>> FAVORITE_SKILLS;
+    private static final ConfigValue<? extends String> FAVORITE_COLOR_HEX;
+    private static final ConfigValue<Boolean> SKILL_TREE_BACKGROUND_PARALLAX;
+    public static Set<ResourceLocation> favorite_skills;
+    public static int favorite_color;
+    public static boolean favorite_color_is_rainbow;
+    public static boolean skill_tree_background_parallax;
 
-  static {
-    FAVORITE_SKILLS =
-        BUILDER.defineList("favorite_skills", new ArrayList<>(), ClientConfig::isValidSkillId);
-    FAVORITE_COLOR_HEX =
-        BUILDER.define("favorite_color_hex", "#42B0FF", ClientConfig::isValidHexColor);
-    SKILL_TREE_BACKGROUND_PARALLAX =
-        BUILDER.define("skill_tree_background_parallax", true);
-    SPEC = BUILDER.build();
-  }
-
-  private static boolean isValidSkillId(Object o) {
-    return o instanceof String s && ResourceLocation.tryParse(s) != null;
-  }
-
-  @SuppressWarnings("ResultOfMethodCallIgnored")
-  private static boolean isValidHexColor(Object o) {
-    if (!(o instanceof String s)) return false;
-    if (s.equals("rainbow")) return true;
-    try {
-      Integer.decode(s);
-    } catch (NumberFormatException e) {
-      return false;
+    static {
+        FAVORITE_SKILLS = BUILDER.defineList("favorite_skills", new ArrayList<>(), ClientConfig::isValidSkillId);
+        FAVORITE_COLOR_HEX = BUILDER.define("favorite_color_hex", "#42B0FF", ClientConfig::isValidHexColor);
+        SKILL_TREE_BACKGROUND_PARALLAX = BUILDER.define("skill_tree_background_parallax", true);
+        SPEC = BUILDER.build();
     }
-    return true;
-  }
 
-  @SubscribeEvent
-  static void load(ModConfigEvent.Loading event) {
-    if (event.getConfig().getSpec() != SPEC) return;
-    favorite_skills =
-        FAVORITE_SKILLS.get().stream().map(ResourceLocation::parse).collect(Collectors.toSet());
-    favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");
-    skill_tree_background_parallax = SKILL_TREE_BACKGROUND_PARALLAX.get();
-    if (!favorite_color_is_rainbow) {
-      favorite_color = Integer.decode(FAVORITE_COLOR_HEX.get());
+    private static boolean isValidSkillId(Object o) {
+        return o instanceof String s && ResourceLocation.tryParse(s) != null;
     }
-  }
 
-  public static void toggleFavoriteSkill(PassiveSkill skill) {
-    if (favorite_skills.contains(skill.getId())) {
-      favorite_skills.remove(skill.getId());
-    } else {
-      favorite_skills.add(skill.getId());
+    private static boolean isValidHexColor(Object o) {
+        if (!(o instanceof String s)) {
+            return false;
+        }
+        if (s.equals("rainbow")) {
+            return true;
+        }
+        try {
+            Integer.decode(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
-    FAVORITE_SKILLS.set(
-        favorite_skills.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
-  }
+
+    @SubscribeEvent
+    static void load(ModConfigEvent.Loading event) {
+        if (event.getConfig().getSpec() != SPEC) {
+            return;
+        }
+        favorite_skills = FAVORITE_SKILLS.get().stream().map(ResourceLocation::parse).collect(Collectors.toSet());
+        favorite_color_is_rainbow = FAVORITE_COLOR_HEX.get().equals("rainbow");
+        skill_tree_background_parallax = SKILL_TREE_BACKGROUND_PARALLAX.get();
+        if (!favorite_color_is_rainbow) {
+            favorite_color = Integer.decode(FAVORITE_COLOR_HEX.get());
+        }
+    }
+
+    public static void toggleFavoriteSkill(PassiveSkill skill) {
+        if (favorite_skills.contains(skill.getId())) {
+            favorite_skills.remove(skill.getId());
+        } else {
+            favorite_skills.add(skill.getId());
+        }
+        FAVORITE_SKILLS.set(favorite_skills.stream().map(ResourceLocation::toString).collect(Collectors.toList()));
+    }
 }

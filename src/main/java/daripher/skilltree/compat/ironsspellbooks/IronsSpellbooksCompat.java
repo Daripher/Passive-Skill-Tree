@@ -5,8 +5,8 @@ import daripher.skilltree.compat.ironsspellbooks.skill.bonus.SpellLevelSkillBonu
 import daripher.skilltree.compat.ironsspellbooks.skill.bonus.function.ManaLevelFunction;
 import daripher.skilltree.init.PSTFloatFunctions;
 import daripher.skilltree.init.PSTSkillBonuses;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.SkillBonus;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
 import daripher.skilltree.skill.bonus.function.FloatFunction;
 import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
@@ -20,12 +20,9 @@ public enum IronsSpellbooksCompat {
     INSTANCE;
 
     private static final Map<Player, List<UUID>> PLAYER_SPELLS_MAP = new HashMap<>();
-    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> GRANT_SPELL_BONUS =
-            PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
-    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> SPELL_LEVEL_BONUS =
-            PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
-    public static final DeferredHolder<FloatFunction.Serializer, ? extends FloatFunction.Serializer> MANA_LEVEL_FUNCTION =
-            PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
+    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> GRANT_SPELL_BONUS = PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
+    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> SPELL_LEVEL_BONUS = PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
+    public static final DeferredHolder<FloatFunction.Serializer, ? extends FloatFunction.Serializer> MANA_LEVEL_FUNCTION = PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
 
     public void register() {
         NeoForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
@@ -50,7 +47,7 @@ public enum IronsSpellbooksCompat {
 
     private void applyGrantSpellBonus(SpellSelectionManager.SpellSelectionEvent event) {
         Player player = event.getEntity();
-        List<GrantSpellSkillBonus> skillBonuses = SkillBonusHandler.getSkillBonuses(player, GrantSpellSkillBonus.class);
+        List<GrantSpellSkillBonus> skillBonuses = SkillBonusProvider.getSkillBonuses(player, GrantSpellSkillBonus.class);
         for (GrantSpellSkillBonus bonus : skillBonuses) {
             if (!bonus.getPlayerCondition().test(player)) {
                 continue;
@@ -61,10 +58,10 @@ public enum IronsSpellbooksCompat {
     }
 
     private void applySpellLevelBonus(ModifySpellLevelEvent event) {
-        if (!(event.getEntity() instanceof Player player))  {
+        if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        List<SpellLevelSkillBonus> skillBonuses = SkillBonusHandler.getSkillBonuses(player, SpellLevelSkillBonus.class);
+        List<SpellLevelSkillBonus> skillBonuses = SkillBonusProvider.getSkillBonuses(player, SpellLevelSkillBonus.class);
         for (SpellLevelSkillBonus bonus : skillBonuses) {
             if (!bonus.getSpellId().toString().equals(event.getSpell().getSpellId())) {
                 continue;

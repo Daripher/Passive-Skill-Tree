@@ -3,12 +3,8 @@ package daripher.skilltree.recipe.workbench;
 import daripher.skilltree.init.PSTRecipeTypes;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
 import daripher.skilltree.recipe.SkillRequiringRecipe;
-import daripher.skilltree.skill.bonus.SkillBonusHandler;
+import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.RecipeUnlockBonus;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,91 +15,96 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import daripher.skilltree.util.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractWorkbenchRecipe
-    implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
-  private final Map<Ingredient, Integer> additionalIngredients;
-  private final ResourceLocation id;
-  private final boolean requiresPassiveSkill;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-  public AbstractWorkbenchRecipe(
-      ResourceLocation id, Map<Ingredient, Integer> ingredients, boolean requiresPassiveSkill) {
-    this.additionalIngredients = ingredients;
-    this.requiresPassiveSkill = requiresPassiveSkill;
-    this.id = id;
-  }
+public abstract class AbstractWorkbenchRecipe implements Recipe<WorkbenchContainer>, SkillRequiringRecipe {
+    private final ResourceLocation id;
+    private final boolean requiresPassiveSkill;
 
-  @Override
-  public boolean matches(@NotNull WorkbenchContainer container, @NotNull Level level) {
-    if (!isValidBaseItem(container.getBaseItem())) {
-      return false;
+    public AbstractWorkbenchRecipe(ResourceLocation id, boolean requiresPassiveSkill) {
+        this.requiresPassiveSkill = requiresPassiveSkill;
+        this.id = id;
     }
-    if (!canBeUsedBy(container.getPlayer())) {
-      return false;
+
+    @Override
+    public boolean matches(@NotNull WorkbenchContainer container, @NotNull Level level) {
+        ItemStack baseItem = container.getBaseItem();
+        if (!isValidBaseItem(baseItem)) {
+            return false;
+        }
+        if (isLockedFor(container.getPlayer())) {
+            return false;
+        }
+        return hasIngredients(container, getAdditionalIngredients(baseItem));
     }
-    return hasIngredients(container, additionalIngredients);
-  }
 
-  protected String getDescriptionId() {
-    ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    public String getDescriptionId() {
+        ResourceLocation id = ForgeRegistries.RECIPE_SERIALIZERS.getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "recipe.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  public boolean canBeUsedBy(@NotNull Player player) {
-    return !requiresPassiveSkill || hasRecipeLearned(player);
-  }
+    public boolean isLockedFor(@NotNull Player player) {
+        return requiresPassiveSkill && !hasRecipeLearned(player);
+    }
 
-  public abstract boolean isValidBaseItem(ItemStack itemStack);
+    public abstract boolean isValidBaseItem(ItemStack itemStack);
 
-  public abstract Component getShortDescription();
+    public boolean isValidIngredient(ItemStack itemStack) {
+        return true;
+    }
 
-  public List<Component> getFullDescription() {
-    return List.of(getShortDescription());
-  }
+    public abstract Component getShortDescription();
 
-  public abstract @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer);
+    public List<Component> getFullDescription() {
+        return List.of(getShortDescription());
+    }
 
-  public abstract int requiredBaseItemAmount();
+    public abstract @NotNull ItemStack getResult(WorkbenchContainer workbenchContainer);
 
-  public Map<Ingredient, Integer> getAdditionalIngredients() {
-    return additionalIngredients;
-  }
+    public abstract int requiredBaseItemAmount();
 
-  protected final boolean hasRecipeLearned(@NotNull Player player) {
-    return SkillBonusHandler.getSkillBonuses(player, RecipeUnlockBonus.class).stream()
-        .map(RecipeUnlockBonus::getRecipeId)
-        .anyMatch(getId()::equals);
-  }
+    public abstract @Nullable Pair<Ingredient, Integer> getBaseIngredient();
 
-  protected boolean hasIngredients(
-      @NotNull WorkbenchContainer container, Map<Ingredient, Integer> ingredients) {
-    return container.hasIngredients(ingredients);
-  }
+    public abstract Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient);
 
-  @Override
-  public boolean canCraftInDimensions(int width, int height) {
-    return width == 7 && height == 1;
-  }
+    protected final boolean hasRecipeLearned(@NotNull Player player) {
+        return SkillBonusProvider.getSkillBonuses(player, RecipeUnlockBonus.class).stream().map(RecipeUnlockBonus::getRecipeId)
+                .anyMatch(getId()::equals);
+    }
 
-  public @NotNull ResourceLocation getId() {
-    return id;
-  }
+    protected boolean hasIngredients(@NotNull WorkbenchContainer container, Map<Ingredient, Integer> ingredients) {
+        return container.hasIngredients(ingredients);
+    }
 
-  @Deprecated
-  @Override
-  public @NotNull ItemStack getResultItem(@NotNull HolderLookup.Provider registryAccess) {
-    return ItemStack.EMPTY;
-  }
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return width == 5 && height == 2;
+    }
 
-  @Override
-  public @NotNull RecipeType<?> getType() {
-    return PSTRecipeTypes.WORKBENCH.get();
-  }
+    public @NotNull ResourceLocation getId() {
+        return id;
+    }
 
-  @Override
-  public boolean requiresPassiveSkill() {
-    return requiresPassiveSkill;
-  }
+    @Deprecated
+    @Override
+    public @NotNull ItemStack getResultItem(@NotNull HolderLookup.Provider registryAccess) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return PSTRecipeTypes.WORKBENCH.get();
+    }
+
+    @Override
+    public boolean hasPassiveSkillRequirement() {
+        return requiresPassiveSkill;
+    }
 }

@@ -1,39 +1,38 @@
 package daripher.skilltree.skill.bonus.item;
 
+import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTRegistries;
-import java.util.Objects;
-import java.util.function.Consumer;
-
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+
 public interface ItemBonus<T extends ItemBonus<T>> {
-  boolean canMerge(ItemBonus<?> other);
+    boolean canMerge(ItemBonus<?> other);
 
-  default boolean sameBonus(ItemBonus<?> other) {
-    return canMerge(other);
-  }
+    T merge(ItemBonus<?> other);
 
-  T merge(ItemBonus<?> other);
+    T copy();
 
-  T copy();
+    T multiply(double multiplier);
 
-  T multiply(double multiplier);
+    ItemBonus.Serializer getSerializer();
 
-  ItemBonus.Serializer getSerializer();
+    default String getDescriptionId() {
+        ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(getSerializer());
+        Objects.requireNonNull(id);
+        return "item_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
+    }
 
-  default String getDescriptionId() {
-    ResourceLocation id = PSTRegistries.ITEM_BONUSES.get().getKey(getSerializer());
-    Objects.requireNonNull(id);
-    return "item_bonus.%s.%s".formatted(id.getNamespace(), id.getPath());
-  }
+    List<MutableComponent> getFullTooltip();
 
-  void addTooltip(Consumer<MutableComponent> consumer);
+    boolean isPositive();
 
-  boolean isPositive();
+    void addEditorWidgets(SkillTreeEditor editor, Consumer<T> consumer);
 
-  interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {
-    ItemBonus<?> createDefaultInstance();
-  }
+    interface Serializer extends daripher.skilltree.data.serializers.Serializer<ItemBonus<?>> {
+        ItemBonus<?> createDefaultInstance();
+    }
 }

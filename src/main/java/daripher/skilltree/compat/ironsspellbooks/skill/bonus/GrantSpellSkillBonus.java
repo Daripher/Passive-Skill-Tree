@@ -24,6 +24,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
@@ -88,8 +90,9 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
         return this;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public MutableComponent getTooltip() {
+    public MutableComponent getSimpleTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
         MutableComponent tooltip = Component.translatable(getDescriptionId(), spellName, spellLevel);
@@ -103,26 +106,22 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
     }
 
     @Override
-    public void addEditorWidgets(
-            SkillTreeEditor editor, int row, Consumer<GrantSpellSkillBonus> consumer) {
+    public void addEditorWidgets(SkillTreeEditor editor, Consumer<GrantSpellSkillBonus> consumer) {
         editor.addLabel(0, 0, "Spell", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId).map(ResourceLocation::parse).toList();
-        editor.addSelectionMenu(0,0, 200, spellIds)
-                .setValue(spellId)
+        List<ResourceLocation> spellIds = SpellRegistry.getEnabledSpells().stream().map(AbstractSpell::getSpellId)
+                .map(ResourceLocation::parse).toList();
+        editor.addSelectionMenu(0, 0, 200, spellIds).setValue(spellId)
                 .setElementNameGetter(spellId -> Component.literal(spellId.toString()))
                 .setResponder(spellId -> selectSpellId(editor, consumer, spellId));
         editor.increaseHeight(19);
-        editor.addLabel(0,0, "Level", ChatFormatting.GOLD);
+        editor.addLabel(0, 0, "Level", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor.addNumericTextField(0,0, 50, 14, spellLevel)
-                .setNumericResponder(spellLevel -> selectSpellLevel(consumer, spellLevel));
+        editor.addNumericTextField(0, 0, 50, 14, spellLevel).setNumericResponder(spellLevel -> selectSpellLevel(consumer, spellLevel));
         editor.increaseHeight(19);
-        editor.addLabel(0,0, "Player Condition", ChatFormatting.GOLD);
+        editor.addLabel(0, 0, "Player Condition", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        editor
-                .addSelectionMenu(0, 0, 200, playerCondition)
-                .setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
+        editor.addSelectionMenu(0, 0, 200, playerCondition).setResponder(condition -> selectPlayerCondition(editor, consumer, condition))
                 .setMenuInitFunc(() -> addPlayerConditionWidgets(editor, consumer));
         editor.increaseHeight(19);
     }
@@ -146,20 +145,14 @@ public class GrantSpellSkillBonus implements SkillBonus<GrantSpellSkillBonus>, T
         this.spellId = spellId;
     }
 
-    private void addPlayerConditionWidgets(
-            SkillTreeEditor editor, Consumer<GrantSpellSkillBonus> consumer) {
-        playerCondition.addEditorWidgets(
-                editor,
-                c -> {
-                    setPlayerCondition(c);
-                    consumer.accept(this.copy());
-                });
+    private void addPlayerConditionWidgets(SkillTreeEditor editor, Consumer<GrantSpellSkillBonus> consumer) {
+        playerCondition.addEditorWidgets(editor, c -> {
+            setPlayerCondition(c);
+            consumer.accept(this.copy());
+        });
     }
 
-    private void selectPlayerCondition(
-            SkillTreeEditor editor,
-            Consumer<GrantSpellSkillBonus> consumer,
-            LivingEntityPredicate condition) {
+    private void selectPlayerCondition(SkillTreeEditor editor, Consumer<GrantSpellSkillBonus> consumer, LivingEntityPredicate condition) {
         setPlayerCondition(condition);
         consumer.accept(this.copy());
         editor.rebuildWidgets();

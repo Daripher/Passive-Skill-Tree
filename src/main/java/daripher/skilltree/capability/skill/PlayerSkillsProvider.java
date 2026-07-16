@@ -19,59 +19,68 @@ import org.jetbrains.annotations.NotNull;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class PlayerSkillsProvider {
-  @SubscribeEvent
-  public static void copySkills(PlayerEvent.Clone event) {
-    if (event.getEntity().level().isClientSide) return;
-    PlayerSkills originalData = get(event.getOriginal());
-    PlayerSkills cloneData = get(event.getEntity());
-    cloneData.deserializeNBT(
-        event.getEntity().level().registryAccess(),
-        originalData.serializeNBT(event.getOriginal().level().registryAccess()));
-  }
-
-  @SubscribeEvent
-  public static void syncServerData(PlayerLoggedInEvent event) {
-    if (event.getEntity().level().isClientSide) return;
-    sendServerData((ServerPlayer) event.getEntity());
-  }
-
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) return;
-    get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
-  }
-
-  @SubscribeEvent
-  public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof Player player)) return;
-    if (event.getEntity().level().isClientSide) return;
-    IPlayerSkills capability = get(player);
-    if (capability.isTreeReset()) {
-      player.sendSystemMessage(
-          Component.translatable("skilltree.message.reset").withStyle(ChatFormatting.YELLOW));
-      capability.setTreeReset(false);
+    @SubscribeEvent
+    public static void copySkills(PlayerEvent.Clone event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        PlayerSkills originalData = get(event.getOriginal());
+        PlayerSkills cloneData = get(event.getEntity());
+        cloneData.deserializeNBT(
+                event.getEntity().level().registryAccess(),
+                originalData.serializeNBT(event.getOriginal().level().registryAccess()));
     }
-  }
 
-  @SubscribeEvent
-  public static void syncPlayerSkills(EntityJoinLevelEvent event) {
-    if (!(event.getEntity() instanceof ServerPlayer player)) return;
-    sendPlayerSkills(player);
-  }
+    @SubscribeEvent
+    public static void syncServerData(PlayerLoggedInEvent event) {
+        if (event.getEntity().level().isClientSide) {
+            return;
+        }
+        sendServerData((ServerPlayer) event.getEntity());
+    }
 
-  public static void sendServerData(ServerPlayer player) {
-    PacketDistributor.sendToPlayer(player, new SyncServerDataMessage());
-  }
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void restoreSkillsAttributeModifiers(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        get(player).getPlayerSkills().forEach(skill -> skill.learn(player, false));
+    }
 
-  public static void sendPlayerSkills(ServerPlayer player) {
-    PacketDistributor.sendToPlayer(player, new SyncPlayerSkillsMessage(player));
-  }
+    @SubscribeEvent
+    public static void sendTreeResetMessage(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof Player player) || player.level().isClientSide) {
+            return;
+        }
+        IPlayerSkills capability = get(player);
+        if (capability.isTreeReset()) {
+            player.sendSystemMessage(
+                    Component.translatable("skilltree.message.reset")
+                            .withStyle(ChatFormatting.YELLOW));
+            capability.setTreeReset(false);
+        }
+    }
 
-  public static @NotNull PlayerSkills get(Player player) {
-    return player.getData(PSTAttachments.PLAYER_SKILLS.get());
-  }
+    @SubscribeEvent
+    public static void syncPlayerSkills(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            sendPlayerSkills(player);
+        }
+    }
 
-  public static boolean hasSkills(@NotNull Player player) {
-    return player.hasData(PSTAttachments.PLAYER_SKILLS.get());
-  }
+    public static void sendServerData(ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, new SyncServerDataMessage());
+    }
+
+    public static void sendPlayerSkills(ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, new SyncPlayerSkillsMessage(player));
+    }
+
+    public static @NotNull PlayerSkills get(Player player) {
+        return player.getData(PSTAttachments.PLAYER_SKILLS.get());
+    }
+
+    public static boolean hasSkills(@NotNull Player player) {
+        return player.hasData(PSTAttachments.PLAYER_SKILLS.get());
+    }
 }
