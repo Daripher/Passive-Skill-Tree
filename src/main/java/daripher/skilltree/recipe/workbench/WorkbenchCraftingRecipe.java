@@ -1,31 +1,36 @@
 package daripher.skilltree.recipe.workbench;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.init.PSTRecipeSerializers;
 import daripher.skilltree.inventory.menu.WorkbenchContainer;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import java.util.Map;
+import java.util.Optional;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
     private final @Nullable Pair<Ingredient, Integer> baseIngredient;
     private final Map<Ingredient, Integer> additionalIngredients;
     private final ItemStack result;
 
-    public WorkbenchCraftingRecipe(ResourceLocation id, @Nullable Pair<Ingredient, Integer> baseIngredient, Map<Ingredient, Integer> additionalIngredients, boolean requiresPassiveSkill, ItemStack result) {
+    public WorkbenchCraftingRecipe(
+            ResourceLocation id,
+            @Nullable Pair<Ingredient, Integer> baseIngredient,
+            Map<Ingredient, Integer> additionalIngredients,
+            boolean requiresPassiveSkill,
+            ItemStack result) {
         super(id, requiresPassiveSkill);
         this.result = result;
         this.baseIngredient = baseIngredient;
@@ -33,7 +38,9 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull WorkbenchContainer container, @NotNull RegistryAccess registryAccess) {
+    public @NotNull ItemStack assemble(
+            @NotNull WorkbenchContainer container,
+            @NotNull HolderLookup.Provider registryAccess) {
         return getResult(container);
     }
 
@@ -42,12 +49,13 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
         if (baseIngredient == null) {
             return itemStack.isEmpty();
         }
-        return baseIngredient.getLeft().test(itemStack) && itemStack.getCount() >= baseIngredient.getRight();
+        return baseIngredient.getLeft().test(itemStack)
+                && itemStack.getCount() >= baseIngredient.getRight();
     }
 
     @Override
     public Map<Ingredient, Integer> getAdditionalIngredients(ItemStack baseIngredient) {
-        return getAdditionalIngredients();
+        return additionalIngredients;
     }
 
     public Map<Ingredient, Integer> getAdditionalIngredients() {
@@ -80,61 +88,77 @@ public class WorkbenchCraftingRecipe extends AbstractWorkbenchRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<WorkbenchCraftingRecipe> {
+        private static final ResourceLocation UNKNOWN_ID =
+                ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "unknown");
+
+        private static final MapCodec<WorkbenchCraftingRecipe> CODEC =
+                RecordCodecBuilder.mapCodec(instance -> instance.group(
+                                ResourceLocation.CODEC.optionalFieldOf("id", UNKNOWN_ID)
+                                        .forGetter(AbstractWorkbenchRecipe::getId),
+                                WorkbenchRecipeCodecs.IngredientEntry.CODEC
+                                        .optionalFieldOf("base_ingredient")
+                                        .forGetter(recipe -> optionalBaseIngredient(recipe.baseIngredient)),
+                                WorkbenchRecipeCodecs.IngredientEntry.CODEC.listOf()
+                                        .fieldOf("ingredients")
+                                        .xmap(WorkbenchRecipeCodecs::toMap, WorkbenchRecipeCodecs::toEntries)
+                                        .forGetter(WorkbenchCraftingRecipe::getAdditionalIngredients),
+                                Codec.BOOL.optionalFieldOf("requires_passive_skill", false)
+                                        .forGetter(AbstractWorkbenchRecipe::hasPassiveSkillRequirement),
+                                ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result))
+                        .apply(instance, (id, baseIngredient, ingredients, requiresPassiveSkill, result) ->
+                                new WorkbenchCraftingRecipe(
+                                        id,
+                                        baseIngredient.map(entry -> Pair.of(entry.ingredient(), entry.requiredAmount()))
+                                                .orElse(null),
+                                        ingredients,
+                                        requiresPassiveSkill,
+                                        result)));
+
+        private static final StreamCodec<RegistryFriendlyByteBuf, WorkbenchCraftingRecipe>
+                STREAM_CODEC = StreamCodec.of(Serializer::encode, Serializer::decode);
+
         @Override
-        public @NotNull WorkbenchCraftingRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject jsonObject) {
-            boolean requiresPassiveSkill = jsonObject.get("requires_passive_skill").getAsBoolean();
-            Map<Ingredient, Integer> additionalIngredients = new HashMap<>();
-            JsonArray ingredientsJson = jsonObject.getAsJsonArray("additionalIngredients");
-            for (JsonElement jsonElement : ingredientsJson) {
-                JsonObject ingredientJson = jsonElement.getAsJsonObject();
-                Ingredient ingredient = Ingredient.fromJson(ingredientJson.get("ingredient"));
-                int requiredAmount = ingredientJson.get("required_amount").getAsInt();
-                additionalIngredients.put(ingredient, requiredAmount);
-            }
-            Pair<Ingredient, Integer> baseIngredient = null;
-            if (jsonObject.has("base_ingredient")) {
-                JsonObject baseIngredientJson = jsonObject.get("base_ingredient").getAsJsonObject();
-                Ingredient ingredient = Ingredient.fromJson(baseIngredientJson.get("ingredient"));
-                int requiredAmount = baseIngredientJson.get("required_amount").getAsInt();
-                baseIngredient = Pair.of(ingredient, requiredAmount);
-            }
-            JsonObject resultJson = jsonObject.getAsJsonObject("result");
-            ItemStack result = CraftingHelper.getItemStack(resultJson, true, true);
-            return new WorkbenchCraftingRecipe(id, baseIngredient, additionalIngredients, requiresPassiveSkill, result);
+        public @NotNull MapCodec<WorkbenchCraftingRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public @Nullable WorkbenchCraftingRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, WorkbenchCraftingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        private static WorkbenchCraftingRecipe decode(RegistryFriendlyByteBuf buf) {
+            ResourceLocation id = buf.readResourceLocation();
             boolean requiresPassiveSkill = buf.readBoolean();
-            Map<Ingredient, Integer> additionalIngredients = new HashMap<>();
-            int ingredientsCount = buf.readInt();
-            for (int i = 0; i < ingredientsCount; i++) {
-                additionalIngredients.put(Ingredient.fromNetwork(buf), buf.readInt());
-            }
+            Map<Ingredient, Integer> ingredients = WorkbenchRecipeCodecs.readIngredientMap(buf);
             Pair<Ingredient, Integer> baseIngredient = null;
-            boolean hasBaseIngredient = buf.readBoolean();
-            if (hasBaseIngredient) {
-                baseIngredient = Pair.of(Ingredient.fromNetwork(buf), buf.readInt());
+            if (buf.readBoolean()) {
+                baseIngredient = Pair.of(Ingredient.CONTENTS_STREAM_CODEC.decode(buf), buf.readInt());
             }
-            ItemStack result = buf.readItem();
-            return new WorkbenchCraftingRecipe(id, baseIngredient, additionalIngredients, requiresPassiveSkill, result);
+            ItemStack result = ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
+            return new WorkbenchCraftingRecipe(
+                    id, baseIngredient, ingredients, requiresPassiveSkill, result);
         }
 
-        @Override
-        public void toNetwork(@NotNull FriendlyByteBuf buf, @NotNull WorkbenchCraftingRecipe recipe) {
+        private static void encode(RegistryFriendlyByteBuf buf, WorkbenchCraftingRecipe recipe) {
+            buf.writeResourceLocation(recipe.getId());
             buf.writeBoolean(recipe.hasPassiveSkillRequirement());
-            int ingredientsCount = recipe.getAdditionalIngredients().size();
-            buf.writeInt(ingredientsCount);
-            recipe.getAdditionalIngredients().forEach((ingredient, requiredAmount) -> {
-                ingredient.toNetwork(buf);
-                buf.writeInt(requiredAmount);
-            });
+            WorkbenchRecipeCodecs.writeIngredientMap(buf, recipe.additionalIngredients);
             buf.writeBoolean(recipe.baseIngredient != null);
             if (recipe.baseIngredient != null) {
-                recipe.baseIngredient.getLeft().toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.baseIngredient.getLeft());
                 buf.writeInt(recipe.baseIngredient.getRight());
             }
-            buf.writeItem(recipe.result);
+            ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, recipe.result);
+        }
+
+        private static Optional<WorkbenchRecipeCodecs.IngredientEntry> optionalBaseIngredient(
+                @Nullable Pair<Ingredient, Integer> baseIngredient) {
+            if (baseIngredient == null) {
+                return Optional.empty();
+            }
+            return Optional.of(new WorkbenchRecipeCodecs.IngredientEntry(
+                    baseIngredient.getLeft(), baseIngredient.getRight()));
         }
     }
 }

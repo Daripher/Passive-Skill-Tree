@@ -132,7 +132,7 @@ public final class MobEffectIdPredicate implements MobEffectPredicate {
 
         @Override
         public MobEffectPredicate createDefaultInstance() {
-            return new MobEffectIdPredicate(MobEffects.POISON);
+            return new MobEffectIdPredicate(MobEffects.POISON.value());
         }
     }
 }

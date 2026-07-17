@@ -3,6 +3,7 @@ package daripher.skilltree.skill.bonus.item;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.client.widget.editor.menu.EditorMenu;
@@ -263,9 +264,15 @@ public final class GroupedItemBonus implements ItemBonus<GroupedItemBonus> {
 
         @Override
         public ItemBonus<?> createDefaultInstance() {
-            AttributeModifier defaultModifier = new AttributeModifier("Default Modifier", 1, AttributeModifier.Operation.ADDITION);
-            ItemBonus<?> bonus1 = new EquipmentBonus(new AttributeBonus(Attributes.ARMOR, defaultModifier));
-            ItemBonus<?> bonus2 = new EquipmentBonus(new AttributeBonus(Attributes.ARMOR_TOUGHNESS, defaultModifier));
+            AttributeModifier defaultModifier = new AttributeModifier(
+                    ResourceLocation.fromNamespaceAndPath(
+                            SkillTreeMod.MOD_ID, "default_modifier"),
+                    1,
+                    AttributeModifier.Operation.ADD_VALUE);
+            ItemBonus<?> bonus1 = new EquipmentBonus(
+                    new AttributeBonus(Attributes.ARMOR.value(), defaultModifier));
+            ItemBonus<?> bonus2 = new EquipmentBonus(
+                    new AttributeBonus(Attributes.ARMOR_TOUGHNESS.value(), defaultModifier));
             ArrayList<ItemBonus<?>> bonuses = new ArrayList<>();
             bonuses.add(bonus1);
             bonuses.add(bonus2);

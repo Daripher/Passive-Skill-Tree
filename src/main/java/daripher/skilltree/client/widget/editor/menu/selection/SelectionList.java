@@ -152,9 +152,10 @@ public abstract class SelectionList<T> extends AbstractButton {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+    public boolean mouseScrolled(
+            double mouseX, double mouseY, double scrollX, double scrollY) {
         if (isMouseOver(mouseX, mouseY)) {
-            setScroll(scroll - Mth.sign(delta));
+            setScroll(scroll - Mth.sign(scrollY));
             return true;
         }
         return false;

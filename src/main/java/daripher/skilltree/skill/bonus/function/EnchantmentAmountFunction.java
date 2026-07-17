@@ -39,7 +39,7 @@ public class EnchantmentAmountFunction implements FloatFunction<EnchantmentAmoun
     }
 
     private int getEnchants(Stream<ItemStack> items) {
-        return items.map(EnchantmentHelper::getEnchantments).map(Map::size).reduce(Integer::sum).orElse(0);
+        return items.map(ItemStack::getEnchantments).mapToInt(enchantments -> enchantments.size()).sum();
     }
 
     @Override

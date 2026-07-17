@@ -99,7 +99,7 @@ public final class EnchantingExperienceRefundBonus implements SkillBonus<Enchant
         MutableComponent tooltip;
         if (chance < 1f) {
             tooltip = Component.translatable(getDescriptionId() + ".chance", itemStackPredicate.getTooltip());
-            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         } else {
             tooltip = Component.translatable(getDescriptionId(), itemStackPredicate.getTooltip("plural"));
         }

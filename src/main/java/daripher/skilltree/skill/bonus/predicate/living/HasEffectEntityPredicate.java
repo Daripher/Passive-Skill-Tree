@@ -8,6 +8,8 @@ import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -37,10 +39,11 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
     @Override
     public boolean test(LivingEntity living) {
+        Holder<MobEffect> effectHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(this.effect);
         if (amplifier == 0) {
-            return living.hasEffect(this.effect);
+            return living.hasEffect(effectHolder);
         }
-        MobEffectInstance effect = living.getEffect(this.effect);
+        MobEffectInstance effect = living.getEffect(effectHolder);
         return effect != null && effect.getAmplifier() >= this.amplifier;
     }
 
@@ -164,7 +167,7 @@ public final class HasEffectEntityPredicate implements LivingEntityPredicate {
 
         @Override
         public LivingEntityPredicate createDefaultInstance() {
-            return new HasEffectEntityPredicate(MobEffects.POISON);
+            return new HasEffectEntityPredicate(MobEffects.POISON.value());
         }
     }
 }

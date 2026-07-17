@@ -11,7 +11,6 @@ import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.config.ServerConfig;
 import daripher.skilltree.data.reloader.SkillsReloader;
 import daripher.skilltree.exp.ExpHelper;
-import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.network.message.LearnSkillMessage;
 import daripher.skilltree.skill.PassiveSkill;
@@ -30,6 +29,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -266,7 +266,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
             return;
         }
         int cost = ServerConfig.getSkillPointCost(currentLevel);
-        NetworkDispatcher.network_channel.sendToServer(new GainSkillPointMessage());
+        PacketDistributor.sendToServer(new GainSkillPointMessage());
         player.giveExperiencePoints(-cost);
     }
 
@@ -312,7 +312,7 @@ public class SkillTreeWidgets extends WidgetGroup<AbstractWidget> {
 
     protected void learnSkill(PassiveSkill skill) {
         learnedSkills.add(skill.getId());
-        NetworkDispatcher.network_channel.sendToServer(new LearnSkillMessage(skill));
+        PacketDistributor.sendToServer(new LearnSkillMessage(skill));
         rebuildWidgets();
     }
 

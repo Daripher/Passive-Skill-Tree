@@ -9,6 +9,8 @@ import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.init.predicate.PSTLivingEntityPredicates;
 import daripher.skilltree.skill.bonus.player.ExperienceGainMultiplierBonus;
 import daripher.skilltree.skill.bonus.player.LootAmountModifierBonus;
+import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -569,8 +571,9 @@ public class PSTEnglishTranslationProvider extends PSTTranslationProvider {
     }
 
     protected void add(Potion potion, String name) {
-        add(potion.getName(Items.POTION.getDescriptionId() + ".effect."), "Potion of " + name);
-        add(potion.getName(Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Splash Potion of " + name);
-        add(potion.getName(Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Lingering Potion of " + name);
+        var potionHolder = Optional.of(BuiltInRegistries.POTION.wrapAsHolder(potion));
+        add(Potion.getName(potionHolder, Items.POTION.getDescriptionId() + ".effect."), "Potion of " + name);
+        add(Potion.getName(potionHolder, Items.SPLASH_POTION.getDescriptionId() + ".effect."), "Splash Potion of " + name);
+        add(Potion.getName(potionHolder, Items.LINGERING_POTION.getDescriptionId() + ".effect."), "Lingering Potion of " + name);
     }
 }

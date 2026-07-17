@@ -40,7 +40,11 @@ public final class RemoveMobEffectBonus implements EventListenerBonus<RemoveMobE
 
     @Override
     public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
-        target.getActiveEffects().stream().map(MobEffectInstance::getEffect).filter(effectPredicate).forEach(target::removeEffect);
+        target.getActiveEffects().stream()
+                .filter(instance -> effectPredicate.test(instance.getEffect().value()))
+                .map(MobEffectInstance::getEffect)
+                .toList()
+                .forEach(target::removeEffect);
     }
 
     @Override
@@ -90,7 +94,7 @@ public final class RemoveMobEffectBonus implements EventListenerBonus<RemoveMobE
         }
         MutableComponent tooltip = Component.translatable(descriptioId, effectDescription);
         if (chance < 1) {
-            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         }
         tooltip = eventListener.getTooltip(tooltip);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

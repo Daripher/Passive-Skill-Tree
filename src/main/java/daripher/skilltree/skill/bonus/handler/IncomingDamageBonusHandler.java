@@ -7,17 +7,17 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class IncomingDamageBonusHandler {
     @SubscribeEvent
-    public static void modifyIncomingDamage(LivingHurtEvent event) {
+    public static void modifyIncomingDamage(LivingIncomingDamageEvent event) {
         DamageSource damageSource = event.getSource();
         LivingEntity attacker = getAttacker(damageSource);
         if (!(event.getEntity() instanceof Player player)) {
@@ -31,9 +31,9 @@ public class IncomingDamageBonusHandler {
         float baseDamageMultiplier = 1f;
         float totalDamageMultiplier = 1f;
         for (IncomingDamageBonus bonus : skillBonuses) {
-            flatDamageBonus += bonus.getDamageModifier(AttributeModifier.Operation.ADDITION, damageSource, player, attacker);
-            baseDamageMultiplier += bonus.getDamageModifier(AttributeModifier.Operation.MULTIPLY_BASE, damageSource, player, attacker);
-            totalDamageMultiplier *= 1f + bonus.getDamageModifier(AttributeModifier.Operation.MULTIPLY_TOTAL, damageSource, player, attacker);
+            flatDamageBonus += bonus.getDamageModifier(AttributeModifier.Operation.ADD_VALUE, damageSource, player, attacker);
+            baseDamageMultiplier += bonus.getDamageModifier(AttributeModifier.Operation.ADD_MULTIPLIED_BASE, damageSource, player, attacker);
+            totalDamageMultiplier *= 1f + bonus.getDamageModifier(AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, damageSource, player, attacker);
         }
         float amount = event.getAmount();
         amount += flatDamageBonus;

@@ -11,20 +11,20 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class SkillBonusHandlerUtils {
     public static final String LAST_ATTACK_TARGET_TAG_NAME = "LastAttackTarget";
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void setLastHurtEntity(LivingHurtEvent event) {
+    public static void setLastHurtEntity(LivingIncomingDamageEvent event) {
         Player attacker = null;
         if (event.getSource().getEntity() instanceof Player player) {
             attacker = player;

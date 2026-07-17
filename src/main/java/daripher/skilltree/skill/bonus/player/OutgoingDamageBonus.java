@@ -329,7 +329,7 @@ public final class OutgoingDamageBonus implements SkillBonus<OutgoingDamageBonus
         @Override
         public OutgoingDamageBonus deserialize(FriendlyByteBuf buf) {
             float amount = buf.readFloat();
-            AttributeModifier.Operation operation = AttributeModifier.Operation.fromValue(buf.readInt());
+            AttributeModifier.Operation operation = AttributeModifier.Operation.BY_ID.apply(buf.readInt());
             OutgoingDamageBonus bonus = new OutgoingDamageBonus(amount, operation);
             bonus.playerMultiplier = NetworkHelper.readLivingMultiplier(buf);
             bonus.targetMultiplier = NetworkHelper.readLivingMultiplier(buf);
@@ -345,7 +345,7 @@ public final class OutgoingDamageBonus implements SkillBonus<OutgoingDamageBonus
                 throw new IllegalArgumentException();
             }
             buf.writeFloat(aBonus.amount);
-            buf.writeInt(aBonus.operation.toValue());
+            buf.writeInt(aBonus.operation.id());
             NetworkHelper.writeLivingMultiplier(buf, aBonus.playerMultiplier);
             NetworkHelper.writeLivingMultiplier(buf, aBonus.targetMultiplier);
             NetworkHelper.writeLivingCondition(buf, aBonus.playerCondition);
@@ -355,7 +355,7 @@ public final class OutgoingDamageBonus implements SkillBonus<OutgoingDamageBonus
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new OutgoingDamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE).setDamageCondition(new MeleeDamageCondition());
+            return new OutgoingDamageBonus(0.1f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE).setDamageCondition(new MeleeDamageCondition());
         }
     }
 }

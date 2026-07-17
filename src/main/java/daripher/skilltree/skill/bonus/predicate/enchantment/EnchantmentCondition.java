@@ -2,7 +2,7 @@ package daripher.skilltree.skill.bonus.predicate.enchantment;
 
 import daripher.skilltree.init.PSTRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import daripher.skilltree.enchantment.EnchantmentCategory;
 
 import java.util.Objects;
 

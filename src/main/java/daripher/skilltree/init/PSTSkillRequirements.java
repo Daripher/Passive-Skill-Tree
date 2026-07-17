@@ -4,8 +4,8 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.skill.requirement.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,10 +14,10 @@ public class PSTSkillRequirements {
     public static final ResourceLocation REGISTRY_ID = ResourceLocation.fromNamespaceAndPath(SkillTreeMod.MOD_ID, "skill_requirements");
     public static final DeferredRegister<SkillRequirement.Serializer> REGISTRY = DeferredRegister.create(REGISTRY_ID, SkillTreeMod.MOD_ID);
 
-    public static final RegistryObject<SkillRequirement.Serializer> STAT_VALUE = REGISTRY.register("stat_value", StatRequirement.Serializer::new);
-    public static final RegistryObject<SkillRequirement.Serializer> NUMERIC_VALUE = REGISTRY.register("numeric_value", NumericValueRequirement.Serializer::new);
-    public static final RegistryObject<SkillRequirement.Serializer> ADVANCEMENT = REGISTRY.register("advancement", AdvancementRequirement.Serializer::new);
-    public static final RegistryObject<SkillRequirement.Serializer> LEARNED_SKILL = REGISTRY.register("learned_skill", LearnedSkillRequirement.Serializer::new);
+    public static final DeferredHolder<SkillRequirement.Serializer, ? extends SkillRequirement.Serializer> STAT_VALUE = REGISTRY.register("stat_value", StatRequirement.Serializer::new);
+    public static final DeferredHolder<SkillRequirement.Serializer, ? extends SkillRequirement.Serializer> NUMERIC_VALUE = REGISTRY.register("numeric_value", NumericValueRequirement.Serializer::new);
+    public static final DeferredHolder<SkillRequirement.Serializer, ? extends SkillRequirement.Serializer> ADVANCEMENT = REGISTRY.register("advancement", AdvancementRequirement.Serializer::new);
+    public static final DeferredHolder<SkillRequirement.Serializer, ? extends SkillRequirement.Serializer> LEARNED_SKILL = REGISTRY.register("learned_skill", LearnedSkillRequirement.Serializer::new);
 
     @SuppressWarnings("rawtypes")
     public static List<SkillRequirement> requirementList() {

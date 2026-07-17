@@ -3,12 +3,12 @@ package daripher.skilltree.config;
 import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.PassiveSkill;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class ClientConfig {
-    public static final ForgeConfigSpec SPEC;
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     private static final ConfigValue<List<? extends String>> FAVORITE_SKILLS;
     private static final ConfigValue<? extends String> FAVORITE_COLOR_HEX;
     private static final ConfigValue<Boolean> SKILL_TREE_BACKGROUND_PARALLAX;
@@ -35,7 +35,7 @@ public class ClientConfig {
     }
 
     private static boolean isValidSkillId(Object o) {
-        return o instanceof String s && ResourceLocation.isValidResourceLocation(s);
+        return o instanceof String s && ResourceLocation.tryParse(s) != null;
     }
 
     private static boolean isValidHexColor(Object o) {

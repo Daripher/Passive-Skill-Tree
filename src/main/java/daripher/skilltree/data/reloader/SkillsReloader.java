@@ -10,6 +10,7 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.PassiveSkill;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.requirement.SkillRequirement;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,9 +18,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -31,7 +32,10 @@ public class SkillsReloader extends SimpleJsonResourceReloadListener {
     public static final Gson GSON = new GsonBuilder().registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
             .registerTypeAdapter(SkillBonus.class, new SkillBonusSerializer())
             .registerTypeAdapter(SkillRequirement.class, new SkillRequirementSerializer())
-            .registerTypeAdapter(MutableComponent.class, new Component.Serializer()).setPrettyPrinting().create();
+            .registerTypeAdapter(
+                    MutableComponent.class,
+                    new Component.SerializerAdapter(RegistryAccess.EMPTY))
+            .setPrettyPrinting().create();
     private static final Map<ResourceLocation, PassiveSkill> SKILLS = new HashMap<>();
 
     public SkillsReloader() {

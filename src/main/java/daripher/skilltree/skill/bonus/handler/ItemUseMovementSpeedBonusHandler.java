@@ -6,14 +6,14 @@ import daripher.skilltree.skill.bonus.player.ItemUseMovementSpeedBonus;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class ItemUseMovementSpeedBonusHandler {
     @SubscribeEvent
     public static void modifyItemUseMovementSpeed(MovementInputUpdateEvent event) {

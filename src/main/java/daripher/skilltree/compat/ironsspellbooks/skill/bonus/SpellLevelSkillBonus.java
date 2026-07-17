@@ -24,8 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -103,7 +103,7 @@ public class SpellLevelSkillBonus implements SkillBonus<SpellLevelSkillBonus> {
     public MutableComponent getSimpleTooltip() {
         LocalPlayer clientPlayer = Minecraft.getInstance().player;
         Component spellName = SpellRegistry.getSpell(spellId).getDisplayName(clientPlayer);
-        AttributeModifier.Operation operation = AttributeModifier.Operation.ADDITION;
+        AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_VALUE;
         MutableComponent tooltip = Component.translatable(getDescriptionId(), spellName);
         tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, bonusLevels, operation);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);

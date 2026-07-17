@@ -1,7 +1,7 @@
 package daripher.skilltree.compat.attributeslib;
 
 import daripher.skilltree.skill.PassiveSkill;
-import dev.shadowsoffire.attributeslib.client.ModifierSourceType;
+import dev.shadowsoffire.apothic_attributes.client.ModifierSourceType;
 
 public enum AttributesLibCompatibility {
     INSTANCE;

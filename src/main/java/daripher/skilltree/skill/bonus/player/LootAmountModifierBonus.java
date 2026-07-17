@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -84,13 +85,14 @@ public final class LootAmountModifierBonus implements SkillBonus<LootAmountModif
         } else if (multiplier == -1) {
             multiplierDescription = Component.translatable(descriptionId + ".none");
         } else {
-            String formattedMultiplier = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(multiplier * 100);
+            String formattedMultiplier =
+                    ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(multiplier * 100);
             multiplierDescription = Component.translatable(descriptionId + ".multiplier", formattedMultiplier);
         }
         MutableComponent bonusDescription;
         if (chance < 1) {
             bonusDescription = Component.translatable(descriptionId, multiplierDescription, lootDescription);
-            bonusDescription = TooltipHelper.getSkillBonusTooltip(bonusDescription, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+            bonusDescription = TooltipHelper.getSkillBonusTooltip(bonusDescription, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         } else {
             descriptionId += ".guaranteed";
             if (multiplier == -1) {
@@ -209,7 +211,7 @@ public final class LootAmountModifierBonus implements SkillBonus<LootAmountModif
 
         public LootContextParam<Entity> getPlayerLootContextParam() {
             return switch (this) {
-                case MOBS, FISHING -> LootContextParams.KILLER_ENTITY;
+                case MOBS, FISHING -> LootContextParams.ATTACKING_ENTITY;
                 case GEMS, CHESTS, ORE, ARCHAEOLOGY -> LootContextParams.THIS_ENTITY;
             };
         }

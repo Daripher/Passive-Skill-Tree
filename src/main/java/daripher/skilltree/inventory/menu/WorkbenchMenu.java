@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -164,7 +165,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
             updateCraftingResult(selectedRecipe);
             return;
         }
-        if (!ItemStack.isSameItemSameTags(input, prevInput)) {
+        if (!ItemStack.isSameItemSameComponents(input, prevInput)) {
             setupRecipeList();
             prevInput = input.copy();
         }
@@ -185,7 +186,7 @@ public class WorkbenchMenu extends AbstractContainerMenu {
             if (!level.isClientSide) {
                 ItemStack craftResult = selectedRecipe.assemble(workbenchContainer, level.registryAccess());
                 addCraftingBonuses(craftResult);
-                resultSlots.setRecipeUsed(selectedRecipe);
+                resultSlots.setRecipeUsed(new RecipeHolder<>(selectedRecipe.getId(), selectedRecipe));
                 resultSlots.setItem(0, craftResult);
             }
         }
@@ -206,14 +207,18 @@ public class WorkbenchMenu extends AbstractContainerMenu {
         if (!WORKBENCH_RECIPE_CACHE.isEmpty()) {
             return WORKBENCH_RECIPE_CACHE;
         }
-        List<CraftingRecipe> vanillaCraftingRecipes = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream()
-                .filter(recipe -> !recipe.getResultItem(level.registryAccess()).isEmpty()).toList();
-        WORKBENCH_RECIPE_CACHE.addAll(level.getRecipeManager().getAllRecipesFor(PSTRecipeTypes.WORKBENCH));
+        List<RecipeHolder<CraftingRecipe>> vanillaCraftingRecipes = level.getRecipeManager()
+                .getAllRecipesFor(RecipeType.CRAFTING).stream()
+                .filter(recipe -> !recipe.value().getResultItem(level.registryAccess()).isEmpty()).toList();
+        WORKBENCH_RECIPE_CACHE.addAll(level.getRecipeManager()
+                .getAllRecipesFor(PSTRecipeTypes.WORKBENCH.get()).stream()
+                .map(RecipeHolder::value)
+                .toList());
         WORKBENCH_RECIPE_CACHE.addAll(vanillaCraftingRecipes.stream().map(this::convertVanillaRecipe).toList());
         return WORKBENCH_RECIPE_CACHE;
     }
 
-    private AbstractWorkbenchRecipe convertVanillaRecipe(CraftingRecipe craftingRecipe) {
+    private AbstractWorkbenchRecipe convertVanillaRecipe(RecipeHolder<CraftingRecipe> craftingRecipe) {
         return new WorkbenchVanillaCraftingRecipe(craftingRecipe, level.registryAccess());
     }
 

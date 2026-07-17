@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "package": "daripher.skilltree.mixin",
   "mixins": [
     "minecraft/PlayerMixin",
@@ -14,7 +14,8 @@
   ],
   "client": [
     "EditBoxAccessor",
-    "ClientAdvancementsAccessor"
+    "ClientAdvancementsAccessor",
+    "minecraft/ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

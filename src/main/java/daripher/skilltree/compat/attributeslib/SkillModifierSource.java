@@ -2,7 +2,7 @@ package daripher.skilltree.compat.attributeslib;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import daripher.skilltree.skill.PassiveSkill;
-import dev.shadowsoffire.attributeslib.client.ModifierSource;
+import dev.shadowsoffire.apothic_attributes.client.ModifierSource;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 

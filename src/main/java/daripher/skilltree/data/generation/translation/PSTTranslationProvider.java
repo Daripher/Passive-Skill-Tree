@@ -17,8 +17,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import daripher.skilltree.util.ForgeRegistries;
 
 import java.util.Objects;
 
@@ -175,7 +175,8 @@ public abstract class PSTTranslationProvider extends LanguageProvider {
         add(key, value);
     }
 
-    protected void add(TagKey<Item> itemTag, String value) {
+    @Override
+    public void add(TagKey<?> itemTag, String value) {
         ResourceLocation id = itemTag.location();
         String key = "item_tag.%s".formatted(id.toString());
         add(key, value);

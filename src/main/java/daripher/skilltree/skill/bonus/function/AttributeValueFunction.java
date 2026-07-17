@@ -9,6 +9,8 @@ import daripher.skilltree.network.NetworkHelper;
 import daripher.skilltree.skill.bonus.SkillBonus;
 import daripher.skilltree.skill.bonus.predicate.living.FloatFunctionEntityPredicate;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -30,7 +32,10 @@ public class AttributeValueFunction implements FloatFunction<AttributeValueFunct
     @Override
     public float apply(LivingEntity entity) {
         AttributeMap attributes = entity.getAttributes();
-        return attributes.hasAttribute(attribute) ? (float) attributes.getValue(attribute) : 0f;
+        Holder<Attribute> attributeHolder = BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
+        return attributes.hasAttribute(attributeHolder)
+                ? (float) attributes.getValue(attributeHolder)
+                : 0f;
     }
 
     @Override
@@ -136,7 +141,7 @@ public class AttributeValueFunction implements FloatFunction<AttributeValueFunct
 
         @Override
         public FloatFunction<?> createDefaultInstance() {
-            return new AttributeValueFunction(Attributes.MAX_HEALTH);
+            return new AttributeValueFunction(Attributes.MAX_HEALTH.value());
         }
     }
 }

@@ -76,7 +76,7 @@ public final class ExperienceGainMultiplierBonus implements SkillBonus<Experienc
     public MutableComponent getSimpleTooltip() {
         Component sourceDescription = Component.translatable(experienceSource.getDescriptionId());
         MutableComponent tooltip = Component.translatable(getDescriptionId(), sourceDescription);
-        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, multiplier, AttributeModifier.Operation.MULTIPLY_BASE);
+        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, multiplier, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }

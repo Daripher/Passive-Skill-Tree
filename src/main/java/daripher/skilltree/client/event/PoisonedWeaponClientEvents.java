@@ -9,15 +9,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID, value = Dist.CLIENT)
 public class PoisonedWeaponClientEvents {
     @SubscribeEvent
     public static void addPoisonedWeaponTooltip(ItemTooltipEvent event) {
@@ -42,7 +42,7 @@ public class PoisonedWeaponClientEvents {
         Style style = TooltipHelper.getSkillBonusStyle(true);
         Component effectNameTooltip = TooltipHelper.getEffectTooltip(mobEffectInstance);
         MutableComponent effectTooltip;
-        if (!mobEffectInstance.getEffect().isInstantenous()) {
+        if (!mobEffectInstance.getEffect().value().isInstantenous()) {
             int duration = mobEffectInstance.getDuration();
             Component durationTooltip = getDurationTooltip(duration);
             effectTooltip = Component.translatable("skilltree.poisoned_weapon.effect", effectNameTooltip, durationTooltip);

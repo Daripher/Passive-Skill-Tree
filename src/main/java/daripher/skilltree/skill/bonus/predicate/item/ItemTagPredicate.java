@@ -10,7 +10,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -58,7 +58,8 @@ public class ItemTagPredicate implements ItemStackPredicate {
     public void addEditorWidgets(SkillTreeEditor editor, Consumer<ItemStackPredicate> consumer) {
         editor.addLabel(0, 0, "Tag", ChatFormatting.GREEN);
         editor.increaseHeight(19);
-        editor.addTextField(0, 0, 200, 14, tagId.toString()).setSoftFilter(ResourceLocation::isValidResourceLocation)
+        editor.addTextField(0, 0, 200, 14, tagId.toString())
+                .setSoftFilter(text -> ResourceLocation.tryParse(text) != null)
                 .setResponder(text -> selectTagId(consumer, text));
         editor.increaseHeight(19);
     }

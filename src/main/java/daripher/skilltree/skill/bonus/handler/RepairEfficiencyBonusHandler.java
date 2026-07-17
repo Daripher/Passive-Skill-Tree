@@ -5,14 +5,14 @@ import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.RepairEfficiencyBonus;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class RepairEfficiencyBonusHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void applyRepairEfficiency(AnvilUpdateEvent event) {

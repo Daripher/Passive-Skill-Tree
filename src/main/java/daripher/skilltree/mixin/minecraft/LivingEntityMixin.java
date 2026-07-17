@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import daripher.skilltree.entity.EquipmentContainer;
 import daripher.skilltree.skill.bonus.handler.JumpHeightBonusHandler;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +23,7 @@ public abstract class LivingEntityMixin implements EquipmentContainer {
     private final List<ItemStack> equipment = new ArrayList<>();
 
     @SuppressWarnings({"ConstantValue", "unused"})
-    @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
+    @ModifyReturnValue(method = "getJumpPower()F", at = @At("RETURN"), remap = false)
     private float applyJumpHeightBonus(float original) {
         if ((Object) this instanceof Player player) {
             return original * JumpHeightBonusHandler.getJumpHeightMultiplier(player);
@@ -31,8 +32,12 @@ public abstract class LivingEntityMixin implements EquipmentContainer {
     }
 
     @SuppressWarnings("unused")
-    @Inject(method = "dropAllDeathLoot", at = @At("HEAD"))
-    private void storeEquipmentBeforeDeath(DamageSource damageSource, CallbackInfo callbackInfo) {
+    @Inject(
+            method = "dropAllDeathLoot(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;)V",
+            at = @At("HEAD"),
+            remap = false)
+    private void storeEquipmentBeforeDeath(
+            ServerLevel level, DamageSource damageSource, CallbackInfo callbackInfo) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack itemInSlot = getItemBySlot(slot);
             if (itemInSlot.isEmpty()) {

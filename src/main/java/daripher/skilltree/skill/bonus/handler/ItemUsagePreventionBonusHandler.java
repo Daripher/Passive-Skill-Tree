@@ -10,19 +10,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class ItemUsagePreventionBonusHandler {
     // recursion protection
     private static boolean isProcessingRejection;
@@ -37,13 +38,45 @@ public class ItemUsagePreventionBonusHandler {
     }
 
     @SubscribeEvent
-    public static void preventItemUsage(PlayerInteractEvent event) {
+    public static void preventItemUsage(PlayerInteractEvent.LeftClickBlock event) {
+        preventInteraction(event);
+    }
+
+    @SubscribeEvent
+    public static void preventItemUsage(PlayerInteractEvent.RightClickBlock event) {
+        preventInteraction(event);
+    }
+
+    @SubscribeEvent
+    public static void preventItemUsage(PlayerInteractEvent.RightClickItem event) {
+        preventInteraction(event);
+    }
+
+    @SubscribeEvent
+    public static void preventItemUsage(PlayerInteractEvent.EntityInteract event) {
+        preventInteraction(event);
+    }
+
+    @SubscribeEvent
+    public static void preventItemUsage(PlayerInteractEvent.EntityInteractSpecific event) {
+        preventInteraction(event);
+    }
+
+    private static void preventInteraction(PlayerInteractEvent event) {
         Player player = event.getEntity();
         ItemStack itemStack = event.getItemStack();
         if (shouldPreventItemUsage(player, itemStack)) {
-            event.setCancellationResult(InteractionResult.FAIL);
-            if (event.isCancelable()) {
-                event.setCanceled(true);
+            if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
+                rightClickItem.setCancellationResult(InteractionResult.FAIL);
+            } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
+                rightClickBlock.setCancellationResult(InteractionResult.FAIL);
+            } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
+                entityInteract.setCancellationResult(InteractionResult.FAIL);
+            } else if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
+                entityInteractSpecific.setCancellationResult(InteractionResult.FAIL);
+            }
+            if (event instanceof ICancellableEvent cancellableEvent) {
+                cancellableEvent.setCanceled(true);
             }
         }
     }

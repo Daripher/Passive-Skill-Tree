@@ -126,7 +126,7 @@ public final class EffectDurationBonus implements SkillBonus<EffectDurationBonus
         Component effectTypeDescription = effectPredicate.getTooltip("plural");
         String key = getDescriptionId() + "." + target.getName();
         MutableComponent tooltip = Component.translatable(key, effectTypeDescription);
-        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, duration, AttributeModifier.Operation.MULTIPLY_BASE);
+        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, duration, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, target);
         tooltip = playerCondition.getTooltip(tooltip, target);
         tooltip = enemyMultiplier.getTooltip(tooltip, target);

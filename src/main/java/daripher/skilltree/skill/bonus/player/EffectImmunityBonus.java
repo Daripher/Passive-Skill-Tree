@@ -186,7 +186,8 @@ public final class EffectImmunityBonus implements SkillBonus<EffectImmunityBonus
 
         @Override
         public SkillBonus<?> createDefaultInstance() {
-            return new EffectImmunityBonus(new MobEffectIdPredicate(MobEffects.POISON));
+            return new EffectImmunityBonus(
+                    new MobEffectIdPredicate(MobEffects.POISON.value()));
         }
     }
 }

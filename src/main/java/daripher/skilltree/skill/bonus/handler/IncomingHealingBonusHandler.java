@@ -4,13 +4,13 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.IncomingHealingBonus;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class IncomingHealingBonusHandler {
     @SubscribeEvent
     public static void modifyIncomingHealing(LivingHealEvent event) {

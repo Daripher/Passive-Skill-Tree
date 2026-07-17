@@ -302,7 +302,7 @@
   "item_tag.curios:ring": "반지",
   "item_tag.curios:ring.plural": "반지",
   "item_tag.curios:ring.plural.type": "반지",
-  "item_tag.forge:curios/jewelry": "장신구",
+  "item_tag.curios:jewelry": "장신구",
   "key.categories.skilltree": "Passive Skill Tree",
   "key.display_skill_tree": "스킬 트리 열기",
   "living_condition.skilltree.attribute_value.max": "%s (%s이 %s %s 이하일 때)",

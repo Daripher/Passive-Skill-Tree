@@ -8,23 +8,22 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class EventListenerBonusHandler {
     @SubscribeEvent
-    public static void triggerHurtEvents(LivingHurtEvent event) {
+    public static void triggerHurtEvents(LivingIncomingDamageEvent event) {
         DamageSource damageSource = event.getSource();
         LivingEntity target = event.getEntity();
         Entity damagingEntity = damageSource.getEntity();
@@ -43,9 +42,7 @@ public class EventListenerBonusHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void triggerCritEvents(CriticalHitEvent event) {
-        Event.Result eventResult = event.getResult();
-        boolean isCrit = eventResult == Event.Result.ALLOW || (eventResult == Event.Result.DEFAULT && event.isVanillaCritical());
-        if (!isCrit) {
+        if (!event.isCriticalHit()) {
             return;
         }
         if (!(event.getTarget() instanceof LivingEntity target)) {
@@ -58,7 +55,7 @@ public class EventListenerBonusHandler {
     }
 
     @SubscribeEvent
-    public static void triggerShieldBlockEvents(ShieldBlockEvent event) {
+    public static void triggerShieldBlockEvents(LivingShieldBlockEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }

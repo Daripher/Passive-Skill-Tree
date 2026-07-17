@@ -12,19 +12,19 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class ArrowRetrievalChanceBonusHandler {
     public static final String STUCK_ARROWS_TAG_NAME = "StuckArrows";
 
     @SubscribeEvent
-    public static void saveStuckArrows(LivingHurtEvent event) {
+    public static void saveStuckArrows(LivingIncomingDamageEvent event) {
         DamageSource damageSource = event.getSource();
         if (!(damageSource.getDirectEntity() instanceof AbstractArrow arrow)) {
             return;
@@ -54,7 +54,7 @@ public class ArrowRetrievalChanceBonusHandler {
         LivingEntity target = event.getEntity();
         CompoundTag targetPersistentData = target.getPersistentData();
         ListTag stuckArrowsTag = targetPersistentData.getList(STUCK_ARROWS_TAG_NAME, Tag.TAG_COMPOUND);
-        stuckArrowsTag.add(arrowStack.save(new CompoundTag()));
+        stuckArrowsTag.add(arrowStack.save(target.registryAccess(), new CompoundTag()));
         targetPersistentData.put(STUCK_ARROWS_TAG_NAME, stuckArrowsTag);
     }
 
@@ -67,7 +67,7 @@ public class ArrowRetrievalChanceBonusHandler {
             return;
         }
         for (Tag tag : arrowsTag) {
-            ItemStack arrowStack = ItemStack.of((CompoundTag) tag);
+            ItemStack arrowStack = ItemStack.parseOptional(entity.registryAccess(), (CompoundTag) tag);
             entity.spawnAtLocation(arrowStack);
         }
     }

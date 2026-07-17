@@ -6,8 +6,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.function.Supplier;
 
@@ -22,6 +22,6 @@ public class PSTCreativeTabs {
     }
 
     private static void collectModItems(CreativeModeTab.Output output) {
-        PSTItems.REGISTRY.getEntries().stream().map(RegistryObject::get).forEach(output::accept);
+        PSTItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(output::accept);
     }
 }

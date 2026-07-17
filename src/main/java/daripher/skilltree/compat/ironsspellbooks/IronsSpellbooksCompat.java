@@ -11,8 +11,8 @@ import daripher.skilltree.skill.bonus.function.FloatFunction;
 import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.*;
 
@@ -20,13 +20,13 @@ public enum IronsSpellbooksCompat {
     INSTANCE;
 
     private static final Map<Player, List<UUID>> PLAYER_SPELLS_MAP = new HashMap<>();
-    public static final RegistryObject<SkillBonus.Serializer> GRANT_SPELL_BONUS = PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
-    public static final RegistryObject<SkillBonus.Serializer> SPELL_LEVEL_BONUS = PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
-    public static final RegistryObject<FloatFunction.Serializer> MANA_LEVEL_FUNCTION = PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
+    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> GRANT_SPELL_BONUS = PSTSkillBonuses.REGISTRY.register("grant_spell", GrantSpellSkillBonus.Serializer::new);
+    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> SPELL_LEVEL_BONUS = PSTSkillBonuses.REGISTRY.register("spell_level", SpellLevelSkillBonus.Serializer::new);
+    public static final DeferredHolder<FloatFunction.Serializer, ? extends FloatFunction.Serializer> MANA_LEVEL_FUNCTION = PSTFloatFunctions.REGISTRY.register("mana_level", ManaLevelFunction.Serializer::new);
 
     public void register() {
-        MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
-        MinecraftForge.EVENT_BUS.addListener(INSTANCE::applySpellLevelBonus);
+        NeoForge.EVENT_BUS.addListener(INSTANCE::applyGrantSpellBonus);
+        NeoForge.EVENT_BUS.addListener(INSTANCE::applySpellLevelBonus);
     }
 
     public void addPlayerSpell(Player player, UUID uuid) {

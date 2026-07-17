@@ -50,7 +50,7 @@ public interface SkillBonus<T extends SkillBonus<T>> extends Comparable<SkillBon
     default List<MutableComponent> getFullTooltip() {
         return List.of(getSimpleTooltip());
     }
-    
+
     default void gatherInfo(Consumer<MutableComponent> consumer) {
         TooltipHelper.consumeTranslated(getDescriptionId() + ".info", consumer);
     }

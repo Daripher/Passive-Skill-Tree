@@ -19,9 +19,9 @@ import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import daripher.skilltree.util.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

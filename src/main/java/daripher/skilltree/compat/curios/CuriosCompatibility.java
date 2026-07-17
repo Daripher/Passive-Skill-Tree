@@ -8,11 +8,11 @@ import daripher.skilltree.skill.bonus.player.PreventItemUsageBonus;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.TriState;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.event.CurioEquipEvent;
+import top.theillusivec4.curios.api.event.CurioCanEquipEvent;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ import java.util.stream.Stream;
 public enum CuriosCompatibility {
     INSTANCE;
 
-    public static final RegistryObject<SkillBonus.Serializer> CURIO_SLOTS_BONUS = PSTSkillBonuses.REGISTRY.register("curio_slots", CurioSlotsBonus.Serializer::new);
+    public static final DeferredHolder<SkillBonus.Serializer, ? extends SkillBonus.Serializer> CURIO_SLOTS_BONUS = PSTSkillBonuses.REGISTRY.register("curio_slots", CurioSlotsBonus.Serializer::new);
 
     public void register() {
-        MinecraftForge.EVENT_BUS.addListener(INSTANCE::applyCantUseItemBonus);
+        NeoForge.EVENT_BUS.addListener(INSTANCE::applyCantUseItemBonus);
     }
 
     public Stream<ItemStack> getCurios(LivingEntity living) {
@@ -39,13 +39,13 @@ public enum CuriosCompatibility {
     }
 
 
-    private void applyCantUseItemBonus(CurioEquipEvent event) {
+    private void applyCantUseItemBonus(CurioCanEquipEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
         for (PreventItemUsageBonus bonus : SkillBonusProvider.getSkillBonuses(player, PreventItemUsageBonus.class)) {
             if (bonus.getItemCondition().test(event.getStack())) {
-                event.setResult(Event.Result.DENY);
+                event.setEquipResult(TriState.FALSE);
                 return;
             }
         }

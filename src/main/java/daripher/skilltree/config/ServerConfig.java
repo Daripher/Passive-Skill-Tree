@@ -1,20 +1,20 @@
 package daripher.skilltree.config;
 
 import daripher.skilltree.SkillTreeMod;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @EventBusSubscriber(modid = SkillTreeMod.MOD_ID, bus = Bus.MOD)
 public class ServerConfig {
-    public static final ForgeConfigSpec SPEC;
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     private static final ConfigValue<Integer> MAX_SKILL_POINTS;
     private static final ConfigValue<Integer> FIRST_SKILL_COST;
     private static final ConfigValue<Integer> LAST_SKILL_COST;
@@ -77,7 +77,16 @@ public class ServerConfig {
     }
 
     @SubscribeEvent
-    static void load(ModConfigEvent event) {
+    static void load(ModConfigEvent.Loading event) {
+        loadValues(event);
+    }
+
+    @SubscribeEvent
+    static void reload(ModConfigEvent.Reloading event) {
+        loadValues(event);
+    }
+
+    private static void loadValues(ModConfigEvent event) {
         if (event.getConfig().getSpec() != SPEC) {
             return;
         }

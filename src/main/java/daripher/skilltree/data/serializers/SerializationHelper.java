@@ -20,19 +20,20 @@ import daripher.skilltree.skill.bonus.predicate.item.NoneItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.item.PotionStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.NoneLivingEntityPredicate;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 public class SerializationHelper {
     @NotNull
@@ -55,27 +56,26 @@ public class SerializationHelper {
 
     @NotNull
     public static AttributeModifier deserializeAttributeModifier(JsonObject json) {
-        UUID id = UUID.fromString(json.get("id").getAsString());
-        String name = json.get("name").getAsString();
+        ResourceLocation id = deserializeModifierId(json.get("id").getAsString());
         double amount = json.get("amount").getAsDouble();
         AttributeModifier.Operation operation = deserializeOperation(json);
-        return new AttributeModifier(id, name, amount, operation);
+        return new AttributeModifier(id, amount, operation);
     }
 
     public static void serializeAttributeModifier(JsonObject json, AttributeModifier modifier) {
-        json.addProperty("id", modifier.getId().toString());
-        json.addProperty("name", modifier.getName());
-        json.addProperty("amount", modifier.getAmount());
-        serializeOperation(json, modifier.getOperation());
+        json.addProperty("id", modifier.id().toString());
+        json.addProperty("name", modifier.id().toString());
+        json.addProperty("amount", modifier.amount());
+        serializeOperation(json, modifier.operation());
     }
 
     @NotNull
     public static AttributeModifier.Operation deserializeOperation(JsonObject json) {
-        return AttributeModifier.Operation.fromValue(json.get("operation").getAsInt());
+        return AttributeModifier.Operation.BY_ID.apply(json.get("operation").getAsInt());
     }
 
     public static void serializeOperation(JsonObject json, AttributeModifier.Operation operation) {
-        json.addProperty("operation", operation.toValue());
+        json.addProperty("operation", operation.id());
     }
 
     public static @Nonnull LivingMultiplier deserializeLivingMultiplier(JsonObject json, String name) {
@@ -258,11 +258,14 @@ public class SerializationHelper {
         MobEffect effect = deserializeMobEffect(json);
         int duration = json.get("duration").getAsInt();
         int amplifier = json.get("amplifier").getAsInt();
-        return new MobEffectInstance(Objects.requireNonNull(effect), duration, amplifier);
+        return new MobEffectInstance(
+                BuiltInRegistries.MOB_EFFECT.wrapAsHolder(Objects.requireNonNull(effect)),
+                duration,
+                amplifier);
     }
 
     public static void serializeEffectInstance(JsonObject json, MobEffectInstance effect) {
-        serializeMobEffect(json, effect.getEffect());
+        serializeMobEffect(json, effect.getEffect().value());
         json.addProperty("duration", effect.getDuration());
         json.addProperty("amplifier", effect.getAmplifier());
     }
@@ -302,27 +305,26 @@ public class SerializationHelper {
 
     @NotNull
     public static AttributeModifier deserializeAttributeModifier(CompoundTag tag) {
-        UUID modifierId = UUID.fromString(tag.getString("id"));
-        String name = tag.getString("name");
+        ResourceLocation modifierId = deserializeModifierId(tag.getString("id"));
         double amount = tag.getDouble("amount");
         AttributeModifier.Operation operation = deserializeOperation(tag);
-        return new AttributeModifier(modifierId, name, amount, operation);
+        return new AttributeModifier(modifierId, amount, operation);
     }
 
     public static void serializeAttributeModifier(CompoundTag tag, AttributeModifier modifier) {
-        tag.putString("id", modifier.getId().toString());
-        tag.putString("name", modifier.getName());
-        tag.putDouble("amount", modifier.getAmount());
-        serializeOperation(tag, modifier.getOperation());
+        tag.putString("id", modifier.id().toString());
+        tag.putString("name", modifier.id().toString());
+        tag.putDouble("amount", modifier.amount());
+        serializeOperation(tag, modifier.operation());
     }
 
     @NotNull
     public static AttributeModifier.Operation deserializeOperation(CompoundTag tag) {
-        return AttributeModifier.Operation.fromValue(tag.getInt("operation"));
+        return AttributeModifier.Operation.BY_ID.apply(tag.getInt("operation"));
     }
 
     public static void serializeOperation(CompoundTag tag, AttributeModifier.Operation operation) {
-        tag.putInt("operation", operation.toValue());
+        tag.putInt("operation", operation.id());
     }
 
     public static @Nonnull LivingMultiplier deserializeLivingMultiplier(CompoundTag tag, String name) {
@@ -454,11 +456,12 @@ public class SerializationHelper {
         MobEffect effect = Objects.requireNonNull(deserializeMobEffect(tag));
         int duration = tag.getInt("duration");
         int amplifier = tag.getInt("amplifier");
-        return new MobEffectInstance(effect, duration, amplifier);
+        return new MobEffectInstance(
+                BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect), duration, amplifier);
     }
 
     public static void serializeEffectInstance(CompoundTag tag, MobEffectInstance effect) {
-        serializeMobEffect(tag, effect.getEffect());
+        serializeMobEffect(tag, effect.getEffect().value());
         tag.putInt("duration", effect.getDuration());
         tag.putInt("amplifier", effect.getAmplifier());
     }
@@ -520,5 +523,14 @@ public class SerializationHelper {
         ItemBonus.Serializer serializer = PSTRegistries.ITEM_BONUSES.get().getValue(serializerId);
         Objects.requireNonNull(serializer);
         return serializer.deserialize(itemBonusTag);
+    }
+
+    private static ResourceLocation deserializeModifierId(String rawId) {
+        ResourceLocation parsed = ResourceLocation.tryParse(rawId);
+        if (parsed != null && rawId.contains(":")) {
+            return parsed;
+        }
+        return ResourceLocation.fromNamespaceAndPath(
+                SkillTreeMod.MOD_ID, "modifier/" + rawId.toLowerCase(Locale.ROOT));
     }
 }

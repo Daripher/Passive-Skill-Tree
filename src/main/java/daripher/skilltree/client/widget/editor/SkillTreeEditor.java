@@ -41,7 +41,7 @@ import net.minecraft.stats.StatType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -77,13 +77,13 @@ public class SkillTreeEditor extends WidgetGroup<AbstractWidget> {
     }
 
     @Override
-    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    protected void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         skillMirrorer.render(graphics, mouseX, mouseY, partialTick);
         skillDragger.render(graphics, mouseX, mouseY, partialTick);
         if (height > 0) {
             graphics.fill(getX(), getY(), getX() + width, getY() + height, 0xDD000000);
         }
-        super.render(graphics, mouseX, mouseY, partialTick);
+        super.renderWidget(graphics, mouseX, mouseY, partialTick);
     }
 
     @Override

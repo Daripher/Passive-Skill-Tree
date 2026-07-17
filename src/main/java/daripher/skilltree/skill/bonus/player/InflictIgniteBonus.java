@@ -43,7 +43,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
     @Override
     public void applyEffect(LivingEntity target, @Nullable LivingEntity source) {
         if (target.getRandom().nextFloat() < chance) {
-            target.setSecondsOnFire(duration);
+            target.igniteForSeconds(duration);
         }
     }
 
@@ -84,7 +84,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
 
     @Override
     public MutableComponent getSimpleTooltip() {
-        String durationDescription = StringUtil.formatTickDuration(duration * 20);
+        String durationDescription = StringUtil.formatTickDuration(duration * 20, 20f);
         String targetDescription = eventListener.getTarget().name().toLowerCase(Locale.ROOT);
         String bonusDescription = getDescriptionId() + "." + targetDescription;
         if (chance < 1) {
@@ -92,7 +92,7 @@ public final class InflictIgniteBonus implements EventListenerBonus<InflictIgnit
         }
         MutableComponent tooltip = Component.translatable(bonusDescription, durationDescription);
         if (chance < 1) {
-            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+            tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         }
         tooltip = eventListener.getTooltip(tooltip);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

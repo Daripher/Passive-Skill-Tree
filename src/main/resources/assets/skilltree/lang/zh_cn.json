@@ -302,7 +302,7 @@
   "item_tag.curios:ring": "戒指",
   "item_tag.curios:ring.plural": "戒指",
   "item_tag.curios:ring.plural.type": "戒指",
-  "item_tag.forge:curios/jewelry": "珠宝",
+  "item_tag.curios:jewelry": "珠宝",
   "key.categories.skilltree": "被动技能树",
   "key.display_skill_tree": "打开技能页面",
   "living_condition.skilltree.attribute_value.max": "%s，如果%s有%s以下的%s",

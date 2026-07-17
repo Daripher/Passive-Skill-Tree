@@ -18,7 +18,10 @@ public abstract class PlayerMixin extends LivingEntity implements PlayerExtensio
     }
 
     @SuppressWarnings("DataFlowIssue")
-    @Inject(method = "onEnchantmentPerformed", at = @At("TAIL"))
+    @Inject(
+            method = "onEnchantmentPerformed(Lnet/minecraft/world/item/ItemStack;I)V",
+            at = @At("TAIL"),
+            remap = false)
     private void restoreEnchantmentExperience(ItemStack itemStack, int enchantmentCost, CallbackInfo callbackInfo) {
         Player player = (Player) (Object) this;
         if (EnchantingExperienceRefundBonusHandler.shouldRefundEnchantingExperience(player, itemStack)) {

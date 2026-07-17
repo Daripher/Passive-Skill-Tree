@@ -53,7 +53,7 @@ public final class ArrowRetrievalBonus implements SkillBonus<ArrowRetrievalBonus
 
     @Override
     public MutableComponent getSimpleTooltip() {
-        return TooltipHelper.getSkillBonusTooltip(getDescriptionId(), chance, AttributeModifier.Operation.MULTIPLY_BASE)
+        return TooltipHelper.getSkillBonusTooltip(getDescriptionId(), chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
                 .withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));
     }
 

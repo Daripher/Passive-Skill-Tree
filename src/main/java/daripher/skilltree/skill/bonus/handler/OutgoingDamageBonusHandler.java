@@ -7,16 +7,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class OutgoingDamageBonusHandler {
     @SubscribeEvent
-    public static void modifyOutgoingDamage(LivingHurtEvent event) {
+    public static void modifyOutgoingDamage(LivingIncomingDamageEvent event) {
         DamageSource damageSource = event.getSource();
         if (!(damageSource.getEntity() instanceof Player player)) {
             return;
@@ -30,9 +30,9 @@ public class OutgoingDamageBonusHandler {
         float baseDamageMultiplier = 1f;
         float totalDamageMultiplier = 1f;
         for (OutgoingDamageBonus bonus : skillBonuses) {
-            flatDamageBonus += bonus.getDamageModifier(AttributeModifier.Operation.ADDITION, damageSource, player, target);
-            baseDamageMultiplier += bonus.getDamageModifier(AttributeModifier.Operation.MULTIPLY_BASE, damageSource, player, target);
-            totalDamageMultiplier *= 1f + bonus.getDamageModifier(AttributeModifier.Operation.MULTIPLY_TOTAL, damageSource, player, target);
+            flatDamageBonus += bonus.getDamageModifier(AttributeModifier.Operation.ADD_VALUE, damageSource, player, target);
+            baseDamageMultiplier += bonus.getDamageModifier(AttributeModifier.Operation.ADD_MULTIPLIED_BASE, damageSource, player, target);
+            totalDamageMultiplier *= 1f + bonus.getDamageModifier(AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, damageSource, player, target);
         }
         float amount = event.getAmount();
         amount += flatDamageBonus;

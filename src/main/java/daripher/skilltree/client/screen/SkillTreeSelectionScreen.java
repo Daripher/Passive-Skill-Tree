@@ -47,7 +47,7 @@ public class SkillTreeSelectionScreen extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         for (Renderable widget : renderables) {
             if (!(widget instanceof SkillTreeSelectionButton button)) {
@@ -61,7 +61,8 @@ public class SkillTreeSelectionScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics) {
+    public void renderBackground(
+            GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/skill_tree_background.png");
         int size = SkillTreeScreen.BACKGROUND_SIZE;
         guiGraphics.blit(texture, (width - size) / 2, (height - size) / 2, 0, 0F, 0F, size, size, size, size);

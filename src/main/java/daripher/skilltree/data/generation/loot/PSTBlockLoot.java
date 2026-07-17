@@ -1,17 +1,18 @@
 package daripher.skilltree.data.generation.loot;
 
 import daripher.skilltree.init.PSTBlocks;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 
 public class PSTBlockLoot extends BlockLootSubProvider {
-    protected PSTBlockLoot() {
-        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    protected PSTBlockLoot(HolderLookup.Provider lookupProvider) {
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
     }
 
     @Override
@@ -21,6 +22,6 @@ public class PSTBlockLoot extends BlockLootSubProvider {
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return PSTBlocks.REGISTRY.getEntries().stream().map(RegistryObject::get)::iterator;
+        return PSTBlocks.REGISTRY.getEntries().stream().<Block>map(DeferredHolder::get)::iterator;
     }
 }

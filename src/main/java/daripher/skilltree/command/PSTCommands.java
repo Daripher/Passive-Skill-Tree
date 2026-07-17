@@ -12,8 +12,6 @@ import daripher.skilltree.capability.skill.PlayerSkillsProvider;
 import daripher.skilltree.client.tooltip.TooltipHelper;
 import daripher.skilltree.data.reloader.SkillTreesReloader;
 import daripher.skilltree.data.reloader.SkillsReloader;
-import daripher.skilltree.network.NetworkDispatcher;
-import daripher.skilltree.network.message.SyncPlayerSkillsMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -24,10 +22,9 @@ import net.minecraft.commands.arguments.selector.EntitySelector;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
@@ -95,7 +92,7 @@ public class PSTCommands {
         IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
         skillsCapability.resetTree(player);
         player.sendSystemMessage(Component.translatable("skilltree.message.reset_command").withStyle(ChatFormatting.YELLOW));
-        NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+        PlayerSkillsProvider.sendPlayerSkills(player);
         return 1;
     }
 
@@ -105,7 +102,7 @@ public class PSTCommands {
         IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
         skillsCapability.setSkillPoints(amount + skillsCapability.getSkillPoints());
         player.sendSystemMessage(Component.translatable("skilltree.message.point_command").withStyle(ChatFormatting.YELLOW));
-        NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+        PlayerSkillsProvider.sendPlayerSkills(player);
         return 1;
     }
 
@@ -114,7 +111,7 @@ public class PSTCommands {
         int amount = IntegerArgumentType.getInteger(ctx, AMOUNT_ARGUMENT_NAME);
         IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
         skillsCapability.setSkillPoints(amount);
-        NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+        PlayerSkillsProvider.sendPlayerSkills(player);
         return 1;
     }
 
@@ -123,7 +120,7 @@ public class PSTCommands {
         ResourceLocation skillId = ctx.getArgument(SKILL_ID_ARGUMENT_NAME, ResourceLocation.class);
         IPlayerSkills skillsCapability = PlayerSkillsProvider.get(player);
         if (skillsCapability.grantSkill(SkillsReloader.getSkillById(skillId))) {
-            NetworkDispatcher.network_channel.send(PacketDistributor.PLAYER.with(() -> player), new SyncPlayerSkillsMessage(player));
+            PlayerSkillsProvider.sendPlayerSkills(player);
             Component skillName = TooltipHelper.getSkillTitle(skillId);
             player.sendSystemMessage(Component.translatable("skilltree.message.grant_skill_command", skillName)
                     .withStyle(ChatFormatting.YELLOW));

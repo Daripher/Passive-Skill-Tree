@@ -90,7 +90,7 @@ public class TextField extends EditBox implements TickingWidget {
         Font font = minecraft.font;
         String visibleText = font.plainSubstrByWidth(getValue().substring(accessor.getDisplayPos()), getInnerWidth());
         boolean isTextSplitByCursor = cursorVisiblePosition >= 0 && cursorVisiblePosition <= visibleText.length();
-        boolean isCursorVisible = isFocused() && accessor.getFrame() / 6 % 2 == 0 && isTextSplitByCursor;
+        boolean isCursorVisible = isFocused() && minecraft.gui.getGuiTicks() / 6 % 2 == 0 && isTextSplitByCursor;
         if (visibleText.isEmpty() && hint != null && !isFocused()) {
             visibleText = hint;
         }
@@ -153,7 +153,6 @@ public class TextField extends EditBox implements TickingWidget {
 
     @Override
     public void onWidgetTick() {
-        this.tick();
     }
 
     public TextField setFocused() {

@@ -111,7 +111,7 @@
   "item_tag.curios:necklace.plural": "Colares",
   "item_tag.curios:ring": "Anel",
   "item_tag.curios:ring.plural": "Anéis",
-  "item_tag.forge:curios/jewelry": "Joias",
+  "item_tag.curios:jewelry": "Joias",
   "item_tag.skilltree:armors/leather": "Armadura de Couro",
   "item_tag.skilltree:armors/leather.plural": "Armaduras de Couro",
   "key.categories.skilltree": "Árvore de Habilidades Passivas",

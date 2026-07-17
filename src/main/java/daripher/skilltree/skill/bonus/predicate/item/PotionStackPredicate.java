@@ -7,6 +7,7 @@ import daripher.skilltree.data.serializers.SerializationHelper;
 import daripher.skilltree.init.predicate.PSTItemPredicates;
 import daripher.skilltree.network.NetworkHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -14,11 +15,12 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.StreamSupport;
 
 public final class PotionStackPredicate implements ItemStackPredicate {
     private Type type;
@@ -41,8 +43,11 @@ public final class PotionStackPredicate implements ItemStackPredicate {
     }
 
     public static boolean hasEffects(ItemStack stack, MobEffectCategory category) {
-        return PotionUtils.getAllEffects(stack.getOrCreateTag()).stream().map(MobEffectInstance::getEffect)
-                .anyMatch(effect -> effect.getCategory() == category);
+        PotionContents contents =
+                stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+        return StreamSupport.stream(contents.getAllEffects().spliterator(), false)
+                .map(MobEffectInstance::getEffect)
+                .anyMatch(effect -> effect.value().getCategory() == category);
     }
 
     @Override

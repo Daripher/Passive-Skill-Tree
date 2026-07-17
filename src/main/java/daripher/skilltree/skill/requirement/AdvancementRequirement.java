@@ -6,7 +6,7 @@ import daripher.skilltree.client.widget.editor.SkillTreeEditor;
 import daripher.skilltree.init.PSTSkillRequirements;
 import daripher.skilltree.mixin.ClientAdvancementsAccessor;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientAdvancements;
@@ -40,7 +40,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
             LocalPlayer localPlayer = (LocalPlayer) player;
             ClientAdvancements advancements = localPlayer.connection.getAdvancements();
             ClientAdvancementsAccessor advancementsAccessor = (ClientAdvancementsAccessor) advancements;
-            Advancement advancement = advancements.getAdvancements().get(advancementId);
+            AdvancementHolder advancement = advancements.get(advancementId);
             AdvancementProgress progress = advancementsAccessor.getProgress().get(advancement);
             if (progress == null) {
                 return false;
@@ -54,7 +54,7 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
             }
             ServerAdvancementManager advancementManager = server.getAdvancements();
             PlayerAdvancements advancements = serverPlayer.getAdvancements();
-            Advancement advancement = advancementManager.getAdvancement(advancementId);
+            AdvancementHolder advancement = advancementManager.get(advancementId);
             if (advancement == null) {
                 return false;
             }
@@ -77,7 +77,8 @@ public final class AdvancementRequirement implements SkillRequirement<Advancemen
         ClientAdvancements advancements = localPlayer.connection.getAdvancements();
         editor.addLabel(0, 0, "Advancement ID", ChatFormatting.GOLD);
         editor.increaseHeight(19);
-        List<ResourceLocation> advancementIds = advancements.getAdvancements().getAllAdvancements().stream().map(Advancement::getId)
+        List<ResourceLocation> advancementIds = advancements.getTree().nodes().stream()
+                .map(node -> node.holder().id())
                 .toList();
         editor.addSelectionMenu(0, 0, 200, advancementIds).setValue(getAdvancementId())
                 .setElementNameGetter(v -> Component.literal(v.toString())).setResponder(v -> selectAdvancementId(consumer, v));

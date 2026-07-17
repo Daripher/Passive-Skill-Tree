@@ -1,4 +1,5 @@
 {
   "type": "skilltree:workbench_potion_mixing",
+  "id": "skilltree:potion_mixing",
   "requires_passive_skill": true
 }

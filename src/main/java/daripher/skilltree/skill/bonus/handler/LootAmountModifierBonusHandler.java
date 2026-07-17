@@ -5,9 +5,12 @@ import daripher.skilltree.skill.bonus.player.LootAmountModifierBonus;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -26,7 +29,10 @@ public class LootAmountModifierBonusHandler {
             }
             if (lootContext.hasParam(LootContextParams.TOOL)) {
                 ItemStack tool = lootContext.getParam(LootContextParams.TOOL);
-                if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0) {
+                Holder<Enchantment> silkTouch = lootContext.getLevel().registryAccess()
+                        .lookupOrThrow(Registries.ENCHANTMENT)
+                        .getOrThrow(Enchantments.SILK_TOUCH);
+                if (tool.getEnchantmentLevel(silkTouch) > 0) {
                     return defaultLoot;
                 }
             }

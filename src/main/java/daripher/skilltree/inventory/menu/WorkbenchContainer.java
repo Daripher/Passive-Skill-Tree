@@ -4,11 +4,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeInput;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorkbenchContainer extends TransientCraftingContainer {
+public class WorkbenchContainer extends TransientCraftingContainer implements RecipeInput {
     public final WorkbenchMenu menu;
 
     public WorkbenchContainer(WorkbenchMenu menu) {
@@ -22,6 +23,11 @@ public class WorkbenchContainer extends TransientCraftingContainer {
 
     public ItemStack getBaseItem() {
         return getItem(0);
+    }
+
+    @Override
+    public int size() {
+        return getContainerSize();
     }
 
     public boolean hasIngredients(Map<Ingredient, Integer> ingredients) {

@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -80,7 +80,7 @@ public class WorkbenchResultSlot extends Slot {
     protected void checkTakeAchievements(@NotNull ItemStack itemStack) {
         if (removeCount > 0) {
             itemStack.onCraftedBy(player.level(), player, removeCount);
-            ForgeEventFactory.firePlayerCraftingEvent(player, itemStack, workbenchContainer);
+            EventHooks.firePlayerCraftingEvent(player, itemStack, workbenchContainer);
             consumeMaterials();
         }
         removeCount = 0;

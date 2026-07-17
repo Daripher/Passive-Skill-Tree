@@ -15,6 +15,7 @@ import daripher.skilltree.skill.bonus.predicate.item.ItemStackPredicate;
 import daripher.skilltree.skill.bonus.predicate.living.LivingEntityPredicate;
 import daripher.skilltree.skill.requirement.SkillRequirement;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -24,7 +25,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -91,20 +92,17 @@ public class NetworkHelper {
     }
 
     public static void writeAttributeModifier(FriendlyByteBuf buf, AttributeModifier modifier) {
-        buf.writeLong(modifier.getId().getMostSignificantBits());
-        buf.writeLong(modifier.getId().getLeastSignificantBits());
-        buf.writeUtf(modifier.getName());
-        buf.writeDouble(modifier.getAmount());
-        writeOperation(buf, modifier.getOperation());
+        buf.writeResourceLocation(modifier.id());
+        buf.writeDouble(modifier.amount());
+        writeOperation(buf, modifier.operation());
     }
 
     @Nonnull
     public static AttributeModifier readAttributeModifier(FriendlyByteBuf buf) {
-        UUID id = new UUID(buf.readLong(), buf.readLong());
-        String name = buf.readUtf();
+        ResourceLocation id = buf.readResourceLocation();
         double amount = buf.readDouble();
         AttributeModifier.Operation operation = readOperation(buf);
-        return new AttributeModifier(id, name, amount, operation);
+        return new AttributeModifier(id, amount, operation);
     }
 
     public static void writeResourceLocations(FriendlyByteBuf buf, List<ResourceLocation> locations) {
@@ -398,16 +396,16 @@ public class NetworkHelper {
     }
 
     public static void writeOperation(FriendlyByteBuf buf, AttributeModifier.Operation operation) {
-        buf.writeInt(operation.toValue());
+        buf.writeInt(operation.id());
     }
 
     @NotNull
     public static AttributeModifier.Operation readOperation(FriendlyByteBuf buf) {
-        return AttributeModifier.Operation.fromValue(buf.readInt());
+        return AttributeModifier.Operation.BY_ID.apply(buf.readInt());
     }
 
     public static void writeEffectInstance(FriendlyByteBuf buf, MobEffectInstance effect) {
-        writeMobEffect(buf, effect.getEffect());
+        writeMobEffect(buf, effect.getEffect().value());
         buf.writeInt(effect.getDuration());
         buf.writeInt(effect.getAmplifier());
     }
@@ -416,7 +414,10 @@ public class NetworkHelper {
     public static MobEffectInstance readEffectInstance(FriendlyByteBuf buf) {
         MobEffect effect = readMobEffect(buf);
         Objects.requireNonNull(effect);
-        return new MobEffectInstance(effect, buf.readInt(), buf.readInt());
+        return new MobEffectInstance(
+                BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect),
+                buf.readInt(),
+                buf.readInt());
     }
 
     public static void writeValueProvider(FriendlyByteBuf buf, FloatFunction<?> provider) {

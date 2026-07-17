@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 import javax.annotation.Nonnull;
@@ -86,7 +86,9 @@ public class RecipeUnlockBonus implements SkillBonus<RecipeUnlockBonus> {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         Objects.requireNonNull(clientLevel);
         RecipeManager recipesManager = clientLevel.getRecipeManager();
-        List<ResourceLocation> artisanRecipes = recipesManager.getAllRecipesFor(PSTRecipeTypes.WORKBENCH).stream().map(Recipe::getId)
+        List<ResourceLocation> artisanRecipes = recipesManager
+                .getAllRecipesFor(PSTRecipeTypes.WORKBENCH.get()).stream()
+                .map(RecipeHolder::id)
                 .toList();
         editor.addSelectionMenu(0, 0, 200, artisanRecipes).setValue(recipeId).setResponder(id -> selectRecipeId(editor, consumer, id));
         editor.increaseHeight(19);

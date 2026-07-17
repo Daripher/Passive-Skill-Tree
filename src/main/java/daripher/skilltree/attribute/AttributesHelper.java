@@ -1,12 +1,13 @@
 package daripher.skilltree.attribute;
 
 import daripher.skilltree.SkillTreeMod;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +19,10 @@ public class AttributesHelper {
             return List.of();
         }
         AttributeSupplier attributeSupplier = DefaultAttributes.getSupplier(EntityType.PLAYER);
-        return ForgeRegistries.ATTRIBUTES.getValues().stream().filter(attributeSupplier::hasAttribute).toList();
+        return ForgeRegistries.ATTRIBUTES.getValues().stream()
+                .filter(attribute -> attributeSupplier.hasAttribute(
+                        BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute)))
+                .toList();
     }
 
     public static String getName(Attribute attribute) {

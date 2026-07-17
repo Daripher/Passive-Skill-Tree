@@ -4,23 +4,22 @@ import daripher.skilltree.SkillTreeMod;
 import daripher.skilltree.skill.SkillBonusProvider;
 import daripher.skilltree.skill.bonus.player.HealthReservationBonus;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
+@EventBusSubscriber(modid = SkillTreeMod.MOD_ID)
 public class HealthReservationBonusHandler {
     @SubscribeEvent
-    public static void applyHealthReservation(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END || event.side == LogicalSide.CLIENT) {
+    public static void applyHealthReservation(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide) {
             return;
         }
-        Player player = event.player;
         float reservation = getHealthReservation(player);
         if (reservation == 0) {
             return;

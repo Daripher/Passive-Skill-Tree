@@ -11,7 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import daripher.skilltree.util.ForgeRegistries;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -74,7 +74,7 @@ public final class ItemIdPredicate implements ItemStackPredicate {
     }
 
     private static boolean isItemId(String text) {
-        if (!ResourceLocation.isValidResourceLocation(text)) {
+        if (ResourceLocation.tryParse(text) == null) {
             return false;
         }
         return ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse(text));

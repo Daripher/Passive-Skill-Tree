@@ -82,7 +82,7 @@ public final class HealthReservationBonus implements SkillBonus<HealthReservatio
 
     @Override
     public MutableComponent getSimpleTooltip() {
-        MutableComponent tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, AttributeModifier.Operation.MULTIPLY_BASE);
+        MutableComponent tooltip = TooltipHelper.getSkillBonusTooltip(getDescriptionId(), amount, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
         return tooltip.withStyle(TooltipHelper.getSkillBonusStyle(isPositive()));

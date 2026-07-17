@@ -169,7 +169,7 @@ public final class EquipmentBonus implements ItemBonus<EquipmentBonus> {
 
         @Override
         public ItemBonus<?> createDefaultInstance() {
-            return new EquipmentBonus(new OutgoingDamageBonus(0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
+            return new EquipmentBonus(new OutgoingDamageBonus(0.1f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         }
     }
 }

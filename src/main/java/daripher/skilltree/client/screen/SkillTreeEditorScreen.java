@@ -12,7 +12,7 @@ import daripher.skilltree.skill.PassiveSkillTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
+import daripher.skilltree.client.screen.StatsUpdateListener;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
@@ -89,7 +89,7 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
 
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics);
+        renderBackground(graphics, mouseX, mouseY, partialTick);
         skillButtons.render(graphics, mouseX, mouseY, partialTick);
         renderOverlay(graphics);
         editorWidgets.render(graphics, mouseX, mouseY, partialTick);
@@ -137,7 +137,8 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics) {
+    public void renderBackground(
+            GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         ResourceLocation texture = ResourceLocation.parse("skilltree:textures/screen/skill_tree_background.png");
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
@@ -158,8 +159,10 @@ public class SkillTreeEditorScreen extends Screen implements StatsUpdateListener
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
-        return editorWidgets.mouseScrolled(mouseX, mouseY, amount) || skillButtons.mouseScrolled(mouseX, mouseY, amount);
+    public boolean mouseScrolled(
+            double mouseX, double mouseY, double scrollX, double scrollY) {
+        return editorWidgets.mouseScrolled(mouseX, mouseY, scrollX, scrollY)
+                || skillButtons.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override

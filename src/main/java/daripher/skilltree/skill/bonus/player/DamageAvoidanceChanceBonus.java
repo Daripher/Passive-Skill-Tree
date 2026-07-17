@@ -121,7 +121,7 @@ public final class DamageAvoidanceChanceBonus implements SkillBonus<DamageAvoida
     @Override
     public MutableComponent getSimpleTooltip() {
         MutableComponent tooltip = Component.translatable(getDescriptionId(), damageCondition.getTooltip());
-        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.MULTIPLY_BASE);
+        tooltip = TooltipHelper.getSkillBonusTooltip(tooltip, chance, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         tooltip = playerMultiplier.getTooltip(tooltip, Target.PLAYER);
         tooltip = attackerMultiplier.getTooltip(tooltip, Target.ENEMY);
         tooltip = playerCondition.getTooltip(tooltip, Target.PLAYER);
